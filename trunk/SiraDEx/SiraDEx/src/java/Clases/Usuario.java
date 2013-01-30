@@ -23,16 +23,42 @@ public class Usuario extends ActionForm {
     private String username;
     private String password;
     private String tipo;
-    private String telefono;
-    private String email;
+    private List constancias;
     private String mensaje;
     private static final String[] ATRIBUTOS = {
         "nombre", //0
         "apellido", //1
-        "usbid", //2
+        "usuario", //2
         "password", //3
     };
- 
+    private static final String[] TABLAS = {
+        "CONSTANCIA" //0
+    };
+
+    private class Constancia {
+
+        protected Date fechaSolicitud;
+        protected Date fechaEntrega;
+
+        public Constancia(Date fechaSolicitud) {
+            this.fechaSolicitud = fechaSolicitud;
+        }
+
+        public Constancia(Date fechaSolicitud, Date fechaEntrega) {
+            this.fechaSolicitud = fechaSolicitud;
+            this.fechaEntrega = fechaEntrega;
+        }
+
+        public void setFechaEntrega(Date fechaEntrega) {
+            this.fechaEntrega = fechaEntrega;
+        }
+
+        @Override
+        public String toString() {
+            return "Constancia{" + "fechaSolicitud=" + fechaSolicitud
+                    + ", fechaEntrega=" + fechaEntrega + '}';
+        }
+    }
 
     public Usuario() {
     }
@@ -57,6 +83,14 @@ public class Usuario extends ActionForm {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public List getConstancias() {
+        return constancias;
+    }
+
+    public void setConstancias(List constancias) {
+        this.constancias = constancias;
     }
 
     public String getUsername() {
@@ -95,22 +129,6 @@ public class Usuario extends ActionForm {
         return mensaje;
     }
 
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
@@ -178,7 +196,7 @@ public class Usuario extends ActionForm {
                     Usuario u = new Usuario();
                     //u.setNombre(rs.getString("nombre_campo"));
                     //u.setApellido(rs.getString("apellido"));
-                    u.setUsername(rs.getString("usbid"));
+                    u.setUsername(rs.getString("usuario"));
                     u.setPassword(rs.getString("password"));
                     listaUsuarios.add(u);
                 }

@@ -36,8 +36,7 @@ public class Entity {
         "JEFE_DEPENDENCIA", //4
         "COMUNIDAD_U", //5
         "VALOR", //6
-        "PARTICIPA", //7
-        ""
+        "PARTICIPA" //7
     };
 
     /*

@@ -49,9 +49,8 @@ public class Actividad extends ActionForm {
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
         "PARTICIPA", //1
-        "USUARIO"    //2
+        "USUARIO" //2
     };
-    
 
     public Actividad(int idActividad, String validacion, String criterioEval,
             String evaluacion) {
@@ -102,8 +101,6 @@ public class Actividad extends ActionForm {
     public void setValidacion(String validacion) {
         this.validacion = validacion;
     }
-
-
 
     public ArrayList<CampoValor> getCamposValores() {
         return camposValores;
@@ -177,8 +174,6 @@ public class Actividad extends ActionForm {
     public String toString() {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
     }
-
-    
 
     public boolean esActividadUsuario() {
         try {
@@ -279,11 +274,11 @@ public class Actividad extends ActionForm {
         return listaValor;
     }
 
-public boolean agregarActividad() {
+    public boolean agregarActividad() {
         Entity e = new Entity(1, 2);
         boolean resp;
-        
-        String[] columnas ={
+
+        String[] columnas = {
             "id_tipo_actividad",
             "criterio",
             "valor",
@@ -293,7 +288,7 @@ public boolean agregarActividad() {
             "modificador",
             "fecha_modif"
         };
-        
+
         Object[] actividad = {
             idTipoActividad,
             criterio,
@@ -310,7 +305,7 @@ public boolean agregarActividad() {
         Iterator itValores = this.camposValores.iterator();
         int i = 0;
         while (resp = (itValores.hasNext())) {
-            
+
             System.out.println("El campo " + camposValores.get(i).getCampo().getNombre());
             System.out.println("El valor " + camposValores.get(i).getValor());
             i++;
@@ -320,7 +315,7 @@ public boolean agregarActividad() {
             resp &= checkValorCampo(campoVerif, valorVerif);
         }
 
-        if (resp = e.insertar2(columnas, actividad)){
+        if (resp = e.insertar2(columnas, actividad)) {
 
             setIdActividad(e.seleccionarMaxId(ATRIBUTOS[0]));
 
@@ -340,15 +335,31 @@ public boolean agregarActividad() {
             return resp;
 
         }
+        Entity ePariticipa = new Entity(1, 7);
+        String[] columnas2 = {
+            "id_act",
+            "usuario"
+        };
+        if (resp) {
+            Iterator itParticipantes = this.participantes.iterator();
+
+            while (resp &= itParticipantes.hasNext()) {
+                String participa = (String) itParticipantes.next();
+                String id = String.valueOf( this.idActividad );
+                String[] tuplaInsertar = {id , participa};
+                
+                resp &= ePariticipa.insertar2(columnas2, tuplaInsertar);
+            }
+        }
+
         return resp;
     }
 
     public boolean eliminarActividad() {
         Entity e = new Entity(5, 2);
         return e.borrar(ATRIBUTOS[0], idActividad);
-  
-    }
 
+    }
 
     public static ArrayList<Actividad> listarActividades() {
         ArrayList<Actividad> listaActividad = new ArrayList<Actividad>(0);
@@ -357,38 +368,38 @@ public boolean agregarActividad() {
         ResultSet rs = eActividad.listar();
 
         Entity eTipoAct = new Entity(0, 1);
-        
+
         if (rs != null) {
             try {
                 while (rs.next()) {
                     Actividad a = new Actividad();
-                    
+
                     a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-                    
+
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-                    
+
                     a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-                    
+
                     a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-                    
+
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
-                    
+
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
-                    
+
                     a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
-                    
+
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
-                    
+
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
-                    
+
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
                     ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
                     r.next();
                     a.setNombreTipoActividad(r.getString(1));
-                    
+
                     listaActividad.add(a);
                 }
             } catch (SQLException ex) {
@@ -411,26 +422,26 @@ public boolean agregarActividad() {
             try {
                 while (rs.next()) {
                     Actividad a = new Actividad();
-                    
+
                     a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-                    
+
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-                    
+
                     a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-                    
+
                     a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-                    
+
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
-                    
+
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
-                    
+
                     a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
-                    
+
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
-                    
+
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
-                 
+
                     listaActividad.add(a);
                 }
             } catch (SQLException ex) {
@@ -448,40 +459,40 @@ public boolean agregarActividad() {
         String[] condicion = {this.creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
-        
+
         Entity eTipoAct = new Entity(0, 1);
 
         if (rs != null) {
             try {
                 while (rs.next()) {
                     Actividad a = new Actividad();
-                    
+
                     a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-                    
+
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-                    
+
                     a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-                    
+
                     a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-                    
+
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
-                    
+
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
-                    
+
                     a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
-                    
+
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
-                    
+
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
-                    
+
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
                     ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
                     r.next();
                     a.setNombreTipoActividad(r.getString(1));
-                    
+
                     listaActividad.add(a);
                 }
             } catch (SQLException ex) {
@@ -492,44 +503,48 @@ public boolean agregarActividad() {
         } else {
             System.out.println("RS NULO");
         }
-        
-        eActividad = new Entity(4,2);
-        String[] colCondicion = {TABLAS[2] + ".usuario"};
+
+        eActividad = new Entity(4, 2);
+        String[] tabABuscar = {
+            TABLAS[0],
+            TABLAS[1]
+        };
+        String[] colCondicion = {TABLAS[1] + ".usuario"};
         String[] colValor = {this.creador};
-        
-        rs = eActividad.naturalJoins(ATRIBUTOS, TABLAS, colCondicion, colValor);
-        
+
+        rs = eActividad.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+
         if (rs != null) {
             try {
                 while (rs.next()) {
                     Actividad a = new Actividad();
-                    
+
                     a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-                    
+
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-                    
+
                     a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-                    
+
                     a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-                    
+
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
-                    
+
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
-                    
+
                     a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
-                    
+
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
-                    
+
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
-                    
+
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
                     ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
                     r.next();
                     a.setNombreTipoActividad(r.getString(1));
-                    
+
                     listaActividad.add(a);
                 }
             } catch (SQLException ex) {
@@ -540,7 +555,7 @@ public boolean agregarActividad() {
         } else {
             System.out.println("RS NULO");
         }
-        
+
 
         return listaActividad;
     }
