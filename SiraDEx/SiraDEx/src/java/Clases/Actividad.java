@@ -46,6 +46,11 @@ public class Actividad extends ActionForm {
         "modificador",//7
         "fecha_modif"//8
     };
+    private static String[] TABLAS = {
+        "ACTIVIDAD", //0
+        "PARTICIPA", //1
+        "USUARIO"    //2
+    };
     
 
     public Actividad(int idActividad, String validacion, String criterioEval,
@@ -487,6 +492,55 @@ public boolean agregarActividad() {
         } else {
             System.out.println("RS NULO");
         }
+        
+        eActividad = new Entity(4,2);
+        String[] colCondicion = {TABLAS[2] + ".usuario"};
+        String[] colValor = {this.creador};
+        
+        rs = eActividad.naturalJoins(ATRIBUTOS, TABLAS, colCondicion, colValor);
+        
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Actividad a = new Actividad();
+                    
+                    a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
+                    
+                    int id = rs.getInt(Actividad.ATRIBUTOS[1]);
+                    a.setIdTipoActividad(id);
+                    
+                    a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
+                    
+                    a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
+                    
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
+                    
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
+                    
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
+                    
+                    String[] ta = {"nombre_tipo_actividad"};
+                    String[] idTipoAct = {"id_tipo_actividad"};
+                    Integer[] idAct = {id};
+                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
+                    r.next();
+                    a.setNombreTipoActividad(r.getString(1));
+                    
+                    listaActividad.add(a);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+
+        } else {
+            System.out.println("RS NULO");
+        }
+        
 
         return listaActividad;
     }
