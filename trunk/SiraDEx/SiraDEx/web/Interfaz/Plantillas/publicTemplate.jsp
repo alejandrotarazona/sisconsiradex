@@ -1,5 +1,5 @@
 <%-- 
-    Document   : template
+    Document   : publicTemplate
     Created on : 28/11/2012, 09:23:25 PM
     Author     : SisCon
 --%>
@@ -82,8 +82,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <tiles:insert attribute="leftMenu" />
+                    </div>                          
                     <tiles:insert attribute="rightMenu" />
                 </div>
                 <tiles:insert attribute="footer" />

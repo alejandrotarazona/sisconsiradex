@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+ <!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 1.1//EN"
+       "http://jakarta.apache.org/struts/dtds/tiles-config_1_1.dtd">
+
+
+<!--
+     This is a blank Tiles definition file with a commented example.
+-->
+
+<tiles-definitions>
+    
+    <definition name="plantillaPublica" path="/Interfaz/Plantillas/publicTemplate.jsp">
+        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
+        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
+        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="rightMenu" value="/Interfaz/Plantillas/rightMenu.jsp" />
+        <put name="footer" value="/Interfaz/Plantillas/footerInic.jsp" />
+    </definition>
+
+    <definition name="plantillaSesion" path="/Interfaz/Plantillas/sessionTemplate.jsp">
+        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
+        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
+        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="leftMenu" value="/Interfaz/Plantillas/leftMenu.jsp" />
+        <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
+    </definition>
+    
+    <definition name="paginaInicial" extends="plantillaPublica">
+        <put name="body" value="/EntradaSiraDEx.jsp" />
+    </definition>
+
+    <definition name="sesionIniciada" extends="plantillaSesion">
+        <put name="body" value="/bienvenida.jsp" />
+    </definition>
+    
+    <definition name="sesionCerrada" extends="plantillaPublica">
+        <put name="body" value="/EntradaSiraDEx.jsp" />
+    </definition>
+    
+    <definition name="gestionUsuarios" extends="plantillaSesion">
+        <put name="body" value="/usuario/gestionUsuarios.jsp" />
+    </definition>
+                  
+    <definition name="coleccionUsuarios" extends="plantillaSesion" >
+        <put name="body" value="/usuario/coleccionUsuarios.jsp" />
+    </definition>
+        
+    <definition name="agregarUsuario" extends="plantillaSesion">
+        <put name="body" value="/usuario/formAgregarUsuario.jsp" />
+    </definition>
+    
+    <definition name="eliminarUsuario" extends="plantillaSesion">
+        <put name="body" value="/usuario/formEliminarUsuario.jsp" />
+    </definition>
+    
+    <definition name="gestionTiposActividad" extends="plantillaSesion">
+        <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
+    </definition>
+    
+    <definition name="coleccionTiposActividad" extends="plantillaSesion" >
+        <put name="body" value="/tipoActividad/coleccionTiposActividad.jsp" />
+    </definition>
+    
+    <definition name="agregarTipoActividad" extends="plantillaSesion">
+        <put name="body" value="/tipoActividad/formAgregarTipoActividad.jsp" />
+    </definition>
+    
+    <definition name="agregarCampos" extends="plantillaSesion">
+        <put name="body" value="/tipoActividad/formAgregarCampos.jsp" />
+    </definition>
+    
+    <definition name="eliminarTipoActividad" extends="plantillaSesion">
+        <put name="body" value="/tipoActividad/formEliminarTipoActividad.jsp" />
+    </definition>
+ 
+    <definition name="gestionActividad" extends="plantillaSesion">
+        <put name="body" value="/actividad/gestionActividad.jsp" />
+    </definition>
+    
+    <definition name="coleccionActividad" extends="plantillaSesion" >
+        <put name="body" value="/actividad/coleccionActividad.jsp" />
+    </definition>
+    
+    <definition name="agregarActividad1" extends="plantillaSesion">
+        <put name="body" value="/actividad/formAgregarActividad1.jsp" />
+    </definition>
+    
+    <definition name="agregarActividad2" extends="plantillaSesion">
+        <put name="body" value="/actividad/formAgregarActividad2.jsp" />
+    </definition>
+    
+    <definition name="eliminarActividad" extends="plantillaSesion">
+        <put name="body" value="/actividad/formEliminarActividad.jsp" />
+    </definition>
+    
+
+</tiles-definitions>
