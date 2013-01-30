@@ -13,7 +13,7 @@
     <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
     <link rel="canonical" href="/node/1" />
     <style type="text/css" media="all">@import url("Interfaz/Stylesheets/base.css");</style>
-    <style type="text/css" media="all">@import url("Interfaz/Styñesheets/field.css");
+    <style type="text/css" media="all">@import url("Interfaz/Stylesheets/field.css");
         @import url("Interfaz/Stylesheets/user.css");
         @import url("Interfaz/Stylesheets/views.css");</style>
     <style type="text/css" media="all">@import url("Interfaz/Stylesheets/ckeditor.css");

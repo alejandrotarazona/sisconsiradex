@@ -13,5 +13,6 @@
     </head>
     <body>
         <h1>Bienvenido al SiraDEX (Sistema de Registro de Actividades de Extensión)</h1>
-        <p>SiraDEX permite a los profesores, estudiantes y demás miembros de la comunidad universitaria agregar, modificar y eliminar sus actividades de extensión.</body>
+        <p>SiraDEX permite a los profesores, estudiantes y demás miembros de la comunidad universitaria agregar, modificar y eliminar sus actividades de extensión.
+    </body>
 </html>

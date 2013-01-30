@@ -159,7 +159,7 @@ ul.menu {
   font-weight: bold;
 }
 ul.menu li {
-    margin: 0 -10px 6px -17px; /* LTR */
+  margin: 0 -10px 6px -17px; /* LTR */
 }
 li {
   font-size: 11px;
@@ -501,7 +501,7 @@ td.revision-current {
 .comment header {
  border: none;
  font-style: italic;
- padding: 0.5em 9;
+ padding: 0.5em;
  position: relative;
 }
 .comment .user-picture {

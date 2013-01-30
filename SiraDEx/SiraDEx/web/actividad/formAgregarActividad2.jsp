@@ -9,6 +9,31 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<script type="text/javascript">
+    $(function() {		
+        $("#fecha_input input").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+
+        $( "#fecha_input input" ).datepicker(
+        "option", "dateFormat", "dd-mm-yy" 
+    );
+	
+        $( "#fecha_input input" ).datepicker({
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+        });		
+	
+        var dayNamesMin = $( "#fecha_input input" ).datepicker( "option", "dayNames" );
+        $( "#fecha_input input" ).datepicker( 
+        "option", "dayNamesMin", [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+    );
+
+        $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
+    })	
+</script>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
