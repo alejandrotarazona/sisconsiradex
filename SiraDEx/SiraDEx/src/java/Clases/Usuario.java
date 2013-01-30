@@ -31,6 +31,9 @@ public class Usuario extends ActionForm {
         "apellido", //1
         "usbid", //2
         "password", //3
+        "tipo", //4
+        "telefono", //5
+        "email" //6   
     };
  
 
@@ -168,7 +171,7 @@ public class Usuario extends ActionForm {
     
     public static ArrayList<Usuario> listarUsuario(){
         Entity eUsuario = new Entity(0,0);
-        ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>(0);
+        ArrayList<Usuario> listaUsuarios = new ArrayList<>(0);
         
         ResultSet rs = eUsuario.listar();
 
@@ -176,18 +179,18 @@ public class Usuario extends ActionForm {
             try {
                 while (rs.next()) {
                     Usuario u = new Usuario();
-                    //u.setNombre(rs.getString("nombre_campo"));
-                    //u.setApellido(rs.getString("apellido"));
-                    u.setUsername(rs.getString("usbid"));
-                    u.setPassword(rs.getString("password"));
+                    u.setNombre(rs.getString(ATRIBUTOS[0]));
+                    u.setApellido(rs.getString(ATRIBUTOS[1]));
+                    u.setUsername(rs.getString(ATRIBUTOS[2]));
+                    u.setPassword(rs.getString(ATRIBUTOS[3]));
+                    u.setTipo(rs.getString(ATRIBUTOS[4]));
+                    u.setTelefono(rs.getString(ATRIBUTOS[5]));
+                    u.setEmail(rs.getString(ATRIBUTOS[6]));
                     listaUsuarios.add(u);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-
-
-
         }
         return listaUsuarios;
     }
