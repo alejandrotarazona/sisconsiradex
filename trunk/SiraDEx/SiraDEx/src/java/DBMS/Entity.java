@@ -35,7 +35,9 @@ public class Entity {
         "CAMPO", //3
         "JEFE_DEPENDENCIA", //4
         "COMUNIDAD_U", //5
-        "VALOR" //6
+        "VALOR", //6
+        "PARTICIPA", //7
+        ""
     };
 
     /*
