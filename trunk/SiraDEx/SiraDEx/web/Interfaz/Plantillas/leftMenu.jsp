@@ -15,45 +15,45 @@
             <div class="inner">
                 <div class="content">
                     <ul class="menu">
+                        <logic:present name="user">
+                            <logic:equal name="user" property="tipo" value="DEx">
 
-                        <logic:equal name="user" property="tipo" value="DEx">
-                            
-                            <li><html:link action="/AGestionTiposActividad"> 
-                                    Gestionar tipos de actividad 
-                                </html:link></li>
+                                <li><html:link action="/AGestionTiposActividad"> 
+                                        Gestionar tipos de actividad 
+                                    </html:link></li>
 
 
-                            <li><html:link action="/AGestionActividad"> 
-                                    Gestionar actividades
-                                </html:link></li>
-                            
-                            <li><a href="construccion.html">Mostrar productividad individual</a></li>
-                            <li><a href="construccion.html">Mostrar productividad general</a></li>
-                            <li><html:link action="/AGestionUsuarios"> 
-                                    Gestionar usuarios
-                                </html:link></li><br/>  
-                            </logic:equal>
+                                <li><html:link action="/AGestionActividad"> 
+                                        Gestionar actividades
+                                    </html:link></li>
 
-                        <logic:equal name="user" property="tipo" value="Prof">
-                            <li><html:link action="/AGestionActividad"> 
-                                    Gestionar mis actividades
-                                </html:link></li>
-                            <li><a href="construccion.html">Mostrar productividad individual</a></li>
-                        </logic:equal>  
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad individual</a></li>
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad general</a></li>
+                                <li><html:link action="/AGestionUsuarios"> 
+                                        Gestionar usuarios
+                                    </html:link></li><br/>  
+                                </logic:equal>
 
-                        <logic:equal name="user" property="tipo" value="WM">
+                            <logic:equal name="user" property="tipo" value="Prof">
+                                <li><html:link action="/AGestionActividad"> 
+                                        Gestionar mis actividades
+                                    </html:link></li>
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad individual</a></li>
+                            </logic:equal>  
 
-                            <li><a href="construccion.html">Consultar log</a></li>
-                            <li><a href="construccion.html">Gestionar backup</a></li>
-                            <li><a href="construccion.html">Gestionar roles</a></li>
-                        </logic:equal> 
+                            <logic:equal name="user" property="tipo" value="WM">
 
-                        <logic:equal name="user" property="tipo" value="CU">
-                            <li><html:link action="/AGestionActividad"> 
-                                    Gestionar mis actividades
-                                </html:link></li>
-                            </logic:equal>
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Consultar log</a></li>
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar backup</a></li>
+                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar roles</a></li>
+                            </logic:equal> 
 
+                            <logic:equal name="user" property="tipo" value="CU">
+                                <li><html:link action="/AGestionActividad"> 
+                                        Gestionar mis actividades
+                                    </html:link></li>
+                                </logic:equal>
+                            </logic:present>
                     </ul>    
                 </div>
             </div>

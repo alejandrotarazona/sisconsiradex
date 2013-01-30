@@ -20,25 +20,33 @@ import org.apache.struts.action.ActionForm;
 public class TipoActividad extends ActionForm {
     private int id;
     private String nombreTipo;
+    private String tipoPR;
     private int nroCampos;
     private String descripcion;
-    private int permiso;
-    private ArrayList<Campo> campos;
+    private ArrayList permiso;
+    private String programa;
+    private String validador;
+    private String producto;
+    private boolean activo;
+    private ArrayList<Campo> campos; 
     private String mensaje;
     private static final String[] ATRIBUTOS = {
-        "id_tipo_actividad",
-        "nombre_tipo_actividad",
-        "nro_campos",
-        "descripcion",
-        "permisos"
+        "id_tipo_actividad", //0
+        "nombre_tipo_actividad", //1
+        "tipo_p_r", //2
+        "nro_campos", //3
+        "descripcion", //4
+        "programa", //5
+        "validador", //6
+        "producto", //7
+        "activo" //8
     };
 
     private static final String[] tiposCampos = {
         "texto",   //STRING
         "numero",  //INT
         "fecha",   //DATE
-        "hora",    //TIME
-        "checkbox",//CHECKBOX
+        "checkbox"//CHECKBOX
     };
 
     public static String[] getTiposCampos() {
@@ -100,12 +108,44 @@ public class TipoActividad extends ActionForm {
         this.descripcion = descripcion;
     }
 
-    public int getPermiso() {
+    public String getTipoPR() {
+        return tipoPR;
+    }
+
+    public void setTipoPR(String tipoPR) {
+        this.tipoPR = tipoPR;
+    }
+
+    public ArrayList getPermiso() {
         return permiso;
     }
 
-    public void setPermiso(int permiso) {
+    public void setPermiso(ArrayList permiso) {
         this.permiso = permiso;
+    }
+
+    public String getPrograma() {
+        return programa;
+    }
+
+    public void setPrograma(String programa) {
+        this.programa = programa;
+    }
+
+    public String getValidador() {
+        return validador;
+    }
+
+    public void setValidador(String validador) {
+        this.validador = validador;
+    }
+
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
     }
 
     public String getMensaje() {
@@ -116,20 +156,29 @@ public class TipoActividad extends ActionForm {
         this.mensaje = mensaje;
     }
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+    
     public void setId() {
         Entity eId = new Entity(0, 1);
+        
         String[] seleccionar = {ATRIBUTOS[0]};
+        
         String[] columnas = {
             ATRIBUTOS[1],
-            ATRIBUTOS[2],
-            ATRIBUTOS[3]
+            ATRIBUTOS[8]
         };
-        Integer nroDeCampos = new Integer(this.nroCampos);
+        
         Object[] valores = {
             nombreTipo,
-            nroDeCampos,
-            descripcion
+            activo
         };
+        
         ResultSet rs = eId.proyectar(seleccionar, columnas, valores);
         if(rs != null){
             try {
@@ -138,8 +187,7 @@ public class TipoActividad extends ActionForm {
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            
+            }       
         }
     }
 
@@ -238,7 +286,7 @@ public class TipoActividad extends ActionForm {
                     t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
                     t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
                     t.setDescripcion(rs.getString(ATRIBUTOS[3]));
-                    t.setPermiso(rs.getInt(ATRIBUTOS[4]));
+                    
                     tipos.add(t);
                 }
             } catch (SQLException ex) {

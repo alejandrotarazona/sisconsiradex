@@ -21,7 +21,7 @@
 
 
         <p>Para ingresar al SiraDEx utilizando su USBID, por favor
-            <a href="construccion.html">haga click aqu&iacute;</a>
+            <a href="http://localhost:8080/SiraDEXS1/construccion.html">haga click aqu&iacute;</a>
         </p><br>
 
         <html:link action="/Entrar?method=inCU">Entrar como comunidad universitaria</html:link>
@@ -32,5 +32,5 @@
         <br>
         <html:link action="/Entrar?method=inWM">Entrar como webmaster</html:link>
 
-        </body>
+    </body>
 </html:html>

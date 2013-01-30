@@ -21,21 +21,74 @@
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
         <logic:present name="tipoActividadForm" property="mensaje">
             <bean:write name="tipoActividadForm" property="mensaje" /><br/>
-        </logic:present>
-        <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
-            <table><tr>
-                <td>Nombre<span style="color:red">*</span> </td>
-                <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
-            </tr>
-            <tr>
-            <td>Descripcion<span style="color:red">*</span> </td>
-            <td><html:textarea name="tipoActividadForm"  cols="100" rows="4"
-                           property="descripcion"></td></html:textarea>
-        </tr>
-        <tr><td>Numero de campos<span style="color:red">*</span> </td>
-        <td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>
-        </tr>
-        <tr><td><html:submit> Siguiente </html:submit></td></tr>
+</logic:present>
+<html:form method="POST" action ="/RegistrarTipoActividad?method=save">
+    <table>
+        <tr>
+        <td>Nombre<span style="color:red">*</span> </td>
+    <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
+</tr>
+<tr>
+<td>Descripcion<span style="color:red">*</span> </td>
+<td><html:textarea name="tipoActividadForm"  cols="100" rows="4"
+               property="descripcion"></td></html:textarea>
+</tr>
+<tr>
+<td>Tipo<span style="color:red">*</span> </td>
+<html:select property="criterio">
+    <html:option value="P">Tipo P</html:option>
+<html:option value="R">Tipo R</html:option>
+</html:select>
+</td>
+</tr>
+<tr>
+<td>Programa del tipo de actividad<span style="color:red">*</span> </td>
+<td>
+    <html:select property="id_programa" styleId="styleSelect">
+        <html:option value="">Seleccione un programa...</html:option>
+        <html:options
+            collection="programas"
+            property="id_programa"
+            labelProperty="nombre_programa"/>
+    </html:select>
+</td>
+</tr>
+<tr>
+<td>Coordinación a validar<span style="color:red">*</span> </td>
+<td>
+    <html:select property="id_validador_ta">
+        <html:option value="">Seleccione una coordinación...</html:option>
+        <html:options
+            collection="coordinaciones"
+            property="id_coordinacion"
+            labelProperty="nombre_coordinacion"/>
+    </html:select>
+</td>
+</tr>
+<tr>
+<td>
+    <p>Realizada por<span style="color:red">*</span> </p>
+    <ul>
+        <li>
+            <html:multibox property="usuario">Administrativos</html:multibox>
+            Personal Administrativo
+
+            <html:multibox property="usuario">Estudiantes</html:multibox>
+            Estudiantes
+        </li>
+        <li>
+            <html:multibox property="usuario">Profesores</html:multibox>
+            Profesores
+            <html:multibox property="usuario">Obreros</html:multibox>
+            Obreros
+        </li>
+    </ul>
+</td>
+</tr>
+<tr><td>Numero de campos<span style="color:red">*</span> </td>
+<td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>
+</tr>
+<tr><td><html:submit> Siguiente </html:submit></td></tr>
 </table>
 </html:form>
 </body>
