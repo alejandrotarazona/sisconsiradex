@@ -10,22 +10,28 @@ DROP TABLE CATALOGO CASCADE;
 DROP TABLE CAMPO_CATALOGO CASCADE;
 DROP TABLE ELEMENTO_CATALOGO CASCADE;
 DROP TABLE VALOR_CATALOGO CASCADE;
-DROP TABLE PROGRAMA CASCADE;
-DROP TABLE COORDINACION CASCADE;
 DROP TABLE PARTICIPA CASCADE;
 
 CREATE TABLE PERMISO(
     id_permiso  SERIAL PRIMARY KEY,
     nombre      VARCHAR(20) NOT NULL
+)
+WITH (
+  OIDS=FALSE
 );
 
 CREATE TABLE USUARIO(
-    usuario             VARCHAR(20)CONSTRAINT PK_usuario PRIMARY KEY,
+    usbid             VARCHAR(20) NOT NULL,
     password            VARCHAR(20) NOT NULL,
-    tipo_usuario        INT NOT NULL,
+    tipo                INT NOT NULL,
+    nombre              VARCHAR(20),
+    apellido            VARCHAR(20),
+    email               VARCHAR(20),
+    telefono            VARCHAR(15),
 
+CONSTRAINT PK_usbid PRIMARY KEY (usbid),
 CONSTRAINT FK_usuario__permiso 
-            FOREIGN KEY (tipo_usuario) 
+            FOREIGN KEY (tipo) 
             REFERENCES PERMISO 
             ON UPDATE CASCADE 
             ON DELETE CASCADE
@@ -34,38 +40,18 @@ WITH (
   OIDS=FALSE
 );
 
-CREATE TABLE PROGRAMA(
-    id_programa SERIAL PRIMARY KEY,
-    nombre      VARCHAR(14) NOT NULL
-);
-
-CREATE TABLE COORDINACION(
-    id_coord    SERIAL PRIMARY KEY,
-    nombre      VARCHAR(100) NOT NULL
-);
 
 CREATE TABLE TIPO_ACTIVIDAD(
-    id_tipo_actividad       SERIAL NOT NULL,
-    nombre_tipo_actividad   VARCHAR(140)  NOT NULL,
+    id_tipo_actividad       SERIAL PRIMARY KEY,
+    nombre_tipo_actividad   VARCHAR(140) NOT NULL,
     tipo_p_r                VARCHAR(1),
     nro_campos              SMALLINT NOT NULL,
     descripcion             VARCHAR(2000) NOT NULL,
     programa                INT NOT NULL,
     validador               INT NOT NULL,
     producto                VARCHAR(50),
+    activo                  BOOLEAN DEFAULT TRUE
     
-CONSTRAINT PK_tipo_actividad 
-            PRIMARY KEY (id_tipo_actividad),
-CONSTRAINT FK_tipo_actividadad__coordinacion 
-            FOREIGN KEY (validador) 
-            REFERENCES coordinacion 
-            ON UPDATE CASCADE 
-            ON DELETE CASCADE,
-CONSTRAINT FK_tipo_actividadad__programa 
-            FOREIGN KEY (programa) 
-            REFERENCES programa 
-            ON UPDATE CASCADE 
-            ON DELETE CASCADE
 )
 WITH (
   OIDS=FALSE
@@ -86,21 +72,27 @@ CONSTRAINT FK_tiene_permiso__permiso
             REFERENCES PERMISO 
             ON UPDATE CASCADE 
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
-
 
 CREATE TABLE ACTIVIDAD(
     id_actividad      SERIAL,
     id_tipo_actividad integer NOT NULL,
-    criterio          VARCHAR(10),
-    evaluacion        VARCHAR(64),
+    criterio          VARCHAR(13),
+    valor             VARCHAR(3),
     validacion        VARCHAR(12),
-    usuario           VARCHAR(20) NOT NULL,
+    creador           VARCHAR(20) NOT NULL,
+    fecha_creacion    VARCHAR(20) NOT NULL,
+    modificador       VARCHAR(20) NOT NULL,
+    fecha_modif       VARCHAR(20) NOT NULL,
+
 
 
 CONSTRAINT PK_actividad PRIMARY KEY (id_actividad),
 CONSTRAINT FK_actividad__usuario 
-            FOREIGN KEY (usuario) 
+            FOREIGN KEY (creador) 
             REFERENCES USUARIO 
             ON UPDATE CASCADE 
             ON DELETE CASCADE,
@@ -133,12 +125,6 @@ WITH (
   OIDS=FALSE
 );
 
-CREATE TABLE CATALOGO(
-    id_cat      SERIAL PRIMARY KEY,
-    nombre      VARCHAR(20) NOT NULL,
-    nro_campos  INT NOT NULL
-);
-
 CREATE TABLE VALOR(
     id_campo     integer NOT NULL,
     id_actividad integer NOT NULL,
@@ -166,14 +152,27 @@ CREATE TABLE LOG(
     fecha   DATE DEFAULT CURRENT_DATE,
     hora    TIME DEFAULT CURRENT_TIME,
     ip      VARCHAR(15) NOT NULL,
-    usuario VARCHAR(20),
+    usbid VARCHAR(20),
 
 CONSTRAINT FK_log__usuario 
-            FOREIGN KEY (usuario) 
+            FOREIGN KEY (usbid) 
             REFERENCES USUARIO 
             ON UPDATE CASCADE 
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
+
+CREATE TABLE CATALOGO(
+    id_cat      SERIAL PRIMARY KEY,
+    nombre      VARCHAR(20) NOT NULL,
+    nro_campos  INT NOT NULL
+)
+WITH (
+  OIDS=FALSE
+);
+
 
 CREATE TABLE CAMPO_CATALOGO(
     id_campo        SERIAL PRIMARY KEY,
@@ -186,6 +185,9 @@ CONSTRAINT FK_campo_catalogo__catalogo
             REFERENCES CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
 
 CREATE TABLE ELEMENTO_CATALOGO(
@@ -197,6 +199,9 @@ CONSTRAINT FK_elemento_catalogo__catalogo
             REFERENCES CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
 
 CREATE TABLE VALOR_CATALOGO(
@@ -216,23 +221,28 @@ CONSTRAINT FK_valor_catalogo__elemento
             REFERENCES ELEMENTO_CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
 
 CREATE TABLE PARTICIPA(
     id_act          INT NOT NULL,
-    usuario         VARCHAR(20) NOT NULL,
+    usbid         VARCHAR(20) NOT NULL,
 
 CONSTRAINT PK_participa 
-            PRIMARY KEY (id_act, usuario),
+            PRIMARY KEY (id_act, usbid),
 CONSTRAINT FK_participa__actividad 
             FOREIGN KEY (id_act) 
             REFERENCES ACTIVIDAD
             ON UPDATE CASCADE
             ON DELETE CASCADE,
 CONSTRAINT FK_participa__usuario 
-            FOREIGN KEY (usuario) 
+            FOREIGN KEY (usbid) 
             REFERENCES USUARIO
             ON UPDATE CASCADE
             ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
 );
-
