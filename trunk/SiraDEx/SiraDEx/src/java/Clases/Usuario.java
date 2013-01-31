@@ -25,6 +25,7 @@ public class Usuario extends ActionForm {
     private String tipo;
     private String telefono;
     private String email;
+    private String rol;
     private String mensaje;
     private static final String[] ATRIBUTOS = {
         "nombre", //0
@@ -33,7 +34,8 @@ public class Usuario extends ActionForm {
         "password", //3
         "tipo", //4
         "telefono", //5
-        "email" //6   
+        "email", //6
+        "rol" //7
     };
  
 
@@ -113,6 +115,14 @@ public class Usuario extends ActionForm {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
     
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
@@ -186,6 +196,7 @@ public class Usuario extends ActionForm {
                     u.setTipo(rs.getString(ATRIBUTOS[4]));
                     u.setTelefono(rs.getString(ATRIBUTOS[5]));
                     u.setEmail(rs.getString(ATRIBUTOS[6]));
+                    u.setRol(rs.getString(ATRIBUTOS[7]));
                     listaUsuarios.add(u);
                 }
             } catch (SQLException ex) {
@@ -197,7 +208,7 @@ public class Usuario extends ActionForm {
 
     public boolean agregarUsuario() {
         Entity e = new Entity(1, 0);
-        String[] usuarios = {username, password, tipo};
+        String[] usuarios = {username, password, rol};
         if (esUsuario()) {
             return false;
         } else {

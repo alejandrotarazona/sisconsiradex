@@ -10,6 +10,9 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
+<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
+
+
 <script type="text/javascript">
     $(function() {		
         $("#fecha_input input").datepicker({
@@ -60,15 +63,15 @@
             <td><logic:equal name="campoValor" property="campo.tipo" value="texto">
                     <html:text name="campoValor" property="valor" indexed="true"/></td>  
                 </logic:equal>
+            
                 <logic:equal name="campoValor" property="campo.tipo" value="numero">
                     <html:text name="campoValor" property="valor" indexed="true"/></td>  
                 </logic:equal>
+       
                 <logic:equal name="campoValor" property="campo.tipo" value="fecha">
-                    <html:text name="campoValor" property="valor" indexed="true"/></td>  
+                    <span id="fecha_input"> <html:text property="valor" value="" /></span></td>  
                 </logic:equal>
-                <logic:equal name="campoValor" property="campo.tipo" value="hora">
-                    <html:text name="campoValor" property="valor" indexed="true"/></td>  
-                </logic:equal>
+
                 <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
                     <html:checkbox name="campoValor" property="valor" indexed="true"/></td>  
                 </logic:equal>

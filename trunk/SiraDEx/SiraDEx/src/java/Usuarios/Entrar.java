@@ -37,7 +37,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setTipo("CU");
+        u.setRol("CU");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -46,7 +46,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setTipo("DEx");
+        u.setRol("DEx");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -55,7 +55,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setTipo("Prof");
+        u.setRol("Prof");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -64,7 +64,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setTipo("WM");
+        u.setRol("WM");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }

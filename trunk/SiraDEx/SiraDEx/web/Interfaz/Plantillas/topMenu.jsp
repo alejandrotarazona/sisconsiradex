@@ -20,7 +20,7 @@
                             <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Contactenos</html:link> |
                             <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Realizar busquedas públicas</html:link> |
                             <logic:present name="user" >
-                                <logic:equal name="user" property="tipo" value="DEx">
+                                <logic:equal name="user" property="rol" value="DEx">
                                     <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Realizar consultas avanzadas</html:link> |
                                 </logic:equal>
                             </logic:present>
