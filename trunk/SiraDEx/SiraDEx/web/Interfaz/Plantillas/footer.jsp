@@ -13,7 +13,7 @@
                         <tr>
                         <td valign="bottom" width="95">
                             <a href="http://www.usb.ve">
-                                <img alt="" src="http://localhost:8080/SiraDEXS1/Interfaz/Imagenes/cebolla_70_45.jpg" />
+                                <img alt="" src="http://localhost:8080/SiraDEx/Interfaz/Imagenes/cebolla_70_45.jpg" />
                             </a>
                         </td>
                         <td valign="bottom">

@@ -10,88 +10,81 @@
 -->
 
 <tiles-definitions>
-    
-    <definition name="plantillaPublica" path="/Interfaz/Plantillas/publicTemplate.jsp">
-        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
-        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
-        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
-        <put name="rightMenu" value="/Interfaz/Plantillas/rightMenu.jsp" />
-        <put name="footer" value="/Interfaz/Plantillas/footerInic.jsp" />
-    </definition>
 
-    <definition name="plantillaSesion" path="/Interfaz/Plantillas/sessionTemplate.jsp">
+    <definition name="plantilla" path="/Interfaz/Plantillas/template.jsp">
         <put name="head" value="/Interfaz/Plantillas/head.jsp" />
         <put name="header" value="/Interfaz/Plantillas/header.jsp" />
         <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
         <put name="leftMenu" value="/Interfaz/Plantillas/leftMenu.jsp" />
+        <put name="rightMenu" value="/Interfaz/Plantillas/rightMenu.jsp" />
         <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
     </definition>
     
-    <definition name="paginaInicial" extends="plantillaPublica">
+    <definition name="paginaInicial" extends="plantilla">
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
 
-    <definition name="sesionIniciada" extends="plantillaSesion">
+    <definition name="sesionIniciada" extends="plantilla">
         <put name="body" value="/bienvenida.jsp" />
     </definition>
     
-    <definition name="sesionCerrada" extends="plantillaPublica">
+    <definition name="sesionCerrada" extends="plantilla">
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
     
-    <definition name="gestionUsuarios" extends="plantillaSesion">
+    <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
     </definition>
                   
-    <definition name="coleccionUsuarios" extends="plantillaSesion" >
+    <definition name="coleccionUsuarios" extends="plantilla" >
         <put name="body" value="/usuario/coleccionUsuarios.jsp" />
     </definition>
         
-    <definition name="agregarUsuario" extends="plantillaSesion">
+    <definition name="agregarUsuario" extends="plantilla">
         <put name="body" value="/usuario/formAgregarUsuario.jsp" />
     </definition>
     
-    <definition name="eliminarUsuario" extends="plantillaSesion">
+    <definition name="eliminarUsuario" extends="plantilla">
         <put name="body" value="/usuario/formEliminarUsuario.jsp" />
     </definition>
     
-    <definition name="gestionTiposActividad" extends="plantillaSesion">
+    <definition name="gestionTiposActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
     </definition>
     
-    <definition name="coleccionTiposActividad" extends="plantillaSesion" >
+    <definition name="coleccionTiposActividad" extends="plantilla" >
         <put name="body" value="/tipoActividad/coleccionTiposActividad.jsp" />
     </definition>
     
-    <definition name="agregarTipoActividad" extends="plantillaSesion">
+    <definition name="agregarTipoActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/formAgregarTipoActividad.jsp" />
     </definition>
     
-    <definition name="agregarCampos" extends="plantillaSesion">
+    <definition name="agregarCampos" extends="plantilla">
         <put name="body" value="/tipoActividad/formAgregarCampos.jsp" />
     </definition>
     
-    <definition name="eliminarTipoActividad" extends="plantillaSesion">
+    <definition name="eliminarTipoActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/formEliminarTipoActividad.jsp" />
     </definition>
  
-    <definition name="gestionActividad" extends="plantillaSesion">
+    <definition name="gestionActividad" extends="plantilla">
         <put name="body" value="/actividad/gestionActividad.jsp" />
     </definition>
     
-    <definition name="coleccionActividad" extends="plantillaSesion" >
+    <definition name="coleccionActividad" extends="plantilla" >
         <put name="body" value="/actividad/coleccionActividad.jsp" />
     </definition>
     
-    <definition name="agregarActividad1" extends="plantillaSesion">
+    <definition name="agregarActividad1" extends="plantilla">
         <put name="body" value="/actividad/formAgregarActividad1.jsp" />
     </definition>
     
-    <definition name="agregarActividad2" extends="plantillaSesion">
+    <definition name="agregarActividad2" extends="plantilla">
         <put name="body" value="/actividad/formAgregarActividad2.jsp" />
     </definition>
     
-    <definition name="eliminarActividad" extends="plantillaSesion">
+    <definition name="eliminarActividad" extends="plantilla">
         <put name="body" value="/actividad/formEliminarActividad.jsp" />
     </definition>
     

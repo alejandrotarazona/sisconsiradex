@@ -17,14 +17,14 @@
                                 <html:link page="/Login.do?method=save">Inicio</html:link> |
                             </logic:present>
                             
-                            <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Contactenos</html:link> |
-                            <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Realizar busquedas públicas</html:link> |
+                            <html:link href="http://localhost:8080/SiraDEx/construccion.html">Contactenos</html:link> |
+                            <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar busquedas públicas</html:link> |
                             <logic:present name="user" >
                                 <logic:equal name="user" property="rol" value="DEx">
-                                    <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Realizar consultas avanzadas</html:link> |
+                                    <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar consultas avanzadas</html:link> |
                                 </logic:equal>
                             </logic:present>
-                            <html:link href="http://localhost:8080/SiraDEXS1/construccion.html">Ayuda</html:link>
+                            <html:link href="http://localhost:8080/SiraDEx/construccion.html">Ayuda</html:link>
                         </td>
                         </tr>
                     </table>

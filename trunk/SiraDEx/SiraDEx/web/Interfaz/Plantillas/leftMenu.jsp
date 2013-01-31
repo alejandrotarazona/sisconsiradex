@@ -27,8 +27,8 @@
                                         Gestionar actividades
                                     </html:link></li>
 
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad individual</a></li>
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad general</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad general</a></li>
                                 <li><html:link action="/AGestionUsuarios"> 
                                         Gestionar usuarios
                                     </html:link></li><br/>  
@@ -38,14 +38,14 @@
                                 <li><html:link action="/AGestionActividad"> 
                                         Gestionar mis actividades
                                     </html:link></li>
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad individual</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
                             </logic:equal>  
 
                             <logic:equal name="user" property="rol" value="WM">
 
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Consultar log</a></li>
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar backup</a></li>
-                                <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar roles</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar log</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Gestionar backup</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Gestionar roles</a></li>
                             </logic:equal> 
 
                             <logic:equal name="user" property="rol" value="CU">
