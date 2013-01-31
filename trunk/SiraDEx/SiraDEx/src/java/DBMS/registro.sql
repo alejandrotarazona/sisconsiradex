@@ -36,14 +36,23 @@ INSERT INTO valor values(9,2,'28/11/2012');
 INSERT INTO valor values(10,2,'Jorge Garcia');
 INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 */
---      Usuarios
+
+
+--Permisos
+
+INSERT INTO permiso (nombre) VALUES ('Estudiante');
+INSERT INTO permiso (nombre) VALUES ('Empleado');
+INSERT INTO permiso (nombre) VALUES ('Obrero');
+INSERT INTO permiso (nombre) VALUES ('Profesor');
+
+--Usuarios
 INSERT INTO usuario VALUES ('05-38199', '123456', 1, 'Jorge', 'García', '05-38199@usb.ve', '04141360451');
 INSERT INTO usuario VALUES ('07-41618', 'diana', 2, 'Diana', 'Vainberg', '07-41618@usb.ve', null);
-INSERT INTO usuario VALUES ('jf', 'jf', 3, 'Jose', 'Fernandez', 'jf@usb.ve', .'04125555555');
+INSERT INTO usuario VALUES ('jf', 'jf', 3, 'Jose', 'Fernandez', 'jf@usb.ve', '04125555555');
 INSERT INTO usuario VALUES ('kdoming', 'kdoming',4, 'Kenyer', 'Dominguez', 'kdoming@usb.ve', null);
-INSERT INTO usuario VALUES ('07-10000', 'pedro', 5, 'Pedro', 'Perez', 'pedroperez@usb.ve', null);
+INSERT INTO usuario VALUES ('07-10000', 'pedro', 4, 'Pedro', 'Perez', 'pedroperez@usb.ve', null);
 
---      Catalogo
+--Catalogo
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Coordinaciones', 2);
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Programas', 1);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Estudiantes', 1);
@@ -51,12 +60,14 @@ INSERT INTO catalogo (nombre, nro_campos) VALUES ('Programas', 1);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Departamentos', 1);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Profesores', 1);
 
---      Campos de coordinaciones
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Nombre coordinacion', 'Texto');
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Id coordinador', 'Texto');
---	Campos de programas
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (2, 'Nombre programa', 'Texto');
---	Campos de estudiante
+--Campos de coordinaciones
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Nombre', 'texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Id coordinador', 'texto');
+
+--Campos de programas
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (2, 'Nombre', 'texto');
+
+--Campos de estudiante
 --INSERT INTO campo_catalogo (id_catalogo, nombre_campo, tipo_campo) VALUES (3, 'Nombre estudiante', 'Texto');
 --INSERT INTO campo_catalogo (id_catalogo, nombre_campo, tipo_campo) VALUES (3, 'carnet', 'Texto');
 --      Campos de carreras
@@ -69,21 +80,21 @@ INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (2, 'Nombre
 --INSERT INTO campo_catalogo (id_catalogo, nombre_campo, tipo_campo) VALUES (6, 'Nombre profesor', 'Texto');
 --INSERT INTO campo_catalogo (id_catalogo, nombre_campo, tipo_campo) VALUES (6, 'Id profesor', 'Texto');
 
---      elementos de los catalogos
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (1, 1)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (2, 1)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (3, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (4, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (5, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (6, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (7, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (8, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (9, 2)
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (10, 2)
+--Elementos de los catalogos
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (1, 1);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (2, 1);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (3, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (4, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (5, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (6, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (7, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (8, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (9, 2);
+INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (10, 2);
 
 
---	Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
---	Valores para los nombres de las coordinaciones (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
+--Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
+--Valores para los nombres de las coordinaciones (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,1,'Coordinacion de Computacion y Tecnologia de la Informacion');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,2,'Coordinacion de Cooperacion Tecnica y Desarrollo Social');
 --INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,1,'BPDex');
@@ -104,11 +115,4 @@ INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,8,'Nivelacio
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,9,'Emprendimiento y Seguimiento de Egresados');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,10,'Formacion Complementaria');
 
-
---  permiso
-
-INSERT INTO permiso (nombre) VALUES ('Estudiante');
-INSERT INTO permiso (nombre) VALUES ('Empleado');
-INSERT INTO permiso (nombre) VALUES ('Obrero');
-INSERT INTO permiso (nombre) VALUES ('Profesor');
 
