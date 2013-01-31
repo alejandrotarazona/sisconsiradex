@@ -44,7 +44,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList ta = Clases.TipoActividad.listarTiposActividad();
-        request.setAttribute("tipos", ta);
+        request.setAttribute("tipos", ta);//verificar si la lista es vacia
         Actividad a = (Actividad) form;
         a.setMensaje("");
         return mapping.findForward(PAGE);

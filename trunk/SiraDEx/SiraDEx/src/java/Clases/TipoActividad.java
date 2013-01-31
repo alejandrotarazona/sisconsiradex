@@ -18,6 +18,7 @@ import org.apache.struts.action.ActionForm;
  * @author SisCon
  */
 public class TipoActividad extends ActionForm {
+
     private int id;
     private String nombreTipo;
     private String tipoPR;
@@ -28,7 +29,7 @@ public class TipoActividad extends ActionForm {
     private String validador;
     private String producto;
     private boolean activo;
-    private ArrayList<Campo> campos; 
+    private ArrayList<Campo> campos;
     private String mensaje;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
@@ -41,11 +42,10 @@ public class TipoActividad extends ActionForm {
         "producto", //7
         "activo" //8
     };
-
     private static final String[] tiposCampos = {
-        "texto",   //STRING
-        "numero",  //INT
-        "fecha",   //DATE
+        "texto", //STRING
+        "numero", //INT
+        "fecha", //DATE
         "checkbox"//CHECKBOX
     };
 
@@ -70,7 +70,7 @@ public class TipoActividad extends ActionForm {
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public ArrayList<Campo> getCampos() {
         return campos;
     }
@@ -163,31 +163,31 @@ public class TipoActividad extends ActionForm {
     public void setActivo(boolean activo) {
         this.activo = activo;
     }
-    
+
     public void setId() {
         Entity eId = new Entity(0, 1);
-        
+
         String[] seleccionar = {ATRIBUTOS[0]};
-        
+
         String[] columnas = {
             ATRIBUTOS[1],
             ATRIBUTOS[8]
         };
-        
+
         Object[] valores = {
             nombreTipo,
             activo
         };
-        
+
         ResultSet rs = eId.proyectar(seleccionar, columnas, valores);
-        if(rs != null){
+        if (rs != null) {
             try {
-                if(rs.next()){
-                        this.id = rs.getInt(ATRIBUTOS[0]);
+                if (rs.next()) {
+                    this.id = rs.getInt(ATRIBUTOS[0]);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }       
+            }
         }
     }
 
@@ -249,8 +249,9 @@ public class TipoActividad extends ActionForm {
             };
 
             if (resp = e.insertar2(aInsertar, valores)) {
+                activo = resp;
                 this.setId();
-                System.out.println("Ya inserte el tipo de Actividad");
+                System.out.println("Ya inserte el tipo de Actividad con ID " + id);
                 Iterator it = campos.iterator();
                 System.out.println("Creo el iterador");
                 while (it.hasNext() && resp) {
@@ -260,8 +261,10 @@ public class TipoActividad extends ActionForm {
                     if (!resp) {
                         System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
                         this.eliminarTipoActividad();
-        }
-    }
+                    }
+                }
+                //llamada a metodo que inserta en la tabla tiene permiso los string del 
+                // arreglo permiso
             } else {
                 this.eliminarTipoActividad();
             }
@@ -279,7 +282,7 @@ public class TipoActividad extends ActionForm {
 
             return true;
         } else {
-            
+
             return false;
         }
 
@@ -298,7 +301,7 @@ public class TipoActividad extends ActionForm {
                     t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
                     t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
                     t.setDescripcion(rs.getString(ATRIBUTOS[3]));
-                    
+
                     tipos.add(t);
                 }
             } catch (SQLException ex) {
@@ -350,9 +353,9 @@ public class TipoActividad extends ActionForm {
             System.out.println("\n\n\nExito");
         } else {
             System.out.println("\n\n\nFracaso");
-    }
+        }
 //        t.eliminarTipoActividad();
 
 
-}
+    }
 }
