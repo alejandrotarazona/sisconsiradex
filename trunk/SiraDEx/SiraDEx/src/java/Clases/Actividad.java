@@ -345,9 +345,9 @@ public class Actividad extends ActionForm {
 
             while (resp &= itParticipantes.hasNext()) {
                 String participa = (String) itParticipantes.next();
-                String id = String.valueOf( this.idActividad );
-                String[] tuplaInsertar = {id , participa};
-                
+                String id = String.valueOf(this.idActividad);
+                String[] tuplaInsertar = {id, participa};
+
                 resp &= ePariticipa.insertar2(columnas2, tuplaInsertar);
             }
         }

@@ -70,6 +70,8 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        ArrayList tiposAct = Clases.TipoActividad.listarTiposActividad();
+        request.setAttribute("tipos", tiposAct);
         TipoActividad t = (TipoActividad) form;
         t.setMensaje("");
         return mapping.findForward(PAGE);
