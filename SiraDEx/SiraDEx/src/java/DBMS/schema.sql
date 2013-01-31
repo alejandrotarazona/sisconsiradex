@@ -21,13 +21,15 @@ WITH (
 );
 
 CREATE TABLE USUARIO(
-    usbid             VARCHAR(20) NOT NULL,
-    password            VARCHAR(20) NOT NULL,
-    tipo                INT NOT NULL,
-    nombre              VARCHAR(20),
-    apellido            VARCHAR(20),
-    email               VARCHAR(20),
-    telefono            VARCHAR(15),
+    usbid       VARCHAR(20) NOT NULL,
+    password    VARCHAR(20) NOT NULL,
+    rol         VARCHAR(4),
+    tipo        INT,
+    nombre      VARCHAR(20),
+    apellido    VARCHAR(20),
+    telefono    VARCHAR(15),
+    email       VARCHAR(20),
+    
 
 CONSTRAINT PK_usbid PRIMARY KEY (usbid),
 CONSTRAINT FK_usuario__permiso 
@@ -44,11 +46,11 @@ WITH (
 CREATE TABLE TIPO_ACTIVIDAD(
     id_tipo_actividad       SERIAL PRIMARY KEY,
     nombre_tipo_actividad   VARCHAR(140) NOT NULL,
-    tipo_p_r                VARCHAR(1),
+    tipo_p_r                VARCHAR(1) NOT NULL,
     nro_campos              SMALLINT NOT NULL,
     descripcion             VARCHAR(2000) NOT NULL,
-    programa                INT NOT NULL,
-    validador               INT NOT NULL,
+    programa                VARCHAR(140) NOT NULL,
+    validador               VARCHAR(140) NOT NULL,
     producto                VARCHAR(50),
     activo                  BOOLEAN DEFAULT TRUE
     

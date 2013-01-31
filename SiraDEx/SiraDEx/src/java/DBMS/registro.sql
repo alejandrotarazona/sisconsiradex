@@ -46,11 +46,11 @@ INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
 
 --Usuarios
-INSERT INTO usuario VALUES ('05-38199', '123456', 1, 'Jorge', 'García', '05-38199@usb.ve', '04141360451');
-INSERT INTO usuario VALUES ('07-41618', 'diana', 2, 'Diana', 'Vainberg', '07-41618@usb.ve', null);
-INSERT INTO usuario VALUES ('jf', 'jf', 3, 'Jose', 'Fernandez', 'jf@usb.ve', '04125555555');
-INSERT INTO usuario VALUES ('kdoming', 'kdoming',4, 'Kenyer', 'Dominguez', 'kdoming@usb.ve', null);
-INSERT INTO usuario VALUES ('07-10000', 'pedro', 4, 'Pedro', 'Perez', 'pedroperez@usb.ve', null);
+INSERT INTO usuario VALUES ('05-38199', '123456', 'WM', 1, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
+INSERT INTO usuario VALUES ('07-41618', 'diana', 'CU', 2, 'Diana', 'Vainberg', null, '07-41618@usb.ve');
+INSERT INTO usuario VALUES ('jf', 'jf', 'CU', 3, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
+INSERT INTO usuario VALUES ('kdoming', 'kdoming', 'Prof',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
+INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',4, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');
 
 --Catalogo
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Coordinaciones', 2);
@@ -95,8 +95,8 @@ INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (10, 2);
 
 --Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
 --Valores para los nombres de las coordinaciones (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,1,'Coordinacion de Computacion y Tecnologia de la Informacion');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,2,'Coordinacion de Cooperacion Tecnica y Desarrollo Social');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,1,'Coordinacion de Igualdad de Oportunidades');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (1,2,'Coordinacion de Cooperacion Tecnica');
 --INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,1,'BPDex');
 --INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,1,'Funindes USB');
 --INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,1,'Coordinacion de Educacion Permanente');

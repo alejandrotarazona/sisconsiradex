@@ -16,7 +16,7 @@
                 <div class="content">
                     <ul class="menu">
                         <logic:present name="user">
-                            <logic:equal name="user" property="tipo" value="DEx">
+                            <logic:equal name="user" property="rol" value="DEx">
 
                                 <li><html:link action="/AGestionTiposActividad"> 
                                         Gestionar tipos de actividad 
@@ -34,21 +34,21 @@
                                     </html:link></li><br/>  
                                 </logic:equal>
 
-                            <logic:equal name="user" property="tipo" value="Prof">
+                            <logic:equal name="user" property="rol" value="Prof">
                                 <li><html:link action="/AGestionActividad"> 
                                         Gestionar mis actividades
                                     </html:link></li>
                                 <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Mostrar productividad individual</a></li>
                             </logic:equal>  
 
-                            <logic:equal name="user" property="tipo" value="WM">
+                            <logic:equal name="user" property="rol" value="WM">
 
                                 <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Consultar log</a></li>
                                 <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar backup</a></li>
                                 <li><a href="http://localhost:8080/SiraDEXS1/construccion.html">Gestionar roles</a></li>
                             </logic:equal> 
 
-                            <logic:equal name="user" property="tipo" value="CU">
+                            <logic:equal name="user" property="rol" value="CU">
                                 <li><html:link action="/AGestionActividad"> 
                                         Gestionar mis actividades
                                     </html:link></li>

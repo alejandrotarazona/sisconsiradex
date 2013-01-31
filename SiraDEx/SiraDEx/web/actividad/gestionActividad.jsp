@@ -21,7 +21,7 @@
             <bean:write name="actividadForm" property="mensaje" /><br/>
         </logic:present>
             
-        <logic:equal name="user" property="tipo" value="DEx">
+        <logic:equal name="user" property="rol" value="DEx">
             <html:link action="/ColeccionActividad"> 
                 Ver actividades
             </html:link><br/>
@@ -39,7 +39,7 @@
             </html:link> 
         </logic:equal>
                 
-        <logic:equal name="user" property="tipo" value="CU">
+        <logic:equal name="user" property="rol" value="CU">
             <html:link action="/ColeccionMisActividades"> 
                 Ver mis actividades
             </html:link><br/>  
@@ -53,7 +53,7 @@
             </html:link>       
         </logic:equal>
                 
-        <logic:equal name="user" property="tipo" value="Prof">
+        <logic:equal name="user" property="rol" value="Prof">
             <html:link action="/ColeccionMisActividades"> 
                 Ver mis actividades
             </html:link><br/>  

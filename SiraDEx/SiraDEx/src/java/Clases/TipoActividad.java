@@ -23,7 +23,7 @@ public class TipoActividad extends ActionForm {
     private String tipoPR;
     private int nroCampos;
     private String descripcion;
-    private ArrayList permiso;
+    private String[] permiso;
     private String programa;
     private String validador;
     private String producto;
@@ -116,11 +116,11 @@ public class TipoActividad extends ActionForm {
         this.tipoPR = tipoPR;
     }
 
-    public ArrayList getPermiso() {
+    public String[] getPermiso() {
         return permiso;
     }
 
-    public void setPermiso(ArrayList permiso) {
+    public void setPermiso(String[] permiso) {
         this.permiso = permiso;
     }
 
@@ -222,7 +222,15 @@ public class TipoActividad extends ActionForm {
         Entity e = new Entity(1, 1);
         boolean resp = true;
 
-        Object[] valores = {nombreTipo, nroCampos, descripcion};
+        Object[] valores = {
+            nombreTipo,
+            tipoPR,
+            nroCampos,
+            descripcion,
+            programa,
+            validador,
+            producto
+        };
         if (resp &= esTipoActividad()) {
             this.mensaje = "No se puede registrar el tipo de actividad."
                     + "Ya existe un tipo de actividad de nombre '"
@@ -233,7 +241,11 @@ public class TipoActividad extends ActionForm {
             String[] aInsertar = {
                 ATRIBUTOS[1],
                 ATRIBUTOS[2],
-                ATRIBUTOS[3]
+                ATRIBUTOS[3],
+                ATRIBUTOS[4],
+                ATRIBUTOS[5],
+                ATRIBUTOS[6],
+                ATRIBUTOS[7]
             };
 
             if (resp = e.insertar2(aInsertar, valores)) {
