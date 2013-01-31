@@ -44,12 +44,11 @@
 <tr>
 <td>Programa del tipo de actividad<span style="color:red">*</span> </td>
 <td>
-    <html:select property="id_programa" styleId="styleSelect">
+    <html:select property="programa" styleId="styleSelect">
         <html:option value="">Seleccione un programa...</html:option>
-        <html:options
-            collection="programas"
-            property="id_programa"
-            labelProperty="nombre_programa"/>
+        <html:optionsCollection name="programas"
+            label="nombre"
+            value="id_programa"/>
     </html:select>
 </td>
 </tr>

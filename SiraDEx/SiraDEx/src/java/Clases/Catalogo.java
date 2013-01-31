@@ -23,7 +23,7 @@ public class Catalogo extends ActionForm {
     private int idCatalogo;
     private String nombre;
     private int nroCampos;
-    private ArrayList<Campo> campos;
+    private ArrayList<CampoCatalogo> campos;
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
@@ -37,28 +37,9 @@ public class Catalogo extends ActionForm {
 
     };
     
-    /*private ArrayList<Elementos>    elementosCatalogo;
+    private ArrayList<ElementoCatalogo>    elementosCatalogo;
     
-    private class Elementos{
-        ArrayList<String> valores;
-
-        public Elementos() {
-        }
-
-        public Elementos(ArrayList<String> valores) {
-            this.valores = valores;
-        }
-
-        public ArrayList<String> getValores() {
-            return valores;
-        }
-
-        public void setValores(ArrayList<String> valores) {
-            this.valores = valores;
-        }
-    }*/
-    
-    public static String[] getTiposCampos() {
+   public static String[] getTiposCampos() {
         return tiposCampos;
     }
     
@@ -75,6 +56,30 @@ public class Catalogo extends ActionForm {
         return idCatalogo;
     }
 
+    public void setIdCatalogo(){
+        Entity eId = new Entity(0,8);
+        try {
+            String[] proyectar = {ATRIBUTOS[0]};
+            String[] columnas = {
+                "nombre"
+            };
+            Object[] valores = {
+              this.nombre  
+            };
+            ResultSet rs = eId.proyectar(proyectar, columnas, valores);
+            
+            if(rs.next()){
+                try {
+                    this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    };
+    
     public void setIdCatalogo(int idCatalogo) {
         this.idCatalogo = idCatalogo;
     }
@@ -95,17 +100,47 @@ public class Catalogo extends ActionForm {
         this.nroCampos = nroCampos;
     }
     
-    public ArrayList<Campo> getCampos() {
+    public ArrayList<CampoCatalogo> getCampos() {
         return campos;
     }
 
-    public void setCampos(ArrayList<Campo> campos) {
+    public void setCampos(ArrayList<CampoCatalogo> campos) {
         this.campos = campos;
     }
 
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + ", idCatalogo=" + idCatalogo + '}';
+    }
+    
+    public boolean agregar(){
+        Entity eCatalogo = new Entity(1,8);
+        boolean resp = true;
+        
+        String[] columnas = {
+            "nombre",
+            "nro_campos"
+        };
+        Integer nCampos = new Integer (this.nroCampos);
+        Object[] valores = {
+            this.nombre,
+            nCampos
+        };
+        
+        resp &= eCatalogo.insertar2(columnas, ATRIBUTOS);
+        if(resp){
+            setIdCatalogo();
+        } else {
+            return resp;
+        }
+        Iterator itCampos = this.campos.iterator();
+        
+        while(itCampos.hasNext() && resp){
+            CampoCatalogo cC = (CampoCatalogo) itCampos.next();
+            resp &= cC.agregarCampo(idCatalogo);
+        }       
+        
+        return resp;
     }
     
     /*Lo siguiente lo saqué de TipoActividad.java falta adaptarlo a Catalogo,

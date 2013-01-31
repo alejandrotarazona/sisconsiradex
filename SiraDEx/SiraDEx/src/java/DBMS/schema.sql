@@ -135,15 +135,8 @@ WITH (
 
 CREATE TABLE CATALOGO(
     id_cat      SERIAL PRIMARY KEY,
-    id_campo    INT NOT NULL,
     nombre      VARCHAR(20) NOT NULL,
-    nro_campos  INT NOT NULL,
-
-CONSTRAINT FK_catalogo__campo
-            FOREIGN KEY(id_campo)
-            REFERENCES CAMPO
-            ON UPDATE CASCADE
-            ON DELETE CASCADE
+    nro_campos  INT NOT NULL
 );
 
 CREATE TABLE VALOR(
