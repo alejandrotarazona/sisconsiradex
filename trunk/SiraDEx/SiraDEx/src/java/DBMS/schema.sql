@@ -180,8 +180,6 @@ CREATE TABLE CAMPO_CATALOGO(
     id_cat          INT NOT NULL,
     nombre_campo    VARCHAR(100) NOT NULL,
     tipo_campo      VARCHAR(16) NOT NULL,
-    longitud        INT,
-    obligatorio     BOOLEAN,
 
 CONSTRAINT FK_campo_catalogo__catalogo 
             FOREIGN KEY (id_cat) 

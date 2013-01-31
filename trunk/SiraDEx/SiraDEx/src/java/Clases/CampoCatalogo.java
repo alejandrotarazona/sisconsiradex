@@ -5,6 +5,9 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  *
@@ -30,9 +33,24 @@ public class CampoCatalogo {
 
     public CampoCatalogo() {
     }
+    
+    public static CampoCatalogo leer() throws IOException{
+        CampoCatalogo resp;
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        
+        System.out.println("Introduzca el nombre del campo:");
+        String name = br.readLine();
+        System.out.println("");
+        System.out.println("Introduzca el tipo del campo: ");
+        String type = br.readLine();
+        System.out.println("");
+        
+        resp = new CampoCatalogo(name,type);
+        
+        return resp;
+    }
 
-    public CampoCatalogo(int idCampo, String nombre, String tipo, boolean obligatorio) {
-        this.idCampo = idCampo;
+    public CampoCatalogo(String nombre, String tipo) {
         this.nombre = nombre;
         this.tipo = tipo;
     }
@@ -63,9 +81,9 @@ public class CampoCatalogo {
 
     public boolean agregarCampo(int idCatalogo){
         boolean resp=true;
-        Entity eCampoCatalogo = new Entity(1,10);
+        Entity eCampoCatalogo = new Entity(1,9);
         String[] columnas = {
-            ATRIBUTOS[0],
+            ATRIBUTOS[1],
             ATRIBUTOS[2],
             ATRIBUTOS[3]
         };
