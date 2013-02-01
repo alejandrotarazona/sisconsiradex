@@ -82,8 +82,6 @@ WITH (
 CREATE TABLE ACTIVIDAD(
     id_actividad      SERIAL,
     id_tipo_actividad integer NOT NULL,
-    criterio          VARCHAR(13),
-    valor             VARCHAR(3),
     validacion        VARCHAR(12),
     creador           VARCHAR(20) NOT NULL,
     fecha_creacion    VARCHAR(20) NOT NULL,
