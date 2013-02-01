@@ -299,8 +299,13 @@ public class TipoActividad extends ActionForm {
                     TipoActividad t = new TipoActividad();
                     t.setId(rs.getInt(ATRIBUTOS[0]));
                     t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
-                    t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
-                    t.setDescripcion(rs.getString(ATRIBUTOS[3]));
+                    t.setTipoPR(rs.getString(ATRIBUTOS[2]));
+                    t.setNroCampos(rs.getInt(ATRIBUTOS[3]));
+                    t.setDescripcion(rs.getString(ATRIBUTOS[4]));
+                    t.setPrograma(rs.getString(ATRIBUTOS[5]));
+                    t.setValidador(rs.getString(ATRIBUTOS[6]));
+                    t.setProducto(rs.getString(ATRIBUTOS[7]));
+                    t.setActivo(rs.getBoolean(ATRIBUTOS[8]));
 
                     tipos.add(t);
                 }
@@ -341,6 +346,7 @@ public class TipoActividad extends ActionForm {
         //t.agregarTipoActividad();
 
         TipoActividad t = new TipoActividad("prueba1", 2, "pasantia");
+        t.setTipoPR("p");
         ArrayList<Campo> cs = new ArrayList<Campo>();
 
         Campo c0 = new Campo("Nombre", "texto", 16, true);

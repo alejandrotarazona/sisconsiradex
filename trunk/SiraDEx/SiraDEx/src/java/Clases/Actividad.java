@@ -25,8 +25,6 @@ public class Actividad extends ActionForm {
     private int idActividad;
     private int idTipoActividad;
     private String nombreTipoActividad;
-    private String criterio;
-    private String valor;
     private String validacion;
     private String creador;
     private String fechaCreacion;
@@ -38,8 +36,8 @@ public class Actividad extends ActionForm {
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
-        "criterio", //2
-        "valor", //3
+        "", //2
+        "", //3
         "validacion", //4
         "creador", //5
         "fecha_creacion",//6
@@ -52,10 +50,9 @@ public class Actividad extends ActionForm {
         "USUARIO" //2
     };
 
-    public Actividad(int idActividad, String validacion, String criterioEval,
+    public Actividad(int idActividad, String validacion,
             String evaluacion) {
         this.idActividad = idActividad;
-        this.criterio = criterioEval;
         this.validacion = validacion;
     }
 
@@ -86,13 +83,6 @@ public class Actividad extends ActionForm {
         this.nombreTipoActividad = nombreTipoActividad;
     }
 
-    public String getCriterio() {
-        return criterio;
-    }
-
-    public void setCriterio(String criterio) {
-        this.criterio = criterio;
-    }
 
     public String getValidacion() {
         return validacion;
@@ -122,13 +112,6 @@ public class Actividad extends ActionForm {
         this.mensaje = mensaje;
     }
 
-    public String getValor() {
-        return valor;
-    }
-
-    public void setValor(String valor) {
-        this.valor = valor;
-    }
 
     public String getCreador() {
         return creador;
@@ -280,8 +263,6 @@ public class Actividad extends ActionForm {
 
         String[] columnas = {
             "id_tipo_actividad",
-            "criterio",
-            "valor",
             "validacion",
             "creador",
             "fecha_creacion",
@@ -291,8 +272,6 @@ public class Actividad extends ActionForm {
 
         Object[] actividad = {
             idTipoActividad,
-            criterio,
-            valor,
             validacion,
             creador,
             fechaCreacion,
@@ -379,10 +358,6 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-
-                    a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
@@ -428,10 +403,6 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-
-                    a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
-
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
@@ -471,10 +442,6 @@ public class Actividad extends ActionForm {
 
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-
-                    a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-
-                    a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
 
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
@@ -523,10 +490,6 @@ public class Actividad extends ActionForm {
 
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-
-                    a.setCriterio(rs.getString(Actividad.ATRIBUTOS[2]));
-
-                    a.setValor(rs.getString(Actividad.ATRIBUTOS[3]));
 
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
 

@@ -115,7 +115,8 @@ public class Campo {
     public boolean agregarCampo(int idTipoActividad) {
         System.out.println("Agrego un Campo");
         Entity e = new Entity(1, 3);
-        Object[] valores = {idTipoActividad, nombre, tipo, longitud, obligatorio};
+        Integer idTA = new Integer(idTipoActividad);
+        Object[] valores = {idTA, nombre, tipo, longitud, obligatorio};
         String[] columnas = {
             ATRIBUTOS[1],
             ATRIBUTOS[2],

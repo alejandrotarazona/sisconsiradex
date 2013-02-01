@@ -89,7 +89,6 @@ public class Agregar extends DispatchAction {
                     + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
-        t.eliminarTipoActividad();
         return mapping.findForward(FAILURE);
 
 
