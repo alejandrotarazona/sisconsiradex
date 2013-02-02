@@ -112,17 +112,18 @@ public class CampoCatalogo {
     public boolean agregarCampo(int idCatalogo){
         boolean resp=true;
         Entity eCampoCatalogo = new Entity(1,9);
-        String[] columnas = {
-            ATRIBUTOS[1],
-            ATRIBUTOS[2],
-            ATRIBUTOS[3]
-        };
         Integer idCat = new Integer(idCatalogo);
         Object[] valores = {
             idCat,
             nombre,
             tipo
         };
+        String[] columnas = {
+            ATRIBUTOS[1],
+            ATRIBUTOS[2],
+            ATRIBUTOS[3]
+        };
+        
         resp &= eCampoCatalogo.insertar2(columnas, valores);
         
         return resp;
