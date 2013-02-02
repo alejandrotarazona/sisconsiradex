@@ -10,7 +10,7 @@ import java.util.Iterator;
 
 /**
  *
- * @author alejandro
+ * @author SisCon
  */
 public class ElementoCatalogo {
     private int                             idCatalogo;
@@ -65,5 +65,10 @@ public class ElementoCatalogo {
         }
         
         return resp;        
+    }
+    
+    public boolean eliminar() {
+        Entity e = new Entity(5, 10);
+        return e.borrar("idElemento", idElemento);
     }
 }
