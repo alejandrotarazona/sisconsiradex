@@ -8,6 +8,11 @@ import DBMS.Entity;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -16,6 +21,7 @@ import java.io.InputStreamReader;
 public class CampoCatalogo {
     
     private int     idCampo;
+    private int     idCatalogo;
     private String  nombre;
     private String  tipo;
     
@@ -59,6 +65,30 @@ public class CampoCatalogo {
         return idCampo;
     }
 
+    public int getIdCatalogo() {
+        return idCatalogo;
+    }
+
+    public void setIdCatalogo(int idCatalogo) {
+        this.idCatalogo = idCatalogo;
+    }
+
+    public static String[] getTABLAS() {
+        return TABLAS;
+    }
+
+    public static void setTABLAS(String[] TABLAS) {
+        CampoCatalogo.TABLAS = TABLAS;
+    }
+
+    public static String[] getATRIBUTOS() {
+        return ATRIBUTOS;
+    }
+
+    public static void setATRIBUTOS(String[] ATRIBUTOS) {
+        CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
+    }
+
     public void setIdCampo(int idCampo) {
         this.idCampo = idCampo;
     }
@@ -94,6 +124,39 @@ public class CampoCatalogo {
             tipo
         };
         resp &= eCampoCatalogo.insertar2(columnas, valores);
+        
+        return resp;
+    }
+    
+    public static ArrayList<CampoCatalogo> listar(int idCat){
+        ArrayList<CampoCatalogo> resp = new ArrayList<CampoCatalogo>(0);
+        Entity eListar = new Entity(0, 9);
+        
+        String[] columnas = {
+            ATRIBUTOS[1]
+        };
+        Integer idBuscar = new Integer(idCat);
+        Object[] valores = {
+            idBuscar
+        };
+        
+        ResultSet rs = eListar.seleccionar(columnas, valores);
+        
+         if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CampoCatalogo t = new CampoCatalogo();
+                    t.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    t.setIdCatalogo(idCat);
+                    t.setNombre(rs.getString(ATRIBUTOS[2]));
+                    t.setTipo(rs.getString(ATRIBUTOS[3]));
+                    
+                    resp.add(t);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
         
         return resp;
     }

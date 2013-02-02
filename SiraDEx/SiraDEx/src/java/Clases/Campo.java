@@ -5,12 +5,13 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.Serializable;
 
 /**
  *
  * @author SisCon
  */
-public class Campo {
+public class Campo implements Serializable {
     private int idCampo;
     private int idTipoActividad;
     private String nombre;
