@@ -4,11 +4,14 @@
  */
 package Clases;
 
+import java.io.Serializable;
+
 /**
  *
  * @author SisCon
  */
-public class CampoValor {
+public class CampoValor implements Serializable {
+    
     private Campo campo;
     private String valor;
 

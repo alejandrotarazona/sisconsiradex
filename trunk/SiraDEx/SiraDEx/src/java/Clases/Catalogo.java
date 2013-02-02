@@ -36,6 +36,11 @@ public class Catalogo extends ActionForm {
         "numero", //INT
         "fecha", //DATE
     };
+    public static String[] TABLAS = {
+        "CATALOGO", //0
+        "CAMPOCATALOGO", //1
+        "ELEMENTO" //3
+    };
 
     public static String[] getTiposCampos() {
         return tiposCampos;
@@ -133,6 +138,29 @@ public class Catalogo extends ActionForm {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
     }
 
+    public boolean esCatalogo() {
+        boolean resp = true;
+
+        try {
+            Entity e = new Entity(0, 8);
+
+            String[] atrib = {ATRIBUTOS[1]};
+            String[] valor = {nombre};
+            ResultSet rs = e.seleccionar(atrib, valor);
+            if (rs != null) {
+                while (rs.next()) {
+                    if (rs.getString(ATRIBUTOS[1]).equals(nombre)) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public boolean agregar() {
         Entity eCatalogo = new Entity(1, 8);
         boolean resp = true;
@@ -147,21 +175,48 @@ public class Catalogo extends ActionForm {
             nCampos
         };
 
-        resp &= eCatalogo.insertar2(columnas, valores);
-        if (resp) {
-            setIdCatalogo();
-            Iterator itCampos = this.campos.iterator();
-
-            while (itCampos.hasNext() && resp) {
-                CampoCatalogo cC = (CampoCatalogo) itCampos.next();
-                resp &= cC.agregarCampo(idCatalogo);
-            }
+        if (resp &= this.esCatalogo()) {
+            return false;
         } else {
-            return resp;
+            resp = true;
+            resp &= eCatalogo.insertar2(columnas, valores);
+            if (resp) {
+                setIdCatalogo();
+                Iterator itCampos = this.campos.iterator();
+
+                while (itCampos.hasNext() && resp) {
+                    CampoCatalogo cC = (CampoCatalogo) itCampos.next();
+                    resp &= cC.agregarCampo(idCatalogo);
+                }
+            } else {
+                return resp;
+            }
         }
 
 
         return resp;
+    }
+
+    public static ArrayList<Catalogo> listarCatalogos() {
+        Entity eListar = new Entity(0, 8);
+        ResultSet rs = eListar.listar();
+        ArrayList<Catalogo> tipos = new ArrayList<Catalogo>(0);
+
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Catalogo t = new Catalogo();
+                    t.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
+                    t.setNombre(rs.getString(ATRIBUTOS[1]));
+                    t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
+
+                    tipos.add(t);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return tipos;
     }
 
     public static void main(String[] args) throws IOException {

@@ -291,7 +291,7 @@ public class Actividad extends ActionForm {
             CampoValor v = (CampoValor) itValores.next();
             Campo campoVerif = (Campo) v.getCampo();
             String valorVerif = (String) v.getValor();
-            resp &= checkValorCampo(campoVerif, valorVerif);
+            resp &= true; //checkValorCampo(campoVerif, valorVerif);
         }
 
         if (resp = e.insertar2(columnas, actividad)) {
