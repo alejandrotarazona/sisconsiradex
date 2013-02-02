@@ -23,7 +23,7 @@ public class Campo implements Serializable {
         "texto",   //STRING
         "numero",  //INT
         "fecha",   //DATE
-        "hora",    //TIME
+        "archivo", //ARCHIVO
         "checkbox",//CHECKBOX
     };
 
@@ -117,7 +117,13 @@ public class Campo implements Serializable {
         System.out.println("Agrego un Campo");
         Entity e = new Entity(1, 3);
         Integer idTA = new Integer(idTipoActividad);
-        Object[] valores = {idTA, nombre, tipo, longitud, obligatorio};
+        Object[] valores = {
+            idTA,
+            nombre,
+            tipo,
+            longitud,
+            obligatorio
+        };
         String[] columnas = {
             ATRIBUTOS[1],
             ATRIBUTOS[2],
