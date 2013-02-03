@@ -124,6 +124,9 @@
             <forward name="failure" path="eliminarActividad"/>
             <forward name="page" path="eliminarActividad"/>
         </action>
+        <action input="/" name="usuarioForm" path="/ListarCatalogos" scope="session" type="Catalogo.Listar"/>
+        <action input="/" name="usuarioForm" path="/EliminarCatalogo" scope="session" type="Catalogo.Eliminar"/>
+        <action input="/" name="usuarioForm" path="/AgregarCatalogo" scope="session" type="Catalogo.Agregar"/>
         <action input="/" name="usuarioForm" path="/Usuarios" scope="session" type="Usuarios.Entrar"/>
           
         <action path="/Welcome" forward="paginaInicial"/> 
