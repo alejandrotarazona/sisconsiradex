@@ -26,8 +26,7 @@ public class Catalogo extends ActionForm {
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
-    private String mensaje = "";
-
+    private String mensaje;
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
@@ -73,13 +72,6 @@ public class Catalogo extends ActionForm {
         return resp;
     }
     
-        public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
 
     public Catalogo(String nombre, int nroCampos) {
         this.nombre = nombre;
@@ -144,6 +136,14 @@ public class Catalogo extends ActionForm {
         this.campos = campos;
     }
 
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
