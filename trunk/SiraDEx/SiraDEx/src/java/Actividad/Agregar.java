@@ -56,7 +56,7 @@ public class Agregar extends DispatchAction {
 
         Actividad a = (Actividad) form;
         
-        ArrayList<CampoValor> valores = a.listarCampos();
+        ArrayList<CampoValor> valores = Clases.CampoValor.listar(a.getIdTipoActividad());
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");

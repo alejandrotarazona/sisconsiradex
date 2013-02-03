@@ -130,7 +130,7 @@ public class CampoCatalogo {
     }
     
     public static ArrayList<CampoCatalogo> listar(int idCat){
-        ArrayList<CampoCatalogo> resp = new ArrayList<CampoCatalogo>(0);
+        ArrayList<CampoCatalogo> resp = new ArrayList<>(0);
         Entity eListar = new Entity(0, 9);
         
         String[] columnas = {

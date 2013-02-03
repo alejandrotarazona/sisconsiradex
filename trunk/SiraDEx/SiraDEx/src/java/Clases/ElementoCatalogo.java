@@ -113,8 +113,8 @@ private static String[] ATRIBUTOS = {
 
                     String[] nombreCat = {"nombre"};
                     String[] idCat = {"id_cat"};
-                    Integer[] idAct = {id};
-                    ResultSet r = eCatalogo.proyectar(nombreCat, idCat, idAct);
+                    Integer[] idElem = {id};
+                    ResultSet r = eCatalogo.proyectar(nombreCat, idCat, idElem);
                     r.next();
                     ec.setCatalogo(r.getString(1));
 
