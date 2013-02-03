@@ -229,34 +229,6 @@ public class Actividad extends ActionForm {
         return resp;
     }
 
-    public ArrayList<CampoValor> listarCampos() {
-        ArrayList<CampoValor> listaValor = new ArrayList<CampoValor>(0);
-        Entity eCampo = new Entity(0, 3);
-        String[] columnas = {Actividad.ATRIBUTOS[1]};
-        Integer[] condiciones = {idTipoActividad};
-
-        ResultSet rs = eCampo.seleccionar(columnas, condiciones);
-
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Campo c = new Campo();
-                    c.setIdCampo(rs.getInt("id_campo"));
-                    c.setIdTipoActividad(rs.getInt("id_tipo_actividad"));
-                    c.setNombre(rs.getString("nombre_campo"));
-                    c.setTipo(rs.getString("tipo_campo"));
-                    c.setLongitud(rs.getInt("longitud"));
-                    c.setObligatorio(rs.getBoolean("obligatorio"));
-                    CampoValor cv = new CampoValor(c);
-                    listaValor.add(cv);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return listaValor;
-    }
-
     public boolean agregarActividad() {
         Entity e = new Entity(1, 2);
         boolean resp;
@@ -341,7 +313,7 @@ public class Actividad extends ActionForm {
     }
 
     public static ArrayList<Actividad> listarActividades() {
-        ArrayList<Actividad> listaActividad = new ArrayList<Actividad>(0);
+        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
 
         ResultSet rs = eActividad.listar();
@@ -386,7 +358,7 @@ public class Actividad extends ActionForm {
     }
 
     public ArrayList<Actividad> listarActividadesDeTipo() {
-        ArrayList<Actividad> listaActividad = new ArrayList<Actividad>(0);
+        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
         String[] columna = {Actividad.ATRIBUTOS[1]};
         Integer[] condicion = {idTipoActividad};
@@ -424,7 +396,7 @@ public class Actividad extends ActionForm {
     }
 
     public ArrayList<Actividad> listarActividadesDeUsuario() {
-        ArrayList<Actividad> listaActividad = new ArrayList<Actividad>(0);
+        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
         String[] columna = {Actividad.ATRIBUTOS[5]};
         String[] condicion = {this.creador};

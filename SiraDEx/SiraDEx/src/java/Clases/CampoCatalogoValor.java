@@ -5,15 +5,19 @@
 package Clases;
 
 import DBMS.Entity;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
- * @author alejandro
+ * @author SisCon
  */
 public class CampoCatalogoValor {
 
-    private int campo;
-    private int elemento;
+    private CampoCatalogo campo;
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
@@ -28,20 +32,17 @@ public class CampoCatalogoValor {
     public CampoCatalogoValor() {
     }
 
-    public int getCampo() {
+    
+    public CampoCatalogoValor(CampoCatalogo campo) {
+        this.campo = campo;
+    }
+    
+    public CampoCatalogo getCampo() {
         return campo;
     }
 
-    public void setCampo(int campo) {
+    public void setCampo(CampoCatalogo campo) {
         this.campo = campo;
-    }
-
-    public int getElemento() {
-        return elemento;
-    }
-
-    public void setElemento(int elemento) {
-        this.elemento = elemento;
     }
 
     public String getValor() {
@@ -58,13 +59,39 @@ public class CampoCatalogoValor {
         Entity eValor = new Entity(1,9);
         Object[] valores = {
           campo,
-          elemento,
           valor
         };
         
         resp = eValor.insertar2(ATRIBUTOS, valores);
         
         return resp;
+    }
+    
+    public static ArrayList<CampoCatalogoValor> listar(int idCatalogo) {
+        ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
+        Entity eCampo = new Entity(0, 9);
+        String[] columnas = {"id_cat"};
+        Integer[] condiciones = {idCatalogo};
+
+        ResultSet rs = eCampo.seleccionar(columnas, condiciones);
+
+        if (rs != null) { 
+            try {
+                while (rs.next()) {
+                    CampoCatalogo c = new CampoCatalogo();
+                    c.setIdCampo(rs.getInt("id_campo"));
+                    c.setIdCatalogo(rs.getInt("id_cat"));
+                    c.setNombre(rs.getString("nombre_campo"));
+                    c.setTipo(rs.getString("tipo_campo"));
+      
+                    CampoCatalogoValor cv = new CampoCatalogoValor(c);
+                    listaValor.add(cv);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listaValor;
     }
     
 }

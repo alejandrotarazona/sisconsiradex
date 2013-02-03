@@ -211,7 +211,7 @@ public class Catalogo extends ActionForm {
     public static ArrayList<Catalogo> listar() {
         Entity eListar = new Entity(0, 8);
         ResultSet rs = eListar.listar();
-        ArrayList<Catalogo> tipos = new ArrayList<Catalogo>(0);
+        ArrayList<Catalogo> tipos = new ArrayList<>(0);
 
         if (rs != null) {
             try {
