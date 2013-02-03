@@ -26,6 +26,8 @@ public class Catalogo extends ActionForm {
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
+    private String mensaje = "";
+
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
@@ -66,8 +68,17 @@ public class Catalogo extends ActionForm {
             CampoCatalogo cc = CampoCatalogo.leer();
             resp.campos.add(cc);
         }
+        
 
         return resp;
+    }
+    
+        public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
     }
 
     public Catalogo(String nombre, int nroCampos) {
@@ -197,7 +208,7 @@ public class Catalogo extends ActionForm {
         return resp;
     }
 
-    public static ArrayList<Catalogo> listarCatalogos() {
+    public static ArrayList<Catalogo> listar() {
         Entity eListar = new Entity(0, 8);
         ResultSet rs = eListar.listar();
         ArrayList<Catalogo> tipos = new ArrayList<Catalogo>(0);
@@ -217,6 +228,13 @@ public class Catalogo extends ActionForm {
             }
         }
         return tipos;
+    }
+    
+    public boolean eliminar(){
+        boolean resp = true;
+        Entity eEliminar = new Entity(5,8);
+        resp = eEliminar.borrar(ATRIBUTOS[0],this.idCatalogo);
+        return resp;
     }
 
     public static void main(String[] args) throws IOException {
