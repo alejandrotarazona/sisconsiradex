@@ -11,16 +11,18 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class ElementoCatalogo {
+public class ElementoCatalogo extends ActionForm {
     private int     idElemento;
     private int     idCatalogo;
     private String  catalogo;   
     private ArrayList<CampoCatalogoValor>   valor;
+    private String                          mensaje;
 
 private static String[] ATRIBUTOS = {
         "id_elemento", //1
@@ -63,6 +65,14 @@ private static String[] ATRIBUTOS = {
     }
     
   
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
     public boolean agregar(){
         Entity eElemento = new Entity(1,10);
         boolean resp = true;
