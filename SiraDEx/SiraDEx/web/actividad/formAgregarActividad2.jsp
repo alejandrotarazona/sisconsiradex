@@ -45,39 +45,39 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Registrar Actividad</h1>
-        
+
         <logic:present name="actividadForm" property="mensaje">
             <bean:write name="actividadForm" property="mensaje" /><br/>
         </logic:present>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
-        <table>           
-            <html:form action="/RegistrarActividad?method=save2">
-                
-                <logic:iterate name="actividadForm" property="camposValores" id="campoValor" indexId="index">
-                <tr>
-                <td><bean:write name="campoValor" property="campo.nombre"></bean:write>
-                    <logic:equal name="campoValor" property="campo.obligatorio" value="true">
-                    <span style="color:red">*</span>  
-                </logic:equal>
-            </td>
-            <td><logic:equal name="campoValor" property="campo.tipo" value="texto">
-                    <html:text name="campoValor" property="valor" indexed="true"/></td>  
-                </logic:equal>
-            
-                <logic:equal name="campoValor" property="campo.tipo" value="numero">
-                    <html:text name="campoValor" property="valor" indexed="true"/></td>  
-                </logic:equal>
-       
-                <logic:equal name="campoValor" property="campo.tipo" value="fecha">
-                    <span id="fecha_input"> <html:text property="valor" value="" /></span></td>  
-                </logic:equal>
+<table>           
+    <html:form action="/RegistrarActividad?method=save2">
 
-                <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
-                    <html:checkbox name="campoValor" property="valor" indexed="true"/></td>  
-                </logic:equal>
-                
-        </tr>
-    </logic:iterate>
+        <logic:iterate name="actividadForm" property="camposValores" id="campoValor" indexId="index">
+            <tr>
+            <td><bean:write name="campoValor" property="campo.nombre"></bean:write>
+                <logic:equal name="campoValor" property="campo.obligatorio" value="true">
+                <span style="color:red">*</span>  
+            </logic:equal>
+        </td>
+        <td><logic:equal name="campoValor" property="campo.tipo" value="texto">
+                <html:text name="campoValor" property="valor" indexed="true"/>  
+            </logic:equal>
+
+            <logic:equal name="campoValor" property="campo.tipo" value="numero">
+                <html:text name="campoValor" property="valor" indexed="true"/> 
+            </logic:equal>
+
+            <logic:equal name="campoValor" property="campo.tipo" value="fecha">
+            <span id="fecha_input"> <html:text name="campoValor" property="valor" indexed="true" /></span>  
+        </logic:equal>
+
+        <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
+            <html:checkbox name="campoValor" property="valor" indexed="true"/>
+        </logic:equal>
+    </td>  
+</tr>
+</logic:iterate>
 </table>
 <br>
 <html:submit>Registrar</html:submit>

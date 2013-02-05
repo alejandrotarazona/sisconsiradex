@@ -34,7 +34,7 @@ legend a.fieldset-title {
   color: #999;
 }
 .js fieldset.collapsible legend a {
-  background: url(../images/gray.png) no-repeat 0 -132px;
+  background: url(images/gray.png) no-repeat 0 -132px;
   padding-left: 20px;
   -moz-transition: color 0.3s linear;
   -webkit-transition: color 0.3s linear;
@@ -43,7 +43,7 @@ legend a.fieldset-title {
 .js fieldset.collapsible legend a:hover,
 .js fieldset.collapsible legend a:focus,
 .js fieldset.collapsible legend a:active {
-  background-image: url(../images/black.png);
+  background-image: url(images/black.png);
   color: #444;
 }
 .js fieldset.collapsed legend a {
@@ -140,7 +140,7 @@ input.form-submit,
 .form-actions a,
 .form-actions a:visited,
 .button, a.button, a.button:visited {
-  background: #e6e4e2 url(../images/ui/ui-bg_highlight-soft_90_e6e4e2_1x100.png) 50% 50% repeat-x;
+  background: #e6e4e2 url(images/ui-bg_highlight-soft_90_e6e4e2_1x100.png) 50% 50% repeat-x;
   border: 1px solid #e6e4e2;
   border-bottom-color: #bbb;
   border-right-color: #bbb;
@@ -164,7 +164,7 @@ input.form-submit:hover,
 a.button:hover,
 a.button:focus,
 a.button:active {
-  background: #d6d4d1 url(../images/ui/ui-bg_highlight-soft_50_d6d4d1_1x100.png) 50% 50% repeat-x;
+  background: #d6d4d1 url(images/ui-bg_highlight-soft_50_d6d4d1_1x100.png) 50% 50% repeat-x;
   border: 1px solid #e1dedb;
   border-bottom-color: #aaa;
   border-right-color: #aaa;
