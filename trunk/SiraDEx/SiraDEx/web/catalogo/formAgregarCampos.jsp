@@ -1,6 +1,6 @@
 <%-- 
     Document   : formAgregarCampos
-    Created on : 02/11/2012, 05:14:54 PM
+    Created on : 02/02/2013, 05:14:54 PM
     Author     : SisCon
 --%>
 
@@ -13,23 +13,21 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Campos del Tipo de Actividad</title>
+        <title>SiraDEx | Registrar Campos del Catálogo</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registrar Campos del Tipo de Actividad</h1>
-        <logic:present name="tipoActividadForm" property="mensaje">
-            <bean:write name="tipoActividadForm" property="mensaje" /><br/>
+        <h1 class="title" id="page-title">Registrar Campos del Catálogo</h1>
+        <logic:present name="catalogoForm" property="mensaje">
+            <bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
         <table>
             <tr>
             <td><b>Nombre</b></td>
             <td><b>Tipo</b></td>
-            <td><b>Longitud</b></td>
-            <td><b>Obligatoriedad</b></td>
         </tr>            
 
-        <html:form action="/RegistrarTipoActividad?method=save2">
-            <logic:iterate name="tipoActividadForm" property="campos" id="campo" indexId="index">
+        <html:form action="/RegistrarCatalogo?method=save2">
+            <logic:iterate name="catalogoForm" property="campos" id="campo" indexId="index">
                 <tr>
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>
 
@@ -39,8 +37,6 @@
                         <html:option value="fecha">fecha</html:option>
                         <html:option value="checkbox">checkbox</html:option>
                     </html:select></td>
-                <td><html:text name="campo" property="longitud" indexed="true"/></td>
-                <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
             </tr>
         </logic:iterate>
     </table>

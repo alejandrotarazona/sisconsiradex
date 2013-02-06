@@ -35,10 +35,6 @@
     <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
     </definition>
-                  
-    <definition name="coleccionUsuarios" extends="plantilla" >
-        <put name="body" value="/usuario/coleccionUsuarios.jsp" />
-    </definition>
         
     <definition name="agregarUsuario" extends="plantilla">
         <put name="body" value="/usuario/formAgregarUsuario.jsp" />
@@ -52,9 +48,6 @@
         <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
     </definition>
     
-    <definition name="coleccionTiposActividad" extends="plantilla" >
-        <put name="body" value="/tipoActividad/coleccionTiposActividad.jsp" />
-    </definition>
     
     <definition name="agregarTipoActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/formAgregarTipoActividad.jsp" />
@@ -70,10 +63,6 @@
  
     <definition name="gestionActividad" extends="plantilla">
         <put name="body" value="/actividad/gestionActividad.jsp" />
-    </definition>
-    
-    <definition name="coleccionActividad" extends="plantilla" >
-        <put name="body" value="/actividad/coleccionActividad.jsp" />
     </definition>
     
     <definition name="agregarActividad1" extends="plantilla">

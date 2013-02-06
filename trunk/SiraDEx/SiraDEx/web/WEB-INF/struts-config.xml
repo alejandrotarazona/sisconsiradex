@@ -37,14 +37,9 @@
             <forward name="success" path="sesionCerrada"/>
         </action>
 
-        <action path="/AGestionUsuarios" type="Usuarios.VerCatalogo"
+        <action path="/AGestionUsuarios" type="Usuarios.Listar"
                 scope="request" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
-        </action>
-        
-        <action path="/ColeccionUsuarios" type="Usuarios.Listar" scope="request" 
-                name="usuarioForm">
-            <forward name="success" path="coleccionUsuarios"/>
         </action>
         
         <action path="/RegistrarUsuario" type="Usuarios.Agregar" scope="request"
@@ -61,15 +56,11 @@
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
-        <action path="/AGestionTiposActividad" type="TiposActividad.VerCatalogo"
+        <action path="/AGestionTiposActividad" type="TiposActividad.Listar"
                 scope="request" name="tipoActividadForm">
             <forward name="success" path="gestionTiposActividad"/>
         </action>
        
-        <action path="/ColeccionTiposActividad" type="TiposActividad.Listar" 
-                scope="request" name="tipoActividadForm">
-            <forward name="success" path="coleccionTiposActividad"/>
-        </action>
         
         <action path="/RegistrarTipoActividad" type="TiposActividad.Agregar" 
                 scope="session" parameter="method" name="tipoActividadForm">
@@ -86,20 +77,10 @@
             <forward name="page" path="eliminarTipoActividad"/>
         </action>
         
-        
-        <action path="/ColeccionActividad" type="Actividad.ListarDex" 
-                scope="request" name="actividadForm">
-            <forward name="success" path="coleccionActividad"/>
-        </action>
-        
-        <action path="/ColeccionMisActividades" type="Actividad.ListarCU" 
-                scope="request" name="actividadForm">
-            <forward name="success" path="coleccionActividad"/>
-        </action>
-        
-        <action path="/AGestionActividad" type="Actividad.VerCatalogo"
-                scope="request" name="actividadForm">
-            <forward name="success" path="gestionActividad"/>
+        <action path="/AGestionActividad" type="Actividad.Listar"
+                scope="request" parameter="method" name="actividadForm">
+            <forward name="success1" path="gestionActividad"/>
+            <forward name="success2" path="gestionActividad"/>
         </action>
         
         <action path="/RegistrarActividad" type="Actividad.Agregar" 
@@ -123,10 +104,7 @@
             <forward name="failure" path="eliminarActividad"/>
             <forward name="page" path="eliminarActividad"/>
         </action>
-        <action input="/" name="usuarioForm" path="/ListarCatalogos" scope="session" type="Catalogo.Listar"/>
-        <action input="/" name="usuarioForm" path="/EliminarCatalogo" scope="session" type="Catalogo.Eliminar"/>
-        <action input="/" name="usuarioForm" path="/AgregarCatalogo" scope="session" type="Catalogo.Agregar"/>
-        <action input="/" name="usuarioForm" path="/Usuarios" scope="session" type="Usuarios.Entrar"/>
+      
           
         <action path="/Welcome" forward="paginaInicial"/> 
     </action-mappings>

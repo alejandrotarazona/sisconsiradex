@@ -20,9 +20,6 @@
         <logic:present name="usuarioForm" property="mensaje">
             <bean:write name="usuarioForm" property="mensaje" /><br/>
         </logic:present>
-        <html:link action="/ColeccionUsuarios"> 
-            Ver usuarios
-        </html:link><br/>  
 
         <html:link action="/RegistrarUsuario?method=page"> 
             Registrar usuario
@@ -31,5 +28,27 @@
         <html:link action="/EliminarUsuario?method=page"> 
             Eliminar usuario
         </html:link> 
-    </body>
+
+        <h1 class="title" id="page-title">Usuarios registrados en el sistema</h1>
+        <logic:notPresent name="usuarios">
+            No hay usuarios que mostrar
+        </logic:notPresent>
+        <logic:present name="usuarios">
+            <logic:empty name="usuarios">
+                No hay usuarios que mostrar
+            </logic:empty>
+            <table>
+                <logic:iterate name="usuarios" id="usr">
+                    <tr>
+                    <td><b>Username</b></td>
+                    <td><bean:write name="usr" property="username"></bean:write></td>
+                    </tr>
+                    <tr>
+                    <td><b>Password</b></td>
+                    <td><bean:write name="usr" property="password"></bean:write></td>
+                </tr>
+        </logic:iterate>
+    </table>
+</logic:present>
+</body>
 </html>

@@ -18,9 +18,9 @@ import org.apache.struts.action.ActionForm;
  * @author SisCon
  */
 public class ElementoCatalogo extends ActionForm {
-    private int     idElemento;
-    private int     idCatalogo;
-    private String  catalogo;   
+    private int                             idElemento;
+    private int                             idCatalogo;
+    private String                          catalogo;   
     private ArrayList<CampoCatalogoValor>   valor;
     private String                          mensaje;
 

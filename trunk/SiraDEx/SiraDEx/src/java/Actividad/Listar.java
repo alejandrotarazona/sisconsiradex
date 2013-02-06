@@ -4,23 +4,25 @@
  */
 package Actividad;
 
+import Clases.Actividad;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  *
  * @author SisCon
  */
-
-public class ListarDex extends org.apache.struts.action.Action {
+public class Listar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-
+    private static final String SUCCESS1 = "success1";
+    private static final String SUCCESS2 = "success2";
     /**
      * This is the action called from the Struts framework.
      *
@@ -31,15 +33,24 @@ public class ListarDex extends org.apache.struts.action.Action {
      * @throws java.lang.Exception
      * @return
      */
-    @Override
-        public ActionForward execute(ActionMapping mapping, ActionForm form,
+    public ActionForward listUser(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-         
-        ArrayList a = Clases.Actividad.listarActividades();
-
+        Actividad act = new Actividad();
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        String username = u.getUsername();
+        act.setCreador(username);
+        
+        ArrayList<Actividad> a = act.listarActividadesDeUsuario();
         request.setAttribute("acts", a);
-        return mapping.findForward(SUCCESS);
+        return mapping.findForward(SUCCESS1);
+    
     }
-   
+    public ActionForward listAll(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        ArrayList a = Clases.Actividad.listarActividades();
+        request.setAttribute("acts", a);
+        return mapping.findForward(SUCCESS2);
+    }
 }
