@@ -1,6 +1,6 @@
 <%-- 
-    Document   : coleccionTiposActividad
-    Created on : 31/10/2012, 11:15:51 PM
+    Document   : gestionCatalogo
+    Created on : 02/02/2013, 11:15:51 PM
     Author     : SisCon
 --%>
 

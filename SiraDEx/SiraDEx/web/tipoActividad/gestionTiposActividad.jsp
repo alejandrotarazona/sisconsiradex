@@ -19,10 +19,7 @@
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
         <logic:present name="tipoActividadForm" property="mensaje">
             <bean:write name="tipoActividadForm" property="mensaje" /><br/>
-        </logic:present>
-        <html:link action="/ColeccionTiposActividad"> 
-            Ver tipos de actividad
-        </html:link><br/>  
+        </logic:present> 
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
             Registrar tipo de actividad
@@ -31,5 +28,27 @@
         <html:link action="/EliminarTipoActividad?method=page"> 
             Eliminar tipo de actividad
         </html:link> 
-    </body>
+
+        <h1 class="title" id="page-title">Tipos de Actividades registradas en el sistema</h1>
+        <logic:notPresent name="tipos">
+            No hay tipos de actividad que mostrar
+        </logic:notPresent>
+        <logic:present name="tipos">
+            <logic:empty name="tipos">
+                No hay tipos de actividad que mostrar
+            </logic:empty>
+            <table>
+                <logic:iterate name="tipos" id="ta">
+                    <tr>
+                    <td><b>Nombre</b></td>
+                    <td><bean:write name="ta" property="nombreTipo"></bean:write></td>
+                    </tr>
+                    <tr>
+                    <td><b>Descripción</b></td>
+                    <td><bean:write name="ta" property="descripcion"></bean:write></td>
+                </tr>
+        </logic:iterate>
+    </table>
+</logic:present>
+</body>
 </html>

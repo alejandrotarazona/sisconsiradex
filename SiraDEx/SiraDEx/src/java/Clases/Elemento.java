@@ -7,13 +7,12 @@ package Clases;
 import DBMS.Entity;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class Elemento extends ActionForm {
+public class Elemento {
 
     private String id;
     private String atributo1;
