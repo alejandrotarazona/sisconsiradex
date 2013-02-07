@@ -1,8 +1,3 @@
-<%-- 
-    Document   : gestionTiposActividad
-    Created on : 31/10/2012, 08:41:09 AM
-    Author     : SisCon
---%>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -40,12 +35,7 @@
             <table>
                 <logic:iterate name="tipos" id="ta">
                     <tr>
-                    <td><b>Nombre</b></td>
-                    <td><bean:write name="ta" property="nombreTipo"></bean:write></td>
-                    </tr>
-                    <tr>
-                    <td><b>Descripción</b></td>
-                    <td><bean:write name="ta" property="descripcion"></bean:write></td>
+                    <bean:write name="ta" property="nombreTipo"></bean:write><br>
                 </tr>
         </logic:iterate>
     </table>

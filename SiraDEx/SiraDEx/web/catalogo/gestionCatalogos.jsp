@@ -1,9 +1,3 @@
-<%-- 
-    Document   : gestionTiposActividad
-    Created on : 31/10/2012, 08:41:09 AM
-    Author     : SisCon
---%>
-
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -21,9 +15,26 @@
             <bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
 
-        <html:link action="/AgregarCatalogo?method=page"> 
+        <html:link action="/RegistrarCatalogo?method=page"> 
             Registrar catalogo
-        </html:link><br/>  
+        </html:link><br/>
+        
+        <h1 class="title" id="page-title">Catalogos registrados en el sistema</h1>
+        <logic:notPresent name="catalogos">
+            No hay catalogos de actividad que mostrar
+        </logic:notPresent>
+        <logic:present name="catalogos">
+            <logic:empty name="catalogos">
+                No hay catalogos de actividad que mostrar
+            </logic:empty>
+            <table>
+                <logic:iterate name="catalogos" id="cat">
+                    <tr>
+                    <bean:write name="cat" property="nombre"></bean:write><br>
+                </tr>
+        </logic:iterate>
+    </table>
+</logic:present>
 
     </body>
 </html>

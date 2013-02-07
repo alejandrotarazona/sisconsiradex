@@ -56,7 +56,7 @@ public class Agregar extends DispatchAction {
         ElementoCatalogo ec = (ElementoCatalogo) form;
         
         ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(ec.getIdCatalogo());
-        ec.setValor(valores);
+        ec.setCamposValores(valores);
         return mapping.findForward(SUCCESS);
 
     }

@@ -1,14 +1,8 @@
-<%-- 
-    Document   : formAgregarCampos
-    Created on : 02/11/2012, 05:14:54 PM
-    Author     : SisCon
---%>
-
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>s
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
@@ -26,7 +20,7 @@
             <td><b>Tipo</b></td>
         </tr>            
 
-        <html:form action="/AgregarCatalogo?method=save2">
+        <html:form action="/RegistrarCatalogo?method=save2">
             <logic:iterate name="catalogoForm" property="campos" id="campo" indexId="index">
                 <tr>
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>

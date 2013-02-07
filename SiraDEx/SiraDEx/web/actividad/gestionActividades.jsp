@@ -65,17 +65,13 @@
             <table>
                 <logic:iterate name="acts" id="act">
                     <tr>
-                    <td><b>Tipo de Actividad</b></td>
-                    <td><bean:write name="act" property="nombreTipoActividad"></bean:write></td>
-                    </tr>
-                    <tr>
-                    <td><b>Id</b></td>
-                    <td><bean:write name="act" property="idActividad"></bean:write></td>
+                    <b><bean:write name="user" property="apellido"></bean:write>, 
+                        <bean:write name="user" property="nombre"></bean:write></b> 
+                    "<bean:write name="act" property="nombreTipoActividad"></bean:write>"<br>
                 </tr>
-
-        </logic:iterate>
-    </table>
-</logic:present>
+            </logic:iterate>
+        </table>
+    </logic:present>
 
 </body>
 </html>

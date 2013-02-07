@@ -42,26 +42,26 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Catalogo t = (Catalogo) form;
+        Catalogo cat = (Catalogo) form;
 
-        if (t.getNombre().contains(";") || t.getNombre().contains("<")
-                || t.getNombre().contains(">") || t.getNombre().contains("'")
-                || t.getNombre().contains("&") || t.getNombre().contains("$")) {
-            t.setMensaje("El nombre tiene un caracter invalido, por favor "
+        if (cat.getNombre().contains(";") || cat.getNombre().contains("<")
+                || cat.getNombre().contains(">") || cat.getNombre().contains("'")
+                || cat.getNombre().contains("&") || cat.getNombre().contains("$")) {
+            cat.setMensaje("El nombre tiene un caracter invalido, por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
 
         }
-        int numeroCampos = t.getNroCampos();
-        ArrayList<CampoCatalogo> campos = new ArrayList<CampoCatalogo>();
+        int numeroCampos = cat.getNroCampos();
+        ArrayList<CampoCatalogo> campos = new ArrayList<>();
 
         for (int i = 0; i < numeroCampos; i++) {
             CampoCatalogo c = new CampoCatalogo();
-            c.setIdCatalogo(t.getIdCatalogo());
+            c.setIdCatalogo(cat.getIdCatalogo());
             campos.add(c);
         }
 
-        t.setCampos(campos);
+        cat.setCampos(campos);
 
         return mapping.findForward(SUCCESS);
 
@@ -72,8 +72,8 @@ public class Agregar extends DispatchAction {
             throws Exception {
         /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
         request.setAttribute("programas", programas);*/
-        Catalogo t = (Catalogo) form;
-        t.setMensaje("");
+        Catalogo cat = (Catalogo) form;
+        cat.setMensaje("");
         return mapping.findForward(PAGE);
     }
 
@@ -81,11 +81,11 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Catalogo t = (Catalogo) form;
+        Catalogo cat = (Catalogo) form;
 
-        if (t.agregar()) {
+        if (cat.agregar()) {
 
-            t.setMensaje("El catalogo '" + t.getNombre() + "' ha sido "
+            cat.setMensaje("El catalogo '" + cat.getNombre() + "' ha sido "
                     + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
