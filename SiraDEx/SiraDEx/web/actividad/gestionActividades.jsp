@@ -26,21 +26,13 @@
             <html:link action="/RegistrarActividad?method=page"> 
                 Registrar actividad
             </html:link><br/>  
-
-            <html:link action="/EliminarActividad?method=page"> 
-                Eliminar actividad
-            </html:link> 
         </logic:equal>
 
         <logic:equal name="user" property="rol" value="CU"> 
 
             <html:link action="/RegistrarActividad?method=page"> 
                 Registrar actividad
-            </html:link><br/>     
-
-            <html:link action="/EliminarMiActividad?method=page"> 
-                Eliminar mi actividad  
-            </html:link>       
+            </html:link><br/>        
         </logic:equal>
 
         <logic:equal name="user" property="rol" value="Prof">
@@ -48,10 +40,6 @@
             <html:link action="/RegistrarActividad?method=page"> 
                 Registrar actividad
             </html:link><br/>     
-
-            <html:link action="/EliminarMiActividad?method=page"> 
-                Eliminar mi actividad  
-            </html:link>
         </logic:equal>
 
         <h1 class="title" id="page-title">Actividades registradas en el sistema</h1>
@@ -65,15 +53,15 @@
             <table>
                 <logic:iterate name="acts" id="act">
                     <tr>
-                    <b><bean:write name="user" property="apellido"></bean:write>, 
-                        <bean:write name="user" property="nombre"></bean:write></b> 
-                    "<bean:write name="act" property="nombreTipoActividad"/>"
-                    <html:form method="POST" action="/EliminarActividad">
+                    <td><b><bean:write name="user" property="apellido"></bean:write>, 
+                        <bean:write name="user" property="nombre"></bean:write></b></td> 
+                    <td>"<bean:write name="act" property="nombreTipoActividad"/>"</td>
+                    <td><html:form method="POST" action="/EliminarActividad">
                         <html:hidden name="act" property="idActividad" />
                         <html:submit>Eliminar</html:submit>
-                    </html:form>
-                    <br>
+                    </html:form></td>
                     </tr>
+                    <tr></tr>
                 </logic:iterate>
             </table>
         </logic:present>
