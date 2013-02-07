@@ -39,7 +39,6 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-       
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -49,20 +48,20 @@ public class Agregar extends DispatchAction {
         a.setMensaje("");
         return mapping.findForward(PAGE);
     }
-    
+
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
         Actividad a = (Actividad) form;
-        
+
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(a.getIdTipoActividad());
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         a.setCreador(username);
-        
+
         return mapping.findForward(SUCCESS);
 
     }
@@ -73,10 +72,21 @@ public class Agregar extends DispatchAction {
 
         Actividad a = (Actividad) form;
 
-
         if (a.agregarActividad()) {
 
             a.setMensaje("Su actividad ha sido registrado con éxito.");
+
+            Usuario u = (Usuario) request.getSession().getAttribute("user");
+            String rol = u.getRol();
+            ArrayList<Actividad> act;
+
+            if (rol.equalsIgnoreCase("WM")) {
+                act = Clases.Actividad.listarActividades();
+            } else {
+                act = a.listarActividadesDeUsuario();
+            }
+            request.setAttribute("acts", act);
+
             return mapping.findForward(SUCCESSFULL);
         }
 
