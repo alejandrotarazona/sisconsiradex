@@ -802,3 +802,53 @@ ul.action-links:after,
 .overlay #footer {
   display: none;
 }
+
+/* Botones
+-------------------------------------------------------------------------*/
+#eliminar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: url('imagenes/papelera.gif') no-repeat;
+
+}
+
+#botonModificar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background-image: url(iconos/Save_26x26.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#botonEliminar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background-image: url(iconos/Delete2_26x26.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#botonAgregar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background-image: url(iconos/Add_26x26.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#botonModificar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: url('iconos/Edit_26x26.png') no-repeat;
+}
+#botonResponder{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background: url('iconos/Responder.png') no-repeat;
+}
