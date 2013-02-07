@@ -67,11 +67,16 @@
                     <tr>
                     <b><bean:write name="user" property="apellido"></bean:write>, 
                         <bean:write name="user" property="nombre"></bean:write></b> 
-                    "<bean:write name="act" property="nombreTipoActividad"></bean:write>"<br>
-                </tr>
-            </logic:iterate>
-        </table>
-    </logic:present>
+                    "<bean:write name="act" property="nombreTipoActividad"/>"
+                    <html:form method="POST" action="/EliminarActividad">
+                        <html:hidden name="act" property="idActividad" />
+                        <html:submit>Eliminar</html:submit>
+                    </html:form>
+                    <br>
+                    </tr>
+                </logic:iterate>
+            </table>
+        </logic:present>
 
-</body>
+    </body>
 </html>
