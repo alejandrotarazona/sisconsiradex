@@ -10,20 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  *
  * @author diana
  */
-public class EliminarDex extends DispatchAction {
+public class Eliminar extends org.apache.struts.action.Action {
 
     /*
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    private static final String PAGE = "page";
 
     /**
      * This is the action called from the Struts framework.
@@ -35,7 +33,8 @@ public class EliminarDex extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    public ActionForward delete(ActionMapping mapping, ActionForm form,
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad a = (Actividad) form;
@@ -48,11 +47,4 @@ public class EliminarDex extends DispatchAction {
             return mapping.findForward(FAILURE);
         }
     }
-
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        return mapping.findForward(PAGE);
-    }
-
 }

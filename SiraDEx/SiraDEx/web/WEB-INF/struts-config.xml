@@ -39,7 +39,7 @@
             <forward name="success" path="sesionCerrada"/>
         </action>
 
-        <!-- ===============================================================-->
+        <!-- ===================USUARIOS====================================-->
 
         <action path="/AGestionUsuarios" type="Usuarios.Listar"
                 scope="request" name="usuarioForm">
@@ -60,7 +60,7 @@
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
-        <!-- ===============================================================-->
+        <!-- ================TIPOS DE ACTIVIDAD=============================-->
         
         <action path="/AGestionTiposActividad" type="TiposActividad.Listar"
                 scope="request" name="tipoActividadForm">
@@ -82,7 +82,7 @@
             <forward name="page" path="eliminarTipoActividad"/>
         </action>
         
-        <!-- ===============================================================-->
+        <!-- ======================ACTIVIDADES==============================-->
         
         <action path="/AGestionActividades" type="Actividad.Listar"
                 scope="request" parameter="method" name="actividadForm">
@@ -98,21 +98,13 @@
             <forward name="page" path="agregarActividad1"/>
         </action>
                
-        <action path="/EliminarActividad" type="Actividad.EliminarDex" scope="request"
-                parameter="method" name="actividadForm">
+        <action path="/EliminarActividad" type="Actividad.Eliminar" 
+                scope="request" name="actividadForm">
             <forward name="success" path="gestionActividades"/>
-            <forward name="failure" path="eliminarActividad"/>
-            <forward name="page" path="eliminarActividad"/>
+            <forward name="failure" path="gestionActividades"/>
         </action>
         
-        <action path="/EliminarMiActividad" type="Actividad.EliminarCU" scope="request"
-                parameter="method" name="actividadForm">
-            <forward name="success" path="gestionActividades"/>
-            <forward name="failure" path="eliminarActividad"/>
-            <forward name="page" path="eliminarActividad"/>
-        </action>
-        
-        <!-- ===============================================================-->
+        <!-- ====================CATALOGOS==================================-->
         
         <action path="/AGestionCatalogos" type="Catalogo.Listar"
                 scope="request" name="catalogoForm">
@@ -127,7 +119,7 @@
             <forward name="page" path="agregarCatalogo"/>
         </action>
         
-        <!-- ===============================================================-->
+        <!-- =================ELEMENTOS DE CATALOGO=========================-->
         
         <action path="/AGestionElementos" type="ElementoCatalogo.Listar"
                 scope="request" name="elementoCatalogoForm">

@@ -32,7 +32,7 @@
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
     
-    <!-- ===============================================================-->
+    <!-- ===================USUARIOS====================================-->
     
     <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
@@ -46,7 +46,7 @@
         <put name="body" value="/usuario/formEliminarUsuario.jsp" />
     </definition>
     
-    <!-- ===============================================================-->
+    <!-- ===================TIPOS DE ACTIVIDAD==========================-->
     
     <definition name="gestionTiposActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
@@ -64,7 +64,7 @@
         <put name="body" value="/tipoActividad/formEliminarTipoActividad.jsp" />
     </definition>
  
-    <!-- ===============================================================-->
+    <!-- =====================ACTIVIDADES===============================-->
  
     <definition name="gestionActividades" extends="plantilla">
         <put name="body" value="/actividad/gestionActividades.jsp" />
@@ -77,12 +77,9 @@
     <definition name="agregarActividad2" extends="plantilla">
         <put name="body" value="/actividad/formAgregarActividad2.jsp" />
     </definition>
+
     
-    <definition name="eliminarActividad" extends="plantilla">
-        <put name="body" value="/actividad/formEliminarActividad.jsp" />
-    </definition>
-    
-    <!-- ===============================================================-->
+    <!-- ====================CATALOGOS==================================-->
     
     <definition name="gestionCatalogos" extends="plantilla">
         <put name="body" value="/catalogo/gestionCatalogos.jsp" />
@@ -96,7 +93,7 @@
         <put name="body" value="/catalogo/formAgregarCampos.jsp" />
     </definition>
     
-    <!-- ===============================================================-->
+    <!-- ==================ELEMENTOS DE CATALOGO========================-->
     
     <definition name="gestionElementos" extends="plantilla">
         <put name="body" value="/elementoCatalogo/gestionElementos.jsp" />
