@@ -54,17 +54,20 @@
                 <logic:iterate name="acts" id="act">
                     <tr>
                     <td><b><bean:write name="user" property="apellido"></bean:write>, 
-                        <bean:write name="user" property="nombre"></bean:write></b></td> 
+                            <bean:write name="user" property="nombre"></bean:write></b></td> 
                     <td>"<bean:write name="act" property="nombreTipoActividad"/>"</td>
                     <td><html:form method="POST" action="/EliminarActividad">
-                        <html:hidden name="act" property="idActividad" />
-                        <html:submit>Eliminar</html:submit>
-                    </html:form></td>
-                    </tr>
-                    <tr></tr>
-                </logic:iterate>
-            </table>
-        </logic:present>
+                            <html:hidden name="act" property="idActividad" />
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Esta seguro de eliminar la actividad?')" />
+                        </html:form></td>
+                </tr>
+                <tr></tr>
+            </logic:iterate>
+        </table>
+    </logic:present>
 
-    </body>
+</body>
 </html>
