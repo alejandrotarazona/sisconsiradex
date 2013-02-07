@@ -53,7 +53,7 @@ public class Agregar extends DispatchAction {
 
         }
         int numeroCampos = t.getNroCampos();
-        ArrayList<Campo> campos = new ArrayList<Campo>();
+        ArrayList<Campo> campos = new ArrayList<>();
 
         for (int i = 0; i < numeroCampos; i++) {
             Campo c = new Campo();

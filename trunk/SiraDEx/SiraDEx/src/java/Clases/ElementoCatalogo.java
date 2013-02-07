@@ -21,7 +21,7 @@ public class ElementoCatalogo extends ActionForm {
     private int                             idElemento;
     private int                             idCatalogo;
     private String                          catalogo;   
-    private ArrayList<CampoCatalogoValor>   valor;
+    private ArrayList<CampoCatalogoValor>   camposValores;
     private String                          mensaje;
 
 private static String[] ATRIBUTOS = {
@@ -48,12 +48,12 @@ private static String[] ATRIBUTOS = {
         this.idCatalogo = idCatalogo;
     }
 
-    public ArrayList<CampoCatalogoValor> getValor() {
-        return valor;
+    public ArrayList<CampoCatalogoValor> getCamposValores() {
+        return camposValores;
     }
 
-    public void setValor(ArrayList<CampoCatalogoValor> valor) {
-        this.valor = valor;
+    public void setCamposValores(ArrayList<CampoCatalogoValor> camposValores) {
+        this.camposValores = camposValores;
     }
 
     public String getCatalogo() {
@@ -88,7 +88,7 @@ private static String[] ATRIBUTOS = {
         if(resp) {setIdElemento();}
         else {return resp;}
         
-        Iterator itValores = this.valor.iterator();
+        Iterator itValores = this.camposValores.iterator();
         
         while(itValores.hasNext() && resp){
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();

@@ -1,8 +1,3 @@
-<%-- 
-    Document   : formAgregarTipoActividad
-    Created on : Oct 26, 2012, 8:37:29 AM
-    Author     : SisCon
---%>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -22,7 +17,7 @@
         <logic:present name="catalogoForm" property="mensaje">
             <bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
-        <html:form method="POST" action ="/AgregarCatalogo?method=save">
+        <html:form method="POST" action ="/RegistrarCatalogo?method=save">
             <table>
                 <tr>
                     <td>Nombre<span style="color:red">*</span> </td>

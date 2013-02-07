@@ -1,8 +1,3 @@
-<%-- 
-    Document   : gestionUsuarios
-    Created on : 29/10/2012, 04:45:11 PM
-    Author     : SisCon
---%>
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -40,12 +35,8 @@
             <table>
                 <logic:iterate name="usuarios" id="usr">
                     <tr>
-                    <td><b>Username</b></td>
-                    <td><bean:write name="usr" property="username"></bean:write></td>
-                    </tr>
-                    <tr>
-                    <td><b>Password</b></td>
-                    <td><bean:write name="usr" property="password"></bean:write></td>
+                    <b>USB-ID</b> <bean:write name="usr" property="username"></bean:write> 
+                    <b>Password</b> <bean:write name="usr" property="password"></bean:write><br>
                 </tr>
         </logic:iterate>
     </table>

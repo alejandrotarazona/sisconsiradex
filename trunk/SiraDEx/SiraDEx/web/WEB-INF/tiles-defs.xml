@@ -32,6 +32,8 @@
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
     
+    <!-- ===============================================================-->
+    
     <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
     </definition>
@@ -44,10 +46,11 @@
         <put name="body" value="/usuario/formEliminarUsuario.jsp" />
     </definition>
     
+    <!-- ===============================================================-->
+    
     <definition name="gestionTiposActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
     </definition>
-    
     
     <definition name="agregarTipoActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/formAgregarTipoActividad.jsp" />
@@ -61,8 +64,10 @@
         <put name="body" value="/tipoActividad/formEliminarTipoActividad.jsp" />
     </definition>
  
-    <definition name="gestionActividad" extends="plantilla">
-        <put name="body" value="/actividad/gestionActividad.jsp" />
+    <!-- ===============================================================-->
+ 
+    <definition name="gestionActividades" extends="plantilla">
+        <put name="body" value="/actividad/gestionActividades.jsp" />
     </definition>
     
     <definition name="agregarActividad1" extends="plantilla">
@@ -77,16 +82,33 @@
         <put name="body" value="/actividad/formEliminarActividad.jsp" />
     </definition>
     
-    <definition name="agregarCatalogo1" extends="plantilla">
-        <put name="body" value="/catalogo/formAgregarCatalogos.jsp" />
+    <!-- ===============================================================-->
+    
+    <definition name="gestionCatalogos" extends="plantilla">
+        <put name="body" value="/catalogo/gestionCatalogos.jsp" />
     </definition>
     
-    <definition name="agregarCatalogo2" extends="plantilla">
+    <definition name="agregarCatalogo" extends="plantilla">
+        <put name="body" value="/catalogo/formAgregarCatalogo.jsp" />
+    </definition>
+    
+    <definition name="agregarCamposCatalogo" extends="plantilla">
         <put name="body" value="/catalogo/formAgregarCampos.jsp" />
     </definition>
     
-    <definition name="gestionarCatalogo" extends="plantilla">
-        <put name="body" value="/catalogo/gestionCatalogos.jsp" />
+    <!-- ===============================================================-->
+    
+    <definition name="gestionElementos" extends="plantilla">
+        <put name="body" value="/elementoCatalogo/gestionElementos.jsp" />
     </definition>
+    
+    <definition name="agregarElemento1" extends="plantilla">
+        <put name="body" value="/elementoCatalogo/formAgregarElemento1.jsp" />
+    </definition>
+    
+    <definition name="agregarElemento2" extends="plantilla">
+        <put name="body" value="/elementoCatalogo/formAgregarElemento2.jsp" />
+    </definition>
+    
 
 </tiles-definitions>

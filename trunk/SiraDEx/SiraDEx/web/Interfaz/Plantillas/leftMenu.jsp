@@ -30,7 +30,7 @@
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="Prof">
-                                <li><html:link action="/AGestionActividad?method=listUser"> 
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
                                         Gestionar mis actividades
                                     </html:link></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
@@ -42,8 +42,16 @@
                                         Gestionar tipos de actividad 
                                     </html:link></li>
                                 
-                                 <li><html:link action="/AGestionActividad?method=listAll"> 
+                                 <li><html:link action="/AGestionActividades?method=listAll"> 
                                         Gestionar actividades
+                                    </html:link></li>
+                                 
+                                 <li><html:link action="/AGestionCatalogos"> 
+                                        Gestionar catálogos 
+                                    </html:link></li>
+                                 
+                                 <li><html:link action="/AGestionElementos"> 
+                                        Gestionar elementos de un catálogo
                                     </html:link></li>
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar log</a></li>
@@ -52,7 +60,7 @@
                             </logic:equal> 
 
                             <logic:equal name="user" property="rol" value="CU">
-                                <li><html:link action="/AGestionActividad?method=listUser"> 
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
                                         Gestionar mis actividades
                                     </html:link></li>
                                 </logic:equal>
