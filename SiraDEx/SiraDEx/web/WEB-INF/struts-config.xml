@@ -10,6 +10,7 @@
         <form-bean  name="usuarioForm" type="Clases.Usuario" />
         <form-bean  name="tipoActividadForm" type="Clases.TipoActividad"/>
         <form-bean  name="actividadForm" type="Clases.Actividad"/>
+        <form-bean  name="catalogoForm" type="Clases.Catalogo"/>
     </form-beans>
     
     <global-exceptions>
@@ -104,7 +105,18 @@
             <forward name="failure" path="eliminarActividad"/>
             <forward name="page" path="eliminarActividad"/>
         </action>
-      
+        <action input="/" name="usuarioForm" path="/ListarCatalogos" scope="session" type="Catalogo.Listar"/>
+        <action input="/" name="usuarioForm" path="/EliminarCatalogo" scope="session" type="Catalogo.Eliminar"/>
+        
+        <action name="catalogoForm" path="/AgregarCatalogo" scope="request" 
+                type="Catalogo.Agregar" parameter="method">
+            <forward name="success" path="agregarCatalogo2"/>
+            <forward name="successfull" path="gestionarCatalogo"/>
+            <forward name="failure" path="agregarCatalogo2"/>
+            <forward name="page" path="agregarCatalogo1"/>
+        </action>
+        
+        <action input="/" name="usuarioForm" path="/Usuarios" scope="session" type="Usuarios.Entrar"/>
           
         <action path="/Welcome" forward="paginaInicial"/> 
     </action-mappings>

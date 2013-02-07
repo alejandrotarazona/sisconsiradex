@@ -77,5 +77,16 @@
         <put name="body" value="/actividad/formEliminarActividad.jsp" />
     </definition>
     
+    <definition name="agregarCatalogo1" extends="plantilla">
+        <put name="body" value="/catalogo/formAgregarCatalogos.jsp" />
+    </definition>
+    
+    <definition name="agregarCatalogo2" extends="plantilla">
+        <put name="body" value="/catalogo/formAgregarCampos.jsp" />
+    </definition>
+    
+    <definition name="gestionarCatalogo" extends="plantilla">
+        <put name="body" value="/catalogo/gestionCatalogos.jsp" />
+    </definition>
 
 </tiles-definitions>

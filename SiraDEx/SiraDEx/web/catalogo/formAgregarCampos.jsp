@@ -1,6 +1,6 @@
 <%-- 
     Document   : formAgregarCampos
-    Created on : 02/02/2013, 05:14:54 PM
+    Created on : 02/11/2012, 05:14:54 PM
     Author     : SisCon
 --%>
 
@@ -8,15 +8,15 @@
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>s
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Campos del Catálogo</title>
+        <title>SiraDEx | Registrar Campos del Catalogo</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registrar Campos del Catálogo</h1>
+        <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
         <logic:present name="catalogoForm" property="mensaje">
             <bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
@@ -26,7 +26,7 @@
             <td><b>Tipo</b></td>
         </tr>            
 
-        <html:form action="/RegistrarCatalogo?method=save2">
+        <html:form action="/AgregarCatalogo?method=save2">
             <logic:iterate name="catalogoForm" property="campos" id="campo" indexId="index">
                 <tr>
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>
@@ -35,8 +35,8 @@
                         <html:option value="texto">texto</html:option>
                         <html:option value="numero">numero</html:option>
                         <html:option value="fecha">fecha</html:option>
-                        <html:option value="checkbox">checkbox</html:option>
-                    </html:select></td>
+                    </html:select>
+                </td>
             </tr>
         </logic:iterate>
     </table>

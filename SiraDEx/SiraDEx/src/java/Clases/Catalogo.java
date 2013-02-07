@@ -67,11 +67,10 @@ public class Catalogo extends ActionForm {
             CampoCatalogo cc = CampoCatalogo.leer();
             resp.campos.add(cc);
         }
-        
+
 
         return resp;
     }
-    
 
     public Catalogo(String nombre, int nroCampos) {
         this.nombre = nombre;
@@ -143,7 +142,7 @@ public class Catalogo extends ActionForm {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
+
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
@@ -193,11 +192,16 @@ public class Catalogo extends ActionForm {
             resp &= eCatalogo.insertar2(columnas, valores);
             if (resp) {
                 setIdCatalogo();
-                Iterator itCampos = this.campos.iterator();
-
-                while (itCampos.hasNext() && resp) {
-                    CampoCatalogo cC = (CampoCatalogo) itCampos.next();
-                    resp &= cC.agregarCampo(idCatalogo);
+                Iterator itCampos;
+                if (this.campos!= null) {
+                    itCampos = campos.iterator();
+                    while (itCampos.hasNext() && resp) {
+                        CampoCatalogo cC = (CampoCatalogo) itCampos.next();
+                        resp &= cC.agregarCampo(idCatalogo);
+                    }
+                }
+                else {
+                    System.out.println("");
                 }
             } else {
                 return resp;
@@ -229,11 +233,11 @@ public class Catalogo extends ActionForm {
         }
         return tipos;
     }
-    
-    public boolean eliminar(){
+
+    public boolean eliminar() {
         boolean resp = true;
-        Entity eEliminar = new Entity(5,8);
-        resp = eEliminar.borrar(ATRIBUTOS[0],this.idCatalogo);
+        Entity eEliminar = new Entity(5, 8);
+        resp = eEliminar.borrar(ATRIBUTOS[0], this.idCatalogo);
         return resp;
     }
 
