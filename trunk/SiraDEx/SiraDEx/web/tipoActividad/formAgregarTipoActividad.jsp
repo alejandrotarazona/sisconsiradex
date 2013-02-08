@@ -30,7 +30,7 @@
 </tr>
 <tr>
 <td>Descripcion<span style="color:red">*</span> </td>
-<td><html:textarea name="tipoActividadForm"  cols="100" rows="4"
+<td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
                property="descripcion"></td></html:textarea>
 </tr>
 <tr>
