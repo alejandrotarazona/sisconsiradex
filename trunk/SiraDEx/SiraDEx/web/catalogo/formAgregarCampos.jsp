@@ -21,11 +21,11 @@
         </tr>            
 
         <html:form action="/RegistrarCatalogo?method=save2">
-            <logic:iterate name="catalogoForm" property="campos" id="campo" indexId="index">
+            <logic:iterate name="catalogoForm" property="campos" id="campos" indexId="index">
                 <tr>
-                <td><html:text name="campo" property="nombre" indexed="true"/></td>
+                <td><html:text name="campos" property="nombre" indexed="true"/></td>
 
-                <td><html:select name="campo" property="tipo" indexed="true">
+                <td><html:select name="campos" property="tipo" indexed="true">
                         <html:option value="texto">texto</html:option>
                         <html:option value="numero">numero</html:option>
                         <html:option value="fecha">fecha</html:option>
