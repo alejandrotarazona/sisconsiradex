@@ -22,7 +22,7 @@
       xmlns:sioct="http://rdfs.org/sioc/types#"
       xmlns:skos="http://www.w3.org/2004/02/skos/core#"
       xmlns:xsd="http://www.w3.org/2001/XMLSchema#">
-    
+
     <tiles:insert attribute="head"/>
     <body class="html front not-logged-in two-sidebars page-node page-node- page-node-1 node-type-page" >
         <div id="skip-link">

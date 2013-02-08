@@ -5,6 +5,8 @@
 package Actividad;
 
 import Clases.Actividad;
+import Clases.Usuario;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -38,11 +40,31 @@ public class Eliminar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad a = (Actividad) form;
-        
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        String rol = u.getRol();
+        ArrayList<Actividad> act;
+
         if (a.eliminarActividad()) {
             a.setMensaje("La actividad ha sido eliminada.");
+
+            if (rol.equalsIgnoreCase("WM")) {
+                act = Clases.Actividad.listarActividades();
+            } else {
+                act = a.listarActividadesDeUsuario();
+            }
+            request.setAttribute("acts", act);
             return mapping.findForward(SUCCESS);
+            
         } else {
+            
+            if (rol.equalsIgnoreCase("WM")) {
+                act = Clases.Actividad.listarActividades();
+            } else {
+                act = a.listarActividadesDeUsuario();
+            }
+            request.setAttribute("acts", act);
+            
             a.setMensaje("La actividad que desea eliminar no existe.");
             return mapping.findForward(FAILURE);
         }

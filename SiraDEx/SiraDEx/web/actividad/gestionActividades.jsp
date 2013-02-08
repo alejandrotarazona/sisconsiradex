@@ -17,32 +17,15 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Actividades</h1>
+
+        <html:link action="/RegistrarActividad?method=page"> 
+            Registrar actividad
+        </html:link><br/>        
+
+        <h1 class="title" id="page-title">Actividades registradas en el sistema</h1>
         <logic:present name="actividadForm" property="mensaje">
             <bean:write name="actividadForm" property="mensaje" /><br/>
         </logic:present>
-
-        <logic:equal name="user" property="rol" value="WM">
-
-            <html:link action="/RegistrarActividad?method=page"> 
-                Registrar actividad
-            </html:link><br/>  
-        </logic:equal>
-
-        <logic:equal name="user" property="rol" value="CU"> 
-
-            <html:link action="/RegistrarActividad?method=page"> 
-                Registrar actividad
-            </html:link><br/>        
-        </logic:equal>
-
-        <logic:equal name="user" property="rol" value="Prof">
-
-            <html:link action="/RegistrarActividad?method=page"> 
-                Registrar actividad
-            </html:link><br/>     
-        </logic:equal>
-
-        <h1 class="title" id="page-title">Actividades registradas en el sistema</h1>
         <logic:notPresent name="acts">
             No hay actividad que mostrar
         </logic:notPresent>
@@ -61,7 +44,7 @@
                             <html:submit styleId="botonEliminar"
                                          value=" "
                                          title="Eliminar"
-                                         onclick="return confirm('¿Esta seguro de eliminar la actividad?')" />
+                                         onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
                         </html:form></td>
                 </tr>
                 <tr></tr>
