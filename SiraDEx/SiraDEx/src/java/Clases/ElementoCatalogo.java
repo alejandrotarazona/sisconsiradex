@@ -92,7 +92,7 @@ private static String[] ATRIBUTOS = {
         
         while(itValores.hasNext() && resp){
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            resp &= ccv.agregar();                
+            resp &= ccv.agregar(this.idElemento);                
         }
         
         return resp;        

@@ -53,16 +53,18 @@ public class CampoCatalogoValor {
         this.valor = valor;
     }
     
-    public boolean agregar(){
+    public boolean agregar(int idElemento){
         boolean resp = true;
+        Integer elementoId = new Integer(idElemento);
         
-        Entity eValor = new Entity(1,9);
+        Entity eValor = new Entity(1,11);
         Object[] valores = {
-          campo,
+          campo.getIdCampo(),
+          elementoId,
           valor
         };
         
-        resp = eValor.insertar2(ATRIBUTOS, valores);
+        resp &= eValor.insertar2(ATRIBUTOS, valores);
         
         return resp;
     }
