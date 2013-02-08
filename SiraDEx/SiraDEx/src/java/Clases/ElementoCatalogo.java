@@ -52,6 +52,10 @@ private static String[] ATRIBUTOS = {
         return camposValores;
     }
 
+        public CampoCatalogoValor getCampoValor(int i) {
+        return camposValores.get(i);
+    }
+        
     public void setCamposValores(ArrayList<CampoCatalogoValor> camposValores) {
         this.camposValores = camposValores;
     }
