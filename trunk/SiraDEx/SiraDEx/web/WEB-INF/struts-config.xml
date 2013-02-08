@@ -76,10 +76,9 @@
         </action>
         
         <action path="/EliminarTipoActividad" type="TiposActividad.Eliminar"
-                scope="request" parameter="method" name="tipoActividadForm">
+                scope="request" name="tipoActividadForm">
             <forward name="success" path="gestionTiposActividad"/>
-            <forward name="failure" path="eliminarTipoActividad"/>
-            <forward name="page" path="eliminarTipoActividad"/>
+            <forward name="failure" path="gestionTiposActividad"/>
         </action>
         
         <!-- ======================ACTIVIDADES==============================-->
@@ -117,7 +116,15 @@
             <forward name="successfull" path="gestionCatalogos"/>
             <forward name="failure" path="agregarCatalogo"/>
             <forward name="page" path="agregarCatalogo"/>
+            
         </action>
+        
+        <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
+                scope="session" name="catalogoForm">
+            <forward name="success" path="gestionCatalogos"/>
+            <forward name="failure" path="gestionCatalogos"/>           
+        </action>
+            
         
         <!-- =================ELEMENTOS DE CATALOGO=========================-->
         

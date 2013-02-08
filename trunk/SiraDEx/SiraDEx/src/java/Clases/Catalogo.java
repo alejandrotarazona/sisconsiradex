@@ -234,10 +234,10 @@ public class Catalogo extends ActionForm {
         return tipos;
     }
 
-    public boolean eliminar() {
+    public boolean eliminar(int idCat) {
         boolean resp = true;
         Entity eEliminar = new Entity(5, 8);
-        resp = eEliminar.borrar(ATRIBUTOS[0], this.idCatalogo);
+        resp = eEliminar.borrar(ATRIBUTOS[0], idCat);
         return resp;
     }
 

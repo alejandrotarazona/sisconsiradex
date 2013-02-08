@@ -276,9 +276,7 @@ public class TipoActividad extends ActionForm {
     public boolean eliminarTipoActividad() {
         Entity eTipoActividad = new Entity(5, 1);
 
-        if (esTipoActividad()) {
-
-            eTipoActividad.borrar(ATRIBUTOS[1], nombreTipo);
+        if (eTipoActividad.borrar(ATRIBUTOS[0], this.id)) {
 
             return true;
         } else {

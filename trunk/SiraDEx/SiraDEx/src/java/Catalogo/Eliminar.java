@@ -5,6 +5,7 @@
 package Catalogo;
 
 import Clases.Catalogo;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -16,14 +17,13 @@ import org.apache.struts.actions.DispatchAction;
  *
  * @author alejandro
  */
-public class Eliminar extends DispatchAction {
+public class Eliminar extends org.apache.struts.action.Action {
 
     /*
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    private static final String PAGE = "page";
 
     /**
      * This is the action called from the Struts framework.
@@ -35,23 +35,22 @@ public class Eliminar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    public ActionForward delete(ActionMapping mapping, ActionForm form,
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Catalogo t = (Catalogo) form;
-        
-        if (t.eliminar()) {
+
+        if (t.eliminar(t.getIdCatalogo())) {
             t.setMensaje("El catlogo ha sido eliminado.");
+            ArrayList cat = Clases.Catalogo.listar();
+            request.setAttribute("catalogos", cat);
             return mapping.findForward(SUCCESS);
         } else {
             t.setMensaje("El catalogo que desea eliminar no existe.");
+            ArrayList cat = Clases.Catalogo.listar();
+            request.setAttribute("catalogos", cat);
             return mapping.findForward(FAILURE);
         }
-    }
-
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        return mapping.findForward(PAGE);
     }
 }

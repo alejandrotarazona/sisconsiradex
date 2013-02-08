@@ -19,7 +19,7 @@
         <logic:equal name="user" property="rol" value="WM">
 
             <html:link action="/RegistrarElemento?method=page"> 
-                Agregar elemento a un catalogo
+                Agregar elemento
             </html:link><br/>  
 
         </logic:equal>
