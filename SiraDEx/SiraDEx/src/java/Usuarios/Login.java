@@ -53,8 +53,14 @@ public class Login extends DispatchAction {
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
         }
-        u.agregarUsuario();
-        return mapping.findForward(SUCCESS);
+        if (u.esUsuario()){
+            request.getSession().setAttribute("usuario", u);
+            return mapping.findForward(SUCCESS);
+        }
+        else {
+            return mapping.findForward(FAILURE);
+        }
+            
     }
 
 }

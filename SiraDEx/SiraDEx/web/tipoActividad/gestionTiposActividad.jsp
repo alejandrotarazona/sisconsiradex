@@ -20,10 +20,6 @@
             Registrar tipo de actividad
         </html:link><br/>  
 
-        <html:link action="/EliminarTipoActividad?method=page"> 
-            Eliminar tipo de actividad
-        </html:link> 
-
         <h1 class="title" id="page-title">Tipos de Actividades registradas en el sistema</h1>
         <logic:notPresent name="tipos">
             No hay tipos de actividad que mostrar
@@ -35,10 +31,21 @@
             <table>
                 <logic:iterate name="tipos" id="ta">
                     <tr>
-                    <bean:write name="ta" property="nombreTipo"></bean:write><br>
+                    <td>
+                        <bean:write name="ta" property="nombreTipo"/>
+                    </td>
+                    <td><html:form method="POST" action="/EliminarTipoActividad">
+                            <html:hidden name="ta" property="id" />
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Está seguro que 
+                                         desea eliminar el Tipo de Actividad?')" />
+                        </html:form>
+                    </td>
                 </tr>
-        </logic:iterate>
-    </table>
-</logic:present>
+            </logic:iterate>
+        </table>
+    </logic:present>
 </body>
 </html>

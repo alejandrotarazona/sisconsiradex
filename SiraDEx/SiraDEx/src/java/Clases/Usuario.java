@@ -144,7 +144,8 @@ public class Usuario extends ActionForm {
             ResultSet rs = e.seleccionar(col, cond);
             if (rs != null) {
                 while (rs.next()) {
-                    if (rs.getString(ATRIBUTOS[2]).equals(username)) {
+                    if (rs.getString(ATRIBUTOS[2]).equals(username)
+                            && rs.getString(ATRIBUTOS[3]).equals(password)) {
                         return true;
                     }
                 }

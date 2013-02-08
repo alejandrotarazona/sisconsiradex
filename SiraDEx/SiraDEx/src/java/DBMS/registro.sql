@@ -51,6 +51,8 @@ INSERT INTO usuario VALUES ('07-41618', 'diana', 'CU', 2, 'Diana', 'Vainberg', n
 INSERT INTO usuario VALUES ('jf', 'jf', 'CU', 3, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
 INSERT INTO usuario VALUES ('kdoming', 'kdoming', 'Prof',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
 INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',4, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');
+INSERT INTO usuario VALUES ('admin', 'admin', 'WM', 1, 'Administrador', 'del Sistema',null,null);
+
 
 --Catalogo
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Coordinaciones', 2);
@@ -81,16 +83,16 @@ INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (2, 'Nombre
 --INSERT INTO campo_catalogo (id_catalogo, nombre_campo, tipo_campo) VALUES (6, 'Id profesor', 'Texto');
 
 --Elementos de los catalogos
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (1, 1);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (2, 1);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (3, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (4, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (5, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (6, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (7, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (8, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (9, 2);
-INSERT INTO elemento_catalogo (id_elemento, id_catalogo) VALUES (10, 2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (1);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (1);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
 
 
 --Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
