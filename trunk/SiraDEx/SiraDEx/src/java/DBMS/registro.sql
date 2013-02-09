@@ -37,6 +37,13 @@ INSERT INTO valor values(10,2,'Jorge Garcia');
 INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 */
 
+--Tipo de actividad
+
+INSERT INTO tipo_actividad VALUES (1,'Formulacion de proyectos del BPDEx', 'P',1,'Projecto del BPDEx','EP','CIO',null, true);
+
+--Campo de un tipo de actividad
+
+INSERT INTO campo VALUES (1,1,'Nombre del proyecto', 'texto', 10, true);
 
 --Permisos
 
