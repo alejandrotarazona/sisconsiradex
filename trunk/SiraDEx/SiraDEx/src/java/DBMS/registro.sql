@@ -39,11 +39,18 @@ INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 
 --Tipo de actividad
 
-INSERT INTO tipo_actividad VALUES (1,'Formulacion de proyectos del BPDEx', 'P',1,'Projecto del BPDEx','EP','CIO',null, true);
+INSERT INTO tipo_actividad VALUES (1,'Formulacion de proyectos del BPDEx', 'P',2,'Projecto del BPDEx','EP','CIO',null, true);
+INSERT INTO tipo_actividad VALUES (2,'Diseño y propuesta de nuevos diplomados', 'P',2,'Nuevos diplomados','EP','CIO',null, true);
+INSERT INTO tipo_actividad VALUES (3,'Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta', true);
 
 --Campo de un tipo de actividad
 
-INSERT INTO campo VALUES (1,1,'Nombre del proyecto', 'texto', 10, true);
+INSERT INTO campo VALUES (1,1,'Nombre del proyecto', 'texto', 20, true);
+INSERT INTO campo VALUES (2,1,'Nombre del tutor', 'texto', 20, true);
+INSERT INTO campo VALUES (3,2,'Nombre del diplomado', 'texto', 20, true);
+INSERT INTO campo VALUES (4,2,'Nombre del estudiante', 'texto', 20, true);
+INSERT INTO campo VALUES (5,3,'Nombre de la pasantia', 'texto', 20, true);
+INSERT INTO campo VALUES (6,3,'Nombre del pasante', 'texto', 20, true);
 
 --Permisos
 
