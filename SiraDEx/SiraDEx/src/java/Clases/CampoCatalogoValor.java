@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,9 +16,11 @@ import java.util.logging.Logger;
  *
  * @author SisCon
  */
-public class CampoCatalogoValor {
+public class CampoCatalogoValor implements Serializable{
 
     private CampoCatalogo campo;
+    private int idCampo;
+    private int idElemento;
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
@@ -28,6 +31,22 @@ public class CampoCatalogoValor {
         "id_elemento", //1
         "valor" //2
     };
+
+    public int getIdCampo() {
+        return idCampo;
+    }
+
+    public void setIdCampo(int idCampo) {
+        this.idCampo = idCampo;
+    }
+    
+    public int getIdElemento() {
+        return idElemento;
+    }
+
+    public void setIdElemento(int idElemento) {
+        this.idElemento = idElemento;
+    }
 
     public CampoCatalogoValor() {
     }
@@ -96,4 +115,28 @@ public class CampoCatalogoValor {
         return listaValor;
     }
     
+    public static ArrayList<CampoCatalogoValor> listarElem(int idElem) {
+        ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
+        Entity eCampo = new Entity(0, 12);
+        String[] columnas = {"id_elemento"};
+        Integer[] condiciones = {idElem};
+
+        ResultSet rs = eCampo.seleccionar(columnas, condiciones);
+
+        if (rs != null) { 
+            try {
+                while (rs.next()) {
+                    CampoCatalogoValor cv = new CampoCatalogoValor();
+                    cv.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    cv.setIdElemento(rs.getInt(ATRIBUTOS[1]));
+                    cv.setValor(rs.getString(ATRIBUTOS[2]));
+      
+                    listaValor.add(cv);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listaValor;
+    }
 }

@@ -29,18 +29,25 @@ public class Entity {
         "DELETE", //5 
     };
     private final String[] TABLAS = {
-        "USUARIO", //0
-        "TIPO_ACTIVIDAD", //1
-        "ACTIVIDAD", //2
-        "CAMPO", //3
-        "JEFE_DEPENDENCIA", //4
-        "COMUNIDAD_U", //5
-        "VALOR", //6
-        "PARTICIPA", //7
-        "CATALOGO", //8
-        "CAMPO_CATALOGO", //9
-        "ELEMENTO_CATALOGO", //10
-        "VALOR_CATALOGO" //11
+        "USUARIO",              //0
+        "TIPO_ACTIVIDAD",       //1
+        "ACTIVIDAD",            //2
+        "CAMPO",                //3
+        "JEFE_DEPENDENCIA",     //4
+        "COMUNIDAD_U",          //5
+        "VALOR",                //6
+        "PARTICIPA",            //7
+        "CATALOGO",             //8
+        "CAMPO_CATALOGO",       //9
+        "ELEMENTO_CATALOGO",    //10
+        "VALOR_CATALOGO",       //11
+        "ELEMENTOS",            //12 TABLAS AUXILIARES PARA PODER LISTAR META INFO.
+        "ESTUDIANTES",          //13             OJO!!!
+        "PROFESORES",           //14              NO se puede hacer insert ni update
+        "OBREROS",              //15                 a traves de estas!!!
+        "PROGRAMAS",            //16
+        "EMPLEADOS",            //17
+        "COORDINACIONES"        //18    ---------------------------------------
     };
 
     /*
@@ -111,6 +118,7 @@ public class Entity {
             }
         }
 
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
@@ -120,6 +128,7 @@ public class Entity {
     public int seleccionarMaxId(String id) {
         sql = "SELECT MAX (" + id + ") " + "FROM " + TABLA;
 
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
         int maxId = 0;
@@ -138,6 +147,7 @@ public class Entity {
                 + "FROM " + TABLA;
 
 
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
@@ -148,7 +158,7 @@ public class Entity {
             Object[] valores) {
 
         sql = ACCION + " " + seleccionar[0];
-        
+
         int i;
         for (i = 1; i < seleccionar.length; i++) {
             sql += " , " + seleccionar[i];
@@ -162,7 +172,7 @@ public class Entity {
             sql += " FROM " + TABLA
                     + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
         }
-        
+
         for (i = 1; i < columnas.length; i++) {
             if (valores[i] instanceof Integer) {
                 sql += " AND " + columnas[i] + " = " + valores[i];
@@ -171,6 +181,7 @@ public class Entity {
             }
         }
 
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
@@ -203,6 +214,7 @@ public class Entity {
                     + valores[i] + "' ";
         }
 
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
@@ -217,20 +229,20 @@ public class Entity {
         int indice;
 
         for (indice = 1; indice < colModificar.length; indice++) {
-            sql += " , " + colModificar[indice] + " = '" 
+            sql += " , " + colModificar[indice] + " = '"
                     + modificaciones[indice] + "' ";
         }
 
         sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
 
         for (indice = 1; indice < condColumnas.length; indice++) {
-            sql += " AND " + condColumnas[indice] + " = '" 
+            sql += " AND " + condColumnas[indice] + " = '"
                     + valores[indice] + "' ";
         }
 
 
         DataBase db = DataBase.getInstance();
-
+        System.out.println(sql);
         boolean resp = db.update(sql);
         return resp;
     }
@@ -244,6 +256,7 @@ public class Entity {
             sql = ACCION + " FROM " + TABLA
                     + " WHERE " + columna + " = '" + valor + "'";
         }
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
 
         boolean resp = db.update(sql);
@@ -269,19 +282,20 @@ public class Entity {
         }
 
         sql += ")";
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
         return resp;
     }
 
-    public boolean insertar2(String[] columnas, Object[] valores){
+    public boolean insertar2(String[] columnas, Object[] valores) {
         int k;
         sql = ACCION + " INTO " + TABLA + '(';
-        for (k = 0 ; k < columnas.length - 1; k++){
-            sql += columnas[k]+ ',';
+        for (k = 0; k < columnas.length - 1; k++) {
+            sql += columnas[k] + ',';
         }
         sql += columnas[k] + ")  VALUES (";
-        
+
         for (k = 0; k < (valores.length - 1); k++) {
             if (valores[k] instanceof Integer) {
                 sql += " " + valores[k] + " ,";
@@ -297,12 +311,11 @@ public class Entity {
         }
 
         sql += ")";
+        System.out.println(sql);
         DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
         return resp;
     }
-    
-    
 
     public static void main(String[] args) {
         /*

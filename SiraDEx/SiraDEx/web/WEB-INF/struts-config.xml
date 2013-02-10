@@ -129,7 +129,7 @@
         <!-- =================ELEMENTOS DE CATALOGO=========================-->
         
         <action path="/AGestionElementos" type="ElementoCatalogo.Listar"
-                scope="request" name="elementoCatalogoForm">
+                scope="request" name="catalogoForm">
             <forward name="success" path="gestionElementos"/>
         </action>
         

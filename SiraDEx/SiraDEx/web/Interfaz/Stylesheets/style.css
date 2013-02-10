@@ -852,3 +852,11 @@ ul.action-links:after,
     border: 0;
     background: url('iconos/Responder.png') no-repeat;
 }
+#botonExaminar{
+    width: 26px;
+    height: 26px;
+    border: 0;
+    background-image: url(iconos/Examine_26x26.png);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
