@@ -30,20 +30,28 @@
             <table>
                 <logic:iterate name="catalogos" id="cat">
                     <tr>
-                    <td>
-                        <bean:write name="cat" property="nombre"></bean:write>
-                    </td>
-                    <td>
-                        <html:form method="POST" action="/EliminarCatalogo">
-                            <html:hidden name="cat" property="idCatalogo" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está 
-                                         seguro que desea eliminar el Catalogo?')" />
-                        </html:form>
-                    </td>
-                </tr>
+                        <td>
+                            <bean:write name="cat" property="nombre" />
+                        </td>
+                        <td>
+                            <html:form method="POST" action="/AGestionElementos">
+                                <html:hidden name="cat" property="idCatalogo" />
+                                <html:submit styleId="botonExaminar"
+                                             value=" "
+                                             title="Examinar"/>
+                            </html:form>
+                        </td>
+                        <td>
+                            <html:form method="POST" action="/EliminarCatalogo">
+                                <html:hidden name="cat" property="idCatalogo" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está 
+                                             seguro que desea eliminar el Catalogo?')" />
+                            </html:form>
+                        </td>
+                    </tr>
             </logic:iterate>
         </table>
     </logic:present>

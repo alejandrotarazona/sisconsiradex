@@ -37,20 +37,6 @@ INSERT INTO valor values(10,2,'Jorge Garcia');
 INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 */
 
---Tipo de actividad
-
-INSERT INTO tipo_actividad VALUES (1,'Formulacion de proyectos del BPDEx', 'P',2,'Projecto del BPDEx','EP','CIO',null, true);
-INSERT INTO tipo_actividad VALUES (2,'Diseño y propuesta de nuevos diplomados', 'P',2,'Nuevos diplomados','EP','CIO',null, true);
-INSERT INTO tipo_actividad VALUES (3,'Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta', true);
-
---Campo de un tipo de actividad
-
-INSERT INTO campo VALUES (1,1,'Nombre del proyecto', 'texto', 20, true);
-INSERT INTO campo VALUES (2,1,'Nombre del tutor', 'texto', 20, true);
-INSERT INTO campo VALUES (3,2,'Nombre del diplomado', 'texto', 20, true);
-INSERT INTO campo VALUES (4,2,'Nombre del estudiante', 'texto', 20, true);
-INSERT INTO campo VALUES (5,3,'Nombre de la pasantia', 'texto', 20, true);
-INSERT INTO campo VALUES (6,3,'Nombre del pasante', 'texto', 20, true);
 
 --Permisos
 
@@ -60,21 +46,23 @@ INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
 
 --Usuarios
-INSERT INTO usuario VALUES ('05-38199', '123456', 'WM', 1, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
-INSERT INTO usuario VALUES ('07-41618', 'diana', 'CU', 2, 'Diana', 'Vainberg', null, '07-41618@usb.ve');
+INSERT INTO usuario VALUES ('05-38199', '123456', 'WM', 3, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
+INSERT INTO usuario VALUES ('07-41618', 'diana', 'CU', 3, 'Diana', 'Vainberg', null, '07-41618@usb.ve');
 INSERT INTO usuario VALUES ('jf', 'jf', 'CU', 3, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
 INSERT INTO usuario VALUES ('kdoming', 'kdoming', 'Prof',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
-INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',4, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');
-INSERT INTO usuario VALUES ('admin', 'admin', 'WM', 1, 'Administrador', 'del Sistema',null,null);
+INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',2, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');
+INSERT INTO usuario VALUES ('admin', 'admin', 'WM', null, 'Administrador', 'del Sistema',null,null);
 
 
 --Catalogo
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Coordinaciones', 2);
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Programas', 1);
---INSERT INTO catalogo (nombre, nro_campos) VALUES ('Estudiantes', 1);
+INSERT INTO catalogo (nombre, nro_campos) VALUES ('Estudiantes', 0);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Carreras', 1);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Departamentos', 1);
---INSERT INTO catalogo (nombre, nro_campos) VALUES ('Profesores', 1);
+INSERT INTO catalogo (nombre, nro_campos) VALUES ('Profesores', 0);
+INSERT INTO catalogo (nombre, nro_campos) VALUES ('Empleados' , 0);
+INSERT INTO catalogo (nombre, nro_campos) VALUES ('Obreros', 0);
 
 --Campos de coordinaciones
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Nombre', 'texto');

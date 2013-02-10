@@ -18,16 +18,17 @@ import org.apache.struts.action.ActionForm;
  * @author SisCon
  */
 public class ElementoCatalogo extends ActionForm {
-    private int                             idElemento;
-    private int                             idCatalogo;
-    private String                          catalogo;   
-    private ArrayList<CampoCatalogoValor>   camposValores;
-    private String                          mensaje;
 
-private static String[] ATRIBUTOS = {
+    private int idElemento;
+    private int idCatalogo;
+    private String catalogo;
+    private ArrayList<CampoCatalogoValor> camposValores;
+    private String mensaje;
+    private static String[] ATRIBUTOS = {
         "id_elemento", //1
         "id_catalogo" //0
     };
+
     public ElementoCatalogo() {
     }
 
@@ -38,9 +39,9 @@ private static String[] ATRIBUTOS = {
     public void setIdElemento(int idElemento) {
         this.idElemento = idElemento;
     }
-    
-    public void setIdElemento(){
-        Entity eElemento = new Entity(0,10);
+
+    public void setIdElemento() {
+        Entity eElemento = new Entity(0, 10);
         this.idElemento = eElemento.seleccionarMaxId("id_elemento");
     }
 
@@ -52,10 +53,10 @@ private static String[] ATRIBUTOS = {
         return camposValores;
     }
 
-        public CampoCatalogoValor getCampoValor(int i) {
+    public CampoCatalogoValor getCampoValor(int i) {
         return camposValores.get(i);
     }
-        
+
     public void setCamposValores(ArrayList<CampoCatalogoValor> camposValores) {
         this.camposValores = camposValores;
     }
@@ -67,8 +68,7 @@ private static String[] ATRIBUTOS = {
     public void setCatalogo(String catalogo) {
         this.catalogo = catalogo;
     }
-    
-  
+
     public String getMensaje() {
         return mensaje;
     }
@@ -76,11 +76,11 @@ private static String[] ATRIBUTOS = {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
-    public boolean agregar(){
-        Entity eElemento = new Entity(1,10);
+
+    public boolean agregar() {
+        Entity eElemento = new Entity(1, 10);
         boolean resp = true;
-        
+
         String[] columnas = {
             "id_catalogo"
         };
@@ -89,24 +89,27 @@ private static String[] ATRIBUTOS = {
             idCat
         };
         resp &= eElemento.insertar2(columnas, valores);
-        if(resp) {setIdElemento();}
-        else {return resp;}
-        
-        Iterator itValores = this.camposValores.iterator();
-        
-        while(itValores.hasNext() && resp){
-            CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            resp &= ccv.agregar(this.idElemento);                
+        if (resp) {
+            setIdElemento();
+        } else {
+            return resp;
         }
-        
-        return resp;        
+
+        Iterator itValores = this.camposValores.iterator();
+
+        while (itValores.hasNext() && resp) {
+            CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
+            resp &= ccv.agregar(this.idElemento);
+        }
+
+        return resp;
     }
-    
+
     public boolean eliminar() {
         Entity e = new Entity(5, 10);
         return e.borrar("idElemento", idElemento);
     }
-    
+
     public static ArrayList<ElementoCatalogo> listarElementos() {
         ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
         Entity eElementoCatalogo = new Entity(0, 10);
@@ -142,4 +145,34 @@ private static String[] ATRIBUTOS = {
         return listaElementoCatalogo;
     }
 
+    public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
+        ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
+        Entity eBuscar = new Entity(0, 10);
+        String[] columnas = {
+            ATRIBUTOS[1]
+        };
+        Integer valor = new Integer(idCat);
+        Object[] valores = {
+            valor
+        };
+
+        ResultSet rs = eBuscar.seleccionar(columnas, valores);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    ElementoCatalogo ec = new ElementoCatalogo();
+                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+                    
+                    ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento); 
+                    resp.add(ec);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
+
+        return resp;
+    }
 }

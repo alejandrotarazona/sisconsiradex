@@ -26,22 +26,24 @@
 
 
         <h1 class="title" id="page-title">Elementos del Catálogo</h1>
-        <logic:notPresent name="elemtos">
-            No hay actividad que mostrar
+        <logic:notPresent name="elementos">
+            No hay elementos que mostrar
         </logic:notPresent>
-        <logic:present name="elemtos">
-            <logic:empty name="elemtos">
-                No hay actividad que mostrar
+        <logic:present name="elementos">
+            <logic:empty name="elementos">
+                No hay elementos que mostrar
             </logic:empty>
             <table>
-                <logic:iterate name="elemtos" id="elem">
+                <logic:iterate name="elementos" id="elem">
+                    <tr>
+                        <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
 
-                    <logic:iterate name="eleme" property="camposValores" id="campoValor" indexId="index">
-                        <tr>
-                            <bean:write name="campoValor" property="campo.nombre"></bean:write>: 
-                            <bean:write name="campoValor" property="valor"></bean:write><br>
-                        </tr>
-                    </logic:iterate>
+                            <!--bean:write name="campoValor" property="campo.nombre"/-->
+                            <bean:write name="campoValor" property="valor"></bean:write>
+
+                        </logic:iterate>
+                    <br>
+                    </tr>
 
                 </logic:iterate>
 
