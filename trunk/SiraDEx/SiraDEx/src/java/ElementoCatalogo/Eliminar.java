@@ -4,7 +4,9 @@
  */
 package ElementoCatalogo;
 
+import Clases.CampoCatalogoValor;
 import Clases.ElementoCatalogo;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -16,14 +18,13 @@ import org.apache.struts.actions.DispatchAction;
  *
  * @author diana
  */
-public class Eliminar extends DispatchAction {
+public class Eliminar extends org.apache.struts.action.Action {
 
     /*
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    private static final String PAGE = "page";
 
     /**
      * This is the action called from the Struts framework.
@@ -35,24 +36,22 @@ public class Eliminar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    public ActionForward delete(ActionMapping mapping, ActionForm form,
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo ec = (ElementoCatalogo) form;
         
         if (ec.eliminar()) {
             ec.setMensaje("El elemento ha sido eliminado");
+            ArrayList<CampoCatalogoValor> elem = Clases.CampoCatalogoValor.listarElem(ec.getIdCatalogo());
+            request.setAttribute("elementos", elem);
             return mapping.findForward(SUCCESS);
         } else {
             ec.setMensaje("El elemento que desea eliminar no existe.");
+            ArrayList<CampoCatalogoValor> elem = Clases.CampoCatalogoValor.listarElem(ec.getIdCatalogo());
+            request.setAttribute("elementos", elem);
             return mapping.findForward(FAILURE);
         }
     }
-
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        return mapping.findForward(PAGE);
-    }
-
 }

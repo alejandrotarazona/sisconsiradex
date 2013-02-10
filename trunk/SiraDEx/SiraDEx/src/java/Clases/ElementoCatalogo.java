@@ -65,6 +65,10 @@ public class ElementoCatalogo extends ActionForm {
         return catalogo;
     }
 
+    public int getIdElemento() {
+        return idElemento;
+    }
+
     public void setCatalogo(String catalogo) {
         this.catalogo = catalogo;
     }
@@ -107,7 +111,7 @@ public class ElementoCatalogo extends ActionForm {
 
     public boolean eliminar() {
         Entity e = new Entity(5, 10);
-        return e.borrar("idElemento", idElemento);
+        return e.borrar("id_elemento", idElemento);
     }
 
     public static ArrayList<ElementoCatalogo> listarElementos() {
