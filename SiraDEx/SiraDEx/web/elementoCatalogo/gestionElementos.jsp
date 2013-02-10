@@ -36,12 +36,21 @@
             <table>
                 <logic:iterate name="elementos" id="elem">
                     <tr>
-                        <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
+                    <html:form method="POST" action="/EliminarElemento">
+                            <html:hidden name="elem" property="idElemento" />
+                            <html:hidden name="elem" property="idCatalogo"/>
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Está seguro que desea eliminar el Elemento?')" />
+                        </html:form>
+                    <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
 
-                            <!--bean:write name="campoValor" property="campo.nombre"/-->
-                            <bean:write name="campoValor" property="valor"></bean:write>
+                        <!--bean:write name="campoValor" property="campo.nombre"/-->
 
-                        </logic:iterate>
+                        <bean:write name="campoValor" property="valor"></bean:write>
+
+                    </logic:iterate>
                     <br>
                     </tr>
 

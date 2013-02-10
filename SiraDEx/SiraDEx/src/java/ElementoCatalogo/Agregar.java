@@ -43,7 +43,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList ca = Clases.Catalogo.listar();
-        request.setAttribute("catalogos", ca);//verificar si la lista es vacia
+        request.setAttribute("catalogos", ca);                  //verificar si la lista es vacia
         ElementoCatalogo ec = (ElementoCatalogo) form;
         ec.setMensaje("");
         return mapping.findForward(PAGE);

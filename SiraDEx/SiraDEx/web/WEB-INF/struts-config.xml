@@ -140,6 +140,14 @@
             <forward name="failure" path="agregarElemento2"/>
             <forward name="page" path="agregarElemento1"/>
         </action>
+        
+        <action name="elementoCatalogoForm" path="/EliminarElemento" 
+                scope="request" type="ElementoCatalogo.Eliminar">
+            <forward name="success" path="gestionElementos"/>
+            <forward name="failure" path="gestionElementos"/>                        
+        </action>
+        
+        
           
         <!-- ===============================================================-->
           
