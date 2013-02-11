@@ -34,7 +34,7 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-     
+       
         ArrayList cat = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cat);
         return mapping.findForward(SUCCESS);

@@ -36,13 +36,11 @@ public class Actividad extends ActionForm {
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
-        "", //2
-        "", //3
-        "validacion", //4
-        "creador", //5
-        "fecha_creacion",//6
-        "modificador",//7
-        "fecha_modif"//8
+        "validacion", //2
+        "creador", //3
+        "fecha_creacion",//4
+        "modificador",//5
+        "fecha_modif"//6
     };
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
@@ -162,14 +160,14 @@ public class Actividad extends ActionForm {
         try {
             Entity e = new Entity(0, 2);
 
-            String[] col = {ATRIBUTOS[0], ATRIBUTOS[5]};
+            String[] col = {ATRIBUTOS[0], ATRIBUTOS[3]};
             Object[] condicion = {idActividad, creador};
 
             ResultSet rs = e.seleccionar(col, condicion);
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getInt(ATRIBUTOS[0]) == idActividad
-                            && rs.getString(ATRIBUTOS[5]).equals(creador)) {
+                            && rs.getString(ATRIBUTOS[3]).equals(creador)) {
                         return true;
                     }
                 }
@@ -330,15 +328,15 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
 
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
@@ -375,15 +373,15 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
 
                     listaActividad.add(a);
                 }
@@ -398,7 +396,7 @@ public class Actividad extends ActionForm {
     public ArrayList<Actividad> listarActividadesDeUsuario() {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
-        String[] columna = {Actividad.ATRIBUTOS[5]};
+        String[] columna = {Actividad.ATRIBUTOS[3]};
         String[] condicion = {this.creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
@@ -415,15 +413,15 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
 
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
@@ -443,12 +441,12 @@ public class Actividad extends ActionForm {
             System.out.println("RS NULO");
         }
 
-        eActividad = new Entity(4, 2);
+        eActividad = new Entity(0, 2);
         String[] tabABuscar = {
             TABLAS[0],
             TABLAS[1]
         };
-        String[] colCondicion = {TABLAS[1] + ".usuario"};
+        String[] colCondicion = {TABLAS[1] + ".usbid"};
         String[] colValor = {this.creador};
 
         rs = eActividad.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
@@ -463,15 +461,15 @@ public class Actividad extends ActionForm {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[7]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[8]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
 
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};

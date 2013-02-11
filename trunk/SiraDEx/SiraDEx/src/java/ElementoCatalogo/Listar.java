@@ -4,7 +4,6 @@
  */
 package ElementoCatalogo;
 
-import Clases.Catalogo;
 import Clases.ElementoCatalogo;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -37,11 +36,11 @@ public class Listar extends org.apache.struts.action.Action {
         public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        Catalogo cat = (Catalogo) form;
-        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(cat.getIdCatalogo());
-
+        ElementoCatalogo e = (ElementoCatalogo) form;
+        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(e.getIdCatalogo());
         request.setAttribute("elementos", ec);
+        e = ec.get(0);
+        request.setAttribute("elemento", e);
         return mapping.findForward(SUCCESS);
     }
    
