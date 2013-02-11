@@ -21,7 +21,6 @@ public class ElementoCatalogo extends ActionForm {
 
     private int idElemento;
     private int idCatalogo;
-    private String catalogo;
     private ArrayList<CampoCatalogoValor> camposValores;
     private String mensaje;
     private static String[] ATRIBUTOS = {
@@ -32,17 +31,21 @@ public class ElementoCatalogo extends ActionForm {
     public ElementoCatalogo() {
     }
 
-    public int getIdCatalogo() {
-        return idCatalogo;
+    public int getIdElemento() {
+        return idElemento;
+    }
+
+    public void setIdElemento() {
+        Entity eElemento = new Entity(0, 10);
+        this.idElemento = eElemento.seleccionarMaxId("id_elemento");
     }
 
     public void setIdElemento(int idElemento) {
         this.idElemento = idElemento;
     }
 
-    public void setIdElemento() {
-        Entity eElemento = new Entity(0, 10);
-        this.idElemento = eElemento.seleccionarMaxId("id_elemento");
+    public int getIdCatalogo() {
+        return idCatalogo;
     }
 
     public void setIdCatalogo(int idCatalogo) {
@@ -53,24 +56,12 @@ public class ElementoCatalogo extends ActionForm {
         return camposValores;
     }
 
-    public CampoCatalogoValor getCampoValor(int i) {
-        return camposValores.get(i);
-    }
-
     public void setCamposValores(ArrayList<CampoCatalogoValor> camposValores) {
         this.camposValores = camposValores;
     }
 
-    public String getCatalogo() {
-        return catalogo;
-    }
-
-    public int getIdElemento() {
-        return idElemento;
-    }
-
-    public void setCatalogo(String catalogo) {
-        this.catalogo = catalogo;
+    public CampoCatalogoValor getCampoValor(int i) {
+        return camposValores.get(i);
     }
 
     public String getMensaje() {
@@ -120,8 +111,6 @@ public class ElementoCatalogo extends ActionForm {
 
         ResultSet rs = eElementoCatalogo.listar();
 
-        Entity eCatalogo = new Entity(0, 8);
-
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -131,13 +120,6 @@ public class ElementoCatalogo extends ActionForm {
 
                     int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
                     ec.setIdCatalogo(id);
-
-                    String[] nombreCat = {"nombre"};
-                    String[] idCat = {"id_cat"};
-                    Integer[] idElem = {id};
-                    ResultSet r = eCatalogo.proyectar(nombreCat, idCat, idElem);
-                    r.next();
-                    ec.setCatalogo(r.getString(1));
 
                     listaElementoCatalogo.add(ec);
                 }
@@ -155,20 +137,28 @@ public class ElementoCatalogo extends ActionForm {
         String[] columnas = {
             ATRIBUTOS[1]
         };
-        Integer valor = new Integer(idCat);
+        Integer id = new Integer(idCat);
         Object[] valores = {
-            valor
+            id
         };
 
         ResultSet rs = eBuscar.seleccionar(columnas, valores);
         if (rs != null) {
-            try {
+            try {int flag = 1;
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
                     ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
-                    
-                    ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento); 
+
+                    ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento);
                     resp.add(ec);
+                    Iterator it = ec.camposValores.iterator();
+                    
+                    while (it.hasNext() && flag == 1) {
+                        CampoCatalogoValor c = (CampoCatalogoValor) it.next();
+                        System.out.println(c.getCampo().getNombre());
+
+                    }
+                    flag = 0;
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);

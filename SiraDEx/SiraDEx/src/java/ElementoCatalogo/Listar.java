@@ -40,7 +40,7 @@ public class Listar extends org.apache.struts.action.Action {
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(e.getIdCatalogo());
         request.setAttribute("elementos", ec);
         e = ec.get(0);
-        request.setAttribute("elemento", e);
+        request.setAttribute("campos", e.getCamposValores());
         return mapping.findForward(SUCCESS);
     }
    
