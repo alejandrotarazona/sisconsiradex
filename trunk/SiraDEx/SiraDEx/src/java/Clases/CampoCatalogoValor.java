@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author SisCon
  */
-public class CampoCatalogoValor implements Serializable{
+public class CampoCatalogoValor implements Serializable {
 
     private CampoCatalogo campo;
     private int idCampo;
@@ -24,14 +24,17 @@ public class CampoCatalogoValor implements Serializable{
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
-        "CAMPO_CATALOGO",  //1
+        "CAMPO_CATALOGO", //1
         "ELEMENTO_CATALOGO" //2
     };
-    private static String[] ATRIBUTOS = {
-        "id_campo", //0
-        "id_elemento", //1
-        "valor" //2
-    };
+    
+
+    public CampoCatalogoValor() {
+    }
+
+    public CampoCatalogoValor(CampoCatalogo campo) {
+        this.campo = campo;
+    }
 
     public int getIdCampo() {
         return idCampo;
@@ -40,7 +43,7 @@ public class CampoCatalogoValor implements Serializable{
     public void setIdCampo(int idCampo) {
         this.idCampo = idCampo;
     }
-    
+
     public int getIdElemento() {
         return idElemento;
     }
@@ -49,14 +52,6 @@ public class CampoCatalogoValor implements Serializable{
         this.idElemento = idElemento;
     }
 
-    public CampoCatalogoValor() {
-    }
-
-    
-    public CampoCatalogoValor(CampoCatalogo campo) {
-        this.campo = campo;
-    }
-    
     public CampoCatalogo getCampo() {
         return campo;
     }
@@ -72,23 +67,28 @@ public class CampoCatalogoValor implements Serializable{
     public void setValor(String valor) {
         this.valor = valor;
     }
-    
-    public boolean agregar(int idElemento){
+
+    public boolean agregar(int idElemento) {
         boolean resp = true;
         Integer elementoId = new Integer(idElemento);
-        
-        Entity eValor = new Entity(1,11);
-        Object[] valores = {
-          campo.getIdCampo(),
-          elementoId,
-          valor
+
+        Entity eValor = new Entity(1, 11);
+        String[] ATRIBUTOS = {
+        "id_campo",
+        "id_elemento", 
+        "valor"
         };
-        
+        Object[] valores = {
+            campo.getIdCampo(),
+            elementoId,
+            valor
+        };
+
         resp &= eValor.insertar2(ATRIBUTOS, valores);
-        
+
         return resp;
     }
-    
+
     public static ArrayList<CampoCatalogoValor> listar(int idCatalogo) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 9);
@@ -97,7 +97,7 @@ public class CampoCatalogoValor implements Serializable{
 
         ResultSet rs = eCampo.seleccionar(columnas, condiciones);
 
-        if (rs != null) { 
+        if (rs != null) {
             try {
                 while (rs.next()) {
                     CampoCatalogo c = new CampoCatalogo();
@@ -105,7 +105,7 @@ public class CampoCatalogoValor implements Serializable{
                     c.setIdCatalogo(rs.getInt("id_cat"));
                     c.setNombre(rs.getString("nombre_campo"));
                     c.setTipo(rs.getString("tipo_campo"));
-      
+
                     CampoCatalogoValor cv = new CampoCatalogoValor(c);
                     listaValor.add(cv);
                 }
@@ -115,29 +115,38 @@ public class CampoCatalogoValor implements Serializable{
         }
         return listaValor;
     }
-    
+
     public static ArrayList<CampoCatalogoValor> listarElem(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 10);
-
+        String[] ATRIBUTOS = {
+        "id_campo", //0
+        "id_elemento", //1
+        "valor", //2
+        "nombre_campo", //3
+        "tipo_campo" //4
+        };
         String[] tabABuscar = {
             TABLAS[0],
             TABLAS[1],
             TABLAS[2]
         };
-        String[] colCondicion = {TABLAS[0]+".id_elemento"};
+        String[] colCondicion = {TABLAS[0] + ".id_elemento"};
         Object[] colValor = {idElem};
 
         ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
-       
-        if (rs != null) { 
+
+        if (rs != null) {
             try {
                 while (rs.next()) {
                     CampoCatalogoValor cv = new CampoCatalogoValor();
                     cv.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     cv.setIdElemento(rs.getInt(ATRIBUTOS[1]));
                     cv.setValor(rs.getString(ATRIBUTOS[2]));
-      
+                    CampoCatalogo cc = new CampoCatalogo();
+                    cc.setNombre(rs.getString(ATRIBUTOS[3]));
+                    cv.setCampo(cc);
+
                     listaValor.add(cv);
                 }
             } catch (SQLException ex) {

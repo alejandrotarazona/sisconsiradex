@@ -48,7 +48,7 @@
                                              value=" "
                                              title="Eliminar"
                                              onclick="return confirm('¿Está 
-                                             seguro que desea eliminar el Catalogo?')" />
+                                             seguro que desea eliminar catálogo?')" />
                             </html:form>
                         </td>
                     </tr>

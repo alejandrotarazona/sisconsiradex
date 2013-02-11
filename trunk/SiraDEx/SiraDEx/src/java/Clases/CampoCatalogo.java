@@ -17,9 +17,9 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author alejandro
+ * @author SisCon
  */
-public class CampoCatalogo{
+public class CampoCatalogo implements Serializable{
     
     private int     idCampo;
     private int     idCatalogo;

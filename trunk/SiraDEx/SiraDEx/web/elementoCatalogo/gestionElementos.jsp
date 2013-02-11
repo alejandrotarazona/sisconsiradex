@@ -34,30 +34,38 @@
                 No hay elementos que mostrar
             </logic:empty>
             <table>
-                
-                <logic:iterate name="elementos" id="elem">
-                    <tr>
-                        <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
+                <tr>
+                    <logic:iterate name="campos" id="campo">
+                    <td>
+                        <b><bean:write name="campo" property="campo.nombre"/></b>
+                    </td>    
+                </logic:iterate>  
+            </tr>
+            <logic:iterate name="elementos" id="elem">
 
-                            <bean:write name="campoValor" property="valor"/>
-                            <%--POR ALGUNA EXTRAÑA RAZON LO DE ARRIBA NO DA ERROR Y ESTO SÍ 
-                                    bean:write name="campoValor" property="campo.nombre"/--%>
-                        </logic:iterate>
-                        <html:form method="POST" action="/EliminarElemento">
-                            <html:hidden name="elem" property="idElemento" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar el Elemento?')" />
-                        </html:form>
-                    <br>
-                    </tr>
-
+                <tr>
+                    <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
+                    <td>
+                        <bean:write name="campoValor" property="valor"/>
+                    </td>
                 </logic:iterate>
+                <td>
+                    <html:form method="POST" action="/EliminarElemento">
+                        <html:hidden name="elem" property="idElemento" />
+                        <html:submit styleId="botonEliminar"
+                                     value=" "
+                                     title="Eliminar"
+                                     onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
+                    </html:form>
+                </td>
+                <br>
+                </tr>
 
-            </logic:present>
+            </logic:iterate>
 
-        </table>
+        </logic:present>
 
-    </body>
+    </table>
+
+</body>
 </html>
