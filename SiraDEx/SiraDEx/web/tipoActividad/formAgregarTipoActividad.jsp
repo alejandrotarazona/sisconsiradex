@@ -62,6 +62,16 @@
 </td>
 </tr>
 <tr>
+<td>Coordinación a validar<span style="color:red">*</span> </td>
+<td>
+    <html:select property="validador">
+        <html:option value="">(Seleccione una coordinación)</html:option>
+        <html:option value="CIO">Coordinacion de Igualdad de Oportunidades</html:option>
+        <%-- <html:optionsCollection name="coordinaciones" label="atributo1" value="id"/> --%>
+    </html:select>
+</td>
+</tr>
+<tr>
 <td>Realizado por<span style="color:red">*</span> </td>
 <td>
     <html:multibox property="permiso">Empleados</html:multibox> Empleados<br>

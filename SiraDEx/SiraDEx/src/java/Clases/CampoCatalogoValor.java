@@ -24,7 +24,8 @@ public class CampoCatalogoValor implements Serializable{
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
-        "CAMPO_CATALOGO"  //1
+        "CAMPO_CATALOGO",  //1
+        "ELEMENTO_CATALOGO" //2
     };
     private static String[] ATRIBUTOS = {
         "id_campo", //0
@@ -117,12 +118,18 @@ public class CampoCatalogoValor implements Serializable{
     
     public static ArrayList<CampoCatalogoValor> listarElem(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 12);
-        String[] columnas = {"id_elemento"};
-        Integer[] condiciones = {idElem};
+        Entity eCampo = new Entity(0, 10);
 
-        ResultSet rs = eCampo.seleccionar(columnas, condiciones);
+        String[] tabABuscar = {
+            TABLAS[0],
+            TABLAS[1],
+            TABLAS[2]
+        };
+        String[] colCondicion = {TABLAS[0]+".id_elemento"};
+        Object[] colValor = {idElem};
 
+        ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+       
         if (rs != null) { 
             try {
                 while (rs.next()) {

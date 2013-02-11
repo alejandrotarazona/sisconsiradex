@@ -49,10 +49,6 @@
                                  <li><html:link action="/AGestionCatalogos"> 
                                         Gestionar catálogos 
                                     </html:link></li>
-                                 
-                                 <li><html:link action="/AGestionElementos"> 
-                                        Gestionar elementos de un catálogo
-                                    </html:link></li>
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar log</a></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Gestionar backup</a></li>

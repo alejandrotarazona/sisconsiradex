@@ -25,8 +25,8 @@ public class ElementoCatalogo extends ActionForm {
     private ArrayList<CampoCatalogoValor> camposValores;
     private String mensaje;
     private static String[] ATRIBUTOS = {
-        "id_elemento", //1
-        "id_catalogo" //0
+        "id_elemento", //0
+        "id_catalogo" //1
     };
 
     public ElementoCatalogo() {

@@ -41,13 +41,13 @@ public class Entity {
         "CAMPO_CATALOGO",       //9
         "ELEMENTO_CATALOGO",    //10
         "VALOR_CATALOGO",       //11
-        "ELEMENTOS",            //12 TABLAS AUXILIARES PARA PODER LISTAR META INFO.
-        "ESTUDIANTES",          //13             OJO!!!
-        "PROFESORES",           //14              NO se puede hacer insert ni update
-        "OBREROS",              //15                 a traves de estas!!!
-        "PROGRAMAS",            //16
-        "EMPLEADOS",            //17
-        "COORDINACIONES"        //18    ---------------------------------------
+        
+        "ESTUDIANTES",          //12             OJO!!!
+        "PROFESORES",           //13              NO se puede hacer insert ni update
+        "OBREROS",              //14                a traves de estas!!!
+        "PROGRAMAS",            //15
+        "EMPLEADOS",            //16
+        "COORDINACIONES"        //17    ---------------------------------------
     };
 
     /*
@@ -192,7 +192,7 @@ public class Entity {
             String[] seleccionar,
             String[] tablas,
             String[] columnas,
-            String[] valores) {
+            Object[] valores) {
         sql = ACCION + " " + seleccionar[0];
         int i;
 
@@ -205,15 +205,21 @@ public class Entity {
         for (i = 1; i < tablas.length; i++) {
             sql += " NATURAL JOIN " + tablas[i];
         }
-        sql += " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
+        
+        if (valores[0] instanceof Integer) {
+            sql += " WHERE " + columnas[0] + " = " + valores[0];
+        } else {
 
-
-        for (i = 1; i < columnas.length; i++) {
-            sql += "AND "
-                    + columnas[i] + " = '"
-                    + valores[i] + "' ";
+            sql += " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
         }
-
+        for (i = 1; i < columnas.length; i++) {
+            if (valores[i] instanceof Integer) {
+                sql += " AND " + columnas[i] + " = " + valores[i];
+            } else {
+                sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
+            }
+        }
+        
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
