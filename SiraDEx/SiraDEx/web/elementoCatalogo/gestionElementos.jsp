@@ -20,12 +20,12 @@
 
             <html:link action="/RegistrarElemento?method=page"> 
                 Agregar elemento
-            </html:link><br/>  
+            </html:link><br><br>  
 
         </logic:equal>
 
 
-        <h1 class="title" id="page-title">Elementos del Catálogo</h1>
+        <% out.print("<h1>Elementos del catálogo "+(String) request.getAttribute("nombreCat")+"</h1>");%>
         <logic:notPresent name="elementos">
             No hay elementos que mostrar
         </logic:notPresent>

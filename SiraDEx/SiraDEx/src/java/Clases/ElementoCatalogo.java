@@ -144,7 +144,8 @@ public class ElementoCatalogo extends ActionForm {
 
         ResultSet rs = eBuscar.seleccionar(columnas, valores);
         if (rs != null) {
-            try {int flag = 1;
+            try {
+                int flag = 1;
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
                     ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
@@ -152,7 +153,7 @@ public class ElementoCatalogo extends ActionForm {
                     ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento);
                     resp.add(ec);
                     Iterator it = ec.camposValores.iterator();
-                    
+
                     while (it.hasNext() && flag == 1) {
                         CampoCatalogoValor c = (CampoCatalogoValor) it.next();
                         System.out.println(c.getCampo().getNombre());
@@ -165,8 +166,7 @@ public class ElementoCatalogo extends ActionForm {
             }
 
         }
-
-
         return resp;
     }
+    
 }

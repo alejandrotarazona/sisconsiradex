@@ -37,10 +37,12 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
-        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(e.getIdCatalogo());
+        int idCat = e.getIdCatalogo();
+        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         e = ec.get(0);
         request.setAttribute("campos", e.getCamposValores());
+        request.setAttribute("nombreCat",Clases.Catalogo.getNombre(idCat));
         return mapping.findForward(SUCCESS);
     }
    
