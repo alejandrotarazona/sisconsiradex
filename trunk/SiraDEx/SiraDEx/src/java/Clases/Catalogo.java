@@ -115,6 +115,21 @@ public class Catalogo extends ActionForm {
         return nombre;
     }
 
+    public static String getNombre(int idCatalogo) {
+        try {
+            Entity eCatalogo = new Entity(0, 8);
+            String[] nombre = {"nombre"};
+            String[] idCat = {"id_cat"};
+            Integer[] id = {idCatalogo};
+            ResultSet r = eCatalogo.proyectar(nombre, idCat, id);
+            r.next();
+            return r.getString(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
@@ -193,14 +208,13 @@ public class Catalogo extends ActionForm {
             if (resp) {
                 setIdCatalogo();
                 Iterator itCampos;
-                if (this.campos!= null) {
+                if (this.campos != null) {
                     itCampos = campos.iterator();
                     while (itCampos.hasNext() && resp) {
                         CampoCatalogo cC = (CampoCatalogo) itCampos.next();
                         resp &= cC.agregarCampo(idCatalogo);
                     }
-                }
-                else {
+                } else {
                     System.out.println("");
                 }
             } else {
