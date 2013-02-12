@@ -42,11 +42,11 @@
         <h1 class="title" id="page-title">Agregar elemento al catalogo</h1>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">
-            <bean:write name="elementoCatalogoForm" property="mensaje" /><br/>
+            <div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /><br/></div>
         </logic:present>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
-    <html:form action="/RegistrarElemento?method=save2">
+    <html:form action="/RegistrarElemento?method=save">
 
         <logic:iterate name="elementoCatalogoForm" property="camposValores" id="campoValor" indexId="index">
             <tr>
@@ -69,7 +69,7 @@
 </logic:iterate>
 </table>
 <br>
-<html:submit>Registrar</html:submit>
+<div align="center"><html:submit>Registrar</html:submit></div>
 
 </html:form>
 </body>

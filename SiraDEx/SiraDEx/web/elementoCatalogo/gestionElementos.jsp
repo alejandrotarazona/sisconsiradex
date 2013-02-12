@@ -12,25 +12,27 @@
 
     </head>
     <body>
-        <% out.print("<h1 class='title' id='page-title'>Gestion del Catálogo " + (String) request.getAttribute("nombreCat") + "</h1>");%>
-        <logic:present name="elementoCatalogoForm" property="mensaje">
-            <bean:write name="elementoCatalogoForm" property="mensaje" /><br/>
-        </logic:present>
+        <% out.print("<h1 class='title' id='page-title'>Gestión del Catálogo " + (String) request.getAttribute("nombreCat") + "</h1>");%>
 
         <logic:equal name="user" property="rol" value="WM">
 
             <html:link action="/RegistrarElemento?method=page"> 
                 Agregar elemento
-            </html:link><br>  
+            </html:link><br>
 
         </logic:equal>
 
+        <logic:present name="elementoCatalogoForm" property="mensaje">
+            <div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /></div>
+        </logic:present>
+        
+        <h1>Elementos del catálogo</h1>
         <logic:notPresent name="elementos">
-            No hay elementos que mostrar
+            <p align="center">No hay elementos que mostrar</p>
         </logic:notPresent>
         <logic:present name="elementos">
             <logic:empty name="elementos">
-                No hay elementos que mostrar
+                <p align="center">No hay elementos que mostrar</p>
             </logic:empty>
             <table>
                 <tr>
@@ -57,11 +59,11 @@
                                      onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
                     </html:form>
                 </td>
-                </tr>
+            </tr>
 
-            </logic:iterate>
-        </table>
-    </logic:present>
+        </logic:iterate>
+    </table>
+</logic:present>
 
 </body>
 </html>

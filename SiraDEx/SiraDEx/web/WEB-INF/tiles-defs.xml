@@ -99,12 +99,8 @@
         <put name="body" value="/elementoCatalogo/gestionElementos.jsp" />
     </definition>
     
-    <definition name="agregarElemento1" extends="plantilla">
-        <put name="body" value="/elementoCatalogo/formAgregarElemento1.jsp" />
-    </definition>
-    
-    <definition name="agregarElemento2" extends="plantilla">
-        <put name="body" value="/elementoCatalogo/formAgregarElemento2.jsp" />
+    <definition name="agregarElemento" extends="plantilla">
+        <put name="body" value="/elementoCatalogo/formAgregarElemento.jsp" />
     </definition>
     
 

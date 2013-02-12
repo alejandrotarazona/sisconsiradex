@@ -85,7 +85,7 @@ public class Agregar extends DispatchAction {
 
         if (cat.agregar()) {
 
-            cat.setMensaje("El catalogo '" + cat.getNombre() + "' ha sido "
+            cat.setMensaje("El catálogo '" + cat.getNombre() + "' ha sido "
                     + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
