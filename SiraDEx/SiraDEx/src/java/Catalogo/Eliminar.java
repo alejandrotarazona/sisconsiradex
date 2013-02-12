@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  *
@@ -42,7 +41,7 @@ public class Eliminar extends org.apache.struts.action.Action {
         Catalogo t = (Catalogo) form;
 
         if (t.eliminar(t.getIdCatalogo())) {
-            t.setMensaje("El catlogo ha sido eliminado.");
+            t.setMensaje("El catálogo ha sido eliminado.");
             ArrayList cat = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cat);
             return mapping.findForward(SUCCESS);

@@ -8,12 +8,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Agregar Catalogo</title>
+        <title>SiraDEx | Agregar Catálogo</title>
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registro de Catalogos</h1>
-        <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
+        <h1 class="title" id="page-title">Registro de Catálogos</h1>
+        <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p>
         <logic:present name="catalogoForm" property="mensaje">
             <bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>

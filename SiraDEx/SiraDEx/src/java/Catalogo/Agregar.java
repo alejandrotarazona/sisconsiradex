@@ -38,6 +38,14 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Catalogo cat = (Catalogo) form;
+        cat.setMensaje("");
+        return mapping.findForward(PAGE);
+    }
+
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -67,16 +75,6 @@ public class Agregar extends DispatchAction {
 
     }
 
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
-        request.setAttribute("programas", programas);*/
-        Catalogo cat = (Catalogo) form;
-        cat.setMensaje("");
-        return mapping.findForward(PAGE);
-    }
-
     public ActionForward save2(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -87,8 +85,14 @@ public class Agregar extends DispatchAction {
 
             cat.setMensaje("El catálogo '" + cat.getNombre() + "' ha sido "
                     + "registrado con éxito.");
+            ArrayList cats = Clases.Catalogo.listar();
+            request.setAttribute("catalogos", cats);
             return mapping.findForward(SUCCESSFULL);
         }
+        cat.setMensaje("Error: El catálogo '" + cat.getNombre() + "' no ha sido"
+                + " registrado, verifique que no exista un catálogo con ese nombre.");
+        ArrayList cats = Clases.Catalogo.listar();
+        request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);
 
 

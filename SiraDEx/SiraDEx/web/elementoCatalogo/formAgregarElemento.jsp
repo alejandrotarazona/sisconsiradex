@@ -36,7 +36,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Agregar elemento al catalogo</title>
+        <% out.print("<title>SiraDEx | Agregar elemento al catálogo " + (String) request.getAttribute("nombreCat") + "</title>");%>
+
     </head>
     <body>
         <h1 class="title" id="page-title">Agregar elemento al catalogo</h1>

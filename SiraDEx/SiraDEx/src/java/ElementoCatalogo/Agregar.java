@@ -58,7 +58,7 @@ public class Agregar extends DispatchAction {
 
 
         if (e.agregar()) {
-            e.setMensaje("Su elemento ha sido registrado con éxito.");
+            e.setMensaje("El elemento ha sido registrado con éxito.");
             ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);
             e = ec.get(0);

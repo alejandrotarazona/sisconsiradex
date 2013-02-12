@@ -38,6 +38,17 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
+        request.setAttribute("programas", programas);*/
+        TipoActividad t = (TipoActividad) form;
+        t.setMensaje("");
+        return mapping.findForward(PAGE);
+    }
+    
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -65,16 +76,6 @@ public class Agregar extends DispatchAction {
 
         return mapping.findForward(SUCCESS);
 
-    }
-
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
-        request.setAttribute("programas", programas);*/
-        TipoActividad t = (TipoActividad) form;
-        t.setMensaje("");
-        return mapping.findForward(PAGE);
     }
 
     public ActionForward save2(ActionMapping mapping, ActionForm form,
