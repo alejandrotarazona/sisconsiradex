@@ -28,11 +28,11 @@
         
         <h1>Elementos del catálogo</h1>
         <logic:notPresent name="elementos">
-            <p align="center">No hay elementos que mostrar</p>
+            <p align="center">No hay elementos que mostrar.</p>
         </logic:notPresent>
         <logic:present name="elementos">
             <logic:empty name="elementos">
-                <p align="center">No hay elementos que mostrar</p>
+                <p align="center">No hay elementos que mostrar.</p>
             </logic:empty>
             <table>
                 <tr>
