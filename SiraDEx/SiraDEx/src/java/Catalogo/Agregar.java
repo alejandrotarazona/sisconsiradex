@@ -16,7 +16,7 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  *
- * @author alejandro
+ * @author SisCon
  */
 public class Agregar extends DispatchAction {
 
@@ -42,7 +42,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Catalogo cat = (Catalogo) form;
-        cat.setMensaje("");
+        cat.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 
