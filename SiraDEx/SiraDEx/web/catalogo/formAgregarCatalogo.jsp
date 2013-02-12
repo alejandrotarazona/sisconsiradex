@@ -15,7 +15,7 @@
         <h1 class="title" id="page-title">Registro de Catálogos</h1>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p>
         <logic:present name="catalogoForm" property="mensaje">
-            <bean:write name="catalogoForm" property="mensaje" /><br/>
+            <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
         <html:form method="POST" action ="/RegistrarCatalogo?method=save">
             <table>
