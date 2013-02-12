@@ -43,7 +43,7 @@
         <h1 class="title" id="page-title">Agregar elemento al catalogo</h1>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">
-            <div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /><br/></div>
+            <br/><div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /><br/></div>
         </logic:present>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
