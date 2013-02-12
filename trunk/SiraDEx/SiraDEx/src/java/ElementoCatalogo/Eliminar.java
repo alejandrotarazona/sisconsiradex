@@ -14,7 +14,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  *
- * @author diana
+ * @author SisCon
  */
 public class Eliminar extends org.apache.struts.action.Action {
 
@@ -54,18 +54,18 @@ public class Eliminar extends org.apache.struts.action.Action {
                 request.setAttribute("elementos", null);
             }
             return mapping.findForward(SUCCESS);
-        } else {
-            e.setMensaje("Error: El elemento no pudo ser eliminado.");
-            ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
-            request.setAttribute("elementos", ec);
-            int tam = ec.size();
-            if (tam > 0) {
-                e = ec.get(tam - 1);
-                request.setAttribute("campos", e.getCamposValores());
-            } else {
-                request.setAttribute("elementos", null);
-            }
-            return mapping.findForward(FAILURE);
         }
+        e.setMensaje("Error: El elemento no pudo ser eliminado.");
+        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
+        request.setAttribute("elementos", ec);
+        int tam = ec.size();
+        if (tam > 0) {
+            e = ec.get(tam - 1);
+            request.setAttribute("campos", e.getCamposValores());
+        } else {
+            request.setAttribute("elementos", null);
+        }
+        return mapping.findForward(FAILURE);
+
     }
 }

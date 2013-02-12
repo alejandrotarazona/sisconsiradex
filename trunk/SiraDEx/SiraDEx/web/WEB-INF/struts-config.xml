@@ -120,7 +120,7 @@
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
-                scope="session" name="catalogoForm">
+                scope="request" name="catalogoForm">
             <forward name="success" path="gestionCatalogos"/>
             <forward name="failure" path="gestionCatalogos"/>           
         </action>
@@ -129,16 +129,15 @@
         <!-- =================ELEMENTOS DE CATALOGO=========================-->
 
         <action path="/AGestionElementos" type="ElementoCatalogo.Listar"
-                scope="request" name="elementoCatalogoForm">
+                scope="session" name="elementoCatalogoForm">
             <forward name="success" path="gestionElementos"/>
         </action>
         
         <action path="/RegistrarElemento" type="ElementoCatalogo.Agregar" 
                 scope="session" parameter="method" name="elementoCatalogoForm">
-            <forward name="success" path="agregarElemento2"/>
-            <forward name="successfull" path="gestionElementos"/>
-            <forward name="failure" path="agregarElemento2"/>
-            <forward name="page" path="agregarElemento1"/>
+            <forward name="page" path="agregarElemento"/>
+            <forward name="success" path="gestionElementos"/>
+            <forward name="failure" path="agregarElemento"/>
         </action>
         
         <action name="elementoCatalogoForm" path="/EliminarElemento" 

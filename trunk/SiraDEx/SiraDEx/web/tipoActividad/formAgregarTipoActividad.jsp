@@ -62,16 +62,6 @@
 </td>
 </tr>
 <tr>
-<td>Coordinación a validar<span style="color:red">*</span> </td>
-<td>
-    <html:select property="validador">
-        <html:option value="">(Seleccione una coordinación)</html:option>
-        <html:option value="CIO">Coordinacion de Igualdad de Oportunidades</html:option>
-        <%-- <html:optionsCollection name="coordinaciones" label="atributo1" value="id"/> --%>
-    </html:select>
-</td>
-</tr>
-<tr>
 <td>Realizado por<span style="color:red">*</span> </td>
 <td>
     <html:multibox property="permiso">Empleados</html:multibox> Empleados<br>
@@ -79,6 +69,10 @@
     <html:multibox property="permiso">Profesores</html:multibox> Profesores<br>
     <html:multibox property="permiso">Obreros</html:multibox> Obreros 
 </td>       
+</tr>
+<tr>
+<td>Producto<span style="color:red">*</span> </td>
+<td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
 </tr>
 <tr><td>Numero de campos<span style="color:red">*</span> </td>
 <td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>

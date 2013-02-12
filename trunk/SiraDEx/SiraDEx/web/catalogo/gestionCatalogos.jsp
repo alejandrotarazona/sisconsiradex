@@ -7,51 +7,52 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestion de Catalogos</title>
+        <title>SiraDEx | Gestión de Catálogos</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de Catalogos</h1>
-        <logic:present name="catalogoForm" property="mensaje">
-            <bean:write name="catalogoForm" property="mensaje" /><br/>
-        </logic:present>
+        <h1 class="title" id="page-title">Gestión de Catálogos</h1>
 
         <html:link action="/RegistrarCatalogo?method=page"> 
-            Registrar catalogo
+            Agregar catálogo
         </html:link><br/>
 
-        <h1 class="title" id="page-title">Catalogos registrados en el sistema</h1>
+        <logic:present name="catalogoForm" property="mensaje">
+            <div align="center"><bean:write name="catalogoForm" property="mensaje" /></div>
+        </logic:present>
+            
+        <h1>Catálogos del sistema</h1>
         <logic:notPresent name="catalogos">
-            No hay catalogos de actividad que mostrar
+            <p align="center">No hay catálogos que mostrar.</p>
         </logic:notPresent>
         <logic:present name="catalogos">
             <logic:empty name="catalogos">
-                No hay catalogos de actividad que mostrar
+                <p align="center">No hay catálogos que mostrar.</p>
             </logic:empty>
             <table>
                 <logic:iterate name="catalogos" id="cat">
                     <tr>
-                        <td>
-                            <bean:write name="cat" property="nombre" />
-                        </td>
-                        <td>
-                            <html:form method="POST" action="/AGestionElementos">
-                                <html:hidden name="cat" property="idCatalogo" />
-                                <html:submit styleId="botonExaminar"
-                                             value=" "
-                                             title="Consultar"/>
-                            </html:form>
-                        </td>
-                        <td>
-                            <html:form method="POST" action="/EliminarCatalogo">
-                                <html:hidden name="cat" property="idCatalogo" />
-                                <html:submit styleId="botonEliminar"
-                                             value=" "
-                                             title="Eliminar"
-                                             onclick="return confirm('¿Está 
-                                             seguro que desea eliminar catálogo?')" />
-                            </html:form>
-                        </td>
-                    </tr>
+                    <td>
+                        <bean:write name="cat" property="nombre" />
+                    </td>
+                    <td>
+                        <html:form method="POST" action="/AGestionElementos">
+                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:submit styleId="botonExaminar"
+                                         value=" "
+                                         title="Consultar"/>
+                        </html:form>
+                    </td>
+                    <td>
+                        <html:form method="POST" action="/EliminarCatalogo">
+                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Está 
+                                         seguro que desea eliminar catálogo?')" />
+                        </html:form>
+                    </td>
+                </tr>
             </logic:iterate>
         </table>
     </logic:present>

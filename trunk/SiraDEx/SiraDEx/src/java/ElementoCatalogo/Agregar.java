@@ -24,7 +24,6 @@ public class Agregar extends DispatchAction {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
-    private static final String SUCCESSFULL = "successfull";
     private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
@@ -38,44 +37,41 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-       
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ArrayList ca = Clases.Catalogo.listar();
-        request.setAttribute("catalogos", ca);                  //verificar si la lista es vacia
-        ElementoCatalogo ec = (ElementoCatalogo) form;
-        ec.setMensaje("");
+        ElementoCatalogo e = (ElementoCatalogo) form;
+        e.setMensaje("");
+        ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(e.getIdCatalogo());
+        e.setCamposValores(valores);
+
         return mapping.findForward(PAGE);
     }
-    
+
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        ElementoCatalogo ec = (ElementoCatalogo) form;
-        
-        ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(ec.getIdCatalogo());
-        ec.setCamposValores(valores);
-        return mapping.findForward(SUCCESS);
-
-    }
-    
-    public ActionForward save2(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-
-        ElementoCatalogo ec = (ElementoCatalogo) form;
+        ElementoCatalogo e = (ElementoCatalogo) form;
+        int idCat = e.getIdCatalogo();
+        request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
 
 
-        if (ec.agregar()) {
-
-            ec.setMensaje("Su elemento ha sido registrado con éxito.");
-            return mapping.findForward(SUCCESSFULL);
+        if (e.agregar()) {
+            e.setMensaje("Su elemento ha sido registrado con éxito.");
+            ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
+            request.setAttribute("elementos", ec);
+            e = ec.get(0);
+            request.setAttribute("campos", e.getCamposValores());
+            return mapping.findForward(SUCCESS);
         }
 
-        ec.setMensaje("No se pudo registrar el elemento. Por favor revise que "
+        e.setMensaje("No se pudo registrar el elemento. Por favor revise que "
                 + "los campos se han llenado correctamente.");
+        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
+        request.setAttribute("elementos", ec);
+        e = ec.get(0);
+        request.setAttribute("campos", e.getCamposValores());
         return mapping.findForward(FAILURE);
 
 
