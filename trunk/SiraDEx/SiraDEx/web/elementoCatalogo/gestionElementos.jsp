@@ -8,10 +8,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestion de Elementos del catálogo</title>
+        <% out.print("<title>SiraDEx | Gestión del Catálogo " + (String) request.getAttribute("nombreCat") + "</title>");%>
+
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de elementos del catálogo</h1>
+        <% out.print("<h1 class='title' id='page-title'>Gestion del Catálogo " + (String) request.getAttribute("nombreCat") + "</h1>");%>
         <logic:present name="elementoCatalogoForm" property="mensaje">
             <bean:write name="elementoCatalogoForm" property="mensaje" /><br/>
         </logic:present>
@@ -20,12 +21,10 @@
 
             <html:link action="/RegistrarElemento?method=page"> 
                 Agregar elemento
-            </html:link><br><br>  
+            </html:link><br>  
 
         </logic:equal>
 
-
-        <% out.print("<h1>Elementos del catálogo "+(String) request.getAttribute("nombreCat")+"</h1>");%>
         <logic:notPresent name="elementos">
             No hay elementos que mostrar
         </logic:notPresent>
@@ -58,14 +57,11 @@
                                      onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
                     </html:form>
                 </td>
-                <br>
                 </tr>
 
             </logic:iterate>
-
-        </logic:present>
-
-    </table>
+        </table>
+    </logic:present>
 
 </body>
 </html>

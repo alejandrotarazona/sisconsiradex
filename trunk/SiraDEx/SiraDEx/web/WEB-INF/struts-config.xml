@@ -142,7 +142,7 @@
         </action>
         
         <action name="elementoCatalogoForm" path="/EliminarElemento" 
-                scope="request" type="ElementoCatalogo.Eliminar">
+                scope="session" type="ElementoCatalogo.Eliminar">
             <forward name="success" path="gestionElementos"/>
             <forward name="failure" path="gestionElementos"/>                        
         </action>

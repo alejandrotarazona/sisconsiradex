@@ -11,13 +11,12 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class TipoActividad extends ActionForm {
+public class TipoActividad extends Root {
 
     private int id;
     private String nombreTipo;
@@ -30,7 +29,6 @@ public class TipoActividad extends ActionForm {
     private String producto;
     private boolean activo;
     private ArrayList<Campo> campos;
-    private String mensaje;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
         "nombre_tipo_actividad", //1
@@ -146,14 +144,6 @@ public class TipoActividad extends ActionForm {
 
     public void setProducto(String producto) {
         this.producto = producto;
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     public boolean isActivo() {
@@ -289,7 +279,7 @@ public class TipoActividad extends ActionForm {
     public static ArrayList<TipoActividad> listarTiposActividad() {
         Entity eListar = new Entity(0, 1);
         ResultSet rs = eListar.listar();
-        ArrayList<TipoActividad> tipos = new ArrayList<TipoActividad>(0);
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
         if (rs != null) {
             try {
@@ -345,7 +335,7 @@ public class TipoActividad extends ActionForm {
 
         TipoActividad t = new TipoActividad("prueba1", 2, "pasantia");
         t.setTipoPR("p");
-        ArrayList<Campo> cs = new ArrayList<Campo>();
+        ArrayList<Campo> cs = new ArrayList<>();
 
         Campo c0 = new Campo("Nombre", "texto", 16, true);
         Campo c1 = new Campo("Apellido", "texto", 16, false);

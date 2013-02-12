@@ -14,19 +14,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class Catalogo extends ActionForm {
+public class Catalogo extends Root {
 
     private int idCatalogo;
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
-    private String mensaje;
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
@@ -150,14 +148,6 @@ public class Catalogo extends ActionForm {
         this.campos = campos;
     }
 
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
@@ -249,10 +239,9 @@ public class Catalogo extends ActionForm {
     }
 
     public boolean eliminar(int idCat) {
-        boolean resp = true;
         Entity eEliminar = new Entity(5, 8);
-        resp = eEliminar.borrar(ATRIBUTOS[0], idCat);
-        return resp;
+        return eEliminar.borrar(ATRIBUTOS[0], idCat);
+        
     }
 
     public static void main(String[] args) throws IOException {

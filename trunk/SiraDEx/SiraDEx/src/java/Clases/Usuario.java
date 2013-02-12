@@ -10,13 +10,12 @@ import java.sql.SQLException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class Usuario extends ActionForm {
+public class Usuario extends Root {
 
     private String nombre;
     private String apellido;
@@ -26,7 +25,6 @@ public class Usuario extends ActionForm {
     private String telefono;
     private String email;
     private String rol;
-    private String mensaje;
     private static final String[] ATRIBUTOS = {
         "nombre", //0
         "apellido", //1
@@ -96,10 +94,6 @@ public class Usuario extends ActionForm {
         this.tipo = tipo;
     }
 
-    public String getMensaje() {
-        return mensaje;
-    }
-
     public String getTelefono() {
         return telefono;
     }
@@ -122,10 +116,6 @@ public class Usuario extends ActionForm {
 
     public void setRol(String rol) {
         this.rol = rol;
-    }
-    
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     @Override
