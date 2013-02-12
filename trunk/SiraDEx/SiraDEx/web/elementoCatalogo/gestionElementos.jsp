@@ -17,7 +17,7 @@
         <logic:equal name="user" property="rol" value="WM">
 
             <html:link action="/RegistrarElemento?method=page"> 
-                Agregar elemento
+                Agregar Elemento al Catálogo
             </html:link><br>
 
         </logic:equal>
@@ -26,7 +26,7 @@
             <div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /></div>
         </logic:present>
         
-        <h1>Elementos del catálogo</h1>
+        <h1>Elementos del Catálogo</h1>
         <logic:notPresent name="elementos">
             <p align="center">No hay elementos que mostrar.</p>
         </logic:notPresent>

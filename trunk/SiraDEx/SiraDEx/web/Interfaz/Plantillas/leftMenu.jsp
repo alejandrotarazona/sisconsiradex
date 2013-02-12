@@ -16,22 +16,22 @@
                 <div class="content">
                     <ul class="menu">
                         <logic:present name="user">
+                            <li><h1 class="title" id="page-title">Gestionar:</h1></li>
                             <logic:equal name="user" property="rol" value="DEx">
-
-                                <li><html:link action="/AGestionTiposActividad"> 
-                                        Gestionar tipos de actividad 
+                                <li><html:link action="/AGestionTiposActividad">
+                                        Tipos de actividad 
                                     </html:link></li>
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad general</a></li>
                                 <li><html:link action="/AGestionUsuarios"> 
-                                        Gestionar usuarios
+                                        Usuarios
                                     </html:link></li><br/>  
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="Prof">
                                 <li><html:link action="/AGestionActividades?method=listUser"> 
-                                        Gestionar mis actividades
+                                        Actividades
                                     </html:link></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
                             </logic:equal>  
@@ -39,15 +39,15 @@
                             <logic:equal name="user" property="rol" value="WM">
                                 
                                 <li><html:link action="/AGestionTiposActividad"> 
-                                        Gestionar tipos de actividad 
+                                        Tipos de Actividad 
                                     </html:link></li>
                                 
                                  <li><html:link action="/AGestionActividades?method=listAll"> 
-                                        Gestionar actividades
+                                        Actividades
                                     </html:link></li>
                                  
                                  <li><html:link action="/AGestionCatalogos"> 
-                                        Gestionar catálogos 
+                                        Catálogos 
                                     </html:link></li>
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar log</a></li>
@@ -57,7 +57,7 @@
 
                             <logic:equal name="user" property="rol" value="CU">
                                 <li><html:link action="/AGestionActividades?method=listUser"> 
-                                        Gestionar mis actividades
+                                        Actividades
                                     </html:link></li>
                                 </logic:equal>
                             </logic:present>

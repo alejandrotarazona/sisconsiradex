@@ -13,7 +13,7 @@
         <h1 class="title" id="page-title">Gestión de Catálogos</h1>
 
         <html:link action="/RegistrarCatalogo?method=page"> 
-            Agregar catálogo
+            Agregar Catálogo
         </html:link><br/>
 
         <logic:present name="catalogoForm" property="mensaje">
