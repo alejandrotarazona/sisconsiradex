@@ -16,7 +16,6 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author SisCon
  */
-
 public class Listar extends org.apache.struts.action.Action {
 
     /* forward name="success" path="" */
@@ -33,17 +32,21 @@ public class Listar extends org.apache.struts.action.Action {
      * @return
      */
     @Override
-        public ActionForward execute(ActionMapping mapping, ActionForm form,
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
         int idCat = e.getIdCatalogo();
+        request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
-        e = ec.get(0);
-        request.setAttribute("campos", e.getCamposValores());
-        request.setAttribute("nombreCat",Clases.Catalogo.getNombre(idCat));
+        int tam = ec.size();
+        if (tam > 0) {
+            e = ec.get(tam - 1);
+            request.setAttribute("campos", e.getCamposValores());
+        } else {
+            request.setAttribute("elementos", null);
+        }
         return mapping.findForward(SUCCESS);
     }
-   
 }

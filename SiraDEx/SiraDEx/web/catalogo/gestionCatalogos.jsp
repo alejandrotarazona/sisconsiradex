@@ -38,7 +38,7 @@
                                 <html:hidden name="cat" property="idCatalogo" />
                                 <html:submit styleId="botonExaminar"
                                              value=" "
-                                             title="Examinar"/>
+                                             title="Consultar"/>
                             </html:form>
                         </td>
                         <td>

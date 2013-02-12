@@ -11,18 +11,16 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class ElementoCatalogo extends ActionForm {
+public class ElementoCatalogo extends Root {
 
     private int idElemento;
     private int idCatalogo;
     private ArrayList<CampoCatalogoValor> camposValores;
-    private String mensaje;
     private static String[] ATRIBUTOS = {
         "id_elemento", //0
         "id_catalogo" //1
@@ -62,14 +60,6 @@ public class ElementoCatalogo extends ActionForm {
 
     public CampoCatalogoValor getCampoValor(int i) {
         return camposValores.get(i);
-    }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
     }
 
     public boolean agregar() {

@@ -39,4 +39,5 @@ public class Listar extends org.apache.struts.action.Action {
         request.setAttribute("catalogos", cat);
         return mapping.findForward(SUCCESS);
     }
+    
 }

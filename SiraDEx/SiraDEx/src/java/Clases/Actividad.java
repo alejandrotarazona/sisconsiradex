@@ -14,13 +14,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import org.apache.struts.action.ActionForm;
 
 /**
  *
  * @author SisCon
  */
-public class Actividad extends ActionForm {
+public class Actividad extends Root {
 
     private int idActividad;
     private int idTipoActividad;
@@ -32,7 +31,6 @@ public class Actividad extends ActionForm {
     private String fechaModif;
     private ArrayList<String> participantes;
     private ArrayList<CampoValor> camposValores;
-    private String mensaje;
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
@@ -101,15 +99,6 @@ public class Actividad extends ActionForm {
     public void setCamposValores(ArrayList<CampoValor> camposValores) {
         this.camposValores = camposValores;
     }
-
-    public String getMensaje() {
-        return mensaje;
-    }
-
-    public void setMensaje(String mensaje) {
-        this.mensaje = mensaje;
-    }
-
 
     public String getCreador() {
         return creador;
@@ -516,7 +505,7 @@ public class Actividad extends ActionForm {
         Actividad a = new Actividad();
         a.setCreador("alejandro");
         a.setIdTipoActividad(66);
-        ArrayList<Actividad> lista = a.listarActividades();
+        ArrayList<Actividad> lista = listarActividades();
         System.out.println("\n\n\nListando todas las actividades");
         imprimirLista(lista);
 
