@@ -41,7 +41,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
-        e.setMensaje("");
+        e.setMensaje(null);
         ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(e.getIdCatalogo());
         e.setCamposValores(valores);
 

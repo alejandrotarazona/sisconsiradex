@@ -8,27 +8,30 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Agregar Catálogo</title>
+        <title>SiraDEx | Registro de Catálogo</title>
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registro de Catálogos</h1>
-        <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p>
-        <logic:present name="catalogoForm" property="mensaje">
-            <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
-        </logic:present>
-        <html:form method="POST" action ="/RegistrarCatalogo?method=save">
-            <table>
-                <tr>
-                    <td>Nombre<span style="color:red">*</span> </td>
-                    <td><html:text name="catalogoForm" property="nombre"></html:text></td>
-                </tr>
-
-                <tr><td>Numero de campos<span style="color:red">*</span> </td>
-                    <td><html:text name="catalogoForm" property="nroCampos"></html:text></td>
-                </tr>
-                <tr><td><html:submit> Siguiente </html:submit></td></tr>
-            </table>
-        </html:form>
-    </body>
+        <h1 class="title" id="page-title">Registro de Catálogo</h1>
+        <p>Los campos con el asterisco  <span style="color:red">*</span> 
+    son obligatorios.</p>
+    <logic:present name="catalogoForm" property="mensaje">
+    <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
+</logic:present>
+<html:form method="POST" action ="/RegistrarCatalogo?method=save">
+    <table>
+        <tr>
+        <td>Nombre<span style="color:red">*</span> </td>
+    <td><html:text name="catalogoForm" property="nombre"/></td>
+</tr>
+<tr>
+<td>Número de campos<span style="color:red">*</span> </td>
+<td><html:text name="catalogoForm" property="nroCampos"/></td>
+</tr>
+<tr>
+<td><html:submit> Siguiente </html:submit></td>
+</tr>
+</table>
+</html:form>
+</body>
 </html>

@@ -8,11 +8,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <% out.print("<title>SiraDEx | Gestión del Catálogo " + (String) request.getAttribute("nombreCat") + "</title>");%>
+        <% out.print("<title>SiraDEx | Gestión del Catálogo "
+                    + (String) request.getAttribute("nombreCat") + "</title>");%>
 
     </head>
     <body>
-        <% out.print("<h1 class='title' id='page-title'>Gestión del Catálogo " + (String) request.getAttribute("nombreCat") + "</h1>");%>
+        <% out.print("<h1 class='title' id='page-title'>Gestión del Catálogo "
+                    + (String) request.getAttribute("nombreCat") + "</h1>");%>
 
         <logic:equal name="user" property="rol" value="WM">
 
@@ -23,9 +25,10 @@
         </logic:equal>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">
-            <div align="center"><bean:write name="elementoCatalogoForm" property="mensaje" /></div>
-        </logic:present>
-        
+            <br/><div align="center"><bean:write name="elementoCatalogoForm" 
+                        property="mensaje" /></div><br/>
+            </logic:present>
+
         <h1>Elementos del Catálogo</h1>
         <logic:notPresent name="elementos">
             <p align="center">No hay elementos que mostrar.</p>
@@ -45,7 +48,8 @@
             <logic:iterate name="elementos" id="elem">
 
                 <tr>
-                    <logic:iterate name="elem" property="camposValores" id="campoValor" indexId="index">
+                    <logic:iterate name="elem" property="camposValores" 
+                                   id="campoValor" indexId="index">
                     <td>
                         <bean:write name="campoValor" property="valor"/>
                     </td>

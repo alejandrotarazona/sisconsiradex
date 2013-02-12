@@ -17,9 +17,10 @@
         </html:link><br/>
 
         <logic:present name="catalogoForm" property="mensaje">
-            <div align="center"><bean:write name="catalogoForm" property="mensaje" /></div>
-        </logic:present>
-            
+            <div align="center"><bean:write name="catalogoForm" 
+                        property="mensaje" /></div>
+            </logic:present>
+
         <h1>Catálogos del sistema</h1>
         <logic:notPresent name="catalogos">
             <p align="center">No hay catálogos que mostrar.</p>
@@ -48,8 +49,7 @@
                             <html:submit styleId="botonEliminar"
                                          value=" "
                                          title="Eliminar"
-                                         onclick="return confirm('¿Está 
-                                         seguro que desea eliminar catálogo?')" />
+                                         onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
                         </html:form>
                     </td>
                 </tr>

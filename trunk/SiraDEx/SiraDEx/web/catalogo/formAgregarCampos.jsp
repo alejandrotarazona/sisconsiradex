@@ -12,7 +12,7 @@
     <body>
         <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
         <logic:present name="catalogoForm" property="mensaje">
-            <bean:write name="catalogoForm" property="mensaje" /><br/>
+            <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
         </logic:present>
         <table>
             <tr>
@@ -21,7 +21,8 @@
         </tr>            
 
         <html:form action="/RegistrarCatalogo?method=save2">
-            <logic:iterate name="catalogoForm" property="campos" id="campos" indexId="index">
+            <logic:iterate name="catalogoForm" property="campos" id="campos" 
+                           indexId="index">
                 <tr>
                 <td><html:text name="campos" property="nombre" indexed="true"/></td>
 

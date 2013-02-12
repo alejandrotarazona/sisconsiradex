@@ -50,9 +50,9 @@
                                         Catálogos 
                                     </html:link></li>
 
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar log</a></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Gestionar backup</a></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Gestionar roles</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Backup</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Roles</a></li>
+                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></li>
                             </logic:equal> 
 
                             <logic:equal name="user" property="rol" value="CU">
