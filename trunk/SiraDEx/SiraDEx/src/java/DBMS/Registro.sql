@@ -38,6 +38,33 @@ INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 */
 
 
+--Tipo de actividad
+
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Formulacion de proyectos del BPDEx', 'P',11,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx', true);
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Tutoría de PSC', 'P',5,'Nuevos diplomados','Tutoría','PSC','Informe', true);
+--INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta', true);
+
+--Campo de un tipo de actividad
+
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Fecha de postulación', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Fecha de inicio', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Fecha fin', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Nombre del autor', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Título', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Área de atención', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Comunidad', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Zonas', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Número de beneficiaros', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Tipo de beneficiaros', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Costo', 'numero', 20, true);
+
+
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Fecha de inscripción', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Fecha de culminación', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del tutor', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del alumno', 'texto', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Código', 'texto', 20, true);
+
 --Permisos
 
 INSERT INTO permiso (nombre) VALUES ('Estudiante');
