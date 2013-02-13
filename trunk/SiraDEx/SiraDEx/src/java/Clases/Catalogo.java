@@ -251,9 +251,9 @@ public class Catalogo extends Root {
         Entity e = new Entity(2, 8);
 
         String[] condColumnas = {ATRIBUTOS[1]};
-        Object[] valores = {nombre};
+        Object[] valores = {nombres[0]};
         String[] colModificar = {ATRIBUTOS[1]};
-        String[] nombreCat = {nombres[0]};
+        String[] nombreCat = {nombre};
 
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
         

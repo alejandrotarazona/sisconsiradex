@@ -28,10 +28,9 @@
 <td>Número de campos<span style="color:red">*</span> </td>
 <td><html:text name="catalogoForm" property="nroCampos"/></td>
 </tr>
-<tr>
-<td><html:submit> Siguiente </html:submit></td>
-</tr>
 </table>
+<br>
+<html:submit>Siguiente</html:submit>
 </html:form>
 </body>
 </html>

@@ -21,27 +21,30 @@
         <h1 class="title" id="page-title">Edición de Catálogo</h1>
 
         <logic:present name="catalogoForm" property="mensaje">
-            <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
-        </logic:present>
-        <html:form method="POST" action ="/ModificarCatalogo?method=update">
+            <br/> <div align="center"><bean:write name="catalogoForm" 
+                        property="mensaje" /></div><br/>
+            </logic:present>
+            <html:form method="POST" action ="/ModificarCatalogo?method=update">
             <table>
                 <tr>
-                <td>Nombre del cátalogo: </td>
+                <td>Nombre del cátalogo</td>
 
                 <td><html:text name="catalogoForm" property="nombre" 
                     value='<%=(String) request.getAttribute("nombreCat")%>'/></td>
             </tr>
-            <tr><td>Nombre de los campos:</td> </tr>
+            <tr><td>Nombre(s) de los campo(s)</td>
+
             <logic:iterate name="catalogoForm" property="campos" id="campos" 
                            indexId="index">
-            <tr><td></td>
-            <td><html:text name="campos" property="nombre" value="falta por hacer" 
-                       indexed="true"/></td>
-        </tr>
-    </logic:iterate>
-</table>
-<br>
-<div align="center"><html:submit>Modificar</html:submit></div>
+
+                <td><html:text name="campos" property="nombre" value="falta por hacer" 
+                           indexed="true"/></td>
+            </tr>
+        </logic:iterate>
+    </table>
+    <br>
+    <div align="center"><html:submit value="Modificar"
+                 onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
 
 </html:form>
 </body>
