@@ -243,23 +243,28 @@ public class Catalogo extends Root {
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
 
     }
-    //en el parametro nombres están los nuevos nombres para, primero el catálogo
-    //y luego sus campos
-
+    //en el parámetro nombres están los viejos nombres, primero el del catálogo
+    //luego el de sus campos
     public boolean modificar(String[] nombres) {
-        boolean respuesta = true;
+        boolean respuesta;
+        boolean resp2=true;
         Entity e = new Entity(2, 8);
 
-        String[] condColumnas = {ATRIBUTOS[0]};
-        Object[] valores = {nombres[0]};
+        String[] condColumnas = {ATRIBUTOS[1]};
+        Object[] valores = {nombre};
         String[] colModificar = {ATRIBUTOS[1]};
-        String[] nombreCat = {nombre};
+        String[] nombreCat = {nombres[0]};
 
-        respuesta &= e.modificar(condColumnas, valores, colModificar, nombreCat);
-
-        for (int i = 1; respuesta && i < nombres.length; i++) {
-
-            respuesta &= Clases.CampoCatalogo.modificar(nombres[i], idCatalogo);
+        respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
+        
+        System.out.println("MODIFICO NOMBRE "+respuesta); 
+        
+        System.out.println("Ahora a modificar los campos");
+        for (int i = 1; i < nombres.length; i++) {
+        System.out.println("nombre viejo campo "+nombres[i] + 
+                " iteracion " +i + " nombrelength " + nombres.length);  
+            resp2 = campos.get(i-1).modificar(nombres[i], idCatalogo);
+            System.out.println("MODIFICO CAMPO "+resp2); 
         }
         return respuesta;
     }

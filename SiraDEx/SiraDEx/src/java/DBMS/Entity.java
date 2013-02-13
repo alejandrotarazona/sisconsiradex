@@ -230,10 +230,10 @@ public class Entity {
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
         if (modificaciones[0] instanceof Integer) {
-            sql = ACCION + TABLA + " SET " + colModificar[0] + " = "
+            sql = ACCION +" "+ TABLA + " SET " + colModificar[0] + " = "
                     + modificaciones[0];
         } else {
-            sql = ACCION + TABLA + " SET " + colModificar[0] + " = '"
+            sql = ACCION +" "+ TABLA + " SET " + colModificar[0] + " = '"
                     + modificaciones[0] + "' ";
         }
 
@@ -264,7 +264,7 @@ public class Entity {
 
 
         DataBase db = DataBase.getInstance();
-        System.out.println(sql);
+        //System.out.println(sql);
         boolean resp = db.update(sql);
         return resp;
     }
