@@ -167,9 +167,9 @@ public class CampoCatalogo implements Serializable {
         Entity e = new Entity(2, 9);
 
         String[] condColumnas = {ATRIBUTOS[2],ATRIBUTOS[1]};
-        Object[] valores = {this.nombre, idCat};
+        Object[] valores = {nombre, idCat};
         String[] colModificar = {ATRIBUTOS[2]};
-        String[] nombreCampo = {nombre};
+        String[] nombreCampo = {this.nombre};
          System.out.println("nombre viejo campo: "+nombre
                  +", nombre nuevo campo: " +this.nombre);
         return e.modificar(condColumnas, valores, colModificar, nombreCampo);

@@ -18,7 +18,7 @@
 
         <logic:present name="catalogoForm" property="mensaje">
             <div align="center"><bean:write name="catalogoForm" 
-                        property="mensaje" /></div>
+                        property="mensaje" /></div><br/>
             </logic:present>
 
         <h1>Catálogos del sistema</h1>
