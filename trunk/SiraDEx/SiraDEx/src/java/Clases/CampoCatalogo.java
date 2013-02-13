@@ -162,16 +162,16 @@ public class CampoCatalogo implements Serializable {
         return resp;
     }
 
-    //en el parámetro nombre está el nuevo nombre para el campo del catalogo
-    public static boolean modificar(String nombre, int idCat) {
+    //en el parámetro nombre está el nombre viejo para el campo del catalogo
+    public boolean modificar(String nombre, int idCat) {
         Entity e = new Entity(2, 9);
 
-        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[0]};
-        Object[] valores = {nombre, idCat};
-        String[] colModificar = {ATRIBUTOS[1]};
+        String[] condColumnas = {ATRIBUTOS[2],ATRIBUTOS[1]};
+        Object[] valores = {this.nombre, idCat};
+        String[] colModificar = {ATRIBUTOS[2]};
         String[] nombreCampo = {nombre};
-
+         System.out.println("nombre viejo campo: "+nombre
+                 +", nombre nuevo campo: " +this.nombre);
         return e.modificar(condColumnas, valores, colModificar, nombreCampo);
-
     }
 }

@@ -29,7 +29,7 @@
                 <td>Nombre del cátalogo: </td>
 
                 <td><html:text name="catalogoForm" property="nombre" 
-                    value='<%=(String) request.getAttribute("nombre")%>'/></td>
+                    value='<%=(String) request.getAttribute("nombreCat")%>'/></td>
             </tr>
             <tr><td>Nombre de los campos:</td> </tr>
             <logic:iterate name="catalogoForm" property="campos" id="campos" 

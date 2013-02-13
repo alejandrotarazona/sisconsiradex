@@ -39,10 +39,21 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Catalogo cat = (Catalogo) form;
         cat.setMensaje(null);
+        
         int idCat = cat.getIdCatalogo(); 
         cat.setCampos(Clases.CampoCatalogo.listar(idCat));
-        request.setAttribute("nombre", cat.getNombre());
-
+        String nombreCat = Clases.Catalogo.getNombre(idCat);
+        request.setAttribute("nombreCat", nombreCat);
+        
+        int nroCampos = cat.getCampos().size();
+        String[] nombres = new String[nroCampos+1];
+        nombres[0] = nombreCat;
+            
+        for (int i = 1; i < nombres.length; i++) {
+            nombres[i] = cat.getCampos().get(i-1).getNombre();
+        }
+        
+        request.getSession().setAttribute("nombres", nombres);
         return mapping.findForward(PAGE);
     }
 
@@ -52,26 +63,21 @@ public class Modificar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
         
-        int nroCampos = cat.getCampos().size();
-        System.out.println("TAMAÑO GETCAMPO "+nroCampos);
-        String[] nombres = new String[nroCampos+1];
-        nombres[0] = cat.getNombre();
-
-        for (int i = 1; i < nombres.length; i++) {
-            nombres[i] = cat.getCampos().get(i).getNombre();
-            System.out.println("NOMBRES[i] "+nombres[i] +" " + i);
-            
+        String[] nombres = (String[])request.getSession().getAttribute("nombres");
+                
+        System.out.print("arreglo de nombres viejos:  ");
+        for (int i = 0; i < nombres.length; i++) {
+             System.out.print(nombres[i]+" ");
         }
+        System.out.println("");
         if (cat.modificar(nombres)) {
 
-            cat.setMensaje("El catálogo '" + cat.getNombre() + "' ha sido "
-                    + "modificado con éxito.");
+            cat.setMensaje("El catálogo ha sido modificado con éxito.");
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
             return mapping.findForward(SUCCESS);
         }
-        cat.setMensaje("Error: El catálogo '" + cat.getNombre() + "' no ha sido"
-                + " modificado correctamente.");
+        cat.setMensaje("Error: El catálogo NO no se pudo modificar correctamente.");
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);
