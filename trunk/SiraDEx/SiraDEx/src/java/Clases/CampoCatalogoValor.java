@@ -88,7 +88,9 @@ public class CampoCatalogoValor implements Serializable {
 
         return resp;
     }
-
+    
+    //Crea una lista de CampoCatalogoValor para agregar un nuevo elemento al 
+    //catalogo cuyo id es pasado por parametro, solo los campos son seteados.
     public static ArrayList<CampoCatalogoValor> listar(int idCatalogo) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 9);
@@ -116,6 +118,8 @@ public class CampoCatalogoValor implements Serializable {
         return listaValor;
     }
 
+    //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
+    //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoCatalogoValor> listarElem(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 10);

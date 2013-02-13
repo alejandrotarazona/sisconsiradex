@@ -29,25 +29,25 @@ public class Entity {
         "DELETE", //5 
     };
     private final String[] TABLAS = {
-        "USUARIO",              //0
-        "TIPO_ACTIVIDAD",       //1
-        "ACTIVIDAD",            //2
-        "CAMPO",                //3
-        "JEFE_DEPENDENCIA",     //4
-        "COMUNIDAD_U",          //5
-        "VALOR",                //6
-        "PARTICIPA",            //7
-        "CATALOGO",             //8
-        "CAMPO_CATALOGO",       //9
-        "ELEMENTO_CATALOGO",    //10
-        "VALOR_CATALOGO",       //11
-        
-        "ESTUDIANTES",          //12             OJO!!!
-        "PROFESORES",           //13              NO se puede hacer insert ni update
-        "OBREROS",              //14                a traves de estas!!!
-        "PROGRAMAS",            //15
-        "EMPLEADOS",            //16
-        "COORDINACIONES"        //17    ---------------------------------------
+        "USUARIO", //0
+        "TIPO_ACTIVIDAD", //1
+        "ACTIVIDAD", //2
+        "CAMPO", //3
+        "JEFE_DEPENDENCIA", //4
+        "COMUNIDAD_U", //5
+        "VALOR", //6
+        "PARTICIPA", //7
+        "CATALOGO", //8
+        "CAMPO_CATALOGO", //9
+        "ELEMENTO_CATALOGO", //10
+        "VALOR_CATALOGO", //11
+
+        "ESTUDIANTES", //12             OJO!!!
+        "PROFESORES", //13              NO se puede hacer insert ni update
+        "OBREROS", //14                a traves de estas!!!
+        "PROGRAMAS", //15
+        "EMPLEADOS", //16
+        "COORDINACIONES" //17    ---------------------------------------
     };
 
     /*
@@ -205,7 +205,7 @@ public class Entity {
         for (i = 1; i < tablas.length; i++) {
             sql += " NATURAL JOIN " + tablas[i];
         }
-        
+
         if (valores[0] instanceof Integer) {
             sql += " WHERE " + columnas[0] + " = " + valores[0];
         } else {
@@ -219,7 +219,7 @@ public class Entity {
                 sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
             }
         }
-        
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -229,21 +229,37 @@ public class Entity {
 
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
-        sql = ACCION + TABLA + " SET " + colModificar[0] + " = '"
-                + modificaciones[0] + "' ";
+        if (modificaciones[0] instanceof Integer) {
+            sql = ACCION + TABLA + " SET " + colModificar[0] + " = "
+                    + modificaciones[0];
+        } else {
+            sql = ACCION + TABLA + " SET " + colModificar[0] + " = '"
+                    + modificaciones[0] + "' ";
+        }
 
         int indice;
 
         for (indice = 1; indice < colModificar.length; indice++) {
-            sql += " , " + colModificar[indice] + " = '"
-                    + modificaciones[indice] + "' ";
+            if (modificaciones[0] instanceof Integer) {
+                sql += " , " + colModificar[indice] + " = "
+                        + modificaciones[indice];
+            } else {
+                sql += " , " + colModificar[indice] + " = '"
+                        + modificaciones[indice] + "' ";
+            }
         }
-
-        sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
-
+        if (valores[0] instanceof Integer) {
+            sql += " WHERE " + condColumnas[0] + " = " + valores[0];
+        } else {
+            sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
+        }
         for (indice = 1; indice < condColumnas.length; indice++) {
-            sql += " AND " + condColumnas[indice] + " = '"
-                    + valores[indice] + "' ";
+            if (valores[0] instanceof Integer) {
+                sql += " AND " + condColumnas[indice] + " = " + valores[indice];
+            } else {
+                sql += " AND " + condColumnas[indice] + " = '"
+                        + valores[indice] + "' ";
+            }
         }
 
 

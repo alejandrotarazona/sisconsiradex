@@ -241,7 +241,27 @@ public class Catalogo extends Root {
     public boolean eliminar(int idCat) {
         Entity eEliminar = new Entity(5, 8);
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
-        
+
+    }
+    //en el parametro nombres están los nuevos nombres para, primero el catálogo
+    //y luego sus campos
+
+    public boolean modificar(String[] nombres) {
+        boolean respuesta = true;
+        Entity e = new Entity(2, 8);
+
+        String[] condColumnas = {ATRIBUTOS[0]};
+        Object[] valores = {nombres[0]};
+        String[] colModificar = {ATRIBUTOS[1]};
+        String[] nombreCat = {nombre};
+
+        respuesta &= e.modificar(condColumnas, valores, colModificar, nombreCat);
+
+        for (int i = 1; respuesta && i < nombres.length; i++) {
+
+            respuesta &= Clases.CampoCatalogo.modificar(nombres[i], idCatalogo);
+        }
+        return respuesta;
     }
 
     public static void main(String[] args) throws IOException {

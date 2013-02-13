@@ -135,21 +135,12 @@ public class ElementoCatalogo extends Root {
         ResultSet rs = eBuscar.seleccionar(columnas, valores);
         if (rs != null) {
             try {
-                int flag = 1;
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
                     ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
                     ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento);
-                    resp.add(ec);
-                    Iterator it = ec.camposValores.iterator();
-
-                    while (it.hasNext() && flag == 1) {
-                        CampoCatalogoValor c = (CampoCatalogoValor) it.next();
-                        System.out.println(c.getCampo().getNombre());
-
-                    }
-                    flag = 0;
+                    resp.add(ec);       
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);

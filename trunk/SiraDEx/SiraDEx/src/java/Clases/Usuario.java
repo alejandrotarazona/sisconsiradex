@@ -17,8 +17,8 @@ import java.util.logging.Logger;
  */
 public class Usuario extends Root {
 
-    private String nombre;
-    private String apellido;
+    private String nombres;
+    private String apellidos;
     private String username;
     private String password;
     private String tipo;
@@ -26,8 +26,8 @@ public class Usuario extends Root {
     private String email;
     private String rol;
     private static final String[] ATRIBUTOS = {
-        "nombre", //0
-        "apellido", //1
+        "nombres", //0
+        "apellidos", //1
         "usbid", //2
         "password", //3
         "tipo", //4
@@ -40,10 +40,10 @@ public class Usuario extends Root {
     public Usuario() {
     }
 
-    public Usuario(String nombre, String apellido, String username,
+    public Usuario(String nombres, String apellidos, String username,
             String password, String mensaje) {
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.nombres = nombres;
+        this.apellidos = apellidos;
         this.username = username;
         this.password = password;
         this.mensaje = mensaje;
@@ -54,12 +54,12 @@ public class Usuario extends Root {
         this.password = password;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getUsername() {
@@ -70,12 +70,12 @@ public class Usuario extends Root {
         this.username = username;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getNombres() {
+        return nombres;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
     }
 
     public String getPassword() {
@@ -180,8 +180,8 @@ public class Usuario extends Root {
             try {
                 while (rs.next()) {
                     Usuario u = new Usuario();
-                    u.setNombre(rs.getString(ATRIBUTOS[0]));
-                    u.setApellido(rs.getString(ATRIBUTOS[1]));
+                    u.setNombres(rs.getString(ATRIBUTOS[0]));
+                    u.setApellidos(rs.getString(ATRIBUTOS[1]));
                     u.setUsername(rs.getString(ATRIBUTOS[2]));
                     u.setPassword(rs.getString(ATRIBUTOS[3]));
                     u.setTipo(rs.getString(ATRIBUTOS[4]));

@@ -25,8 +25,8 @@ CREATE TABLE USUARIO(
     password    VARCHAR(20) NOT NULL,
     rol         VARCHAR(4),
     tipo        INT,
-    nombre      VARCHAR(20),
-    apellido    VARCHAR(20),
+    nombres     VARCHAR(50),
+    apellidos   VARCHAR(50),
     telefono    VARCHAR(15),
     email       VARCHAR(20),
     
