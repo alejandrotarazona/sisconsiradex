@@ -36,8 +36,8 @@
             <table>
                 <logic:iterate name="acts" id="act">
                     <tr>
-                    <td><b><bean:write name="user" property="apellido"></bean:write>, 
-                            <bean:write name="user" property="nombre"></bean:write></b></td> 
+                    <td><b><bean:write name="user" property="apellidos"></bean:write>, 
+                            <bean:write name="user" property="nombres"></bean:write></b></td> 
                     <td>"<bean:write name="act" property="nombreTipoActividad"/>"</td>
                     <td><html:form method="POST" action="/EliminarActividad">
                             <html:hidden name="act" property="idActividad" />
