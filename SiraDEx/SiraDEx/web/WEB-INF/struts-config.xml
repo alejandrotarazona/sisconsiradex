@@ -115,8 +115,7 @@
             <forward name="success" path="agregarCamposCatalogo"/>
             <forward name="successfull" path="gestionCatalogos"/>
             <forward name="failure" path="agregarCatalogo"/>
-            <forward name="page" path="agregarCatalogo"/>
-            
+            <forward name="page" path="agregarCatalogo"/>     
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
@@ -124,7 +123,13 @@
             <forward name="success" path="gestionCatalogos"/>
             <forward name="failure" path="gestionCatalogos"/>           
         </action>
-            
+        
+         <action path="/ModificarCatalogo" type="Catalogo.Modificar" 
+                scope="session" parameter="method" name="catalogoForm">
+            <forward name="page" path="modificarCatalogo"/> 
+            <forward name="success" path="gestionCatalogos"/>
+            <forward name="failure" path="modificarCatalogo"/>    
+        </action>
         
         <!-- =================ELEMENTOS DE CATALOGO=========================-->
 
@@ -140,13 +145,11 @@
             <forward name="failure" path="agregarElemento"/>
         </action>
         
-        <action name="elementoCatalogoForm" path="/EliminarElemento" 
-                scope="session" type="ElementoCatalogo.Eliminar">
+        <action path="/EliminarElemento" type="ElementoCatalogo.Eliminar"
+                scope="session" name="elementoCatalogoForm" >
             <forward name="success" path="gestionElementos"/>
             <forward name="failure" path="gestionElementos"/>                        
         </action>
-        
-        
           
         <!-- ===============================================================-->
           

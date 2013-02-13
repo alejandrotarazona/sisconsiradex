@@ -19,19 +19,17 @@ import java.util.logging.Logger;
  *
  * @author SisCon
  */
-public class CampoCatalogo implements Serializable{
-    
-    private int     idCampo;
-    private int     idCatalogo;
-    private String  nombre;
-    private String  tipo;
-    
+public class CampoCatalogo implements Serializable {
+
+    private int idCampo;
+    private int idCatalogo;
+    private String nombre;
+    private String tipo;
     private static String[] TABLAS = {
         "CATALOGO",//0
         "CAMPO_CATALOGO", //1
     };
-    
-    private static String[] ATRIBUTOS ={
+    private static String[] ATRIBUTOS = {
         "id_campo", //0
         "id_cat", //1
         "nombre_campo", //2
@@ -40,20 +38,20 @@ public class CampoCatalogo implements Serializable{
 
     public CampoCatalogo() {
     }
-    
-    public static CampoCatalogo leer() throws IOException{
+
+    public static CampoCatalogo leer() throws IOException {
         CampoCatalogo resp;
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        
+
         System.out.println("Introduzca el nombre del campo:");
         String name = br.readLine();
         System.out.println("");
         System.out.println("Introduzca el tipo del campo: ");
         String type = br.readLine();
         System.out.println("");
-        
-        resp = new CampoCatalogo(name,type);
-        
+
+        resp = new CampoCatalogo(name, type);
+
         return resp;
     }
 
@@ -110,9 +108,9 @@ public class CampoCatalogo implements Serializable{
         this.tipo = tipo;
     }
 
-    public boolean agregarCampo(int idCatalogo){
-        boolean resp=true;
-        Entity eCampoCatalogo = new Entity(1,9);
+    public boolean agregarCampo(int idCatalogo) {
+        boolean resp = true;
+        Entity eCampoCatalogo = new Entity(1, 9);
         Integer idCat = new Integer(idCatalogo);
         Object[] valores = {
             idCat,
@@ -124,16 +122,16 @@ public class CampoCatalogo implements Serializable{
             ATRIBUTOS[2],
             ATRIBUTOS[3]
         };
-        
+
         resp &= eCampoCatalogo.insertar2(columnas, valores);
-        
+
         return resp;
     }
-    
-    public static ArrayList<CampoCatalogo> listar(int idCat){
+
+    public static ArrayList<CampoCatalogo> listar(int idCat) {
         ArrayList<CampoCatalogo> resp = new ArrayList<>(0);
         Entity eListar = new Entity(0, 9);
-        
+
         String[] columnas = {
             ATRIBUTOS[1]
         };
@@ -141,26 +139,39 @@ public class CampoCatalogo implements Serializable{
         Object[] valores = {
             idBuscar
         };
-        
+
         ResultSet rs = eListar.seleccionar(columnas, valores);
-        
-         if (rs != null) {
+
+        if (rs != null) {
             try {
                 while (rs.next()) {
-                    CampoCatalogo t = new CampoCatalogo();
-                    t.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    t.setIdCatalogo(idCat);
-                    t.setNombre(rs.getString(ATRIBUTOS[2]));
-                    t.setTipo(rs.getString(ATRIBUTOS[3]));
-                    
-                    resp.add(t);
+                    CampoCatalogo cc = new CampoCatalogo();
+                    cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    cc.setIdCatalogo(idCat);
+                    cc.setNombre(rs.getString(ATRIBUTOS[2]));
+                    System.out.println("NOMBRE CAMPO "+rs.getString(ATRIBUTOS[2]));
+                    cc.setTipo(rs.getString(ATRIBUTOS[3]));
+
+                    resp.add(cc);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+
         return resp;
     }
-    
+
+    //en el parámetro nombre está el nuevo nombre para el campo del catalogo
+    public static boolean modificar(String nombre, int idCat) {
+        Entity e = new Entity(2, 9);
+
+        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[0]};
+        Object[] valores = {nombre, idCat};
+        String[] colModificar = {ATRIBUTOS[1]};
+        String[] nombreCampo = {nombre};
+
+        return e.modificar(condColumnas, valores, colModificar, nombreCampo);
+
+    }
 }

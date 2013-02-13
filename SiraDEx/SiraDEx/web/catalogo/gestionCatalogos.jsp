@@ -36,6 +36,14 @@
                         <bean:write name="cat" property="nombre" />
                     </td>
                     <td>
+                        <html:form method="POST" action="/ModificarCatalogo?method=page">
+                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td>
+                    <td>
                         <html:form method="POST" action="/AGestionElementos">
                             <html:hidden name="cat" property="idCatalogo" />
                             <html:submit styleId="botonExaminar"

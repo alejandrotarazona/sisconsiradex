@@ -93,6 +93,10 @@
         <put name="body" value="/catalogo/formAgregarCampos.jsp" />
     </definition>
     
+    <definition name="modificarCatalogo" extends="plantilla">
+        <put name="body" value="/catalogo/formModificarCatalogo.jsp" />
+    </definition>
+    
     <!-- ==================ELEMENTOS DE CATALOGO========================-->
     
     <definition name="gestionElementos" extends="plantilla">
