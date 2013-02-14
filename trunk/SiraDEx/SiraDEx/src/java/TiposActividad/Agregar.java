@@ -38,17 +38,16 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
-        request.setAttribute("programas", programas);*/
+         request.setAttribute("programas", programas);*/
         TipoActividad t = (TipoActividad) form;
         t.setMensaje("");
         return mapping.findForward(PAGE);
     }
-    
+
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -62,6 +61,12 @@ public class Agregar extends DispatchAction {
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
 
+        } else if (t.getNroCampos() <= 0) {
+            t.setMensaje("El número de campos DEBE SER mayor o igual a 1 campos. "
+                    + "Actualmente presenta "
+                    + t.getNroCampos() + " campos. Por favor elija otro número.");
+            
+            return mapping.findForward(FAILURE);
         }
         int numeroCampos = t.getNroCampos();
         ArrayList<Campo> campos = new ArrayList<>();
@@ -88,6 +93,8 @@ public class Agregar extends DispatchAction {
 
             t.setMensaje("El tipo de actividad '" + t.getNombreTipo() + "' ha sido "
                     + "registrado con éxito.");
+            ArrayList ta = Clases.TipoActividad.listarTiposActividad();
+            request.setAttribute("tipos", ta);
             return mapping.findForward(SUCCESSFULL);
         }
         return mapping.findForward(FAILURE);
