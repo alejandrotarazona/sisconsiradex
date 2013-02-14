@@ -20,6 +20,11 @@ public class CampoValor implements Serializable {
     
     private Campo campo;
     private String valor;
+    private static String[] TABLAS = {
+        "VALOR",
+        "CAMPO",
+        "ACTIVIDAD"
+    };
 
     public CampoValor() {
     }
@@ -73,4 +78,46 @@ public class CampoValor implements Serializable {
         return listaValor;
     }
     
+    //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
+    //elemento cuyo id es pasado por parametro, los campos y valores son seteados
+    public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
+        ArrayList<CampoValor> listaValor = new ArrayList<>(0);
+        Entity eCampo = new Entity(0, 2);
+        String[] ATRIBUTOS = {
+        "id_campo",
+        "id_tipo_actividad",
+         "nombre_campo", 
+        "tipo_campo",
+        "longitud",
+        "obligatorio",
+        "valor", 
+       
+        };
+        String[] tabABuscar = {
+            TABLAS[0],
+            TABLAS[1],
+            TABLAS[2]
+        };
+        String[] colCondicion = {"id_actividad"};
+        Object[] colValor = {idActividad};
+
+        ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CampoValor cv = new CampoValor();
+                    cv.setValor(rs.getString(ATRIBUTOS[6]));
+                    Campo c = new Campo();
+                    c.setNombre(rs.getString(ATRIBUTOS[2]));
+                    cv.setCampo(c);
+
+                    listaValor.add(cv);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return listaValor;
+    }
 }

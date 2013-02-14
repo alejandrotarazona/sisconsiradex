@@ -42,18 +42,42 @@ public class Listar extends DispatchAction {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         act.setCreador(username);
-
+        act.setMensaje(null);
         ArrayList<Actividad> a = act.listarActividadesDeUsuario();
         request.setAttribute("acts", a);
+        
+        int tam = a.size();
+        if (tam > 0) {
+            act = a.get(tam - 1);
+            request.setAttribute("campos", act.getCamposValores());
+        } else {
+            request.setAttribute("acts", null);
+        }
+        
         return mapping.findForward(SUCCESS1);
 
+        
     }
 
     public ActionForward listAll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ArrayList a = Clases.Actividad.listarActividades();
+        
+        Actividad act = new Actividad();
+        ArrayList<Actividad> a = act.listarActividades();
+        act.setMensaje(null);
+       
         request.setAttribute("acts", a);
+        
+        int tam = a.size();
+        if (tam > 0) {
+            act = a.get(tam - 1);
+            request.setAttribute("campos", act.getCamposValores());
+        } else {
+            request.setAttribute("acts", null);
+        }
+        
+        
         return mapping.findForward(SUCCESS2);
     }
 

@@ -326,6 +326,8 @@ public class Actividad extends Root {
                     
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
                     
+                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+                            
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
@@ -371,6 +373,8 @@ public class Actividad extends Root {
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
                     
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                    
+                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
                     
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
@@ -418,6 +422,8 @@ public class Actividad extends Root {
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
                     
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                    
+                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
                     
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
