@@ -30,7 +30,7 @@
 </tr>
 </table>
 <br>
-<html:submit>Siguiente</html:submit>
+<div align="center"><html:submit>Siguiente</html:submit></div>
 </html:form>
 </body>
 </html>

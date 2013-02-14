@@ -32,19 +32,23 @@
                 <td><html:text name="catalogoForm" property="nombre" 
                     value='<%=(String) request.getAttribute("nombreCat")%>'/></td>
             </tr>
-            <tr><td>Nombre(s) de los campo(s)</td>
+            <tr><td>Nombre de los campos</td></tr>
 
-            <logic:iterate name="catalogoForm" property="campos" id="campos" 
-                           indexId="index">
+        <logic:iterate name="catalogoForm" property="campos" id="campos" 
+                       indexId="index">
+            <%
+                String[] nombres = (String[]) request.getSession().getAttribute("nombres");
+                int i = (Integer) pageContext.findAttribute("index");%>
 
-                <td><html:text name="campos" property="nombre" value="falta por hacer" 
-                           indexed="true"/></td>
-            </tr>
-        </logic:iterate>
-    </table>
-    <br>
-    <div align="center"><html:submit value="Modificar"
-                 onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+            <tr><td></td>
+            <td><html:text name="campos" property="nombre" value='<%=nombres[i + 1]%>' 
+                       indexed="true"/></td>
+        </tr>
+    </logic:iterate>
+</table>
+<br>
+<div align="center"><html:submit value="Modificar"
+             onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
 
 </html:form>
 </body>

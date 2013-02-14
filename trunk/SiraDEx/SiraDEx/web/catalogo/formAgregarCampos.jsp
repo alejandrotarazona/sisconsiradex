@@ -36,7 +36,7 @@
         </logic:iterate>
     </table>
     <br>
-    <html:submit>Registrar</html:submit>
+    <div align="center"><html:submit>Registrar</html:submit></div>
 
 </html:form>
 </body>
