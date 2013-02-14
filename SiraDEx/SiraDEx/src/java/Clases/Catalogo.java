@@ -247,7 +247,7 @@ public class Catalogo extends Root {
     //luego el de sus campos
     public boolean modificar(String[] nombres) {
         boolean respuesta;
-        boolean resp2=true;
+        
         Entity e = new Entity(2, 8);
 
         String[] condColumnas = {ATRIBUTOS[1]};
@@ -256,15 +256,9 @@ public class Catalogo extends Root {
         String[] nombreCat = {nombre};
 
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
-        
-        System.out.println("MODIFICO NOMBRE "+respuesta); 
-        
-        System.out.println("Ahora a modificar los campos");
-        for (int i = 1; i < nombres.length; i++) {
-        System.out.println("nombre viejo campo "+nombres[i] + 
-                " iteracion " +i + " nombrelength " + nombres.length);  
-            resp2 = campos.get(i-1).modificar(nombres[i], idCatalogo);
-            System.out.println("MODIFICO CAMPO "+resp2); 
+ 
+        for (int i = 1; i < nombres.length; i++) { 
+             respuesta &= campos.get(i-1).modificar(nombres[i], idCatalogo);
         }
         return respuesta;
     }

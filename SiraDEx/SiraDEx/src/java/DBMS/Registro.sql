@@ -4,7 +4,7 @@
 INSERT INTO tipo_actividad VALUES (NEXTVAL('tipo_actividad_seq'),'Responsable en la ejecucion de proyectos del BDPEX', 8, 'Se explican datos sobre un proyecto del BDPEX' , null);
 INSERT INTO tipo_actividad VALUES (NEXTVAL('tipo_actividad_seq'),'Diseño y propuesta de nuevos Diplomados', 3, 'Se diseña y propone nuevos diplomados', null);
 -- Campos
-
+Turno
 INSERT INTO campo values(NEXTVAL('campo_seq'),1,'Fecha de inicio', 'fecha',10,true);
 INSERT INTO campo values(NEXTVAL('campo_seq'),1,'Fecha de fin', 'fecha',10,true);
 INSERT INTO campo values(NEXTVAL('campo_seq'),1,'Nombre del autor', 'texto',32,true);
