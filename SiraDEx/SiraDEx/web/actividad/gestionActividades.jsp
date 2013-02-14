@@ -43,9 +43,18 @@
             <table>
                 <logic:iterate name="acts" id="act">
                     <tr>
-                    <td><b><bean:write name="user" property="apellidos"></bean:write>, 
-                            <bean:write name="user" property="nombres"></bean:write></b></td> 
-                    <td>"<bean:write name="act" property="nombreTipoActividad"/>"</td>
+                  
+                      <b><bean:write name="user" property="apellidos"></bean:write>, 
+                        <bean:write name="user" property="nombres"></bean:write></b>,
+                    "<bean:write name="act" property="nombreTipoActividad"/>"
+                    
+                    <logic:iterate name="act" property="camposValores" 
+                                   id="campoValor" indexId="index">
+                    
+                        ,<bean:write name="campoValor" property="valor"/>
+                   
+                </logic:iterate>
+                    
                     <td><html:form method="POST" action="/EliminarActividad">
                             <html:hidden name="act" property="idActividad" />
                             <html:submit styleId="botonEliminar"
