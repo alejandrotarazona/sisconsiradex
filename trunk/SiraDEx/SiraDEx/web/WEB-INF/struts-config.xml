@@ -87,6 +87,8 @@
                 scope="request" parameter="method" name="actividadForm">
             <forward name="success1" path="gestionActividades"/>
             <forward name="success2" path="gestionActividades"/>
+            <forward name="success3" path="gestionActividades"/>
+            
         </action>
         
         <action path="/RegistrarActividad" type="Actividad.Agregar" 

@@ -34,13 +34,20 @@
                     <td>
                         <bean:write name="ta" property="nombreTipo"/>
                     </td>
+                    <td>
+                        <html:form method="POST" action="/AGestionActividades?method=listType">
+                            <html:hidden name="ta" property="idTipoActividad" />
+                            <html:submit styleId="botonExaminar"
+                                         value=" "
+                                         title="Consultar"/>
+                        </html:form>
+                    </td>
                     <td><html:form method="POST" action="/EliminarTipoActividad">
                             <html:hidden name="ta" property="id" />
                             <html:submit styleId="botonEliminar"
                                          value=" "
                                          title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que 
-                                         desea eliminar el Tipo de Actividad?')" />
+                                         onclick="return confirm('¿Está seguro que desea eliminar el Tipo de Actividad?')" />
                         </html:form>
                     </td>
                 </tr>

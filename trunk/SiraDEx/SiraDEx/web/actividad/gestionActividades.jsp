@@ -17,10 +17,17 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Actividades</h1>
-
-        <html:link action="/RegistrarActividad?method=page"> 
-            Registrar actividad
-        </html:link><br/>        
+        <logic:notPresent name="TipoAct">
+            <html:link action="/RegistrarActividad?method=page"> 
+                Registrar actividad
+            </html:link><br/>
+        </logic:notPresent>
+        <logic:present name="TipoAct">
+            <html:form action ="/RegistrarActividad?method=save">
+                <html:hidden name="TipoAct" property="idTipoActividad" />
+                <html:submit>Registrar actividad</html:submit>
+            </html:form>
+        </logic:present>
 
         <h1 class="title" id="page-title">Actividades registradas en el sistema</h1>
         <logic:present name="actividadForm" property="mensaje">

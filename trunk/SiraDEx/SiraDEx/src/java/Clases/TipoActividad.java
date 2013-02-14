@@ -64,6 +64,10 @@ public class TipoActividad extends Root {
     public int getId() {
         return id;
     }
+    
+    public int getIdTipoActividad(){
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;

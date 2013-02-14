@@ -96,4 +96,34 @@ public class Agregar extends DispatchAction {
 
 
     }
+    public ActionForward saveTipo(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Actividad a = (Actividad) form;
+
+        if (a.agregarActividad()) {
+
+            a.setMensaje("Su actividad ha sido registrado con éxito.");
+
+            Usuario u = (Usuario) request.getSession().getAttribute("user");
+            String rol = u.getRol();
+            ArrayList<Actividad> act;
+
+            if (rol.equalsIgnoreCase("WM")) {
+                act = Clases.Actividad.listarActividades();
+            } else {
+                act = a.listarActividadesDeUsuario();
+            }
+            request.setAttribute("acts", act);
+
+            return mapping.findForward(SUCCESSFULL);
+        }
+
+        a.setMensaje("No se pudo registrar la actividad. Por favor revise que "
+                + "los campos se han llenado correctamente.");
+        return mapping.findForward(FAILURE);
+
+
+    }
 }
