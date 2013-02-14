@@ -44,8 +44,8 @@
 
                 <logic:iterate name="acts" id="act">
                     <tr><td>
-                        <b><bean:write name="user" property="apellidos"></bean:write>, 
-                            <bean:write name="user" property="nombres"></bean:write></b>,
+                        <b><bean:write name="user" property="apellidos"></bean:write></b>, 
+                        <b><bean:write name="user" property="nombres"></bean:write></b>,
                         "<bean:write name="act" property="nombreTipoActividad"/>"
 
                         <logic:iterate name="act" property="camposValores" 
