@@ -38,33 +38,54 @@ public class Entrar extends DispatchAction {
             throws Exception {
         Usuario u = (Usuario) form;
         u.setRol("CU");
+        u.setTipo(3);
+        u.setUsername("07-41618");
+        u.setPassword("diana");
+        u.setNombres("Diana");
+        u.setApellidos("Vainberg");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
-
+    
     public ActionForward inDEx(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
         u.setRol("DEx");
+        u.setTipo(2);
+        u.setUsername("07-10000");
+        u.setPassword("pedro");
+        u.setNombres("Pedro");
+        u.setApellidos("Perez");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
+
 
     public ActionForward inProf(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
         u.setRol("Prof");
+        u.setTipo(4);
+        u.setUsername("kdoming");
+        u.setPassword("kdoming");
+        u.setNombres("Kenyer");
+        u.setApellidos("Dominguez");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
-    
+
     public ActionForward inWM(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
         u.setRol("WM");
+        u.setTipo(3);
+        u.setUsername("05-38199");
+        u.setPassword("123456");
+        u.setNombres("Jorge");
+        u.setApellidos("García");
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }

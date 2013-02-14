@@ -21,7 +21,7 @@ public class Usuario extends Root {
     private String apellidos;
     private String username;
     private String password;
-    private String tipo;
+    private int tipo;
     private String telefono;
     private String email;
     private String rol;
@@ -35,7 +35,6 @@ public class Usuario extends Root {
         "email", //6
         "rol" //7
     };
- 
 
     public Usuario() {
     }
@@ -86,11 +85,11 @@ public class Usuario extends Root {
         this.password = password;
     }
 
-    public String getTipo() {
+    public int getTipo() {
         return tipo;
     }
 
-    public void setTipo(String tipo) {
+    public void setTipo(Integer tipo) {
         this.tipo = tipo;
     }
 
@@ -123,7 +122,6 @@ public class Usuario extends Root {
         return "Usuario{" + " username= " + username + ", password= " + password + " }";
     }
 
-
     public boolean esUsuario() {
         try {
             Entity e = new Entity(0, 0);
@@ -139,13 +137,12 @@ public class Usuario extends Root {
                         return true;
                     }
                 }
-            } 
-        } catch (SQLException ex) {
-                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-    return false;    
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
-       
 
     public boolean usuarioLogin() {
         try {
@@ -154,7 +151,7 @@ public class Usuario extends Root {
             String[] cond = {username, password};
             ResultSet rs = e.seleccionar(col, cond);
             if (rs != null) {
-                
+
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[2]).equals(username)
                             && rs.getString(ATRIBUTOS[3]).equals(password)) {
@@ -169,11 +166,11 @@ public class Usuario extends Root {
         return false;
 
     }
-    
-    public static ArrayList<Usuario> listarUsuario(){
-        Entity eUsuario = new Entity(0,0);
+
+    public static ArrayList<Usuario> listarUsuario() {
+        Entity eUsuario = new Entity(0, 0);
         ArrayList<Usuario> listaUsuarios = new ArrayList<>(0);
-        
+
         ResultSet rs = eUsuario.listar();
 
         if (rs != null) {
@@ -184,7 +181,7 @@ public class Usuario extends Root {
                     u.setApellidos(rs.getString(ATRIBUTOS[1]));
                     u.setUsername(rs.getString(ATRIBUTOS[2]));
                     u.setPassword(rs.getString(ATRIBUTOS[3]));
-                    u.setTipo(rs.getString(ATRIBUTOS[4]));
+                    u.setTipo(rs.getInt(ATRIBUTOS[4]));
                     u.setTelefono(rs.getString(ATRIBUTOS[5]));
                     u.setEmail(rs.getString(ATRIBUTOS[6]));
                     u.setRol(rs.getString(ATRIBUTOS[7]));

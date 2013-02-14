@@ -14,7 +14,7 @@
                                 <html:link action="/Logout">
                                     (Cerrar Sesión)
                                 </html:link> |
-                                <html:link page="/Login.do?method=save">Inicio</html:link> |
+                                <html:link page="/Login.do?method=page">Inicio</html:link> |
                             </logic:present>
                             
                             <html:link href="http://localhost:8080/SiraDEx/construccion.html">Contactenos</html:link> |

@@ -26,12 +26,13 @@
         <action path="/Login" type="Usuarios.Login" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="sesionIniciada"/>
+            <forward name="page" path="/autenticacion.jsp"/>
             <forward name="failure" path="/autenticacion.jsp"/>
         </action>
         
         <action path="/Entrar" type="Usuarios.Entrar" scope="session" 
                 parameter="method" name="usuarioForm">
-            <forward name="success" path="/autenticacion.jsp"/>
+            <forward name="success" path="sesionIniciada"/>
         </action>
         
         <action path="/Logout" type="Usuarios.Logout" 
