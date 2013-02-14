@@ -64,8 +64,8 @@ public class TipoActividad extends Root {
     public int getId() {
         return id;
     }
-    
-    public int getIdTipoActividad(){
+
+    public int getIdTipoActividad() {
         return id;
     }
 
@@ -225,11 +225,11 @@ public class TipoActividad extends Root {
             validador,
             producto
         };
-        if (resp &= esTipoActividad()) {
+        if (esTipoActividad()) {
             this.mensaje = "No se puede registrar el tipo de actividad."
                     + "Ya existe un tipo de actividad de nombre '"
                     + this.nombreTipo + "'.Por favor elija otro nombre.";
-            return !resp;
+            return false;
         } else {
             System.out.println("No ha sido insertada previamente");
             String[] aInsertar = {
