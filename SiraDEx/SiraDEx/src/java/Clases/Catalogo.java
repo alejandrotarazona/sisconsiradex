@@ -254,7 +254,9 @@ public class Catalogo extends Root {
         Object[] valores = {nombres[0]};
         String[] colModificar = {ATRIBUTOS[1]};
         String[] nombreCat = {nombre};
-
+        if (this.esCatalogo()) {
+            return false;
+        }
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
  
         for (int i = 1; i < nombres.length; i++) { 

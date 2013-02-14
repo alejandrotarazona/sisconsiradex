@@ -14,13 +14,13 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición del Catálogo  <bean:write name="catalogoForm"
-                    property="nombre"/></title>
+        <% out.print("<title>SiraDEx | Edición del Catálogo "
+                    + (String) request.getAttribute("nombreCat") + "</title>");%>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
-            name="catalogoForm" property="nombre"/> </h1>
+        <% out.print("<h1 class='title' id='page-title'>Edición del Catálogo "
+                    + (String) request.getAttribute("nombreCat") + "</h1>");%>
 
         <logic:present name="catalogoForm" property="mensaje">
             <br/> <div align="center"><bean:write name="catalogoForm" 
@@ -31,10 +31,8 @@
                 <tr>
                 <td>Nombre del cátalogo</td>
 
-                <td><html:text name="catalogoForm" property="nombre">
-                        <bean:write name="catalogoForm" property="nombre"/>
-                    </html:text> 
-                   
+                <td><html:text name="catalogoForm" property="nombre" 
+                    value='<%=(String) request.getAttribute("nombreCat")%>'/></td>
             </tr>
             <tr><td>Nombre de los campos</td></tr>
 

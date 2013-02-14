@@ -84,7 +84,7 @@
         <!-- ======================ACTIVIDADES==============================-->
         
         <action path="/AGestionActividades" type="Actividad.Listar"
-                scope="request" parameter="method" name="actividadForm">
+                scope="session" parameter="method" name="actividadForm">
             <forward name="success1" path="gestionActividades"/>
             <forward name="success2" path="gestionActividades"/>
             <forward name="success3" path="gestionActividades"/>

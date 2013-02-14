@@ -17,7 +17,7 @@
         </logic:present> 
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
-            Registrar tipo de actividad
+            Agregar tipo de actividad
         </html:link><br/>  
 
         <h1 class="title" id="page-title">Tipos de Actividades registradas en el sistema</h1>

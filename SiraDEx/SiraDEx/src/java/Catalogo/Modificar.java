@@ -43,7 +43,7 @@ public class Modificar extends DispatchAction {
         int idCat = cat.getIdCatalogo(); 
         cat.setCampos(Clases.CampoCatalogo.listar(idCat));
         String nombreCat = Clases.Catalogo.getNombre(idCat);
-        request.setAttribute("nombreCat", nombreCat);
+        cat.setNombre(nombreCat);
         
         int nroCampos = cat.getCampos().size();
         String[] nombres = new String[nroCampos+1];
