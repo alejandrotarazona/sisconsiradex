@@ -28,8 +28,8 @@ CREATE OR REPLACE VIEW coordinaciones
 CREATE OR REPLACE VIEW estudiantes
                 (nombre, apellido, telefono, email)
     AS
-    SELECT u.nombre,
-            apellido,
+    SELECT u.nombres,
+            apellidos,
             telefono,
             email
     FROM usuario u
@@ -40,8 +40,8 @@ CREATE OR REPLACE VIEW estudiantes
 CREATE OR REPLACE VIEW obreros
                 (nombre, apellido, telefono, email)
     AS
-    SELECT u.nombre,
-            apellido,
+    SELECT u.nombres,
+            apellidos,
             telefono,
             email
     FROM usuario u
@@ -52,8 +52,8 @@ CREATE OR REPLACE VIEW obreros
 CREATE OR REPLACE VIEW empleados
                 (nombre, apellido, telefono, email)
     AS
-    SELECT u.nombre,
-            apellido,
+    SELECT u.nombres,
+            apellidos,
             telefono,
             email
     FROM usuario u
@@ -64,8 +64,8 @@ CREATE OR REPLACE VIEW empleados
 CREATE OR REPLACE VIEW profesores
                 (nombre, apellido, telefono, email)
     AS
-    SELECT u.nombre,
-            apellido,
+    SELECT u.nombres,
+            apellidos,
             telefono,
             email
     FROM usuario u
