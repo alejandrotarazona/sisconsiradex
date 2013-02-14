@@ -19,8 +19,6 @@ import java.util.logging.Logger;
 public class CampoCatalogoValor implements Serializable {
 
     private CampoCatalogo campo;
-    private int idCampo;
-    private int idElemento;
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
@@ -34,22 +32,6 @@ public class CampoCatalogoValor implements Serializable {
 
     public CampoCatalogoValor(CampoCatalogo campo) {
         this.campo = campo;
-    }
-
-    public int getIdCampo() {
-        return idCampo;
-    }
-
-    public void setIdCampo(int idCampo) {
-        this.idCampo = idCampo;
-    }
-
-    public int getIdElemento() {
-        return idElemento;
-    }
-
-    public void setIdElemento(int idElemento) {
-        this.idElemento = idElemento;
     }
 
     public CampoCatalogo getCampo() {
@@ -120,7 +102,7 @@ public class CampoCatalogoValor implements Serializable {
 
     //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
-    public static ArrayList<CampoCatalogoValor> listarElem(int idElem) {
+    public static ArrayList<CampoCatalogoValor> listarCamposValores(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 10);
         String[] ATRIBUTOS = {
@@ -135,7 +117,7 @@ public class CampoCatalogoValor implements Serializable {
             TABLAS[1],
             TABLAS[2]
         };
-        String[] colCondicion = {TABLAS[0] + ".id_elemento"};
+        String[] colCondicion = {"id_elemento"};
         Object[] colValor = {idElem};
 
         ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
@@ -143,9 +125,7 @@ public class CampoCatalogoValor implements Serializable {
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    CampoCatalogoValor cv = new CampoCatalogoValor();
-                    cv.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    cv.setIdElemento(rs.getInt(ATRIBUTOS[1]));
+                    CampoCatalogoValor cv = new CampoCatalogoValor();                
                     cv.setValor(rs.getString(ATRIBUTOS[2]));
                     CampoCatalogo cc = new CampoCatalogo();
                     cc.setNombre(rs.getString(ATRIBUTOS[3]));

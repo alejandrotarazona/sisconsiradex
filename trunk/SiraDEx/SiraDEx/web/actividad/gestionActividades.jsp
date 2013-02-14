@@ -40,31 +40,29 @@
             <logic:empty name="acts">
                 No hay actividad que mostrar
             </logic:empty>
-            <table>
+            <table> 
+
                 <logic:iterate name="acts" id="act">
-                    <tr>
-                  
-                      <b><bean:write name="user" property="apellidos"></bean:write>, 
-                        <bean:write name="user" property="nombres"></bean:write></b>,
-                    "<bean:write name="act" property="nombreTipoActividad"/>"
-                    
-                    <logic:iterate name="act" property="camposValores" 
-                                   id="campoValor" indexId="index">
-                    
-                        ,<bean:write name="campoValor" property="valor"/>
-                   
-                </logic:iterate>
-                    
+                    <tr><td>
+                        <b><bean:write name="user" property="apellidos"></bean:write>, 
+                            <bean:write name="user" property="nombres"></bean:write></b>,
+                        "<bean:write name="act" property="nombreTipoActividad"/>"
+
+                        <logic:iterate name="act" property="camposValores" 
+                                       id="campoValor" indexId="index">
+
+                            ,<bean:write name="campoValor" property="valor"/>
+
+                        </logic:iterate>
+                    </td> 
                     <td><html:form method="POST" action="/EliminarActividad">
                             <html:hidden name="act" property="idActividad" />
                             <html:submit styleId="botonEliminar"
                                          value=" "
                                          title="Eliminar"
                                          onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
-                        </html:form></td>
-                </tr>
-                <tr></tr>
-            </logic:iterate>
+                        </html:form></td></tr>
+                    </logic:iterate>         
         </table>
     </logic:present>
 

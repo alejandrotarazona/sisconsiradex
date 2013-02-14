@@ -139,7 +139,7 @@ public class ElementoCatalogo extends Root {
                     ElementoCatalogo ec = new ElementoCatalogo();
                     ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-                    ec.camposValores = CampoCatalogoValor.listarElem(ec.idElemento);
+                    ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
                     resp.add(ec);       
                 }
             } catch (SQLException ex) {
