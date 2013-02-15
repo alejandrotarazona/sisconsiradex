@@ -75,6 +75,20 @@ public class Actividad extends Root {
         return nombreTipoActividad;
     }
     
+     public void setNombreTipoActividad() {
+        try {
+            Entity eTipoAct = new Entity(0, 1);
+            String[] ta = {"nombre_tipo_actividad"};
+                    String[] idTipoAct = {"id_tipo_actividad"};
+                    Integer[] id = {idTipoActividad};
+                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, id);
+                    r.next();
+                    nombreTipoActividad = r.getString(1);
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+        
     public void setNombreTipoActividad(String nombreTipoActividad) {
         this.nombreTipoActividad = nombreTipoActividad;
     }
@@ -341,7 +355,7 @@ public class Actividad extends Root {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        
+       
         return listaActividad;
     }
     

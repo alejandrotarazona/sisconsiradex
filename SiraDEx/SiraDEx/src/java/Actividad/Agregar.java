@@ -45,7 +45,7 @@ public class Agregar extends DispatchAction {
         ArrayList ta = Clases.TipoActividad.listarTiposActividad();
         request.setAttribute("tipos", ta);//verificar si la lista es vacia
         Actividad a = (Actividad) form;
-        a.setMensaje("");
+        a.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 
@@ -54,7 +54,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-
+        a.setNombreTipoActividad();
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(a.getIdTipoActividad());
         a.setCamposValores(valores);
 

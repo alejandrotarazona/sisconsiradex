@@ -41,14 +41,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Actividad</title>
+        <title>SiraDEx | Registrar <bean:write name="actividadForm"
+                    property="nombreTipoActividad"/></title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registrar Actividad</h1>
+        <h1 class='title' id='page-title'>Registro de <bean:write 
+                name="actividadForm" property="nombreTipoActividad"/> </h1>
 
         <logic:present name="actividadForm" property="mensaje">
-            <bean:write name="actividadForm" property="mensaje" /><br/>
-        </logic:present>
+            <br/><b><div align="center">
+                    <bean:write name="actividadForm" property="mensaje" /></div></b><br/>
+                </logic:present>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
     <html:form action="/RegistrarActividad?method=save2">
@@ -75,12 +78,30 @@
         <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
             <html:checkbox name="campoValor" property="valor" indexed="true"/>
         </logic:equal>
-    </td>  
+
+        <logic:equal name="campoValor" property="campo.tipo" value="textol">
+            <html:textarea name="campoValor"  cols="campo.longitud" rows="4"
+                           property="valor" indexed="true"></html:textarea>
+        </logic:equal>
+        <logic:equal name="campoValor" property="campo.tipo" value="archivo">
+            <html:text name="campoValor" property="valor" indexed="true"/>
+        </logic:equal>
+        <%--falta por hacer<logic:equal name="campoValor" property="campo.tipo" value="archivo">
+           <html:text name="campoValor" property="valor" indexed="true"/>
+        </logic:equal>
+        falta por hacer <logic:equal name="campoValor" property="campo.tipo" value='un catalogo'>
+           <html:text name="campoValor" property="valor" indexed="true"/>
+        </logic:equal>--%>
+</td>  
 </tr>
 </logic:iterate>
+<tr>
+<td>(Pendiente campo para subir el producto)</td>    
+<td><html:text name="campoValor" property="valor"/> </td>  
+</tr>
 </table>
 <br>
-<html:submit>Registrar</html:submit>
+<div align="center"><html:submit>Registrar</html:submit></div>
 
 </html:form>
 </body>

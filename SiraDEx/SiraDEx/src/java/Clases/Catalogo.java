@@ -254,13 +254,30 @@ public class Catalogo extends Root {
         Object[] valores = {nombres[0]};
         String[] colModificar = {ATRIBUTOS[1]};
         String[] nombreCat = {nombre};
-        if (this.esCatalogo()) {
+        if (this.esCatalogo() && !nombre.equals(nombres[0])) {
+            mensaje = "Error: Ya existe un catálogo llamado "
+                    + "" + nombres[0] + ".\n Intente con otro nombre.";
+            return false;
+        }
+        if (nombres[0].equals("Coordinaciones") && !nombre.equals(nombres[0])) {
+            mensaje = "Error: El nombre del catálogo Coordinaciones no puede"
+                    + " ser modificado.\n Solo se permite modificar el nombre de"
+                    + " sus campos.";
+            return false;
+        }
+        if (nombres[0].equals("Coordinaciones") && !nombre.equals(nombres[0])) {
+            mensaje = "Error: El nombre del catálogo Programas no puede"
+                    + " ser modificado.\n Solo se permite modificar el nombre de"
+                    + " sus campos.";
             return false;
         }
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
         for (int i = 1; i < nombres.length; i++) {
             respuesta &= campos.get(i - 1).modificar(nombres[i], idCatalogo);
+        }
+        if (!respuesta){
+            mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }
         return respuesta;
     }

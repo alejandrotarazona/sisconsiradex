@@ -34,18 +34,19 @@ public class Elemento {
         this.contenido = contenido;
     }
 
-    public static ArrayList<Elemento> listarCamposValor(String nombre) {
+    public static ArrayList<Elemento> listarElementos(String catalogo, int valores) {
         try {
             Entity eCat = new Entity(0, 8);
 
 
             String[] cat = {"nombre"};
             String[] idCatalogo = {"id_cat"};
-            String[] nombreCat = {nombre};
+            String[] nombreCat = {catalogo};
             ResultSet r = eCat.proyectar(idCatalogo, cat, nombreCat);
             r.next();
             int idCat = r.getInt(1);
-            ArrayList<ElementoCatalogo> programas = Clases.ElementoCatalogo.listarElementosId(idCat);
+            ArrayList<ElementoCatalogo> programas;
+            programas = Clases.ElementoCatalogo.listarElementosId(idCat);
             Iterator it = programas.iterator();
             ArrayList<Elemento> contenidos = new ArrayList<>(0);
             int j = 0;
@@ -54,7 +55,12 @@ public class Elemento {
                 ArrayList<CampoCatalogoValor> prog = ec.getCamposValores();
                 int i = 0;
                 String valor = "";
-                for (i = 0; i < prog.size(); i++) {
+                if (valores > prog.size()){
+                    System.out.println("la funcion listarElementos debe ser "
+                            + "llamada con un entero menor o igual al número "
+                            + "de valores que tenga el elemnto del catálogo");
+                }
+                for (i = 0; i < valores; i++) {
                     valor += prog.get(i).getValor() + ", ";
                 }
                 Elemento e = new Elemento(valor);
@@ -72,7 +78,7 @@ public class Elemento {
 
     public static void main(String[] args) {
 
-        ArrayList<Elemento> programas = listarCamposValor("Coordinaciones");
+        ArrayList<Elemento> programas = listarElementos("Coordinaciones",1);
         Iterator it = programas.iterator();
 
         while (it.hasNext()) {

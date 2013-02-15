@@ -43,34 +43,36 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList<Elemento> programas;
-        programas = Clases.Elemento.listarCamposValor("Programas");
-        request.setAttribute("programas", programas);
-         ArrayList<Elemento> coordinaciones;
-        coordinaciones = Clases.Elemento.listarCamposValor("Coordinaciones");
-        request.setAttribute("coordinaciones", coordinaciones);
+        programas = Clases.Elemento.listarElementos("Programas",1);
+        request.getSession().setAttribute("programas", programas);
+        ArrayList<Elemento> coordinaciones;
+        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones",1);
+        request.getSession().setAttribute("coordinaciones", coordinaciones);
         TipoActividad t = (TipoActividad) form;
-        t.setMensaje("");
+        t.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
         TipoActividad t = (TipoActividad) form;
-
+        ArrayList catalogos = Clases.Catalogo.listar();
+        request.getSession().setAttribute("catalogos", catalogos);
+        
         if (t.getNombreTipo().contains(";") || t.getNombreTipo().contains("<")
                 || t.getNombreTipo().contains(">") || t.getNombreTipo().contains("'")
                 || t.getNombreTipo().contains("&") || t.getNombreTipo().contains("$")) {
-            t.setMensaje("El nombre tiene un caracter invalido, por favor "
+            t.setMensaje("Error: El nombre del tipo de actividad contiene uno de los "
+                    + "siguientes carácteres inválidos: ;>?'&$ por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
 
         } else if (t.getNroCampos() <= 0) {
-            t.setMensaje("El número de campos DEBE SER mayor o igual a 1 campos. "
-                    + "Actualmente presenta "
-                    + t.getNroCampos() + " campos. Por favor elija otro número.");
-            
+            t.setMensaje("Error: El número de campos de un tipo de actividad "
+                    + "debe ser de al menos 1. Ingrese un número válido y "
+                    + "presione Siguiente.");
             return mapping.findForward(FAILURE);
         }
         int numeroCampos = t.getNroCampos();
