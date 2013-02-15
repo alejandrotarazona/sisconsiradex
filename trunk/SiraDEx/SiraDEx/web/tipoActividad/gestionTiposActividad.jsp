@@ -12,22 +12,21 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
-        <logic:present name="tipoActividadForm" property="mensaje">
-            <br/><div align="center">
-                <bean:write name="tipoActividadForm" property="mensaje" /></div><br/>
-            </logic:present> 
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
-            Agregar tipo de actividad
-        </html:link><br/>  
-
-        <h1 class="title" id="page-title">Tipos de Actividades registradas en el sistema</h1>
+            Agregar tipo de actividad<br>
+        </html:link>
+        <logic:present name="tipoActividadForm" property="mensaje">
+            <br><div align="center"><b>
+                    <bean:write name="tipoActividadForm" property="mensaje" /></b></div>
+                </logic:present> 
+        <h1>Tipos de Actividades registradas en el sistema</h1>
         <logic:notPresent name="tipos">
             No hay tipos de actividad que mostrar
         </logic:notPresent>
         <logic:present name="tipos">
             <logic:empty name="tipos">
-                No hay tipos de actividad que mostrar
+                <div align="center">No hay tipos de actividad que mostrar</div>
             </logic:empty>
             <table>
                 <logic:iterate name="tipos" id="ta">
@@ -35,14 +34,7 @@
                     <td>
                         <bean:write name="ta" property="nombreTipo"/>
                     </td>
-                    <td>
-                        <html:form method="POST" action="/AGestionActividades?method=listType">
-                            <html:hidden name="ta" property="idTipoActividad" />
-                            <html:submit styleId="botonExaminar"
-                                         value=" "
-                                         title="Consultar"/>
-                        </html:form>
-                    </td>
+                    
                     <td><html:form method="POST" action="/EliminarTipoActividad">
                             <html:hidden name="ta" property="id" />
                             <html:submit styleId="botonEliminar"

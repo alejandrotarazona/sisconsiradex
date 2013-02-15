@@ -29,12 +29,12 @@
             </html:form>
         </logic:present>
 
-        <h1 class="title" id="page-title">Actividades registradas en el sistema</h1>
+        <h1>Actividades registradas en el sistema</h1>
         <logic:present name="actividadForm" property="mensaje">
             <bean:write name="actividadForm" property="mensaje" /><br/>
         </logic:present>
         <logic:notPresent name="acts">
-            No hay actividad que mostrar
+            <div align="center">No hay actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="acts">
             <logic:empty name="acts">
@@ -51,7 +51,7 @@
                         <logic:iterate name="act" property="camposValores" 
                                        id="campoValor" indexId="index">
 
-                            ,<bean:write name="campoValor" property="valor"/>
+                            , <bean:write name="campoValor" property="valor"/> 
 
                         </logic:iterate>
                     </td> 

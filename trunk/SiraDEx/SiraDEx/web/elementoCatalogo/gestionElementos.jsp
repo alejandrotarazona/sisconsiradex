@@ -25,8 +25,8 @@
         </logic:equal>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">
-            <br/><div align="center"><bean:write name="elementoCatalogoForm" 
-                        property="mensaje" /></div><br/>
+            <br/><div align="center"><b><bean:write name="elementoCatalogoForm" 
+                        property="mensaje" /></b></div><br/>
             </logic:present>
 
         <h1>Elementos del Catálogo</h1>

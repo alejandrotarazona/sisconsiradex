@@ -17,26 +17,27 @@
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registrar Actividad</h1>
+        <h1 class="title" id="page-title">Registro de Actividad</h1>
         <logic:present name="actividadForm" property="mensaje">
-            <br/><div align="center">
-                <bean:write name="actividadForm" property="mensaje" />
-            </div><br/>
-        </logic:present>
-        <html:form method="POST" action ="/RegistrarActividad?method=save">
-
-        <tr>
-        <td><strong>Tipo de Actividad:</strong></td>
-        <td><label>
-            <html:select property="idTipoActividad">
-                <html:option value="">(Seleccione un tipo de actividad)</html:option>
-                <html:optionsCollection name="tipos"
-                                        label="nombreTipo" value="id"/>
-            </html:select>
-        </label></td>
-</tr>
-
-<html:submit>Siguiente</html:submit>
-</html:form>
+            <br/><b><div align="center">
+                    <bean:write name="actividadForm" property="mensaje" />
+                </div></b><br/>
+            </logic:present>
+            <html:form method="POST" action ="/RegistrarActividad?method=save">
+            <table>
+                <tr>
+                <td><b>Tipo de Actividad </b></td>
+                <td>
+                    <html:select property="idTipoActividad">
+                        <html:option value="">(Seleccione un tipo de actividad)</html:option>
+                        <html:optionsCollection name="tipos"
+                                                label="nombreTipo" value="id"/>
+                    </html:select>
+                </td>
+            </tr>
+        </table>
+        <br>
+        <div align="center"><html:submit>Siguiente</html:submit></div>
+    </html:form>
 </body>
 </html>

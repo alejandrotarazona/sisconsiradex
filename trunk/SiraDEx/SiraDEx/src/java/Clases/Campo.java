@@ -18,6 +18,7 @@ public class Campo implements Serializable {
     private String tipo;
     private int longitud;
     private boolean obligatorio;
+    
    
     private static final String[] TIPOS = {
         "texto",   //STRING

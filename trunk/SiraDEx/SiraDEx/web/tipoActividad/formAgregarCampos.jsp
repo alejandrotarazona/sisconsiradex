@@ -16,16 +16,20 @@
         <title>SiraDEx | Registrar Campos del Tipo de Actividad</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registrar Campos del Tipo de Actividad</h1>
+        <h1 class="title" id="page-title">Registro de Campos de <bean:write 
+                name="tipoActividadForm" property="nombreTipo"/> </h1>
         <logic:present name="tipoActividadForm" property="mensaje">
-            <bean:write name="tipoActividadForm" property="mensaje" /><br/>
-        </logic:present>
+            <br/><div align="center"><b>
+                    <bean:write name="tipoActividadForm" property="mensaje" />
+                </b></div><br/>
+                </logic:present>
         <table>
             <tr>
             <td><b>Nombre</b></td>
             <td><b>Tipo</b></td>
             <td><b>Longitud</b></td>
             <td><b>Obligatoriedad</b></td>
+            <td><b>Catálogo</b></td>
         </tr>            
 
         <html:form action="/RegistrarTipoActividad?method=save2">
@@ -35,19 +39,28 @@
 
                 <td><html:select name="campo" property="tipo" indexed="true">
                         <html:option value="texto">texto</html:option>
+                        <html:option value="textol">texto largo</html:option>
                         <html:option value="numero">numero</html:option>
                         <html:option value="fecha">fecha</html:option>
-                        <html:option value="catálogo">catálogo</html:option>
+                        <html:option value="catalogo">catálogo</html:option>
                         <html:option value="archivo">archivo</html:option>
                         <html:option value="checkbox">checkbox</html:option>
                     </html:select></td>
+
                 <td><html:text name="campo" property="longitud" indexed="true"/></td>
+
                 <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
+
+                <td><html:select name="campo" property="tipo" indexed="true"><%--por ahora property=tipo--%>
+                        <html:option value="">NO APLICA</html:option>
+                        <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
+                    </html:select></td>
+
             </tr>
         </logic:iterate>
     </table>
     <br>
-    <html:submit>Registrar</html:submit>
+    <div align="center"><html:submit>Registrar</html:submit></div>
 
 </html:form>
 </body>

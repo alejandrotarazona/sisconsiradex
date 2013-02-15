@@ -65,11 +65,6 @@ public class Modificar extends DispatchAction {
         
         String[] nombres = (String[])request.getSession().getAttribute("nombres");
                 
-        System.out.print("arreglo de nombres viejos:  ");
-        for (int i = 0; i < nombres.length; i++) {
-             System.out.print(nombres[i]+" ");
-        }
-        System.out.println("");
         if (cat.modificar(nombres)) {
 
             cat.setMensaje("El catálogo ha sido modificado con éxito.");
@@ -77,7 +72,6 @@ public class Modificar extends DispatchAction {
             request.setAttribute("catalogos", cats);
             return mapping.findForward(SUCCESS);
         }
-        cat.setMensaje("Error: El catálogo NO no se pudo modificar correctamente.");
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);

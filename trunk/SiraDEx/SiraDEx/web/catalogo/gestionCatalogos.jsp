@@ -21,7 +21,7 @@
                         property="mensaje" /></div><br/>
             </logic:present>
 
-        <h1>Catálogos del sistema</h1>
+        <h1>Catálogos registrados en el sistema</h1>
         <logic:notPresent name="catalogos">
             <p align="center">No hay catálogos que mostrar.</p>
         </logic:notPresent>

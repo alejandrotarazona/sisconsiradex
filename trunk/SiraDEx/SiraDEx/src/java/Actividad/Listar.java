@@ -85,6 +85,7 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad a = (Actividad) form;
+        a.setMensaje(null);
         ArrayList<Actividad> act = a.listarActividadesDeTipo();
         request.setAttribute("acts", act);
         request.setAttribute("TipoAct", a);

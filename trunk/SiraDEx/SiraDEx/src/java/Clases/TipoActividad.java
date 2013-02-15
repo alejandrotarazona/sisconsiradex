@@ -27,7 +27,6 @@ public class TipoActividad extends Root {
     private String programa;
     private String validador;
     private String producto;
-    private boolean activo;
     private ArrayList<Campo> campos;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
@@ -203,7 +202,7 @@ public class TipoActividad extends Root {
     public boolean agregarTipoActividad() {
 
         Entity e = new Entity(1, 1);
-        boolean resp = true;
+        boolean resp;
 
         Object[] valores = {
             nombreTipo,
@@ -232,7 +231,6 @@ public class TipoActividad extends Root {
             };
 
             if (resp = e.insertar2(aInsertar, valores)) {
-                activo = resp;
                 this.setId();
                 System.out.println("Ya inserte el tipo de Actividad con ID " + id);
                 Iterator it = campos.iterator();

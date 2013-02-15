@@ -17,11 +17,11 @@
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registro del Tipo de Actividad</h1>
+        <h1 class="title" id="page-title">Registro de Tipo de Actividad</h1>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
         <logic:present name="tipoActividadForm" property="mensaje">
-    <br/><div align="center">
-        <bean:write name="tipoActividadForm" property="mensaje" /></div><br/>
+    <br/><div align="center"><b>
+        <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
     </logic:present>
     <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
     <table>
@@ -47,7 +47,6 @@
 <td>
     <html:select property="programa">
         <html:option value="">(Seleccione un programa)</html:option>
-        <html:option value="EP">Educacion Permanente</html:option>
         <html:optionsCollection name="programas" label="contenido" value="contenido"/>
 
     </html:select>
@@ -58,8 +57,7 @@
 <td>       
     <html:select property="validador">
         <html:option value="">(Seleccione una coordinación)</html:option>
-        <html:option value="CIO">Coordinacion de Igualdad de Oportunidades</html:option>
-        <<html:optionsCollection name="coordinaciones" label="contenido" value="contenido"/>
+        <html:optionsCollection name="coordinaciones" label="contenido" value="contenido"/>
     </html:select>
 </td>
 </tr>
