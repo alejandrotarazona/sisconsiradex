@@ -23,8 +23,8 @@
             name="catalogoForm" property="nombre"/> </h1>
 
         <logic:present name="catalogoForm" property="mensaje">
-            <br/> <div align="center"><bean:write name="catalogoForm" 
-                        property="mensaje" /></div><br/>
+            <br/> <div align="center"><b><bean:write name="catalogoForm" 
+                        property="mensaje" /></b></div><br/>
             </logic:present>
             <html:form method="POST" action ="/ModificarCatalogo?method=update">
             <table>

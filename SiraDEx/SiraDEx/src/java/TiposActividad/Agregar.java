@@ -74,6 +74,11 @@ public class Agregar extends DispatchAction {
                     + "debe ser de al menos 1. Ingrese un número válido y "
                     + "presione Siguiente.");
             return mapping.findForward(FAILURE);
+        } else if (t.getDescripcion().equals("") || t.getNombreTipo().equals("") ||
+                t.getPermiso().equals("") || t.getPrograma().equals("") || t.getTipoPR().equals("")
+                || t.getValidador().equals("")){
+            t.setMensaje("Error: Los campos con obligatorios deben ser llenados");
+            return mapping.findForward(FAILURE);
         }
         int numeroCampos = t.getNroCampos();
         ArrayList<Campo> campos = new ArrayList<>();

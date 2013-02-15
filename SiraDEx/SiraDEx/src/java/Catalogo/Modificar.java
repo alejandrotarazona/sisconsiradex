@@ -73,6 +73,7 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
         ArrayList cats = Clases.Catalogo.listar();
+        cat.setNombre(nombres[0]);
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);
 

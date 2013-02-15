@@ -16,7 +16,7 @@
         <put name="header" value="/Interfaz/Plantillas/header.jsp" />
         <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
         <put name="leftMenu" value="/Interfaz/Plantillas/leftMenu.jsp" />
-        <put name="rightMenu" value="/Interfaz/Plantillas/rightMenu.jsp" />
+        <!--put name="rightMenu" value="/Interfaz/Plantillas/rightMenu.jsp" /-->
         <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
     </definition>
     

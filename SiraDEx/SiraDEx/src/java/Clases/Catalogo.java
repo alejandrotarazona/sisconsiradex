@@ -256,7 +256,7 @@ public class Catalogo extends Root {
         String[] nombreCat = {nombre};
         if (this.esCatalogo() && !nombre.equals(nombres[0])) {
             mensaje = "Error: Ya existe un catálogo llamado "
-                    + "" + nombres[0] + ".\n Intente con otro nombre.";
+                    + "" + nombre + ".\n Intente con otro nombre.";
             return false;
         }
         if (nombres[0].equals("Coordinaciones") && !nombre.equals(nombres[0])) {
