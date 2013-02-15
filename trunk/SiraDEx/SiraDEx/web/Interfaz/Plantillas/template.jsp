@@ -69,12 +69,6 @@
                                                         <br />
                                                         <br />
                                                         <br />
-                                                        <p><strong>Ubicación</strong></p>
-                                                        <p>Edificio de Comunicaciones. Piso 2. Apartado 89000. Valle de Sartenejas. Baruta. Edo. Miranda.<br />
-                                                            Teléfono: 58-0212- 906-3157 <br />
-                                                            Fax:58-0212-9063159<br />
-                                                            Correo Electrónico: <a href="mailto:dex@usb.ve">dex@usb.ve<br /></a>Página web: <a href="http://www.dex.usb.ve/">http://www.dex.usb.ve</a></p>
-
                                                     </div>
                                                 </div>
                                             </div>
@@ -85,7 +79,7 @@
                         </div>
                     </div>
                     <tiles:insert attribute="leftMenu" />
-                    <tiles:insert attribute="rightMenu" />
+                    <!--tiles:insert attribute="rightMenu" /-->
                 </div>
                 <tiles:insert attribute="footer" />
             </div>
