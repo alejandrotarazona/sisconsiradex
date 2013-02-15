@@ -13,8 +13,9 @@
     <body>
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
         <logic:present name="tipoActividadForm" property="mensaje">
-            <bean:write name="tipoActividadForm" property="mensaje" /><br/>
-        </logic:present> 
+            <br/><div align="center">
+                <bean:write name="tipoActividadForm" property="mensaje" /></div><br/>
+            </logic:present> 
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
             Agregar tipo de actividad

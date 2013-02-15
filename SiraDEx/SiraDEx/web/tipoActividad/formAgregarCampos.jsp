@@ -37,8 +37,8 @@
                         <html:option value="texto">texto</html:option>
                         <html:option value="numero">numero</html:option>
                         <html:option value="fecha">fecha</html:option>
-                        <html:option value="catálogo">checkbox</html:option>
-                        <html:option value="archivo">checkbox</html:option>
+                        <html:option value="catálogo">catálogo</html:option>
+                        <html:option value="archivo">archivo</html:option>
                         <html:option value="checkbox">checkbox</html:option>
                     </html:select></td>
                 <td><html:text name="campo" property="longitud" indexed="true"/></td>

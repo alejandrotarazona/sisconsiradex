@@ -5,6 +5,7 @@
 package TiposActividad;
 
 import Clases.Campo;
+import Clases.Elemento;
 import Clases.TipoActividad;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -41,8 +42,12 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        /*ArrayList programas = Clases.Elemento.listarElementos("Programas");
-         request.setAttribute("programas", programas);*/
+        ArrayList<Elemento> programas;
+        programas = Clases.Elemento.listarCamposValor("Programas");
+        request.setAttribute("programas", programas);
+         ArrayList<Elemento> coordinaciones;
+        coordinaciones = Clases.Elemento.listarCamposValor("Coordinaciones");
+        request.setAttribute("coordinaciones", coordinaciones);
         TipoActividad t = (TipoActividad) form;
         t.setMensaje("");
         return mapping.findForward(PAGE);

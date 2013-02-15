@@ -40,8 +40,8 @@ INSERT INTO valor values(11,2,'Nombre del archivo.txt');
 
 --Tipo de actividad
 
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Formulacion de proyectos del BPDEx', 'P',11,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx', true);
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Tutoría de PSC', 'P',5,'Nuevos diplomados','Tutoría','PSC','Informe', true);
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Formulacion de proyectos del BPDEx', 'P',11,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx');
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de PSC', 'P',5,'Nuevos diplomados','Tutoría','PSC','Informe');
 --INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta', true);
 
 --Campo de un tipo de actividad

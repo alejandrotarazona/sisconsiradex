@@ -140,7 +140,7 @@ public class ElementoCatalogo extends Root {
                     ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
                     ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
-                    resp.add(ec);       
+                    resp.add(ec);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -149,5 +149,6 @@ public class ElementoCatalogo extends Root {
         }
         return resp;
     }
+
     
 }
