@@ -37,8 +37,7 @@ public class TipoActividad extends Root {
         "descripcion", //4
         "programa", //5
         "validador", //6
-        "producto", //7
-        "activo" //8
+        "producto" //7
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -150,27 +149,17 @@ public class TipoActividad extends Root {
         this.producto = producto;
     }
 
-    public boolean isActivo() {
-        return activo;
-    }
-
-    public void setActivo(boolean activo) {
-        this.activo = activo;
-    }
-
     public void setId() {
         Entity eId = new Entity(0, 1);
 
         String[] seleccionar = {ATRIBUTOS[0]};
 
         String[] columnas = {
-            ATRIBUTOS[1],
-            ATRIBUTOS[8]
+            ATRIBUTOS[1]
         };
 
         Object[] valores = {
-            nombreTipo,
-            activo
+            nombreTipo
         };
 
         ResultSet rs = eId.proyectar(seleccionar, columnas, valores);
@@ -297,7 +286,6 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setProducto(rs.getString(ATRIBUTOS[7]));
-                    t.setActivo(rs.getBoolean(ATRIBUTOS[8]));
 
                     tipos.add(t);
                 }

@@ -19,7 +19,9 @@
     <body>
         <h1 class="title" id="page-title">Registrar Actividad</h1>
         <logic:present name="actividadForm" property="mensaje">
-            <bean:write name="actividadForm" property="mensaje" />
+            <br/><div align="center">
+                <bean:write name="actividadForm" property="mensaje" />
+            </div><br/>
         </logic:present>
         <html:form method="POST" action ="/RegistrarActividad?method=save">
 

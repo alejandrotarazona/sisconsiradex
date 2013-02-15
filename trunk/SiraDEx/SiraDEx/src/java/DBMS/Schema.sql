@@ -51,8 +51,7 @@ CREATE TABLE TIPO_ACTIVIDAD(
     descripcion             VARCHAR(2000) NOT NULL,
     programa                VARCHAR(140) NOT NULL,
     validador               VARCHAR(140) NOT NULL,
-    producto                VARCHAR(50),
-    activo                  BOOLEAN DEFAULT TRUE
+    producto                VARCHAR(50)
     
 )
 WITH (

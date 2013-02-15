@@ -20,9 +20,10 @@
         <h1 class="title" id="page-title">Registro del Tipo de Actividad</h1>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
         <logic:present name="tipoActividadForm" property="mensaje">
-            <bean:write name="tipoActividadForm" property="mensaje" /><br/>
-</logic:present>
-<html:form method="POST" action ="/RegistrarTipoActividad?method=save">
+    <br/><div align="center">
+        <bean:write name="tipoActividadForm" property="mensaje" /></div><br/>
+    </logic:present>
+    <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
     <table>
         <tr>
         <td>Nombre<span style="color:red">*</span> </td>
@@ -47,17 +48,18 @@
     <html:select property="programa">
         <html:option value="">(Seleccione un programa)</html:option>
         <html:option value="EP">Educacion Permanente</html:option>
-        <%-- <html:optionsCollection name="programas" label="atributo1" value="id"/> --%>
+        <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+
     </html:select>
 </td>
 </tr>
 <tr>
 <td>Coordinación a validar<span style="color:red">*</span> </td>
-<td>
+<td>       
     <html:select property="validador">
         <html:option value="">(Seleccione una coordinación)</html:option>
         <html:option value="CIO">Coordinacion de Igualdad de Oportunidades</html:option>
-        <%-- <html:optionsCollection name="coordinaciones" label="atributo1" value="id"/> --%>
+        <<html:optionsCollection name="coordinaciones" label="contenido" value="contenido"/>
     </html:select>
 </td>
 </tr>
@@ -72,7 +74,7 @@
 </tr>
 <tr>
 <td>Producto<span style="color:red">*</span> </td>
-<td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
+<td><html:text name="tipoActividadForm" property="producto"></html:text></td>
 </tr>
 <tr><td>Numero de campos<span style="color:red">*</span> </td>
 <td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>

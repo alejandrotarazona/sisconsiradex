@@ -154,7 +154,6 @@ public class Catalogo extends Root {
     }
 
     public boolean esCatalogo() {
-        boolean resp = true;
 
         try {
             Entity e = new Entity(0, 8);
@@ -245,9 +244,10 @@ public class Catalogo extends Root {
     }
     //en el parámetro nombres están los viejos nombres, primero el del catálogo
     //luego el de sus campos
+
     public boolean modificar(String[] nombres) {
         boolean respuesta;
-        
+
         Entity e = new Entity(2, 8);
 
         String[] condColumnas = {ATRIBUTOS[1]};
@@ -258,9 +258,9 @@ public class Catalogo extends Root {
             return false;
         }
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
- 
-        for (int i = 1; i < nombres.length; i++) { 
-             respuesta &= campos.get(i-1).modificar(nombres[i], idCatalogo);
+
+        for (int i = 1; i < nombres.length; i++) {
+            respuesta &= campos.get(i - 1).modificar(nombres[i], idCatalogo);
         }
         return respuesta;
     }
