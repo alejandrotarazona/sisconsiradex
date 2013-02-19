@@ -107,6 +107,10 @@ public class CampoCatalogo implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+    public boolean isNombreInvalido(){
+        boolean resp = nombre.equals("");
+        return resp;
+    }
 
     public boolean agregarCampo(int idCatalogo) {
         boolean resp = true;

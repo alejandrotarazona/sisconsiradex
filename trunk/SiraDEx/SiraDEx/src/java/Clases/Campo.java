@@ -107,7 +107,10 @@ public class Campo implements Serializable {
         return TIPOS;
     }
     
-    
+    public boolean isNombreInvalido(){
+        boolean resp = nombre.equals("");
+        return resp;
+    }
 
        @Override
     public String toString() {

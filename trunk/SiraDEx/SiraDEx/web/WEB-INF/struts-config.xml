@@ -72,8 +72,9 @@
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="success" path="agregarCampos"/>
             <forward name="successfull" path="gestionTiposActividad"/>
-            <forward name="failure" path="agregarTipoActividad"/>
+            <forward name="failure" path="agregarTipoActividad"/>            
             <forward name="page" path="agregarTipoActividad"/>
+            <forward name="failureCampos" path="agregarCampos"/>
         </action>
         
         <action path="/EliminarTipoActividad" type="TiposActividad.Eliminar"
@@ -118,7 +119,8 @@
             <forward name="success" path="agregarCamposCatalogo"/>
             <forward name="successfull" path="gestionCatalogos"/>
             <forward name="failure" path="agregarCatalogo"/>
-            <forward name="page" path="agregarCatalogo"/>     
+            <forward name="page" path="agregarCatalogo"/>
+            <forward name="failureCampos" path="agregarCamposCatalgo"/>     
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"

@@ -26,6 +26,7 @@ public class Agregar extends DispatchAction {
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL = "successfull";
     private static final String FAILURE = "failure";
+    private static final String FAILURE2 = "failureCampos";
     private static final String PAGE = "page";
 
     /**
@@ -80,6 +81,23 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
+        ArrayList<CampoCatalogo> c = cat.getCampos();
+
+        for (int i = 1; i <= cat.getNroCampos(); i++) {
+            try {
+                CampoCatalogo aux = c.get(i-1);
+                if (aux.isNombreInvalido()) {
+                    cat.setMensaje("El campo número " + i
+                            + " contiene un nombre inválido");
+                    return mapping.findForward(FAILURE2);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                cat.setMensaje("El campo número " + i
+                            + " contiene un nombre inválido");
+                    return mapping.findForward(FAILURE2);
+            }
+        }
 
         if (cat.agregar()) {
 

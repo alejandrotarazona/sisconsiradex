@@ -27,6 +27,7 @@ public class Agregar extends DispatchAction {
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL = "successfull";
     private static final String FAILURE = "failure";
+    private static final String FAILURE2 = "failureCampos";
     private static final String PAGE = "page";
 
     /**
@@ -43,10 +44,10 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList<Elemento> programas;
-        programas = Clases.Elemento.listarElementos("Programas",1);
+        programas = Clases.Elemento.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
         ArrayList<Elemento> coordinaciones;
-        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones",1);
+        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
         TipoActividad t = (TipoActividad) form;
         t.setMensaje(null);
@@ -56,11 +57,11 @@ public class Agregar extends DispatchAction {
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         TipoActividad t = (TipoActividad) form;
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
-        
+
         if (t.getNombreTipo().contains(";") || t.getNombreTipo().contains("<")
                 || t.getNombreTipo().contains(">") || t.getNombreTipo().contains("'")
                 || t.getNombreTipo().contains("&") || t.getNombreTipo().contains("$")) {
@@ -74,9 +75,9 @@ public class Agregar extends DispatchAction {
                     + "debe ser de al menos 1. Ingrese un número válido y "
                     + "presione Siguiente.");
             return mapping.findForward(FAILURE);
-        } else if (t.getDescripcion().equals("") || t.getNombreTipo().equals("") ||
-                t.getPermiso().equals("") || t.getPrograma().equals("") || t.getTipoPR().equals("")
-                || t.getValidador().equals("")){
+        } else if (t.getDescripcion().equals("") || t.getNombreTipo().equals("")
+                || t.getPermiso().equals("") || t.getPrograma().equals("") || t.getTipoPR().equals("")
+                || t.getValidador().equals("")) {
             t.setMensaje("Error: Los campos con obligatorios deben ser llenados");
             return mapping.findForward(FAILURE);
         }
@@ -100,6 +101,23 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         TipoActividad t = (TipoActividad) form;
+        ArrayList<Campo> c = t.getCampos();
+
+        for (int i = 1; i <= t.getNroCampos(); i++) {
+            try {
+                Campo aux = c.get(i-1);
+                if (aux.isNombreInvalido()) {
+                    t.setMensaje("El campo número " + i
+                            + " contiene un nombre inválido");
+                    return mapping.findForward(FAILURE2);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                t.setMensaje("El campo número " + i
+                            + " contiene un nombre inválido");
+                    return mapping.findForward(FAILURE2);
+            }
+        }
 
         if (t.agregarTipoActividad()) {
 
