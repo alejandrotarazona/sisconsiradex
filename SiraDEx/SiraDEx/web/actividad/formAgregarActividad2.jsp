@@ -21,7 +21,7 @@
         });
 
         $( "#fecha_input input" ).datepicker(
-        "option", "dateFormat", "dd-mm-yy" 
+        "option", "dateFormat", "dd/mm/yy" 
     );
 	
         $( "#fecha_input input" ).datepicker({
@@ -92,7 +92,7 @@
         falta por hacer <logic:equal name="campoValor" property="campo.tipo" value='un catalogo'>
            <html:text name="campoValor" property="valor" indexed="true"/>
         </logic:equal>--%>
-</td>  
+    </td>  
 </tr>
 </logic:iterate>
 <tr>
