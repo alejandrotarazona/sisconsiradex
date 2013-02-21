@@ -54,15 +54,15 @@ public class Agregar extends DispatchAction {
         t.setMensaje(null);
         return mapping.findForward(PAGE);
     }
-
+    
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
         TipoActividad t = (TipoActividad) form;
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
-
+        
         if (t.getNombreTipo().contains(";") || t.getNombreTipo().contains("<")
                 || t.getNombreTipo().contains(">") || t.getNombreTipo().contains("'")
                 || t.getNombreTipo().contains("&") || t.getNombreTipo().contains("$")) {
@@ -70,8 +70,18 @@ public class Agregar extends DispatchAction {
                     + "siguientes carácteres inválidos: ;>?'&$ por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
-
-        } else if (t.getNroCampos() <= 0) {
+            
+        } else if (t.getNombreTipo().length() > 140) {
+            t.setMensaje("El nombre del tipo de actividad es muy largo");
+            return mapping.findForward(FAILURE);
+        } else if (t.getDescripcion().length() > 2000) {
+            t.setMensaje("La descripcion del tipo de actividad es muy larga");
+            return mapping.findForward(FAILURE);
+        } else if (t.getProducto().length() > 50) {
+            t.setMensaje("El nombre del campo \"Producto\" es muy largo");
+            return mapping.findForward(FAILURE);
+        }
+        else if (t.getNroCampos() <= 0) {
             t.setMensaje("Error: El número de campos de un tipo de actividad "
                     + "debe ser de al menos 1. Ingrese un número válido y "
                     + "presione Siguiente.");
@@ -82,26 +92,26 @@ public class Agregar extends DispatchAction {
         }
         int numeroCampos = t.getNroCampos();
         ArrayList<Campo> campos = new ArrayList<>();
-
+        
         for (int i = 0; i < numeroCampos; i++) {
             Campo c = new Campo();
             c.setIdTipoActividad(t.getId());
             campos.add(c);
         }
-
+        
         t.setCampos(campos);
-
+        
         return mapping.findForward(SUCCESS);
-
+        
     }
-
+    
     public ActionForward save2(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
         TipoActividad t = (TipoActividad) form;
         ArrayList<Campo> c = t.getCampos();
-
+        
         for (int i = 1; i <= t.getNroCampos(); i++) {
             try {
                 Campo aux = c.get(i - 1);
@@ -117,11 +127,11 @@ public class Agregar extends DispatchAction {
                 return mapping.findForward(FAILURE2);
             }
         }
-
+        
         if (Verificaciones.verif(t)) {
-
+            
             if (t.agregarTipoActividad()) {
-
+                
                 t.setMensaje("El tipo de actividad '" + t.getNombreTipo() + "' ha sido "
                         + "registrado con éxito.");
                 ArrayList ta = Clases.TipoActividad.listarTiposActividad();
@@ -133,7 +143,7 @@ public class Agregar extends DispatchAction {
             t.setMensaje("Los campos no pueden ser llenados sólo con espacios");
             return mapping.findForward(FAILURE2);
         }
-
-
+        
+        
     }
 }

@@ -8,12 +8,9 @@ import DBMS.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -228,7 +225,7 @@ public class Actividad extends Root {
                 mensaje = "Todo campo obligatorio debe ser llenado";
                 return false;
             }
-            resp &= true; //checkValorCampo(campoVerif, valorVerif);
+            resp &= Verificaciones.verif(campoVerif, valorVerif);
         }
 
         if (resp = e.insertar2(columnas, actividad)) {

@@ -10,42 +10,44 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Clase de verificaciones. Cada método recibe parametros y regresa true en
- *      caso de haber verificado bien. En caso de encontrar algún error en los
- *      patrones.
+ * Clase de verificaciones. Cada método recibe parametros y regresa true en caso
+ * de haber verificado bien. En caso de encontrar algún error en los patrones.
+ *
  * @author SisCon
  */
 public class Verificaciones {
 
     /**
-     * Verifica la correcta inicializacion de los nombres de campo
-     * y los nombres de Tipo de Actividad, Descripción, Nombre
-     * del archivo de Producto y Numero de Campos.
+     * Verifica la correcta inicializacion de los nombres de campo y los nombres
+     * de Tipo de Actividad, Descripción, Nombre del archivo de Producto y
+     * Numero de Campos.
+     *
      * @param ta Tipo de Actividad a verificar.
      * @return true en caso de estar correctamente inicializados los valores.
-     * @return false en caso de no estar correctamente inicializados los valores.
+     * @return false en caso de no estar correctamente inicializados los
+     * valores.
      */
     public static boolean verif(TipoActividad ta) {
         boolean resp = true;
-        Pattern limpiar = Pattern.compile("(([a-zA-Z]|[0-9])+s*)+");
+        Pattern limpiar = Pattern.compile("([a-zA-Z]|[0-9])+");
 
         Matcher buscar = limpiar.matcher(ta.getNombreTipo());
         resp = resp && (buscar.lookingAt());
-        System.out.println(ta.getNombreTipo()+ " " +resp);
+        System.out.println(ta.getNombreTipo() + " " + resp);
         buscar = limpiar.matcher(ta.getDescripcion());
         resp = resp && (buscar.lookingAt());
-        System.out.println(ta.getDescripcion()+ " " +resp);
+        System.out.println(ta.getDescripcion() + " " + resp);
         buscar = limpiar.matcher(ta.getProducto());
         resp = resp && (buscar.lookingAt());
-        System.out.println(ta.getProducto()+ " " +resp);
+        System.out.println(ta.getProducto() + " " + resp);
         buscar = limpiar.matcher(ta.getValidador());
         resp = resp && (buscar.lookingAt());
-        System.out.println(ta.getValidador()+ " " +resp);
+        System.out.println(ta.getValidador() + " " + resp);
         limpiar = Pattern.compile("[0-9]+");
         String aux = String.valueOf(ta.getNroCampos());
         buscar = limpiar.matcher(aux);
         resp = resp && (buscar.lookingAt());
-        System.out.println(ta.getNroCampos()+ " " +resp);
+        System.out.println(ta.getNroCampos() + " " + resp);
 
         ArrayList<Campo> campos;
         if ((campos = ta.getCampos()) != null) {
@@ -67,8 +69,9 @@ public class Verificaciones {
     }
 
     /**
-     * Funcion que verifica que el valor de una actividad se corresponda
-     * con el tipo del campo respectivo.
+     * Funcion que verifica que el valor de una actividad se corresponda con el
+     * tipo del campo respectivo.
+     *
      * @param campo Campo con el que hacer la correspondencia.
      * @param valor Valor de la actividad.
      * @return true si hay correspondencia
@@ -92,32 +95,28 @@ public class Verificaciones {
             resp = resp && buscar.lookingAt();
 
         } else if (tipo_campo.equals(posibles_tipos[2])) {
-/**            Pattern limpiar =
-                    Pattern.compile("([0-3][0-9])/([0-1][0-9])/([0-9][0-9][0-9][0-9])");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-            Calendar corroboracion = Calendar.getInstance();
-            int dia = Integer.parseInt(buscar.group(1));
-            int mes = Integer.parseInt(buscar.group(2));
-            int ano = Integer.parseInt(buscar.group(3));
-            corroboracion.set(ano, mes, dia);
-            resp = resp && (corroboracion != null);
-*/          resp = true;
+            /**
+             * Pattern limpiar =
+             * Pattern.compile("([0-3][0-9])/([0-1][0-9])/([0-9][0-9][0-9][0-9])");
+             * Matcher buscar = limpiar.matcher(valor); resp = resp &&
+             * buscar.lookingAt(); Calendar corroboracion =
+             * Calendar.getInstance(); int dia =
+             * Integer.parseInt(buscar.group(1)); int mes =
+             * Integer.parseInt(buscar.group(2)); int ano =
+             * Integer.parseInt(buscar.group(3)); corroboracion.set(ano, mes,
+             * dia); resp = resp && (corroboracion != null);
+             */
+            resp = true;
         } else if (tipo_campo.equals(posibles_tipos[3])) {
- /**           Pattern limpiar =
-                    Pattern.compile("([0-2][0-9]:[0-5][0-9]:[0-5][0-9])|([0-1][0-9]:[0-5][0-9]:[0-5][0-9](am|pm))");
+            Pattern limpiar = Pattern.compile("([a-zA-Z0-9_-])+\\.pdf");
             Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-*/          resp = true;
+            resp = true;
         } else if (tipo_campo.equals(posibles_tipos[4])) {
             Pattern limpiar = Pattern.compile("true|false");
             Matcher buscar = limpiar.matcher(valor);
             resp = resp && buscar.lookingAt();
         }
 
-        if (campo.isObligatorio()) {
-            resp = resp && valor.length() > 0;
-        }
         resp = resp && valor.length() < 1400;
 
         return resp;
