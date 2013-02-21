@@ -7,6 +7,7 @@ package TiposActividad;
 import Clases.Campo;
 import Clases.Elemento;
 import Clases.TipoActividad;
+import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -75,10 +76,8 @@ public class Agregar extends DispatchAction {
                     + "debe ser de al menos 1. Ingrese un número válido y "
                     + "presione Siguiente.");
             return mapping.findForward(FAILURE);
-        } else if (t.getDescripcion().equals("") || t.getNombreTipo().equals("")
-                || t.getPermiso().equals("") || t.getPrograma().equals("") || t.getTipoPR().equals("")
-                || t.getValidador().equals("")) {
-            t.setMensaje("Error: Los campos con obligatorios deben ser llenados");
+        } else if (!Verificaciones.verif(t)) {
+            t.setMensaje("Error: Los campos obligatorios (*) deben ser llenados");
             return mapping.findForward(FAILURE);
         }
         int numeroCampos = t.getNroCampos();
@@ -105,7 +104,7 @@ public class Agregar extends DispatchAction {
 
         for (int i = 1; i <= t.getNroCampos(); i++) {
             try {
-                Campo aux = c.get(i-1);
+                Campo aux = c.get(i - 1);
                 if (aux.isNombreInvalido()) {
                     t.setMensaje("El campo número " + i
                             + " contiene un nombre inválido");
@@ -114,20 +113,26 @@ public class Agregar extends DispatchAction {
             } catch (Exception e) {
                 e.printStackTrace();
                 t.setMensaje("El campo número " + i
-                            + " contiene un nombre inválido");
-                    return mapping.findForward(FAILURE2);
+                        + " contiene un nombre inválido");
+                return mapping.findForward(FAILURE2);
             }
         }
 
-        if (t.agregarTipoActividad()) {
+        if (Verificaciones.verif(t)) {
 
-            t.setMensaje("El tipo de actividad '" + t.getNombreTipo() + "' ha sido "
-                    + "registrado con éxito.");
-            ArrayList ta = Clases.TipoActividad.listarTiposActividad();
-            request.setAttribute("tipos", ta);
-            return mapping.findForward(SUCCESSFULL);
+            if (t.agregarTipoActividad()) {
+
+                t.setMensaje("El tipo de actividad '" + t.getNombreTipo() + "' ha sido "
+                        + "registrado con éxito.");
+                ArrayList ta = Clases.TipoActividad.listarTiposActividad();
+                request.setAttribute("tipos", ta);
+                return mapping.findForward(SUCCESSFULL);
+            }
+            return mapping.findForward(FAILURE);
+        } else {
+            t.setMensaje("Los campos no pueden ser llenados sólo con espacios");
+            return mapping.findForward(FAILURE2);
         }
-        return mapping.findForward(FAILURE);
 
 
     }
