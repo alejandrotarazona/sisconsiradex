@@ -35,6 +35,11 @@ public class CampoCatalogo implements Serializable {
         "nombre_campo", //2
         "tipo_campo" //3
     };
+    private static String[] TIPOS = {
+        "texto",    //0
+        "numero",   //1
+        "fecha"     //2
+    };
 
     public CampoCatalogo() {
     }
@@ -111,6 +116,15 @@ public class CampoCatalogo implements Serializable {
         boolean resp = nombre.equals("");
         return resp;
     }
+
+    public static String[] getTIPOS() {
+        return TIPOS;
+    }
+
+    public static void setTIPOS(String[] TIPOS) {
+        CampoCatalogo.TIPOS = TIPOS;
+    }
+    
 
     public boolean agregarCampo(int idCatalogo) {
         boolean resp = true;
