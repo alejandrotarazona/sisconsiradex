@@ -84,7 +84,14 @@ public class ElementoCatalogo extends Root {
 
         while (itValores.hasNext() && resp) {
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            resp &= ccv.agregar(this.idElemento);
+            resp &= Verificaciones.verif(ccv.getCampo(), ccv.getValor());
+            if (resp) {
+                resp &= ccv.agregar(this.idElemento);
+            } else {
+                this.eliminar();
+                return resp;
+            }
+
         }
 
         return resp;
@@ -149,6 +156,4 @@ public class ElementoCatalogo extends Root {
         }
         return resp;
     }
-
-    
 }

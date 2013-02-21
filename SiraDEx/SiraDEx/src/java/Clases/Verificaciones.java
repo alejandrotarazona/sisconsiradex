@@ -84,7 +84,7 @@ public class Verificaciones {
         String[] posibles_tipos = Campo.getTIPOS();
 
         if (tipo_campo.equals(posibles_tipos[0])) {
-            Pattern limpiar = Pattern.compile("(([a-zA-Z]|[0-9])+s*)+*");
+            Pattern limpiar = Pattern.compile("(([a-zA-Z0-9_-])+s*)*");
             Matcher buscar = limpiar.matcher(valor);
             resp = resp && buscar.lookingAt();
             resp = resp && valor.length() <= campo.getLongitud();
@@ -116,6 +116,40 @@ public class Verificaciones {
             Matcher buscar = limpiar.matcher(valor);
             resp = resp && buscar.lookingAt();
         }
+
+        resp = resp && valor.length() < 1400;
+
+        return resp;
+    }
+    
+    /**
+     * Funcion que verifica que el valor de un elemento se corresponda con el
+     * tipo del campo del catalogo respectivo.
+     *
+     * @param campo CampoCatalogo con el que hacer la correspondencia.
+     * @param valor Valor del Elemento.
+     * @return true si hay correspondencia
+     * @return false si no hay correspondencia.
+     */
+    public static boolean verif(CampoCatalogo campo, String valor) {
+        boolean resp = true;
+
+        String tipo_campo = campo.getTipo();
+        String[] posibles_tipos = CampoCatalogo.getTIPOS();
+
+        if (tipo_campo.equals(posibles_tipos[0])) {
+            Pattern limpiar = Pattern.compile("(([a-zA-Z0-9_-])+s*)*");
+            Matcher buscar = limpiar.matcher(valor);
+            resp = resp && buscar.lookingAt();
+
+        } else if (tipo_campo.equals(posibles_tipos[1])) {
+            Pattern limpiar = Pattern.compile("[0-9]*");
+            Matcher buscar = limpiar.matcher(valor);
+            resp = resp && buscar.lookingAt();
+
+        } else {
+            resp = true;
+        } 
 
         resp = resp && valor.length() < 1400;
 
