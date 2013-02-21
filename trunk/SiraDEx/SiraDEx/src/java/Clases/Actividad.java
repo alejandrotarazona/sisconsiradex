@@ -29,6 +29,7 @@ public class Actividad extends Root {
     private String fechaCreacion;
     private String modificador;
     private String fechaModif;
+    private String producto;
     private ArrayList<String> participantes;
     private ArrayList<CampoValor> camposValores;
     private static String[] ATRIBUTOS = {
@@ -153,6 +154,14 @@ public class Actividad extends Root {
         this.participantes = participantes;
     }
 
+    public String getProducto() {
+        return producto;
+    }
+
+    public void setProducto(String producto) {
+        this.producto = producto;
+    }
+
     @Override
     public String toString() {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
@@ -178,55 +187,6 @@ public class Actividad extends Root {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    public static boolean checkValorCampo(Campo campo, String valor) {
-        boolean resp = true;
-
-        String tipo_campo = campo.getTipo();
-        String[] posibles_tipos = Campo.getTIPOS();
-
-        if (tipo_campo.equals(posibles_tipos[0])) {
-            Pattern limpiar = Pattern.compile(".*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp &= buscar.matches();
-            resp &= valor.length() <= campo.getLongitud();
-
-        } else if (tipo_campo.equals(posibles_tipos[1])) {
-            Pattern limpiar = Pattern.compile("[0-9]*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp &= buscar.matches();
-
-        } else if (tipo_campo.equals(posibles_tipos[2])) {
-            Pattern limpiar =
-                    Pattern.compile("([0-3][0-9])/([0-1][0-9])/([0-9][0-9][0-9][0-9])");
-            Matcher buscar = limpiar.matcher(valor);
-            resp &= buscar.matches();
-            Calendar corroboracion = Calendar.getInstance();
-            int dia = Integer.parseInt(buscar.group(1));
-            int mes = Integer.parseInt(buscar.group(2));
-            int ano = Integer.parseInt(buscar.group(3));
-            corroboracion.set(ano, mes, dia);
-            resp &= (corroboracion != null);
-
-        } else if (tipo_campo.equals(posibles_tipos[3])) {
-            Pattern limpiar =
-                    Pattern.compile("([0-2][0-9]:[0-5][0-9]:[0-5][0-9])|([0-1][0-9]:[0-5][0-9]:[0-5][0-9](am|pm))");
-            Matcher buscar = limpiar.matcher(valor);
-            resp &= buscar.matches();
-
-        } else if (tipo_campo.equals(posibles_tipos[4])) {
-            Pattern limpiar = Pattern.compile("true|false");
-            Matcher buscar = limpiar.matcher(valor);
-            resp &= buscar.matches();
-        }
-
-        if (campo.isObligatorio()) {
-            resp &= valor.length() > 0;
-        }
-        resp &= valor.length() < 140;
-
-        return resp;
     }
 
     public boolean agregarActividad() {
@@ -528,11 +488,6 @@ public class Actividad extends Root {
         String prueba = "1989";
         String prueba2 = "Adios1987425";
 
-        boolean ejec = checkValorCampo(c, prueba);
-        System.out.println("El resultado de la primera prueba es: " + ejec);
-
-        ejec = checkValorCampo(c, prueba2);
-        System.out.println("El resultado de la segunda prueba es: " + ejec);
 
         Actividad a = new Actividad();
         a.setCreador("alejandro");
