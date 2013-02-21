@@ -73,8 +73,10 @@ INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
 
 --Usuarios
+INSERT INTO usuario VALUES ('00-00000', '123456', 'PO', 3, 'Pablo', 'Perez', '04321234567', '00-00000@usb.ve');
+INSERT INTO usuario VALUES ('05-38978', 'alejandro', 'EA', 3, 'Alejandro', 'Tarazona', '04121341842', '05-38978@usb.ve');
 INSERT INTO usuario VALUES ('05-38199', '123456', 'WM', 3, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
-INSERT INTO usuario VALUES ('07-41618', 'diana', 'CU', 3, 'Diana', 'Vainberg', null, '07-41618@usb.ve');
+INSERT INTO usuario VALUES ('07-41618', 'diana', 'ES', 3, 'Diana', 'Vainberg', null, '07-41618@usb.ve');
 INSERT INTO usuario VALUES ('jf', 'jf', 'CU', 3, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
 INSERT INTO usuario VALUES ('kdoming', 'kdoming', 'Prof',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
 INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',2, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');

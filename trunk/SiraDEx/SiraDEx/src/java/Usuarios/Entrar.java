@@ -33,11 +33,39 @@ public class Entrar extends DispatchAction {
      * @return
      */
 
-    public ActionForward inCU(ActionMapping mapping, ActionForm form,
+    public ActionForward inPO(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("CU");
+        u.setRol("PO");
+        u.setTipo(3);
+        u.setUsername("00-00000");
+        u.setPassword("123456");
+        u.setNombres("Pablo");
+        u.setApellidos("Perez");
+        request.getSession().setAttribute("user", u);
+        return mapping.findForward(SUCCESS);
+    }
+    
+    public ActionForward inEA(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario u = (Usuario) form;
+        u.setRol("EA");
+        u.setTipo(3);
+        u.setUsername("05-38978");
+        u.setPassword("alejandro");
+        u.setNombres("Alejandro");
+        u.setApellidos("Tarazona");
+        request.getSession().setAttribute("user", u);
+        return mapping.findForward(SUCCESS);
+    }
+    
+    public ActionForward inES(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario u = (Usuario) form;
+        u.setRol("ES");
         u.setTipo(3);
         u.setUsername("07-41618");
         u.setPassword("diana");
@@ -46,6 +74,8 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
+    
+    
     
     public ActionForward inDEx(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
