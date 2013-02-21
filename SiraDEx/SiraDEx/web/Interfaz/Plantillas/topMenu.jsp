@@ -10,7 +10,7 @@
                     <table bgcolor= "#E0F2F7">
                         <tr>
                         <td><logic:present name="user" >
-                                Usuario <bean:write name="usuarioForm" property="username" />
+                                Usuario <bean:write name="usuarioForm" property="nombres" /> <bean:write name="usuarioForm" property="apellidos" />
                                 <html:link action="/Logout">
                                     (Cerrar Sesión)
                                 </html:link> |

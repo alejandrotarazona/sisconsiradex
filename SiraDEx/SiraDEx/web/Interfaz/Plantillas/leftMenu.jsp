@@ -55,7 +55,17 @@
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></li>
                             </logic:equal> 
 
-                            <logic:equal name="user" property="rol" value="CU">
+                            <logic:equal name="user" property="rol" value="EA">
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                        Actividades
+                                    </html:link></li>
+                                </logic:equal>
+                                <logic:equal name="user" property="rol" value="PO">
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                        Actividades
+                                    </html:link></li>
+                                </logic:equal>
+                                <logic:equal name="user" property="rol" value="ES">
                                 <li><html:link action="/AGestionActividades?method=listUser"> 
                                         Actividades
                                     </html:link></li>

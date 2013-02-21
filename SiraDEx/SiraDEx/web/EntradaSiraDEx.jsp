@@ -24,13 +24,17 @@
             <html:link action="/Login?method=page">haga click aquí</html:link>
         </p><br>
 
-        <html:link action="/Entrar?method=inCU">Entrar como comunidad universitaria</html:link>
+        <html:link action="/Entrar?method=inEA">Entrar como Empleado Administrativo</html:link>
         <br>
-        <html:link action="/Entrar?method=inProf">Entrar como profesor</html:link>
+        <html:link action="/Entrar?method=inPO">Entrar como Personal Obrero</html:link>
         <br>
-        <html:link action="/Entrar?method=inDEx">Entrar como personal del DEx</html:link>
+        <html:link action="/Entrar?method=inES">Entrar como Estudiante</html:link>
         <br>
-        <html:link action="/Entrar?method=inWM">Entrar como webmaster</html:link>
+        <html:link action="/Entrar?method=inProf">Entrar como Profesor</html:link>
+        <br>
+        <html:link action="/Entrar?method=inDEx">Entrar como Personal del DEx</html:link>
+        <br>
+        <html:link action="/Entrar?method=inWM">Entrar como Webmaster</html:link>
 
     </body>
 </html:html>
