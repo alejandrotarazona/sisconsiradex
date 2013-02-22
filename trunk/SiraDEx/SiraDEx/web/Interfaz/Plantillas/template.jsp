@@ -79,7 +79,6 @@
                         </div>
                     </div>
                     <tiles:insert attribute="leftMenu" />
-                    <!--tiles:insert attribute="rightMenu" /-->
                 </div>
                 <tiles:insert attribute="footer" />
             </div>

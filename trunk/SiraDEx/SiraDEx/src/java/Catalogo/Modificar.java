@@ -40,32 +40,32 @@ public class Modificar extends DispatchAction {
         Catalogo cat = (Catalogo) form;
         cat.setMensaje(null);
         
-        int idCat = cat.getIdCatalogo(); 
-        cat.setCampos(Clases.CampoCatalogo.listar(idCat));
+        int idCat = cat.getIdCatalogo();
+        ArrayList campos = Clases.CampoCatalogo.listar(idCat);
+        cat.setCampos(campos);
         String nombreCat = Clases.Catalogo.getNombre(idCat);
         cat.setNombre(nombreCat);
         
-        int nroCampos = cat.getCampos().size();
-        String[] nombres = new String[nroCampos+1];
-        nombres[0] = nombreCat;
-            
-        for (int i = 1; i < nombres.length; i++) {
-            nombres[i] = cat.getCampos().get(i-1).getNombre();
-        }
+        /*es necesario otro ArrayList con los valores no modificados para 
+         * guardarlo con setAttribute ya que el anterior se modifica en el form 
+         * del jsp debido a que ArrayList es un apuntador*/
+        ArrayList camposNM = Clases.CampoCatalogo.listar(idCat);
+        request.getSession().setAttribute("camposNM", camposNM);
         
-        request.getSession().setAttribute("nombres", nombres);
+        request.getSession().setAttribute("nombreNM", nombreCat);
         return mapping.findForward(PAGE);
     }
-
+   
     public ActionForward update(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
         
-        String[] nombres = (String[])request.getSession().getAttribute("nombres");
-                
-        if (cat.modificar(nombres)) {
+        ArrayList campos = (ArrayList)request.getSession().getAttribute("camposNM");
+        
+        String nombre = (String) request.getSession().getAttribute("nombreNM");         
+        if (cat.modificar(nombre, campos)) {
 
             cat.setMensaje("El catálogo ha sido modificado con éxito.");
             ArrayList cats = Clases.Catalogo.listar();
@@ -73,7 +73,7 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
         ArrayList cats = Clases.Catalogo.listar();
-        cat.setNombre(nombres[0]);
+        cat.setNombre(nombre);
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);
 

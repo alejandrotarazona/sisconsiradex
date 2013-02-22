@@ -242,30 +242,30 @@ public class Catalogo extends Root {
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
 
     }
-    //en el parámetro nombres están los viejos nombres, primero el del catálogo
-    //luego el de sus campos
+    //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
+    //el parámetro campos su lista de campos No Modificados
 
-    public boolean modificar(String[] nombres) {
+    public boolean modificar(String nombreNM, ArrayList camposNM) {
         boolean respuesta;
 
         Entity e = new Entity(2, 8);
 
         String[] condColumnas = {ATRIBUTOS[1]};
-        Object[] valores = {nombres[0]};
+        Object[] valores = {nombreNM};
         String[] colModificar = {ATRIBUTOS[1]};
         String[] nombreCat = {nombre};
-        if (this.esCatalogo() && !nombre.equals(nombres[0])) {
+        if (this.esCatalogo() && !nombre.equals(nombreNM)) {
             mensaje = "Error: Ya existe un catálogo llamado "
                     + "" + nombre + ".\n Intente con otro nombre.";
             return false;
         }
-        if (nombres[0].equals("Coordinaciones") && !nombre.equals(nombres[0])) {
+        if (nombreNM.equals("Coordinaciones") && !nombre.equals(nombreNM)) {
             mensaje = "Error: El nombre del catálogo Coordinaciones no puede"
                     + " ser modificado.\n Solo se permite modificar el nombre de"
                     + " sus campos.";
             return false;
         }
-        if (nombres[0].equals("Coordinaciones") && !nombre.equals(nombres[0])) {
+        if (nombreNM.equals("Coordinaciones") && !nombre.equals(nombreNM)) {
             mensaje = "Error: El nombre del catálogo Programas no puede"
                     + " ser modificado.\n Solo se permite modificar el nombre de"
                     + " sus campos.";
@@ -273,8 +273,11 @@ public class Catalogo extends Root {
         }
         respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
-        for (int i = 1; i < nombres.length; i++) {
-            respuesta &= campos.get(i - 1).modificar(nombres[i], idCatalogo);
+        Iterator it = camposNM.iterator();
+        
+        for (int i = 0; it.hasNext(); i++) {
+            CampoCatalogo campoNM = (CampoCatalogo)it.next();
+            respuesta &= campos.get(i).modificar(campoNM);
         }
         if (!respuesta){
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
