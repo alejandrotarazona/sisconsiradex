@@ -4,7 +4,6 @@
     Author     : SisCon
 --%>
 
-
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -20,13 +19,13 @@
     </head>
     <body>
         <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
-            name="catalogoForm" property="nombre"/> </h1>
+                name="catalogoForm" property="nombre"/> </h1>
 
         <logic:present name="catalogoForm" property="mensaje">
             <br/> <div align="center"><b><bean:write name="catalogoForm" 
                         property="mensaje" /></b></div><br/>
-            </logic:present>
-            <html:form method="POST" action ="/ModificarCatalogo?method=update">
+                </logic:present>
+                <html:form method="POST" action ="/ModificarCatalogo?method=update">
             <table>
                 <tr>
                 <td>Nombre del cátalogo</td>
@@ -34,25 +33,41 @@
                 <td><html:text name="catalogoForm" property="nombre">
                         <bean:write name="catalogoForm" property="nombre"/>
                     </html:text> 
-                   
+
+                    </tr>
+                <tr><td>Campos:</td></tr>
+                <tr><td>Nombre</td><td>Tipo</td></tr>
+            <logic:iterate name="catalogoForm" property="campos" id="campos" 
+                           indexId="index">
+
+                <tr>
+                <td><html:text name="campos" property="nombre" indexed="true">
+                        <bean:write name="campos" property="nombre"/>
+                    </html:text> </td>
+                <td><html:select name="campos" property="tipo" indexed="true">
+                        <html:option value="tipo"> <bean:write name="campos" property="tipo"/></html:option>
+                        <logic:equal name="campos" property="tipo" value="texto">
+                            <html:option value="numero">numero</html:option>
+                            <html:option value="fecha">fecha</html:option>
+                        </logic:equal>
+                        <logic:equal name="campos" property="tipo" value="numero">
+                            <html:option value="texto">texto</html:option>
+                            <html:option value="fecha">fecha</html:option>
+                        </logic:equal>
+                        <logic:equal name="campos" property="tipo" value="fecha">
+                            <html:option value="texto">texto</html:option>
+                            <html:option value="numero">numero</html:option>
+                        </logic:equal>
+
+                    </html:select>
+                </td>
             </tr>
-            <tr><td>Nombre de los campos</td></tr>
+        </logic:iterate>
 
-        <logic:iterate name="catalogoForm" property="campos" id="campos" 
-                       indexId="index">
-            <%
-                String[] nombres = (String[]) request.getSession().getAttribute("nombres");
-                int i = (Integer) pageContext.findAttribute("index");%>
-
-            <tr><td></td>
-            <td><html:text name="campos" property="nombre" value='<%=nombres[i + 1]%>' 
-                       indexed="true"/></td>
-        </tr>
-    </logic:iterate>
-</table>
-<br>
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+    </table>
+    <br>
+    <div align="center"><html:submit value="Modificar"
+                 onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
 
 </html:form>
 </body>

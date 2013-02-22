@@ -110,6 +110,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
         
         TipoActividad t = (TipoActividad) form;
+        t.setMensaje(null);
         ArrayList<Campo> c = t.getCampos();
         
         for (int i = 1; i <= t.getNroCampos(); i++) {

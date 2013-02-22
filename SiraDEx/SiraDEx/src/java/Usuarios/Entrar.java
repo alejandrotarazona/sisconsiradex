@@ -37,7 +37,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("PO");
+        u.setRol("CU");
         u.setTipo(3);
         u.setUsername("00-00000");
         u.setPassword("123456");
@@ -51,7 +51,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("EA");
+        u.setRol("CU");
         u.setTipo(3);
         u.setUsername("05-38978");
         u.setPassword("alejandro");
@@ -65,7 +65,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("ES");
+        u.setRol("CU");
         u.setTipo(3);
         u.setUsername("07-41618");
         u.setPassword("diana");
