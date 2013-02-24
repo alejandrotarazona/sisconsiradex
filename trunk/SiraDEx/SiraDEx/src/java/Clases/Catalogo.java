@@ -25,21 +25,28 @@ public class Catalogo extends Root {
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
+    
+    /*atributo auxiliar para agregar nuevos campos en el modificar*/
+    private ArrayList<CampoCatalogo> camposAux;
+                                                
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
         "nro_campos"
     };
-    private static final String[] tiposCampos = {
+    private static final String[] tiposCampos = {//no lo usamos para nada
         "texto", //STRING
         "numero", //INT
         "fecha", //DATE
     };
-    public static String[] TABLAS = {
+    public static String[] TABLAS = {//no lo usamos para nada
         "CATALOGO", //0
-        "CAMPOCATALOGO", //1
+        "CAMPO_CATALOGO", //1 
         "ELEMENTO" //3
     };
+    /* Alejandro por favor agrega código que usemos y sino lo usamos aún 
+     * al menos específica donde crees que lo vamos a usar, porque cada ves 
+     * veo que agregas más código inútil. Gracias La Gerencia*/
 
     public static String[] getTiposCampos() {
         return tiposCampos;
@@ -148,6 +155,14 @@ public class Catalogo extends Root {
         this.campos = campos;
     }
 
+    public ArrayList<CampoCatalogo> getCamposAux() {
+        return camposAux;
+    }
+
+    public void setCamposAux(ArrayList<CampoCatalogo> camposAux) {
+        this.camposAux = camposAux;
+    }
+
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
@@ -175,9 +190,23 @@ public class Catalogo extends Root {
         return false;
     }
 
-    public boolean agregar() {
-        Entity eCatalogo = new Entity(1, 8);
+    public boolean agregarCampos(ArrayList campos) {
         boolean resp = true;
+        setIdCatalogo();
+        Iterator itCampos;
+        if (campos != null) {
+            itCampos = campos.iterator();
+            while (itCampos.hasNext() && resp) {
+                CampoCatalogo cC = (CampoCatalogo) itCampos.next();
+                resp &= cC.agregarCampo(idCatalogo);
+            }
+        }
+        return resp;
+    }
+
+    public boolean agregar() {
+        Entity eCatalogo = new Entity(1, 8);//INSERT CATALOGO
+        boolean resp;
 
         String[] columnas = {
             "nombre",
@@ -189,29 +218,14 @@ public class Catalogo extends Root {
             nCampos
         };
 
-        if (resp &= this.esCatalogo()) {
+        if (this.esCatalogo()) {
             return false;
         } else {
-            resp = true;
-            resp &= eCatalogo.insertar2(columnas, valores);
+            resp = eCatalogo.insertar2(columnas, valores);
             if (resp) {
-                setIdCatalogo();
-                Iterator itCampos;
-                if (this.campos != null) {
-                    itCampos = campos.iterator();
-                    while (itCampos.hasNext() && resp) {
-                        CampoCatalogo cC = (CampoCatalogo) itCampos.next();
-                        resp &= cC.agregarCampo(idCatalogo);
-                    }
-                } else {
-                    System.out.println("");
-                }
-            } else {
-                return resp;
+                resp = agregarCampos(campos);
             }
         }
-
-
         return resp;
     }
 
@@ -243,10 +257,11 @@ public class Catalogo extends Root {
 
     }
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
-    //el parámetro campos su lista de campos No Modificados
+    //el parámetro camposNM su lista de campos No Modificados
 
-    public boolean modificar(String nombreNM, ArrayList camposNM) {
-        boolean respuesta;
+    public boolean modificar(String nombreNM, ArrayList camposNM,
+            ArrayList camposNuevos) {
+        boolean resp;
 
         Entity e = new Entity(2, 8);
 
@@ -271,18 +286,22 @@ public class Catalogo extends Root {
                     + " sus campos.";
             return false;
         }
-        respuesta = e.modificar(condColumnas, valores, colModificar, nombreCat);
+        resp = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
         Iterator it = camposNM.iterator();
-        
+
         for (int i = 0; it.hasNext(); i++) {
-            CampoCatalogo campoNM = (CampoCatalogo)it.next();
-            respuesta &= campos.get(i).modificar(campoNM);
+            CampoCatalogo campoNM = (CampoCatalogo) it.next();
+            resp &= campos.get(i).modificar(campoNM, idCatalogo);
         }
-        if (!respuesta){
+        //En modificar se usa nroCampos para agregar nuevos campos
+        if (nroCampos != 0) {
+            resp &= agregarCampos(camposAux);
+        }
+        if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }
-        return respuesta;
+        return resp;
     }
 
     public static void main(String[] args) throws IOException {

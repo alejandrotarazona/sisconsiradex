@@ -22,7 +22,6 @@ import java.util.logging.Logger;
 public class CampoCatalogo implements Serializable {
 
     private int idCampo;
-    private int idCatalogo;
     private String nombre;
     private String tipo;
     private static String[] TABLAS = {
@@ -36,9 +35,9 @@ public class CampoCatalogo implements Serializable {
         "tipo_campo" //3
     };
     private static String[] TIPOS = {
-        "texto",    //0
-        "numero",   //1
-        "fecha"     //2
+        "texto", //0
+        "numero", //1
+        "fecha" //2
     };
 
     public CampoCatalogo() {
@@ -69,30 +68,6 @@ public class CampoCatalogo implements Serializable {
         return idCampo;
     }
 
-    public int getIdCatalogo() {
-        return idCatalogo;
-    }
-
-    public void setIdCatalogo(int idCatalogo) {
-        this.idCatalogo = idCatalogo;
-    }
-
-    public static String[] getTABLAS() {
-        return TABLAS;
-    }
-
-    public static void setTABLAS(String[] TABLAS) {
-        CampoCatalogo.TABLAS = TABLAS;
-    }
-
-    public static String[] getATRIBUTOS() {
-        return ATRIBUTOS;
-    }
-
-    public static void setATRIBUTOS(String[] ATRIBUTOS) {
-        CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
-    }
-
     public void setIdCampo(int idCampo) {
         this.idCampo = idCampo;
     }
@@ -112,7 +87,8 @@ public class CampoCatalogo implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    public boolean isNombreInvalido(){
+
+    public boolean isNombreInvalido() {
         boolean resp = nombre.equals("");
         return resp;
     }
@@ -124,7 +100,22 @@ public class CampoCatalogo implements Serializable {
     public static void setTIPOS(String[] TIPOS) {
         CampoCatalogo.TIPOS = TIPOS;
     }
-    
+
+    public static String[] getTABLAS() {
+        return TABLAS;
+    }
+
+    public static void setTABLAS(String[] TABLAS) {
+        CampoCatalogo.TABLAS = TABLAS;
+    }
+
+    public static String[] getATRIBUTOS() {
+        return ATRIBUTOS;
+    }
+
+    public static void setATRIBUTOS(String[] ATRIBUTOS) {
+        CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
+    }
 
     public boolean agregarCampo(int idCatalogo) {
         boolean resp = true;
@@ -153,9 +144,8 @@ public class CampoCatalogo implements Serializable {
         String[] columnas = {
             ATRIBUTOS[1]
         };
-        Integer idBuscar = new Integer(idCat);
         Object[] valores = {
-            idBuscar
+            idCat
         };
 
         ResultSet rs = eListar.seleccionar(columnas, valores);
@@ -165,7 +155,6 @@ public class CampoCatalogo implements Serializable {
                 while (rs.next()) {
                     CampoCatalogo cc = new CampoCatalogo();
                     cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    cc.setIdCatalogo(idCat);
                     cc.setNombre(rs.getString(ATRIBUTOS[2]));
                     cc.setTipo(rs.getString(ATRIBUTOS[3]));
 
@@ -180,14 +169,14 @@ public class CampoCatalogo implements Serializable {
     }
 
     //en el parámetro campo recibe un campo no modificado del catalogo
-    public boolean modificar(CampoCatalogo campo) {
+    public boolean modificar(CampoCatalogo campo, int idCat) {
         Entity e = new Entity(2, 9);
 
-        String[] condColumnas = {ATRIBUTOS[2],ATRIBUTOS[3],ATRIBUTOS[1]};
-        Object[] valores = {campo.getNombre(), campo.getTipo(), idCatalogo};
-        String[] colModificar = {ATRIBUTOS[2],ATRIBUTOS[3]};
-        String[] nombreCampo = {nombre,tipo};
-        
+        String[] condColumnas = {ATRIBUTOS[2], ATRIBUTOS[3], ATRIBUTOS[1]};
+        Object[] valores = {campo.getNombre(), campo.getTipo(), idCat};
+        String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
+        String[] nombreCampo = {nombre, tipo};
+
         return e.modificar(condColumnas, valores, colModificar, nombreCampo);
     }
 }

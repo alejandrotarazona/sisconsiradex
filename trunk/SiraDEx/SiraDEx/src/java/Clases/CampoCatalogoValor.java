@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -25,7 +26,6 @@ public class CampoCatalogoValor implements Serializable {
         "CAMPO_CATALOGO", //1
         "ELEMENTO_CATALOGO" //2
     };
-    
 
     public CampoCatalogoValor() {
     }
@@ -56,9 +56,9 @@ public class CampoCatalogoValor implements Serializable {
 
         Entity eValor = new Entity(1, 11);
         String[] ATRIBUTOS = {
-        "id_campo",
-        "id_elemento", 
-        "valor"
+            "id_campo",
+            "id_elemento",
+            "valor"
         };
         Object[] valores = {
             campo.getIdCampo(),
@@ -70,33 +70,20 @@ public class CampoCatalogoValor implements Serializable {
 
         return resp;
     }
-    
+
     //Crea una lista de CampoCatalogoValor para agregar un nuevo elemento al 
     //catalogo cuyo id es pasado por parametro, solo los campos son seteados.
     public static ArrayList<CampoCatalogoValor> listar(int idCatalogo) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 9);
-        String[] columnas = {"id_cat"};
-        Integer[] condiciones = {idCatalogo};
+        ArrayList campos = Clases.CampoCatalogo.listar(idCatalogo);
+        Iterator it = campos.iterator();
 
-        ResultSet rs = eCampo.seleccionar(columnas, condiciones);
-
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    CampoCatalogo c = new CampoCatalogo();
-                    c.setIdCampo(rs.getInt("id_campo"));
-                    c.setIdCatalogo(rs.getInt("id_cat"));
-                    c.setNombre(rs.getString("nombre_campo"));
-                    c.setTipo(rs.getString("tipo_campo"));
-
-                    CampoCatalogoValor cv = new CampoCatalogoValor(c);
-                    listaValor.add(cv);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        for (int i = 0; it.hasNext(); i++) {
+            CampoCatalogo c = (CampoCatalogo) it.next();
+            CampoCatalogoValor cv = new CampoCatalogoValor(c);
+            listaValor.add(cv);
         }
+
         return listaValor;
     }
 
@@ -106,11 +93,11 @@ public class CampoCatalogoValor implements Serializable {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 10);
         String[] ATRIBUTOS = {
-        "id_campo", //0
-        "id_elemento", //1
-        "valor", //2
-        "nombre_campo", //3
-        "tipo_campo" //4
+            "id_campo", //0
+            "id_elemento", //1
+            "valor", //2
+            "nombre_campo", //3
+            "tipo_campo" //4
         };
         String[] tabABuscar = {
             TABLAS[0],
@@ -125,7 +112,7 @@ public class CampoCatalogoValor implements Serializable {
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    CampoCatalogoValor cv = new CampoCatalogoValor();                
+                    CampoCatalogoValor cv = new CampoCatalogoValor();
                     cv.setValor(rs.getString(ATRIBUTOS[2]));
                     CampoCatalogo cc = new CampoCatalogo();
                     cc.setNombre(rs.getString(ATRIBUTOS[3]));

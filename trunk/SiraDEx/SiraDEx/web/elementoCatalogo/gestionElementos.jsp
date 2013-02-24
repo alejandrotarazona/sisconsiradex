@@ -8,9 +8,9 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        
         <% out.print("<title>SiraDEx | Gestión del Catálogo "
                     + (String) request.getAttribute("nombreCat") + "</title>");%>
-
     </head>
     <body>
         <% out.print("<h1 class='title' id='page-title'>Gestión del Catálogo "
@@ -34,9 +34,6 @@
             <p align="center">No hay elementos que mostrar.</p>
         </logic:notPresent>
         <logic:present name="elementos">
-            <logic:empty name="elementos">
-                <p align="center">No hay elementos que mostrar.</p>
-            </logic:empty>
             <table>
                 <tr>
                     <logic:iterate name="campos" id="campo">

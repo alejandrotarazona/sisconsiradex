@@ -36,7 +36,7 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
-        e.setMensaje(null);
+        e.deleteSessions(request);
         int idCat = e.getIdCatalogo();
         request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);

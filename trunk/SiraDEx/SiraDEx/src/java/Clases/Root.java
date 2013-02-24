@@ -23,14 +23,19 @@ public class Root extends ActionForm {
   public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
   }
-      //este método es para solucionar el problema con los acentos y la ñ en las vistas 
+      //método que soluciona el problema con los acentos y la ñ en las vistas 
       public void reset(ActionMapping mapping, HttpServletRequest request) {
-        System.out.println("---- Entrada en reset(...) ----");
-
         try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException ex) {
         }
     }
-  
+     /* método para usarlo en las acciones que requieran que los forms con 
+      * session sean eliminados*/ 
+     public void deleteSessions(HttpServletRequest  _request) {
+        _request.getSession().removeAttribute("actividadForm");
+        _request.getSession().removeAttribute("tipoActividadForm");
+        _request.getSession().removeAttribute("catalogoForm");
+        _request.getSession().removeAttribute("elementoCatalogoForm");
+      }
 }
