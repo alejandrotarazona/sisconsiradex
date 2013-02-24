@@ -120,7 +120,7 @@
             <forward name="successfull" path="gestionCatalogos"/>
             <forward name="failure" path="agregarCatalogo"/>
             <forward name="page" path="agregarCatalogo"/>
-            <forward name="failureCampos" path="agregarCamposCatalgo"/>     
+            <forward name="failureCampos" path="agregarCamposCatalogo"/>     
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
@@ -131,7 +131,7 @@
         
          <action path="/ModificarCatalogo" type="Catalogo.Modificar" 
                 scope="session" parameter="method" name="catalogoForm">
-            <forward name="page" path="modificarCatalogo"/> 
+            <forward name="page" path="modificarCatalogo"/>
             <forward name="success" path="gestionCatalogos"/>
             <forward name="failure" path="modificarCatalogo"/>    
         </action>

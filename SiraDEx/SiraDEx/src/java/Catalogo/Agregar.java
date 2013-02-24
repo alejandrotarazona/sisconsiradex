@@ -66,7 +66,6 @@ public class Agregar extends DispatchAction {
 
         for (int i = 0; i < numeroCampos; i++) {
             CampoCatalogo c = new CampoCatalogo();
-            c.setIdCatalogo(cat.getIdCatalogo());
             campos.add(c);
         }
 
@@ -84,23 +83,16 @@ public class Agregar extends DispatchAction {
         ArrayList<CampoCatalogo> c = cat.getCampos();
 
         for (int i = 1; i <= cat.getNroCampos(); i++) {
-            try {
+
                 CampoCatalogo aux = c.get(i-1);
                 if (aux.isNombreInvalido()) {
                     cat.setMensaje("El campo número " + i
                             + " contiene un nombre inválido");
                     return mapping.findForward(FAILURE2);
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                cat.setMensaje("El campo número " + i
-                            + " contiene un nombre inválido");
-                    return mapping.findForward(FAILURE2);
-            }
         }
-
         if (cat.agregar()) {
-
+            
             cat.setMensaje("El catálogo '" + cat.getNombre() + "' ha sido "
                     + "registrado con éxito.");
             ArrayList cats = Clases.Catalogo.listar();
