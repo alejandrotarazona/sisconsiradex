@@ -75,8 +75,13 @@ public class Agregar extends DispatchAction {
                 + "los campos se han llenado correctamente.");
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
-        
-        request.setAttribute("campos", e.getCamposValores());
+        int tam = ec.size();
+        if (tam > 0) {
+            e = ec.get(tam - 1);
+            request.setAttribute("campos", e.getCamposValores());
+        } else {
+            request.setAttribute("elementos", null);
+        }
         return mapping.findForward(FAILURE);
 
 
