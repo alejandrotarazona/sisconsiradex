@@ -4,6 +4,12 @@
  */
 package DBMS;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -230,10 +236,10 @@ public class Entity {
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
         if (modificaciones[0] instanceof Integer) {
-            sql = ACCION +" "+ TABLA + " SET " + colModificar[0] + " = "
+            sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = "
                     + modificaciones[0];
         } else {
-            sql = ACCION +" "+ TABLA + " SET " + colModificar[0] + " = '"
+            sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
                     + modificaciones[0] + "' ";
         }
 
@@ -336,6 +342,47 @@ public class Entity {
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
+        return resp;
+    }
+
+    /**
+     * Insert que se usa cuando se quiere agregar un archivo a una tabla dada.
+     *
+     * @param tabla Tabla donde se hará el INSERT
+     * @param valores Valores que deben de insertarse en la fila de la tabla.
+     * @param archivo Archivo que acompaña a los valores y tambien debe
+     * insrtarse
+     * @return ture en caso de poder hacer el insert. false en otro caso.
+     */
+    public boolean insert(String tabla, Object[] valores, File archivo) {
+        boolean resp = true;
+
+
+        int k;
+        sql = ACCION + " INTO " + TABLA
+                + " VALUES (";
+        for (k = 0; k < (valores.length - 1); k++) {
+            if (valores[k] instanceof Integer) {
+                sql += " " + valores[k] + " ,";
+            } else {
+                sql += "'" + valores[k] + "' ,";
+            }
+        }
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        try {
+            try {
+                resp = db.update(sql, archivo);
+            } catch (IOException ex) {
+                Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
+                return false;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
+        }
+
         return resp;
     }
 
