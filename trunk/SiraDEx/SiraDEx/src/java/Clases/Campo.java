@@ -12,29 +12,29 @@ import java.io.Serializable;
  * @author SisCon
  */
 public class Campo implements Serializable {
+
     private int idCampo;
     private int idTipoActividad;
     private String nombre;
     private String tipo;
     private int longitud;
     private boolean obligatorio;
-    
-   
+    private String catalogo;
     private static final String[] TIPOS = {
-        "texto",   //STRING
-        "numero",  //INT
-        "fecha",   //DATE
+        "texto", //STRING
+        "numero", //INT
+        "fecha", //DATE
         "archivo", //ARCHIVO
         "checkbox",//CHECKBOX
     };
-
-     private static final String[] ATRIBUTOS = {
+    private static final String[] ATRIBUTOS = {
         "id_campo",
         "id_tipo_actividad",
         "nombre_campo",
         "tipo_campo",
         "longitud",
-        "obligatorio"
+        "obligatorio",
+        "catalogo"
     };
 
     public Campo(String nombre, String tipo, boolean obligatorio) {
@@ -49,7 +49,7 @@ public class Campo implements Serializable {
         this.longitud = longitud;
         this.obligatorio = obligatorio;
     }
-    
+
     public Campo() {
     }
 
@@ -77,12 +77,10 @@ public class Campo implements Serializable {
         this.nombre = nombre;
     }
 
-
     public void setObligatorio(boolean obligatorio) {
         this.obligatorio = obligatorio;
     }
 
-    
     public boolean isObligatorio() {
         return obligatorio;
     }
@@ -102,17 +100,25 @@ public class Campo implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
+    
+    public String getCatalogo() {
+        return catalogo;
+    }
+
+    public void setCatalogo(String catalogo) {
+        this.catalogo = catalogo;
+    }
 
     public static String[] getTIPOS() {
         return TIPOS;
     }
-    
-    public boolean isNombreInvalido(){
+
+    public boolean isNombreInvalido() {
         boolean resp = nombre.equals("");
         return resp;
     }
 
-       @Override
+    @Override
     public String toString() {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
     }
@@ -126,21 +132,23 @@ public class Campo implements Serializable {
             nombre,
             tipo,
             longitud,
-            obligatorio
+            obligatorio,
+            catalogo
         };
         String[] columnas = {
             ATRIBUTOS[1],
             ATRIBUTOS[2],
             ATRIBUTOS[3],
             ATRIBUTOS[4],
-            ATRIBUTOS[5]
+            ATRIBUTOS[5],
+            ATRIBUTOS[6]
         };
         boolean resp = e.insertar2(columnas, valores);
         return resp;
-        
+
     }
-    
-    public boolean modificarCampo(){
-    return true;
+
+    public boolean modificarCampo() {
+        return true;
     }
 }

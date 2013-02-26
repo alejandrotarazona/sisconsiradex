@@ -42,7 +42,7 @@
 
     </head>
     <body>
-        <h1 class="title" id="page-title">Agregar elemento al catalogo</h1>
+        <h1 class="title" id="page-title">Agregar Elemento al Catalogo</h1>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">
             <br/><div align="center"><bean:write name="elementoCatalogoForm" 

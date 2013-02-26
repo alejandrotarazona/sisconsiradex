@@ -26,11 +26,11 @@
     <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
     <table>
         <tr>
-        <td>Nombre<span style="color:red">*</span> </td>
+        <td>Nombre de la Actividad<span style="color:red">*</span> </td>
     <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
 </tr>
 <tr>
-<td>Descripcion<span style="color:red">*</span> </td>
+<td>Descripción<span style="color:red">*</span> </td>
 <td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
                property="descripcion"></td></html:textarea>
 </tr>
@@ -46,7 +46,7 @@
 <td>Programa del tipo de actividad<span style="color:red">*</span> </td>
 <td>
     <html:select property="programa">
-        <html:option value="">(Seleccione un programa)</html:option>
+        <html:option value="">-- Seleccione --</html:option>
         <html:optionsCollection name="programas" label="contenido" value="contenido"/>
 
     </html:select>
@@ -56,7 +56,7 @@
 <td>Coordinación a validar<span style="color:red">*</span> </td>
 <td>       
     <html:select property="validador">
-        <html:option value="">(Seleccione una coordinación)</html:option>
+        <html:option value="">-- Seleccione --</html:option>
         <html:optionsCollection name="coordinaciones" label="contenido" value="contenido"/>
     </html:select>
 </td>

@@ -36,7 +36,12 @@ public class Listar extends org.apache.struts.action.Action {
             throws Exception {
      
         ArrayList ta = Clases.TipoActividad.listarTiposActividad();
-        request.setAttribute("tipos", ta);
+        int tam = ta.size();
+        if (tam != 0) {
+            request.setAttribute("tipos", ta);
+        } else {
+            request.setAttribute("tipos", null);
+        }
         return mapping.findForward(SUCCESS);
     }
 }

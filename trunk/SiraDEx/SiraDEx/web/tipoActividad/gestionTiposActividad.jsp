@@ -14,7 +14,7 @@
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
-            Agregar tipo de actividad<br>
+            Agregar Tipo de Actividad<br>
         </html:link>
         <logic:present name="tipoActividadForm" property="mensaje">
             <br><div align="center"><b>
@@ -25,9 +25,7 @@
             No hay tipos de actividad que mostrar
         </logic:notPresent>
         <logic:present name="tipos">
-            <logic:empty name="tipos">
-                <div align="center">No hay tipos de actividad que mostrar</div>
-            </logic:empty>
+           
             <table>
                 <logic:iterate name="tipos" id="ta">
                     <tr>

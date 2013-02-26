@@ -26,9 +26,7 @@
             <p align="center">No hay catálogos que mostrar.</p>
         </logic:notPresent>
         <logic:present name="catalogos">
-            <logic:empty name="catalogos">
-                <p align="center">No hay catálogos que mostrar.</p>
-            </logic:empty>
+            
             <table>
                 <logic:iterate name="catalogos" id="cat">
                     <tr>

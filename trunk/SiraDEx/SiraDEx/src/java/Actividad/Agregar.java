@@ -6,6 +6,8 @@ package Actividad;
 
 import Clases.Actividad;
 import Clases.CampoValor;
+import Clases.Elemento;
+import Clases.TipoActividad;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -43,7 +45,12 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList ta = Clases.TipoActividad.listarTiposActividad();
-        request.setAttribute("tipos", ta);//verificar si la lista es vacia
+        int tam = ta.size();
+        if (tam != 0) {
+            request.setAttribute("tipos", ta);
+        } else {
+            request.setAttribute("tipos", null);
+        }
         Actividad a = (Actividad) form;
         a.setMensaje(null);
         return mapping.findForward(PAGE);
@@ -55,12 +62,21 @@ public class Agregar extends DispatchAction {
 
         Actividad a = (Actividad) form;
         a.setNombreTipoActividad();
-        ArrayList<CampoValor> valores = Clases.CampoValor.listar(a.getIdTipoActividad());
+        int id = a.getIdTipoActividad();
+        ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         a.setCreador(username);
+        
+        TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
+        request.setAttribute("tipoAct", ta);
+        
+        ArrayList<Elemento> catalogo;
+        String nombreCat = a.getCampoValor(0).getCampo().getCatalogo();
+        catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
+        request.getSession().setAttribute("cat", catalogo);
 
         return mapping.findForward(SUCCESS);
 

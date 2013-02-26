@@ -88,11 +88,6 @@ public class CampoCatalogo implements Serializable {
         this.tipo = tipo;
     }
 
-    public boolean isNombreInvalido() {
-        boolean resp = nombre.equals("");
-        return resp;
-    }
-
     public static String[] getTIPOS() {
         return TIPOS;
     }
@@ -115,6 +110,11 @@ public class CampoCatalogo implements Serializable {
 
     public static void setATRIBUTOS(String[] ATRIBUTOS) {
         CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
+    }
+
+    public boolean isNombreInvalido() {
+        boolean resp = nombre.equals("");
+        return resp;
     }
 
     public boolean agregarCampo(int idCatalogo) {

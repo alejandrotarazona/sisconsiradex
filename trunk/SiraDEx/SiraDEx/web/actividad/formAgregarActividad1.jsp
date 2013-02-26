@@ -13,7 +13,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Actividad</title>
+        <title>SiraDEx | Agregar Actividad</title>
     </head>
 
     <body>
@@ -23,21 +23,21 @@
                     <bean:write name="actividadForm" property="mensaje" />
                 </div></b><br/>
             </logic:present>
-            <html:form method="POST" action ="/RegistrarActividad?method=save">
+        Seleccione la Actividad que desea agregar.
+        <logic:present name="tipos">
             <table>
-                <tr>
-                <td><b>Tipo de Actividad </b></td>
-                <td>
-                    <html:select property="idTipoActividad">
-                        <html:option value="">(Seleccione un tipo de actividad)</html:option>
-                        <html:optionsCollection name="tipos"
-                                                label="nombreTipo" value="id"/>
-                    </html:select>
-                </td>
-            </tr>
+                <logic:iterate name="tipos" id="ta">
+                    <tr>
+                    <td><html:link action="/RegistrarActividad?method=save" 
+                               paramName="ta" paramProperty="idTipoActividad" 
+                               paramId="idTipoActividad">
+                            <ul><bean:write name="ta" property="nombreTipo"/></ul>
+                        </html:link> 
+                        </td>
+                    </tr>
+            </logic:iterate>
         </table>
-        <br>
-        <div align="center"><html:submit>Siguiente</html:submit></div>
-    </html:form>
+
+    </logic:present>       
 </body>
 </html>
