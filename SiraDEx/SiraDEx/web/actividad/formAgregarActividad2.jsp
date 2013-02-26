@@ -54,7 +54,9 @@
                 </logic:present>
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
-    <html:form action="/RegistrarActividad?method=save2">
+    <html:form method="POST"
+               enctype="multipart/form-data"
+               action="/RegistrarActividad?method=save2">
 
         <logic:iterate name="actividadForm" property="camposValores" id="campoValor" indexId="index">
             <tr>
@@ -84,12 +86,8 @@
                            property="valor" indexed="true"></html:textarea>
         </logic:equal>
         <logic:equal name="campoValor" property="campo.tipo" value="archivo">
-            <html:text name="campoValor" property="valor" indexed="true"/>
+            <html:file name="campoValor" property="file" indexed="true"/>
         </logic:equal>
-        <%--falta por hacer
-        <logic:equal name="campoValor" property="campo.tipo" value="archivo">
-           <html:file name="campoValor" property="file" indexed="true"/>
-        </logic:equal>--%>
         <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
             <html:select name="campoValor" property="valor" indexed="true">
                 <html:option value="">

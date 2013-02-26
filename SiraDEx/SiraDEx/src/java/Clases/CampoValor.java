@@ -5,6 +5,8 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,9 +19,15 @@ import java.util.logging.Logger;
  * @author SisCon
  */
 public class CampoValor implements Serializable {
-    
+
     private Campo campo;
     private String valor;
+    private File file = null;
+    private static String[] ATRIBUTOS = {
+        "id_campo", //0
+        "id_actividad", //1
+        "valor" //2
+    };
     private static String[] TABLAS = {
         "VALOR",
         "CAMPO",
@@ -49,7 +57,33 @@ public class CampoValor implements Serializable {
         this.valor = valor;
     }
 
-    
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+        this.valor = file.getName();
+    }
+
+    public boolean agregar(int idAct) {
+        Entity eAgregar = new Entity(1, 6);
+        boolean resp = true;
+
+        Integer idCampo = new Integer(campo.getIdCampo());
+        Integer idActividad = new Integer(idAct);
+
+        if (file != null) {
+            Object[] aAgregar = {idCampo,idActividad, valor, file};
+            resp = resp && eAgregar.insertar(aAgregar);
+        } else {
+            Object[] aAgregar = {idCampo,idActividad, valor};
+            resp = resp && eAgregar.insertar(aAgregar);
+        }
+
+        return resp;
+    }
+
     public static ArrayList<CampoValor> listar(int idTipoActividad) {
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 3);
@@ -78,22 +112,20 @@ public class CampoValor implements Serializable {
         }
         return listaValor;
     }
-    
+
     //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 2);
         String[] ATRIBUTOS = {
-        "id_campo",
-        "id_tipo_actividad",
-         "nombre_campo", 
-        "tipo_campo",
-        "longitud",
-        "obligatorio",
-        "valor", 
-       
-        };
+            "id_campo",
+            "id_tipo_actividad",
+            "nombre_campo",
+            "tipo_campo",
+            "longitud",
+            "obligatorio",
+            "valor",};
         String[] tabABuscar = {
             TABLAS[0],
             TABLAS[1],

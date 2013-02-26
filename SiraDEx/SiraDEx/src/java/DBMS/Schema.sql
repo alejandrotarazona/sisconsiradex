@@ -128,7 +128,8 @@ WITH (
 CREATE TABLE VALOR(
     id_campo     integer NOT NULL,
     id_actividad integer NOT NULL,
-    valor        VARCHAR(1400),
+    valor        VARCHAR,
+    archivo      BYTEA,
  
 CONSTRAINT PK_valor PRIMARY KEY (id_campo, id_actividad),
 CONSTRAINT FK_valor__campo 

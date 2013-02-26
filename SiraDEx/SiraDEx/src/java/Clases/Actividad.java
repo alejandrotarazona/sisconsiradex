@@ -236,13 +236,7 @@ public class Actividad extends Root {
 
             while ((itValores.hasNext())) {
                 CampoValor v = (CampoValor) itValores.next();
-                Campo campoActual = (Campo) v.getCampo();
-                String valorActual = (String) v.getValor();
-
-                Object[] tupla = {campoActual.getIdCampo(),
-                    idActividad,
-                    valorActual};
-                resp = eValores.insertar(tupla);
+                resp = resp && v.agregar(this.idActividad);
             }
 
             return resp;

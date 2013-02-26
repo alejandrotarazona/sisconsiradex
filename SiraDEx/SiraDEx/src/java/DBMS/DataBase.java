@@ -4,6 +4,10 @@
  */
 package DBMS;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -84,6 +88,21 @@ public class DataBase {
         return false;
     }
 
+    public boolean update(String sql, File archivo) throws FileNotFoundException, SQLException, IOException {
+        boolean resp = true;
+        FileInputStream fis = new FileInputStream(archivo);
+        PreparedStatement ps = conexion.prepareStatement(sql + "?, ?)");
+        ps.setString(1, archivo.getName());
+        ps.setBinaryStream(2, fis, archivo.length());
+
+        System.out.println(ps.toString());
+        resp = resp && ps.execute();
+        ps.close();
+        fis.close();
+
+        return resp;
+    }
+
     public static void main(String[] args) {
         try {
             /*
@@ -92,13 +111,13 @@ public class DataBase {
              */
 
             DataBase d = DataBase.getInstance();
-  
+
             ResultSet rs = d.consult("select * from usuario");
             ResultSetMetaData rsmd = rs.getMetaData();
             int numColumna = rsmd.getColumnCount();
             while (rs.next()) {
                 for (int i = 1; i <= numColumna; i++) {
-                    System.out.print(rs.getString(i)+" ");
+                    System.out.print(rs.getString(i) + " ");
                 }
                 System.out.println("");
             }
