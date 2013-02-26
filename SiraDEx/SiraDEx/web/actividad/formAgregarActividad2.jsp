@@ -86,18 +86,24 @@
         <logic:equal name="campoValor" property="campo.tipo" value="archivo">
             <html:text name="campoValor" property="valor" indexed="true"/>
         </logic:equal>
-        <%--falta por hacer<logic:equal name="campoValor" property="campo.tipo" value="archivo">
-           <html:text name="campoValor" property="valor" indexed="true"/>
-        </logic:equal>
-        falta por hacer <logic:equal name="campoValor" property="campo.tipo" value='un catalogo'>
-           <html:text name="campoValor" property="valor" indexed="true"/>
+        <%--falta por hacer
+        <logic:equal name="campoValor" property="campo.tipo" value="archivo">
+           <html:file name="campoValor" property="file" indexed="true"/>
         </logic:equal>--%>
+        <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
+            <html:select name="campoValor" property="valor" indexed="true">
+                <html:option value="">
+                    -- Seleccione --
+                </html:option>
+                <html:optionsCollection name="cat" label="contenido" value="contenido"/>
+            </html:select>
+        </logic:equal>
     </td>  
 </tr>
 </logic:iterate>
 <tr>
-<td>(Pendiente campo para subir el producto)</td>    
-<td><html:text name="campoValor" property="valor"/> </td>  
+<td><bean:write name="tipoAct" property="producto"/><span style="color:red">*</span> </td>    
+<td><html:text name="campoValor" property="valor"/> </td><%--falta por hacer--%>  
 </tr>
 </table>
 <br>

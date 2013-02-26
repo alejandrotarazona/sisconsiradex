@@ -36,7 +36,7 @@ public class TipoActividad extends Root {
         "descripcion", //4
         "programa", //5
         "validador", //6
-        "producto" //7
+        "producto" //7  
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -199,6 +199,35 @@ public class TipoActividad extends Root {
         return false;
     }
 
+    public static TipoActividad getTipoActividad(int id) {
+
+        Entity e = new Entity(0, 1);
+
+        String[] atrib = {"id_tipo_actividad"};
+        Integer[] valor = {id};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        TipoActividad t = new TipoActividad();
+        if (rs != null) {
+            try {
+                rs.next();
+                t.setId(id);
+                t.setNombreTipo(rs.getString("nombre_tipo_actividad"));
+                t.setTipoPR(rs.getString("tipo_p_r"));
+                t.setNroCampos(rs.getInt("nro_campos"));
+                t.setDescripcion(rs.getString("descripcion"));
+                t.setPrograma(rs.getString("programa"));
+                t.setValidador(rs.getString("validador"));
+                t.setProducto(rs.getString("producto"));
+                
+                return t;
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+        return null;
+    }
+
     public boolean agregarTipoActividad() {
 
         Entity e = new Entity(1, 1);
@@ -267,9 +296,11 @@ public class TipoActividad extends Root {
 
     }
 
-    public static ArrayList<TipoActividad> listarTiposActividad() {
+    public static ArrayList<TipoActividad> listarTiposActividad() { //DEBE RECIBIR UN TIPO DE USUARIO
         Entity eListar = new Entity(0, 1);
-        ResultSet rs = eListar.listar();
+        ResultSet rs = eListar.listar();/*LA CONSULTA A LA BASE DE DATOS DEBE CAMBIARSE POR
+         * POR UNA QUE LISTE DEPENDIENDO DEL TIPO DE USUARIO
+         */
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
         if (rs != null) {
@@ -284,7 +315,6 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setProducto(rs.getString(ATRIBUTOS[7]));
-
                     tipos.add(t);
                 }
             } catch (SQLException ex) {

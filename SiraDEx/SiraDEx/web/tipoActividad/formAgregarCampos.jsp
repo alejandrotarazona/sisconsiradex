@@ -40,7 +40,7 @@
                 <td><html:select name="campo" property="tipo" indexed="true">
                         <html:option value="texto">texto</html:option>
                         <html:option value="textol">texto largo</html:option>
-                        <html:option value="numero">numero</html:option>
+                        <html:option value="numero">número</html:option>
                         <html:option value="fecha">fecha</html:option>
                         <html:option value="catalogo">catálogo</html:option>
                         <html:option value="archivo">archivo</html:option>
@@ -51,8 +51,8 @@
 
                 <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
 
-                <td><html:select name="campo" property="tipo" indexed="true"><%--por ahora property=tipo--%>
-                        <html:option value="">NO APLICA</html:option>
+                <td><html:select name="campo" property="catalogo" indexed="true">
+                        <html:option value="">(Seleccione un catálogo)</html:option>
                         <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
                     </html:select></td>
 

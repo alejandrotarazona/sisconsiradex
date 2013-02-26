@@ -19,13 +19,13 @@
         <h1 class="title" id="page-title">Gestion de Actividades</h1>
         <logic:notPresent name="TipoAct">
             <html:link action="/RegistrarActividad?method=page"> 
-                Registrar actividad
+                Agregar Actividad
             </html:link><br/>
         </logic:notPresent>
         <logic:present name="TipoAct">
             <html:form action ="/RegistrarActividad?method=save">
                 <html:hidden name="TipoAct" property="idTipoActividad" />
-                <html:submit>Registrar actividad</html:submit>
+                <html:submit>Agregar actividad</html:submit>
             </html:form>
         </logic:present>
 

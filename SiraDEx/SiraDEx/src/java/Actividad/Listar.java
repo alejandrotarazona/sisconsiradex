@@ -64,7 +64,7 @@ public class Listar extends DispatchAction {
             throws Exception {
         
         Actividad act = new Actividad();
-        ArrayList<Actividad> a = act.listarActividades();
+        ArrayList<Actividad> a = Clases.Actividad.listarActividades();
         act.setMensaje(null);
        
         request.setAttribute("acts", a);

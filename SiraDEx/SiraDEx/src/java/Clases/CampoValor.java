@@ -68,6 +68,7 @@ public class CampoValor implements Serializable {
                     c.setTipo(rs.getString("tipo_campo"));
                     c.setLongitud(rs.getInt("longitud"));
                     c.setObligatorio(rs.getBoolean("obligatorio"));
+                    c.setCatalogo(rs.getString("catalogo"));
                     CampoValor cv = new CampoValor(c);
                     listaValor.add(cv);
                 }

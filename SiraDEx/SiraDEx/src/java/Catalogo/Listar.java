@@ -39,7 +39,12 @@ public class Listar extends org.apache.struts.action.Action {
         Catalogo c = (Catalogo) form;
         c.deleteSessions(request);
         ArrayList cat = Clases.Catalogo.listar();
-        request.setAttribute("catalogos", cat);
+        int tam = cat.size();
+        if (tam != 0) {
+            request.setAttribute("catalogos", cat);
+        } else {
+            request.setAttribute("catalogos", null);
+        }
         return mapping.findForward(SUCCESS);
     }
     

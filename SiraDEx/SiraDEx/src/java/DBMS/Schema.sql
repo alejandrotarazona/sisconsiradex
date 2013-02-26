@@ -112,6 +112,7 @@ CREATE TABLE CAMPO(
     tipo_campo        VARCHAR(16) NOT NULL,
     longitud          NUMERIC(3),
     obligatorio       BOOLEAN NOT NULL,
+    catalogo          VARCHAR(50),
 
 CONSTRAINT PK_campo PRIMARY KEY (id_campo),
 CONSTRAINT FK_campo__tipo_actividad 

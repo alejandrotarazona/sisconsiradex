@@ -9,7 +9,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <% out.print("<title>SiraDEx | Gestión del Catálogo "
+        <% out.print("<title>SiraDEx | Consulta del Catálogo "
                     + (String) request.getAttribute("nombreCat") + "</title>");%>
     </head>
     <body>
