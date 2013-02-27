@@ -100,8 +100,8 @@
 </tr>
 </logic:iterate>
 <tr>
-<td><bean:write name="tipoAct" property="producto"/><span style="color:red">*</span> </td>    
-<td><html:text name="campoValor" property="valor"/> </td><%--falta por hacer--%>  
+<%--td><bean:write name="tipoAct" property="producto"/><span style="color:red">*</span> </td>    
+<td><html:text name="campoValor" property="valor"/> </td><--falta por hacer--%>  
 </tr>
 </table>
 <br>
