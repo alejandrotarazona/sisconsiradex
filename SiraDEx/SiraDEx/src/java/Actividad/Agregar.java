@@ -5,6 +5,7 @@
 package Actividad;
 
 import Clases.Actividad;
+import Clases.Campo;
 import Clases.CampoValor;
 import Clases.Elemento;
 import Clases.TipoActividad;
@@ -64,14 +65,25 @@ public class Agregar extends DispatchAction {
         a.setNombreTipoActividad();
         int id = a.getIdTipoActividad();
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
+        CampoValor producto = new CampoValor();
+        
+        
+        Campo c = new Campo();
+        c.setObligatorio(true);
+        c.setTipo("archivo");
+        TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
+        c.setNombre(ta.getProducto());
+        
+        producto.setCampo(c);
+        valores.add(producto);
+                
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         a.setCreador(username);
         
-        TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
-        request.setAttribute("tipoAct", ta);
+        
         
         ArrayList<Elemento> catalogo;
         String nombreCat = a.getCampoValor(0).getCampo().getCatalogo();
