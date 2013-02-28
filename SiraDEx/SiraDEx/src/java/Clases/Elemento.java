@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ import java.util.logging.Logger;
  */
 //Clase para ser usada como estructura para el pasaje de elementos de un catálogo
 //al momento de hacer una lista desplegable de optionsCollection
-public class Elemento {
+public class Elemento implements Serializable {
 
     private String contenido;
 

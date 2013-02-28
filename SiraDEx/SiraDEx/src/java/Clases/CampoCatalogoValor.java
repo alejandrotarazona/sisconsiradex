@@ -106,7 +106,7 @@ public class CampoCatalogoValor implements Serializable {
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoCatalogoValor> listarCamposValores(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 10);
+        Entity eCampo = new Entity(0, 10);//SELECT ELEMENTO_CATALOGO
         String[] ATRIBUTOS = {
             "id_campo", //0
             "id_elemento", //1
