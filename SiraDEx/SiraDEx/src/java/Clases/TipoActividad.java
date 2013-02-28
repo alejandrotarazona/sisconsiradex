@@ -23,7 +23,7 @@ public class TipoActividad extends Root {
     private String tipoPR;
     private int nroCampos;
     private String descripcion;
-    private String[] permiso;
+    private ArrayList<String> permiso;
     private String programa;
     private String validador;
     private String producto;
@@ -116,11 +116,11 @@ public class TipoActividad extends Root {
         this.tipoPR = tipoPR;
     }
 
-    public String[] getPermiso() {
+    public ArrayList<String> getPermiso() {
         return permiso;
     }
 
-    public void setPermiso(String[] permiso) {
+    public void setPermiso(ArrayList<String> permiso) {
         this.permiso = permiso;
     }
 
@@ -146,6 +146,53 @@ public class TipoActividad extends Root {
 
     public void setProducto(String producto) {
         this.producto = producto;
+    }
+
+    private boolean checkPermiso(String rol) {
+        Iterator it = permiso.iterator();
+        while (it.hasNext()) {
+            String estePermiso = (String) it.next();
+            if (rol.equals(estePermiso)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean checkValidador(String validador) {
+        return this.validador.equals(validador);
+    }
+
+    private void setPermisos() {
+        Entity ePermisos = new Entity(0, 18);
+        int i = 0;
+        String[] seleccionar = {
+            "permiso.nombre"
+        };
+        String[] tablas = {
+            "tipo_actividad",
+            "tipo_permiso",
+            "permiso"
+        };
+        String[] columnas = {
+            "tipo_actividad.id_tipo_actividad"
+        };
+        Object[] valores = {
+            id
+        };
+        ResultSet rs = ePermisos.naturalJoins(seleccionar, tablas, columnas, valores);
+        if (rs != null) {
+            try {
+                permiso = new ArrayList<>(0);
+                while (rs.next()) {
+                    String estePermiso = (String) rs.getString("nombre");
+                    permiso.add(estePermiso);
+                    System.out.println("Recuperando el permiso: "+estePermiso);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     public void setId() {
@@ -211,13 +258,14 @@ public class TipoActividad extends Root {
             try {
                 rs.next();
                 t.setId(id);
-                t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
-                t.setTipoPR(rs.getString(ATRIBUTOS[2]));
-                t.setNroCampos(rs.getInt(ATRIBUTOS[3]));
-                t.setDescripcion(rs.getString(ATRIBUTOS[4]));
-                t.setPrograma(rs.getString(ATRIBUTOS[5]));
-                t.setValidador(rs.getString(ATRIBUTOS[6]));
-                t.setProducto(rs.getString(ATRIBUTOS[7]));
+                t.setNombreTipo(rs.getString("nombre_tipo_actividad"));
+                t.setTipoPR(rs.getString("tipo_p_r"));
+                t.setNroCampos(rs.getInt("nro_campos"));
+                t.setDescripcion(rs.getString("descripcion"));
+                t.setPrograma(rs.getString("programa"));
+                t.setValidador(rs.getString("validador"));
+                t.setProducto(rs.getString("producto"));
+                t.setPermisos();
 
                 return t;
             } catch (SQLException ex) {
@@ -259,6 +307,13 @@ public class TipoActividad extends Root {
                 ATRIBUTOS[7]
             };
 
+            Campo c = new Campo();
+            c.setNombre(this.producto);
+            c.setIdTipoActividad(id);
+            c.setObligatorio(true);
+            c.setTipo(Campo.getTIPOS()[3]);
+            this.campos.add(c);
+
             if (resp = e.insertar2(aInsertar, valores)) {
                 this.setId();
                 System.out.println("Ya inserte el tipo de Actividad con ID " + id);
@@ -273,17 +328,31 @@ public class TipoActividad extends Root {
                         this.eliminarTipoActividad();
                     }
                 }
-                Campo c = new Campo();
-                c.setObligatorio(true);
-                c.setTipo("archivo");
-                c.setNombre(producto);
-                resp &= c.agregarCampo(id);
-                if (!resp) {
-                    System.out.print("No se pudo registrar el campo " + producto);
-                    this.eliminarTipoActividad();
+                Entity ePermisos = new Entity(1, 18);
+                Object[] valoresPermisos = {
+                    id,
+                    0
+                };
+                Iterator itPermisos = permiso.iterator();
+                while (itPermisos.hasNext()) {
+                    String estePermiso = (String) itPermisos.next();
+                    switch (estePermiso) {
+
+                        case "estudiante":
+                            valoresPermisos[1] = 1;
+                            break;
+                        case "empleado":
+                            valoresPermisos[1] = 2;
+                            break;
+                        case "obrero":
+                            valoresPermisos[1] = 3;
+                            break;
+                        case "profesor":
+                            valoresPermisos[1] = 4;
+                            break;
+                    }
+                    ePermisos.insertar(valoresPermisos);
                 }
-                //llamada a metodo que inserta en la tabla tiene permiso los string del 
-                // arreglo permiso
             } else if (!resp) {
                 this.eliminarTipoActividad();
             }
@@ -311,9 +380,7 @@ public class TipoActividad extends Root {
      */
     public static ArrayList<TipoActividad> listarTiposActividad() { //DEBE RECIBIR UN TIPO DE USUARIO
         Entity eListar = new Entity(0, 1);
-        ResultSet rs = eListar.listar();/*LA CONSULTA A LA BASE DE DATOS DEBE CAMBIARSE POR
-         * POR UNA QUE LISTE DEPENDIENDO DEL TIPO DE USUARIO
-         */
+        ResultSet rs = eListar.listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
         if (rs != null) {
@@ -328,10 +395,49 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setProducto(rs.getString(ATRIBUTOS[7]));
+                    t.setPermisos();
                     tipos.add(t);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return tipos;
+    }
+
+    /**
+     * Lista los tipos de actividades que puede realizar el usuario.
+     *
+     * @param usuario El usuario del cual se quieren listar las posibilidades de
+     * tipos de actividad.
+     * @return Lista de los tipos de actividad que puede realizar el usuario
+     * dado.
+     */
+    public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
+        Entity eListar = new Entity(0, 1);
+        ArrayList<TipoActividad> tiposAux = listarTiposActividad();
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
+        Iterator it = tiposAux.iterator();
+
+        while (it.hasNext()) {
+            TipoActividad t = (TipoActividad) it.next();
+            if (t.checkPermiso(u.getRol())) {
+                tipos.add(t);
+            }
+        }
+        return tipos;
+    }
+
+    public static ArrayList<TipoActividad> listarTiposActividad(String validador) {
+        Entity eListar = new Entity(0, 1);
+        ArrayList<TipoActividad> tiposAux = listarTiposActividad();
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
+        Iterator it = tiposAux.iterator();
+
+        while (it.hasNext()) {
+            TipoActividad t = (TipoActividad) it.next();
+            if (t.checkValidador(validador)) {
+                tipos.add(t);
             }
         }
         return tipos;
