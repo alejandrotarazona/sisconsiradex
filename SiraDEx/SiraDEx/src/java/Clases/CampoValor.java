@@ -6,7 +6,6 @@ package Clases;
 
 import DBMS.Entity;
 import java.io.File;
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -143,6 +142,7 @@ public class CampoValor implements Serializable {
                     cv.setValor(rs.getString(ATRIBUTOS[6]));
                     Campo c = new Campo();
                     c.setNombre(rs.getString(ATRIBUTOS[2]));
+                    c.setTipo(rs.getString(ATRIBUTOS[3]));
                     cv.setCampo(c);
 
                     listaValor.add(cv);

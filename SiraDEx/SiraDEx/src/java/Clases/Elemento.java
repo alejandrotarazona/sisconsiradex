@@ -35,7 +35,8 @@ public class Elemento {
     }
 
     //retorna una lista con los valores de los elemenos del catalogo dado
-    public static ArrayList<Elemento> listarElementos(String catalogo, int valores) {
+    public static ArrayList<Elemento> listarElementos(String catalogo,
+            int valores) {
         try {
             Entity eCat = new Entity(0, 8);
 
@@ -56,10 +57,10 @@ public class Elemento {
                 ArrayList<CampoCatalogoValor> elem = ec.getCamposValores();
                 int i = 0;
                 String valor = "";
-                if (valores > elem.size()){
+                if (valores > elem.size()) {
                     //si valores es mayor que el numero de campos de un elemento
                     //se le asigna por defecto el numero de campos
-                    valores = elem.size(); 
+                    valores = elem.size();
                 }
                 for (i = 0; i < valores; i++) {
                     valor += elem.get(i).getValor() + ", ";
@@ -79,7 +80,7 @@ public class Elemento {
 
     public static void main(String[] args) {
 
-        ArrayList<Elemento> elementos = listarElementos("Coordinaciones",1);
+        ArrayList<Elemento> elementos = listarElementos("Coordinaciones", 1);
         Iterator it = elementos.iterator();
 
         while (it.hasNext()) {

@@ -88,21 +88,21 @@
         <logic:equal name="campoValor" property="campo.tipo" value="archivo">
             <html:file name="campoValor" property="file" indexed="true"/>
         </logic:equal>
+
+        <%   int i = (Integer) pageContext.findAttribute("index");
+             String catalogoi= ("cat"+i);%>    
+
         <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
             <html:select name="campoValor" property="valor" indexed="true">
                 <html:option value="">
                     -- Seleccione --
                 </html:option>
-                <html:optionsCollection name="cat" label="contenido" value="contenido"/>
+                <html:optionsCollection name='<%=catalogoi%>' label="contenido" value="contenido"/>
             </html:select>
         </logic:equal>
     </td>  
 </tr>
 </logic:iterate>
-<tr>
-<%--td><bean:write name="tipoAct" property="producto"/><span style="color:red">*</span> </td>    
-<td><html:text name="campoValor" property="valor"/> </td><--falta por hacer--%>  
-</tr>
 </table>
 <br>
 <div align="center"><html:submit>Registrar</html:submit></div>

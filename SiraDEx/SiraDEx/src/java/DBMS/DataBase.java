@@ -68,8 +68,8 @@ public class DataBase {
             return rs;
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+            return null;//probando retornar null si no se conecta a la base de datos
         }
-        return null;
     }
 
     public boolean update(String sql) {
