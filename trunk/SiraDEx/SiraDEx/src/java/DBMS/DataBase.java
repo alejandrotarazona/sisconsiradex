@@ -52,9 +52,7 @@ public class DataBase {
 
             //System.out.println("Connection acomplished.");
             return connection;
-        } catch (SQLException ex) {
-            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException | ClassNotFoundException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -90,15 +88,14 @@ public class DataBase {
 
     public boolean update(String sql, File archivo) throws FileNotFoundException, SQLException, IOException {
         boolean resp = true;
-        FileInputStream fis = new FileInputStream(archivo);
-        PreparedStatement ps = conexion.prepareStatement(sql + "?, ?)");
-        ps.setString(1, archivo.getName());
-        ps.setBinaryStream(2, fis, archivo.length());
+        try (FileInputStream fis = new FileInputStream(archivo); 
+                PreparedStatement ps = conexion.prepareStatement(sql + "?, ?)")) {
+            ps.setString(1, archivo.getName());
+            ps.setBinaryStream(2, fis, archivo.length());
 
-        System.out.println(ps.toString());
-        resp = resp && ps.execute();
-        ps.close();
-        fis.close();
+            System.out.println(ps.toString());
+            resp = resp && ps.execute();
+        }
 
         return resp;
     }
