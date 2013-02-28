@@ -5,7 +5,6 @@
 package Actividad;
 
 import Clases.Actividad;
-import Clases.Campo;
 import Clases.CampoValor;
 import Clases.Elemento;
 import Clases.TipoActividad;
@@ -65,30 +64,23 @@ public class Agregar extends DispatchAction {
         a.setNombreTipoActividad();
         int id = a.getIdTipoActividad();
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
-        CampoValor producto = new CampoValor();
-        
-        
-        Campo c = new Campo();
-        c.setObligatorio(true);
-        c.setTipo("archivo");
-        TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
-        c.setNombre(ta.getProducto());
-        
-        producto.setCampo(c);
-        valores.add(producto);
-                
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         a.setCreador(username);
-        
-        
-        
-        ArrayList<Elemento> catalogo;
-        String nombreCat = a.getCampoValor(0).getCampo().getCatalogo();
-        catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
-        request.getSession().setAttribute("cat", catalogo);
+
+        for (int i = 0; i < a.getCamposValores().size(); i++) {
+      
+            String nombreCat = a.getCampoValor(i).getCampo().getCatalogo();
+            
+            if (!nombreCat.equals("")) {
+                
+                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
+                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
+                request.getSession().setAttribute("cat" + i, catalogo);
+            }
+        }
 
         return mapping.findForward(SUCCESS);
 
@@ -114,6 +106,7 @@ public class Agregar extends DispatchAction {
                 act = a.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", act);
+            
 
             return mapping.findForward(SUCCESSFULL);
         }
@@ -124,6 +117,7 @@ public class Agregar extends DispatchAction {
 
 
     }
+    //Alejandro cuando puedas me explicas para qué hiciste este método
     public ActionForward saveTipo(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {

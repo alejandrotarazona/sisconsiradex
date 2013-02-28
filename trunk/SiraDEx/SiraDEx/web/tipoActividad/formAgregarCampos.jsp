@@ -52,7 +52,7 @@
                 <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
 
                 <td><html:select name="campo" property="catalogo" indexed="true">
-                        <html:option value="">(Seleccione un catálogo)</html:option>
+                        <html:option value="">No Aplica</html:option>
                         <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
                     </html:select></td>
 

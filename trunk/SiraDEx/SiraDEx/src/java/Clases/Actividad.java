@@ -29,6 +29,7 @@ public class Actividad extends Root {
     private String producto;
     private ArrayList<String> participantes;
     private ArrayList<CampoValor> camposValores;
+    private String descripcion;
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
@@ -159,6 +160,15 @@ public class Actividad extends Root {
         this.producto = producto;
     }
 
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
+
     @Override
     public String toString() {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
@@ -273,7 +283,7 @@ public class Actividad extends Root {
         Entity eActividad = new Entity(0, 2);
 
         ResultSet rs = eActividad.listar();
-
+        
         Entity eTipoAct = new Entity(0, 1);
 
         if (rs != null) {
@@ -298,18 +308,22 @@ public class Actividad extends Root {
 
                     a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
 
-                    String[] ta = {"nombre_tipo_actividad"};
-                    String[] idTipoAct = {"id_tipo_actividad"};
-                    Integer[] idAct = {id};
-                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
-                    r.next();
-                    a.setNombreTipoActividad(r.getString(1));
+                    TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
+                    
+                    a.setNombreTipoActividad(ta.getNombreTipo());
+                    
+                    a.setDescripcion(ta.getDescripcion());//atributos como este 
+                    // no son  necesarios guardarlos en la tabla ACTIVIDAD ya que
+                    // ya que estan en la tabla TIPO_ACTIVIDAD
+                    // es decir pudiecemos hacer esto mismo con idTipo y nombreTipo
 
                     listaActividad.add(a);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            return null;//probando retornar null si rs es null
         }
 
         return listaActividad;

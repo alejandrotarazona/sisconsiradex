@@ -9,9 +9,24 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js">
+        </script>
+        <script>
+            $(document).ready(function(){
+
+                $(".detalles").hide();
+                $(".mostrar").click(function(){
+                    $(this).siblings('.detalles').toggle();
+
+                });
+            });
+        </script>
+
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Gestion de Actividades</title>
     </head>
@@ -51,20 +66,37 @@
                         <logic:iterate name="act" property="camposValores" 
                                        id="campoValor" indexId="index">
 
-                            , <bean:write name="campoValor" property="valor"/> 
+                            <logic:notEqual name="campoValor" property="campo.tipo" value="textol">
+                                , <bean:write name="campoValor" property="valor"/>
+                            </logic:notEqual>
 
-                        </logic:iterate>
-                    </td> 
-                    <td><html:form method="POST" action="/EliminarActividad">
-                            <html:hidden name="act" property="idActividad" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
-                        </html:form></td></tr>
-                    </logic:iterate>         
-        </table>
-    </logic:present>
+                        </logic:iterate>.
+
+                        <span class="detalles"><b>Descripción:</b><bean:write name="act" property="descripcion"/>"
+                        <logic:iterate name="act" property="camposValores" 
+                                       id="campoValor" indexId="index">
+
+                            <logic:equal name="campoValor" property="campo.tipo" value="textol">
+                            <br>
+                                <b><bean:write name="campoValor" property="campo.nombre"/>: </b>
+                                <bean:write name="campoValor" property="valor"/>
+                            </logic:equal>
+
+                    </logic:iterate></span>  
+                   
+
+                    <div class="mostrar"><a>Mostrar Detalles</a></div>
+                </td> 
+                <td><html:form method="POST" action="/EliminarActividad">
+                        <html:hidden name="act" property="idActividad" />
+                        <html:submit styleId="botonEliminar"
+                                     value=" "
+                                     title="Eliminar"
+                                     onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
+                    </html:form></td></tr>
+                </logic:iterate>         
+    </table>
+</logic:present>
 
 </body>
 </html>

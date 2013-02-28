@@ -211,14 +211,14 @@ public class TipoActividad extends Root {
             try {
                 rs.next();
                 t.setId(id);
-                t.setNombreTipo(rs.getString("nombre_tipo_actividad"));
-                t.setTipoPR(rs.getString("tipo_p_r"));
-                t.setNroCampos(rs.getInt("nro_campos"));
-                t.setDescripcion(rs.getString("descripcion"));
-                t.setPrograma(rs.getString("programa"));
-                t.setValidador(rs.getString("validador"));
-                t.setProducto(rs.getString("producto"));
-                
+                t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
+                t.setTipoPR(rs.getString(ATRIBUTOS[2]));
+                t.setNroCampos(rs.getInt(ATRIBUTOS[3]));
+                t.setDescripcion(rs.getString(ATRIBUTOS[4]));
+                t.setPrograma(rs.getString(ATRIBUTOS[5]));
+                t.setValidador(rs.getString(ATRIBUTOS[6]));
+                t.setProducto(rs.getString(ATRIBUTOS[7]));
+
                 return t;
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -273,9 +273,18 @@ public class TipoActividad extends Root {
                         this.eliminarTipoActividad();
                     }
                 }
+                Campo c = new Campo();
+                c.setObligatorio(true);
+                c.setTipo("archivo");
+                c.setNombre(producto);
+                resp &= c.agregarCampo(id);
+                if (!resp) {
+                    System.out.print("No se pudo registrar el campo " + producto);
+                    this.eliminarTipoActividad();
+                }
                 //llamada a metodo que inserta en la tabla tiene permiso los string del 
                 // arreglo permiso
-            } else {
+            } else if (!resp) {
                 this.eliminarTipoActividad();
             }
         }
@@ -296,6 +305,10 @@ public class TipoActividad extends Root {
 
     }
 
+    /**
+     *
+     * @return
+     */
     public static ArrayList<TipoActividad> listarTiposActividad() { //DEBE RECIBIR UN TIPO DE USUARIO
         Entity eListar = new Entity(0, 1);
         ResultSet rs = eListar.listar();/*LA CONSULTA A LA BASE DE DATOS DEBE CAMBIARSE POR
