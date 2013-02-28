@@ -19,6 +19,7 @@ import java.util.logging.Logger;
  */
 public class CampoCatalogoValor implements Serializable {
 
+    private int idCampo;
     private CampoCatalogo campo;
     private String valor;
     private static String[] TABLAS = {
@@ -26,7 +27,21 @@ public class CampoCatalogoValor implements Serializable {
         "CAMPO_CATALOGO", //1
         "ELEMENTO_CATALOGO" //2
     };
-
+    
+    private static String[] ATRIBUTOS = {
+        "id_campo", //0
+        "id_elemento", //1
+        "valor", //2
+    };
+    
+    public void setIdCampo(int idCampo){
+        this.idCampo = idCampo;
+    }
+    
+    public int getIdCampo(){
+        return idCampo; 
+    }
+    
     public CampoCatalogoValor() {
     }
 
@@ -125,5 +140,16 @@ public class CampoCatalogoValor implements Serializable {
             }
         }
         return listaValor;
+    }
+    
+    public boolean modificar(CampoCatalogoValor campo) {
+        Entity e = new Entity(2, 11);
+
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[2]};
+        Object[] valores = {campo.getIdCampo(), campo.getValor()};
+        String[] colModificar = {ATRIBUTOS[0], ATRIBUTOS[2]};
+        String[] nombreCampo = {valor};
+
+        return e.modificar(condColumnas, valores, colModificar, nombreCampo);
     }
 }

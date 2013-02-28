@@ -280,7 +280,7 @@ public class Catalogo extends Root {
                     + " sus campos.";
             return false;
         }
-        if (nombreNM.equals("Coordinaciones") && !nombre.equals(nombreNM)) {
+        if (nombreNM.equals("Programas") && !nombre.equals(nombreNM)) {
             mensaje = "Error: El nombre del catálogo Programas no puede"
                     + " ser modificado.\n Solo se permite modificar el nombre de"
                     + " sus campos.";
