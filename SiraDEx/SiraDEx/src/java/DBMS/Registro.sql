@@ -1,4 +1,6 @@
 
+
+
 --Tipo de actividad
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Formulacion de proyectos del BPDEx', 'P',11,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx');
@@ -26,12 +28,31 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del alumno', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Código', 'texto', 20, true);
 
+--Actividad
+
+--INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, fecha_creacion, modificador, fecha_modif) VALUES (15,2,null,'admin','10/01/13',null,null);
+
+--Valor
+/*
+INSERT INTO valor (id_campo, id_actividad, valor) VALUES (12,15,'10/01/13');
+INSERT INTO valor (id_campo, id_actividad, valor) VALUES (13,15,'20/01/13');
+INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Dominguez');
+INSERT INTO valor (id_campo, id_actividad, valor) VALUES (15,15,'Diana Vainberg');
+INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
+*/
 --Permisos
 
 INSERT INTO permiso (nombre) VALUES ('Estudiante');
 INSERT INTO permiso (nombre) VALUES ('Empleado');
 INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
+
+
+---Tiene_permiso
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,2);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
+
 
 --Usuarios
 INSERT INTO usuario VALUES ('00-00000', '123456', 'PO', 3, 'Pablo', 'Perez', '04321234567', '00-00000@usb.ve');
@@ -42,6 +63,7 @@ INSERT INTO usuario VALUES ('jf', 'jf', 'CU', 3, 'Jose', 'Fernandez', '041255555
 INSERT INTO usuario VALUES ('kdoming', 'kdoming', 'Prof',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
 INSERT INTO usuario VALUES ('07-10000', 'pedro', 'DEx',2, 'Pedro', 'Perez',  null, 'pedroperez@usb.ve');
 INSERT INTO usuario VALUES ('admin', 'admin', 'WM', null, 'Administrador', 'del Sistema',null,null);
+
 
 
 --Catalogo
