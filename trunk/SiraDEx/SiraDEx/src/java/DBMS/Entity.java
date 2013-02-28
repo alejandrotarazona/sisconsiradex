@@ -5,11 +5,7 @@
 package DBMS;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -53,7 +49,9 @@ public class Entity {
         "OBREROS", //14                a traves de estas!!!
         "PROGRAMAS", //15
         "EMPLEADOS", //16
-        "COORDINACIONES" //17    ---------------------------------------
+        "COORDINACIONES", //17    ---------------------------------------
+        
+        "TIPO_PERMISO" //18
     };
 
     /*

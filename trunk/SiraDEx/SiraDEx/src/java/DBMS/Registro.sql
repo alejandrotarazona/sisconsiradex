@@ -109,4 +109,4 @@ INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,8,'Nivelacio
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,9,'Emprendimiento y Seguimiento de Egresados');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (3,10,'Formacion Complementaria');
 
-
+--      Permisos por Tipo de Actividad  --

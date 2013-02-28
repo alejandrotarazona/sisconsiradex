@@ -20,6 +20,7 @@ public class Campo implements Serializable {
     private int longitud;
     private boolean obligatorio;
     private String catalogo = "";
+    private boolean lista;
     private static final String[] TIPOS = {
         "texto", //STRING
         "numero", //INT
@@ -118,6 +119,14 @@ public class Campo implements Serializable {
         return resp;
     }
 
+    public boolean isLista() {
+        return lista;
+    }
+
+    public void setLista(boolean lista) {
+        this.lista = lista;
+    }
+    
     @Override
     public String toString() {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';

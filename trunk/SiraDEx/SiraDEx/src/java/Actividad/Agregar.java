@@ -44,7 +44,16 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ArrayList ta = Clases.TipoActividad.listarTiposActividad();
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        ArrayList ta;
+        if (u.getRol().equalsIgnoreCase("WM")) {
+            ta = Clases.TipoActividad.listarTiposActividad();
+        } else if (u.getRol().equalsIgnoreCase("DEx")) {
+            ta = Clases.TipoActividad.listarTiposActividad(u.getRol());
+        } else {
+            ta = Clases.TipoActividad.listarTiposActividad(u);
+        }
+
         int tam = ta.size();
         if (tam != 0) {
             request.setAttribute("tipos", ta);
