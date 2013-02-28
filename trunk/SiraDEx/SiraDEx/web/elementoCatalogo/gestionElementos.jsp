@@ -51,6 +51,14 @@
                         <bean:write name="campoValor" property="valor"/>
                     </td>
                 </logic:iterate>
+                 <td>
+                        <html:form method="POST" action="/ModificarElementoCatalogo?method=page">
+                            <html:hidden name="elem" property="idElemento" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td>    
                 <td>
                     <html:form method="POST" action="/EliminarElemento">
                         <html:hidden name="elem" property="idElemento" />

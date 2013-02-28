@@ -24,6 +24,7 @@ public class ElementoCatalogo extends Root {
     private static String[] ATRIBUTOS = {
         "id_elemento", //0
         "id_catalogo" //1
+       
     };
 
     public ElementoCatalogo() {
@@ -153,6 +154,22 @@ public class ElementoCatalogo extends Root {
                 Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
             }
 
+        }
+        return resp;
+    }
+    
+    public boolean modificar(ArrayList camposNM) {
+        boolean resp = false;
+      
+        Iterator it = camposNM.iterator();
+
+        for (int i = 0; it.hasNext(); i++) {
+            CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
+            resp &= camposValores.get(i).modificar(campoNM);
+        }
+       
+        if (!resp) {
+            mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }
         return resp;
     }
