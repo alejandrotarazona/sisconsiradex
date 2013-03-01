@@ -192,6 +192,11 @@ public class Campo implements Serializable {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Campo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return resp;
     }

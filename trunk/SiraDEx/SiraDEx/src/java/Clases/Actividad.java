@@ -186,6 +186,7 @@ public class Actividad extends Root {
                 while (rs.next()) {
                     if (rs.getInt(ATRIBUTOS[0]) == idActividad
                             && rs.getString(ATRIBUTOS[3]).equals(creador)) {
+                        rs.close();
                         return true;
                     }
                 }
@@ -278,7 +279,7 @@ public class Actividad extends Root {
 
     }
 
-    public static ArrayList<Actividad> listarActividades() {
+    public static ArrayList<Actividad> listarActividades() throws SQLException {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
 
@@ -323,13 +324,14 @@ public class Actividad extends Root {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
+            rs.close();
             return null;//probando retornar null si rs es null
         }
 
         return listaActividad;
     }
 
-    public ArrayList<Actividad> listarActividadesDeTipo() {
+    public ArrayList<Actividad> listarActividadesDeTipo() throws SQLException {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
         String[] columna = {Actividad.ATRIBUTOS[1]};
@@ -363,16 +365,18 @@ public class Actividad extends Root {
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
-                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
-                    r.next();
-                    a.setNombreTipoActividad(r.getString(1));
+                    try (ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct)) {
+                        r.next();
+                        a.setNombreTipoActividad(r.getString(1));
 
-                    listaActividad.add(a);
+                        listaActividad.add(a);
+                    }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        rs.close();
 
         return listaActividad;
     }
@@ -417,7 +421,13 @@ public class Actividad extends Root {
                     a.setNombreTipoActividad(r.getString(1));
 
                     listaActividad.add(a);
+                    r.close();
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            try {
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -513,11 +523,19 @@ public class Actividad extends Root {
         Actividad a = new Actividad();
         a.setCreador("alejandro");
         a.setIdTipoActividad(66);
-        ArrayList<Actividad> lista = listarActividades();
+        ArrayList<Actividad> lista = null;
+        try {
+            lista = listarActividades();
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("\n\n\nListando todas las actividades");
         imprimirLista(lista);
-
-        lista = a.listarActividadesDeTipo();
+        try {
+            lista = a.listarActividadesDeTipo();
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
         System.out.println("\n\n\nListando todas las actividades del tipo");
         imprimirLista(lista);
 

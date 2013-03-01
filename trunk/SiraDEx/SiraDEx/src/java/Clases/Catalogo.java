@@ -87,30 +87,29 @@ public class Catalogo extends Root {
     }
 
     public void setIdCatalogo() {
-        Entity eId = new Entity(0, 8);
         try {
-            String[] proyectar = {ATRIBUTOS[0]};
-            String[] columnas = {
-                "nombre"
-            };
-            Object[] valores = {
-                this.nombre
-            };
-            ResultSet rs = eId.proyectar(proyectar, columnas, valores);
+            Entity eId = new Entity(0, 8);
 
-            if (rs.next()) {
-                try {
-                    this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
-                } catch (SQLException ex) {
-                    Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
+                String[] proyectar = {ATRIBUTOS[0]};
+                String[] columnas = {
+                    "nombre"
+                };
+                Object[] valores = {
+                    this.nombre
+                };
+                ResultSet rs = eId.proyectar(proyectar, columnas, valores);
+
+                if (rs.next()) {
+
+                        this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
+                
                 }
-            }
+                rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
+  
     }
-
-    ;
     
     public void setIdCatalogo(int idCatalogo) {
         this.idCatalogo = idCatalogo;
@@ -128,7 +127,9 @@ public class Catalogo extends Root {
             Integer[] id = {idCatalogo};
             ResultSet r = eCatalogo.proyectar(nombre, idCat, id);
             r.next();
-            return r.getString(1);
+            String resp = r.getString(1);
+            r.close();
+            return resp;
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -183,6 +184,7 @@ public class Catalogo extends Root {
                     }
                 }
             }
+            rs.close();
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -230,25 +232,27 @@ public class Catalogo extends Root {
     }
 
     public static ArrayList<Catalogo> listar() {
-        Entity eListar = new Entity(0, 8);//SELECT CATALOGO
-        ResultSet rs = eListar.listar();
-        ArrayList<Catalogo> tipos = new ArrayList<>(0);
+        try {
+            Entity eListar = new Entity(0, 8);//SELECT CATALOGO
+            ResultSet rs = eListar.listar();
+            ArrayList<Catalogo> tipos = new ArrayList<>(0);
 
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Catalogo t = new Catalogo();
-                    t.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
-                    t.setNombre(rs.getString(ATRIBUTOS[1]));
-                    t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
+            if (rs != null) {
+                    while (rs.next()) {
+                        Catalogo t = new Catalogo();
+                        t.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
+                        t.setNombre(rs.getString(ATRIBUTOS[1]));
+                        t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
 
-                    tipos.add(t);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+                        tipos.add(t);
+                    }
             }
+            rs.close();
+            return tipos;
+        } catch (SQLException ex) {
+            Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return tipos;
+        return null;
     }
 
     public boolean eliminar(int idCat) {

@@ -164,6 +164,11 @@ public class CampoCatalogo implements Serializable {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CampoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
         return resp;
     }

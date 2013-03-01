@@ -50,9 +50,11 @@ public class DataBase {
                     "jdbc:postgresql://" + host + ":" + port + "/" + database,
                     username, password);
 
-            //System.out.println("Connection acomplished.");
+            System.out.println("Conexion realizada.");
             return connection;
         } catch (SQLException | ClassNotFoundException ex) {
+            System.out.println("Conexion Fallida!!!.");
+            ex.printStackTrace();
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
@@ -96,7 +98,7 @@ public class DataBase {
             System.out.println(ps.toString());
             resp = resp && ps.execute();
         }
-
+        conexion.close();
         return resp;
     }
 
