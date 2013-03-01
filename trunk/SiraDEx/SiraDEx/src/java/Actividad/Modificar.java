@@ -7,8 +7,8 @@ package Actividad;
 
 import Clases.Actividad;
 import Clases.CampoValor;
-import Clases.TipoActividad;
-import Clases.ElementoCatalogo;
+import Clases.Elemento;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -44,8 +44,8 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
         act.setMensaje(null);
-        
-        ArrayList campos = Clases.CampoValor.listarCamposValores(act.getIdActividad());
+        int id = act.getIdTipoActividad();
+        ArrayList campos = Clases.CampoValor.listarCamposValores(id);
         act.setCamposValores(campos);
     
         act.setNombreTipoActividad();
@@ -56,6 +56,19 @@ public class Modificar extends DispatchAction {
          * del jsp debido a que ArrayList es un apuntador*/
         ArrayList camposNM = Clases.CampoValor.listarCamposValores(act.getIdActividad());
         request.getSession().setAttribute("camposNM", camposNM);
+        
+
+        for (int i = 0; i < act.getCamposValores().size(); i++) {
+      
+            String nombreCat = act.getCampoValor(i).getCampo().getCatalogo();
+            
+            if (!nombreCat.equals("")) {
+                
+                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
+                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
+                request.getSession().setAttribute("cat" + i, catalogo);
+            }
+        }
         return mapping.findForward(PAGE);
     }
 
@@ -71,17 +84,16 @@ public class Modificar extends DispatchAction {
         if (act.modificar(campos)) {
 
             act.setMensaje("La actividad ha sido modificada con éxito.");
+            Usuario u = (Usuario) request.getSession().getAttribute("user");
+            String rol = u.getRol();
             ArrayList<Actividad> acts;
-            acts = Clases.Actividad.listarActividades();
-            request.setAttribute("actividades", acts);
-            int tam = acts.size();
-            if(tam > 0){
-                act = acts.get(tam - 1);
-                request.setAttribute("campos", act.getCamposValores());
+
+            if (rol.equalsIgnoreCase("WM")) {
+                acts = Clases.Actividad.listarActividades();
+            } else {
+                acts = act.listarActividadesDeUsuario();
             }
-            else {
-                request.setAttribute("actividades", null);
-            }
+            request.setAttribute("acts", acts);
             
             return mapping.findForward(SUCCESS);         
       
