@@ -50,9 +50,9 @@ public class Entity {
         "PROGRAMAS", //15
         "EMPLEADOS", //16
         "COORDINACIONES", //17    ---------------------------------------
-        
+
         "TIENE_PERMISO", //18
-        "PERMISOS"      //19      ---------------Vista-------------------
+        "PERMISOS" //19      ---------------Vista-------------------
     };
 
     /*
@@ -234,32 +234,25 @@ public class Entity {
 
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
-        
-            sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
-                    + modificaciones[0] + "' ";
-        
+
+        sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
+                + modificaciones[0] + "' ";
 
         int indice;
 
         for (indice = 1; indice < colModificar.length; indice++) {
-            
-                sql += " , " + colModificar[indice] + " = '"
-                        + modificaciones[indice] + "' ";
-            
+            sql += " , " + colModificar[indice] + " = '"
+                    + modificaciones[indice] + "' ";
         }
-        
-            sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
-        
-        for (indice = 1; indice < condColumnas.length; indice++) {
-            
-                sql += " AND " + condColumnas[indice] + " = '"
-                        + valores[indice] + "' ";
-            
-        }
+        sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
 
+        for (indice = 1; indice < condColumnas.length; indice++) {
+            sql += " AND " + condColumnas[indice] + " = '"
+                    + valores[indice] + "' ";
+        }
 
         DataBase db = DataBase.getInstance();
-        System.out.println(sql);
+        //System.out.println(sql);
         boolean resp = db.update(sql);
         return resp;
     }

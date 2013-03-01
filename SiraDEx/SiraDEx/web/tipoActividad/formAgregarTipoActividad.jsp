@@ -21,9 +21,9 @@
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
         <logic:present name="tipoActividadForm" property="mensaje">
     <br/><div align="center"><b>
-        <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
-    </logic:present>
-    <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
+            <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
+        </logic:present>
+        <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
     <table>
         <tr>
         <td>Nombre de la Actividad<span style="color:red">*</span> </td>
@@ -32,7 +32,8 @@
 <tr>
 <td>Descripción<span style="color:red">*</span> </td>
 <td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
-               property="descripcion"></td></html:textarea>
+               property="descripcion"></html:textarea>
+</td>
 </tr>
 <tr>
 <td>Tipo<span style="color:red">*</span> </td>
@@ -77,8 +78,10 @@
 <tr><td>Numero de campos<span style="color:red">*</span> </td>
 <td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>
 </tr>
-<tr><td><html:submit> Siguiente </html:submit></td></tr>
 </table>
+<br>
+<div align="center"><html:submit> Siguiente </html:submit></div>
 </html:form>
+
 </body>
 </html>

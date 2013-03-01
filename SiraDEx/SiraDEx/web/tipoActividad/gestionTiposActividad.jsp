@@ -32,7 +32,14 @@
                     <td>
                         <bean:write name="ta" property="nombreTipo"/>
                     </td>
-                    
+                    <td>
+                        <html:form method="POST" action="/ModificarTipoActividad?method=page">
+                            <html:hidden name="ta" property="id" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td>
                     <td><html:form method="POST" action="/EliminarTipoActividad">
                             <html:hidden name="ta" property="id" />
                             <html:submit styleId="botonEliminar"

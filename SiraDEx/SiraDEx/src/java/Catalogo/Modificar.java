@@ -108,9 +108,9 @@ public class Modificar extends DispatchAction {
             cat.deleteSessions(request);
             return mapping.findForward(SUCCESS);
         }
-        ArrayList cats = Clases.Catalogo.listar();
+        
         cat.setNombre(nombre);
-        request.setAttribute("catalogos", cats);
+        
         return mapping.findForward(FAILURE);
 
 

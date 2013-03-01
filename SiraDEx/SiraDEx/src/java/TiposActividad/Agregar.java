@@ -135,7 +135,7 @@ public class Agregar extends DispatchAction {
                 
                 t.setMensaje("El tipo de actividad '" + t.getNombreTipo() + "' ha sido "
                         + "registrado con éxito.");
-                ArrayList ta = Clases.TipoActividad.listarTiposActividad();
+                ArrayList ta = Clases.TipoActividad.listar();
                 request.setAttribute("tipos", ta);
                 return mapping.findForward(SUCCESSFULL);
             }

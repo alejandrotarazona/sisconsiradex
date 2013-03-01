@@ -2,9 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ElementoCatalogo;
+package TiposActividad;
 
-import Clases.ElementoCatalogo;
+import Clases.Elemento;
+import Clases.TipoActividad;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  *
- * @author Siscon
+ * @author SisCon
  */
 public class Modificar extends DispatchAction {
 
@@ -37,21 +38,31 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ElementoCatalogo elemCat = (ElementoCatalogo) form;
-        elemCat.setMensaje(null);
+        ArrayList<Elemento> programas;
+        programas = Clases.Elemento.listarElementos("Programas", 1);
+        request.getSession().setAttribute("programas", programas);
+        ArrayList<Elemento> coordinaciones;
+        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
+        request.getSession().setAttribute("coordinaciones", coordinaciones);
+        ArrayList catalogos = Clases.Catalogo.listar();
+        request.getSession().setAttribute("catalogos", catalogos);
+        
+        TipoActividad ta = (TipoActividad) form;
+        ta.setMensaje(null);
 
-        ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
-        elemCat.setCamposValores(campos);
-        int idCat = elemCat.getIdCatalogo();
-        elemCat.setIdCatalogo(idCat);
-        elemCat.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
+        int idTA = ta.getIdTipoActividad();
+        ta.setTipoActividad();
+        ArrayList campos = Clases.Campo.listar(idTA);
+        ta.setCampos(campos);
 
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 
          * del jsp debido a que ArrayList es un apuntador*/
-        ArrayList camposNM = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
-        request.getSession().setAttribute("camposNM", camposNM);
-
+        ArrayList camposNM = Clases.Campo.listar(idTA);
+        TipoActividad taNM = new TipoActividad();
+        taNM.setTipoActividad();
+        taNM.setCampos(camposNM);
+        request.getSession().setAttribute("taNM", taNM);
         return mapping.findForward(PAGE);
     }
 
@@ -59,22 +70,23 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        ElementoCatalogo elemCat = (ElementoCatalogo) form;
+        TipoActividad ta = (TipoActividad) form;
 
-        ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
+        TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
-        if (elemCat.modificar(campos)) {
+        if (ta.modificar(taNM)) {
 
-            elemCat.setMensaje("El elemento ha sido modificado con éxito.");
-            ArrayList<ElementoCatalogo> ec;
-            ec = Clases.ElementoCatalogo.listarElementosId(elemCat.getIdCatalogo());
-            request.setAttribute("elementos", ec);
-            request.setAttribute("campos", elemCat.getCamposValores());
-
-            //elemCat.deleteSessions(request);
+            ta.setMensaje("El catálogo ha sido modificado con éxito.");
+            ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
+            request.setAttribute("tipos", tas);
+           
             return mapping.findForward(SUCCESS);
         }
 
+        ta.setNombreTipo(taNM.getNombreTipo());
+
         return mapping.findForward(FAILURE);
+
+
     }
 }

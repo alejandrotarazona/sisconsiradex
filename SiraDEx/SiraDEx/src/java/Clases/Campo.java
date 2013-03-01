@@ -106,7 +106,7 @@ public class Campo implements Serializable {
     public void setTipo(String tipo) {
         this.tipo = tipo;
     }
-    
+
     public String getCatalogo() {
         return catalogo;
     }
@@ -131,7 +131,7 @@ public class Campo implements Serializable {
     public void setLista(boolean lista) {
         this.lista = lista;
     }
-    
+
     @Override
     public String toString() {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
@@ -161,7 +161,7 @@ public class Campo implements Serializable {
         return resp;
 
     }
-    
+
     public static ArrayList<Campo> listar(int idTA) {
         ArrayList<Campo> resp = new ArrayList<>(0);
         Entity eListar = new Entity(0, 3);//SELECT CAMPO
@@ -193,8 +193,36 @@ public class Campo implements Serializable {
         return resp;
     }
 
+    //en el parámetro campo recibe un campo no modificado del tipo de actividad
+    public boolean modificar(Campo campo, int idTA) {
+        Entity e = new Entity(2, 3);
 
-    public boolean modificarCampo() {
-        return true;
+        String[] condColumnas = ATRIBUTOS;
+        Object[] valores = {
+            idCampo,
+            idTA,
+            campo.getNombre(), 
+            campo.getTipo(),
+            campo.getLongitud(),
+            campo.isObligatorio(),
+            campo.getCatalogo()
+            };
+        String[] colModificar = {
+            ATRIBUTOS[2],
+            ATRIBUTOS[3],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6]
+        };
+        
+        Object[] modificaciones = {
+            nombre,
+            tipo,
+            longitud,
+            obligatorio,
+            catalogo
+        };
+
+        return e.modificar(condColumnas, valores, colModificar, modificaciones);
     }
 }

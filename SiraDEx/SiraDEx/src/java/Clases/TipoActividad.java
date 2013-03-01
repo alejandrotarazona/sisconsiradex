@@ -260,7 +260,7 @@ public class TipoActividad extends Root {
                 t.setPrograma(rs.getString("programa"));
                 t.setValidador(rs.getString("validador"));
                 t.setProducto(rs.getString("producto"));
-                t.setPermisos();
+                //t.setPermisos();
 
                 return t;
             } catch (SQLException ex) {
@@ -269,6 +269,32 @@ public class TipoActividad extends Root {
 
         }
         return null;
+    }
+    
+    public void setTipoActividad() {
+
+        Entity e = new Entity(0, 1);
+
+        String[] atrib = {"id_tipo_actividad"};
+        Integer[] valor = {id};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        if (rs != null) {
+            try {
+                rs.next();
+                nombreTipo = rs.getString("nombre_tipo_actividad");
+                tipoPR = rs.getString("tipo_p_r");
+                nroCampos = rs.getInt("nro_campos");
+                descripcion = rs.getString("descripcion");
+                programa = rs.getString("programa");
+                validador = rs.getString("validador");
+                producto = rs.getString("producto");
+                //permiso = ;
+
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
     }
 
     public boolean agregarTipoActividad() {
@@ -373,7 +399,7 @@ public class TipoActividad extends Root {
      *
      * @return lista con todos los Tipos de Actividad disponibles en la BD
      */
-    public static ArrayList<TipoActividad> listarTiposActividad() {
+    public static ArrayList<TipoActividad> listar() {
         Entity eListar = new Entity(0, 1);
         ResultSet rs = eListar.listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
@@ -390,7 +416,7 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setProducto(rs.getString(ATRIBUTOS[7]));
-                    t.setPermisos();
+                    //t.setPermisos();
                     tipos.add(t);
                 }
             } catch (SQLException ex) {
@@ -409,7 +435,7 @@ public class TipoActividad extends Root {
      * dado.
      */
     public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
-        ArrayList<TipoActividad> tiposAux = listarTiposActividad();
+        ArrayList<TipoActividad> tiposAux = listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();
 
@@ -425,7 +451,7 @@ public class TipoActividad extends Root {
     }
 
     public static ArrayList<TipoActividad> listarTiposActividad(String validador) {
-        ArrayList<TipoActividad> tiposAux = listarTiposActividad();
+        ArrayList<TipoActividad> tiposAux = listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();
 
@@ -438,29 +464,51 @@ public class TipoActividad extends Root {
         return tipos;
     }
 
-    public boolean modificarTipoActividad(String viejoNombre) {
-        boolean respuesta = true;
-        Entity e = new Entity(2, 1);
+    //en el parámetro taNM recibe un TipoActividad No Modificado
+    public boolean modificar(TipoActividad taNM) {
+        boolean resp;
 
-        if (respuesta &= this.esTipoActividad()) {
+        Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
 
-            String[] columnaCondicion = {TipoActividad.ATRIBUTOS[1]};
-            String[] condicion = {viejoNombre};
-            Integer numeroDeCampos = new Integer(this.nroCampos);
-            Object[] modificaciones = {this.nombreTipo, numeroDeCampos, this.descripcion, this.permiso};
+        String[] condColumnas = {ATRIBUTOS[1]};
+        Object[] valores = {
+            taNM.getNombreTipo(),
+            taNM.getTipoPR(),
+            taNM.getDescripcion(),
+            //taNM.getPermiso(),
+            taNM.getPrograma(),
+            taNM.getValidador(),
+            taNM.getProducto()
+        };
+        String[] colModificar = {ATRIBUTOS[1]};
+        Object[] modificaciones = {
+            nombreTipo,
+            tipoPR,
+            descripcion,
+            //permiso,
+            programa,
+            validador,
+            producto};
 
-            if (respuesta &= e.modificar(columnaCondicion, condicion, TipoActividad.ATRIBUTOS, modificaciones)) {
-                this.setMensaje("Cambio realizado con exito");
-                return respuesta;
-            } else {
-                this.setMensaje("El cambio no se pudo realizar");
-                return respuesta;
-            }
-
-        } else {
-            this.setMensaje("No existe ese tipo de Actividad");
-            return respuesta;
+        if (this.esTipoActividad() && !modificaciones[0].equals(taNM.getNombreTipo())) {
+            mensaje = "Error: Ya existe un Tipo de Actividad llamado "
+                    + "" + modificaciones[0] + ".\n Intente con otro nombre.";
+            return false;
         }
+
+        resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
+
+        Iterator it = taNM.getCampos().iterator();
+
+        for (int i = 0; it.hasNext(); i++) {
+            Campo campoNM = (Campo) it.next();
+            resp &= campos.get(i).modificar(campoNM, id);
+        }
+
+        if (!resp) {
+            mensaje = "Error del sistema al intentar actualizar la base de datos.";
+        }
+        return resp;
     }
 
     public static void main(String[] args) {

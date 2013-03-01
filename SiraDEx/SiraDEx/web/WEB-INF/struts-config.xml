@@ -83,6 +83,13 @@
             <forward name="failure" path="gestionTiposActividad"/>
         </action>
         
+        <action path="/ModificarTipoActividad" type="TiposActividad.Modificar" 
+                scope="session" parameter="method" name="tipoActividadForm">
+            <forward name="page" path="modificarTipoActividad"/>
+            <forward name="success" path="gestionTiposActividad"/>
+            <forward name="failure" path="modificarTipoActividad"/>    
+        </action>
+        
         <!-- ======================ACTIVIDADES==============================-->
         
         <action path="/AGestionActividades" type="Actividad.Listar"

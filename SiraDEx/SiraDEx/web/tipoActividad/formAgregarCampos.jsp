@@ -46,19 +46,20 @@
             <td><b>Tipo</b></td>
             <td><b>Longitud</b></td>
             <td><b>Obligatoriedad</b></td>
-            <div id="oculto" style="display: none">
-                <td>
-                    <b>Catálogo</b>
-                </td>
-                <td>
-                    <b>Lista</b>
-                </td>
-            </div>
-            
+
+            <td>
+                <div id="oculto" style="display: none"><b>Catálogo</b></div>
+            </td>
+            <td>
+                <div id="oculto" style="display: none"><b>Lista</b></div>
+            </td>
+
+
         </tr>            
 
         <html:form action="/RegistrarTipoActividad?method=save2">
-            <logic:iterate name="tipoActividadForm" property="campos" id="campo" indexId="index">
+            <logic:iterate name="tipoActividadForm" property="campos" id="campo"
+                           indexId="index">
                 <tr>
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>
                 <td><html:select name="campo" property="tipo" indexed="true">
@@ -75,17 +76,19 @@
 
                 <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
 
-                <div id="oculto" style="display: none">
-                    <td><html:select name="campo" property="catalogo" indexed="true">
+                
+                    <td><div id="oculto" style="display: none">
+                            <html:select name="campo" property="catalogo" indexed="true">
                             <html:option value="">No Aplica</html:option>
                             <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
-                        </html:select>
+                        </html:select> </div>
                     </td>
-                    <td>
+                    <td><div id="oculto" style="display: none">
                         <html:checkbox name="campo" property="lista" indexed="true" value="true"/>
+                        </div>
                     </td>
-                </div>
-                
+               
+
             </tr>
         </logic:iterate>
     </table>
