@@ -208,10 +208,10 @@ WITH (
 CREATE TABLE VALOR_CATALOGO(
     id_campo        INT NOT NULL,
     id_elemento     INT NOT NULL,
-    valor           VARCHAR(1400) NOT NULL,
+    valor           VARCHAR NOT NULL,
 
 CONSTRAINT PK_valor_catalogo 
-            PRIMARY KEY (id_campo, id_elemento, valor),
+            PRIMARY KEY (id_campo, id_elemento),
 CONSTRAINT FK_valor_catalogo__campo_catalogo 
             FOREIGN KEY (id_campo) 
             REFERENCES CAMPO_CATALOGO

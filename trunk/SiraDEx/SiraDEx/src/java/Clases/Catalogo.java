@@ -230,7 +230,7 @@ public class Catalogo extends Root {
     }
 
     public static ArrayList<Catalogo> listar() {
-        Entity eListar = new Entity(0, 8);
+        Entity eListar = new Entity(0, 8);//SELECT CATALOGO
         ResultSet rs = eListar.listar();
         ArrayList<Catalogo> tipos = new ArrayList<>(0);
 
@@ -256,9 +256,9 @@ public class Catalogo extends Root {
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
 
     }
+    
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
     //el parámetro camposNM su lista de campos No Modificados
-
     public boolean modificar(String nombreNM, ArrayList camposNM,
             ArrayList camposNuevos) {
         boolean resp;

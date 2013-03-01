@@ -6,6 +6,11 @@ package Clases;
 
 import DBMS.Entity;
 import java.io.Serializable;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -156,6 +161,38 @@ public class Campo implements Serializable {
         return resp;
 
     }
+    
+    public static ArrayList<Campo> listar(int idTA) {
+        ArrayList<Campo> resp = new ArrayList<>(0);
+        Entity eListar = new Entity(0, 3);//SELECT CAMPO
+
+        String[] columnas = {
+            ATRIBUTOS[1]
+        };
+        Object[] valores = {
+            idTA
+        };
+
+        ResultSet rs = eListar.seleccionar(columnas, valores);
+
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    Campo cc = new Campo();
+                    cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    cc.setNombre(rs.getString(ATRIBUTOS[2]));
+                    cc.setTipo(rs.getString(ATRIBUTOS[3]));
+
+                    resp.add(cc);
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return resp;
+    }
+
 
     public boolean modificarCampo() {
         return true;

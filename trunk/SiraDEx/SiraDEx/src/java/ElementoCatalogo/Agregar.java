@@ -60,7 +60,7 @@ public class Agregar extends DispatchAction {
         if (e.agregar()) {
             e.setMensaje("El elemento ha sido registrado con éxito.");
             ArrayList<ElementoCatalogo> ec;
-                    ec = Clases.ElementoCatalogo.listarElementosId(idCat);
+            ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);
             int tam = ec.size();
             if (tam > 0) {

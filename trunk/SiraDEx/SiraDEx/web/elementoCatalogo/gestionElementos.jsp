@@ -9,12 +9,13 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         
-        <% out.print("<title>SiraDEx | Consulta del Catálogo "
-                    + (String) request.getAttribute("nombreCat") + "</title>");%>
+        <title>SiraDEx | Consulta del Catálogo <bean:write name="elementoCatalogoForm"
+                    property="nombreCatalogo"/></title>
+
     </head>
     <body>
-        <% out.print("<h1 class='title' id='page-title'>Gestión del Catálogo "
-                    + (String) request.getAttribute("nombreCat") + "</h1>");%>
+        <h1 class='title' id='page-title'>Consulta del Catálogo <bean:write 
+                name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
         <logic:equal name="user" property="rol" value="WM">
 

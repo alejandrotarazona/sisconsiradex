@@ -46,6 +46,7 @@ public class Modificar extends DispatchAction {
         ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
         elemCat.setCamposValores(campos);
         int idCat = elemCat.getIdCatalogo();
+        elemCat.setIdCatalogo(idCat);
         elemCat.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
   
         /*es necesario otro ArrayList con los valores no modificados para 
@@ -70,9 +71,16 @@ public class Modificar extends DispatchAction {
         if (elemCat.modificar(campos)) {
 
             elemCat.setMensaje("El elemento ha sido modificado con éxito.");
-            ArrayList elems = Clases.ElementoCatalogo.listarElementos();
-            request.setAttribute("elementos", elems);
-            
+            ArrayList<ElementoCatalogo> ec;
+            ec = Clases.ElementoCatalogo.listarElementosId(elemCat.getIdCatalogo());
+            request.setAttribute("elementos", ec);
+            int tam = ec.size();
+            if (tam > 0) {
+                elemCat = ec.get(tam - 1);
+                request.setAttribute("campos", elemCat.getCamposValores());
+            } else {
+                request.setAttribute("elementos", null);
+            }
             //elemCat.deleteSessions(request);
             return mapping.findForward(SUCCESS);
         }

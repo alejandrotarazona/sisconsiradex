@@ -234,42 +234,32 @@ public class Entity {
 
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
-        if (modificaciones[0] instanceof Integer) {
-            sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = "
-                    + modificaciones[0];
-        } else {
+        
             sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
                     + modificaciones[0] + "' ";
-        }
+        
 
         int indice;
 
         for (indice = 1; indice < colModificar.length; indice++) {
-            if (modificaciones[0] instanceof Integer) {
-                sql += " , " + colModificar[indice] + " = "
-                        + modificaciones[indice];
-            } else {
+            
                 sql += " , " + colModificar[indice] + " = '"
                         + modificaciones[indice] + "' ";
-            }
+            
         }
-        if (valores[0] instanceof Integer) {
-            sql += " WHERE " + condColumnas[0] + " = " + valores[0];
-        } else {
+        
             sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
-        }
+        
         for (indice = 1; indice < condColumnas.length; indice++) {
-            if (valores[0] instanceof Integer) {
-                sql += " AND " + condColumnas[indice] + " = " + valores[indice];
-            } else {
+            
                 sql += " AND " + condColumnas[indice] + " = '"
                         + valores[indice] + "' ";
-            }
+            
         }
 
 
         DataBase db = DataBase.getInstance();
-        //System.out.println(sql);
+        System.out.println(sql);
         boolean resp = db.update(sql);
         return resp;
     }
