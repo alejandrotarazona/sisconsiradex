@@ -73,6 +73,9 @@ public class CampoValor implements Serializable {
         Integer idActividad = new Integer(idAct);
 
         if (file != null) {
+            if (file.length() > 2024){
+                return false;
+            }
             Object[] aAgregar = {idCampo,idActividad, valor, file};
             resp = resp && eAgregar.insertar(aAgregar);
         } else {

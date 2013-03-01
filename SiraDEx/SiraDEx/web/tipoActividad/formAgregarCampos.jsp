@@ -12,18 +12,6 @@
 
 <link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
-<script type="text/javascript">
-    $(document).ready(function(){
-        $("#campo.tipo").select(function(evento){
-            if ($("#campo.tipo").attr("catalogo")){
-                $("#oculto").css("display", "block");
-            } else {
-                $("#oculto").css("display", "none");
-            }
-        });
-    });
-
-</script>
 
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
@@ -48,10 +36,10 @@
             <td><b>Obligatoriedad</b></td>
 
             <td>
-                <div id="oculto" style="display: none"><b>Catálogo</b></div>
+                <b>Catálogo</b>
             </td>
             <td>
-                <div id="oculto" style="display: none"><b>Lista</b></div>
+                <b>Lista</b>
             </td>
 
 
@@ -76,19 +64,16 @@
 
                 <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
 
-                
-                    <td><div id="oculto" style="display: none">
-                            <html:select name="campo" property="catalogo" indexed="true">
-                            <html:option value="">No Aplica</html:option>
+                <td>
+                        <html:select name="campo" property="catalogo" indexed="true">
+                            <html:option value="">---Seleccionar---</html:option>
                             <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
-                        </html:select> </div>
-                    </td>
-                    <td><div id="oculto" style="display: none">
+                        </html:select> 
+                </td>
+                <td>
                         <html:checkbox name="campo" property="lista" indexed="true" value="true"/>
-                        </div>
-                    </td>
-               
-
+                   
+                </td>
             </tr>
         </logic:iterate>
     </table>

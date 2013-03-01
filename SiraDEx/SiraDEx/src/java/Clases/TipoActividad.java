@@ -23,7 +23,7 @@ public class TipoActividad extends Root {
     private String tipoPR;
     private int nroCampos;
     private String descripcion;
-    private ArrayList<String> permiso;
+    private String[] permisos;
     private String programa;
     private String validador;
     private String producto;
@@ -116,13 +116,13 @@ public class TipoActividad extends Root {
     public void setTipoPR(String tipoPR) {
         this.tipoPR = tipoPR;
     }
-
-    public ArrayList<String> getPermiso() {
-        return permiso;
+    
+    public String[] getPermisos() {
+        return permisos;
     }
-
-    public void setPermiso(ArrayList<String> permiso) {
-        this.permiso = permiso;
+    
+    public void setPermisos(String[] permisos){
+        this.permisos = permisos;
     }
 
     public String getPrograma() {
@@ -150,10 +150,8 @@ public class TipoActividad extends Root {
     }
 
     private boolean checkPermiso(String rol) {
-        Iterator it = permiso.iterator();
-        System.out.println("Estoy dentro del chackPermiso. Tam de permisos = " + permiso.size());
-        while (it.hasNext()) {
-            String estePermiso = (String) it.next();
+        for(int i =0 ; i < permisos.length ; i++) {
+            String estePermiso = permisos[i];
 
             System.out.println("\tRol:\t" + rol + "\n\t"
                     + "Permiso:\t" + estePermiso);
@@ -172,6 +170,7 @@ public class TipoActividad extends Root {
     private void setPermisos() {
         Entity ePermisos = new Entity(0, 19);
         ResultSet rs = ePermisos.listar();
+        ArrayList permiso;
         if (rs != null) {
             try {
                 permiso = new ArrayList<>(0);
@@ -182,6 +181,10 @@ public class TipoActividad extends Root {
                         permiso.add(estePermiso);
                         System.out.println("Recuperando el permiso: " + estePermiso);
                     }
+                }
+                permisos = new String[permiso.size()];
+                for(int i = 0 ; i < permiso.size() ; i++){
+                    permisos[i] = (String) permiso.get(i);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -261,7 +264,7 @@ public class TipoActividad extends Root {
                 t.setPrograma(rs.getString("programa"));
                 t.setValidador(rs.getString("validador"));
                 t.setProducto(rs.getString("producto"));
-                //t.setPermisos();
+                t.setPermisos();
 
                 return t;
             } catch (SQLException ex) {
@@ -289,7 +292,7 @@ public class TipoActividad extends Root {
                 programa = rs.getString("programa");
                 validador = rs.getString("validador");
                 producto = rs.getString("producto");
-                //permiso = ;
+                this.setPermisos();
 
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -355,11 +358,9 @@ public class TipoActividad extends Root {
                     id,
                     0
                 };
-                Iterator itPermisos = permiso.iterator();
-                while (itPermisos.hasNext()) {
-                    String estePermiso = (String) itPermisos.next();
+                for(int i = 0 ; i < permisos.length ; i++){
+                    String estePermiso = permisos[i];
                     switch (estePermiso) {
-
                         case "estudiante":
                             valoresPermisos[1] = 1;
                             break;

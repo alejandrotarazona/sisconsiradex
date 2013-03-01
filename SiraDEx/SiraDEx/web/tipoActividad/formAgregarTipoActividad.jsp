@@ -65,10 +65,10 @@
 <tr>
 <td>Realizado por<span style="color:red">*</span> </td>
 <td>
-    <html:multibox property="permiso">Empleados</html:multibox> Empleados<br>
-    <html:multibox property="permiso">Estudiantes</html:multibox> Estudiantes<br>
-    <html:multibox property="permiso">Profesores</html:multibox> Profesores<br>
-    <html:multibox property="permiso">Obreros</html:multibox> Obreros 
+    <html:multibox property="permisos">Empleados</html:multibox> Empleados<br>
+    <html:multibox property="permisos">Estudiantes</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos">Profesores</html:multibox> Profesores<br>
+    <html:multibox property="permisos">Obreros</html:multibox> Obreros 
 </td>       
 </tr>
 <tr>
