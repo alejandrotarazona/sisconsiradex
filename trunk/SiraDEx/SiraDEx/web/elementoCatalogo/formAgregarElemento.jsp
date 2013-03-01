@@ -37,13 +37,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <% out.print("<title>SiraDEx | Agregar elemento al catálogo "
-                    + (String) request.getAttribute("nombreCat") + "</title>");%>
+        <title>SiraDEx | Agregar Elemento al Catálogo <bean:write name="elementoCatalogoForm"
+                    property="nombreCatalogo"/></title>
 
     </head>
     <body>
-        <h1 class="title" id="page-title">Agregar Elemento al Catalogo</h1>
-
+        <h1 class='title' id='page-title'>Agregar Elemento al Catálogo <bean:write 
+                name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
+        
         <logic:present name="elementoCatalogoForm" property="mensaje">
             <br/><div align="center"><bean:write name="elementoCatalogoForm" 
                         property="mensaje" /><br/></div>

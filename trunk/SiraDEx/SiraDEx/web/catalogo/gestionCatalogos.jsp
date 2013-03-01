@@ -17,8 +17,8 @@
         </html:link><br/>
 
         <logic:present name="catalogoForm" property="mensaje">
-            <div align="center"><bean:write name="catalogoForm" 
-                        property="mensaje" /></div><br/>
+            <b><div align="center"><bean:write name="catalogoForm" 
+                        property="mensaje" /></div></b><br/>
             </logic:present>
 
         <h1>Catálogos registrados en el sistema</h1>
