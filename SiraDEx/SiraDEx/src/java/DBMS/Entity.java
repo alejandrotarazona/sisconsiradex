@@ -244,11 +244,12 @@ public class Entity {
             sql += " , " + colModificar[indice] + " = '"
                     + modificaciones[indice] + "' ";
         }
+
         sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
 
         for (indice = 1; indice < condColumnas.length; indice++) {
-            sql += " AND " + condColumnas[indice] + " = '"
-                    + valores[indice] + "' ";
+                sql += " AND " + condColumnas[indice] + " = '"
+                        + valores[indice] + "' ";
         }
 
         DataBase db = DataBase.getInstance();

@@ -180,9 +180,12 @@ public class Campo implements Serializable {
                 while (rs.next()) {
                     Campo cc = new Campo();
                     cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    cc.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
                     cc.setNombre(rs.getString(ATRIBUTOS[2]));
                     cc.setTipo(rs.getString(ATRIBUTOS[3]));
-
+                    cc.setLongitud(rs.getInt(ATRIBUTOS[4]));
+                    cc.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
+                    cc.setCatalogo(rs.getString(ATRIBUTOS[6]));
                     resp.add(cc);
                 }
             } catch (SQLException ex) {

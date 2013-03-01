@@ -36,7 +36,8 @@ public class TipoActividad extends Root {
         "descripcion", //4
         "programa", //5
         "validador", //6
-        "producto" //7  
+        "producto" //7
+    //"permiso" //8   
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -270,7 +271,7 @@ public class TipoActividad extends Root {
         }
         return null;
     }
-    
+
     public void setTipoActividad() {
 
         Entity e = new Entity(0, 1);
@@ -470,25 +471,42 @@ public class TipoActividad extends Root {
 
         Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
 
-        String[] condColumnas = {ATRIBUTOS[1]};
+        String[] condColumnas = {
+            ATRIBUTOS[1],
+            ATRIBUTOS[2],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        //ATRIBUTOS[8]
+        };
         Object[] valores = {
             taNM.getNombreTipo(),
             taNM.getTipoPR(),
             taNM.getDescripcion(),
-            //taNM.getPermiso(),
             taNM.getPrograma(),
             taNM.getValidador(),
             taNM.getProducto()
+        //taNM.getPermiso(),
         };
-        String[] colModificar = {ATRIBUTOS[1]};
+        String[] colModificar = {
+            ATRIBUTOS[1],
+            ATRIBUTOS[2],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        //ATRIBUTOS[8]
+        };
         Object[] modificaciones = {
             nombreTipo,
             tipoPR,
             descripcion,
-            //permiso,
             programa,
             validador,
-            producto};
+            producto
+        //permiso
+        };
 
         if (this.esTipoActividad() && !modificaciones[0].equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado "
