@@ -45,6 +45,8 @@ public class Modificar extends DispatchAction {
         
         ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
         elemCat.setCamposValores(campos);
+        int idCat = elemCat.getIdCatalogo();
+        elemCat.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
   
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 

@@ -158,9 +158,9 @@
           
          <action path="/ModificarElementoCatalogo" type="ElementoCatalogo.Modificar" 
                 scope="session" parameter="method" name="elementoCatalogoForm">
-            <forward name="page" path="modificarElementos"/>
+            <forward name="page" path="modificarElemento"/>
             <forward name="success" path="gestionElementos"/>
-            <forward name="failure" path="modificarElementos"/>    
+            <forward name="failure" path="modificarElemento"/>    
         </action>
         
         <!-- ===============================================================-->

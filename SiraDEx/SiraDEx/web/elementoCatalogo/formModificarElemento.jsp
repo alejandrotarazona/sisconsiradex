@@ -1,9 +1,8 @@
 <%-- 
-    Document   : formModificarCatalogo
+    Document   : formModificarElemento
     Created on : 12/02/2013, 05:09:07 PM
     Author     : SisCon
 --%>
-
 
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -14,43 +13,50 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <% out.print("<title>SiraDEx | Edición del Catálogo "
-                    + (String) request.getAttribute("nombreCat") + "</title>");%>
+        <title>SiraDEx | Edición de los elementos del Catálogo  <bean:write name="elementoCatalogoForm"
+                    property="nombreCatalogo"/></title>
 
     </head>
     <body>
-        <% out.print("<h1 class='title' id='page-title'>Edición del Catálogo "
-                    + (String) request.getAttribute("nombreCat") + "</h1>");%>
+        <h1 class='title' id='page-title'>Edición de los elementos del Catálogo <bean:write 
+                name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
-        <logic:present name="catalogoForm" property="mensaje">
-            <br/> <div align="center"><bean:write name="catalogoForm" 
-                        property="mensaje" /></div><br/>
-            </logic:present>
-            <html:form method="POST" action ="/ModificarCatalogo?method=update">
+        <logic:present name="elementoCatalogoForm" property="mensaje">
+            <br/> <div align="center"><b><bean:write name="elementoCatalogoForm" 
+                        property="mensaje" /></b></div><br/>
+                </logic:present>
+
+        <html:form method="POST" action ="/ModificarElementoCatalogo?method=update">
             <table>
+
                 <tr>
-                <td>Nombre del cátalogo</td>
-
-                <td><html:text name="catalogoForm" property="nombre" 
-                    value='<%=(String) request.getAttribute("nombreCat")%>'/></td>
+                <td><b>Nombre del campo</b></td>
+                <td><b>Valor</b></td>
+                <td><b>Tipo</b></td>
             </tr>
-            <tr><td>Nombre de los campos</td></tr>
 
-        <logic:iterate name="catalogoForm" property="campos" id="campos" 
-                       indexId="index">
-            <%
-                String[] nombres = (String[]) request.getSession().getAttribute("nombres");
-                int i = (Integer) pageContext.findAttribute("index");%>
+            <logic:iterate name="elementoCatalogoForm" property="camposValores" 
+                           id="camposValores" indexId="index">
+                <tr>
+                <td>
+                    <bean:write name="camposValores" property="campo.nombre"/>
+                </td>    
 
-            <tr><td></td>
-            <td><html:text name="campos" property="nombre" value='<%=nombres[i + 1]%>' 
-                       indexed="true"/></td>
-        </tr>
-    </logic:iterate>
-</table>
-<br>
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+                <td><html:text name="camposValores" property="valor" indexed="true">
+                        <bean:write name="camposValores" property="valor"/>
+                    </html:text> 
+                </td>
+                <td>
+                    <bean:write name="camposValores" property="campo.tipo"/>
+                </td>
+            </tr>
+        </logic:iterate>
+
+    </table>
+    <br>
+
+    <div align="center"><html:submit value="Modificar"
+                 onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
 
 </html:form>
 </body>
