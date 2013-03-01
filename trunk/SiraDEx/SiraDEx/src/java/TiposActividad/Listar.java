@@ -4,6 +4,7 @@
  */
 package TiposActividad;
 
+import Clases.TipoActividad;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,7 +36,7 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
      
-        ArrayList ta = Clases.TipoActividad.listarTiposActividad();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarTiposActividad();
         int tam = ta.size();
         if (tam != 0) {
             request.setAttribute("tipos", ta);
