@@ -60,6 +60,7 @@ public class Modificar extends DispatchAction {
          * del jsp debido a que ArrayList es un apuntador*/
         ArrayList camposNM = Clases.Campo.listar(idTA);
         TipoActividad taNM = new TipoActividad();
+        taNM.setId(idTA);
         taNM.setTipoActividad();
         taNM.setCampos(camposNM);
         request.getSession().setAttribute("taNM", taNM);
