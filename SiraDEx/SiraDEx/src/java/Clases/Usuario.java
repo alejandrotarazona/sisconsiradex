@@ -134,6 +134,7 @@ public class Usuario extends Root {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[2]).equals(username)
                             && rs.getString(ATRIBUTOS[3]).equals(password)) {
+                        rs.close();
                         return true;
                     }
                 }
@@ -155,6 +156,7 @@ public class Usuario extends Root {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[2]).equals(username)
                             && rs.getString(ATRIBUTOS[3]).equals(password)) {
+                        rs.close();
                         return true;
                     }
                 }
@@ -187,6 +189,7 @@ public class Usuario extends Root {
                     u.setRol(rs.getString(ATRIBUTOS[7]));
                     listaUsuarios.add(u);
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }

@@ -182,6 +182,7 @@ public class TipoActividad extends Root {
                         System.out.println("Recuperando el permiso: " + estePermiso);
                     }
                 }
+                rs.close();
                 permisos = new String[permiso.size()];
                 for(int i = 0 ; i < permiso.size() ; i++){
                     permisos[i] = (String) permiso.get(i);
@@ -212,6 +213,7 @@ public class TipoActividad extends Root {
             try {
                 if (rs.next()) {
                     this.id = rs.getInt(ATRIBUTOS[0]);
+                    rs.close();
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -225,7 +227,7 @@ public class TipoActividad extends Root {
     }
 
     public boolean esTipoActividad() {
-        try {
+        try {        
             Entity e = new Entity(0, 1);
 
             String[] atrib = {ATRIBUTOS[1]};
@@ -234,15 +236,18 @@ public class TipoActividad extends Root {
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[1]).equals(nombreTipo)) {
+                        rs.close();
                         return true;
                     }
                 }
             }
+            rs.close();
             return false;
         } catch (SQLException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+   
     }
 
     public static TipoActividad getTipoActividad(int id) {
@@ -265,7 +270,7 @@ public class TipoActividad extends Root {
                 t.setValidador(rs.getString("validador"));
                 t.setProducto(rs.getString("producto"));
                 t.setPermisos();
-
+                rs.close();
                 return t;
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -293,7 +298,7 @@ public class TipoActividad extends Root {
                 validador = rs.getString("validador");
                 producto = rs.getString("producto");
                 this.setPermisos();
-
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -421,6 +426,7 @@ public class TipoActividad extends Root {
                     //t.setPermisos();
                     tipos.add(t);
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
