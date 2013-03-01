@@ -150,9 +150,14 @@ public class TipoActividad extends Root {
 
     private boolean checkPermiso(String rol) {
         Iterator it = permiso.iterator();
+        System.out.println("Estoy dentro del chackPermiso. Tam de permisos = " + permiso.size());
         while (it.hasNext()) {
             String estePermiso = (String) it.next();
-            if (rol.equals(estePermiso)) {
+
+            System.out.println("\tRol:\t" + rol + "\n\t"
+                    + "Permiso:\t" + estePermiso);
+            if (rol.equalsIgnoreCase(estePermiso)) {
+                System.out.println("permiso concedido");
                 return true;
             }
         }
@@ -164,34 +169,24 @@ public class TipoActividad extends Root {
     }
 
     private void setPermisos() {
-        Entity ePermisos = new Entity(0, 18);
-        int i = 0;
-        String[] seleccionar = {
-            "permiso.nombre"
-        };
-        String[] tablas = {
-            "tipo_actividad",
-            "tipo_permiso",
-            "permiso"
-        };
-        String[] columnas = {
-            "tipo_actividad.id_tipo_actividad"
-        };
-        Object[] valores = {
-            id
-        };
-        ResultSet rs = ePermisos.naturalJoins(seleccionar, tablas, columnas, valores);
+        Entity ePermisos = new Entity(0, 19);
+        ResultSet rs = ePermisos.listar();
         if (rs != null) {
             try {
                 permiso = new ArrayList<>(0);
                 while (rs.next()) {
-                    String estePermiso = (String) rs.getString("nombre");
-                    permiso.add(estePermiso);
-                    System.out.println("Recuperando el permiso: "+estePermiso);
+                    String esteTipo = rs.getString("nombre_tipo_actividad");
+                    if (this.nombreTipo.equalsIgnoreCase(esteTipo)) {
+                        String estePermiso = (String) rs.getString("nombre");
+                        permiso.add(estePermiso);
+                        System.out.println("Recuperando el permiso: " + estePermiso);
+                    }
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } else {
+            System.out.println("Salió null el ResultSet");
         }
     }
 
@@ -376,9 +371,9 @@ public class TipoActividad extends Root {
 
     /**
      *
-     * @return
+     * @return lista con todos los Tipos de Actividad disponibles en la BD
      */
-    public static ArrayList<TipoActividad> listarTiposActividad() { //DEBE RECIBIR UN TIPO DE USUARIO
+    public static ArrayList<TipoActividad> listarTiposActividad() {
         Entity eListar = new Entity(0, 1);
         ResultSet rs = eListar.listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
@@ -414,13 +409,14 @@ public class TipoActividad extends Root {
      * dado.
      */
     public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
-        Entity eListar = new Entity(0, 1);
         ArrayList<TipoActividad> tiposAux = listarTiposActividad();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();
 
+        System.out.println("El rol del usuario es: " + u.getRol());
         while (it.hasNext()) {
             TipoActividad t = (TipoActividad) it.next();
+            System.out.println("estoy checkeando los permisos...");
             if (t.checkPermiso(u.getRol())) {
                 tipos.add(t);
             }
@@ -429,7 +425,6 @@ public class TipoActividad extends Root {
     }
 
     public static ArrayList<TipoActividad> listarTiposActividad(String validador) {
-        Entity eListar = new Entity(0, 1);
         ArrayList<TipoActividad> tiposAux = listarTiposActividad();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();

@@ -45,7 +45,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        ArrayList ta;
+        ArrayList<TipoActividad> ta;
         if (u.getRol().equalsIgnoreCase("WM")) {
             ta = Clases.TipoActividad.listarTiposActividad();
         } else if (u.getRol().equalsIgnoreCase("DEx")) {

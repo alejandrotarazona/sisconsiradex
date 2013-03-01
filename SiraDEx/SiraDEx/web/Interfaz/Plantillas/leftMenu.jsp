@@ -29,7 +29,7 @@
                                     </html:link></li><br/>  
                                 </logic:equal>
 
-                            <logic:equal name="user" property="rol" value="Prof">
+                            <logic:equal name="user" property="rol" value="profesor">
                                 <li><html:link action="/AGestionActividades?method=listUser"> 
                                         Actividades
                                     </html:link></li>
@@ -55,7 +55,19 @@
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></li>
                             </logic:equal> 
 
-                            <logic:equal name="user" property="rol" value="CU">
+                            <logic:equal name="user" property="rol" value="obrero">
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                        Actividades
+                                    </html:link></li>
+                                </logic:equal>
+                                
+                            <logic:equal name="user" property="rol" value="estudiante">
+                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                        Actividades
+                                    </html:link></li>
+                                </logic:equal>
+                                
+                            <logic:equal name="user" property="rol" value="empleado">
                                 <li><html:link action="/AGestionActividades?method=listUser"> 
                                         Actividades
                                     </html:link></li>

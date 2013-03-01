@@ -23,7 +23,7 @@ WITH (
 CREATE TABLE USUARIO(
     usbid       VARCHAR(20) NOT NULL,
     password    VARCHAR(20) NOT NULL,
-    rol         VARCHAR(4),
+    rol         VARCHAR,
     tipo        INT,
     nombres     VARCHAR(50),
     apellidos   VARCHAR(50),

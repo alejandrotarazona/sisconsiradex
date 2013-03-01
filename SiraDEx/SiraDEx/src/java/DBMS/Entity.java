@@ -51,7 +51,8 @@ public class Entity {
         "EMPLEADOS", //16
         "COORDINACIONES", //17    ---------------------------------------
         
-        "TIPO_PERMISO" //18
+        "TIENE_PERMISO", //18
+        "PERMISOS"      //19      ---------------Vista-------------------
     };
 
     /*
