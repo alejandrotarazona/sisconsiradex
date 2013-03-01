@@ -13,12 +13,12 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición de los elementos del Catálogo  <bean:write name="elementoCatalogoForm"
+        <title>SiraDEx | Edición del elemento del Catálogo  <bean:write name="elementoCatalogoForm"
                     property="nombreCatalogo"/></title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición de los elementos del Catálogo <bean:write 
+        <h1 class='title' id='page-title'>Edición del elemento del Catálogo <bean:write 
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
         <logic:present name="elementoCatalogoForm" property="mensaje">

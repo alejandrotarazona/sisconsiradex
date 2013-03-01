@@ -135,14 +135,15 @@ public class CampoCatalogoValor implements Serializable {
         return listaValor;
     }
     
-    public boolean modificar(CampoCatalogoValor campo) {
+    public boolean modificar(CampoCatalogoValor campo, int idElem) {
         Entity e = new Entity(2, 11);//Update valor_catalogo
 
-        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[2]}; //id_campo, valor
-        Object[] valores = {campo.getCampo().getIdCampo(),campo.getValor()};
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
+        String val = campo.getValor(); 
+        Object[] valores = {campo.getCampo().getIdCampo(), idElem, val};
         String[] colModificar = {ATRIBUTOS[2]}; //valor
-        String[] nombreCampo = {valor};
-
-        return e.modificar(condColumnas, valores, colModificar, nombreCampo);
+        String[] valorCampo = {valor};
+        
+        return e.modificar(condColumnas, valores, colModificar, valorCampo);
     }
 }

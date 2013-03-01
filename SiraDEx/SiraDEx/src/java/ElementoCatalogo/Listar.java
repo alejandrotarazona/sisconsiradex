@@ -38,7 +38,8 @@ public class Listar extends org.apache.struts.action.Action {
         ElementoCatalogo e = (ElementoCatalogo) form;
         e.setMensaje(null);
         int idCat = e.getIdCatalogo();
-        request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
+        e.setIdCatalogo(idCat);
+        e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         int tam = ec.size();

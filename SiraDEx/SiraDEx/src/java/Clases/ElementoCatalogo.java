@@ -174,7 +174,7 @@ public class ElementoCatalogo extends Root {
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            resp &= camposValores.get(i).modificar(campoNM);
+            resp &= camposValores.get(i).modificar(campoNM, idElemento);
         }
        
         if (!resp) {
