@@ -5,11 +5,14 @@
 package Actividad;
 
 import Clases.Actividad;
+import Clases.Campo;
 import Clases.CampoValor;
 import Clases.Elemento;
 import Clases.TipoActividad;
 import Clases.Usuario;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -80,11 +83,11 @@ public class Agregar extends DispatchAction {
         a.setCreador(username);
 
         for (int i = 0; i < a.getCamposValores().size(); i++) {
-      
+
             String nombreCat = a.getCampoValor(i).getCampo().getCatalogo();
-            
+
             if (!nombreCat.equals("")) {
-                
+
                 ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
                 //suponiendo que no hay un catalogo con mas de 5 campos por elemento
                 request.getSession().setAttribute("cat" + i, catalogo);
@@ -100,6 +103,30 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
+        ArrayList<CampoValor> cv = a.getCamposValores();
+        int divisor = 1024 * 1024;
+
+        Iterator it = cv.iterator();
+        while (it.hasNext()) {
+            CampoValor cv0 = (CampoValor) it.next();
+            Campo c = cv0.getCampo();
+            if (c.getTipo().equalsIgnoreCase("archivo")) {
+                File f0 = cv0.getFile();
+
+                double tamBasico = f0.length();
+                double tamano = (tamBasico / divisor);
+                System.out.println("El tamano del archivo es: " + tamBasico);
+                if (tamano > 2.0) {
+                    a.setMensaje("El tamaño del archivo debe ser menor a 2MB");
+                    return mapping.findForward(FAILURE);
+                }
+                if (!cv0.getValor().endsWith(".pdf")) {
+                    a.setMensaje("El archivo DEBE ser un archivo \".pdf\"");
+                    return mapping.findForward(FAILURE);
+                }
+
+            }
+        }
 
         if (a.agregarActividad()) {
 
@@ -115,7 +142,7 @@ public class Agregar extends DispatchAction {
                 act = a.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", act);
-            
+
 
             return mapping.findForward(SUCCESSFULL);
         }
@@ -127,6 +154,7 @@ public class Agregar extends DispatchAction {
 
     }
     //Alejandro cuando puedas me explicas para qué hiciste este método
+
     public ActionForward saveTipo(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
