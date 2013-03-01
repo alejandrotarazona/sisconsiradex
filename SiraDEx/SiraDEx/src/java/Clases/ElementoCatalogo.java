@@ -20,6 +20,7 @@ public class ElementoCatalogo extends Root {
 
     private int idElemento;
     private int idCatalogo;
+    private String nombreCatalogo;
     private ArrayList<CampoCatalogoValor> camposValores;
     private static String[] ATRIBUTOS = {
         "id_elemento", //0
@@ -61,6 +62,14 @@ public class ElementoCatalogo extends Root {
 
     public CampoCatalogoValor getCampoValor(int i) {
         return camposValores.get(i);
+    }
+
+    public String getNombreCatalogo() {
+        return nombreCatalogo;
+    }
+
+    public void setNombreCatalogo(String nombreCatalogo) {
+        this.nombreCatalogo = nombreCatalogo;
     }
 
     public boolean agregar() {

@@ -42,7 +42,10 @@ public class Agregar extends DispatchAction {
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
         e.setMensaje(null);
-        ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(e.getIdCatalogo());
+        int idCat = e.getIdCatalogo();
+        e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
+
+        ArrayList<CampoCatalogoValor> valores = Clases.CampoCatalogoValor.listar(idCat);
         e.setCamposValores(valores);
 
         return mapping.findForward(PAGE);
@@ -54,12 +57,10 @@ public class Agregar extends DispatchAction {
 
         ElementoCatalogo e = (ElementoCatalogo) form;
         int idCat = e.getIdCatalogo();
-        request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
-
-
         if (e.agregar()) {
             e.setMensaje("El elemento ha sido registrado con éxito.");
-            ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
+            ArrayList<ElementoCatalogo> ec;
+                    ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);
             int tam = ec.size();
             if (tam > 0) {
