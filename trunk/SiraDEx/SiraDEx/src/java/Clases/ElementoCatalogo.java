@@ -168,7 +168,7 @@ public class ElementoCatalogo extends Root {
     }
     
     public boolean modificar(ArrayList camposNM) {
-        boolean resp = false;
+        boolean resp = true;
       
         Iterator it = camposNM.iterator();
 

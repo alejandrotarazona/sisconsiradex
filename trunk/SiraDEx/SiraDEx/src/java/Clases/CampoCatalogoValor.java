@@ -123,8 +123,9 @@ public class CampoCatalogoValor implements Serializable {
                     CampoCatalogo cc = new CampoCatalogo();
                     cc.setNombre(rs.getString(ATRIBUTOS[3]));
                     cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    cc.setTipo(rs.getString(ATRIBUTOS[4]));
                     cv.setCampo(cc);
-
+                    
                     listaValor.add(cv);
                 }
             } catch (SQLException ex) {
@@ -135,11 +136,11 @@ public class CampoCatalogoValor implements Serializable {
     }
     
     public boolean modificar(CampoCatalogoValor campo) {
-        Entity e = new Entity(2, 11);
+        Entity e = new Entity(2, 11);//Update valor_catalogo
 
-        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[2]};
-        Object[] valores = {campo.getCampo().getIdCampo(), campo.getValor()};
-        String[] colModificar = {ATRIBUTOS[0], ATRIBUTOS[2]};
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[2]}; //id_campo, valor
+        Object[] valores = {campo.getCampo().getIdCampo(),campo.getValor()};
+        String[] colModificar = {ATRIBUTOS[2]}; //valor
         String[] nombreCampo = {valor};
 
         return e.modificar(condColumnas, valores, colModificar, nombreCampo);
