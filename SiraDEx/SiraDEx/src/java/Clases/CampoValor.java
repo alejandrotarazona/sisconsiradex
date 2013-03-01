@@ -73,13 +73,13 @@ public class CampoValor implements Serializable {
         Integer idActividad = new Integer(idAct);
 
         if (file != null) {
-            if (file.length() > 2024){
+            if (file.length() > 2024) {
                 return false;
             }
-            Object[] aAgregar = {idCampo,idActividad, valor, file};
+            Object[] aAgregar = {idCampo, idActividad, valor, file};
             resp = resp && eAgregar.insertar(aAgregar);
         } else {
-            Object[] aAgregar = {idCampo,idActividad, valor};
+            Object[] aAgregar = {idCampo, idActividad, valor};
             resp = resp && eAgregar.insertar(aAgregar);
         }
 
@@ -104,7 +104,7 @@ public class CampoValor implements Serializable {
                     c.setTipo(rs.getString("tipo_campo"));
                     c.setLongitud(rs.getInt("longitud"));
                     c.setObligatorio(rs.getBoolean("obligatorio"));
-                    c.setCatalogo(rs.getString("catalogo"));
+                    //c.setCatalogo(rs.getString("catalogo"));
                     CampoValor cv = new CampoValor(c);
                     listaValor.add(cv);
                 }
@@ -112,34 +112,39 @@ public class CampoValor implements Serializable {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+        try {
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return listaValor;
     }
 
     //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
-        ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 2);
-        String[] ATRIBUTOS = {
-            "id_campo",
-            "id_tipo_actividad",
-            "nombre_campo",
-            "tipo_campo",
-            "longitud",
-            "obligatorio",
-            "valor",};
-        String[] tabABuscar = {
-            TABLAS[0],
-            TABLAS[1],
-            TABLAS[2]
-        };
-        String[] colCondicion = {"id_actividad"};
-        Object[] colValor = {idActividad};
+        try {
+            ArrayList<CampoValor> listaValor = new ArrayList<>(0);
+            Entity eCampo = new Entity(0, 2);
+            String[] ATRIBUTOS = {
+                "id_campo",
+                "id_tipo_actividad",
+                "nombre_campo",
+                "tipo_campo",
+                "longitud",
+                "obligatorio",
+                "valor",};
+            String[] tabABuscar = {
+                TABLAS[0],
+                TABLAS[1],
+                TABLAS[2]
+            };
+            String[] colCondicion = {"id_actividad"};
+            Object[] colValor = {idActividad};
 
-        ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+            ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
 
-        if (rs != null) {
-            try {
+            if (rs != null) {
                 while (rs.next()) {
                     CampoValor cv = new CampoValor();
                     cv.setValor(rs.getString(ATRIBUTOS[6]));
@@ -151,22 +156,25 @@ public class CampoValor implements Serializable {
 
                     listaValor.add(cv);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+
             }
+            rs.close();
+            return listaValor;
+        } catch (SQLException ex) {
+            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return listaValor;
+        return null;
     }
-    
+
     public boolean modificar(CampoValor campo, int idAct) {
-        Entity e = new Entity(2,6);//Update valor
+        Entity e = new Entity(2, 6);//Update valor
 
         String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_actividad, valor
-        String val = campo.getValor(); 
+        String val = campo.getValor();
         Object[] valores = {campo.getCampo().getIdCampo(), idAct, val};
         String[] colModificar = {ATRIBUTOS[2]}; //valor
         String[] valorCampo = {valor};
-        
+
         return e.modificar(condColumnas, valores, colModificar, valorCampo);
     }
 }

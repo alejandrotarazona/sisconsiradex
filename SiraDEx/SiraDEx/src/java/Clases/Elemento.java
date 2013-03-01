@@ -48,6 +48,7 @@ public class Elemento implements Serializable {
             ResultSet r = eCat.proyectar(idCatalogo, cat, nombreCat);
             r.next();
             int idCat = r.getInt(1);
+            r.close();
             ArrayList<ElementoCatalogo> elementos;
             elementos = Clases.ElementoCatalogo.listarElementosId(idCat);
             Iterator it = elementos.iterator();

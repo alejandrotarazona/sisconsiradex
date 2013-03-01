@@ -113,58 +113,63 @@ public class ElementoCatalogo extends Root {
     }
 
     public static ArrayList<ElementoCatalogo> listarElementos() {
-        ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
-        Entity eElementoCatalogo = new Entity(0, 10);
+        try {
+            ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
+            Entity eElementoCatalogo = new Entity(0, 10);
 
-        ResultSet rs = eElementoCatalogo.listar();
+            ResultSet rs = eElementoCatalogo.listar();
 
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    ElementoCatalogo ec = new ElementoCatalogo();
+            if (rs != null) {
+                    while (rs.next()) {
+                        ElementoCatalogo ec = new ElementoCatalogo();
 
-                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+                        ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-                    int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
-                    ec.setIdCatalogo(id);
+                        int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
+                        ec.setIdCatalogo(id);
 
-                    listaElementoCatalogo.add(ec);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                        listaElementoCatalogo.add(ec);
+                    }
+                
             }
-        }
+            rs.close();
 
-        return listaElementoCatalogo;
+            return listaElementoCatalogo;
+        } catch (SQLException ex) {
+            Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
-        ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
-        Entity eBuscar = new Entity(0, 10);
-        String[] columnas = {
-            ATRIBUTOS[1]
-        };
-        Integer id = new Integer(idCat);
-        Object[] valores = {
-            id
-        };
+        try {
+            ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
+            Entity eBuscar = new Entity(0, 10);
+            String[] columnas = {
+                ATRIBUTOS[1]
+            };
+            Integer id = new Integer(idCat);
+            Object[] valores = {
+                id
+            };
+            try (ResultSet rs = eBuscar.seleccionar(columnas, valores)) {
+                if (rs != null) {
+                        while (rs.next()) {
+                            ElementoCatalogo ec = new ElementoCatalogo();
+                            ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-        ResultSet rs = eBuscar.seleccionar(columnas, valores);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    ElementoCatalogo ec = new ElementoCatalogo();
-                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+                            ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
+                            resp.add(ec);
+                        }
 
-                    ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
-                    resp.add(ec);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
-            }
 
+            }
+            return resp;
+        } catch (SQLException ex) {
+            Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return resp;
+        return null;
     }
     
     public boolean modificar(ArrayList camposNM) {

@@ -56,19 +56,6 @@ public class Modificar extends DispatchAction {
          * del jsp debido a que ArrayList es un apuntador*/
         ArrayList camposNM = Clases.CampoValor.listarCamposValores(act.getIdActividad());
         request.getSession().setAttribute("camposNM", camposNM);
-        
-
-        for (int i = 0; i < act.getCamposValores().size(); i++) {
-      
-            String nombreCat = act.getCampoValor(i).getCampo().getCatalogo();
-            
-            if (!nombreCat.equals("")) {
-                
-                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
-                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
-                request.getSession().setAttribute("cat" + i, catalogo);
-            }
-        }
         return mapping.findForward(PAGE);
     }
 
