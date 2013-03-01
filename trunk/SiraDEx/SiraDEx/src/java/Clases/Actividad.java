@@ -487,6 +487,22 @@ public class Actividad extends Root {
 
         }
     }
+    
+     public boolean modificar(ArrayList camposNM) {
+        boolean resp = true;
+      
+        Iterator it = camposNM.iterator();
+
+        for (int i = 0; it.hasNext(); i++) {
+            CampoValor campoNM = (CampoValor) it.next();
+            resp &= camposValores.get(i).modificar(campoNM, idActividad);
+        }
+       
+        if (!resp) {
+            mensaje = "Error del sistema al intentar actualizar la base de datos.";
+        }
+        return resp;
+    }
 
     public static void main(String args[]) {
         Campo c = new Campo("Blah", "Entero", true);

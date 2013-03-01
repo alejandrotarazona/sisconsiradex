@@ -73,6 +73,9 @@
     <definition name="agregarActividad2" extends="plantilla">
         <put name="body" value="/actividad/formAgregarActividad2.jsp" />
     </definition>
+     <definition name="modificarActividad" extends="plantilla">
+        <put name="body" value="/actividad/formModificarActividad.jsp" />
+    </definition> 
 
     
     <!-- ====================CATALOGOS==================================-->

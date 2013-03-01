@@ -86,7 +86,15 @@
                    
 
                     <div class="mostrar"><a>Mostrar Detalles</a></div>
-                </td> 
+                </td>
+                <td>
+                        <html:form method="POST" action="/ModificarActividad?method=page">
+                            <html:hidden name="act" property="idActividad" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td> 
                 <td><html:form method="POST" action="/EliminarActividad">
                         <html:hidden name="act" property="idActividad" />
                         <html:submit styleId="botonEliminar"
