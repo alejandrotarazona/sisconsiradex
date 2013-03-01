@@ -142,6 +142,7 @@ public class CampoValor implements Serializable {
                     cv.setValor(rs.getString(ATRIBUTOS[6]));
                     Campo c = new Campo();
                     c.setNombre(rs.getString(ATRIBUTOS[2]));
+                    c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     c.setTipo(rs.getString(ATRIBUTOS[3]));
                     cv.setCampo(c);
 
@@ -152,5 +153,17 @@ public class CampoValor implements Serializable {
             }
         }
         return listaValor;
+    }
+    
+    public boolean modificar(CampoValor campo, int idAct) {
+        Entity e = new Entity(2,6);//Update valor
+
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_actividad, valor
+        String val = campo.getValor(); 
+        Object[] valores = {campo.getCampo().getIdCampo(), idAct, val};
+        String[] colModificar = {ATRIBUTOS[2]}; //valor
+        String[] valorCampo = {valor};
+        
+        return e.modificar(condColumnas, valores, colModificar, valorCampo);
     }
 }
