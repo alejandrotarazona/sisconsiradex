@@ -172,8 +172,8 @@ public class CampoCatalogo implements Serializable {
     public boolean modificar(CampoCatalogo campo, int idCat) {
         Entity e = new Entity(2, 9);
 
-        String[] condColumnas = {ATRIBUTOS[2], ATRIBUTOS[3], ATRIBUTOS[1]};
-        Object[] valores = {campo.getNombre(), campo.getTipo(), idCat};
+        String[] condColumnas = ATRIBUTOS;
+        Object[] valores = {idCampo,idCat,campo.getNombre(),campo.getTipo()};
         String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
         String[] nombreCampo = {nombre, tipo};
 
