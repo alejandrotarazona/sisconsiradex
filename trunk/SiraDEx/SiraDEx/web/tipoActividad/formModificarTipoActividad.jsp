@@ -106,7 +106,9 @@
 <td><html:text name="campos" property="nombre" indexed="true">
         <bean:write name="campos" property="nombre"/>
     </html:text> </td>
-<td><html:select name="campos" property="tipo" indexed="true">
+<td>
+<td>
+    <html:select name="campos" property="tipo" indexed="true">
         <html:option value ="${campos.tipo}" >
             <bean:write name="campos" property="tipo"/></html:option>
         <logic:equal name="campos" property="tipo" value="texto">
@@ -166,7 +168,8 @@
             <html:option value="archivo">archivo</html:option>
         </logic:equal>
     </html:select>
-
+</td>
+<td>     
     <logic:equal name="campos" property="tipo" value="catalogo">
         <html:select name="campos" property="catalogo" indexed="true">
             <html:option value ="${campos.catalogo}" >
@@ -175,8 +178,9 @@
         </html:select>
     </logic:equal>
 </td>
+</td>
 <td><html:text name="campos" property="longitud" indexed="true">
-    <bean:write name="campos" property="longitud"/>
+        <bean:write name="campos" property="longitud"/>
     </html:text></td>
 
 <td><html:checkbox name="campos" property="obligatorio" indexed="true" value="true"/></td>

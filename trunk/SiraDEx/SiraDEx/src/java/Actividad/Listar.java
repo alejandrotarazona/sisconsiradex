@@ -44,7 +44,7 @@ public class Listar extends DispatchAction {
         act.setCreador(username);
         act.setMensaje(null);
         ArrayList<Actividad> a = act.listarActividadesDeUsuario();
-         if (a == null){//probando si puedo coturar error de conexion
+         if (a == null){//probando si puedo capturar error de conexion
             act.setMensaje("Posible caida de la conexión a la base de datos.");
             return mapping.findForward(SUCCESS1);
         }
@@ -95,7 +95,7 @@ public class Listar extends DispatchAction {
         Actividad a = (Actividad) form;
         a.setMensaje(null);
         ArrayList<Actividad> act = a.listarActividadesDeTipo();
-        if (a == null){//probando si puedo coturar error de conexion
+        if (a == null){//probando si puedo capturar error de conexion
             a.setMensaje("Posible caida de la conexión a la base de datos.");
             return mapping.findForward(SUCCESS3);
         }

@@ -5,6 +5,7 @@
 package DBMS;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -103,24 +104,14 @@ public class Entity {
     }
 
     public ResultSet seleccionar(String[] columnas, Object[] valores) {
-        if (valores[0] instanceof Integer) {
-            sql = ACCION + " * "
-                    + "FROM " + TABLA
-                    + " WHERE " + columnas[0] + " = " + valores[0];
-        } else {
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
 
-            sql = ACCION + " * "
-                    + "FROM " + TABLA
-                    + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
-        }
         int i;
 
         for (i = 1; i < columnas.length; i++) {
-            if (valores[i] instanceof Integer) {
-                sql += " AND " + columnas[i] + " = " + valores[i];
-            } else {
-                sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
-            }
+            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
         }
 
         System.out.println(sql);
@@ -169,21 +160,11 @@ public class Entity {
             sql += " , " + seleccionar[i];
         }
 
-        if (valores[0] instanceof Integer) {
-            sql += " FROM " + TABLA
-                    + " WHERE " + columnas[0] + " = " + valores[0];
-        } else {
-
-            sql += " FROM " + TABLA
-                    + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
-        }
+        sql += " FROM " + TABLA
+                + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
 
         for (i = 1; i < columnas.length; i++) {
-            if (valores[i] instanceof Integer) {
-                sql += " AND " + columnas[i] + " = " + valores[i];
-            } else {
-                sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
-            }
+            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
         }
 
         System.out.println(sql);
@@ -193,36 +174,24 @@ public class Entity {
         return rs;
     }
 
-    public ResultSet naturalJoins(
-            String[] seleccionar,
-            String[] tablas,
-            String[] columnas,
-            Object[] valores) {
+    public ResultSet naturalJoins(String[] seleccionar, String[] tablas,
+            String[] columnas, Object[] valores) {
+
         sql = ACCION + " " + seleccionar[0];
         int i;
 
         for (i = 1; i < seleccionar.length; i++) {
             sql += " , " + seleccionar[i];
         }
-
         sql += " FROM " + tablas[0];
 
         for (i = 1; i < tablas.length; i++) {
             sql += " NATURAL JOIN " + tablas[i];
         }
+        sql += " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
 
-        if (valores[0] instanceof Integer) {
-            sql += " WHERE " + columnas[0] + " = " + valores[0];
-        } else {
-
-            sql += " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
-        }
         for (i = 1; i < columnas.length; i++) {
-            if (valores[i] instanceof Integer) {
-                sql += " AND " + columnas[i] + " = " + valores[i];
-            } else {
-                sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
-            }
+            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
         }
 
         System.out.println(sql);
@@ -248,8 +217,8 @@ public class Entity {
         sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
 
         for (indice = 1; indice < condColumnas.length; indice++) {
-                sql += " AND " + condColumnas[indice] + " = '"
-                        + valores[indice] + "' ";
+            sql += " AND " + condColumnas[indice] + " = '"
+                    + valores[indice] + "' ";
         }
 
         DataBase db = DataBase.getInstance();
@@ -260,13 +229,9 @@ public class Entity {
 
     public boolean borrar(String columna, Object valor) {
 
-        if (valor instanceof Integer) {
-            sql = ACCION + " FROM " + TABLA
-                    + " WHERE " + columna + " = " + valor;
-        } else {
-            sql = ACCION + " FROM " + TABLA
-                    + " WHERE " + columna + " = '" + valor + "'";
-        }
+        sql = ACCION + " FROM " + TABLA
+                + " WHERE " + columna + " = '" + valor + "'";
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
 
@@ -279,20 +244,10 @@ public class Entity {
         sql = ACCION + " INTO " + TABLA
                 + " VALUES (";
         for (k = 0; k < (valores.length - 1); k++) {
-            if (valores[k] instanceof Integer) {
-                sql += " " + valores[k] + " ,";
-            } else {
-                sql += "'" + valores[k] + "' ,";
-            }
+            sql += "'" + valores[k] + "' ,";
         }
+        sql += "'" + valores[valores.length - 1] + "')";
 
-        if (valores[valores.length - 1] instanceof Integer) {
-            sql += " " + valores[valores.length - 1] + " ";
-        } else {
-            sql += "'" + valores[valores.length - 1] + "' ";
-        }
-
-        sql += ")";
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
@@ -308,20 +263,10 @@ public class Entity {
         sql += columnas[k] + ")  VALUES (";
 
         for (k = 0; k < (valores.length - 1); k++) {
-            if (valores[k] instanceof Integer) {
-                sql += " " + valores[k] + " ,";
-            } else {
-                sql += "'" + valores[k] + "' ,";
-            }
+            sql += "'" + valores[k] + "' ,";
         }
+        sql += "'" + valores[valores.length - 1] + "')";
 
-        if (valores[valores.length - 1] instanceof Integer) {
-            sql += " " + valores[valores.length - 1] + " ";
-        } else {
-            sql += "'" + valores[valores.length - 1] + "' ";
-        }
-
-        sql += ")";
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
@@ -335,38 +280,29 @@ public class Entity {
      * @param valores Valores que deben de insertarse en la fila de la tabla.
      * @param archivo Archivo que acompaña a los valores y tambien debe
      * insrtarse
-     * @return ture en caso de poder hacer el insert. false en otro caso.
+     * @return true si hace el insert, sino false.
      */
     public boolean insert(String tabla, Object[] valores, File archivo) {
-        boolean resp = true;
-
-
-        int k;
-        sql = ACCION + " INTO " + TABLA
-                + " VALUES (";
-        for (k = 0; k < (valores.length - 1); k++) {
-            if (valores[k] instanceof Integer) {
-                sql += " " + valores[k] + " ,";
-            } else {
+        try {
+            int k;
+            sql = ACCION + " INTO " + TABLA
+                    + " VALUES (";
+            for (k = 0; k < (valores.length - 1); k++) {
                 sql += "'" + valores[k] + "' ,";
             }
-        }
 
-        System.out.println(sql);
-        DataBase db = DataBase.getInstance();
-        try {
-            try {
-                resp = db.update(sql, archivo);
-            } catch (IOException ex) {
-                Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
-                return false;
-            }
+            System.out.println(sql);
+            DataBase db = DataBase.getInstance();
+            boolean resp = db.update(sql, archivo);
+            return resp;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+        } catch (IOException ex) {
+            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        return resp;
+        return false;
     }
 
     public static void main(String[] args) {

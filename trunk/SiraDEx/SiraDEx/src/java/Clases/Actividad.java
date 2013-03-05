@@ -82,6 +82,7 @@ public class Actividad extends Root {
             Integer[] id = {idTipoActividad};
             ResultSet r = eTipoAct.proyectar(ta, idTipoAct, id);
             r.next();
+            System.out.println("idTipoActividad "+idTipoActividad);
             nombreTipoActividad = r.getString(1);
         } catch (SQLException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);

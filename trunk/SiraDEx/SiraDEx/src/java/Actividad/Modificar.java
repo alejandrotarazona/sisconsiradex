@@ -6,8 +6,6 @@
 package Actividad;
 
 import Clases.Actividad;
-import Clases.CampoValor;
-import Clases.Elemento;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +42,8 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
         act.setMensaje(null);
-        int id = act.getIdTipoActividad();
-        ArrayList campos = Clases.CampoValor.listarCamposValores(id);
+        
+        ArrayList campos = Clases.CampoValor.listarCamposValores(act.getIdActividad());
         act.setCamposValores(campos);
     
         act.setNombreTipoActividad();

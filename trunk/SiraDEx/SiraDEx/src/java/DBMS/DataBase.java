@@ -73,19 +73,22 @@ public class DataBase {
     }
 
     public boolean update(String sql) {
-        try {
+        try {       
             Statement stmt = conexion.createStatement();
             int filas = stmt.executeUpdate(sql);
             System.out.println(sql);
             if (filas > 0) {
+                conexion.close();
                 return true;
             } else {
+                conexion.close();
                 return false;
             }
         } catch (SQLException ex) {
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
+  
     }
 
     public boolean update(String sql, File archivo) throws FileNotFoundException, SQLException, IOException {
