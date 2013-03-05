@@ -113,7 +113,7 @@ public class CampoCatalogoValor implements Serializable {
         String[] colCondicion = {"id_elemento"};
         Object[] colValor = {idElem};
 
-        ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+        ResultSet rs = eCampo.naturalJoin(ATRIBUTOS, tabABuscar, colCondicion, colValor);
 
         if (rs != null) {
             try {

@@ -174,7 +174,7 @@ public class Entity {
         return rs;
     }
 
-    public ResultSet naturalJoins(String[] seleccionar, String[] tablas,
+    public ResultSet naturalJoin(String[] seleccionar, String[] tablas,
             String[] columnas, Object[] valores) {
 
         sql = ACCION + " " + seleccionar[0];
@@ -192,6 +192,27 @@ public class Entity {
 
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
+        }
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
+    
+    public ResultSet naturalJoin(String[] seleccionar, String[] tablas) {
+
+        sql = ACCION + " " + seleccionar[0];
+        int i;
+
+        for (i = 1; i < seleccionar.length; i++) {
+            sql += " , " + seleccionar[i];
+        }
+        sql += " FROM " + tablas[0];
+
+        for (i = 1; i < tablas.length; i++) {
+            sql += " NATURAL JOIN " + tablas[i];
         }
 
         System.out.println(sql);

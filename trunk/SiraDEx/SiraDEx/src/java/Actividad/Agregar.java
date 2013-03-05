@@ -73,7 +73,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-        a.setNombreTipoActividad();
+        a.setActividad();
         int id = a.getIdTipoActividad();
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
         a.setCamposValores(valores);
@@ -175,7 +175,7 @@ public class Agregar extends DispatchAction {
                 act = a.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", act);
-
+            a.deleteSessions(request);
             return mapping.findForward(SUCCESSFULL);
         }
 

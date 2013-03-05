@@ -78,10 +78,8 @@ public class DataBase {
             int filas = stmt.executeUpdate(sql);
             System.out.println(sql);
             if (filas > 0) {
-                conexion.close();
                 return true;
             } else {
-                conexion.close();
                 return false;
             }
         } catch (SQLException ex) {
