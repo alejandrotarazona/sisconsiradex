@@ -129,7 +129,7 @@ public class Agregar extends DispatchAction {
             }
         }
         
-        if (Verificaciones.verif(t)) {
+        if (Verificaciones.verif(t.getCampos())) {
             
             if (t.agregarTipoActividad()) {
                 
@@ -141,7 +141,9 @@ public class Agregar extends DispatchAction {
             }
             return mapping.findForward(FAILURE);
         } else {
-            t.setMensaje("Los campos no pueden ser llenados sólo con espacios");
+            t.setMensaje("Los campos no pueden ser llenados sólo con espacios\n"
+                    + "Si elige un campo texto, debe seleccionar una longitud mayor que cero (0)\n"
+                    + "Si elige un campo tipo catálogo, debe seleccionar un catálogo de la lista");
             return mapping.findForward(FAILURE2);
         }
         
