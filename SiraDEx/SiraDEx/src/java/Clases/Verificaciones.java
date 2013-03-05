@@ -6,6 +6,7 @@ package Clases;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -49,23 +50,41 @@ public class Verificaciones {
         resp = resp && (buscar.lookingAt());
         System.out.println(ta.getNroCampos() + " " + resp);
 
-        ArrayList<Campo> campos;
-        if ((campos = ta.getCampos()) != null) {
-            for (int i = 1; i <= ta.getNroCampos(); i++) {
-                try {
-                    Campo campo = campos.get(i - 1);
+        return resp;
+
+    }
+    /**
+     * Verifica la inicialización de cada uno de los campos entrantes 
+     * basandose en que el Nombre sea correto, no sea 'null' ni conste
+     * sólo de espacios, en caso de que sea de tipo texto, verifica que
+     * la longitud sea mayor que cero (0) y si es de tipo catalogo, verifica
+     * que se haya seleccionado un catálogo válido.
+     * @param campos Arreglo de campos que se deben verificar.
+     * @return true si están correctamente inicializados los campos.
+     */
+    public static boolean verif(ArrayList<Campo> campos){
+        boolean resp = true;
+        Iterator it = campos.iterator();
+        Pattern limpiar;
+        Matcher buscar;
+        while(it.hasNext()){
+            try {
+                    Campo campo = (Campo)it.next();
                     limpiar = Pattern.compile("[a-zA-Z]+");
                     buscar = limpiar.matcher(campo.getNombre());
                     resp = resp && buscar.lookingAt();
+                    if(resp && campo.getTipo().equalsIgnoreCase("texto")){
+                        resp = resp && (campo.getLongitud()>0);
+                    } else if(resp && campo.getTipo().equalsIgnoreCase("catlogo")){
+                        resp = resp && (!campo.getCatalogo().equalsIgnoreCase(""));
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
                 }
-            }
         }
-
+        
         return resp;
-
     }
 
     /**
