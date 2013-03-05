@@ -62,21 +62,16 @@ public class DataBase {
     }
 
     public ResultSet consult(String sql) {
-        try {
+        try {        
             Statement stmt = conexion.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             conexion.close();
             return rs;
         } catch (SQLException ex) {
-            try {
-                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
-                conexion.close();
-                return null;//probando retornar null si no se conecta a la base de datos
-            } catch (SQLException ex1) {
-                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex1);
-            }
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+
     }
 
     public boolean update(String sql) {

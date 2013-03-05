@@ -250,6 +250,7 @@ public class TipoActividad extends Root {
    
     }
 
+    //teniendo el id hace un set del resto de atributos del Tipo de Actividad
     public void setTipoActividad() {
 
         Entity e = new Entity(0, 1);
