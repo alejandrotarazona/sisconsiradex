@@ -4,6 +4,8 @@
     Author     : SisCon
 --%>
 
+<%@page import="Clases.Campo"%>
+<%@page import="Clases.CampoValor"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -65,36 +67,46 @@
 
                         <logic:iterate name="act" property="camposValores" 
                                        id="campoValor" indexId="index">
+                            <%  CampoValor campoV = (CampoValor) pageContext.findAttribute("campoValor");
 
-                            <logic:notEqual name="campoValor" property="campo.tipo" value="textol">
+                                String tipo = (campoV.getCampo().getTipo());
+                                if (tipo.equals("textol") || tipo.equals("checkbox")) {
+                                    Campo c = campoV.getCampo();
+                                    c.setTipo("1");
+                                    campoV.setCampo(c);
+
+                                }
+                            %>    
+                            <logic:notEqual name="campoValor" property="campo.tipo" value="1">
                                 , <bean:write name="campoValor" property="valor"/>
-                            </logic:notEqual>
+                                </logic:notEqual>
 
-                        </logic:iterate>.
+                        </logic:iterate>.<br>
 
-                        <span class="detalles"><b>Descripción:</b><bean:write name="act" property="descripcion"/>"
+                    <span class="detalles"><b>Descripción: </b><bean:write name="act" 
+                                property="descripcion"/>"
                         <logic:iterate name="act" property="camposValores" 
                                        id="campoValor" indexId="index">
 
                             <logic:equal name="campoValor" property="campo.tipo" value="textol">
-                            <br>
+                                <br>
                                 <b><bean:write name="campoValor" property="campo.nombre"/>: </b>
                                 <bean:write name="campoValor" property="valor"/>
                             </logic:equal>
 
-                    </logic:iterate></span>  
-                   
+                        </logic:iterate></span>  
 
-                    <div class="mostrar"><a>Mostrar Detalles</a></div>
+
+                    <div class="mostrar" style=" cursor: pointer;"><a>Mostrar Detalles</a></div>
                 </td>
                 <td>
-                        <html:form method="POST" action="/ModificarActividad?method=page">
-                            <html:hidden name="act" property="idActividad" />
-                            <html:submit styleId="botonModificar"
-                                         value=" "
-                                         title="Modificar"/>
-                        </html:form>
-                    </td> 
+                    <html:form method="POST" action="/ModificarActividad?method=page">
+                        <html:hidden name="act" property="idActividad" />
+                        <html:submit styleId="botonModificar"
+                                     value=" "
+                                     title="Modificar"/>
+                    </html:form>
+                </td> 
                 <td><html:form method="POST" action="/EliminarActividad">
                         <html:hidden name="act" property="idActividad" />
                         <html:submit styleId="botonEliminar"

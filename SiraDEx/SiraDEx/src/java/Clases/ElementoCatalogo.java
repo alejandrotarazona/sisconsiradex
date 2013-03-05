@@ -25,7 +25,6 @@ public class ElementoCatalogo extends Root {
     private static String[] ATRIBUTOS = {
         "id_elemento", //0
         "id_catalogo" //1
-       
     };
 
     public ElementoCatalogo() {
@@ -120,17 +119,17 @@ public class ElementoCatalogo extends Root {
             ResultSet rs = eElementoCatalogo.listar();
 
             if (rs != null) {
-                    while (rs.next()) {
-                        ElementoCatalogo ec = new ElementoCatalogo();
+                while (rs.next()) {
+                    ElementoCatalogo ec = new ElementoCatalogo();
 
-                        ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-                        int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
-                        ec.setIdCatalogo(id);
+                    int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
+                    ec.setIdCatalogo(id);
 
-                        listaElementoCatalogo.add(ec);
-                    }
-                
+                    listaElementoCatalogo.add(ec);
+                }
+
             }
             rs.close();
 
@@ -154,16 +153,15 @@ public class ElementoCatalogo extends Root {
             };
             try (ResultSet rs = eBuscar.seleccionar(columnas, valores)) {
                 if (rs != null) {
-                        while (rs.next()) {
-                            ElementoCatalogo ec = new ElementoCatalogo();
-                            ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+                    while (rs.next()) {
+                        ElementoCatalogo ec = new ElementoCatalogo();
+                        ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-                            ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
-                            resp.add(ec);
-                        }
-
+                        ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
+                        resp.add(ec);
+                    }
                 }
-
+                rs.close();
             }
             return resp;
         } catch (SQLException ex) {
@@ -171,17 +169,17 @@ public class ElementoCatalogo extends Root {
         }
         return null;
     }
-    
+
     public boolean modificar(ArrayList camposNM) {
         boolean resp = true;
-      
+
         Iterator it = camposNM.iterator();
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
             resp &= camposValores.get(i).modificar(campoNM, idElemento);
         }
-       
+
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }

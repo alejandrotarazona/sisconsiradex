@@ -45,10 +45,12 @@ public class Elemento implements Serializable {
             String[] cat = {"nombre"};
             String[] idCatalogo = {"id_cat"};
             String[] nombreCat = {catalogo};
-            ResultSet r = eCat.proyectar(idCatalogo, cat, nombreCat);
-            r.next();
-            int idCat = r.getInt(1);
-            r.close();
+            int idCat;
+            try (ResultSet rs = eCat.proyectar(idCatalogo, cat, nombreCat)) {
+                rs.next();
+                idCat = rs.getInt(1);
+                rs.close();
+            }
             ArrayList<ElementoCatalogo> elementos;
             elementos = Clases.ElementoCatalogo.listarElementosId(idCat);
             Iterator it = elementos.iterator();
@@ -57,7 +59,7 @@ public class Elemento implements Serializable {
             while (it.hasNext()) {
                 ElementoCatalogo ec = (ElementoCatalogo) it.next();
                 ArrayList<CampoCatalogoValor> elem = ec.getCamposValores();
-                int i = 0;
+                int i;
                 String valor = "";
                 if (valores > elem.size()) {
                     //si valores es mayor que el numero de campos de un elemento

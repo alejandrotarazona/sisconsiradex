@@ -104,7 +104,7 @@ public class CampoValor implements Serializable {
                     c.setTipo(rs.getString("tipo_campo"));
                     c.setLongitud(rs.getInt("longitud"));
                     c.setObligatorio(rs.getBoolean("obligatorio"));
-                    //c.setCatalogo(rs.getString("catalogo"));
+                    c.setCatalogo(rs.getString("catalogo"));
                     CampoValor cv = new CampoValor(c);
                     listaValor.add(cv);
                 }
@@ -125,15 +125,17 @@ public class CampoValor implements Serializable {
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
         try {
             ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-            Entity eCampo = new Entity(0, 2);
-            String[] ATRIBUTOS = {
+            Entity eCampo = new Entity(0, 2);//SELECT CAMPO
+            String[] ATRIBUTO = {
                 "id_campo",
                 "id_tipo_actividad",
                 "nombre_campo",
                 "tipo_campo",
                 "longitud",
                 "obligatorio",
-                "valor",};
+                "valor",
+                "catalogo"
+            };
             String[] tabABuscar = {
                 TABLAS[0],
                 TABLAS[1],
@@ -141,24 +143,29 @@ public class CampoValor implements Serializable {
             };
             String[] colCondicion = {"id_actividad"};
             Object[] colValor = {idActividad};
+            try (ResultSet rs = eCampo.naturalJoins(ATRIBUTO, tabABuscar, colCondicion, colValor)) {
+                if (rs != null) {
+                    while (rs.next()) {
+                        CampoValor cv = new CampoValor();
+                        cv.setValor(rs.getString(ATRIBUTO[6]));
+                        
+                        Campo c = new Campo();
+                        c.setIdCampo(rs.getInt(ATRIBUTO[0]));
+                        c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
+                        c.setNombre(rs.getString(ATRIBUTO[2]));
+                        c.setTipo(rs.getString(ATRIBUTO[3]));
+                        c.setLongitud(rs.getInt(ATRIBUTO[4]));
+                        c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
+                        c.setCatalogo(rs.getString(ATRIBUTO[7]));
+                        cv.setCampo(c);
 
-            ResultSet rs = eCampo.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+                        listaValor.add(cv);
+                    }
 
-            if (rs != null) {
-                while (rs.next()) {
-                    CampoValor cv = new CampoValor();
-                    cv.setValor(rs.getString(ATRIBUTOS[6]));
-                    Campo c = new Campo();
-                    c.setNombre(rs.getString(ATRIBUTOS[2]));
-                    c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    c.setTipo(rs.getString(ATRIBUTOS[3]));
-                    cv.setCampo(c);
-
-                    listaValor.add(cv);
                 }
-
+                rs.close();
             }
-            rs.close();
+ 
             return listaValor;
         } catch (SQLException ex) {
             Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);

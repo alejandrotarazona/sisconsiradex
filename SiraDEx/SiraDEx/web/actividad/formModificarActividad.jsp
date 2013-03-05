@@ -9,6 +9,34 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
+
+
+<script type="text/javascript">
+    $(function() {		
+        $("#fecha_input input").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+
+        $( "#fecha_input input" ).datepicker(
+        "option", "dateFormat", "dd/mm/yy" 
+    );
+	
+        $( "#fecha_input input" ).datepicker({
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+        });		
+	
+        var dayNamesMin = $( "#fecha_input input" ).datepicker( "option", "dayNames" );
+        $( "#fecha_input input" ).datepicker( 
+        "option", "dayNamesMin", [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+    );
+
+        $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
+    })	
+</script>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
@@ -26,37 +54,78 @@
                         property="mensaje" /></b></div><br/>
                 </logic:present>
 
-        <html:form method="POST" action ="/ModificarActividad?method=update">
+        <html:form method="POST" enctype="multipart/form-data" 
+                   action ="/ModificarActividad?method=update">
             <table>
 
                 <tr>
-                <td><b>Nombre del campo</b></td>
+                <td><b>Nombre</b></td>
                 <td><b>Valor</b></td>
-                <td><b>Tipo</b></td>
+                
             </tr>
-
             <logic:iterate name="actividadForm" property="camposValores" 
-                           id="camposValores" indexId="index">
+                           id="campoValor" indexId="index">
                 <tr>
-                <td>
-                    <bean:write name="camposValores" property="campo.nombre"/>
-                </td>    
+                <td><bean:write name="campoValor" property="campo.nombre"></bean:write>
+                    <logic:equal name="campoValor" property="campo.obligatorio" 
+                                 value="true">
+                    <span style="color:red">*</span>  
+                </logic:equal>
+            </td>
+            <td><logic:equal name="campoValor" property="campo.tipo" value="texto">
+                    <html:text name="campoValor" property="valor" indexed="true">
+                        <bean:write name="campoValor" property="valor"/>
+                    </html:text>
+                </logic:equal>
 
-                <td><html:text name="camposValores" property="valor" indexed="true">
-                        <bean:write name="camposValores" property="valor"/>
+                <logic:equal name="campoValor" property="campo.tipo" value="numero">
+                    <html:text name="campoValor" property="valor" indexed="true">
+                        <bean:write name="campoValor" property="valor"/>
                     </html:text> 
-                </td>
-                <td>
-                    <bean:write name="camposValores" property="campo.tipo"/>
-                </td>
-            </tr>
-        </logic:iterate>
+                </logic:equal>
 
-    </table>
-    <br>
+                <logic:equal name="campoValor" property="campo.tipo" value="fecha">
+                <span id="fecha_input"> <html:text name="campoValor" property="valor" 
+                           indexed="true" >
+                        <bean:write name="campoValor" property="valor"/>
+                    </html:text></span>  
+                </logic:equal>
 
-    <div align="center"><html:submit value="Modificar"
-                 onclick="return confirm('¿Está seguro que desea modificar la actividad?')"/></div>
+            <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
+                <html:checkbox name="campoValor" property="valor" indexed="true"/>
+            </logic:equal>
+
+            <logic:equal name="campoValor" property="campo.tipo" value="textol">
+                <html:textarea name="campoValor"  cols="campo.longitud" rows="4"
+                               property="valor" indexed="true">
+                    <bean:write name="campoValor" property="valor"/>
+                </html:textarea>
+            </logic:equal>
+            <logic:equal name="campoValor" property="campo.tipo" value="archivo">
+                <html:file name="campoValor" property="file" indexed="true"/>
+            </logic:equal>
+
+            <%   int i = (Integer) pageContext.findAttribute("index");
+                String catalogoi = ("cat" + i);%>    
+
+            <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
+                <html:select name="campoValor" property="valor" indexed="true">
+                    <html:option value="">
+                        -- Seleccione --
+                    </html:option>
+                    <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
+                                            value="contenido"/>
+                </html:select>
+            </logic:equal>
+        </td>  
+ 
+    </tr>
+</logic:iterate>
+</table>
+<br>
+
+<div align="center"><html:submit value="Modificar"
+             onclick="return confirm('¿Está seguro que desea modificar la actividad?')"/></div>
 
 </html:form>
 </body>
