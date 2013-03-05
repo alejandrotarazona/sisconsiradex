@@ -66,7 +66,7 @@ public class CampoValor implements Serializable {
     }
 
     public boolean agregar(int idAct) {
-        Entity eAgregar = new Entity(1, 6);
+        Entity eAgregar = new Entity(1, 6);//INSERT VALOR
         boolean resp = true;
 
         Integer idCampo = new Integer(campo.getIdCampo());
@@ -88,7 +88,7 @@ public class CampoValor implements Serializable {
 
     public static ArrayList<CampoValor> listar(int idTipoActividad) {
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 3);
+        Entity eCampo = new Entity(0, 3);//SELECT CAMPO
         String[] columnas = {"id_tipo_actividad"};
         Integer[] condiciones = {idTipoActividad};
 
