@@ -25,7 +25,7 @@
     );
 	
         $( "#fecha_input input" ).datepicker({
-            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ] 
         });		
 	
         var dayNamesMin = $( "#fecha_input input" ).datepicker( "option", "dayNames" );

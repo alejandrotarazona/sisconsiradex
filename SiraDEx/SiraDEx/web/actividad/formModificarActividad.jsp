@@ -25,13 +25,8 @@
     );
 	
         $( "#fecha_input input" ).datepicker({
-            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ] 
         });		
-	
-        var dayNamesMin = $( "#fecha_input input" ).datepicker( "option", "dayNames" );
-        $( "#fecha_input input" ).datepicker( 
-        "option", "dayNamesMin", [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
-    );
 
         $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
     })	
@@ -61,7 +56,7 @@
                 <tr>
                 <td><b>Nombre</b></td>
                 <td><b>Valor</b></td>
-                
+
             </tr>
             <logic:iterate name="actividadForm" property="camposValores" 
                            id="campoValor" indexId="index">
@@ -92,7 +87,7 @@
                 </logic:equal>
 
             <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
-                <html:checkbox name="campoValor" property="valor" indexed="true"/>
+                <html:checkbox name="campoValor" property="valor" indexed="true"/> 
             </logic:equal>
 
             <logic:equal name="campoValor" property="campo.tipo" value="textol">
@@ -118,7 +113,7 @@
                 </html:select>
             </logic:equal>
         </td>  
- 
+
     </tr>
 </logic:iterate>
 </table>

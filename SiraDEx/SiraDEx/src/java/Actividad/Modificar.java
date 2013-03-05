@@ -6,6 +6,7 @@
 package Actividad;
 
 import Clases.Actividad;
+import Clases.Elemento;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -42,18 +43,22 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
         act.setMensaje(null);
-        
-        ArrayList campos = Clases.CampoValor.listarCamposValores(act.getIdActividad());
-        act.setCamposValores(campos);
-    
-        act.setNombreTipoActividad();
-        
-                
-        /*es necesario otro ArrayList con los valores no modificados para 
-         * guardarlo con setAttribute ya que el anterior se modifica en el form 
-         * del jsp debido a que ArrayList es un apuntador*/
+        act.setActividad();
+               
+        /*ArrayList con los valores no modificados*/
         ArrayList camposNM = Clases.CampoValor.listarCamposValores(act.getIdActividad());
         request.getSession().setAttribute("camposNM", camposNM);
+        
+        /*Se pasan los catalogos de los campos tipo catalogo al jsp de ser necesario*/
+        for (int i = 0; i < act.getCamposValores().size(); i++) {
+            String nombreCat = act.getCampoValor(i).getCampo().getCatalogo();
+            if (!nombreCat.equals("")) {
+                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
+                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
+                request.getSession().setAttribute("cat" + i, catalogo);
+            }
+        }
+        
         return mapping.findForward(PAGE);
     }
 
@@ -79,7 +84,7 @@ public class Modificar extends DispatchAction {
                 acts = act.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", acts);
-            
+            act.deleteSessions(request);
             return mapping.findForward(SUCCESS);         
       
         }

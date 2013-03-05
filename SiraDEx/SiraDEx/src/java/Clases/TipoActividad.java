@@ -250,36 +250,6 @@ public class TipoActividad extends Root {
    
     }
 
-    public static TipoActividad getTipoActividad(int id) {
-
-        Entity e = new Entity(0, 1);
-
-        String[] atrib = {"id_tipo_actividad"};
-        Integer[] valor = {id};
-        ResultSet rs = e.seleccionar(atrib, valor);
-        TipoActividad t = new TipoActividad();
-        if (rs != null) {
-            try {
-                rs.next();
-                t.setId(id);
-                t.setNombreTipo(rs.getString("nombre_tipo_actividad"));
-                t.setTipoPR(rs.getString("tipo_p_r"));
-                t.setNroCampos(rs.getInt("nro_campos"));
-                t.setDescripcion(rs.getString("descripcion"));
-                t.setPrograma(rs.getString("programa"));
-                t.setValidador(rs.getString("validador"));
-                t.setProducto(rs.getString("producto"));
-                t.setPermisos();
-                rs.close();
-                return t;
-            } catch (SQLException ex) {
-                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        }
-        return null;
-    }
-
     public void setTipoActividad() {
 
         Entity e = new Entity(0, 1);

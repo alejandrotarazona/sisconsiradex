@@ -33,16 +33,19 @@ public class Actividad extends Root {
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
-        "validacion", //2
-        "creador", //3
-        "fecha_creacion",//4
-        "modificador",//5
-        "fecha_modif"//6
+        "nombre_tipo_actividad", //2
+        "validacion", //3
+        "creador", //4
+        "fecha_creacion",//5
+        "modificador",//6
+        "fecha_modif",//7
+        "producto",//8
+        "descripcion"//9
     };
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
         "PARTICIPA", //1
-        "USUARIO" //2
+        "USUARIO" //3
     };
 
     public Actividad(int idActividad, String validacion,
@@ -72,21 +75,6 @@ public class Actividad extends Root {
 
     public String getNombreTipoActividad() {
         return nombreTipoActividad;
-    }
-
-    public void setNombreTipoActividad() {
-        try {
-            Entity eTipoAct = new Entity(0, 1);
-            String[] ta = {"nombre_tipo_actividad"};
-            String[] idTipoAct = {"id_tipo_actividad"};
-            Integer[] id = {idTipoActividad};
-            ResultSet r = eTipoAct.proyectar(ta, idTipoAct, id);
-            r.next();
-            System.out.println("idTipoActividad "+idTipoActividad);
-            nombreTipoActividad = r.getString(1);
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public void setNombreTipoActividad(String nombreTipoActividad) {
@@ -168,25 +156,55 @@ public class Actividad extends Root {
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
-    
 
     @Override
     public String toString() {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
     }
 
+    public void setActividad() {
+        try {
+            Entity eActividad = new Entity(0, 2);//SELECT ACTIVIDAD
+
+            String[] tabABuscar = {
+                "ACTIVIDAD",
+                "TIPO_ACTIVIDAD"
+            };
+            try (ResultSet rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar)) {
+                if (rs != null) {
+                      rs.next();
+                      idActividad = rs.getInt(ATRIBUTOS[0]);
+                      idTipoActividad = rs.getInt(ATRIBUTOS[1]);
+                      nombreTipoActividad = rs.getString(ATRIBUTOS[2]);
+                      validacion = rs.getString(ATRIBUTOS[3]);
+                      creador = rs.getString(ATRIBUTOS[4]);
+                      fechaCreacion = rs.getString(ATRIBUTOS[5]);
+                      modificador = rs.getString(ATRIBUTOS[6]);
+                      fechaModif = rs.getString(ATRIBUTOS[7]);
+                      producto = rs.getString(ATRIBUTOS[8]);
+                      descripcion = rs.getString(ATRIBUTOS[9]);
+                      camposValores = CampoValor.listarCamposValores(idActividad);
+       
+              }
+            }
+   
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
     public boolean esActividadUsuario() {
         try {
-            Entity e = new Entity(0, 2);
+            Entity e = new Entity(0, 2);//SELECT ACTIVIDAD
 
-            String[] col = {ATRIBUTOS[0], ATRIBUTOS[3]};
+            String[] col = {ATRIBUTOS[0], ATRIBUTOS[4]};
             Object[] condicion = {idActividad, creador};
 
             ResultSet rs = e.seleccionar(col, condicion);
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getInt(ATRIBUTOS[0]) == idActividad
-                            && rs.getString(ATRIBUTOS[3]).equals(creador)) {
+                            && rs.getString(ATRIBUTOS[4]).equals(creador)) {
                         rs.close();
                         return true;
                     }
@@ -199,7 +217,7 @@ public class Actividad extends Root {
     }
 
     public boolean agregarActividad() {
-        Entity e = new Entity(1, 2);
+        Entity e = new Entity(1, 2);//SELECT ACTIVIDAD
         boolean resp;
 
         String[] columnas = {
@@ -221,7 +239,6 @@ public class Actividad extends Root {
         };
 
 
-        Entity eValores = new Entity(1, 6);
         Iterator itValores = this.camposValores.iterator();
         int i = 0;
         while (resp = (itValores.hasNext())) {
@@ -254,7 +271,7 @@ public class Actividad extends Root {
             return resp;
 
         }
-        Entity ePariticipa = new Entity(1, 7);
+        Entity ePariticipa = new Entity(1, 7);//INSERT PARTICIPA
         String[] columnas2 = {
             "id_act",
             "usuario"
@@ -275,74 +292,75 @@ public class Actividad extends Root {
     }
 
     public boolean eliminarActividad() {
-        Entity e = new Entity(5, 2);
+        Entity e = new Entity(5, 2);//DELETE ACTIVIDAD
         return e.borrar(ATRIBUTOS[0], idActividad);
 
     }
 
-    public static ArrayList<Actividad> listarActividades() throws SQLException {
-        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-        Entity eActividad = new Entity(0, 2);
+    //modificado por Jorge el cinco de marzo
+    public static ArrayList<Actividad> listarActividades() {
+        try {
+            ArrayList<Actividad> listaActividad = new ArrayList<>(0);
+            Entity eActividad = new Entity(0, 2);//SELECT ACTIVIDAD
 
-        ResultSet rs = eActividad.listar();
-        
-        Entity eTipoAct = new Entity(0, 1);
+            String[] tabABuscar = {
+                "ACTIVIDAD",
+                "TIPO_ACTIVIDAD"
+            };
+            try (ResultSet rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar)) {
+                if (rs != null) {
 
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Actividad a = new Actividad();
+                    while (rs.next()) {
+                        Actividad a = new Actividad();
 
-                    a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
+                        a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
 
-                    int id = rs.getInt(Actividad.ATRIBUTOS[1]);
-                    a.setIdTipoActividad(id);
+                        a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
+                        a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
+                        a.setValidacion(rs.getString(ATRIBUTOS[3]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                        a.setCreador(rs.getString(ATRIBUTOS[4]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
+                        a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                        a.setModificador(rs.getString(ATRIBUTOS[6]));
 
-                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+                        a.setFechaModif(rs.getString(ATRIBUTOS[7]));
 
-                    TipoActividad ta = Clases.TipoActividad.getTipoActividad(id);
-                    
-                    a.setNombreTipoActividad(ta.getNombreTipo());
-                    
-                    a.setDescripcion(ta.getDescripcion());//atributos como este 
-                    // no son  necesarios guardarlos en la tabla ACTIVIDAD ya que
-                    // ya que estan en la tabla TIPO_ACTIVIDAD
-                    // es decir pudiecemos hacer esto mismo con idTipo y nombreTipo
+                        a.setProducto(rs.getString(ATRIBUTOS[8]));
 
-                    listaActividad.add(a);
+                        a.setDescripcion(rs.getString(ATRIBUTOS[9]));
+
+                        a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+
+                        listaActividad.add(a);
+                    }
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+                rs.close();
             }
-        } else {
-            rs.close();
-            return null;//probando retornar null si rs es null
-        }
 
-        return listaActividad;
+            return listaActividad;
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
-    public ArrayList<Actividad> listarActividadesDeTipo() throws SQLException {
-        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-        Entity eActividad = new Entity(0, 2);
-        String[] columna = {Actividad.ATRIBUTOS[1]};
-        Integer[] condicion = {idTipoActividad};
+    //hecho por Alejandro falta revisarlo
+    public ArrayList<Actividad> listarActividadesDeTipo() {
+        try {
+            ArrayList<Actividad> listaActividad = new ArrayList<>(0);
+            Entity eActividad = new Entity(0, 2);
+            String[] columna = {Actividad.ATRIBUTOS[1]};
+            Integer[] condicion = {idTipoActividad};
 
-        ResultSet rs = eActividad.seleccionar(columna, condicion);
+            ResultSet rs = eActividad.seleccionar(columna, condicion);
 
-        if (rs != null) {
-            Entity eTipoAct = new Entity(0, 1);
-            try {
+            if (rs != null) {
+                Entity eTipoAct = new Entity(0, 1);
+
                 while (rs.next()) {
                     Actividad a = new Actividad();
 
@@ -351,15 +369,15 @@ public class Actividad extends Root {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
 
                     a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
 
@@ -373,15 +391,18 @@ public class Actividad extends Root {
                         listaActividad.add(a);
                     }
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        rs.close();
 
-        return listaActividad;
+            }
+            rs.close();
+
+            return listaActividad;
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
+    //hecho por Alejandro falta revisarlo
     public ArrayList<Actividad> listarActividadesDeUsuario() {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
@@ -402,15 +423,15 @@ public class Actividad extends Root {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
 
                     a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
 
@@ -446,7 +467,7 @@ public class Actividad extends Root {
         String[] colCondicion = {TABLAS[1] + ".usbid"};
         String[] colValor = {this.creador};
 
-        rs = eActividad.naturalJoins(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+        rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar, colCondicion, colValor);
 
         if (rs != null) {
             try {
@@ -458,15 +479,15 @@ public class Actividad extends Root {
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
 
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[2]));
+                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
 
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[3]));
+                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
 
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[4]));
+                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
 
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[5]));
+                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
 
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[6]));
+                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
 
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
@@ -498,17 +519,17 @@ public class Actividad extends Root {
 
         }
     }
-    
-     public boolean modificar(ArrayList camposNM) {
+
+    public boolean modificar(ArrayList camposNM) {
         boolean resp = true;
-      
+
         Iterator it = camposNM.iterator();
 
         for (int i = 0; it.hasNext(); i++) {
             CampoValor campoNM = (CampoValor) it.next();
             resp &= camposValores.get(i).modificar(campoNM, idActividad);
         }
-       
+
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }
@@ -525,26 +546,21 @@ public class Actividad extends Root {
         a.setCreador("alejandro");
         a.setIdTipoActividad(66);
         ArrayList<Actividad> lista = null;
-        try {
-            lista = listarActividades();
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
+
+        lista = listarActividades();
+
+
         System.out.println("\n\n\nListando todas las actividades");
         imprimirLista(lista);
-        try {
-            lista = a.listarActividadesDeTipo();
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        lista = a.listarActividadesDeTipo();
+
+
+
         System.out.println("\n\n\nListando todas las actividades del tipo");
         imprimirLista(lista);
-
         lista = a.listarActividadesDeUsuario();
+
         System.out.println("\n\n\nListando todas las actividades del usuario");
         imprimirLista(lista);
-
-
-
     }
 }
