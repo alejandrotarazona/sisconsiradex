@@ -77,7 +77,7 @@ public class Modificar extends DispatchAction {
 
         if (ta.modificar(taNM)) {
 
-            ta.setMensaje("El catálogo ha sido modificado con éxito.");
+            ta.setMensaje("El tipo de actividad ha sido modificado con éxito.");
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tas);
            
