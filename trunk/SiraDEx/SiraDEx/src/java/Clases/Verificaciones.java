@@ -74,7 +74,7 @@ public class Verificaciones {
                     resp = resp && buscar.lookingAt();
                     if(resp && campo.getTipo().equalsIgnoreCase("texto")){
                         resp = resp && (campo.getLongitud()>0);
-                    } else if(resp && campo.getTipo().equalsIgnoreCase("catlogo")){
+                    } else if(resp && campo.getTipo().equalsIgnoreCase("catalogo")){
                         resp = resp && (!campo.getCatalogo().equalsIgnoreCase(""));
                     }
                 } catch (Exception e) {
