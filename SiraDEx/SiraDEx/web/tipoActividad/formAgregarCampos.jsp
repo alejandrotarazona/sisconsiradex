@@ -83,7 +83,7 @@
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>
                 <td><html:select name="campo"  property="tipo" indexed="true" 
                 styleId="<%=s%>" styleClass="selector">
-                       <html:optionsCollection name="campos" property="tipos" 
+                       <html:optionsCollection name="campo" property="tipos" 
                                                label="etiqueta" value="valor"/>
                     </html:select></td>
 
