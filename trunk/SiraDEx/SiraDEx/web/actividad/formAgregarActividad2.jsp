@@ -100,7 +100,7 @@
                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" value="contenido"/>
             </html:select>
         </logic:equal>
-    </td>  
+    </td>
 </tr>
 </logic:iterate>
 </table>

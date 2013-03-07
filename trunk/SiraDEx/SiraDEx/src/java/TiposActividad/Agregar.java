@@ -44,14 +44,14 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        TipoActividad t = (TipoActividad) form;
+        t.deleteSessions(request);
         ArrayList<Elemento> programas;
         programas = Clases.Elemento.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
         ArrayList<Elemento> coordinaciones;
         coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
-        TipoActividad t = (TipoActividad) form;
-        t.setMensaje(null);
         return mapping.findForward(PAGE);
     }
     

@@ -10,9 +10,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
-
-
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
@@ -84,22 +81,19 @@
                 %>
                 <tr>
                 <td><html:text name="campo" property="nombre" indexed="true"/></td>
-                <td><html:select name="campo"  property="tipo" indexed="true" styleId="<%=s%>" styleClass="selector">
-                        <html:option value="texto">texto</html:option>
-                        <html:option value="textol">texto largo</html:option>
-                        <html:option value="numero">número</html:option>
-                        <html:option value="fecha">fecha</html:option>
-                        <html:option value="catalogo">catálogo</html:option>
-                        <html:option value="archivo">archivo</html:option>
-                        <html:option value="checkbox">checkbox</html:option>
+                <td><html:select name="campo"  property="tipo" indexed="true" 
+                styleId="<%=s%>" styleClass="selector">
+                       <html:optionsCollection name="campos" property="tipos" 
+                                               label="etiqueta" value="valor"/>
                     </html:select></td>
 
-                <td><html:checkbox name="campo" property="obligatorio" indexed="true" value="true"/></td>
+                <td><html:checkbox name="campo" property="obligatorio" indexed="true" 
+                               value="true"/></td>
 
                 <td><div id ="<%=l%>" style="visibility: visible">
-                        <html:text name="campo" property="longitud" indexed="true"/></div></td>
-
-
+                        <html:text name="campo" property="longitud" indexed="true"/>
+                    </div>
+                </td>
 
                 <td>
                     <div class="<%=m%>" style="visibility: hidden">

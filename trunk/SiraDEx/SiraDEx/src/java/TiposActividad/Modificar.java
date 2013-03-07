@@ -4,6 +4,7 @@
  */
 package TiposActividad;
 
+import Clases.Campo.Par;
 import Clases.Elemento;
 import Clases.TipoActividad;
 import java.util.ArrayList;
@@ -46,7 +47,7 @@ public class Modificar extends DispatchAction {
         request.getSession().setAttribute("coordinaciones", coordinaciones);
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
-        
+
         TipoActividad ta = (TipoActividad) form;
         ta.setMensaje(null);
 
@@ -63,7 +64,8 @@ public class Modificar extends DispatchAction {
         taNM.setId(idTA);
         taNM.setTipoActividad();
         taNM.setCampos(camposNM);
-        request.getSession().setAttribute("taNM", taNM);
+        request.getSession().setAttribute("taNM", taNM); 
+
         return mapping.findForward(PAGE);
     }
 
@@ -80,7 +82,7 @@ public class Modificar extends DispatchAction {
             ta.setMensaje("El tipo de actividad ha sido modificado con éxito.");
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tas);
-           
+
             return mapping.findForward(SUCCESS);
         }
 
