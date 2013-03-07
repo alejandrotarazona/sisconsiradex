@@ -97,6 +97,7 @@
 <tr><td></td>
 <td><b>Nombre</b></td>
 <td><b>Tipo</b></td>
+<td><b>Catálogo</b></td>
 <td><b>Longitud</b></td>
 <td><b>Obligatoriedad</b></td></tr>
 <logic:iterate name="tipoActividadForm" property="campos" id="campos"
@@ -107,77 +108,10 @@
         <bean:write name="campos" property="nombre"/>
     </html:text> </td>
 <td>
-<td>
     <html:select name="campos" property="tipo" indexed="true">
-        <html:option value ="${campos.tipo}" >
-            <bean:write name="campos" property="tipo"/></html:option>
-        <logic:equal name="campos" property="tipo" value="texto">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="fecha">fecha</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="archivo">archivo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="textol">
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="fecha">fecha</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="archivo">archivo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="numero">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="texto">texto</html:option>
-            <html:option value="fecha">fecha</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="archivo">archivo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="fecha">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="archivo">archivo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="catalogo">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="fehca">fecha</html:option>
-            <html:option value="archivo">archivo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="archivo">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="fehca">fecha</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="checkbox">checkbox</html:option>
-        </logic:equal>
-        <logic:equal name="campos" property="tipo" value="checkbox">
-            <html:option value="textol">texto largo</html:option>
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">número</html:option>
-            <html:option value="fehca">fecha</html:option>
-            <html:option value="catalogo">catálogo</html:option>
-            <html:option value="archivo">archivo</html:option>
-        </logic:equal>
-    </html:select>
-</td>
-<td>     
-    <logic:equal name="campos" property="tipo" value="catalogo">
-        <html:select name="campos" property="catalogo" indexed="true">
-            <html:option value ="${campos.catalogo}" >
-                <bean:write name="campos" property="catalogo"/></html:option>
-            <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
+        <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                    value="valor"/>
         </html:select>
-    </logic:equal>
-</td>
 </td>
 <td><html:text name="campos" property="longitud" indexed="true">
         <bean:write name="campos" property="longitud"/>

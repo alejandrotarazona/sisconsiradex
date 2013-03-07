@@ -105,15 +105,11 @@
 
             <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
                 <html:select name="campoValor" property="valor" indexed="true">
-                    <html:option value="">
-                        -- Seleccione --
-                    </html:option>
                     <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
                                             value="contenido"/>
                 </html:select>
             </logic:equal>
         </td>  
-
     </tr>
 </logic:iterate>
 </table>

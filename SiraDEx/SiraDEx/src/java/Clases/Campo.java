@@ -26,12 +26,43 @@ public class Campo implements Serializable {
     private boolean obligatorio;
     private String catalogo = "";
     private boolean lista;
+    private final Par[] tipos = {
+            new Par("texto", "texto"),
+            new Par("catálogo", "catalogo"),
+            new Par("fecha", "fecha"),
+            new Par("número", "numero"),
+            new Par("texto largo", "textol"),
+            new Par("archivo", "archivo"),
+            new Par("checkbox", "checkbox")
+        }; 
+        
+    public static class Par implements Serializable {
+
+        private String etiqueta;
+        private String valor;
+
+        public Par(String etiqueta, String valor) {
+            this.etiqueta = etiqueta;
+            this.valor = valor;
+        }
+
+        public String getEtiqueta() {
+            return etiqueta;
+        }
+
+        public String getValor() {
+            return valor;
+        }
+    }
+    
     private static final String[] TIPOS = {
-        "texto", //STRING
-        "numero", //INT
-        "fecha", //DATE
-        "archivo", //ARCHIVO
-        "checkbox",//CHECKBOX
+        "texto",
+        "número",
+        "fecha",
+        "archivo",
+        "checkbox",
+        "texto largo",
+        "catálogo"
     };
     private static final String[] ATRIBUTOS = {
         "id_campo",
@@ -132,6 +163,10 @@ public class Campo implements Serializable {
         this.lista = lista;
     }
 
+    public Par[] getTipos() {
+        return tipos;
+    }
+     
     @Override
     public String toString() {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
@@ -163,6 +198,7 @@ public class Campo implements Serializable {
     }
 
     public static ArrayList<Campo> listar(int idTA) {
+
         ArrayList<Campo> resp = new ArrayList<>(0);
         Entity eListar = new Entity(0, 3);//SELECT CAMPO
 
@@ -178,15 +214,15 @@ public class Campo implements Serializable {
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    Campo cc = new Campo();
-                    cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    cc.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
-                    cc.setNombre(rs.getString(ATRIBUTOS[2]));
-                    cc.setTipo(rs.getString(ATRIBUTOS[3]));
-                    cc.setLongitud(rs.getInt(ATRIBUTOS[4]));
-                    cc.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
-                    cc.setCatalogo(rs.getString(ATRIBUTOS[6]));
-                    resp.add(cc);
+                    Campo c = new Campo();
+                    c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
+                    c.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
+                    c.setNombre(rs.getString(ATRIBUTOS[2]));
+                    c.setTipo(rs.getString(ATRIBUTOS[3]));
+                    c.setLongitud(rs.getInt(ATRIBUTOS[4]));
+                    c.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
+                    c.setCatalogo(rs.getString(ATRIBUTOS[6]));
+                    resp.add(c);
                 }
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -209,12 +245,12 @@ public class Campo implements Serializable {
         Object[] valores = {
             idCampo,
             idTA,
-            campo.getNombre(), 
+            campo.getNombre(),
             campo.getTipo(),
             campo.getLongitud(),
             campo.isObligatorio(),
             campo.getCatalogo()
-            };
+        };
         String[] colModificar = {
             ATRIBUTOS[2],
             ATRIBUTOS[3],
@@ -222,7 +258,7 @@ public class Campo implements Serializable {
             ATRIBUTOS[5],
             ATRIBUTOS[6]
         };
-        
+
         Object[] modificaciones = {
             nombre,
             tipo,
