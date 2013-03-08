@@ -134,6 +134,7 @@ public class Verificaciones {
         if (nro == 0) {
             ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
                     + "menos 1 como valor");
+            return false;
         }
         respVerif = verifLongPat("Número de Campos", String.valueOf(ta.getNroCampos()),
                 2, numerico, "debe contener sólo números",true);
@@ -281,14 +282,14 @@ public class Verificaciones {
         //Pattern patron = Pattern.compile("[0-9]+"); //numerico de Alejandro
         //problema: admite que sea cualquier cosa siempre y cuando empiece con un numero
 
-        //Pattern patron = Pattern.compile("^[ ]*[0-9]+[ ]*$"); //numerico de Jorge
+        Pattern patron = Pattern.compile("^[ ]*[0-9]+[ ]*$"); //numerico de Jorge
         //no tiene problemas, admite espacios-numeros-espacios, numeros-espacios y espacios-numeros.
 
-        Pattern patron = Pattern.compile("^[ ]*$");// vacío o espacios
+        //Pattern patron = Pattern.compile("^[ ]*$");// vacío o espacios
 
         String prueba1 = "ACVBó 8mñ";
         String prueba2 = "A%$<5>';&";
-        String prueba3 = "  ";
+        String prueba3 = " 4 4";
         Matcher buscar = patron.matcher(prueba1);
         resp = buscar.lookingAt();
         if (!resp) {

@@ -92,7 +92,8 @@
         <bean:write name="tipoActividadForm" property="producto"/>
     </html:text></td>
 </tr>
-
+</table>
+<table>
 <tr><td><b>Campos</b></td></tr>
 <tr><td></td>
 <td><b>Nombre</b></td>
