@@ -84,7 +84,7 @@
                         </logic:iterate>.<br>
 
                     <span class="detalles"><b>Descripción: </b><bean:write name="act" 
-                                property="descripcion"/>"
+                                property="descripcion"/>
                         <logic:iterate name="act" property="camposValores" 
                                        id="campoValor" indexId="index">
 
