@@ -9,6 +9,28 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
+<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
+
+<script type="text/javascript">
+    $(function() {		
+        $("#fecha_input input").datepicker({
+            changeMonth: true,
+            changeYear: true
+        });
+
+        $( "#fecha_input input" ).datepicker(
+        "option", "dateFormat", "dd/mm/yy" 
+    );
+	
+        $( "#fecha_input input" ).datepicker({
+            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ] 
+        });		
+
+        $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
+    })	
+</script>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
@@ -32,7 +54,6 @@
                 <tr>
                 <td><b>Nombre del campo</b></td>
                 <td><b>Valor</b></td>
-                <td><b>Tipo</b></td>
             </tr>
 
             <logic:iterate name="elementoCatalogoForm" property="camposValores" 
@@ -41,14 +62,26 @@
                 <td>
                     <bean:write name="camposValores" property="campo.nombre"/>
                 </td>    
+               <td>
+               <logic:equal name="camposValores" property="campo.tipo" value="texto">
+                    <html:text name="camposValores" property="valor" indexed="true">
+                        <bean:write name="camposValores" property="valor"/>
+                    </html:text>
+                </logic:equal>
 
-                <td><html:text name="camposValores" property="valor" indexed="true">
+                <logic:equal name="camposValores" property="campo.tipo" value="numero">
+                    <html:text name="camposValores" property="valor" indexed="true">
                         <bean:write name="camposValores" property="valor"/>
                     </html:text> 
-                </td>
-                <td>
-                    <bean:write name="camposValores" property="campo.tipo"/>
-                </td>
+                </logic:equal>
+
+                <logic:equal name="camposValores" property="campo.tipo" value="fecha">
+                <span id="fecha_input"> <html:text name="camposValores" property="valor" 
+                           indexed="true" >
+                        <bean:write name="camposValores" property="valor"/>
+                    </html:text></span>  
+                </logic:equal>
+               </td>
             </tr>
         </logic:iterate>
 
@@ -56,7 +89,7 @@
     <br>
 
     <div align="center"><html:submit value="Modificar"
-                 onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+                 onclick="return confirm('¿Está seguro que desea modificar el elemento?')"/></div>
 
 </html:form>
 </body>
