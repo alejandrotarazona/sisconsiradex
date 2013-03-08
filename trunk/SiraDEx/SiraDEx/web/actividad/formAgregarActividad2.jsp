@@ -82,8 +82,7 @@
         </logic:equal>
 
         <logic:equal name="campoValor" property="campo.tipo" value="textol">
-            <html:textarea name="campoValor"  cols="campo.longitud" rows="4"
-                           property="valor" indexed="true"></html:textarea>
+            <html:textarea name="campoValor" property="valor" indexed="true"></html:textarea>
         </logic:equal>
         <logic:equal name="campoValor" property="campo.tipo" value="archivo">
             <html:file name="campoValor" property="file" indexed="true" maxlength="2024" size="2024"/>
