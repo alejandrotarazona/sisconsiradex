@@ -18,43 +18,46 @@
 
     <body>
         <h1 class="title" id="page-title">Registro de Tipo de Actividad</h1>
-        <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
-        <logic:present name="tipoActividadForm" property="mensaje">
-    <br/><div align="center"><b>
-            <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
-        </logic:present>
-        <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
-    <table>
-        <tr>
-        <td>Nombre de la Actividad<span style="color:red">*</span> </td>
-    <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
-</tr>
-<tr>
-<td>Descripción<span style="color:red">*</span> </td>
-<td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
-               property="descripcion"></html:textarea>
-</td>
-</tr>
-<tr>
-<td>Tipo<span style="color:red">*</span> </td>
-<td><html:select property="tipoPR">
-        <html:option value="P">Tipo P</html:option>
-        <html:option value="R">Tipo R</html:option>
-    </html:select>
-</td>
-</tr>
-<tr>
-<td>Programa del tipo de actividad<span style="color:red">*</span> </td>
-<td>
-    <html:select property="programa">
-        <html:option value="">-- Seleccione --</html:option>
-        <html:optionsCollection name="programas" label="contenido" value="contenido"/>
 
-    </html:select>
-</td>
+        <logic:present name="tipoActividadForm" property="mensaje">
+            <br/><div align="center"><b>
+                    <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
+                </logic:present>
+
+                    <font size=2>Todos los campos son obligatorios.</font></br>
+        <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
+            <table>
+                <tr>
+                <td>Nombre de la Actividad</td>
+                <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
+            </tr>
+            <tr>
+            <td>Descripción</td>
+            <td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
+                           property="descripcion"></html:textarea>
+                </td>
+            </tr>
+            <tr>
+            <td>Tipo</td>
+            <td><html:select property="tipoPR">
+                <html:option value="">-- Seleccione --</html:option>
+                <html:option value="P">P</html:option>
+                <html:option value="R">R</html:option>
+            </html:select>
+        </td>
+    </tr>
+    <tr>
+    <td>Programa</td>
+    <td>
+        <html:select property="programa">
+            <html:option value="">-- Seleccione --</html:option>
+            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+
+        </html:select>
+    </td>
 </tr>
 <tr>
-<td>Coordinación a validar<span style="color:red">*</span> </td>
+<td>Coordinación a validar</td>
 <td>       
     <html:select property="validador">
         <html:option value="">-- Seleccione --</html:option>
@@ -63,24 +66,24 @@
 </td>
 </tr>
 <tr>
-<td>Realizado por<span style="color:red">*</span> </td>
+<td>Realizado por</td>
 <td>
     <html:multibox property="permisos">Empleados</html:multibox> Empleados<br>
     <html:multibox property="permisos">Estudiantes</html:multibox> Estudiantes<br>
     <html:multibox property="permisos">Profesores</html:multibox> Profesores<br>
     <html:multibox property="permisos">Obreros</html:multibox> Obreros 
-</td>       
+    </td>       
 </tr>
 <tr>
-<td>Producto<span style="color:red">*</span> </td>
+<td>Producto</td>
 <td><html:text name="tipoActividadForm" property="producto"></html:text></td>
 </tr>
-<tr><td>Numero de campos<span style="color:red">*</span> </td>
+<tr><td>Número de campos</td>
 <td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>
 </tr>
 </table>
 <br>
-<div align="center"><html:submit> Siguiente </html:submit></div>
+<div align="center"><html:submit>Siguiente</html:submit></div>
 </html:form>
 
 </body>
