@@ -23,7 +23,7 @@
                     <bean:write name="actividadForm" property="mensaje" />
                 </div></b><br/>
             </logic:present>
-        Seleccione la Actividad que desea agregar.
+        <font size=2>Seleccione la Actividad que desea agregar.</font>
         <logic:present name="tipos">
             <table>
                 <logic:iterate name="tipos" id="ta">
@@ -33,8 +33,8 @@
                                paramId="idTipoActividad">
                             <ul><bean:write name="ta" property="nombreTipo"/></ul>
                         </html:link> 
-                        </td>
-                    </tr>
+                    </td>
+                </tr>
             </logic:iterate>
         </table>
 

@@ -63,8 +63,10 @@ public class Agregar extends DispatchAction {
         } else {
             request.setAttribute("tipos", null);
         }
+        
         Actividad a = (Actividad) form;
         a.setMensaje(null);
+       
         return mapping.findForward(PAGE);
     }
 
@@ -73,8 +75,11 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-        a.setActividad();
         int id = a.getIdTipoActividad();
+        TipoActividad ta = new TipoActividad();
+        ta.setId(id);
+        ta.setTipoActividad();
+        a.setNombreTipoActividad(ta.getNombreTipo());
         ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
         a.setCamposValores(valores);
 
