@@ -22,7 +22,7 @@
                         $('#'+longitud).css("visibility", "hidden");
                         $('.'+mostrador).css("visibility", "visible");
                         $('.tablaHeader').css("visibility", "visible");
-                    } else if(valor == "texto"){
+                    } else if(valor == "texto" || valor=="textol" || valor=="numero"){
                         $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
                     } else {
