@@ -59,10 +59,6 @@ public class ElementoCatalogo extends Root {
         this.camposValores = camposValores;
     }
 
-    public CampoCatalogoValor getCampoValor(int i) {
-        return camposValores.get(i);
-    }
-
     public String getNombreCatalogo() {
         return nombreCatalogo;
     }

@@ -13,21 +13,8 @@
 <link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
 <script type="text/javascript">
-    $(function() {		
-        $("#fecha_input input").datepicker({
-            changeMonth: true,
-            changeYear: true
-        });
-
-        $( "#fecha_input input" ).datepicker(
-        "option", "dateFormat", "dd/mm/yy" 
-    );
-	
-        $( "#fecha_input input" ).datepicker({
-            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ] 
-        });		
-
-        $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
+    $(function() {
+        $("#fecha_input input").datepicker();
     })	
 </script>
 

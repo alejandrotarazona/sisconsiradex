@@ -12,28 +12,9 @@
 
 <link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
-
 <script type="text/javascript">
-    $(function() {		
-        $("#fecha_input input").datepicker({
-            changeMonth: true,
-            changeYear: true
-        });
-
-        $( "#fecha_input input" ).datepicker(
-        "option", "dateFormat", "dd/mm/yy" 
-    );
-	
-        $( "#fecha_input input" ).datepicker({
-            dayNamesMin: [ "Dom", "Lun", "Mar", "Mie", "Jue", "Vie", "Sab" ] 
-        });		
-	
-        var dayNamesMin = $( "#fecha_input input" ).datepicker( "option", "dayNames" );
-        $( "#fecha_input input" ).datepicker( 
-        "option", "dayNamesMin", [ "Dom", "Lun", "Mar", "Mie", "Juev", "Vier", "Sab" ] 
-    );
-
-        $( "#fecha_input input" ).datepicker( "option", "yearRange", "1970:2013" );
+    $(function() {
+        $("#fecha_input input").datepicker();
     })	
 </script>
 
@@ -58,41 +39,43 @@
                enctype="multipart/form-data"
                action="/RegistrarActividad?method=save2">
 
-        <logic:iterate name="actividadForm" property="camposValores" id="campoValor" indexId="index">
+        <logic:iterate name="actividadForm" property="camposValores" id="camposValores" indexId="index">
             <tr>
-            <td><bean:write name="campoValor" property="campo.nombre"></bean:write>
-                <logic:equal name="campoValor" property="campo.obligatorio" value="true">
+            <td><bean:write name="camposValores" property="campo.nombre"></bean:write>
+                <logic:equal name="camposValores" property="campo.obligatorio" value="true">
                 <span style="color:red">*</span>  
             </logic:equal>
         </td>
-        <td><logic:equal name="campoValor" property="campo.tipo" value="texto">
-                <html:text name="campoValor" property="valor" indexed="true"/>  
+        <td><logic:equal name="camposValores" property="campo.tipo" value="texto">
+                <html:text name="camposValores" property="valor" indexed="true"/>  
             </logic:equal>
 
-            <logic:equal name="campoValor" property="campo.tipo" value="numero">
-                <html:text name="campoValor" property="valor" indexed="true"/> 
+            <logic:equal name="camposValores" property="campo.tipo" value="numero">
+                <html:text name="camposValores" property="valor" indexed="true"/> 
             </logic:equal>
 
-            <logic:equal name="campoValor" property="campo.tipo" value="fecha">
-            <span id="fecha_input"> <html:text name="campoValor" property="valor" indexed="true" /></span>  
+            <logic:equal name="camposValores" property="campo.tipo" value="fecha">
+            <span id="fecha_input">
+                <html:text name="camposValores" property="valor" indexed="true"/>
+            </span>  
         </logic:equal>
 
-        <logic:equal name="campoValor" property="campo.tipo" value="checkbox">
-            <html:checkbox name="campoValor" property="valor" indexed="true"/>
+        <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
+            <html:checkbox name="camposValores" property="valor" indexed="true"/>
         </logic:equal>
 
-        <logic:equal name="campoValor" property="campo.tipo" value="textol">
-            <html:textarea name="campoValor" property="valor" indexed="true"></html:textarea>
+        <logic:equal name="camposValores" property="campo.tipo" value="textol">
+            <html:textarea name="camposValores" property="valor" indexed="true"></html:textarea>
         </logic:equal>
-        <logic:equal name="campoValor" property="campo.tipo" value="archivo">
-            <html:file name="campoValor" property="file" indexed="true" maxlength="2024" size="2024"/>
+        <logic:equal name="camposValores" property="campo.tipo" value="archivo">
+            <html:file name="camposValores" property="file" indexed="true" maxlength="2024" size="2024"/>
         </logic:equal>
 
         <%   int i = (Integer) pageContext.findAttribute("index");
              String catalogoi= ("cat"+i);%>    
 
-        <logic:equal name="campoValor" property="campo.tipo" value="catalogo">
-            <html:select name="campoValor" property="valor" indexed="true">
+        <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
+            <html:select name="camposValores" property="valor" indexed="true">
                 <html:option value="">
                     -- Seleccione --
                 </html:option>

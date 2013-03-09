@@ -93,10 +93,6 @@ public class Actividad extends Root {
         return camposValores;
     }
 
-    public CampoValor getCampoValor(int i) {
-        return camposValores.get(i);
-    }
-
     public void setCamposValores(ArrayList<CampoValor> camposValores) {
         this.camposValores = camposValores;
     }

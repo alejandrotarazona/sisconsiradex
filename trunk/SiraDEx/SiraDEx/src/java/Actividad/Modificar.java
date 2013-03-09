@@ -51,7 +51,7 @@ public class Modificar extends DispatchAction {
         
         /*Se pasan los catalogos de los campos tipo catalogo al jsp de ser necesario*/
         for (int i = 0; i < act.getCamposValores().size(); i++) {
-            String nombreCat = act.getCampoValor(i).getCampo().getCatalogo();
+            String nombreCat = act.getCamposValores().get(i).getCampo().getCatalogo();
             if (!nombreCat.equals("")) {
                 ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
                 //suponiendo que no hay un catalogo con mas de 5 campos por elemento
