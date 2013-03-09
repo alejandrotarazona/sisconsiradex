@@ -387,8 +387,8 @@ article .content {
 }
 article .field-type-image,
 article .content img:nth-child(even) {
-  float: right;
-  margin: 0 0 0em 2em;
+  /*float: right;*/
+  margin: 0 0 -0.5em 1em;
 }
 article .content img:nth-child(odd) {
   float: left;
@@ -440,7 +440,7 @@ article .links a:visited {
 }
 .node img {
   border: solid 1px #e6e4de;
-  padding: 0.5em;
+  /*padding: 0.5em;*/
 }
 .field {
   padding: 0 0 0.5em 0;

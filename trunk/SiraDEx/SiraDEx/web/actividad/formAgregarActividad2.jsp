@@ -14,7 +14,8 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#fecha_input input").datepicker();
+        $(".fecha_input input").datepicker();
+        $(".fecha_click click").datepicker();
     })	
 </script>
 
@@ -54,10 +55,14 @@
                 <html:text name="camposValores" property="valor" indexed="true"/> 
             </logic:equal>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="fecha">
-            <span id="fecha_input">
-                <html:text name="camposValores" property="valor" indexed="true"/>
-            </span>  
+            <logic:equal name="camposValores" property="campo.tipo" value="fecha">    
+            <span class="fecha_input">
+                <html:text name="camposValores" property="valor" indexed="true" 
+                           readonly="true" />
+            </span>
+            <span class="fecha_click">
+                <html:hidden name="camposValores" property="valor" indexed="true" />
+            </span>
         </logic:equal>
 
         <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
@@ -72,7 +77,7 @@
         </logic:equal>
 
         <%   int i = (Integer) pageContext.findAttribute("index");
-             String catalogoi= ("cat"+i);%>    
+            String catalogoi = ("cat" + i);%>    
 
         <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
             <html:select name="camposValores" property="valor" indexed="true">
