@@ -89,7 +89,7 @@ public class Agregar extends DispatchAction {
 
         for (int i = 0; i < a.getCamposValores().size(); i++) {
 
-            String nombreCat = a.getCampoValor(i).getCampo().getCatalogo();
+            String nombreCat = a.getCamposValores().get(i).getCampo().getCatalogo();
 
             if (!nombreCat.equals("")) {
 
