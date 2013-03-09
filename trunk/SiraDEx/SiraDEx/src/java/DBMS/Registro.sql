@@ -5,7 +5,7 @@
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Formulacion de proyectos del BPDEx', 'P',11,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx');
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de PSC', 'P',5,'Nuevos diplomados','Tutoría','PSC','Informe');
---INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto,activo) VALUES ('Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta', true);
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de pasantías cortas profesionales', 'P',2,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta');
 
 --Campo de un tipo de actividad
 
@@ -28,6 +28,8 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del alumno', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Código', 'texto', 20, true);
 
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3,'Fecha de inscripción', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3,'Fecha de culminación', 'fecha', 20, true);
 --Actividad
 
 --INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, fecha_creacion, modificador, fecha_modif) VALUES (15,2,null,'admin','10/01/13',null,null);

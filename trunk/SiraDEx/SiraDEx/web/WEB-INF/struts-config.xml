@@ -33,6 +33,7 @@
         <action path="/Entrar" type="Usuarios.Entrar" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="sesionIniciada"/>
+            <forward name="listarValidaciones" path="/ValidarActividad.do" redirect="true"/>            
         </action>
         
         <action path="/Logout" type="Usuarios.Logout" 
@@ -121,6 +122,13 @@
             <forward name="failure" path="modificarActividad"/>    
         </action>
         
+        <action name="actividadForm" path="/ValidarActividad" 
+                 scope="request" type="Actividad.Validar">
+            <forward name="success" path="sesionIniciada"/>
+            <forward name="failure" path="sesionIniciada"/>
+            
+         </action>
+        
         <!-- ====================CATALOGOS==================================-->
         
         <action path="/AGestionCatalogos" type="Catalogo.Listar"
@@ -175,7 +183,7 @@
             <forward name="page" path="modificarElemento"/>
             <forward name="success" path="gestionElementos"/>
             <forward name="failure" path="modificarElemento"/>    
-        </action>
+        </action>             
         
         <!-- ===============================================================-->
           

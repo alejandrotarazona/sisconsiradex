@@ -38,13 +38,7 @@
                     visibilidad(val,mos, lon);
                 }
             )            
-            });
-            /*var valor = $("verCatalogo").val();
-                    $("verCatalogo").hide();
-                $("verLista").hide();
-                
-                $("verCatalogo").show();
-                $("verLista").show();*/                
+            });              
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

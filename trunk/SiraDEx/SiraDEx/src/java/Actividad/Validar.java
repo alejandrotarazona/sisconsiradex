@@ -15,13 +15,10 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  *
- * @author diana
+ * @author SisCon
  */
-public class Eliminar extends org.apache.struts.action.Action {
+public class Validar extends org.apache.struts.action.Action {
 
-    /*
-     * forward name="success" path=""
-     */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
 
@@ -40,33 +37,16 @@ public class Eliminar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad a = (Actividad) form;
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String validador = user.getNombres();
+        System.out.println("El validador es: "+validador);
+        boolean b = a.validar();
 
-        Usuario u = (Usuario) request.getSession().getAttribute("user");
-        String rol = u.getRol();
-        ArrayList<Actividad> act;
-
-        if (a.eliminarActividad()) {
-            a.setMensaje("La actividad ha sido eliminada.");
-
-            if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
-            } else {
-                a.setCreador(u.getUsername());
-                act = a.listarActividadesDeUsuario();
-            }
-            request.setAttribute("acts", act);
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
+        request.setAttribute("acts", acts);
+        if (b) {
             return mapping.findForward(SUCCESS);
-            
         } else {
-            
-            if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
-            } else {
-                act = a.listarActividadesDeUsuario();
-            }
-            request.setAttribute("acts", act);
-            
-            a.setMensaje("La actividad que desea eliminar no existe.");
             return mapping.findForward(FAILURE);
         }
     }

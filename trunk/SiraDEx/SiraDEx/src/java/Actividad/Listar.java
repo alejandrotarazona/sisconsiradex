@@ -24,6 +24,7 @@ public class Listar extends DispatchAction {
     private static final String SUCCESS1 = "success1";
     private static final String SUCCESS2 = "success2";
     private static final String SUCCESS3 = "success3";
+    private static final String SUCCESS4 = "success4";
 
     /**
      * This is the action called from the Struts framework.
@@ -92,5 +93,16 @@ public class Listar extends DispatchAction {
         request.setAttribute("acts", act);
         request.setAttribute("TipoAct", a);
         return mapping.findForward(SUCCESS3);
+    }
+    
+    public ActionForward listDex(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(user.getNombres());
+        
+        request.setAttribute("acts", acts);
+        
+        return mapping.findForward(SUCCESS4);
     }
 }
