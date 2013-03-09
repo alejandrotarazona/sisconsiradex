@@ -231,7 +231,6 @@ public class Actividad extends Root {
 
         String[] columnas = {
             "id_tipo_actividad",
-            "validacion",
             "creador",
             "fecha_creacion",
             "modificador",
@@ -240,7 +239,6 @@ public class Actividad extends Root {
 
         Object[] actividad = {
             idTipoActividad,
-            validacion,
             creador,
             fechaCreacion,
             modificador,
@@ -549,6 +547,7 @@ public class Actividad extends Root {
         Actividad a;
         while (it.hasNext()) {
             a = (Actividad) it.next();
+            System.out.println("El validador de la actividad es: "+ a.getValidador());
             if (a.getValidador().equalsIgnoreCase(validador)
                     && a.getValidacion().equalsIgnoreCase("en espera")) {
                 resp.add(a);
@@ -572,10 +571,24 @@ public class Actividad extends Root {
 
         Iterator it = camposNM.iterator();
 
-        for (int i = 0; it.hasNext(); i++) {
+        for (int i = 0; it.hasNext() && resp; i++) {
             CampoValor campoNM = (CampoValor) it.next();
             resp &= camposValores.get(i).modificar(campoNM, idActividad);
         }
+        Entity eActividad = new Entity(2,2);
+        String [] condColumn = {
+          ATRIBUTOS[0]
+        };
+        Object[] condValores = {
+            idActividad
+        };
+        String[] colModif = {
+            ATRIBUTOS[3]
+        };
+        Object[] modValor = {
+            "en espera"
+        };
+        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";

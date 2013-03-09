@@ -81,7 +81,7 @@ WITH (
 CREATE TABLE ACTIVIDAD(
     id_actividad      SERIAL,
     id_tipo_actividad integer NOT NULL,
-    validacion        VARCHAR(20) DEFAULT 'en espera' NOT NULL,
+    validacion        VARCHAR(20) DEFAULT 'en espera',
     creador           VARCHAR(20) NOT NULL,
     fecha_creacion    VARCHAR(20) NOT NULL,
     modificador       VARCHAR(20) NOT NULL,
