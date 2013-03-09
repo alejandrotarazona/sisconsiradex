@@ -24,9 +24,7 @@
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad individual</a></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad general</a></li>
-                                <li><html:link action="/AGestionUsuarios"> 
-                                        Usuarios
-                                    </html:link></li>
+                                
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="profesor">
@@ -51,8 +49,10 @@
                                     </html:link></li>
 
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Backup</a></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Roles</a></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></li>
+                                <li><html:link action="/AGestionUsuarios"> 
+                                        Usuarios
+                                    </html:link></li>
                             </logic:equal> 
 
                             <logic:equal name="user" property="rol" value="obrero">

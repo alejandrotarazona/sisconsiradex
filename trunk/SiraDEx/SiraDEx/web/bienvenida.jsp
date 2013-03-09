@@ -51,8 +51,7 @@
 
                         <logic:iterate name="acts" id="act">
                             <tr><td>
-                                <b><bean:write name="user" property="apellidos"></bean:write></b>, 
-                                <b><bean:write name="user" property="nombres"></bean:write></b>,
+                                <b><bean:write name="act" property="creador"></bean:write></b>,
                                 "<bean:write name="act" property="nombreTipoActividad"/>"
 
                                 <logic:iterate name="act" property="camposValores" 
@@ -95,6 +94,15 @@
                                 <html:submit styleId="botonValidar"
                                              value=" "
                                              title="Validar"/>
+                            </html:form>
+                        </td>
+                        <td>
+                            <html:form method="POST" action="/RechazarActividad">
+                                <html:hidden name="act" property="idActividad" />
+                                <html:submit styleId="botonRechazar"
+                                             value=" "
+                                             title="Rechazar"
+                                             onclick="return confirm('¿Está seguro que desea rechazar (eliminar) la actividad?')"/>
                             </html:form>
                         </td>
                     </logic:iterate>

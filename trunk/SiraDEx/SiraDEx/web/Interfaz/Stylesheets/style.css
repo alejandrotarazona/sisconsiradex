@@ -865,5 +865,12 @@ ul.action-links:after,
     width: 26px;
     height: 26px;
     border: 0;
-    background: url('iconos/Save_26x26.png') no-repeat;
+    background: url('iconos/check_26x26.png') no-repeat;
+}
+
+#botonRechazar{
+    width: 26px;
+    height: 26px;;
+    border: 0;
+    background: url('iconos/Delete_26x26.png') no-repeat;
 }
