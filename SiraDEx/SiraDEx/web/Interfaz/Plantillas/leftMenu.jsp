@@ -26,7 +26,7 @@
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar productividad general</a></li>
                                 <li><html:link action="/AGestionUsuarios"> 
                                         Usuarios
-                                    </html:link></li><br/>  
+                                    </html:link></li>
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="profesor">

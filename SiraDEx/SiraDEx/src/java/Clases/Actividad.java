@@ -30,6 +30,7 @@ public class Actividad extends Root {
     private ArrayList<String> participantes;
     private ArrayList<CampoValor> camposValores;
     private String descripcion;
+    private String validador;
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
@@ -40,7 +41,8 @@ public class Actividad extends Root {
         "modificador",//6
         "fecha_modif",//7
         "producto",//8
-        "descripcion"//9
+        "descripcion",//9
+        "validador"//10
     };
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
@@ -56,7 +58,7 @@ public class Actividad extends Root {
         this.idActividad = idActividad;
         this.validacion = validacion;
     }
-    
+
     public int getIdActividad() {
         return idActividad;
     }
@@ -153,6 +155,14 @@ public class Actividad extends Root {
         this.descripcion = descripcion;
     }
 
+    public String getValidador() {
+        return validador;
+    }
+
+    public void setValidador(String validador) {
+        this.validador = validador;
+    }
+
     @Override
     public String toString() {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
@@ -216,7 +226,7 @@ public class Actividad extends Root {
     }
 
     public boolean agregarActividad() {
-        Entity e = new Entity(1, 2);//SELECT ACTIVIDAD
+        Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
         boolean resp;
 
         String[] columnas = {
@@ -296,6 +306,26 @@ public class Actividad extends Root {
 
     }
 
+    public boolean validar() {
+        boolean resp = true;
+        Entity eValidar = new Entity(2, 2); //UPDATE ACTIVIDAD
+        String[] condColumn = {
+          ATRIBUTOS[0]
+        };
+        Object[] condValores = {
+            idActividad
+        };
+        String[] colModificar = {
+            ATRIBUTOS[3]
+        };
+        Object[] modificaciones = {
+          "validada"  
+        };
+
+        resp = resp && eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
+        return resp;
+    }
+
     //modificado por Jorge el cinco de marzo
     public static ArrayList<Actividad> listarActividades() {
         try {
@@ -322,6 +352,7 @@ public class Actividad extends Root {
                         a.setFechaModif(rs.getString(ATRIBUTOS[7]));
                         a.setProducto(rs.getString(ATRIBUTOS[8]));
                         a.setDescripcion(rs.getString(ATRIBUTOS[9]));
+                        a.setValidador(rs.getString(ATRIBUTOS[10]));
                         a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
 
                         listaActividad.add(a);
@@ -391,11 +422,15 @@ public class Actividad extends Root {
         return null;
     }
 
-    //hecho por Alejandro falta revisarlo
+    /**
+     * Lista las actividades que tiene el usuario.
+     *
+     * @return Lista con las actividades realizadas por un usuario.
+     */
     public ArrayList<Actividad> listarActividadesDeUsuario() {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
         Entity eActividad = new Entity(0, 2);
-        String[] columna = {Actividad.ATRIBUTOS[3]};
+        String[] columna = {Actividad.ATRIBUTOS[4]};
         String[] condicion = {this.creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
@@ -498,6 +533,29 @@ public class Actividad extends Root {
 
 
         return listaActividad;
+    }
+
+    /**
+     * Lista las actividades según su validador.
+     *
+     * @param validador Nombre de la dependencia que desea listar las
+     * actividades a por validar.
+     * @return Lista con las actividades realacionadas con el validador,
+     */
+    public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
+        ArrayList<Actividad> resp = new ArrayList<>(0);
+        ArrayList<Actividad> aux0 = listarActividades();
+        Iterator it = aux0.iterator();
+        Actividad a;
+        while (it.hasNext()) {
+            a = (Actividad) it.next();
+            if (a.getValidador().equalsIgnoreCase(validador)
+                    && a.getValidacion().equalsIgnoreCase("en espera")) {
+                resp.add(a);
+            }
+        }
+
+        return resp;
     }
 
     public static void imprimirLista(ArrayList<Actividad> lista) {

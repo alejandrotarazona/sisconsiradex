@@ -394,7 +394,7 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setProducto(rs.getString(ATRIBUTOS[7]));
-                    //t.setPermisos();
+                    t.setPermisos();
                     tipos.add(t);
                 }
                 rs.close();
