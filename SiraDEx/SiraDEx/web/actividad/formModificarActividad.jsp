@@ -15,7 +15,8 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#fecha_input input").datepicker();
+        $(".fecha_input input").datepicker();
+        $(".fecha_click click").datepicker();
     })		
 </script>
 
@@ -67,11 +68,16 @@
                 </logic:equal>
 
                 <logic:equal name="camposValores" property="campo.tipo" value="fecha">
-                <span id="fecha_input"> <html:text name="camposValores" property="valor" 
-                           indexed="true" >
+                <span class="fecha_input">
+                    <html:text name="camposValores" property="valor" indexed="true"
+                               readonly="true">
                         <bean:write name="camposValores" property="valor"/>
-                    </html:text></span>  
-                </logic:equal>
+                    </html:text>
+                </span>
+                <span class="fecha_click">
+                    <html:hidden name="camposValores" property="valor" indexed="true" />
+                </span>
+            </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
                 <html:checkbox name="camposValores" property="valor" indexed="true"/> 

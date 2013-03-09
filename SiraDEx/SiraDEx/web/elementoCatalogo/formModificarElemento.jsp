@@ -14,8 +14,9 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#fecha_input input").datepicker();
-    })	
+        $(".fecha_input input").datepicker();
+        $(".fecha_click click").datepicker();
+    })
 </script>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
@@ -49,34 +50,39 @@
                 <td>
                     <bean:write name="camposValores" property="campo.nombre"/>
                 </td>    
-               <td>
-               <logic:equal name="camposValores" property="campo.tipo" value="texto">
-                    <html:text name="camposValores" property="valor" indexed="true">
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text>
+                <td>
+                    <logic:equal name="camposValores" property="campo.tipo" value="texto">
+                        <html:text name="camposValores" property="valor" indexed="true">
+                            <bean:write name="camposValores" property="valor"/>
+                        </html:text>
+                    </logic:equal>
+
+                    <logic:equal name="camposValores" property="campo.tipo" value="numero">
+                        <html:text name="camposValores" property="valor" indexed="true">
+                            <bean:write name="camposValores" property="valor"/>
+                        </html:text> 
+                    </logic:equal>
+
+                    <logic:equal name="camposValores" property="campo.tipo" value="fecha"> 
+                    <span class="fecha_input">
+                        <html:text name="camposValores" property="valor" indexed="true"
+                                   readonly="true">
+                            <bean:write name="camposValores" property="valor"/>
+                        </html:text>
+                    </span>
+                    <span class="fecha_click">
+                        <html:hidden name="camposValores" property="valor" indexed="true" />
+                    </span>
                 </logic:equal>
+            </td>
+        </tr>
+    </logic:iterate>
 
-                <logic:equal name="camposValores" property="campo.tipo" value="numero">
-                    <html:text name="camposValores" property="valor" indexed="true">
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text> 
-                </logic:equal>
+</table>
+<br>
 
-                <logic:equal name="camposValores" property="campo.tipo" value="fecha">
-                <span id="fecha_input"> <html:text name="camposValores" property="valor" 
-                           indexed="true" >
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text></span>  
-                </logic:equal>
-               </td>
-            </tr>
-        </logic:iterate>
-
-    </table>
-    <br>
-
-    <div align="center"><html:submit value="Modificar"
-                 onclick="return confirm('¿Está seguro que desea modificar el elemento?')"/></div>
+<div align="center"><html:submit value="Modificar"
+             onclick="return confirm('¿Está seguro que desea modificar el elemento?')"/></div>
 
 </html:form>
 </body>

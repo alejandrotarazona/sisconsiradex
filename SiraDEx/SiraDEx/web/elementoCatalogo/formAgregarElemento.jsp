@@ -11,7 +11,8 @@
 
 <script type="text/javascript">
     $(function() {
-        $("#fecha_input input").datepicker();
+        $(".fecha_input input").datepicker();
+        $(".fecha_click click").datepicker();
     })		
 </script>
 
@@ -26,7 +27,7 @@
     <body>
         <h1 class='title' id='page-title'>Agregar Elemento al Catálogo <bean:write 
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
-        
+
         <logic:present name="elementoCatalogoForm" property="mensaje">
             <br/><div align="center"><bean:write name="elementoCatalogoForm" 
                         property="mensaje" /><br/></div>
@@ -51,9 +52,14 @@
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="fecha">
-            <span id="fecha_input"> <html:text name="camposValores" property="valor"
-                       indexed="true" /></span>  
-            </logic:equal>
+            <span class="fecha_input">
+                <html:text name="camposValores" property="valor" indexed="true" 
+                           readonly="true" />
+            </span>
+            <span class="fecha_click">
+                <html:hidden name="camposValores" property="valor" indexed="true"/>
+            </span>
+        </logic:equal>
     </td>  
 </tr>
 </logic:iterate>
