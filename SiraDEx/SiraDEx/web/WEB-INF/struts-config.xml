@@ -62,6 +62,18 @@
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
+        <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="request"
+                parameter="method" name="usuarioForm">
+            <forward name="success" path="perfilUsuario"/>
+        </action>
+        
+        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" scope="request"
+                parameter="method" name="usuarioForm">
+            <forward name="success" path="perfilUsuario"/>
+            <forward name="failure" path="modificarPerfilUsuario"/>
+            <forward name="page" path="modificarPerfilUsuario"/>
+        </action>
+        
         <!-- ================TIPOS DE ACTIVIDAD=============================-->
         
         <action path="/AGestionTiposActividad" type="TiposActividad.Listar"

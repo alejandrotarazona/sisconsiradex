@@ -45,6 +45,14 @@
         <put name="body" value="/usuario/formEliminarUsuario.jsp" />
     </definition>
     
+    <definition name="perfilUsuario" extends="plantilla">
+        <put name="body" value="/usuario/formPerfilUsuario.jsp" />
+    </definition>
+    
+    <definition name="modificarPerfilUsuario" extends="plantilla">
+        <put name="body" value="/usuario/formModificarPerfilUsuario.jsp" />
+    </definition>
+    
     <!-- ===================TIPOS DE ACTIVIDAD==========================-->
     
     <definition name="gestionTiposActividad" extends="plantilla">

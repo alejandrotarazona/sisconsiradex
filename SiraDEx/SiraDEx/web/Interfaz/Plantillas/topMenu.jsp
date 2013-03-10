@@ -9,8 +9,10 @@
                 <ul class="menu">
                     <table bgcolor= "#E0F2F7">
                         <tr>
-                        <td><logic:present name="user" >
-                                Usuario <bean:write name="usuarioForm" property="nombres" /> <bean:write name="usuarioForm" property="apellidos" />
+                        <td><logic:present name="user">
+                                Usuario <html:link action="/VerPerfilUsuario?method=execute">
+                                    <bean:write name="usuarioForm" property="nombres" /> <bean:write name="usuarioForm" property="apellidos" />
+                                    </html:link>
                                 <html:link action="/Logout">
                                     (Cerrar Sesión)
                                 </html:link> |
