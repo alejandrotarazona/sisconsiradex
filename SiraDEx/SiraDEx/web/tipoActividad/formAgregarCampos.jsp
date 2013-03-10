@@ -92,7 +92,7 @@
                 <td>
                     <div class="<%=m%>" style="visibility: hidden">
                         <html:select name="campo" property="catalogo" indexed="true">
-                            <html:option value="">---Seleccionar---</html:option>
+                            <html:option value="">-- Seleccione --</html:option>
                             <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
                         </html:select>
                     </div>

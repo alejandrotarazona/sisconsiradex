@@ -278,6 +278,10 @@ public class TipoActividad extends Root {
     }
 
     public boolean agregarTipoActividad() {
+        
+        if (!Verificaciones.verifCV(this)) {
+            return false;
+        }
 
         Entity e = new Entity(1, 1);
         boolean resp;
@@ -292,9 +296,9 @@ public class TipoActividad extends Root {
             producto
         };
         if (esTipoActividad()) {
-            this.mensaje = "No se puede registrar el tipo de actividad."
-                    + "Ya existe un tipo de actividad de nombre '"
-                    + this.nombreTipo + "'.Por favor elija otro nombre.";
+            this.mensaje = "Error: Ya existe un Tipo de Actividad con el Nombre "
+                    + "de la Actividad '" + this.nombreTipo + "'. Por favor "
+                    + "intente con otro nombre.";
             return false;
         } else {
             System.out.println("No ha sido insertada previamente");
@@ -355,6 +359,8 @@ public class TipoActividad extends Root {
             } else if (!resp) {
                 this.eliminarTipoActividad();
             }
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido "
+                    + "registrado con éxito.";
         }
 
         return resp;
@@ -445,6 +451,11 @@ public class TipoActividad extends Root {
 
     //en el parámetro taNM recibe un TipoActividad No Modificado
     public boolean modificar(TipoActividad taNM) {
+        
+         if (!Verificaciones.verifCV(this)) {
+            return false;
+        }
+        
         boolean resp;
 
         Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
@@ -486,9 +497,10 @@ public class TipoActividad extends Root {
         //permiso
         };
 
-        if (this.esTipoActividad() && !modificaciones[0].equals(taNM.getNombreTipo())) {
+        if (this.esTipoActividad() && 
+                !modificaciones[0].equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado "
-                    + "" + modificaciones[0] + ".\n Intente con otro nombre.";
+                    + "" + modificaciones[0] + ". Por favor intente con otro nombre.";
             return false;
         }
 
@@ -504,6 +516,8 @@ public class TipoActividad extends Root {
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
         }
+        mensaje = "El Tipo de Actividad ha sido modificado con éxito.";
+        
         return resp;
     }
 
