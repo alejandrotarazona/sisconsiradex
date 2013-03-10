@@ -158,8 +158,8 @@ public class Agregar extends DispatchAction {
 
 
     }
+    
     //Alejandro cuando puedas me explicas para qué hiciste este método
-
     public ActionForward saveTipo(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
