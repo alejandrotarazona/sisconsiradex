@@ -24,5 +24,34 @@
             <bean:write name="usuarioForm" property="mensaje" /><br/>
         </logic:present>
 
-    </body>
+
+        <a>Editar perfil</a><%--Falata por hacer--%>
+        <br>
+        <table border="1">
+            <tr>
+            <td><b>USB-ID</b></td>
+            <td><bean:write name="user" property="username"/></td>
+        </tr>
+        <tr>
+        <td><b>Password</b></td>
+        <td><bean:write name="user" property="password"/></td>
+    </tr>
+    <tr>
+    <td><b>Nombre(s)</b></td>
+    <td><bean:write name="user" property="nombres"/></td>
+</tr>
+<tr>
+<td><b>Apellidos</b></td>
+<td><bean:write name="user" property="apellidos"/></td>
+</tr>
+<tr>
+<td><b>Teléfono</b></td>
+<td><bean:write name="user" property="telefono"/></td>
+</tr>
+<tr>
+<td><b>Correo electrónico</b></td>
+<td><bean:write name="user" property="email"/></td>
+</tr>
+</table>
+</body>
 </html>
