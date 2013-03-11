@@ -64,6 +64,7 @@ public class Modificar extends DispatchAction {
         taNM.setId(idTA);
         taNM.setTipoActividad();
         taNM.setCampos(camposNM);
+        
         request.getSession().setAttribute("taNM", taNM); 
 
         return mapping.findForward(PAGE);

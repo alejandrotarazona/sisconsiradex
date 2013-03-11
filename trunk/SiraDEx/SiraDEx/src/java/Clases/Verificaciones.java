@@ -86,7 +86,7 @@ public class Verificaciones {
             ta.setMensaje(respVerif);
             return false;
         }
-
+        
         respVerif = verifLPV("'Descripción'", ta.getDescripcion(), 200,
                 alfanumerico, "debe contener sólo carateres alfanuméricos", true);
         if (respVerif != null) {

@@ -257,11 +257,11 @@ public class Actividad extends Root {
             Campo campoVerif = (Campo) v.getCampo();
             String valorVerif = (String) v.getValor();
 
-            if (campoVerif.isObligatorio() && valorVerif.equals("")) {
+            /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
                 mensaje = "Todo campo obligatorio debe ser llenado";
                 return false;
             }
-            resp &= Verificaciones.verif(campoVerif, valorVerif);
+            resp &= Verificaciones.verif(campoVerif, valorVerif);*/
         }
 
         if (resp = e.insertar2(columnas, actividad)) {
