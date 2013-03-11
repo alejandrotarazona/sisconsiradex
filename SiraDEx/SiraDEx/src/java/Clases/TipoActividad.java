@@ -116,12 +116,12 @@ public class TipoActividad extends Root {
     public void setTipoPR(String tipoPR) {
         this.tipoPR = tipoPR;
     }
-    
+
     public String[] getPermisos() {
         return permisos;
     }
-    
-    public void setPermisos(String[] permisos){
+
+    public void setPermisos(String[] permisos) {
         this.permisos = permisos;
     }
 
@@ -150,7 +150,7 @@ public class TipoActividad extends Root {
     }
 
     private boolean checkPermiso(String rol) {
-        for(int i =0 ; i < permisos.length ; i++) {
+        for (int i = 0; i < permisos.length; i++) {
             String estePermiso = permisos[i];
 
             System.out.println("\tRol:\t" + rol + "\n\t"
@@ -184,7 +184,7 @@ public class TipoActividad extends Root {
                 }
                 rs.close();
                 permisos = new String[permiso.size()];
-                for(int i = 0 ; i < permiso.size() ; i++){
+                for (int i = 0; i < permiso.size(); i++) {
                     permisos[i] = (String) permiso.get(i);
                 }
             } catch (SQLException ex) {
@@ -227,7 +227,7 @@ public class TipoActividad extends Root {
     }
 
     public boolean esTipoActividad() {
-        try {        
+        try {
             Entity e = new Entity(0, 1);
 
             String[] atrib = {ATRIBUTOS[1]};
@@ -247,7 +247,7 @@ public class TipoActividad extends Root {
             Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-   
+
     }
 
     //teniendo el id hace un set del resto de atributos del Tipo de Actividad
@@ -278,7 +278,7 @@ public class TipoActividad extends Root {
     }
 
     public boolean agregarTipoActividad() {
-        
+
         if (!Verificaciones.verifCV(this)) {
             return false;
         }
@@ -295,74 +295,67 @@ public class TipoActividad extends Root {
             validador,
             producto
         };
-        if (esTipoActividad()) {
-            this.mensaje = "Error: Ya existe un Tipo de Actividad con el Nombre "
-                    + "de la Actividad '" + this.nombreTipo + "'. Por favor "
-                    + "intente con otro nombre.";
-            return false;
-        } else {
-            System.out.println("No ha sido insertada previamente");
-            String[] aInsertar = {
-                ATRIBUTOS[1],
-                ATRIBUTOS[2],
-                ATRIBUTOS[3],
-                ATRIBUTOS[4],
-                ATRIBUTOS[5],
-                ATRIBUTOS[6],
-                ATRIBUTOS[7]
-            };
 
-            Campo c = new Campo();
-            c.setNombre(this.producto);
-            c.setIdTipoActividad(id);
-            c.setObligatorio(true);
-            c.setTipo(Campo.getTIPOS()[3]);
-            this.campos.add(c);
+        System.out.println("No ha sido insertada previamente");
+        String[] aInsertar = {
+            ATRIBUTOS[1],
+            ATRIBUTOS[2],
+            ATRIBUTOS[3],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        };
 
-            if (resp = e.insertar2(aInsertar, valores)) {
-                this.setId();
-                System.out.println("Ya inserte el tipo de Actividad con ID " + id);
-                Iterator it = campos.iterator();
-                System.out.println("Creo el iterador");
-                while (it.hasNext() && resp) {
-                    System.out.println("Voy iterando");
-                    Campo cAgregar = (Campo) it.next();
-                    resp &= cAgregar.agregarCampo(id);
-                    if (!resp) {
-                        System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
-                        this.eliminarTipoActividad();
-                    }
+        Campo c = new Campo();
+        c.setNombre(this.producto);
+        c.setIdTipoActividad(id);
+        c.setObligatorio(true);
+        c.setTipo(Campo.getTIPOS()[3]);
+        this.campos.add(c);
+
+        if (resp = e.insertar2(aInsertar, valores)) {
+            this.setId();
+            System.out.println("Ya inserte el tipo de Actividad con ID " + id);
+            Iterator it = campos.iterator();
+            System.out.println("Creo el iterador");
+            while (it.hasNext() && resp) {
+                System.out.println("Voy iterando");
+                Campo cAgregar = (Campo) it.next();
+                resp &= cAgregar.agregarCampo(id);
+                if (!resp) {
+                    System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
+                    this.eliminarTipoActividad();
                 }
-                Entity ePermisos = new Entity(1, 18);
-                Object[] valoresPermisos = {
-                    id,
-                    0
-                };
-                for(int i = 0 ; i < permisos.length ; i++){
-                    String estePermiso = permisos[i];
-                    switch (estePermiso) {
-                        case "estudiante":
-                            valoresPermisos[1] = 1;
-                            break;
-                        case "empleado":
-                            valoresPermisos[1] = 2;
-                            break;
-                        case "obrero":
-                            valoresPermisos[1] = 3;
-                            break;
-                        case "profesor":
-                            valoresPermisos[1] = 4;
-                            break;
-                    }
-                    ePermisos.insertar(valoresPermisos);
-                }
-            } else if (!resp) {
-                this.eliminarTipoActividad();
             }
-            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido "
-                    + "registrado con éxito.";
+            Entity ePermisos = new Entity(1, 18);
+            Object[] valoresPermisos = {
+                id,
+                0
+            };
+            for (int i = 0; i < permisos.length; i++) {
+                String estePermiso = permisos[i];
+                switch (estePermiso) {
+                    case "estudiante":
+                        valoresPermisos[1] = 1;
+                        break;
+                    case "empleado":
+                        valoresPermisos[1] = 2;
+                        break;
+                    case "obrero":
+                        valoresPermisos[1] = 3;
+                        break;
+                    case "profesor":
+                        valoresPermisos[1] = 4;
+                        break;
+                }
+                ePermisos.insertar(valoresPermisos);
+            }
+        } else if (!resp) {
+            this.eliminarTipoActividad();
         }
-
+        mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido "
+                + "registrado con éxito.";
         return resp;
     }
 
@@ -451,11 +444,11 @@ public class TipoActividad extends Root {
 
     //en el parámetro taNM recibe un TipoActividad No Modificado
     public boolean modificar(TipoActividad taNM) {
-        
-         if (!Verificaciones.verifCV(this)) {
+
+        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
             return false;
         }
-        
+
         boolean resp;
 
         Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
@@ -497,8 +490,8 @@ public class TipoActividad extends Root {
         //permiso
         };
 
-        if (this.esTipoActividad() && 
-                !modificaciones[0].equals(taNM.getNombreTipo())) {
+        if (this.esTipoActividad()
+                && !modificaciones[0].equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado "
                     + "" + modificaciones[0] + ". Por favor intente con otro nombre.";
             return false;
@@ -511,13 +504,15 @@ public class TipoActividad extends Root {
         for (int i = 0; it.hasNext(); i++) {
             Campo campoNM = (Campo) it.next();
             resp &= campos.get(i).modificar(campoNM, id);
+            System.out.println("Update "+resp+" "+campoNM.getNombre());
         }
 
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
+            return false;
         }
         mensaje = "El Tipo de Actividad ha sido modificado con éxito.";
-        
+
         return resp;
     }
 

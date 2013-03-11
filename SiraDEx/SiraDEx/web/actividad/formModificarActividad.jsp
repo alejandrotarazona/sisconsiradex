@@ -80,7 +80,9 @@
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
-                <html:checkbox name="camposValores" property="valor" indexed="true"/> 
+                <html:checkbox name="camposValores" property="valor" indexed="true" />
+                <html:hidden name="camposValores" property="valor" value="false" 
+                             indexed="true"/>
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="textol">

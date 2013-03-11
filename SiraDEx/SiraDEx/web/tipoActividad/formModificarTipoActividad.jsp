@@ -26,38 +26,40 @@
                         property="mensaje" /></b></div><br/>
                 </logic:present>
 
+        <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/ModificarTipoActividad?method=update">
             <table>
                 <tr>
-                <td>Nombre de la Actividad<span style="color:red">*</span> </td>
+                <td>Nombre de la Actividad</td>
             <td><html:text name="tipoActividadForm" property="nombreTipo">
                     <bean:write name="tipoActividadForm" property="nombreTipo"/>
                 </html:text> </td>
         </tr>
         <tr>
-        <td>Descripción<span style="color:red">*</span> </td>
-    <td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
-                   property="descripcion">
-            <bean:write name="tipoActividadForm" property="descripcion"/>
-        </html:textarea>
+        <td>Descripción</td>
+        <td><html:textarea name="tipoActividadForm"  cols="80" rows="3"
+                       property="descripcion">
+                <bean:write name="tipoActividadForm" property="descripcion"/>
+            </html:textarea>
+        </td>
+    </tr>
+    <tr>
+    <td>Tipo</td>
+    <td><html:select property="tipoPR">
+            <html:option value ="${tipoActividadForm.tipoPR}">
+                <bean:write name="tipoActividadForm" property="tipoPR"/>
+            </html:option>
+            <logic:equal name="tipoActividadForm" property="tipoPR" value="P">
+                <html:option value="R">R</html:option>
+            </logic:equal>
+            <logic:equal name="tipoActividadForm" property="tipoPR" value="R">
+                <html:option value="P">P</html:option>
+            </logic:equal>
+        </html:select>
     </td>
 </tr>
 <tr>
-<td>Tipo<span style="color:red">*</span> </td>
-<td><html:select property="tipoPR">
-        <html:option value ="${tipoPR}" >
-            <bean:write name="tipoActividadForm" property="tipoPR"/></html:option>
-        <logic:equal name="tipoActividadForm" property="tipoPR" value="P">
-            <html:option value="R">R</html:option>
-        </logic:equal>
-        <logic:equal name="tipoActividadForm" property="tipoPR" value="R">
-            <html:option value="P">P</html:option>
-        </logic:equal>
-    </html:select>
-</td>
-</tr>
-<tr>
-<td>Programa del tipo de actividad<span style="color:red">*</span> </td>
+<td>Programa</td>
 <td>
     <html:select property="programa">
         <html:option value ="${programa}" >
@@ -68,7 +70,7 @@
 </td>
 </tr>
 <tr>
-<td>Coordinación a validar<span style="color:red">*</span> </td>
+<td>Coordinación a validar</td>
 <td>       
     <html:select property="validador">
         <html:option value ="${validador}" >
@@ -87,14 +89,14 @@
 </td>       
 </tr>--%>
 <tr>
-<td>Producto<span style="color:red">*</span> </td>
+<td>Producto</td>
 <td><html:text name="tipoActividadForm" property="producto">
         <bean:write name="tipoActividadForm" property="producto"/>
     </html:text></td>
 </tr>
 </table>
 <table>
-<tr><td><b>Campos</b></td></tr>
+    <tr><td><b>Campos</b></td></tr>
 <tr><td></td>
 <td><b>Nombre</b></td>
 <td><b>Tipo</b></td>
@@ -111,14 +113,18 @@
 <td>
     <html:select name="campos" property="tipo" indexed="true">
         <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                    value="valor"/>
-        </html:select>
+                                value="valor"/>
+    </html:select>
 </td>
 <td><html:text name="campos" property="longitud" indexed="true">
         <bean:write name="campos" property="longitud"/>
     </html:text></td>
 
-<td><html:checkbox name="campos" property="obligatorio" indexed="true" value="true"/></td>
+<td>
+    <html:checkbox name="campos" property="obligatorio" indexed="true" />
+    <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>
+</td>
+
 
 </tr>
 </logic:iterate>

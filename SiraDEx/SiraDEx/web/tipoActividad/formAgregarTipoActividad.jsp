@@ -24,7 +24,7 @@
                     <bean:write name="tipoActividadForm" property="mensaje" /></b></div><br/>
                 </logic:present>
 
-                    <font size=2>Todos los campos son obligatorios.</font></br>
+                    <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
             <table>
                 <tr>

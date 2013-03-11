@@ -63,6 +63,14 @@ public class Agregar extends DispatchAction {
         ta.setMensaje(null);
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
+        
+                
+        if (ta.esTipoActividad()) {
+            ta.setMensaje("Error: Ya existe un Tipo de Actividad con el Nombre "
+                    + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
+                    + "intente con otro nombre.");
+            return mapping.findForward(FAILURE);
+        }
 
         if (!Verificaciones.verifCF(ta)) {
             return mapping.findForward(FAILURE);
