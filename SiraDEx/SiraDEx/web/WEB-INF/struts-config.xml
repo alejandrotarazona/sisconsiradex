@@ -44,26 +44,26 @@
         <!-- ===================USUARIOS====================================-->
 
         <action path="/AGestionUsuarios" type="Usuarios.Listar"
-                scope="request" name="usuarioForm">
+                scope="session" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
         </action>
         
-        <action path="/RegistrarUsuario" type="Usuarios.Agregar" scope="request"
+        <action path="/RegistrarUsuario" type="Usuarios.Agregar" scope="session"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="failure" path="agregarUsuario"/>
             <forward name="page" path="agregarUsuario"/>
         </action>
         
-        <action path="/EliminarUsuario" type="Usuarios.Eliminar" scope="request"
+        <action path="/EliminarUsuario" type="Usuarios.Eliminar" scope="session"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="failure" path="eliminarUsuario"/>
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
-        <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="request"
-                parameter="method" name="usuarioForm">
+        <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="session"
+                name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
         </action>
         
