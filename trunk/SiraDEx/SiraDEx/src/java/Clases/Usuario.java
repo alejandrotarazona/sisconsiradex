@@ -122,6 +122,35 @@ public class Usuario extends Root {
         return "Usuario{" + " username= " + username + ", password= " + password + " }";
     }
 
+    public void setUsuario() {
+        try {
+            Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+
+            String[] tabABuscar = {
+                "USUARIO"
+            };
+            String[] atrib = {"usbid"};
+            String[] valor = {username};
+
+            try (ResultSet rs = eUsuario.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor)) {
+                if (rs != null) {
+                    rs.next();
+                    nombres = rs.getString(ATRIBUTOS[0]);
+                    apellidos = rs.getString(ATRIBUTOS[2]);
+                    password = rs.getString(ATRIBUTOS[3]);
+                    tipo = rs.getInt(ATRIBUTOS[4]);
+                    telefono = rs.getString(ATRIBUTOS[5]);
+                    email = rs.getString(ATRIBUTOS[6]);
+                    rol = rs.getString(ATRIBUTOS[7]);
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    
     public boolean esUsuario() {
         try {
             Entity e = new Entity(0, 0);
@@ -221,7 +250,71 @@ public class Usuario extends Root {
         }
 
     }
+    
+    //en el parámetro user recibe un Usuario no modificado
+    public boolean modificar(Usuario userNM) {
+        
+      
+        boolean resp;
 
+        Entity e = new Entity(2, 0);//UPDATE USUARIO
+
+        String[] condColumnas = {
+            ATRIBUTOS[0],
+            ATRIBUTOS[1],
+            ATRIBUTOS[3],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        };
+        Object[] valores = {
+            userNM.getNombres(),
+            userNM.getApellidos(),
+            userNM.getPassword(),
+            userNM.getTipo(),
+            userNM.getTelefono(),
+            userNM.getEmail(),
+            userNM.getRol()
+        };
+        String[] colModificar = {
+            ATRIBUTOS[0],
+            ATRIBUTOS[1],
+            ATRIBUTOS[3],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        };
+        Object[] modificaciones = {
+            nombres,
+            apellidos,
+            password,
+            tipo,
+            telefono,
+            email,
+            rol
+        };
+
+        if (this.esUsuario() && 
+                !modificaciones[0].equals(userNM.getNombres()) &&
+                !modificaciones[1].equals(userNM.getApellidos())) {
+            mensaje = "Error: Ya existe un Usuario llamado "
+                    + "" + modificaciones[0] + "" + modificaciones[1] + ". "
+                    + "Por favor intente con otro nombre.";
+            return false;
+        }
+
+        resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
+
+        if (!resp) {
+            mensaje = "Error del sistema al intentar actualizar la base de datos.";
+        }
+        mensaje = "El perfil ha sido modificado con éxito.";
+        
+        return resp;
+    }
+    
     public static void main(String[] args) {
         /*
          * probando probando 1 2 3 probando alo alo...

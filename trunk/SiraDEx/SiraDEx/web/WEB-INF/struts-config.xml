@@ -67,7 +67,7 @@
             <forward name="success" path="perfilUsuario"/>
         </action>
         
-        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" scope="request"
+        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" scope="session"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
             <forward name="failure" path="modificarPerfilUsuario"/>
