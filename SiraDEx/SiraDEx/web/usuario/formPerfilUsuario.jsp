@@ -16,16 +16,20 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Perfil del Usuario</title>
+        <title>SiraDEx | Perfil de <bean:write name="user" property="nombres"/>
+        <bean:write name="user" property="apellidos"/></title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Perfil del Usuario</h1>
+        <h1 class="title" id="page-title">Perfil de <bean:write name="user" property="nombres"/>
+        <bean:write name="user" property="apellidos"/></h1>
         <logic:present name="usuarioForm" property="mensaje">
-            <bean:write name="usuarioForm" property="mensaje" /><br/>
+            <bean:write name="usuarioForm" property="mensaje" />
         </logic:present>
 
 
-        <a>Editar perfil</a><%--Falata por hacer--%>
+            
+            <html:link action="/ModificarPerfilUsuario?method=page">Editar perfil</html:link>
+            
         <br>
         <table border="1">
             <tr>
