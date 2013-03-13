@@ -38,12 +38,8 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("obrero");
-        u.setTipo(3);
         u.setUsername("00-00000");
-        u.setPassword("123456");
-        u.setNombres("Pablo");
-        u.setApellidos("Perez");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -52,12 +48,8 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("empleado");
-        u.setTipo(3);
         u.setUsername("05-38978");
-        u.setPassword("alejandro");
-        u.setNombres("Alejandro");
-        u.setApellidos("Tarazona");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -66,28 +58,19 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("estudiante");
-        u.setTipo(3);
         u.setUsername("07-41618");
-        u.setPassword("diana");
-        u.setNombres("Diana");
-        u.setApellidos("Vainberg");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
-    
     
     
     public ActionForward inDEx(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("DEx");
-        u.setTipo(2);
         u.setUsername("07-10000");
-        u.setPassword("pedro");
-        u.setNombres("PSC");
-        u.setApellidos("");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS2);
     }
@@ -97,12 +80,8 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("profesor");
-        u.setTipo(4);
         u.setUsername("kdoming");
-        u.setPassword("kdoming");
-        u.setNombres("Kenyer");
-        u.setApellidos("Dominguez");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
@@ -111,12 +90,8 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setRol("WM");
-        u.setTipo(3);
         u.setUsername("05-38199");
-        u.setPassword("123456");
-        u.setNombres("Jorge");
-        u.setApellidos("García");
+        u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
     }
