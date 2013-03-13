@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+
 /**
  *
  * @author Siscon
@@ -38,11 +39,14 @@ public class ModificarPerfil extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
+        
         u.setMensaje(null);
-        u.setUsuario();
-               
-        request.getSession().setAttribute("userNM", u);
-      
+        
+        Usuario userNM = new Usuario();
+        userNM.setUsername(u.getUsername());
+        userNM.setUsuario();
+        request.getSession().setAttribute("userNM", userNM);
+        
         return mapping.findForward(PAGE);
     }
     
@@ -51,13 +55,14 @@ public class ModificarPerfil extends DispatchAction {
             throws Exception {
       
         Usuario u = (Usuario) form;
-        Usuario user = (Usuario) request.getSession().getAttribute("userNM");
+        Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
             
-        if (u.modificar(user)) {
+        if (u.modificar(userNM)) {
 
             u.setMensaje("El perfil ha sido modificado con éxito.");
             
-            //u.deleteSessions(request);
+            u.deleteSessions(request);
+            
             return mapping.findForward(SUCCESS);         
       
         }

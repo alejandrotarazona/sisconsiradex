@@ -26,40 +26,40 @@
             <bean:write name="user" property="nombres"/>
         <bean:write name="user" property="apellidos"/> </h1>
         
-        <logic:present name="usuarioForm" property="mensaje">
+        <logic:present name="user" property="mensaje">
             <br/> <div align="center"><b><bean:write name="usuarioForm" 
                         property="mensaje" /></b></div><br/>
                 </logic:present>
                         
+                        <html:form method="POST" 
+                   action ="/ModificarPerfilUsuario?method=update">
                         
-                        <html:form method="POST" enctype="multipart/form-data" 
-                   action ="/ModificarPerfil?method=update"/>
             <table>
 
                 <tr>
-                <td><bean:write name="user" property="nombres"/></td>
-                    <td><html:text name="nombres" property="valor" indexed="true">
-                        <bean:write name="nombres" property="valor"/>
+                <td>Nombres</td>
+                    <td><html:text name="user" property="nombres">
+                        <bean:write name="user" property="nombres"/>
                     </html:text></td>
                 </tr>
                 
                 <tr>
-                <td><bean:write name="user" property="apellidos"/></td>
-                    <td><html:text name="apellidos" property="valor" indexed="true">
-                        <bean:write name="apellidos" property="valor"/>
+                <td>Apellidos</td>
+                    <td><html:text name="user" property="apellidos">
+                        <bean:write name="user" property="apellidos"/>
                     </html:text></td>
                 </tr>
                 
                 <tr>
-                <td><bean:write name="user" property="telefono"/></td>
-                    <td><html:text name="telefono" property="valor" indexed="true">
-                        <bean:write name="telefono" property="valor"/>
+                <td>Teléfono</td>
+                    <td><html:text name="user" property="telefono">
+                        <bean:write name="user" property="telefono"/>
                     </html:text></td>
                 </tr>
                 <tr>
-                <td><bean:write name="user" property="correo"/></td>
-                    <td><html:text name="correo" property="valor" indexed="true">
-                        <bean:write name="correo" property="valor"/>
+                <td>Correo Electrónico</td>
+                    <td><html:text name="user" property="email">
+                        <bean:write name="user" property="email"/>
                     </html:text></td>
                 </tr>
                 
@@ -69,6 +69,6 @@
 <div align="center"><html:submit value="Modificar"
              onclick="return confirm('¿Está seguro que desea modificar el perfil?')"/></div>
 
-                    
+    </html:form>     
     </body>
 </html>

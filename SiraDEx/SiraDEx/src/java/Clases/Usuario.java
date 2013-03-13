@@ -136,7 +136,7 @@ public class Usuario extends Root {
                 if (rs != null) {
                     rs.next();
                     nombres = rs.getString(ATRIBUTOS[0]);
-                    apellidos = rs.getString(ATRIBUTOS[2]);
+                    apellidos = rs.getString(ATRIBUTOS[1]);
                     password = rs.getString(ATRIBUTOS[3]);
                     tipo = rs.getInt(ATRIBUTOS[4]);
                     telefono = rs.getString(ATRIBUTOS[5]);
@@ -277,6 +277,7 @@ public class Usuario extends Root {
             userNM.getEmail(),
             userNM.getRol()
         };
+        
         String[] colModificar = {
             ATRIBUTOS[0],
             ATRIBUTOS[1],
@@ -296,19 +297,11 @@ public class Usuario extends Root {
             rol
         };
 
-        if (this.esUsuario() && 
-                !modificaciones[0].equals(userNM.getNombres()) &&
-                !modificaciones[1].equals(userNM.getApellidos())) {
-            mensaje = "Error: Ya existe un Usuario llamado "
-                    + "" + modificaciones[0] + "" + modificaciones[1] + ". "
-                    + "Por favor intente con otro nombre.";
-            return false;
-        }
-
         resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
+            return false;
         }
         mensaje = "El perfil ha sido modificado con éxito.";
         
