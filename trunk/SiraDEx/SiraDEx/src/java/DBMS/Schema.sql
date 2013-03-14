@@ -83,9 +83,9 @@ CREATE TABLE ACTIVIDAD(
     id_tipo_actividad integer NOT NULL,
     validacion        VARCHAR(20) DEFAULT 'en espera',
     creador           VARCHAR(20) NOT NULL,
-    fecha_creacion    VARCHAR(20) NOT NULL,
-    modificador       VARCHAR(20) NOT NULL,
-    fecha_modif       VARCHAR(20) NOT NULL,
+    fecha_creacion    VARCHAR(30) NOT NULL,
+    modificador       VARCHAR(20),
+    fecha_modif       VARCHAR(30),
 
 
 

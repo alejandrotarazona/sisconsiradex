@@ -42,8 +42,8 @@
             <table>
 
                 <tr>
-                <td><b>Nombre</b></td>
-                <td><b>Valor</b></td>
+                <th><b>Nombre</b></th>
+                <th><b>Valor</b></th>
 
             </tr>
             <logic:iterate name="actividadForm" property="camposValores" 
