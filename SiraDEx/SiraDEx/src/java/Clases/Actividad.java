@@ -31,7 +31,7 @@ public class Actividad extends Root {
     private String modificador;
     private String fechaModif;
     private String producto;
-    private ArrayList<String> participantes;
+    private ArrayList<String> participantes = new ArrayList<>(0);;
     private ArrayList<CampoValor> camposValores;
     private String descripcion;
     private String validador;
@@ -195,7 +195,7 @@ public class Actividad extends Root {
         
         String participante = getApellidoNombreCreador();
         System.out.println("apellido y nombre del creador: "+participante);
-        //participantes.add(participante); da un error de nullpointer watafok
+        participantes.add(participante);
 
         Entity eBuscar = new Entity(0, 7); //SELECT PARTICIPA
         String[] atrib = {
@@ -344,7 +344,7 @@ public class Actividad extends Root {
 
         if (resp = e.insertar2(columnas, actividad)) {
 
-            setIdActividad(e.seleccionarMaxId(ATRIBUTOS[0]));
+            idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
             itValores = this.camposValores.iterator();
 
