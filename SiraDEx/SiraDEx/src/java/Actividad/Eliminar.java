@@ -39,34 +39,41 @@ public class Eliminar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Actividad a = (Actividad) form;
+        Actividad act = (Actividad) form;
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String rol = u.getRol();
-        ArrayList<Actividad> act;
+        ArrayList<Actividad> acts;
 
-        if (a.eliminarActividad()) {
-            a.setMensaje("La actividad ha sido eliminada.");
+        if (act.eliminarActividad()) {
+            act.setMensaje("La actividad ha sido eliminada.");
 
             if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
+                acts = Clases.Actividad.listarActividades();
             } else {
-                a.setCreador(u.getUsername());
-                act = a.listarActividadesDeUsuario();
+                act.setCreador(u.getUsername());
+                acts = act.listarActividadesDeUsuario();
             }
-            request.setAttribute("acts", act);
+            request.setAttribute("acts", acts);
+
+            int tam = acts.size();
+            if (tam > 0) {
+                act = acts.get(tam - 1);
+                request.setAttribute("campos", act.getCamposValores());
+            } else {
+                request.setAttribute("acts", null);
+            }
             return mapping.findForward(SUCCESS);
-            
+
         } else {
-            
+
             if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
+                acts = Clases.Actividad.listarActividades();
             } else {
-                act = a.listarActividadesDeUsuario();
+                acts = act.listarActividadesDeUsuario();
             }
-            request.setAttribute("acts", act);
-            
-            a.setMensaje("La actividad que desea eliminar no existe.");
+            request.setAttribute("acts", acts);
+
             return mapping.findForward(FAILURE);
         }
     }

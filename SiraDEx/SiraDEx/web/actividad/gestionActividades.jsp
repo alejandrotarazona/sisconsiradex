@@ -15,8 +15,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js">
-        </script>
+        <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js"></script>
+        <script type="text/javascript" language="javascript" src="Interfaz/Scripts/jquery.dataTables.min.js"></script> 
+
         <script>
             $(document).ready(function(){
 
@@ -25,6 +26,7 @@
                     $(this).siblings('.detalles').toggle();
 
                 });
+                $('#datatab').dataTable();
             });
         </script>
 
@@ -34,37 +36,55 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Actividades</h1>
-            <logic:notPresent name="TipoAct">
-                <html:link action="/RegistrarActividad?method=page"> 
-                    Agregar Actividad
-                </html:link><br/>
-            </logic:notPresent>
-            <logic:present name="TipoAct">
-                <html:form action ="/RegistrarActividad?method=save">
-                    <html:hidden name="TipoAct" property="idTipoActividad" />
-                    <html:submit>Agregar actividad</html:submit>
-                </html:form>
-            </logic:present>
+        <logic:notPresent name="TipoAct">
+            <html:link action="/RegistrarActividad?method=page"> 
+                Agregar Actividad
+            </html:link><br/>
+        </logic:notPresent>
+        <logic:present name="TipoAct">
+            <html:form action ="/RegistrarActividad?method=save">
+                <html:hidden name="TipoAct" property="idTipoActividad" />
+                <html:submit>Agregar actividad</html:submit>
+            </html:form>
+        </logic:present>
 
-            <h1>Actividades registradas en el sistema</h1>
-            <logic:present name="actividadForm" property="mensaje">
-                <bean:write name="actividadForm" property="mensaje" /><br/>
-            </logic:present>
-            <logic:notPresent name="acts">
-                <div align="center">No hay actividad que mostrar</div>
-            </logic:notPresent>
-            <logic:present name="acts">
-                <logic:empty name="acts">
-                    No hay actividad que mostrar
-                </logic:empty>
-                <table> 
+        <h1>Actividades registradas en el sistema</h1>
+        <logic:present name="actividadForm" property="mensaje">
+            <bean:write name="actividadForm" property="mensaje" /><br/>
+        </logic:present>
+        <logic:notPresent name="acts">
+            <div align="center">No hay actividad que mostrar</div>
+        </logic:notPresent>
+        <logic:present name="acts">
 
+            <table id="datatab">
+                <thead>
+                    <tr>
+                    <th>Participantes</th>
+                    <th>Actividad</th>
+                    <th>Detalles</th>
+                    <th>Creación</th>
+                    <th>Modificación</th>
+                    <th>Validación</th>
+                    <th>Modificar</th>
+                    <th>Eliminar</th>
+                    </tr>
+                </thead>
+                <tbody>
                     <logic:iterate name="acts" id="act">
-                        <tr><td>
-                            <b><bean:write name="user" property="apellidos"></bean:write></b>, 
-                            <b><bean:write name="user" property="nombres"></bean:write></b>,
-                            "<bean:write name="act" property="nombreTipoActividad"/>"
 
+                        <tr><td>
+                            <%--mandar un atributo con un string que tenga los p participantes
+                            concatenados como p1, p2, ... , pn --%>
+                        </td>
+                        <td>
+                            <bean:write name="act" property="nombreTipoActividad"/>
+                        </td>
+                        <td>
+                            <%--cambiar el iterate de abajo por un atributo que tenga un 
+                            string con todos los v valores de los campos que no sean textol
+                            concatenados como v1, v2, ... , vn y los casos de fecha y checkbox
+                            concatenar los nombres de los campos también c1:v1,...cn:vn --%>
                             <logic:iterate name="act" property="camposValores" 
                                            id="campoValor" indexId="index">
                                 <%  CampoValor campoV = (CampoValor) pageContext.findAttribute("campoValor");
@@ -78,15 +98,18 @@
                                     }
                                 %>    
                                 <logic:notEqual name="campoValor" property="campo.tipo" value="1">
-                                    , <bean:write name="campoValor" property="valor"/>
+                                    <bean:write name="campoValor" property="valor"/>,
                                 </logic:notEqual>
 
                             </logic:iterate>.<br>
 
                         <span class="detalles"><b>Descripción: </b><bean:write name="act" 
-                                property="descripcion"/>
-                        <logic:iterate name="act" property="camposValores" 
-                                       id="campoValor" indexId="index">
+                                    property="descripcion"/>
+                            <%--cambiar el iterate de abajo por un atributo que tenga un 
+                                string con todos los v valores de los campos que sean textol
+                                concatenados como v1, v2, ... , vn--%>
+                            <logic:iterate name="act" property="camposValores" 
+                                           id="campoValor" indexId="index">
 
                                 <logic:equal name="campoValor" property="campo.tipo" value="textol">
                                     <br>
@@ -97,26 +120,42 @@
                             </logic:iterate></span>  
 
 
-                        <div class="mostrar" style=" cursor: pointer;"><a>Mostrar Detalles</a></div>
-                    </td>
-                    <td>
-                        <html:form method="POST" action="/ModificarActividad?method=page">
-                            <html:hidden name="act" property="idActividad" />
-                            <html:submit styleId="botonModificar"
-                                         value=" "
-                                         title="Modificar"/>
-                        </html:form>
-                    </td> 
-                    <td><html:form method="POST" action="/EliminarActividad">
-                            <html:hidden name="act" property="idActividad" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
-                        </html:form></td></tr>
-                    </logic:iterate>         
-        </table>
-    </logic:present>
+                        <div class="mostrar" style=" cursor: pointer;"><a>Más detalles</a></div>
+                        </td>
+                        <td>
+                            <bean:write name="act" property="creador"></bean:write>, 
+                            <bean:write name="act" property="fechaCreacion"></bean:write>
+                        </td>
+                        <td>
+                            <logic:present  name="act" property="modificador">
+                                <bean:write name="act" property="modificador"></bean:write>, 
+                                <bean:write name="act" property="fechaModif"></bean:write>
+                            </logic:present>
 
-</body>
+                        </td>
+                        <td>
+                            <bean:write name="act" property="validacion"></bean:write>
+                            </td>
+                            <td>
+                            <html:form method="POST" action="/ModificarActividad?method=page">
+                                <html:hidden name="act" property="idActividad" />
+                                <html:submit styleId="botonModificar"
+                                             value=" "
+                                             title="Modificar"/>
+                            </td>
+                            <td>
+                            </html:form>
+                            <html:form method="POST" action="/EliminarActividad">
+                                <html:hidden name="act" property="idActividad" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
+                            </html:form></td></tr>
+                        </logic:iterate>   
+                </tbody> 
+            </table>
+        </logic:present>
+
+    </body>
 </html>

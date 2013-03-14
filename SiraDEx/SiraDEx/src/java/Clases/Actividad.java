@@ -8,7 +8,11 @@ import DBMS.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.Iterator;
+import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,7 +26,7 @@ public class Actividad extends Root {
     private int idTipoActividad;
     private String nombreTipoActividad;
     private String validacion;
-    private String creador;
+    private String creador; //usbid
     private String fechaCreacion;
     private String modificador;
     private String fechaModif;
@@ -168,6 +172,82 @@ public class Actividad extends Root {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
     }
 
+    public String getFechaHora() {
+        TimeZone tz = TimeZone.getTimeZone("America/Caracas");
+        Calendar calendar = new GregorianCalendar(tz);
+        Date trialTime = new Date();
+        calendar.setTime(trialTime);
+        String dia = Integer.toString(calendar.get(Calendar.DATE));
+        String mes = Integer.toString(calendar.get(Calendar.MONTH) + 1);//Enero empieza en 0
+        String año = Integer.toString(calendar.get(Calendar.YEAR));
+        int amopm = calendar.get(Calendar.AM_PM);
+        String am_pm = " p.m.";
+        if (amopm == 0) {
+            am_pm = " a.m.";
+        }
+        String hora = Integer.toString(calendar.get(Calendar.HOUR));
+        String min = Integer.toString(calendar.get(Calendar.MINUTE));
+        String seg = Integer.toString(calendar.get(Calendar.SECOND));
+        return dia + "/" + mes + "/" + año + " " + hora + ":" + min + ":" + seg + am_pm;
+    }
+
+    public void setParticipantes(int idAct) {
+        
+        String participante = getApellidoNombreCreador();
+        System.out.println("apellido y nombre del creador: "+participante);
+        //participantes.add(participante); da un error de nullpointer watafok
+
+        Entity eBuscar = new Entity(0, 7); //SELECT PARTICIPA
+        String[] atrib = {
+            ATRIBUTOS[0]
+        };
+        
+        Object[] valor = {
+            idAct
+        };
+        String[] tabABuscar = {
+            "ACTIVIDAD",
+            "PARTICIPA",
+            "USUARIO"
+        };
+
+        ResultSet rs = eBuscar.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
+                    participantes.add(participante);
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+    }
+
+    public String getApellidoNombreCreador() {
+
+        Entity e = new Entity(0, 0);//SELECT USUARIO
+
+        String[] col = {"usbid"};
+        Object[] condicion = {creador};
+
+        ResultSet rs = e.seleccionar(col, condicion);
+        if (rs != null) {
+            try {
+                rs.next();
+                String resp = rs.getString("apellidos");
+                resp += ", " + rs.getString("nombres");
+                rs.close();
+                return resp;
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
     //teniendo el idActividad hace un set del resto de atributos de la Actividad
     public void setActividad() {
         try {
@@ -228,21 +308,19 @@ public class Actividad extends Root {
     public boolean agregarActividad() {
         Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
         boolean resp;
+        
+        fechaCreacion = getFechaHora();
 
         String[] columnas = {
             "id_tipo_actividad",
             "creador",
-            "fecha_creacion",
-            "modificador",
-            "fecha_modif"
+            "fecha_creacion"
         };
 
         Object[] actividad = {
             idTipoActividad,
             creador,
-            fechaCreacion,
-            modificador,
-            fechaModif
+            fechaCreacion
         };
 
 
@@ -258,10 +336,10 @@ public class Actividad extends Root {
             String valorVerif = (String) v.getValor();
 
             /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
-                mensaje = "Todo campo obligatorio debe ser llenado";
-                return false;
-            }
-            resp &= Verificaciones.verif(campoVerif, valorVerif);*/
+             mensaje = "Todo campo obligatorio debe ser llenado";
+             return false;
+             }
+             resp &= Verificaciones.verif(campoVerif, valorVerif);*/
         }
 
         if (resp = e.insertar2(columnas, actividad)) {
@@ -278,6 +356,7 @@ public class Actividad extends Root {
             return resp;
 
         }
+
         Entity ePariticipa = new Entity(1, 7);//INSERT PARTICIPA
         String[] columnas2 = {
             "id_act",
@@ -285,11 +364,9 @@ public class Actividad extends Root {
         };
         if (resp) {
             Iterator itParticipantes = this.participantes.iterator();
-
             while (resp &= itParticipantes.hasNext()) {
-                String participa = (String) itParticipantes.next();
-                String id = String.valueOf(this.idActividad);
-                String[] tuplaInsertar = {id, participa};
+                String participante = (String) itParticipantes.next();
+                Object[] tuplaInsertar = {idActividad, participante};
 
                 resp &= ePariticipa.insertar2(columnas2, tuplaInsertar);
             }
@@ -308,7 +385,7 @@ public class Actividad extends Root {
         boolean resp = true;
         Entity eValidar = new Entity(2, 2); //UPDATE ACTIVIDAD
         String[] condColumn = {
-          ATRIBUTOS[0]
+            ATRIBUTOS[0]
         };
         Object[] condValores = {
             idActividad
@@ -317,7 +394,7 @@ public class Actividad extends Root {
             ATRIBUTOS[3]
         };
         Object[] modificaciones = {
-          "validada"  
+            "validada"
         };
 
         resp = resp && eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
@@ -339,7 +416,6 @@ public class Actividad extends Root {
 
                     while (rs.next()) {
                         Actividad a = new Actividad();
-
                         a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
                         a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
                         a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
@@ -352,6 +428,7 @@ public class Actividad extends Root {
                         a.setDescripcion(rs.getString(ATRIBUTOS[9]));
                         a.setValidador(rs.getString(ATRIBUTOS[10]));
                         a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+                        a.setParticipantes(a.idActividad);
 
                         listaActividad.add(a);
                     }
@@ -398,6 +475,8 @@ public class Actividad extends Root {
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
 
                     a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+
+                    a.setParticipantes(id);
 
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
@@ -457,6 +536,8 @@ public class Actividad extends Root {
 
                     a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
 
+                    a.setParticipantes(id);
+
                     String[] ta = {"nombre_tipo_actividad"};
                     String[] idTipoAct = {"id_tipo_actividad"};
                     Integer[] idAct = {id};
@@ -470,12 +551,6 @@ public class Actividad extends Root {
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try {
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
 
         } else {
             System.out.println("RS NULO");
@@ -547,7 +622,7 @@ public class Actividad extends Root {
         Actividad a;
         while (it.hasNext()) {
             a = (Actividad) it.next();
-            System.out.println("El validador de la actividad es: "+ a.getValidador());
+            System.out.println("El validador de la actividad es: " + a.getValidador());
             if (a.getValidador().equalsIgnoreCase(validador)
                     && a.getValidacion().equalsIgnoreCase("en espera")) {
                 resp.add(a);
@@ -575,52 +650,62 @@ public class Actividad extends Root {
             CampoValor campoNM = (CampoValor) it.next();
             resp &= camposValores.get(i).modificar(campoNM, idActividad);
         }
-        Entity eActividad = new Entity(2,2);
-        String [] condColumn = {
-          ATRIBUTOS[0]
+
+        Entity eActividad = new Entity(2, 2);
+        fechaModif = getFechaHora();
+        String[] condColumn = {
+            ATRIBUTOS[0]
         };
         Object[] condValores = {
             idActividad
         };
         String[] colModif = {
-            ATRIBUTOS[3]
+            ATRIBUTOS[3],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
         };
         Object[] modValor = {
-            "en espera"
+            "en espera",
+            modificador,
+            fechaModif
         };
         resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
+            return false;
         }
         return resp;
     }
 
     public static void main(String args[]) {
-        Campo c = new Campo("Blah", "Entero", true);
-        String prueba = "1989";
-        String prueba2 = "Adios1987425";
+        /*Campo c = new Campo("Blah", "Entero", true);
+         String prueba = "1989";
+         String prueba2 = "Adios1987425";
 
+
+         Actividad a = new Actividad();
+         a.setCreador("alejandro");
+         a.setIdTipoActividad(66);
+         ArrayList<Actividad> lista = null;
+
+         lista = listarActividades();
+
+
+         System.out.println("\n\n\nListando todas las actividades");
+         imprimirLista(lista);
+         lista = a.listarActividadesDeTipo();
+
+
+
+         System.out.println("\n\n\nListando todas las actividades del tipo");
+         imprimirLista(lista);
+         lista = a.listarActividadesDeUsuario();
+
+         System.out.println("\n\n\nListando todas las actividades del usuario");
+         imprimirLista(lista);*/
 
         Actividad a = new Actividad();
-        a.setCreador("alejandro");
-        a.setIdTipoActividad(66);
-        ArrayList<Actividad> lista = null;
-
-        lista = listarActividades();
-
-
-        System.out.println("\n\n\nListando todas las actividades");
-        imprimirLista(lista);
-        lista = a.listarActividadesDeTipo();
-
-
-
-        System.out.println("\n\n\nListando todas las actividades del tipo");
-        imprimirLista(lista);
-        lista = a.listarActividadesDeUsuario();
-
-        System.out.println("\n\n\nListando todas las actividades del usuario");
-        imprimirLista(lista);
+        System.out.println("fecha hora " + a.getFechaHora());
     }
 }
