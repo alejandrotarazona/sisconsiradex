@@ -808,38 +808,38 @@ ul.action-links:after,
 
 #botonGuardar{
     border: 0;
-    background-image: url(iconos/Save_26x26.png);
+    background: url(iconos/Save_26x26.png) no-repeat;
 }
 
 #botonEliminar{
     border: 0;
-    background-image: url(iconos/Delete2_26x26.gif);
+    background: url(iconos/Delete2_26x26.gif) no-repeat;
 }
 
 #botonAgregar{
     border: 0;
-    background-image: url(iconos/Add_26x26.png);
+    background: url(iconos/Add_26x26.png) no-repeat ;
 }
 
 #botonModificar{
     border: 0;
-    background: url('iconos/Edit_26x26.png');
+    background: url('iconos/Edit_26x26.png') no-repeat ;
 }
 #botonResponder{
     border: 0;
-    background: url('iconos/Responder.png');
+    background: url('iconos/Responder.png') no-repeat ;
 }
 #botonExaminar{
     border: 0;
-    background-image: url(iconos/Examine_26x26.png);
+    background: url(iconos/Examine_26x26.png) no-repeat ;
 }
 
 #botonValidar{
     border: 0;
-    background: url('iconos/check_26x26.png');
+    background: url('iconos/check_26x26.png') no-repeat ;
 }
 
 #botonRechazar{
     border: 0;
-    background: url('iconos/Delete_26x26.png');
+    background: url('iconos/Delete_26x26.png') no-repeat ;
 }
