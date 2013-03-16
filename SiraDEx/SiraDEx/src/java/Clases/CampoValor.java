@@ -137,7 +137,7 @@ public class CampoValor implements Serializable {
         return null;
     }
 
-    /*Crea una lista de CampoValor con los campos y valores de la actividad cuyo
+    /* Crea una lista de CampoValor con los campos y valores de la actividad cuyo
      * id es pasado por parametro*/
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
         try {
@@ -171,15 +171,15 @@ public class CampoValor implements Serializable {
                         if (tipoCampo.equals(ATRIBUTO[8]) ||
                                 tipoCampo.equals("producto")) {
                             byte[] data = rs.getBytes(ATRIBUTO[8]);
-                            String path = cv.getValor()+".pdf";
+                            String path = cv.getValor();//al parecer le da el nombre al archivo
                             File file = bytesToFile(data, path);
-                            cv.setFile(file);
+                            cv.setFile(file);  
                         }
                         Campo c = new Campo();
                         c.setIdCampo(rs.getInt(ATRIBUTO[0]));
                         c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
                         c.setNombre(rs.getString(ATRIBUTO[2]));
-                        c.setTipo(rs.getString(tipoCampo));
+                        c.setTipo(rs.getString(ATRIBUTO[3]));
                         c.setLongitud(rs.getInt(ATRIBUTO[4]));
                         c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
                         c.setCatalogo(rs.getString(ATRIBUTO[7]));
