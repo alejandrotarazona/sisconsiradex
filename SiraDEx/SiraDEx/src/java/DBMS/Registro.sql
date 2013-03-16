@@ -44,10 +44,10 @@ INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
 */
 --Permisos
 
-INSERT INTO permiso (nombre) VALUES ('Estudiante');
-INSERT INTO permiso (nombre) VALUES ('Empleado');
-INSERT INTO permiso (nombre) VALUES ('Obrero');
-INSERT INTO permiso (nombre) VALUES ('Profesor');
+INSERT INTO permiso (nombre) VALUES ('estudiante');
+INSERT INTO permiso (nombre) VALUES ('empleado');
+INSERT INTO permiso (nombre) VALUES ('obrero');
+INSERT INTO permiso (nombre) VALUES ('profesor');
 
 
 ---Tiene_permiso

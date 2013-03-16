@@ -40,7 +40,8 @@
                enctype="multipart/form-data"
                action="/RegistrarActividad?method=save2">
 
-        <logic:iterate name="actividadForm" property="camposValores" id="camposValores" indexId="index">
+        <logic:iterate name="actividadForm" property="camposValores" id="camposValores" 
+                       indexId="index">
             <tr>
             <td><bean:write name="camposValores" property="campo.nombre"></bean:write>
                 <logic:equal name="camposValores" property="campo.obligatorio" value="true">
@@ -48,11 +49,13 @@
             </logic:equal>
         </td>
         <td><logic:equal name="camposValores" property="campo.tipo" value="texto">
-                <html:text name="camposValores" property="valor" indexed="true"/>  
+                <html:text name="camposValores" property="valor" indexed="true"
+                           maxlength="campo.longitud"/>  
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="numero">
-                <html:text name="camposValores" property="valor" indexed="true"/> 
+                <html:text name="camposValores" property="valor" indexed="true"
+                           maxlength="campo.longitud"/> 
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="fecha">    
@@ -61,7 +64,7 @@
                            readonly="true" />
             </span>
             <span class="fecha_click">
-                <html:hidden name="camposValores" property="valor" indexed="true" />
+                <html:hidden name="camposValores" property="valor" indexed="true"/>
             </span>
         </logic:equal>
 
@@ -70,10 +73,17 @@
         </logic:equal>
 
         <logic:equal name="camposValores" property="campo.tipo" value="textol">
-            <html:textarea name="camposValores" property="valor" indexed="true"></html:textarea>
+            <html:textarea name="camposValores" property="valor" indexed="true"/> 
         </logic:equal>
+        
         <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-            <html:file name="camposValores" property="file" indexed="true" maxlength="2024" size="2024"/>
+            <html:file name="camposValores" property="file" indexed="true" 
+                       maxlength="2024" size="2024"/>
+        </logic:equal>
+        
+        <logic:equal name="camposValores" property="campo.tipo" value="producto">
+            <html:file name="camposValores" property="file" indexed="true" 
+                       maxlength="2024" size="2024"/>
         </logic:equal>
 
         <%   int i = (Integer) pageContext.findAttribute("index");
@@ -82,7 +92,8 @@
         <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
             <html:select name="camposValores" property="valor" indexed="true">
                 <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name='<%=catalogoi%>' label="contenido" value="contenido"/>
+                <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
+                                        value="contenido"/>
             </html:select>
         </logic:equal>
     </td>

@@ -80,7 +80,7 @@ public class Agregar extends DispatchAction {
         ta.setId(id);
         ta.setTipoActividad();
         a.setNombreTipoActividad(ta.getNombreTipo());
-        ArrayList<CampoValor> valores = Clases.CampoValor.listar(id);
+        ArrayList<CampoValor> valores = Clases.CampoValor.listarCampos(id);
         a.setCamposValores(valores);
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");

@@ -214,11 +214,15 @@ public class Campo implements Serializable {
         if (rs != null) {
             try {
                 while (rs.next()) {
+                    String tipoCampo = rs.getString(ATRIBUTOS[3]);
+                    if (tipoCampo.equals("producto")){
+                        continue;
+                    }
                     Campo c = new Campo();
                     c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     c.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
                     c.setNombre(rs.getString(ATRIBUTOS[2]));
-                    c.setTipo(rs.getString(ATRIBUTOS[3]));
+                    c.setTipo(tipoCampo);
                     c.setLongitud(rs.getInt(ATRIBUTOS[4]));
                     c.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
                     c.setCatalogo(rs.getString(ATRIBUTOS[6]));

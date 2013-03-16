@@ -83,7 +83,7 @@ CREATE TABLE ACTIVIDAD(
     id_tipo_actividad integer NOT NULL,
     validacion        VARCHAR(20) DEFAULT 'en espera',
     creador           VARCHAR(20) NOT NULL,
-    fecha_creacion    VARCHAR(30) NOT NULL,
+    fecha_creacion    TEXT DEFAULT to_char( now(), 'DD/MM/YYYY HH12:MI:SS a.m.'),
     modificador       VARCHAR(20),
     fecha_modif       VARCHAR(30),
 
