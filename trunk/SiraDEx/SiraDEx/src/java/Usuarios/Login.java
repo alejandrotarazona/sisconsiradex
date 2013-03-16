@@ -56,9 +56,9 @@ public class Login extends DispatchAction {
         if (u.esUsuario()) {
             request.getSession().setAttribute("usuario", u);
             return mapping.findForward(SUCCESS);
-        } else {
-            return mapping.findForward(FAILURE);
         }
+            return mapping.findForward(FAILURE);
+        
 
     }
 }

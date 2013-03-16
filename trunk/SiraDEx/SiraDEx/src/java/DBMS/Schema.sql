@@ -32,7 +32,7 @@ CREATE TABLE PERMISO(
     estudiante          BOOLEAN DEFAULT FALSE,
     profesor            BOOLEAN DEFAULT FALSE, 
     obrero              BOOLEAN DEFAULT FALSE, 
-    empleado            BOOLEAN DEFAULT FALSE
+    empleado            BOOLEAN DEFAULT FALSE,
 
 CONSTRAINT PK_permiso PRIMARY KEY (id_tipo_actividad),
 CONSTRAINT FK_permiso__tipo_actividad 
@@ -57,12 +57,7 @@ CREATE TABLE USUARIO(
     email       VARCHAR(20),
     
 
-CONSTRAINT PK_usbid PRIMARY KEY (usbid),
-CONSTRAINT FK_usuario__permiso 
-            FOREIGN KEY (tipo) 
-            REFERENCES PERMISO 
-            ON UPDATE CASCADE 
-            ON DELETE CASCADE
+CONSTRAINT PK_usbid PRIMARY KEY (usbid)
 )
 WITH (
   OIDS=FALSE
