@@ -27,7 +27,8 @@ public class Actividad extends Root {
     private String modificador;
     private String fechaModif;
     private String producto;
-    private ArrayList<String> participantes = new ArrayList<>(0);;
+    private ArrayList<String> participantes = new ArrayList<>(0);
+    ;
     private ArrayList<CampoValor> camposValores;
     private String descripcion;
     private String validador;
@@ -38,11 +39,11 @@ public class Actividad extends Root {
         "validacion", //3
         "creador", //4
         "fecha_creacion",//5
-        "modificador",//6
-        "fecha_modif",//7
-        "producto",//8
-        "descripcion",//9
-        "validador"//10
+        "modificador", //6
+        "fecha_modif", //7
+        "producto", //8
+        "descripcion", //9
+        "validador" //10
     };
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
@@ -168,38 +169,37 @@ public class Actividad extends Root {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
     }
 
-    
-
     public void setParticipantes(int idAct) {
-        
+
         String participante = getApellidoNombreCreador();
-        System.out.println("apellido y nombre del creador: "+participante);
+        System.out.println("apellido y nombre del creador: " + participante);
         participantes.add(participante);
+        if (participantes.size() > 1) {
+            Entity eBuscar = new Entity(0, 7); //SELECT PARTICIPA
+            String[] atrib = {
+                ATRIBUTOS[0]
+            };
 
-        Entity eBuscar = new Entity(0, 7); //SELECT PARTICIPA
-        String[] atrib = {
-            ATRIBUTOS[0]
-        };
-        
-        Object[] valor = {
-            idAct
-        };
-        String[] tabABuscar = {
-            "ACTIVIDAD",
-            "PARTICIPA",
-            "USUARIO"
-        };
+            Object[] valor = {
+                idAct
+            };
+            String[] tabABuscar = {
+                "ACTIVIDAD",
+                "PARTICIPA",
+                "USUARIO"
+            };
 
-        ResultSet rs = eBuscar.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
-                    participantes.add(participante);
+            ResultSet rs = eBuscar.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor);
+            if (rs != null) {
+                try {
+                    while (rs.next()) {
+                        participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
+                        participantes.add(participante);
 
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
 
