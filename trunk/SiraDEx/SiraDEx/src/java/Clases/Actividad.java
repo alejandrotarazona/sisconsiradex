@@ -8,11 +8,7 @@ import DBMS.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.Iterator;
-import java.util.TimeZone;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -172,24 +168,7 @@ public class Actividad extends Root {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
     }
 
-    public String getFechaHora() {
-        TimeZone tz = TimeZone.getTimeZone("America/Caracas");
-        Calendar calendar = new GregorianCalendar(tz);
-        Date trialTime = new Date();
-        calendar.setTime(trialTime);
-        String dia = Integer.toString(calendar.get(Calendar.DATE));
-        String mes = Integer.toString(calendar.get(Calendar.MONTH) + 1);//Enero empieza en 0
-        String año = Integer.toString(calendar.get(Calendar.YEAR));
-        int amopm = calendar.get(Calendar.AM_PM);
-        String am_pm = " p.m.";
-        if (amopm == 0) {
-            am_pm = " a.m.";
-        }
-        String hora = Integer.toString(calendar.get(Calendar.HOUR));
-        String min = Integer.toString(calendar.get(Calendar.MINUTE));
-        String seg = Integer.toString(calendar.get(Calendar.SECOND));
-        return dia + "/" + mes + "/" + año + " " + hora + ":" + min + ":" + seg + am_pm;
-    }
+    
 
     public void setParticipantes(int idAct) {
         
@@ -308,19 +287,15 @@ public class Actividad extends Root {
     public boolean agregarActividad() {
         Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
         boolean resp;
-        
-        fechaCreacion = getFechaHora();
 
         String[] columnas = {
             "id_tipo_actividad",
-            "creador",
-            "fecha_creacion"
+            "creador"
         };
 
         Object[] actividad = {
             idTipoActividad,
-            creador,
-            fechaCreacion
+            creador
         };
 
 
@@ -331,9 +306,9 @@ public class Actividad extends Root {
             System.out.println("El campo " + camposValores.get(i).getCampo().getNombre());
             System.out.println("El valor " + camposValores.get(i).getValor());
             i++;
-            CampoValor v = (CampoValor) itValores.next();
-            Campo campoVerif = (Campo) v.getCampo();
-            String valorVerif = (String) v.getValor();
+            CampoValor cv = (CampoValor) itValores.next();
+            Campo campoVerif = (Campo) cv.getCampo();
+            String valorVerif = (String) cv.getValor();
 
             /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
              mensaje = "Todo campo obligatorio debe ser llenado";
@@ -349,8 +324,8 @@ public class Actividad extends Root {
             itValores = this.camposValores.iterator();
 
             while ((itValores.hasNext())) {
-                CampoValor v = (CampoValor) itValores.next();
-                resp = resp && v.agregar(this.idActividad);
+                CampoValor cv = (CampoValor) itValores.next();
+                resp = resp && cv.agregar(this.idActividad);
             }
 
             return resp;
@@ -611,7 +586,7 @@ public class Actividad extends Root {
     /**
      * Lista las actividades según su validador.
      *
-     * @param validador Nombre de la dependencia que desea listar las
+     * @param validador Nombre de la dependencia que desea listarCampos las
      * actividades a por validar.
      * @return Lista con las actividades realacionadas con el validador,
      */
@@ -652,7 +627,7 @@ public class Actividad extends Root {
         }
 
         Entity eActividad = new Entity(2, 2);
-        fechaModif = getFechaHora();
+        fechaModif = Clases.Log.getFechaHora();
         String[] condColumn = {
             ATRIBUTOS[0]
         };
@@ -706,6 +681,6 @@ public class Actividad extends Root {
          imprimirLista(lista);*/
 
         Actividad a = new Actividad();
-        System.out.println("fecha hora " + a.getFechaHora());
+        System.out.println("fecha hora " + Clases.Log.getFechaHora());
     }
 }

@@ -68,18 +68,19 @@
 <tr>
 <td>Realizado por</td>
 <td>
-    <html:multibox property="permisos">Empleados</html:multibox> Empleados<br>
-    <html:multibox property="permisos">Estudiantes</html:multibox> Estudiantes<br>
-    <html:multibox property="permisos">Profesores</html:multibox> Profesores<br>
-    <html:multibox property="permisos">Obreros</html:multibox> Obreros 
+    <html:multibox property="permisos">empleado</html:multibox> Empleados<br>
+    <html:multibox property="permisos">estudiante</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos">profesor</html:multibox> Profesores<br>
+    <html:multibox property="permisos">obrero</html:multibox> Obreros 
     </td>       
 </tr>
 <tr>
 <td>Producto</td>
-<td><html:text name="tipoActividadForm" property="producto"></html:text></td>
+<td><html:text name="tipoActividadForm" property="producto"/></td>
 </tr>
 <tr><td>Número de campos</td>
-<td><html:text name="tipoActividadForm" property="nroCampos"></html:text></td>
+<td><html:text name="tipoActividadForm" property="nroCampos" size="1" 
+               maxlength="2"/></td>
 </tr>
 </table>
 <br>

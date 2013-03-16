@@ -6,6 +6,8 @@ package Clases;
 
 import DBMS.Entity;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -76,17 +78,19 @@ public class CampoValor implements Serializable {
             if (file.length() > 2024) {
                 return false;
             }
-            Object[] aAgregar = {idCampo, idActividad, valor, file};
-            resp = resp && eAgregar.insertar(aAgregar);
+            Object[] tupla = {idCampo, idActividad, valor, file};
+            resp = resp && eAgregar.insertar(tupla);
         } else {
-            Object[] aAgregar = {idCampo, idActividad, valor};
-            resp = resp && eAgregar.insertar(aAgregar);
+            Object[] tupla = {idCampo, idActividad, valor};
+            resp = resp && eAgregar.insertar(tupla);
         }
 
         return resp;
     }
 
-    public static ArrayList<CampoValor> listar(int idTipoActividad) {
+    /*Crea una lista de CampoValor con los campos del tipo de actividad cuyo id 
+     es pasado por parametro*/
+    public static ArrayList<CampoValor> listarCampos(int idTipoActividad) {
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(0, 3);//SELECT CAMPO
         String[] columnas = {"id_tipo_actividad"};
@@ -120,8 +124,21 @@ public class CampoValor implements Serializable {
         return listaValor;
     }
 
-    //Crea una lista de CampoCatalogoValor, donde los valores dependen del 
-    //elemento cuyo id es pasado por parametro, los campos y valores son seteados
+    public static File bytesToFile(byte[] data, String path) {
+        try {
+            File archivo = new File(path);
+            try (FileOutputStream fileOS = new FileOutputStream(path)) {
+                fileOS.write(data);
+            }
+            return archivo;
+        } catch (IOException ex) {
+            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    /*Crea una lista de CampoValor con los campos y valores de la actividad cuyo
+     * id es pasado por parametro*/
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
         try {
             ArrayList<CampoValor> listaValor = new ArrayList<>(0);
@@ -134,7 +151,8 @@ public class CampoValor implements Serializable {
                 "longitud",
                 "obligatorio",
                 "valor",
-                "catalogo"
+                "catalogo",
+                "archivo"
             };
             String[] tabABuscar = {
                 TABLAS[0],
@@ -148,12 +166,20 @@ public class CampoValor implements Serializable {
                     while (rs.next()) {
                         CampoValor cv = new CampoValor();
                         cv.setValor(rs.getString(ATRIBUTO[6]));
-                        
+
+                        String tipoCampo = rs.getString(ATRIBUTO[3]);
+                        if (tipoCampo.equals(ATRIBUTO[8]) ||
+                                tipoCampo.equals("producto")) {
+                            byte[] data = rs.getBytes(ATRIBUTO[8]);
+                            String path = cv.getValor()+".pdf";
+                            File file = bytesToFile(data, path);
+                            cv.setFile(file);
+                        }
                         Campo c = new Campo();
                         c.setIdCampo(rs.getInt(ATRIBUTO[0]));
                         c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
                         c.setNombre(rs.getString(ATRIBUTO[2]));
-                        c.setTipo(rs.getString(ATRIBUTO[3]));
+                        c.setTipo(rs.getString(tipoCampo));
                         c.setLongitud(rs.getInt(ATRIBUTO[4]));
                         c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
                         c.setCatalogo(rs.getString(ATRIBUTO[7]));
@@ -165,7 +191,7 @@ public class CampoValor implements Serializable {
                 }
                 rs.close();
             }
- 
+
             return listaValor;
         } catch (SQLException ex) {
             Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);

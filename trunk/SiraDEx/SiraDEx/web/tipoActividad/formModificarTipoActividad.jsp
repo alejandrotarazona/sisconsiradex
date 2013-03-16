@@ -79,15 +79,15 @@
     </html:select>
 </td>
 </tr>
-<%--<tr>
-<td>Realizado por<span style="color:red">*</span> </td>
+<tr>
+<td>Realizado por</td>
 <td>
-    <html:multibox property="permiso">Empleados</html:multibox> Empleados<br>
-    <html:multibox property="permiso">Estudiantes</html:multibox> Estudiantes<br>
-    <html:multibox property="permiso">Profesores</html:multibox> Profesores<br>
-    <html:multibox property="permiso">Obreros</html:multibox> Obreros 
+    <html:multibox property="permisos">empleado</html:multibox> Empleados<br>
+    <html:multibox property="permisos">estudiante</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos">profesor</html:multibox> Profesores<br>
+    <html:multibox property="permisos">obrero</html:multibox> Obreros 
 </td>       
-</tr>--%>
+</tr>
 <tr>
 <td>Producto</td>
 <td><html:text name="tipoActividadForm" property="producto">
