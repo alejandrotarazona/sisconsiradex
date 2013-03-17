@@ -1,9 +1,10 @@
-DROP TABLE TIPO_ACTIVIDAD CASCADE;
-DROP TABLE PERMISO CASCADE;
 DROP TABLE USUARIO CASCADE;
+DROP TABLE TIPO_ACTIVIDAD CASCADE;
 DROP TABLE ACTIVIDAD CASCADE;
 DROP TABLE VALOR CASCADE;
 DROP TABLE CAMPO CASCADE;
+DROP TABLE PERMISO CASCADE;
+DROP TABLE TIENE_PERMISO CASCADE;
 DROP TABLE LOG CASCADE;
 DROP TABLE CATALOGO CASCADE;
 DROP TABLE CAMPO_CATALOGO CASCADE;
@@ -11,40 +12,13 @@ DROP TABLE ELEMENTO_CATALOGO CASCADE;
 DROP TABLE VALOR_CATALOGO CASCADE;
 DROP TABLE PARTICIPA CASCADE;
 
-CREATE TABLE TIPO_ACTIVIDAD(
-    id_tipo_actividad       SERIAL PRIMARY KEY,
-    nombre_tipo_actividad   VARCHAR(140) NOT NULL,
-    tipo_p_r                VARCHAR(1) NOT NULL,
-    nro_campos              SMALLINT NOT NULL,
-    descripcion             VARCHAR(2000) NOT NULL,
-    programa                VARCHAR(140) NOT NULL,
-    validador               VARCHAR(140) NOT NULL,
-    producto                VARCHAR(50) NOT NULL
-    
-)
-WITH (
-  OIDS=FALSE
-);
-
-
 CREATE TABLE PERMISO(
-    id_tipo_actividad   INT NOT NULL,
-    estudiante          BOOLEAN DEFAULT FALSE,
-    profesor            BOOLEAN DEFAULT FALSE, 
-    obrero              BOOLEAN DEFAULT FALSE, 
-    empleado            BOOLEAN DEFAULT FALSE,
-
-CONSTRAINT PK_permiso PRIMARY KEY (id_tipo_actividad),
-CONSTRAINT FK_permiso__tipo_actividad 
-            FOREIGN KEY (id_tipo_actividad) 
-            REFERENCES TIPO_ACTIVIDAD 
-            ON UPDATE CASCADE 
-            ON DELETE CASCADE
+    id_permiso  SERIAL PRIMARY KEY,
+    nombre      VARCHAR(20) NOT NULL
 )
 WITH (
   OIDS=FALSE
 );
-
 
 CREATE TABLE USUARIO(
     usbid       VARCHAR(20) NOT NULL,
@@ -63,6 +37,41 @@ WITH (
   OIDS=FALSE
 );
 
+
+CREATE TABLE TIPO_ACTIVIDAD(
+    id_tipo_actividad       SERIAL PRIMARY KEY,
+    nombre_tipo_actividad   VARCHAR(140) NOT NULL,
+    tipo_p_r                VARCHAR(1) NOT NULL,
+    nro_campos              SMALLINT NOT NULL,
+    descripcion             VARCHAR(2000) NOT NULL,
+    programa                VARCHAR(140) NOT NULL,
+    validador               VARCHAR(140) NOT NULL,
+    producto                VARCHAR(50) NOT NULL
+    
+)
+WITH (
+  OIDS=FALSE
+);
+
+CREATE TABLE TIENE_PERMISO(
+    id_tipo_actividad   INT NOT NULL,
+    id_permiso          INT NOT NULL,
+
+CONSTRAINT PK_tiene_permiso PRIMARY KEY (id_tipo_actividad, id_permiso),
+CONSTRAINT FK_tiene_permiso__tipo_actividad 
+            FOREIGN KEY (id_tipo_actividad) 
+            REFERENCES TIPO_ACTIVIDAD 
+            ON UPDATE CASCADE 
+            ON DELETE CASCADE,
+CONSTRAINT FK_tiene_permiso__permiso 
+            FOREIGN KEY (id_permiso) 
+            REFERENCES PERMISO 
+            ON UPDATE CASCADE 
+            ON DELETE CASCADE
+)
+WITH (
+  OIDS=FALSE
+);
 
 CREATE TABLE ACTIVIDAD(
     id_actividad      SERIAL,

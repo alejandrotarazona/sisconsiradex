@@ -42,11 +42,18 @@ INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Domingue
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (15,15,'Diana Vainberg');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
 */
+--Permisos
+
+INSERT INTO permiso (nombre) VALUES ('estudiante');
+INSERT INTO permiso (nombre) VALUES ('empleado');
+INSERT INTO permiso (nombre) VALUES ('obrero');
+INSERT INTO permiso (nombre) VALUES ('profesor');
 
 
---Permiso
-INSERT INTO permiso (id_tipo_actividad, estudiante, profesor, obrero, empleado) VALUES (1,false,true,false,false);
-INSERT INTO permiso (id_tipo_actividad, estudiante, profesor, obrero, empleado) VALUES (2,false,true,false,true);
+---Tiene_permiso
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,2);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
 
 
 --Usuarios
