@@ -91,8 +91,15 @@
                     <bean:write name="camposValores" property="valor"/>
                 </html:textarea>
             </logic:equal>
+
             <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-                <html:file name="camposValores" property="file" indexed="true"/>
+                <html:file name="camposValores" property="file" indexed="true" 
+                           maxlength="2024" size="2024"/>
+            </logic:equal>
+
+            <logic:equal name="camposValores" property="campo.tipo" value="producto">
+                <html:file name="camposValores" property="file" indexed="true" 
+                           maxlength="2024" size="2024"/>
             </logic:equal>
 
             <%   int i = (Integer) pageContext.findAttribute("index");
