@@ -4,7 +4,6 @@
  */
 package Clases;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -162,7 +161,7 @@ public class Verificaciones {
             String nombre = campo.getNombre();
             String nroCampo = "número "+String.valueOf(i);
             
-            /*verifica que el nombre sea válido (alfanúmerico, no vacío, a lo 
+            /*verifica que el nombre sea válido (alfanumérico, no vacío, a lo 
              * sumo 100 caracteres)*/ 
             Pattern alfanumerico = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9]+$");
             String respVerif = verifLPV(nroCampo, nombre, 100, alfanumerico, 
@@ -172,7 +171,7 @@ public class Verificaciones {
                 return false;
             }
             
-            /*verifica que la longitud sea válida (númerica, no vacía, a lo 
+            /*verifica que la longitud sea válida (numérica, no vacía, a lo 
              * sumo 3 caracteres, mayor que 0)*/
             if (tipo.equals("texto") || tipo.equals("textol")
                     || tipo.equals("numero")) {

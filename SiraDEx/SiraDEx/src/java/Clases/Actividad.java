@@ -205,6 +205,40 @@ public class Actividad extends Root {
 
     }
 
+    public String participantesToString() {
+        String p = "";
+        Iterator it = participantes.iterator();
+        while (it.hasNext()) {
+            p += (String) it.next() + ", ";
+        }
+        p = p.substring(0, p.length() - 2)+".";
+        return p;
+    }
+    
+    public String camposValoresToString() {
+        String s = "";
+        Iterator it = camposValores.iterator();
+        while (it.hasNext()) {
+            CampoValor cv = (CampoValor)it.next();
+            String tipo = cv.getCampo().getTipo();
+            switch (tipo) {
+                case "textol":
+                case "producto":
+                    continue;
+                case "fecha":
+                case "checkbox":
+                    s += cv.getCampo().getNombre()+": "+cv.getValor()+", ";
+                    break;
+                default:
+                    s += cv.getValor()+", ";
+                    break;
+            }
+        }
+        s = s.substring(0, s.length() - 2)+".";
+        return s;
+    }
+    
+
     public String getApellidoNombreCreador() {
 
         Entity e = new Entity(0, 0);//SELECT USUARIO
@@ -623,7 +657,9 @@ public class Actividad extends Root {
 
         for (int i = 0; it.hasNext() && resp; i++) {
             CampoValor campoNM = (CampoValor) it.next();
+            System.out.println("antes modif "+campoNM.getCampo().getNombre()+" "+resp);
             resp &= camposValores.get(i).modificar(campoNM, idActividad);
+            System.out.println("luego modif "+campoNM.getCampo().getNombre()+" "+resp);
         }
 
         Entity eActividad = new Entity(2, 2);
