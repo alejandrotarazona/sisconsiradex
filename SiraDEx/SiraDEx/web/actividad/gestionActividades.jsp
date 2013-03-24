@@ -17,10 +17,11 @@
 <html>
     <head>
         <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js"></script>
-        <script type="text/javascript" language="javascript" src="Interfaz/Scripts/jquery.dataTables.min.js"></script> 
+        <script type="text/javascript" language="javascript" src="Interfaz/Scripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="Interfaz/Scripts/ColReorderWithResize.js"></script>
         <style type="text/css" title="currentStyle">
             @import "Interfaz/Stylesheets/demo_page.css";
-            @import "Interfaz/Stylesheets/demo_table.css";
+            @import "Interfaz/Stylesheets/demo_table_jui.css";
         </style>
         <script>
             $(document).ready(function(){
@@ -31,6 +32,7 @@
 
                 });
                 $('#datatab').dataTable({
+                    "sDom": 'R<"H"lfr>t<"F"ip>',
                     "aoColumns": [       
                         /* Participantes */ null,
                         /* Actividad */ null,
@@ -38,12 +40,14 @@
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        /* Modificar */ { "bSortable": false },
-                        /* Eliminar */ { "bSortable": false }
+                        
+                        /* Acciones */ 
+                        { "bSortable": false },
+                        { "bSortable": false }
+                       
                     ]});
             });
         </script>
-
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Gestion de Actividades</title>
@@ -72,7 +76,7 @@
         <logic:present name="acts">
 
             <div id="demo">
-                <table id="datatab" cellpadding="0" cellspacing="0" border="0" class="display">
+                <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
                     <thead>
                         <tr>
                         <th>Participantes</th>
@@ -140,8 +144,8 @@
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                            </td>
-                            <td>
+                                </td>
+                                <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
@@ -150,15 +154,15 @@
                             </td>
                             <td>
                                 <bean:write name="act" property="validacion"></bean:write>
-                            </td>
-                            <td>
+                                </td>
+                                <td align="center">
                                 <html:form method="POST" action="/ModificarActividad?method=page">
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonModificar"
                                                  value=" "
                                                  title="Modificar"/>
                                 </td>
-                                <td>
+                                <td align="center">
                                 </html:form>
                                 <html:form method="POST" action="/EliminarActividad">
                                     <html:hidden name="act" property="idActividad" />
@@ -172,6 +176,5 @@
                 </table>
             </div>
         </logic:present>
-
     </body>
 </html>

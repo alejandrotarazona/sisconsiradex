@@ -37,43 +37,41 @@
                         <div class="inner">
                             <div id="main-content" class="clearfix">
                                 <div class="region region-content">
-                                    <article id="node-1" class="node node-page clearfix" about="/node/1" typeof="foaf:Document" role="article">
-                                        <div class="content clearfix">
-                                            <div class="field field-name-body field-type-text-with-summary field-label-hidden">
-                                                <div class="field-items">
-                                                    <div class="field-item even" property="content:encoded">
-                                                        <tiles:insert attribute="body" />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                        <br />
-                                                    </div>
+                                    <div class="content clearfix">
+                                        <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                                            <div class="field-items">
+                                                <div class="field-item even" property="content:encoded">
+                                                    <tiles:insert attribute="body" />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
+                                                    <br />
                                                 </div>
                                             </div>
                                         </div>
-                                    </article>
+                                    </div>
                                 </div>
                             </div>
                         </div>
