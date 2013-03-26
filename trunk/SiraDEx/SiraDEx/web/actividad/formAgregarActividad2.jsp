@@ -10,7 +10,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
+<script type="text/javascript" src="Interfaz/Scripts/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.9.2.custom.js"></script>
+<link rel="stylesheet" type="text/css" 
+      href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
 <script type="text/javascript">
     $(function() {
@@ -71,18 +74,18 @@
         <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
             <html:checkbox name="camposValores" property="valor" indexed="true"/>
             <html:hidden name="camposValores" property="valor" value="false" 
-                             indexed="true"/>
+                         indexed="true"/>
         </logic:equal>
 
         <logic:equal name="camposValores" property="campo.tipo" value="textol">
             <html:textarea name="camposValores" property="valor" indexed="true"/> 
         </logic:equal>
-        
+
         <logic:equal name="camposValores" property="campo.tipo" value="archivo">
             <html:file name="camposValores" property="file" indexed="true" 
                        maxlength="2024" size="2024"/>
         </logic:equal>
-        
+
         <logic:equal name="camposValores" property="campo.tipo" value="producto">
             <html:file name="camposValores" property="file" indexed="true" 
                        maxlength="2024" size="2024"/>

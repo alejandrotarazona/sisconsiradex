@@ -26,13 +26,12 @@
         <script>
             $(document).ready(function(){
 
-                $(".detalles").hide();
+                $(".textolargo").hide();
                 $(".mostrar").click(function(){
-                    $(this).siblings('.detalles').toggle();
+                    $(this).siblings('.textolargo').toggle();
 
                 });
                 $('#datatab').dataTable({
-                    "sDom": 'R<"H"lfr>t<"F"ip>',
                     "aoColumns": [       
                         /* Participantes */ null,
                         /* Actividad */ null,
@@ -40,7 +39,7 @@
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        
+                        /* Acciones */ null,
                         /* Acciones */ 
                         { "bSortable": false },
                         { "bSortable": false }
@@ -85,8 +84,9 @@
                         <th>Creación</th>
                         <th>Modificación</th>
                         <th>Validación</th>
-                        <th>Modificar</th>
-                        <th>Eliminar</th>
+                        <th>Producto</th>
+                        <th></th>
+                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -99,53 +99,41 @@
                                 <bean:write name="act" property="nombreTipoActividad"/>
                             </td>
                             <td>
-                                <%--cambiar el iterate de abajo por un atributo que tenga un 
-                                string con todos los v valores de los campos que no sean textol
-                                concatenados como v1, v2, ... , vn y los casos de fecha y checkbox
-                                concatenar los nombres de los campos también c1:v1,...cn:vn 
+
+                                <% out.print(a.camposValoresToString());
+                                CampoValor cv;
+                                String producto ="";
+                                %>
+
+                            <span class="textolargo">
+                                <b>Descripción: </b>
+                                <bean:write name="act" property="descripcion"/>
+
                                 <logic:iterate name="act" property="camposValores" 
                                                id="campoValor" indexId="index">
-                                    <%  CampoValor campoV = (CampoValor) pageContext.findAttribute("campoValor");
-
-                                            String tipo = (campoV.getCampo().getTipo());
-                                            if (tipo.equals("textol") || tipo.equals("checkbox")) {
-                                                Campo c = campoV.getCampo();
-                                                c.setTipo("1");
-                                                campoV.setCampo(c);
-
-                                            }
-                                        %>--%>    
-                                <% out.print(a.camposValoresToString());%>
-                                <%--<logic:notEqual name="campoValor" property="campo.tipo" value="1">
-                                    <bean:write name="campoValor" property="valor"/>,
-                                </logic:notEqual>
-
-                                    </logic:iterate>.-%> <br>
-
-                                <span class="detalles"><b>Descripción: </b><bean:write name="act" 
-                                            property="descripcion"/>
-                                <%--cambiar el iterate de abajo por un atributo que tenga un 
-                                    string con todos los v valores de los campos que sean textol
-                                    concatenados como v1, v2, ... , vn--%>
-                                <logic:iterate name="act" property="camposValores" 
-                                               id="campoValor" indexId="index">
-
-                                    <logic:equal name="campoValor" property="campo.tipo" value="textol">
+                                    <% cv = (CampoValor) pageContext.findAttribute("campoValor");
+                                        if (cv.getCampo().getTipo().equals("producto")) {
+                                            producto = (String)cv.getValor();
+                                        }%>
+                                    <logic:equal name="campoValor" property="campo.tipo" 
+                                                 value="textol">
                                         <br>
-                                        <b><bean:write name="campoValor" property="campo.nombre"/>: </b>
-                                        <bean:write name="campoValor" property="valor"/>
-                                    </logic:equal>
+                                        <b><bean:write name="campoValor" 
+                                                    property="campo.nombre"/>: </b>
+                                            <bean:write name="campoValor" property="valor"/>
+                                        </logic:equal>
 
-                                </logic:iterate></span>  
+                                </logic:iterate>
+                            </span>  
 
 
-                                <div class="mostrar" style=" cursor: pointer;"><a>Más detalles</a></div>
+                            <div class="mostrar" style=" cursor: pointer;"><a>Más detalles</a></div>
                             </td>
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                                </td>
-                                <td>
+                            </td>
+                            <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
@@ -154,8 +142,20 @@
                             </td>
                             <td>
                                 <bean:write name="act" property="validacion"></bean:write>
-                                </td>
-                                <td align="center">
+                            </td>
+
+                            <td align="center">
+                                <html:form method="POST" action="/AGestionActividades?method=listAll">
+                                    <html:hidden name="act" property="idActividad" />
+                                    <html:submit styleId="botonProducto"
+                                                 value=" "
+                                    title='<%= producto %>'/>
+                                    <logic:equal name="campoValor" property="campo.tipo" 
+                                                 value="producto"><br>
+                                        <bean:write name="campoValor" property="campo.nombre"/>
+                                    </logic:equal>    
+                                </html:form></td>
+                            <td align="center">
                                 <html:form method="POST" action="/ModificarActividad?method=page">
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonModificar"

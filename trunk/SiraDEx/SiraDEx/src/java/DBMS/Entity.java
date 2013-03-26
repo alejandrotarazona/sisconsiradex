@@ -102,16 +102,20 @@ public class Entity {
     public void setRespuesta(String[] respuesta) {
         this.respuesta = respuesta;
     }
+    
+    public String escapeSQL(Object o){
+        return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
+    }
 
     public ResultSet seleccionar(String[] columnas, Object[] valores) {
         sql = ACCION + " * "
                 + "FROM " + TABLA
-                + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
+                + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
         int i;
 
         for (i = 1; i < columnas.length; i++) {
-            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
+            sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
 
         System.out.println(sql);
@@ -142,7 +146,6 @@ public class Entity {
         sql = ACCION + " * "
                 + "FROM " + TABLA;
 
-
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -161,10 +164,10 @@ public class Entity {
         }
 
         sql += " FROM " + TABLA
-                + " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
+                + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
         for (i = 1; i < columnas.length; i++) {
-            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
+            sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
 
         System.out.println(sql);
@@ -188,10 +191,10 @@ public class Entity {
         for (i = 1; i < tablas.length; i++) {
             sql += " NATURAL JOIN " + tablas[i];
         }
-        sql += " WHERE " + columnas[0] + " = '" + valores[0] + "' ";
+        sql += " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
         for (i = 1; i < columnas.length; i++) {
-            sql += " AND " + columnas[i] + " = '" + valores[i] + "' ";
+            sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
 
         System.out.println(sql);
@@ -200,7 +203,7 @@ public class Entity {
 
         return rs;
     }
-    
+
     public ResultSet naturalJoin(String[] seleccionar, String[] tablas) {
 
         sql = ACCION + " " + seleccionar[0];
@@ -226,20 +229,20 @@ public class Entity {
             String[] colModificar, Object[] modificaciones) {
 
         sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
-                + modificaciones[0] + "' ";
+                + escapeSQL(modificaciones[0]) + "' ";
 
         int indice;
 
         for (indice = 1; indice < colModificar.length; indice++) {
             sql += " , " + colModificar[indice] + " = '"
-                    + modificaciones[indice] + "' ";
+                    + escapeSQL(modificaciones[indice]) + "' ";
         }
 
-        sql += " WHERE " + condColumnas[0] + " = '" + valores[0] + "' ";
+        sql += " WHERE " + condColumnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
         for (indice = 1; indice < condColumnas.length; indice++) {
             sql += " AND " + condColumnas[indice] + " = '"
-                    + valores[indice] + "' ";
+                    + escapeSQL(valores[indice]) + "' ";
         }
 
         DataBase db = DataBase.getInstance();
@@ -251,7 +254,7 @@ public class Entity {
     public boolean borrar(String columna, Object valor) {
 
         sql = ACCION + " FROM " + TABLA
-                + " WHERE " + columna + " = '" + valor + "'";
+                + " WHERE " + columna + " = '" + escapeSQL(valor) + "'";
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
@@ -265,9 +268,9 @@ public class Entity {
         sql = ACCION + " INTO " + TABLA
                 + " VALUES (";
         for (k = 0; k < (valores.length - 1); k++) {
-            sql += "'" + valores[k] + "' ,";
+            sql += "'" + escapeSQL(valores[k]) + "' ,";
         }
-        sql += "'" + valores[valores.length - 1] + "')";
+        sql += "'" + escapeSQL(valores[valores.length - 1]) + "')";
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
@@ -284,9 +287,9 @@ public class Entity {
         sql += columnas[k] + ")  VALUES (";
 
         for (k = 0; k < (valores.length - 1); k++) {
-            sql += "'" + valores[k] + "' ,";
+            sql += "'" + escapeSQL(valores[k]) + "' ,";
         }
-        sql += "'" + valores[valores.length - 1] + "')";
+        sql += "'" + escapeSQL(valores[valores.length - 1]) + "')";
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
@@ -300,7 +303,7 @@ public class Entity {
      * @param tabla Tabla donde se hará el INSERT
      * @param valores Valores que deben de insertarse en la fila de la tabla.
      * @param archivo Archivo que acompaña a los valores y tambien debe
-     * insrtarse
+     * insertarse
      * @return true si hace el insert, sino false.
      */
     public boolean insert(String tabla, Object[] valores, File archivo) {
@@ -309,7 +312,7 @@ public class Entity {
             sql = ACCION + " INTO " + TABLA
                     + " VALUES (";
             for (k = 0; k < (valores.length - 1); k++) {
-                sql += "'" + valores[k] + "' ,";
+                sql += "'" + escapeSQL(valores[k]) + "' ,";
             }
 
             System.out.println(sql);

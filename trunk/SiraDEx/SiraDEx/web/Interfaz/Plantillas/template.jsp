@@ -42,32 +42,8 @@
                                             <div class="field-items">
                                                 <div class="field-item even" property="content:encoded">
                                                     <tiles:insert attribute="body" />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
-                                                    <br />
+                                                    <br>
+                                                    <br>
                                                 </div>
                                             </div>
                                         </div>

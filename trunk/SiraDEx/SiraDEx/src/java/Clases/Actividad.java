@@ -221,16 +221,22 @@ public class Actividad extends Root {
         while (it.hasNext()) {
             CampoValor cv = (CampoValor)it.next();
             String tipo = cv.getCampo().getTipo();
+            String valor = cv.getValor();
+            if (Clases.Verificaciones.esVacio(valor)){
+                continue;
+            }
             switch (tipo) {
                 case "textol":
                 case "producto":
                     continue;
                 case "fecha":
                 case "checkbox":
-                    s += cv.getCampo().getNombre()+": "+cv.getValor()+", ";
+                    if (!valor.equals("false")){
+                    s += cv.getCampo().getNombre() + ", ";
+                    }
                     break;
                 default:
-                    s += cv.getValor()+", ";
+                    s += valor + ", ";
                     break;
             }
         }
@@ -330,32 +336,13 @@ public class Actividad extends Root {
         Object[] actividad = {
             idTipoActividad,
             creador
-        };
-
-
-        Iterator itValores = this.camposValores.iterator();
-        int i = 0;
-        while (resp = (itValores.hasNext())) {
-
-            System.out.println("El campo " + camposValores.get(i).getCampo().getNombre());
-            System.out.println("El valor " + camposValores.get(i).getValor());
-            i++;
-            CampoValor cv = (CampoValor) itValores.next();
-            Campo campoVerif = (Campo) cv.getCampo();
-            String valorVerif = (String) cv.getValor();
-
-            /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
-             mensaje = "Todo campo obligatorio debe ser llenado";
-             return false;
-             }
-             resp &= Verificaciones.verif(campoVerif, valorVerif);*/
-        }
+        };   
 
         if (resp = e.insertar2(columnas, actividad)) {
 
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
-            itValores = this.camposValores.iterator();
+            Iterator itValores = this.camposValores.iterator();
 
             while ((itValores.hasNext())) {
                 CampoValor cv = (CampoValor) itValores.next();

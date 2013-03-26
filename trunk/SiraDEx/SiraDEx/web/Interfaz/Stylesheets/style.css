@@ -190,7 +190,7 @@ ul.action-links {
  /* margin: 0 0.1em 0 0;*/
 }
 .action-links li a {
-  background: url(../images/gray.png) no-repeat 0 -198px;
+  background: url(images/gray.png) no-repeat 0 -198px;
   padding-left: 20px;
 }
 
@@ -350,7 +350,7 @@ header {
   box-sizing: border-box;
 }
 .block-search input.form-submit {
-  background: transparent url(../images/black.png) no-repeat 0 -330px;
+  background: transparent url(images/black.png) no-repeat 0 -330px;
   border: none;
   height: 16px;
   margin: -2em 4px 0 0;
@@ -363,7 +363,7 @@ header {
 .block-search .form-submit:hover,
 .block-search .form-submit:focus,
 .block-search .form-submit:active {
-  background: #fff url(../images/gray.png) no-repeat 0 -330px;
+  background: #fff url(images/gray.png) no-repeat 0 -330px;
   border: none;
   cursor: pointer;
 }
@@ -515,7 +515,7 @@ td.revision-current {
   width: 50px;
 }
 .comment span a.permalink {
-  background: url(../images/gray.png) no-repeat;
+  background: url(images/gray.png) no-repeat;
   display: inline-block;
   font-size: 0.923em;
   height: 20px;
@@ -656,7 +656,7 @@ ul.secondary {
 }
 .collapsible-toggle a,
 .collapsible-toggle a:visited {
-  background: #fff url(../images/black.png) no-repeat 16px -248px;
+  background: #fff url(images/black.png) no-repeat 16px -248px;
   bottom: 0;
   display: inline-block;
   height: 20px;
@@ -687,7 +687,7 @@ ul.secondary {
 .collapsible-toggle a:hover,
 .collapsible-toggle a:focus,
 .collapsible-toggle a:active {
-  background-image: url(../images/gray.png);
+  background-image: url(images/gray.png);
   outline: 0;
 }
 
@@ -842,4 +842,9 @@ ul.action-links:after,
 #botonRechazar{
     border: 0;
     background: url('iconos/Delete_26x26.png') no-repeat ;
+}
+
+#botonProducto{
+    border: 0;
+    background: url('iconos/pdf_26x26.png') no-repeat ;
 }

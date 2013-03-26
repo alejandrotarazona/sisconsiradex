@@ -5,9 +5,10 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" type="text/css" href="<html:rewrite 
-          page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
-
+<script type="text/javascript" src="Interfaz/Scripts/jquery-1.8.3.js"></script>
+<script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.9.2.custom.js"></script>
+<link rel="stylesheet" type="text/css" 
+      href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
 <script type="text/javascript">
     $(function() {
