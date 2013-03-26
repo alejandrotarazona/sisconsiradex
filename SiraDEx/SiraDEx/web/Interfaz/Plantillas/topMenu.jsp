@@ -6,12 +6,12 @@
 
 <header>
     <div id="block-system-main-menu" class="block block-system block-menu first">          
-        <ul class="menu">
-            <table bgcolor= "#E0F2F7">
-                <tr>
+                <ul class="menu">
+                    <table bgcolor= "#E0F2F7">
+                        <tr>
                 <td><logic:present name="user">
                         Usuario <html:link action="/VerPerfilUsuario" title="Ver perfil">
-                            <bean:write name="usuarioForm" property="nombres" /> <bean:write name="usuarioForm" property="apellidos" />
+                            <bean:write name="user" property="nombres" /> <bean:write name="user" property="apellidos" />
                         </html:link>
                         <html:link action="/Logout">
                             (Cerrar Sesión)

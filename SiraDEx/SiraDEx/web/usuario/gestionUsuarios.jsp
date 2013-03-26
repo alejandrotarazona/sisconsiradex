@@ -12,8 +12,8 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Usuarios</h1>
-        <logic:present name="usuarioForm" property="mensaje">
-            <bean:write name="usuarioForm" property="mensaje" /><br/>
+        <logic:present name="usuarios" property="mensaje">
+            <bean:write name="usuarios" property="mensaje" /><br/>
         </logic:present>
 
         <html:link action="/RegistrarUsuario?method=page"> 
@@ -35,8 +35,10 @@
             <table>
                 <logic:iterate name="usuarios" id="usr">
                     <tr>
-                    <b>USB-ID</b> <bean:write name="usr" property="username"></bean:write> 
-                    <b>Password</b> <bean:write name="usr" property="password"></bean:write><br>
+                    <h1><b>USB-ID: </b><html:link action="/ModificarUsuario?method=page" paramName="usr" 
+                               paramProperty="username" paramId="username">
+                            <bean:write name="usr" property="username"/>
+                    </html:link></h1>
                 </tr>
         </logic:iterate>
     </table>
