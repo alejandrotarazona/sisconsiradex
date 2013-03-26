@@ -377,7 +377,7 @@ public class Actividad extends Root {
 
     }
 
-    public boolean validar() {
+    public boolean validar(boolean valida) {
         boolean resp = true;
         Entity eValidar = new Entity(2, 2); //UPDATE ACTIVIDAD
         String[] condColumn = {
@@ -389,8 +389,14 @@ public class Actividad extends Root {
         String[] colModificar = {
             ATRIBUTOS[3]
         };
+        String val = "";
+        if (valida){
+            val = "Validada";
+        }else{
+            val = "Rechazada";
+        } 
         Object[] modificaciones = {
-            "validada"
+            val
         };
 
         resp = resp && eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
@@ -620,7 +626,7 @@ public class Actividad extends Root {
             a = (Actividad) it.next();
             System.out.println("El validador de la actividad es: " + a.getValidador());
             if (a.getValidador().equalsIgnoreCase(validador)
-                    && a.getValidacion().equalsIgnoreCase("en espera")) {
+                    && a.getValidacion().equalsIgnoreCase("En espera")) {
                 resp.add(a);
             }
         }
@@ -663,7 +669,7 @@ public class Actividad extends Root {
             ATRIBUTOS[7]
         };
         Object[] modValor = {
-            "en espera",
+            "En espera",
             modificador,
             fechaModif
         };

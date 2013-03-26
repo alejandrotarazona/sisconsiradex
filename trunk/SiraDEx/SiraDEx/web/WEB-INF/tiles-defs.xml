@@ -22,10 +22,6 @@
     <definition name="paginaInicial" extends="plantilla">
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
-
-    <definition name="sesionIniciada" extends="plantilla">
-        <put name="body" value="/bienvenida.jsp" />
-    </definition>
     
     <definition name="sesionCerrada" extends="plantilla">
         <put name="body" value="/EntradaSiraDEx.jsp" />
@@ -80,6 +76,10 @@
  
     <definition name="gestionActividades" extends="plantilla">
         <put name="body" value="/actividad/gestionActividades.jsp" />
+    </definition>
+    
+    <definition name="gestionValidaciones" extends="plantilla">
+        <put name="body" value="/actividad/gestionValidaciones.jsp" />
     </definition>
     
     <definition name="agregarActividad1" extends="plantilla">

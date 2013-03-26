@@ -46,15 +46,9 @@ public class Login extends DispatchAction {
             throws Exception {
         Usuario u = (Usuario) form;
 
-        if (u.getPassword().contains(";") || u.getPassword().contains("<")
-                || u.getPassword().contains(">") || u.getPassword().contains("'")
-                || u.getPassword().contains("&") || u.getPassword().contains("$")) {
-            u.setMensaje("La contraseña tiene un caracter invalido, por favor "
-                    + "intente de nuevo.");
-            return mapping.findForward(FAILURE);
-        }
         if (u.esUsuario()) {
-            request.getSession().setAttribute("usuario", u);
+            u.setUsuario();
+            request.getSession().setAttribute("user", u);
             return mapping.findForward(SUCCESS);
         }
             return mapping.findForward(FAILURE);

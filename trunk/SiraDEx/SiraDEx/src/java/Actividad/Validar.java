@@ -36,17 +36,28 @@ public class Validar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Actividad a = (Actividad) form;
+        Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String validador = user.getNombres();
         System.out.println("El validador es: "+validador);
-        boolean b = a.validar();
+        boolean validacion = act.validar(true);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
+       
         request.setAttribute("acts", acts);
-        if (b) {
+        
+        int tam = acts.size();
+        if (tam > 0) {
+            act = acts.get(tam - 1);
+            request.setAttribute("campos", act.getCamposValores());
+        } else {
+            request.setAttribute("acts", null);
+        } 
+        if (validacion) {
+            act.setMensaje("La Actividad ha sido validada.");
             return mapping.findForward(SUCCESS);
         } else {
+            act.setMensaje("Error: La Actividad no se pudo validar, intente de nuevo");
             return mapping.findForward(FAILURE);
         }
     }

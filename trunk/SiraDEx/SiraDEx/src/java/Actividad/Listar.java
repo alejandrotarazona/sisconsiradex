@@ -66,7 +66,7 @@ public class Listar extends DispatchAction {
             throws Exception {
         
         Actividad act = new Actividad();
-        ArrayList<Actividad> a = Clases.Actividad.listarActividades();
+        ArrayList<Actividad> a = Actividad.listarActividades();
         act.setMensaje(null);
        
         request.setAttribute("acts", a);
@@ -86,7 +86,7 @@ public class Listar extends DispatchAction {
     public ActionForward listType(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Actividad a = (Actividad) form;
+        Actividad a = new Actividad();
         a.setMensaje(null);
         ArrayList<Actividad> act = a.listarActividadesDeTipo();
 
@@ -99,9 +99,20 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(user.getNombres());
         
-        request.setAttribute("acts", acts);
+        Actividad act = new Actividad();
+        ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getNombres());
+        act.setMensaje(null);
+       
+        request.setAttribute("acts", a);
+        
+        int tam = a.size();
+        if (tam > 0) {
+            act = a.get(tam - 1);
+            request.setAttribute("campos", act.getCamposValores());
+        } else {
+            request.setAttribute("acts", null);
+        }    
         
         return mapping.findForward(SUCCESS4);
     }

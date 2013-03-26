@@ -21,7 +21,6 @@ public class Entrar extends DispatchAction {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
-    private static final String SUCCESS2 = "listarValidaciones";
 
     /**
      * This is the action called from the Struts framework.
@@ -72,7 +71,7 @@ public class Entrar extends DispatchAction {
         u.setUsername("07-10000");
         u.setUsuario();
         request.getSession().setAttribute("user", u);
-        return mapping.findForward(SUCCESS2);
+        return mapping.findForward(SUCCESS);
     }
 
 
