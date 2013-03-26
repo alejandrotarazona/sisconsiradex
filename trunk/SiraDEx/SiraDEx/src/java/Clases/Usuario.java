@@ -119,7 +119,14 @@ public class Usuario extends Root {
 
     @Override
     public String toString() {
-        return "Usuario{" + " username= " + username + ", password= " + password + " }";
+        return "Usuario{" + " username= " + username + ", password= " + password + ", rol= "+rol+ " }";
+    }
+    
+    public Usuario clone(){
+        Usuario res = new Usuario();
+        res.setUsername(username);
+        res.setUsuario();
+        return res;
     }
 
     public void setUsuario() {

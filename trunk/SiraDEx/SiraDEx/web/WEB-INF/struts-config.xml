@@ -62,6 +62,13 @@
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
+        <action name="usuarioForm" path="/ModificarUsuario" 
+                scope="request" type="Usuarios.Modificar" parameter="method">
+            <forward name="success" path="gestionUsuarios"/>
+            <forward name="failure" path="eliminarUsuario"/>
+            <forward name="page" path="gestionUsuario"/>
+        </action>
+        
         <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="session"
                 name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
@@ -199,7 +206,7 @@
             <forward name="page" path="modificarElemento"/>
             <forward name="success" path="gestionElementos"/>
             <forward name="failure" path="modificarElemento"/>    
-        </action>             
+        </action>            
         
         <!-- ===============================================================-->
           

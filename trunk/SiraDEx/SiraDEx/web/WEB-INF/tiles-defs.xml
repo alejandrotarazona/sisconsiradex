@@ -36,6 +36,10 @@
     <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
     </definition>
+    
+    <definition name="gestionUsuario" extends="plantilla">
+        <put name="body" value="/usuario/formGestionUsuario.jsp" />
+    </definition>
         
     <definition name="agregarUsuario" extends="plantilla">
         <put name="body" value="/usuario/formAgregarUsuario.jsp" />
