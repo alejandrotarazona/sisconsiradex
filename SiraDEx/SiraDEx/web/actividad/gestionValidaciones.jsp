@@ -1,16 +1,16 @@
 <%-- 
-    Document   : gestionActividad
-    Created on : 31/10/2012, 08:41:09 AM
+    Document   : gestionValidaciones
+    Created on : 26/03/2013, 3:14:21 AM
     Author     : SisCon
 --%>
 
 <%@page import="Clases.Actividad"%>
 <%@page import="Clases.Campo"%>
 <%@page import="Clases.CampoValor"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
@@ -39,7 +39,7 @@
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        /* Produucto */ null,
+                        /* Producto */ null,
                         /* Acciones */ 
                         { "bSortable": false },
                         { "bSortable": false }
@@ -52,18 +52,8 @@
         <title>SiraDEx | Gestion de Actividades</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de Actividades</h1>
-        <logic:notPresent name="TipoAct">
-            <html:link action="/RegistrarActividad?method=page"> 
-                Agregar Actividad
-            </html:link><br/>
-        </logic:notPresent>
-        <logic:present name="TipoAct">
-            <html:form action ="/RegistrarActividad?method=save">
-                <html:hidden name="TipoAct" property="idTipoActividad" />
-                <html:submit>Agregar actividad</html:submit>
-            </html:form>
-        </logic:present>
+        <h1 class="title" id="page-title">Gestion de Validaciones</h1>
+
 
         <h1>Actividades registradas en el sistema</h1>
         <logic:present name="actividadForm" property="mensaje">
@@ -156,25 +146,25 @@
                                     </logic:equal>    
                                 </html:form></td>
                             <td align="center">
-                                <html:form method="POST" action="/ModificarActividad?method=page">
+                                <html:form method="POST" action="/ValidarActividad">
                                     <html:hidden name="act" property="idActividad" />
-                                    <html:submit styleId="botonModificar"
+                                    <html:submit styleId="botonValidar"
                                                  value=" "
-                                                 title="Modificar"/>
+                                                 title="Validar"/>
                                 </html:form>
                             </td>
                             <td align="center">
-                                <html:form method="POST" action="/EliminarActividad">
+                                <html:form method="POST" action="/RechazarActividad">
                                     <html:hidden name="act" property="idActividad" />
-                                    <html:submit styleId="botonEliminar"
+                                    <html:submit styleId="botonRechazar"
                                                  value=" "
-                                                 title="Eliminar"
-                                                 onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
+                                                 title="Rechazar"
+                                                 onclick="return confirm('¿Está seguro que desea rechazar la actividad?')"/>
                                 </html:form></td></tr>
                             </logic:iterate>   
                     </tbody> 
                 </table>
             </div>
-        </logic:present>
+        </logic:present>    
     </body>
 </html>

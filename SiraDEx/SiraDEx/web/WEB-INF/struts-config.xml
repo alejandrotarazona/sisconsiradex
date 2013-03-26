@@ -19,21 +19,21 @@
     </global-exceptions>
 
     <global-forwards>
-        <forward name="welcome"  path="/Welcome.do"/>
+        <forward name="welcome" path="/Welcome.do"/>
+             
     </global-forwards>
 
     <action-mappings>
         <action path="/Login" type="Usuarios.Login" scope="session" 
                 parameter="method" name="usuarioForm">
-            <forward name="success" path="sesionIniciada"/>
+            <forward name="success" path="/sesion.jsp"/>
             <forward name="page" path="/autenticacion.jsp"/>
             <forward name="failure" path="/autenticacion.jsp"/>
         </action>
         
         <action path="/Entrar" type="Usuarios.Entrar" scope="session" 
                 parameter="method" name="usuarioForm">
-            <forward name="success" path="sesionIniciada"/>
-            <forward name="listarValidaciones" path="/ValidarActividad.do" redirect="true"/>            
+            <forward name="success" path="/sesion.jsp"/>           
         </action>
         
         <action path="/Logout" type="Usuarios.Logout" 
@@ -117,7 +117,7 @@
             <forward name="success1" path="gestionActividades"/>
             <forward name="success2" path="gestionActividades"/>
             <forward name="success3" path="gestionActividades"/>
-            
+            <forward name="success4" path="gestionValidaciones"/>
         </action>
         
         <action path="/RegistrarActividad" type="Actividad.Agregar" 
@@ -143,13 +143,14 @@
         
         <action name="actividadForm" path="/ValidarActividad" 
                  scope="request" type="Actividad.Validar">
-            <forward name="success" path="sesionIniciada"/>
-            <forward name="failure" path="sesionIniciada"/>
+            <forward name="success" path="gestionValidaciones"/>
+            <forward name="failure" path="gestionValidaciones"/>
             
          </action>
          <action name="actividadForm" path="/RechazarActividad" 
                  scope="session" type="Actividad.Rechazar">
-             <forward name="success" path="sesionIniciada"/>         
+            <forward name="success" path="gestionValidaciones"/>
+            <forward name="failure" path="sgestionValidaciones"/>         
          </action>
          
         <!-- ====================CATALOGOS==================================-->

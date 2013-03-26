@@ -21,6 +21,7 @@ public class Rechazar extends org.apache.struts.action.Action {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
+    private static final String FAILURE = "failure";
 
     /**
      * This is the action called from the Struts framework.
@@ -36,15 +37,28 @@ public class Rechazar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-         Actividad a = (Actividad) form;
+         Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String validador = user.getNombres();
         System.out.println("El validador es: "+validador);
-        a.eliminarActividad();
-
+        
+        boolean validacion = act.validar(false);
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
         request.setAttribute("acts", acts);
         
-        return mapping.findForward(SUCCESS);
+        int tam = acts.size();
+        if (tam > 0) {
+            act = acts.get(tam - 1);
+            request.setAttribute("campos", act.getCamposValores());
+        } else {
+            request.setAttribute("acts", null);
+        } 
+        if (validacion) {
+            act.setMensaje("La Actividad ha sido rechazada.");
+            return mapping.findForward(SUCCESS);
+        } else {
+            act.setMensaje("Error: La Actividad no se pudo rechazar, intente de nuevo");
+            return mapping.findForward(FAILURE);
+        }
     }
 }
