@@ -70,7 +70,8 @@ public class Modificar extends DispatchAction {
         Actividad act = (Actividad) form;
         
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
-        
+        Usuario modificador = (Usuario) request.getSession().getAttribute("user");
+        act.setModificador(modificador.getUsername());
         if (act.modificar(campos)) {
 
             act.setMensaje("La actividad ha sido modificada con éxito.");
@@ -88,7 +89,6 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(SUCCESS);         
       
         }
-        
         
         ArrayList ac = Clases.Actividad.listarActividades();
         request.setAttribute("actividades", ac);

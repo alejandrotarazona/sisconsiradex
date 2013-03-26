@@ -10,8 +10,6 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<link rel="stylesheet" type="text/css" href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 
 <html>

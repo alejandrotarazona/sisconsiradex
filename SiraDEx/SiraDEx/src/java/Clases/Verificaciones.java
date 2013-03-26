@@ -15,55 +15,84 @@ import java.util.regex.Pattern;
 public class Verificaciones {
 
     /**
+     * Verifica que si una cadena es vacía esto incluye también que sea de puros
+     * espacios blancos.
+     *
+     * @param cadena Cadena de caracterres.
+     * @return true en caso de que la cadena pasada como parámetro sea vacía,
+     * false en caso contrario.
+     */
+    public static boolean esVacio(String cadena) {
+
+        Matcher match = Pattern.compile("^[ ]*$").matcher(cadena);
+        if (match.lookingAt()) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
      * Verifica que el valor de un campo sea vacío esto incluye también que sea
      * puros espacios blancos.
      *
      * @param nombreCampo Cadena con el nombre del campo a verificar.
-     * @param cadena Cadena con el valor del campo.
-     * @return Mensaje de error en caso de que la cadena pasada como parámetro
-     * sea vacía, null en caso contrario.
+     * @param valorCampo Cadena con el valor del campo.
+     * @return Mensaje de error en caso de que el valor del campo pasado como 
+     * parámetro sea vacío, null en caso contrario.
      */
-    public static String verifVacio(String nombreCampo, String cadena) {
+    public static String verifVacio(String nombreCampo, String valorCampo) {
 
-        Matcher match = Pattern.compile("^[ ]*$").matcher(cadena);
-        if (match.lookingAt()) {
+        if (esVacio(valorCampo)) {
             return "Error: El campo '" + nombreCampo + "' es obligatorio.";
         }
         return null;
     }
 
     /**
-     * Verifica que el valor de un campo cumpla con la longitud dada, el patrón
-     * dado y si puede ser vacío o no.
+     * Verifica que el valor de un campo cumpla con el patrón dado.
      *
      * @param nombreCampo Cadena con el nombre del campo a verificar.
-     * @param cadena Cadena con el valor del campo.
-     * @param longitud Entero que representa la longitud máxima del valor.
+     * @param valorCampo Cadena con el valor del campo.
      * @param patron Patrón que debe cumplir el valor.
      * @param desc Cadena que describe el patrón dado.
-     * @param obliga Booleano que indica si el campo es obligatorio (no vacío).
-     * @return Mensaje de error en caso de que la cadena pasada como parámetro
-     * sea más larga al parámetro longitud, no cumpla con el patrón pasado como
-     * parámetro o sea vacía, null en caso contrario.
+     * @return Mensaje de error en caso de que el valor del campo pasado como
+     * parámetro no cumpla con el patrón dado, null en caso contrario.
      */
-    public static String verifLPV(String nombreCampo, String cadena, int longitud,
-            Pattern patron, String desc, boolean obliga) {
+    public static String verifPatron(String nombreCampo, String valorCampo,
+            Pattern patron, String desc) {
+
+        Matcher match = patron.matcher(valorCampo);
+        if (!match.lookingAt()) {
+            return "Error: El campo " + nombreCampo + " " + desc;
+        }
+        return null;
+    }
+
+    /**
+     * Verifica que el valor de un campo cumpla con la longitud dada y si puede
+     * ser vacío o no.
+     *
+     * @param nombreCampo Cadena con el nombre del campo a verificar.
+     * @param valorCampo Cadena con el valor del campo.
+     * @param longitud Entero que representa la longitud máxima del valor.
+     * @param obliga Booleano que indica si el campo es obligatorio (no vacío).
+     * @return Mensaje de error en caso de que el valor del campo pasado como 
+     * parámetro sea más largo al parámetro longitud, no cumpla con el patrón 
+     * dado o sea vacío, null en caso contrario.
+     */
+    public static String verifLV(String nombreCampo, String valorCampo, int longitud,
+            boolean obliga) {
 
         if (obliga) {
-            String respVerif = verifVacio(nombreCampo, cadena);
+            String respVerif = verifVacio(nombreCampo, valorCampo);
             if (respVerif != null) {
                 return respVerif;
             }
         }
 
-        if (cadena.length() > longitud) {
+        if (valorCampo.length() > longitud) {
             return "Error: El campo " + nombreCampo + " puede contener "
                     + "a lo sumo " + longitud + " carateres.";
-        }
-
-        Matcher match = patron.matcher(cadena);
-        if (!match.lookingAt()) {
-            return "Error: El campo " + nombreCampo + " " + desc;
         }
 
         return null;
@@ -78,16 +107,15 @@ public class Verificaciones {
      */
     public static boolean verifCF(TipoActividad ta) {
 
-        Pattern alfanumerico = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9]+$");
-        String respVerif = verifLPV("'Nombre de la Actividad'", ta.getNombreTipo(),
-                140, alfanumerico, "debe contener sólo carateres alfanuméricos", true);
+
+        String respVerif = verifLV("'Nombre de la Actividad'", ta.getNombreTipo(),
+                140, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;
         }
-        
-        respVerif = verifLPV("'Descripción'", ta.getDescripcion(), 200,
-                alfanumerico, "debe contener sólo carateres alfanuméricos", true);
+
+        respVerif = verifLV("'Descripción'", ta.getDescripcion(), 200, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;
@@ -118,8 +146,7 @@ public class Verificaciones {
             return false;
         }
 
-        respVerif = verifLPV("'Producto'", ta.getProducto(), 50, alfanumerico,
-                "debe contener sólo carateres alfanuméricos.", true);
+        respVerif = verifLV("'Producto'", ta.getProducto(), 50, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;
@@ -127,13 +154,19 @@ public class Verificaciones {
 
         Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
         String nro = String.valueOf(ta.getNroCampos());
+        respVerif = verifPatron("'Número de Campos'", nro, numerico,
+                "debe contener sólo números.");
+        if (respVerif != null) {
+            ta.setMensaje(respVerif);
+            return false;
+        }
+
         if (nro.equals("0")) {
             ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
-        respVerif = verifLPV("'Número de Campos'", nro, 2, numerico,
-                "debe contener sólo números.", true);
+        respVerif = verifLV("'Número de Campos'", nro, 2, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;
@@ -159,43 +192,48 @@ public class Verificaciones {
             Campo campo = (Campo) it.next();
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
-            String nroCampo = "número "+String.valueOf(i);
-            
+            String nroCampo = "número " + String.valueOf(i);
+
             /*verifica que el nombre sea válido (alfanumérico, no vacío, a lo 
-             * sumo 100 caracteres)*/ 
-            Pattern alfanumerico = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9]+$");
-            String respVerif = verifLPV(nroCampo, nombre, 100, alfanumerico, 
-                    "debe contener sólo carateres alfanuméricos.", true);
+             * sumo 100 caracteres)*/
+
+            String respVerif = verifLV(nroCampo, nombre, 100, true);
             if (respVerif != null) {
                 ta.setMensaje(respVerif);
                 return false;
             }
-            
+
             /*verifica que la longitud sea válida (numérica, no vacía, a lo 
              * sumo 3 caracteres, mayor que 0)*/
             if (tipo.equals("texto") || tipo.equals("textol")
                     || tipo.equals("numero")) {
 
                 Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
-                String nroLong = String.valueOf(campo.getLongitud());
-                respVerif = verifLPV(nroCampo, nroLong, 3, numerico,
-                        "debe contener sólo números", true);
+                String longitud = String.valueOf(campo.getLongitud());
+                respVerif = verifPatron(nroCampo, longitud, numerico,
+                        "debe contener sólo números.");
+                if (respVerif != null) {
+                    ta.setMensaje(respVerif);
+                    return false;
+                }
+                
+                respVerif = verifLV(nroCampo, longitud, 3, true);
                 if (respVerif != null) {
                     ta.setMensaje(respVerif);
                     return false;
                 }
 
-                if (nroLong.equals("0")) {
+                if (longitud.equals("0")) {
                     ta.setMensaje("Error: El campo número " + i + " debe contener "
                             + "al menos 1 como valor para su Longitud.");
                     return false;
                 }
             }
-            
+
             /*verifica que si el tipo es catálogo el valor de catalogo no sea vacío*/
             if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
                 ta.setMensaje("Error: Debe seleccionar un catálogo para el "
-                        + "campo número " + i+".");
+                        + "campo número " + i + ".");
                 return false;
             }
         }
@@ -208,33 +246,39 @@ public class Verificaciones {
      *
      * @param act Actividad a verificar
      * @return true si los valores son validos, de lo contrario retorna false.
-     
-    public static boolean verif(Actividad act) {
-        
-        Iterator it = act.getCamposValores().iterator();
-        Pattern patron;
-        while (it.hasNext()) {
+     *
+     * public static boolean verif(Actividad act) {
+     *
+     * Iterator it = act.getCamposValores().iterator(); Pattern patron; while
+     * (it.hasNext()) {
+     *
+     * CampoValor campoV = (CampoValor) it.next(); String tipo =
+     * campoV.getCampo().getTipo(); String nombre =
+     * campoV.getCampo().getNombre(); if (tipo.equals("texto") ||
+     * tipo.equals("textol")) { patron = Pattern.compile("^[a-zA-Z
+     * .,;"áéíóúAÉÍÓÚÑñ0-9]+$"); } if (tipo.equals("numero")) { patron =
+     * Pattern.compile("^[ ]*[0-9]+[ ]*$"); } if (tipo.equals("catalogo") &&
+     * campo.getCatalogo().equals("")) { ta.setMensaje(""); }
+     *
+     * ///FALTA TERMINAR }
+     *
+     *Iterator itValores = this.camposValores.iterator();
+        int i = 0;
+        while (resp = (itValores.hasNext())) {
 
-            CampoValor campoV = (CampoValor) it.next();
-            String tipo = campoV.getCampo().getTipo();
-            String nombre = campoV.getCampo().getNombre();
-            if (tipo.equals("texto") || tipo.equals("textol")) {
-                patron = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9]+$");
-            }
-            if (tipo.equals("numero")) {
-                patron = Pattern.compile("^[ ]*[0-9]+[ ]*$");
-            }
-            if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
-                ta.setMensaje("");
-            }
+            System.out.println("El campo " + camposValores.get(i).getCampo().getNombre());
+            System.out.println("El valor " + camposValores.get(i).getValor());
+            i++;
+            CampoValor cv = (CampoValor) itValores.next();
+            Campo campoVerif = (Campo) cv.getCampo();
+            String valorVerif = (String) cv.getValor();
 
-                    ///FALTA TERMINAR
-        }
-
-
-        return true;
-    }*/
-
+            /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
+             mensaje = "Todo campo obligatorio debe ser llenado";
+             return false;
+             }
+             resp &= Verificaciones.verif(campoVerif, valorVerif);*/  
+    
     /**
      * Funcion que verifica que el valor de una actividad se corresponda con el
      * tipo del campo respectivo.
@@ -329,18 +373,18 @@ public class Verificaciones {
         //Pattern patron = Pattern.compile("([a-zA-Z]|[0-9])+"); //alfanumerico de Alejandro
         //problema: admite que sea cualquier cosa siempre y cuando haya un caracter alfanumerico 
 
-        //Pattern patron = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9]+$");//alfanumerico de Jorge
+        Pattern patron = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9\\.,;\\+=\\-'\"\\?¿\\$!¡]+$");//alfanumerico de Jorge
         //problema: admite que sea puros espacios en blanco, se usa otro patron en verifCF para resolverlo 
 
         //Pattern patron = Pattern.compile("[0-9]+"); //numerico de Alejandro
         //problema: admite que sea cualquier cosa siempre y cuando empiece con un numero
 
-        Pattern patron = Pattern.compile("^[ ]*[0-9]+[ ]*$"); //numerico de Jorge
+        //Pattern patron = Pattern.compile("^[ ]*[0-9]+[ ]*$"); //numerico de Jorge
         //no tiene problemas, admite espacios-numeros-espacios, numeros-espacios y espacios-numeros.
 
         //Pattern patron = Pattern.compile("^[ ]*$");// vacío o espacios
 
-        String prueba1 = "ACVBó 8mñ";
+        String prueba1 = "ACVBó -',;.\"8mñ";
         String prueba2 = "A%$<5>';&";
         int i = -1;
 
@@ -348,23 +392,23 @@ public class Verificaciones {
         Matcher buscar = patron.matcher(prueba1);
         resp = buscar.lookingAt();
         if (!resp) {
-            System.out.println("Error: El campo no cumple con el patrón");
+            System.out.println(prueba1 + " NO cumple con el patrón");
         } else {
-            System.out.println("prueba1 cumple con el patrón");
+            System.out.println(prueba1 + " cumple con el patrón");
         }
         buscar = patron.matcher(prueba2);
         resp = buscar.lookingAt();
         if (!resp) {
-            System.out.println("Error: El campo no cumple con el patrón");
+            System.out.println(prueba2 + " NO cumple con el patrón");
         } else {
-            System.out.println("prueba2 cumple con el patrón");
+            System.out.println(prueba2 + " cumple con el patrón");
         }
         buscar = patron.matcher(prueba3);
         resp = buscar.lookingAt();
         if (!resp) {
-            System.out.println("Error: El campo no cumple con el patrón");
+            System.out.println(prueba3 + " NO cumple con el patrón");
         } else {
-            System.out.println("prueba3 cumple con el patrón");
+            System.out.println(prueba3 + " cumple con el patrón");
         }
 
     }
