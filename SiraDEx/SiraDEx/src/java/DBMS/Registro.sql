@@ -3,9 +3,9 @@
 
 --Tipo de actividad
 
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Formulacion de proyectos del BPDEx', 'R',12,'Projecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de PSC', 'P',6,'Nuevos diplomados','Tutoría','PSC','Informe de tutoría');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de pasantías cortas profesionales', 'R',3,'Tutoria de pasantias','Cooperacion tecnica','CCTDS','Informe de pasantia corta');
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Formulacion de proyectos del BPDEx', 'R',12,'Proyecto del BPDEx','Acción social y desarrollo comunitario','BPDEx','Proyecto del BDPEx');
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de Proyecto de Servicio Comunitario', 'P',6,'Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario','Coordinación de Formación Complementaria General','Informe de Servicio Comunitario del estudiante y acta de evaluación');
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,programa,validador,producto) VALUES ('Tutoría de pasantías cortas profesionales', 'R',3,'Tutoria de pasantías cortas','Cooperación técnica','Coordinación de Cooperación Técnica','Informe de pasantia corta del estudiante y acta de evaluación');
 
 --Campo de un tipo de actividad
 
@@ -20,18 +20,18 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Número de beneficiaros', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Tipo de beneficiaros', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Costo', 'numero', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Proyecto del BPDEX','archivo',null,true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (1,'Proyecto del BPDEX','producto',null,true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Fecha de inscripción', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Fecha de culminación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del tutor', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Nombre del alumno', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Código', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Informe de tutoría','archivo',null,true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (2,'Informe de tutoría','producto',null,true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3,'Fecha de inscripción', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3,'Fecha de culminación', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3, 'Informe de pasantía corta','archivo',null, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) VALUES (3,'Informe de pasantía corta','producto',null, true);
 
 --Actividad
 
@@ -55,8 +55,9 @@ INSERT INTO permiso (nombre) VALUES ('Profesor');
 
 ---Tiene_permiso
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,2);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (3,4);
+--INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,)
 
 
 --Usuarios
@@ -88,20 +89,20 @@ INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (1, 'Id coo
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (2, 'Nombre', 'texto');
 
 --      Campos de estudiantes
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (3, 'Nombre estudiante', 'Texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (3, 'Nombre estudiante', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (3, 'Carnet', 'Texto');
 
 --      Campos de profesores
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (4, 'Nombre profesor', 'Texto');
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (4, 'Id profesor', 'Texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (4, 'Nombre profesor', 'texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (4, 'Id profesor', 'texto');
 
 --      Campos de empleados
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (5, 'Nombre', 'Texto');
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (5, 'Carnet', 'Texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (5, 'Nombre', 'texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (5, 'Carnet', 'texto');
 
 --      Campos de obreros
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (6, 'Nombre', 'Texto');
-INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (6, 'Carnet', 'Texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (6, 'Nombre', 'texto');
+INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (6, 'Carnet', 'texto');
 
 --      Campos de carreras
 --INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) VALUES (4, 'Nombre carrera', 'Texto');
