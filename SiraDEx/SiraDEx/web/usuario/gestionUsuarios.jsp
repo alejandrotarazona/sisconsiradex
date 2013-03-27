@@ -8,12 +8,14 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestion de Usuarios</title>
+        <title>SiraDEx | Gestión de Usuarios</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de Usuarios</h1>
-        <logic:present name="usuarios" property="mensaje">
-            <bean:write name="usuarios" property="mensaje" /><br/>
+        <h1 class="title">Gestión de Usuarios</h1>
+        <logic:present name="usuarioForm" property="mensaje">
+            <div align="center">
+                <bean:write name="usuarioForm" property="mensaje" />
+            </div><br/>
         </logic:present>
 
         <html:link action="/RegistrarUsuario?method=page"> 
@@ -24,7 +26,7 @@
             Eliminar usuario
         </html:link> 
 
-        <h1 class="title" id="page-title">Usuarios registrados en el sistema</h1>
+        <h1>Usuarios registrados en el sistema</h1>
         <logic:notPresent name="usuarios">
             No hay usuarios que mostrar
         </logic:notPresent>
@@ -38,10 +40,10 @@
                     <h1><b>USB-ID: </b><html:link action="/ModificarUsuario?method=page" paramName="usr" 
                                paramProperty="username" paramId="username">
                             <bean:write name="usr" property="username"/>
-                    </html:link></h1>
+                        </html:link></h1>
                 </tr>
-        </logic:iterate>
-    </table>
-</logic:present>
+            </logic:iterate>
+        </table>
+    </logic:present>
 </body>
 </html>
