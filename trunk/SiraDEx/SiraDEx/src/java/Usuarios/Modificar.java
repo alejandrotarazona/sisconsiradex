@@ -8,11 +8,10 @@ import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.actions.DispatchAction;
 import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  *
@@ -35,8 +34,7 @@ public class Modificar extends DispatchAction {
         Usuario u = (Usuario) form;
         u.setUsuario();
         System.out.println("El usuario elegido es: " + u.toString());
-        request.setAttribute("usuarioM", u);
-        request.getSession().setAttribute("viejoUsuario", u);
+        request.getSession().setAttribute("usuarioNM", u);
         return mapping.findForward(PAGE);
     }
 
@@ -48,34 +46,21 @@ public class Modificar extends DispatchAction {
     public ActionForward modificar(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Usuario aux1 = (Usuario) form;
-        System.out.println("El nuevo usuario es: "+aux1.toString());
-        Usuario viejoUsuario = (Usuario) request.getSession().getAttribute("viejoUsuario");
-        System.out.println("El viejo usuario es: "+viejoUsuario.toString());
-        Usuario nuevoUsuario = viejoUsuario.clone();
-        nuevoUsuario.setRol(aux1.getRol());
-        
-        if(nuevoUsuario.getRol().equalsIgnoreCase("DEx")){
-            nuevoUsuario.setUsername(aux1.getUsername());
+        Usuario u = (Usuario) form;
+        System.out.println("El nuevo usuario es: " + u.toString());
+        Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
+        System.out.println("El viejo usuario es: " + usuarioNM.toString());
+
+
+        if (u.modificar(usuarioNM)) {
+
+            ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
+            request.setAttribute("usuarios", usrs);
+
+            u.setMensaje("El rol del Usuario se modificó con éxito.");
+            return mapping.findForward(SUCCESS);
         }
-        boolean b;
-
-        try {
-            b = nuevoUsuario.modificar(viejoUsuario);
-        } catch (Exception e) {
-            e.printStackTrace();
-            b = false;
-        }
-
-        ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
-        request.setAttribute("usuarios", usrs);
-
-        if (b) {
-            nuevoUsuario.setMensaje("El usuario se modificó con éxito.");
-        } else {
-            nuevoUsuario.setMensaje("No se pudo modificar el usuario.");
-        }
-
-        return mapping.findForward(SUCCESS);
+        u.setMensaje("No se pudo modificar el usuario.");
+        return mapping.findForward(PAGE);
     }
 }

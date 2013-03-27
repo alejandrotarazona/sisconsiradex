@@ -1,9 +1,9 @@
 <%-- 
     Document   : formGestionUsuario
     Created on : Mar 9, 2013, 6:22:20 PM
-    Author     : alejandro
+    Author     : SisCon
 --%>
-<%@page import="Clases.Usuario"%>
+
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -25,23 +25,26 @@
             )});              
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestión de Roles de Usuarios</title>
+        <title>SiraDEx | Edición del Rol de 
+            <bean:write name="usuarioForm" property="nombres"/> 
+            <bean:write name="usuarioForm" property="apellidos"/>
+        </title>
     </head>
     <body>
-        <logic:present name="usuarios" property="mensaje">
-            <bean:write name="usuarios" property="mensaje" /><br/>
+        <h1 class="title">Edición del Rol de 
+            <bean:write name="usuarioForm" property="nombres"/> 
+            <bean:write name="usuarioForm" property="apellidos"/>
+        </h1>
+
+        <logic:present name="usuarioForm" property="mensaje">
+            <bean:write name="usuarioForm" property="mensaje" /><br/>
         </logic:present>
-        <%
-            Usuario u = (Usuario) pageContext.getAttribute("usuarioM");
-            pageContext.setAttribute("viejoUsuario", u);
-        %>
-        <b>Nombre(s): </b><bean:write name="usuarioM" property="nombres"/><br>
-        <b>Apellido(s): </b><bean:write name="usuarioM" property="apellidos"/><br>
+
         <html:form action="/ModificarUsuario?method=modificar">
-            <b>Roles: </b><br>
+            <b>Rol </b>
+
             <html:select styleClass="selector"
-                         name="usuarioM" property="rol">
-                <html:option value="">-- Seleccione --</html:option>
+                         name="usuarioForm" property="rol">
                 <html:option value="obrero">Obrero</html:option>
                 <html:option value="profesor">Profesor</html:option>
                 <html:option value="empleado">Empleado Administrativo</html:option>
@@ -49,19 +52,23 @@
                 <html:option value="DEx">Personal del DEx</html:option>
                 <html:option value="WM">Webmaster</html:option>
             </html:select>
-            <br><br>
-            <div align="left" class="ocultable" style="visibility: hidden">
-                <b>Dependencia o Unidad </b><br>
-                <html:select name="usuarioM" property="username">
-                    <html:option value="">-- Seleccione --</html:option>
-                    <html:option value="PSC">PSC</html:option>
-                    <html:option value="CCTDS">CCTDS</html:option>
-                    <html:option value="USIDEx">USIDEx</html:option>
-                    <html:option value="UPAS">UPAS</html:option>
-                    <html:option value="BPDEx">BPDEx</html:option>
-                </html:select><br><br>
-            </div>
-            <html:submit>Modificar</html:submit>
-        </html:form>
-    </body>
+
+
+        <span align="left" class="ocultable" style="visibility: hidden">
+            <b>   Dependencia o Unidad </b>
+
+            <html:select name="usuarioForm" property="username">
+                <html:option value="">-- Seleccione --</html:option>
+                <html:option value="PSC">PSC</html:option>
+                <html:option value="CCTDS">CCTDS</html:option>
+                <html:option value="USIDEx">USIDEx</html:option>
+                <html:option value="UPAS">UPAS</html:option>
+                <html:option value="BPDEx">BPDEx</html:option>
+            </html:select>
+
+        </span>
+        
+        <div align="center"><html:submit>Modificar</html:submit></div>
+    </html:form>
+</body>
 </html>

@@ -24,6 +24,9 @@
     </global-forwards>
 
     <action-mappings>
+        
+        <!-- ===================USUARIOS====================================-->
+        
         <action path="/Login" type="Usuarios.Login" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="/sesion.jsp"/>
@@ -40,8 +43,6 @@
                 scope="session" name="usuarioForm">
             <forward name="success" path="sesionCerrada"/>
         </action>
-
-        <!-- ===================USUARIOS====================================-->
 
         <action path="/AGestionUsuarios" type="Usuarios.Listar"
                 scope="session" name="usuarioForm">
@@ -62,23 +63,22 @@
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
-        <action name="usuarioForm" path="/ModificarUsuario" 
-                scope="request" type="Usuarios.Modificar" parameter="method">
-            <forward name="success" path="gestionUsuarios"/>
-            <forward name="failure" path="eliminarUsuario"/>
-            <forward name="page" path="gestionUsuario"/>
-        </action>
-        
         <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="session"
                 name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
         </action>
         
-        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" scope="session"
-                parameter="method" name="usuarioForm">
+        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" 
+                scope="session" parameter="method" name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
             <forward name="failure" path="modificarPerfilUsuario"/>
             <forward name="page" path="modificarPerfilUsuario"/>
+        </action>
+        
+        <action path="/ModificarUsuario" name="usuarioForm" scope="request" 
+                type="Usuarios.Modificar" parameter="method">
+            <forward name="success" path="gestionUsuarios"/>
+            <forward name="page" path="modificarRolUsuario"/>
         </action>
         
         <!-- ================TIPOS DE ACTIVIDAD=============================-->

@@ -49,10 +49,10 @@
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestion de Actividades</title>
+        <title>SiraDEx | Gestión de Actividades</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de Actividades</h1>
+        <h1 class="title">Gestión de Actividades</h1>
         <logic:notPresent name="TipoAct">
             <html:link action="/RegistrarActividad?method=page"> 
                 Agregar Actividad
