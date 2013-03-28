@@ -82,10 +82,10 @@
 <tr>
 <td>Realizado por</td>
 <td>
-    <html:multibox property="permisos">empleado</html:multibox> Empleados<br>
-    <html:multibox property="permisos">estudiante</html:multibox> Estudiantes<br>
-    <html:multibox property="permisos">profesor</html:multibox> Profesores<br>
-    <html:multibox property="permisos">obrero</html:multibox> Obreros 
+    <html:multibox property="permisos" bundle="empleado">empleado</html:multibox> Empleados<br>
+    <html:multibox property="permisos" bundle="estudiante">estudiante</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos" bundle="profesor">profesor</html:multibox> Profesores<br>
+    <html:multibox property="permisos" bundle="obrero">obrero</html:multibox> Obreros 
 </td>       
 </tr>
 <tr>
