@@ -65,8 +65,8 @@ public class Agregar extends DispatchAction {
         }
         
         Actividad a = (Actividad) form;
-        a.setMensaje(null);
-       
+        a.setMensajeError(null);
+        
         return mapping.findForward(PAGE);
     }
 
@@ -122,11 +122,11 @@ public class Agregar extends DispatchAction {
                 double tamano = (tamBasico / divisor);
                 System.out.println("El tamano del archivo es: " + tamBasico);
                 if (tamano > 2.0) {
-                    a.setMensaje("El tamaño del archivo debe ser menor a 2MB");
+                    a.setMensajeError("Error: El tamaño del archivo debe ser menor a 2MB");
                     return mapping.findForward(FAILURE);
                 }
                 if (!cv0.getValor().endsWith(".pdf")) {
-                    a.setMensaje("El archivo DEBE ser un archivo \".pdf\"");
+                    a.setMensajeError("Error: El archivo DEBE ser un archivo \".pdf\"");
                     return mapping.findForward(FAILURE);
                 }
 
@@ -152,7 +152,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESSFULL);
         }
 
-        a.setMensaje("No se pudo registrar la actividad. Por favor revise que "
+        a.setMensaje("Error: No se pudo registrar la actividad. Por favor revise que "
                 + "los campos se han llenado correctamente.");
         return mapping.findForward(FAILURE);
 
@@ -184,7 +184,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESSFULL);
         }
 
-        a.setMensaje("No se pudo registrar la actividad. Por favor revise que "
+        a.setMensajeError("Error: No se pudo registrar la actividad. Por favor revise que "
                 + "los campos se han llenado correctamente.");
         return mapping.findForward(FAILURE);
 

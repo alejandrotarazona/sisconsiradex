@@ -49,7 +49,7 @@ public class Modificar extends DispatchAction {
         request.getSession().setAttribute("catalogos", catalogos);
 
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensaje(null);
+        ta.setMensajeError(null);
 
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();

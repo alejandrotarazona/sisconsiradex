@@ -42,7 +42,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-        act.setMensaje(null);
+        act.setMensajeError(null);
         act.setActividad();
                
         /*ArrayList con los valores no modificados*/

@@ -35,7 +35,7 @@
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
         <logic:present name="actividadForm" property="mensaje">
-            <br/> <div align="center"><b><bean:write name="actividadForm" 
+            <br> <div align="center"><b><bean:write name="actividadForm" 
                         property="mensaje" /></b></div><br/>
                 </logic:present>
 

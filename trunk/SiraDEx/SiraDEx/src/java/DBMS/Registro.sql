@@ -17,6 +17,10 @@ programa,validador,nro_productos) VALUES ('Tutoría de pasantías cortas profesi
 'R',3,'Tutoria de pasantías cortas','Cooperación técnica',
 'Coordinación de Cooperación Técnica', 2);
 --'Informe de pasantia corta del estudiante y acta de evaluación');
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
+programa,validador,nro_productos) VALUES ('Participación en actividades de voluntariado en representación de la USB',
+'R',4,'Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario','Unidad de Participación y Acción Social',1);
+--'Informe de participación'
 
 --Campo de un tipo de actividad
 
@@ -27,11 +31,11 @@ VALUES (1,'Fecha de inicio', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (1,'Fecha fin', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Nombre del autor', 'texto', 20, true);
+VALUES (1,'Nombre del autor', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Título', 'texto', 20, true);
+VALUES (1,'Título', 'texto', 40, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Área de atención', 'texto', 20, true);
+VALUES (1,'Área de atención', 'texto', 40, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (1,'Comunidad', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
@@ -50,15 +54,15 @@ VALUES (2,'Fecha de inscripción', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (2,'Fecha de culminación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Nombre del tutor', 'texto', 20, true);
+VALUES (2,'Nombre del tutor', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Nombre del alumno', 'texto', 20, true);
+VALUES (2,'Nombre del alumno', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (2,'Código', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Informe de tutoría','producto',null,true);
+VALUES (2,'Informe de Servicio Comunitario del estudiante','producto',null,true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Informe de tutoría','producto',null,true);
+VALUES (2,'Acta de evaluación','producto',null,true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (3,'Fecha de inscripción', 'fecha', 20, true);
@@ -66,7 +70,19 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 VALUES (3,'Fecha de culminación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (3,'Informe de pasantía corta','producto',null, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (3,'Acta de evaluación','producto',null, true);
 
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (4,'Fecha de inicio', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (4,'Fecha fin', 'fecha', 20, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (4,'Comunidad', 'texto', 40, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (4,'Nombre del voluntario', 'texto', 30, true);
+INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
+VALUES (4,'Informe de participación','producto',null, true);
 --Actividad
 
 /*INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, 
@@ -92,8 +108,10 @@ INSERT INTO permiso (nombre) VALUES ('Profesor');
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (3,4);
---INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,)
-
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,1);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,2);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,3);
+INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,4);
 
 --Usuarios
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 

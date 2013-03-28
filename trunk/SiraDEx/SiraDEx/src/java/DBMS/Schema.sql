@@ -29,7 +29,7 @@ CREATE TABLE USUARIO(
     apellidos   VARCHAR(50),
     telefono    VARCHAR(15),
     email       VARCHAR(20),
-    
+   
 
 CONSTRAINT PK_usbid PRIMARY KEY (usbid)
 )
@@ -58,15 +58,15 @@ CREATE TABLE TIENE_PERMISO(
     id_permiso          INT NOT NULL,
 
 CONSTRAINT PK_tiene_permiso PRIMARY KEY (id_tipo_actividad, id_permiso),
-CONSTRAINT FK_tiene_permiso__tipo_actividad 
-            FOREIGN KEY (id_tipo_actividad) 
-            REFERENCES TIPO_ACTIVIDAD 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_tiene_permiso__tipo_actividad
+            FOREIGN KEY (id_tipo_actividad)
+            REFERENCES TIPO_ACTIVIDAD
+            ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_tiene_permiso__permiso 
-            FOREIGN KEY (id_permiso) 
-            REFERENCES PERMISO 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_tiene_permiso__permiso
+            FOREIGN KEY (id_permiso)
+            REFERENCES PERMISO
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 )
 WITH (
@@ -85,15 +85,15 @@ CREATE TABLE ACTIVIDAD(
 
 
 CONSTRAINT PK_actividad PRIMARY KEY (id_actividad),
-CONSTRAINT FK_actividad__usuario 
-            FOREIGN KEY (creador) 
-            REFERENCES USUARIO 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_actividad__usuario
+            FOREIGN KEY (creador)
+            REFERENCES USUARIO
+            ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_actividad__tipo_actividad 
-            FOREIGN KEY (id_tipo_actividad) 
-            REFERENCES TIPO_ACTIVIDAD 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_actividad__tipo_actividad
+            FOREIGN KEY (id_tipo_actividad)
+            REFERENCES TIPO_ACTIVIDAD
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 )
 WITH (
@@ -107,13 +107,13 @@ CREATE TABLE CAMPO(
     tipo_campo        VARCHAR(16) NOT NULL,
     longitud          NUMERIC(3),
     obligatorio       BOOLEAN NOT NULL,
-    catalogo          VARCHAR DEFAULT '', 
+    catalogo          VARCHAR DEFAULT '',
 
 CONSTRAINT PK_campo PRIMARY KEY (id_campo),
-CONSTRAINT FK_campo__tipo_actividad 
-            FOREIGN KEY (id_tipo_actividad) 
-            REFERENCES TIPO_ACTIVIDAD 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_campo__tipo_actividad
+            FOREIGN KEY (id_tipo_actividad)
+            REFERENCES TIPO_ACTIVIDAD
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 )
 WITH (
@@ -127,15 +127,15 @@ CREATE TABLE VALOR(
     archivo      BYTEA,
  
 CONSTRAINT PK_valor PRIMARY KEY (id_campo, id_actividad),
-CONSTRAINT FK_valor__campo 
-            FOREIGN KEY (id_campo) 
-            REFERENCES CAMPO 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_valor__campo
+            FOREIGN KEY (id_campo)
+            REFERENCES CAMPO
+            ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_valor__actividad 
-            FOREIGN KEY (id_actividad) 
-            REFERENCES ACTIVIDAD 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_valor__actividad
+            FOREIGN KEY (id_actividad)
+            REFERENCES ACTIVIDAD
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 )
 WITH (
@@ -150,10 +150,10 @@ CREATE TABLE LOG(
     ip      VARCHAR(15) NOT NULL,
     usbid VARCHAR(20),
 
-CONSTRAINT FK_log__usuario 
-            FOREIGN KEY (usbid) 
-            REFERENCES USUARIO 
-            ON UPDATE CASCADE 
+CONSTRAINT FK_log__usuario
+            FOREIGN KEY (usbid)
+            REFERENCES USUARIO
+            ON UPDATE CASCADE
             ON DELETE CASCADE
 )
 WITH (
@@ -176,8 +176,8 @@ CREATE TABLE CAMPO_CATALOGO(
     nombre_campo    VARCHAR(100) NOT NULL,
     tipo_campo      VARCHAR(16) NOT NULL,
 
-CONSTRAINT FK_campo_catalogo__catalogo 
-            FOREIGN KEY (id_cat) 
+CONSTRAINT FK_campo_catalogo__catalogo
+            FOREIGN KEY (id_cat)
             REFERENCES CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
@@ -190,8 +190,8 @@ CREATE TABLE ELEMENTO_CATALOGO(
     id_elemento     SERIAL PRIMARY KEY,
     id_catalogo     INT NOT NULL,
 
-CONSTRAINT FK_elemento_catalogo__catalogo 
-            FOREIGN KEY (id_catalogo) 
+CONSTRAINT FK_elemento_catalogo__catalogo
+            FOREIGN KEY (id_catalogo)
             REFERENCES CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
@@ -205,15 +205,15 @@ CREATE TABLE VALOR_CATALOGO(
     id_elemento     INT NOT NULL,
     valor           VARCHAR NOT NULL,
 
-CONSTRAINT PK_valor_catalogo 
+CONSTRAINT PK_valor_catalogo
             PRIMARY KEY (id_campo, id_elemento),
-CONSTRAINT FK_valor_catalogo__campo_catalogo 
-            FOREIGN KEY (id_campo) 
+CONSTRAINT FK_valor_catalogo__campo_catalogo
+            FOREIGN KEY (id_campo)
             REFERENCES CAMPO_CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_valor_catalogo__elemento 
-            FOREIGN KEY (id_elemento) 
+CONSTRAINT FK_valor_catalogo__elemento
+            FOREIGN KEY (id_elemento)
             REFERENCES ELEMENTO_CATALOGO
             ON UPDATE CASCADE
             ON DELETE CASCADE
@@ -226,15 +226,15 @@ CREATE TABLE PARTICIPA(
     id_act          INT NOT NULL,
     usbid         VARCHAR(20) NOT NULL,
 
-CONSTRAINT PK_participa 
+CONSTRAINT PK_participa
             PRIMARY KEY (id_act, usbid),
-CONSTRAINT FK_participa__actividad 
-            FOREIGN KEY (id_act) 
+CONSTRAINT FK_participa__actividad
+            FOREIGN KEY (id_act)
             REFERENCES ACTIVIDAD
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_participa__usuario 
-            FOREIGN KEY (usbid) 
+CONSTRAINT FK_participa__usuario
+            FOREIGN KEY (usbid)
             REFERENCES USUARIO
             ON UPDATE CASCADE
             ON DELETE CASCADE
@@ -242,3 +242,4 @@ CONSTRAINT FK_participa__usuario
 WITH (
   OIDS=FALSE
 );
+

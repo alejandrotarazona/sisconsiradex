@@ -43,7 +43,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Catalogo cat = (Catalogo) form;
-        cat.setMensaje(null);
+        cat.setMensajeError(null);
         return mapping.findForward(PAGE);
     }
 
@@ -56,7 +56,7 @@ public class Agregar extends DispatchAction {
         if (cat.getNombre().contains(";") || cat.getNombre().contains("<")
                 || cat.getNombre().contains(">") || cat.getNombre().contains("'")
                 || cat.getNombre().contains("&") || cat.getNombre().contains("$")) {
-            cat.setMensaje("El nombre tiene un caracter invalido, por favor "
+            cat.setMensaje("Error: El nombre tiene un caracter invalido, por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
 
@@ -86,7 +86,7 @@ public class Agregar extends DispatchAction {
 
                 CampoCatalogo aux = c.get(i-1);
                 if (aux.isNombreInvalido()) {
-                    cat.setMensaje("El campo número " + i
+                    cat.setMensajeError("El campo número " + i
                             + " contiene un nombre inválido");
                     return mapping.findForward(FAILURE2);
                 }
@@ -99,7 +99,7 @@ public class Agregar extends DispatchAction {
             request.setAttribute("catalogos", cats);
             return mapping.findForward(SUCCESSFULL);
         }
-        cat.setMensaje("Error: El catálogo '" + cat.getNombre() + "' no ha sido"
+        cat.setMensajeError("Error: El catálogo '" + cat.getNombre() + "' no ha sido"
                 + " registrado, verifique que no exista un catálogo con ese nombre.");
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);

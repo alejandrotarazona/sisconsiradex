@@ -18,7 +18,8 @@ import org.apache.struts.action.ActionMapping;
 public class Root extends ActionForm {
 
     String mensaje;
-
+    String mensajeError;
+    
     public String getMensaje() {
         return mensaje;
     }
@@ -26,23 +27,30 @@ public class Root extends ActionForm {
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
+    
+    public String getMensajeError() {
+        return mensajeError;
+    }
+
+    public void setMensajeError(String mensajeError) {
+        this.mensajeError = mensajeError;
+    }
+    
     //método que soluciona el problema con los acentos y la ñ en las vistas 
 
+    /**
+     *
+     * @param mapping
+     * @param request
+     */
+    @Override
     public void reset(ActionMapping mapping, HttpServletRequest request) {
         try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException ex) {
         }
     }
-    /* método para eliminar los forms con session excepto el formUsuario
-
-    public void deleteSessions(HttpServletRequest _request) {
-        _request.getSession().removeAttribute("actividadForm");
-        _request.getSession().removeAttribute("tipoActividadForm");
-        _request.getSession().removeAttribute("catalogoForm");
-        _request.getSession().removeAttribute("elementoCatalogoForm");
-    }*/
-
+  
     /* método para eliminar los forms con session excepto el formUsuario y user*/
     
     public void deleteSessions(HttpServletRequest _request) {

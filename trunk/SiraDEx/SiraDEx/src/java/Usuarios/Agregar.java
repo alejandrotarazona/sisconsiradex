@@ -42,7 +42,7 @@ public class Agregar extends DispatchAction {
         if (u.getPassword().contains(";") || u.getPassword().contains("<")
                 || u.getPassword().contains(">") || u.getPassword().contains("'")
                 || u.getPassword().contains("&") || u.getPassword().contains("$")) {
-            u.setMensaje("La contraseña tiene un caracter invalido, por favor "
+            u.setMensajeError("Error: La contraseña tiene un caracter inválido, por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
         }
@@ -50,7 +50,7 @@ public class Agregar extends DispatchAction {
             u.setMensaje("El usuario ha sido registrado con éxito.");
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensaje("Falló el registro. El usuario ya existe en el sistema.");
+            u.setMensajeError("Error: Falló el registro. El usuario ya existe en el sistema.");
             return mapping.findForward(FAILURE);
         }
     }

@@ -44,7 +44,7 @@ public class Eliminar extends DispatchAction {
             u.setMensaje("El usuario ha sido eliminado.");
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensaje("El usuario que desea eliminar no existe.");
+            u.setMensajeError("Error: El usuario que desea eliminar no existe.");
             return mapping.findForward(FAILURE);
         }
     }

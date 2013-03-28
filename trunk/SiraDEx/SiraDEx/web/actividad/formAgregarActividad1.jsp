@@ -18,11 +18,16 @@
 
     <body>
         <h1 class="title" id="page-title">Registro de Actividad</h1>
+        
         <logic:present name="actividadForm" property="mensaje">
-            <br/><b><div align="center">
-                    <bean:write name="actividadForm" property="mensaje" />
-                </div></b><br/>
+            <div align="center"><b>
+                    <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b></div>
+                </logic:present> 
+            <logic:present name="actividadForm" property="mensajeError">
+            <div align="center"><b>
+              <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b></div>
             </logic:present>
+                
         <font size=2>Seleccione la Actividad que desea agregar.</font>
         <logic:present name="tipos">
             <table>

@@ -40,7 +40,7 @@ public class ModificarPerfil extends DispatchAction {
             throws Exception {
         Usuario u = (Usuario) form;
         
-        u.setMensaje(null);
+        u.setMensajeError(null);
         
         Usuario userNM = new Usuario();
         userNM.setUsername(u.getUsername());
