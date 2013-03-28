@@ -5,12 +5,10 @@
 --%>
 
 <%@page import="Clases.Actividad"%>
-<%@page import="Clases.Campo"%>
-<%@page import="Clases.CampoValor"%>
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
-<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
-<%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
-<%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
+<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
+<%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
+<%@taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
@@ -100,10 +98,7 @@
                             </td>
                             <td>
 
-                                <% out.print(a.camposValoresToString());
-                                    CampoValor cv;
-                                    String producto = "";
-                                %>
+                                <% out.print(a.camposValoresToString());%>
 
                             <span class="textolargo">
                                 <b>Descripción: </b>
@@ -111,10 +106,7 @@
 
                                 <logic:iterate name="act" property="camposValores" 
                                                id="campoValor" indexId="index">
-                                    <% cv = (CampoValor) pageContext.findAttribute("campoValor");
-                                        if (cv.getCampo().getTipo().equals("producto")) {
-                                            producto = (String) cv.getValor();
-                                        }%>
+
                                     <logic:equal name="campoValor" property="campo.tipo" 
                                                  value="textol">
                                         <br>
@@ -132,8 +124,8 @@
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                                </td>
-                                <td>
+                            </td>
+                            <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
@@ -142,19 +134,24 @@
                             </td>
                             <td>
                                 <bean:write name="act" property="validacion"></bean:write>
-                                </td>
+                            </td>
 
-                                <td align="center">
-                                <html:form method="POST" action="/AGestionActividades?method=listAll">
-                                    <html:hidden name="act" property="idActividad" />
-                                    <html:submit styleId="botonProducto"
-                                                 value=" "
-                                    title='<%= producto%>'/>
+                            <td align="center">
+                                <logic:iterate name="act" property="camposValores" 
+                                               id="campoValor" indexId="index">
                                     <logic:equal name="campoValor" property="campo.tipo" 
-                                                 value="producto"><br>
-                                        <bean:write name="campoValor" property="campo.nombre"/>
-                                    </logic:equal>    
-                                </html:form></td>
+                                                 value="producto">
+                                        <html:form method="POST" action="/AGestionActividades?method=listAll">
+                                            <html:hidden name="act" property="idActividad" />
+                                            <html:submit styleId="botonProducto"
+                                                         value=" "
+                                                         title="${campoValor.valor}"/>
+                                            <br>
+                                            <bean:write name="campoValor" property="campo.nombre"/>
+                                        </html:form>
+                                    </logic:equal>
+                                </logic:iterate>   
+                            </td>
                             <td align="center">
                                 <html:form method="POST" action="/ModificarActividad?method=page">
                                     <html:hidden name="act" property="idActividad" />
