@@ -5,12 +5,15 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.HttpServletRequest;
+import org.apache.struts.action.ActionMapping;
 
 /**
  *
@@ -162,45 +165,44 @@ public class TipoActividad extends Root {
         return false;
     }
 
-    private boolean checkValidador(String validador) {
-        return this.validador.equals(validador);
-    }
-
     private void setPermisos() {
         Entity ePermisos = new Entity(0, 19);
         ResultSet rs = ePermisos.listar();
-        ArrayList permiso;
+        ArrayList p = new ArrayList<>(0);
         if (rs != null) {
             try {
-                permiso = new ArrayList<>(0);
                 while (rs.next()) {
                     String esteTipo = rs.getString("nombre_tipo_actividad");
-                    if (this.nombreTipo.equalsIgnoreCase(esteTipo)) {
-                        String estePermiso = (String) rs.getString("nombre");
-                        permiso.add(estePermiso);
-                        System.out.println("Recuperando el permiso: " + estePermiso);
+                    if (nombreTipo.equals(esteTipo)) {
+                        String permiso = rs.getString("nombre");
+                        p.add(permiso);
+                        System.out.print("Agregado el permiso " + permiso);
+                        System.out.println(" de la actividad "+ esteTipo);
                     }
                 }
                 rs.close();
-                permisos = new String[permiso.size()];
-                for (int i = 0; i < permiso.size(); i++) {
-                    permisos[i] = (String) permiso.get(i);
+                permisos = new String[p.size()];
+                for (int i = 0; i < p.size(); i++) {
+                    permisos[i] = (String)p.get(i);
+                    System.out.println(permisos[i]);
                 }
+                
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            System.out.println("Salió null el ResultSet");
+            System.out.println("Salió null el ResultSet de setPermisos");
         }
     }
 
-    /* metodo para instancias los camzzzy*/
+    /* metodo para instancias los campos de un tipo de actividad un ves se tiene
+      el numero de campos y productos */
     public void setCampos() {
-        ArrayList<Campo> campos = new ArrayList<>();
+        ArrayList<Campo> cs = new ArrayList<>();
         for (int i = 0; i < nroCampos; i++) {
             Campo c = new Campo();
             c.setIdTipoActividad(id);
-            campos.add(c);
+            cs.add(c);
         }
 
         for (int i = 0; i < nroProductos; i++) {
@@ -208,9 +210,9 @@ public class TipoActividad extends Root {
             c.setIdTipoActividad(id);
             c.setObligatorio(true);
             c.setTipo("producto");
-            campos.add(c);
+            cs.add(c);
         }
-        this.campos = campos;
+        campos = cs;
     }
 
     public void setId() {
@@ -302,16 +304,16 @@ public class TipoActividad extends Root {
         for (int i = 0; i < permisos.length; i++) {
             String estePermiso = permisos[i];
             switch (estePermiso) {
-                case "estudiante":
+                case "Estudiante":
                     valoresPermisos[1] = 1;
                     break;
-                case "empleado":
+                case "Empleado":
                     valoresPermisos[1] = 2;
                     break;
-                case "obrero":
+                case "Obrero":
                     valoresPermisos[1] = 3;
                     break;
-                case "profesor":
+                case "Profesor":
                     valoresPermisos[1] = 4;
                     break;
             }
@@ -455,7 +457,7 @@ public class TipoActividad extends Root {
 
         while (it.hasNext()) {
             TipoActividad t = (TipoActividad) it.next();
-            if (t.checkValidador(validador)) {
+            if (t.getValidador().equals(validador)) {
                 tipos.add(t);
             }
         }
@@ -470,56 +472,50 @@ public class TipoActividad extends Root {
      * @return true en caso de lograr la modificación de los permisos.
      */
     public boolean modificarPermisos() {
+
+        Entity e = new Entity(5, 18);//DELETE TIENE_PERMISO
+        e.borrar("id_tipo_actividad", id);
+
+        e = new Entity(1, 18); //INSERT TIENE_PERMISO
+        String[] columnas = {"id_tipo_actividad", "id_permiso"};
+        Object[] valores = {id, null};
         boolean resp = true;
-
-        Entity e = new Entity(5, 18);
-        resp &= e.borrar("id_tipo_actividad", id);
-        
-        e = new Entity(1, 18);
-        String[] columnas = {
-            "id_tipo_actividad",
-            "id_permiso"
-        };
-
-        Object[] valores = {
-            id,
-            null
-        };
-
         for (int i = 0; i < permisos.length && resp; i++) {
-            /*
-         * estudiante -> 1
-         * empleado -> 2
-         * obrero -> 3
-         * profesor -> 4
-         */
-            System.out.println("El permiso nro "+i+" es: "+permisos[i]);
+
+            System.out.println("El permiso nro " + i + " es: " + permisos[i]);
             switch (permisos[i]) {
-                case "estudiante":
+                case "Estudiante":
                     valores[1] = 1;
                     resp &= e.insertar2(columnas, valores);
                     break;
-                case "empleado":
+                case "Empleado":
                     valores[1] = 2;
                     resp &= e.insertar2(columnas, valores);
                     break;
-                case "obrero":
+                case "Obrero":
                     valores[1] = 3;
                     resp &= e.insertar2(columnas, valores);
                     break;
-                case "profesor":
+                case "Profesor":
                     valores[1] = 4;
                     resp &= e.insertar2(columnas, valores);
                     break;
-
-
             }
         }
-
-
         return resp;
     }
-
+ 
+ //Con esto es que puedo definir que cuando el multibox no tenga nada el arreglo
+ //permisos tome el valor de nulo, pero como sobreescribe el reset de Root tuve 
+ //que agregar lo que estaba en ese reset taambien
+ public void reset(ActionMapping mapping, HttpServletRequest request){
+     try {       
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    permisos = null;
+}
     //en el parámetro taNM recibe un TipoActividad No Modificado
     public boolean modificar(TipoActividad taNM) {
 
@@ -572,12 +568,11 @@ public class TipoActividad extends Root {
         }
 
         resp &= e.modificar(condColumnas, valores, colModificar, modificaciones);
-        System.out.println("Update de campos fijos sin permisos " + resp);
+        System.out.println("modificacion de campos fijos sin permisos " + resp);
         Iterator it = taNM.getCampos().iterator();
 
-        resp &= Verificaciones.verifPerm(permisos);
         resp &= this.modificarPermisos();
-        System.out.println("Update de permisos " + resp);
+        System.out.println("modificacion de permisos " + resp);
 
         for (int i = 0; it.hasNext() && resp; i++) {
             Campo campoNM = (Campo) it.next();

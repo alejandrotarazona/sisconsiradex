@@ -63,11 +63,8 @@
     <tr>
     <td>Programa</td>
     <td>
-        <html:select property="programa">
-            <html:option value ="${programa}" >
-                <bean:write name="tipoActividadForm" property="programa"/></html:option>
+        <html:select property="programa">   
             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
-
         </html:select>
     </td>
 </tr>
@@ -75,8 +72,6 @@
 <td>Coordinación a validar</td>
 <td>       
     <html:select property="validador">
-        <html:option value ="${validador}" >
-            <bean:write name="tipoActividadForm" property="validador"/></html:option>
         <html:optionsCollection name="coordinaciones" label="contenido" value="contenido"/>
     </html:select>
 </td>
@@ -84,10 +79,10 @@
 <tr>
 <td>Realizado por</td>
 <td>
-    <html:multibox property="permisos" bundle="empleado">empleado</html:multibox> Empleados<br>
-    <html:multibox property="permisos" bundle="estudiante">estudiante</html:multibox> Estudiantes<br>
-    <html:multibox property="permisos" bundle="profesor">profesor</html:multibox> Profesores<br>
-    <html:multibox property="permisos" bundle="obrero">obrero</html:multibox> Obreros 
+    <html:multibox property="permisos" bundle="empleado">Empleado</html:multibox> Empleados<br>
+    <html:multibox property="permisos" bundle="estudiante">Estudiante</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos" bundle="profesor">Profesor</html:multibox> Profesores<br>
+    <html:multibox property="permisos" bundle="obrero">Obrero</html:multibox> Obreros 
 </td>       
 </tr>
 <tr>

@@ -70,10 +70,10 @@
 <tr>
 <td>Realizado por</td>
 <td>
-    <html:multibox property="permisos">empleado</html:multibox> Empleados<br>
-    <html:multibox property="permisos">estudiante</html:multibox> Estudiantes<br>
-    <html:multibox property="permisos">profesor</html:multibox> Profesores<br>
-    <html:multibox property="permisos">obrero</html:multibox> Obreros 
+    <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
+    <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
+    <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
+    <html:multibox property="permisos">Obrero</html:multibox> Obreros 
     </td>       
 </tr>
 <tr><td>Número de productos</td>
