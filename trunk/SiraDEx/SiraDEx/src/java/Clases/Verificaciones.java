@@ -379,6 +379,30 @@ public class Verificaciones {
 
         return resp;
     }
+    
+    /**
+     * Funcion que verifica el tamaño del arreglo de permisos y si el
+     * mismo es null.
+     * @param permisos
+     * @return 
+     */
+    public static boolean verifPerm(String[] permisos){
+        boolean resp = true;
+        resp &= (permisos.length > 0);
+        for (int i = 0; i < permisos.length && resp; i++){
+            switch (permisos[i]){
+                case "empleado":
+                case "estudiante":
+                case "obrero":
+                case "profesor":
+                    resp &= true;
+                    break;
+                default: resp = false;
+            }
+                
+        }
+        return true;
+    }
 
     public static void main(String[] args) {
 

@@ -462,52 +462,61 @@ public class TipoActividad extends Root {
         return tipos;
     }
 
-    public boolean modificarPermisos(String[] permisosNM) {
+    /**
+     * Modifica los permisos asociados a un tipo de actividad, eliminando
+     * primero los permisos previos dados a dicha actividad e insertand luego
+     * los nuevos permisos.
+     *
+     * @return true en caso de lograr la modificación de los permisos.
+     */
+    public boolean modificarPermisos() {
         boolean resp = true;
 
-        /*Entity ePermisos = new Entity(2, 18);//UPDATE TIENE_PERMISO
-         String[] condCol = {ATRIBUTOS[0], "id_permiso"};
-         Object[] valores = {id, 0};
-         String[] colModif = {"id_permiso"};
-         Object[] modif = {0};
+        Entity e = new Entity(5, 18);
+        resp &= e.borrar("id_tipo_actividad", id);
         
+        e = new Entity(1, 18);
+        String[] columnas = {
+            "id_tipo_actividad",
+            "id_permiso"
+        };
 
-         int menosLargo = Math.min(permisos.length, permisosNM.length);
-         for (int i = 0; i < menosLargo; i++) {
-         String permiso = permisos[i];
-         switch (permiso) {
-         case "estudiante":
-         valores[1] = 1;
-         break;
-         case "empleado":
-         valores[1] = 2;
-         break;
-         case "obrero":
-         valores[1] = 3;
-         break;
-         case "profesor":
-         valores[1] = 4;
-         break;
-         }
+        Object[] valores = {
+            id,
+            null
+        };
 
-         String permisoNM = permisosNM[i];
-         switch (permisoNM) {
-         case "estudiante":
-         modif[0] = 1;
-         break;
-         case "empleado":
-         modif[0] = 2;
-         break;
-         case "obrero":
-         modif[0] = 3;
-         break;
-         case "profesor":
-         modif[0] = 4;
-         break;
-         }
-         resp &= ePermisos.modificar(condCol, valores, colModif, modif);
-         System.out.println("Update del permiso " + permisosNM[i] + " por " + permisos[i] + " " + resp);
-         }*/
+        for (int i = 0; i < permisos.length && resp; i++) {
+            /*
+         * estudiante -> 1
+         * empleado -> 2
+         * obrero -> 3
+         * profesor -> 4
+         */
+            System.out.println("El permiso nro "+i+" es: "+permisos[i]);
+            switch (permisos[i]) {
+                case "estudiante":
+                    valores[1] = 1;
+                    resp &= e.insertar2(columnas, valores);
+                    break;
+                case "empleado":
+                    valores[1] = 2;
+                    resp &= e.insertar2(columnas, valores);
+                    break;
+                case "obrero":
+                    valores[1] = 3;
+                    resp &= e.insertar2(columnas, valores);
+                    break;
+                case "profesor":
+                    valores[1] = 4;
+                    resp &= e.insertar2(columnas, valores);
+                    break;
+
+
+            }
+        }
+
+
         return resp;
     }
 
@@ -518,7 +527,7 @@ public class TipoActividad extends Root {
             return false;
         }
 
-        boolean resp;
+        boolean resp = true;
 
         Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
 
@@ -562,14 +571,15 @@ public class TipoActividad extends Root {
             return false;
         }
 
-        resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
+        resp &= e.modificar(condColumnas, valores, colModificar, modificaciones);
         System.out.println("Update de campos fijos sin permisos " + resp);
         Iterator it = taNM.getCampos().iterator();
 
-        resp &= this.modificarPermisos(taNM.getPermisos());
+        resp &= Verificaciones.verifPerm(permisos);
+        resp &= this.modificarPermisos();
         System.out.println("Update de permisos " + resp);
 
-        for (int i = 0; it.hasNext(); i++) {
+        for (int i = 0; it.hasNext() && resp; i++) {
             Campo campoNM = (Campo) it.next();
             resp &= campos.get(i).modificar(campoNM, id);
             System.out.println("Update " + resp + " " + campoNM.getNombre());
