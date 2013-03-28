@@ -64,9 +64,14 @@
         </logic:present>
 
         <h1>Actividades registradas en el sistema</h1>
-        <logic:present name="actividadForm" property="mensaje">
-            <div align="center"><bean:write name="actividadForm" property="mensaje" /></div><br/>
-        </logic:present>
+        
+        <br><logic:present name="actividadForm" property="mensaje">
+            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="actividadForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+            </logic:present>
+        
         <logic:notPresent name="acts">
             <div align="center">No hay actividad que mostrar</div>
         </logic:notPresent>

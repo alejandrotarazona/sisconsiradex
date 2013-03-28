@@ -19,10 +19,7 @@
             </div>
         </logic:notPresent>
 
-<b><div class ="status">Mensaje status</div></b>
 
-<b><br><div class ="error">Mensaje error</div></b>
-        
         
         <p>Para ingresar al SiraDEx utilizando su USBID, por favor
             <html:link action="/Login?method=page">haga click aquí</html:link>

@@ -12,11 +12,13 @@
     </head>
     <body>
         <h1 class="title">Gestión de Usuarios</h1>
-        <logic:present name="usuarioForm" property="mensaje">
-            <div align="center">
-                <bean:write name="usuarioForm" property="mensaje" />
-            </div><br/>
-        </logic:present>
+        
+        <br><logic:present name="usuarioForm" property="mensaje">
+            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
+                </logic:present> 
+            <br><logic:present name="usuarioForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
+            </logic:present>
 
         <html:link action="/RegistrarUsuario?method=page"> 
             Registrar usuario

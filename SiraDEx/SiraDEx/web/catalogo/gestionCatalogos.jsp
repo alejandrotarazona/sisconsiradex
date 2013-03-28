@@ -16,9 +16,11 @@
             Agregar Catálogo
         </html:link><br/>
 
-        <logic:present name="catalogoForm" property="mensaje">
-            <b><div align="center"><bean:write name="catalogoForm" 
-                        property="mensaje" /></div></b><br/>
+         <br><logic:present name="catalogoForm" property="mensaje">
+            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="catalogoForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
             </logic:present>
 
         <h1>Catálogos registrados en el sistema</h1>

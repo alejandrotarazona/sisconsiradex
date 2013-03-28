@@ -17,9 +17,14 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Eliminar Usuario</h1>
-        <logic:present name="usuarioForm" property="mensaje">
-            <bean:write name="usuarioForm" property="mensaje" />
-        </logic:present>
+        
+        <br><logic:present name="usuarioForm" property="mensaje">
+            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
+                </logic:present> 
+            <br><logic:present name="usuarioForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
+            </logic:present>
+    
 
         <html:form action="/EliminarUsuario?method=delete">
             

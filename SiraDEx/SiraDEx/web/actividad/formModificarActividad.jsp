@@ -34,11 +34,13 @@
         <h1 class='title' id='page-title'>Edición de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="actividadForm" property="mensaje">
-            <br> <div align="center"><b><bean:write name="actividadForm" 
-                        property="mensaje" /></b></div><br/>
-                </logic:present>
-
+       <br><logic:present name="actividadForm" property="mensaje">
+            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="actividadForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+            </logic:present>
+        
         <html:form method="POST" enctype="multipart/form-data" 
                    action ="/ModificarActividad?method=update">
             <table>

@@ -33,10 +33,13 @@
         <h1 class='title' id='page-title'>Registro de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="actividadForm" property="mensaje">
-            <br/><b><div align="center">
-                    <bean:write name="actividadForm" property="mensaje" /></div></b><br/>
-                </logic:present>
+        <br><logic:present name="actividadForm" property="mensaje">
+            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="actividadForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+            </logic:present>
+                    
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
     <html:form method="POST"

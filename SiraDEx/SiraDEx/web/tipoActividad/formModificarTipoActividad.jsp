@@ -21,10 +21,12 @@
         <h1 class='title' id='page-title'>Edición del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <logic:present name="tipoActividadForm" property="mensaje">
-            <br/> <div align="center"><b><bean:write name="tipoActividadForm" 
-                        property="mensaje" /></b></div><br/>
-                </logic:present>
+        <br><logic:present name="tipoActividadForm" property="mensaje">
+            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
+                </logic:present> 
+            <br><logic:present name="tipoActividadForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
+            </logic:present><br>
 
         <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/ModificarTipoActividad?method=update">

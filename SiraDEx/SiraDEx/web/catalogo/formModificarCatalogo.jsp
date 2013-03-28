@@ -21,10 +21,13 @@
         <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
                 name="catalogoForm" property="nombre"/> </h1>
 
-        <logic:present name="catalogoForm" property="mensaje">
-            <br/> <div align="center"><b><bean:write name="catalogoForm" 
-                        property="mensaje" /></b></div><br/>
-                </logic:present>
+         <br><logic:present name="catalogoForm" property="mensaje">
+            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="catalogoForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
+            </logic:present>
+                        
                 <html:form method="POST" action ="/ModificarCatalogo?method=add">
 
         <tr>

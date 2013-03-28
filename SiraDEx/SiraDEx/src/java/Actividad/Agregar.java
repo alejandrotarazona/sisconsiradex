@@ -152,7 +152,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESSFULL);
         }
 
-        a.setMensaje("Error: No se pudo registrar la actividad. Por favor revise que "
+        a.setMensajeError("Error: No se pudo registrar la actividad. Por favor revise que "
                 + "los campos se han llenado correctamente.");
         return mapping.findForward(FAILURE);
 
