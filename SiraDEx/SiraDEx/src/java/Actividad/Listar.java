@@ -43,7 +43,7 @@ public class Listar extends DispatchAction {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         act.setCreador(username);
-        act.setMensaje(null);
+        act.setMensajeError(null);
         ArrayList<Actividad> a = act.listarActividadesDeUsuario();
  
         request.setAttribute("acts", a);
@@ -67,7 +67,7 @@ public class Listar extends DispatchAction {
         
         Actividad act = new Actividad();
         ArrayList<Actividad> a = Actividad.listarActividades();
-        act.setMensaje(null);
+        act.setMensajeError(null);
        
         request.setAttribute("acts", a);
         
@@ -87,7 +87,7 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad a = new Actividad();
-        a.setMensaje(null);
+        a.setMensajeError(null);
         ArrayList<Actividad> act = a.listarActividadesDeTipo();
 
         request.setAttribute("acts", act);
@@ -102,7 +102,7 @@ public class Listar extends DispatchAction {
         
         Actividad act = new Actividad();
         ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getNombres());
-        act.setMensaje(null);
+        act.setMensajeError(null);
        
         request.setAttribute("acts", a);
         

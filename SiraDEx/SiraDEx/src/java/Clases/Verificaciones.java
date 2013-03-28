@@ -111,38 +111,38 @@ public class Verificaciones {
         String respVerif = verifLV("'Nombre de la Actividad'", ta.getNombreTipo(),
                 140, true);
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
         respVerif = verifLV("'Descripción'", ta.getDescripcion(), 200, true);
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
 
         respVerif = verifVacio("'Tipo'", ta.getTipoPR());
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
         respVerif = verifVacio("'Programa'", ta.getPrograma());
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
         respVerif = verifVacio("'Coordinación a validar'", ta.getValidador());
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
         String[] permisos = ta.getPermisos();
         if (permisos == null) {
-            ta.setMensaje("Error: El campo 'Realizado por' es obligatorio.");
+            ta.setMensajeError("Error: El campo 'Realizado por' es obligatorio.");
             return false;
         }
 
@@ -153,7 +153,7 @@ public class Verificaciones {
         respVerif = verifPatron("'Número de productos'", nro, numerico,
                 "debe contener sólo números.");
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
         if (nro.equals("0")) {
@@ -171,17 +171,17 @@ public class Verificaciones {
         respVerif = verifPatron("'Número de campos'", nro, numerico,
                 "debe contener sólo números.");
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
         if (nro.equals("0")) {
-            ta.setMensaje("Error: El campo 'Número de campos' debe contener al "
+            ta.setMensajeError("Error: El campo 'Número de Campos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
         respVerif = verifLV("'Número de campos'", nro, 2, true);
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
 
@@ -212,7 +212,7 @@ public class Verificaciones {
 
             String respVerif = verifLV(nroCampo, nombre, 100, true);
             if (respVerif != null) {
-                ta.setMensaje(respVerif);
+                ta.setMensajeError(respVerif);
                 return false;
             }
 
@@ -226,18 +226,18 @@ public class Verificaciones {
                 respVerif = verifPatron(nroCampo, longitud, numerico,
                         "debe contener sólo números.");
                 if (respVerif != null) {
-                    ta.setMensaje(respVerif);
+                    ta.setMensajeError(respVerif);
                     return false;
                 }
                 
                 respVerif = verifLV(nroCampo, longitud, 3, true);
                 if (respVerif != null) {
-                    ta.setMensaje(respVerif);
+                    ta.setMensajeError(respVerif);
                     return false;
                 }
 
                 if (longitud.equals("0")) {
-                    ta.setMensaje("Error: El campo número " + i + " debe contener "
+                    ta.setMensajeError("Error: El campo número " + i + " debe contener "
                             + "al menos 1 como valor para su Longitud.");
                     return false;
                 }
@@ -245,7 +245,7 @@ public class Verificaciones {
 
             /*verifica que si el tipo es catálogo el valor de catalogo no sea vacío*/
             if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
-                ta.setMensaje("Error: Debe seleccionar un catálogo para el "
+                ta.setMensajeError("Error: Debe seleccionar un catálogo para el "
                         + "campo número " + i + ".");
                 return false;
             }

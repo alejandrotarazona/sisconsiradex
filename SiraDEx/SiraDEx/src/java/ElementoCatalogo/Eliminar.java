@@ -55,7 +55,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             }
             return mapping.findForward(SUCCESS);
         }
-        e.setMensaje("Error: El elemento no pudo ser eliminado.");
+        e.setMensajeError("Error: El elemento no pudo ser eliminado.");
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         int tam = ec.size();

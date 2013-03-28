@@ -48,8 +48,9 @@ public class Eliminar extends org.apache.struts.action.Action {
         } else {
             ArrayList ta = Clases.TipoActividad.listar();
             request.setAttribute("tipos", ta);
-            t.setMensaje("El tipo de actividad que desea eliminar no existe.");
+            t.setMensajeError("Error: No se pudo eliminar el tipo de actividad");
             return mapping.findForward(FAILURE);
         }
     }
 }
+  

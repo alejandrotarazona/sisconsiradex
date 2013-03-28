@@ -38,7 +38,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
-        elemCat.setMensaje(null);
+        elemCat.setMensajeError(null);
 
         ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
         elemCat.setCamposValores(campos);

@@ -16,10 +16,15 @@
         <html:link action="/RegistrarTipoActividad?method=page"> 
             Agregar Tipo de Actividad<br>
         </html:link>
-        <logic:present name="tipoActividadForm" property="mensaje">
-            <br><div align="center"><b>
-                    <bean:write name="tipoActividadForm" property="mensaje" /></b></div>
+        <br><logic:present name="tipoActividadForm" property="mensaje">
+            <div align="center"><b>
+                    <div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b></div>
                 </logic:present> 
+            <br><logic:present name="tipoActividadForm" property="mensajeError">
+            <div align="center"><b>
+              <div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b></div>
+            </logic:present>
+            
         <h1>Tipos de Actividades registradas en el sistema</h1>
         <logic:notPresent name="tipos">
             No hay tipos de actividad que mostrar

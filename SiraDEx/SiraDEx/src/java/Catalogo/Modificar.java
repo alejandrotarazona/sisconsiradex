@@ -39,7 +39,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Catalogo cat = (Catalogo) form;
-        cat.setMensaje(null);
+        cat.setMensajeError(null);
 
         int idCat = cat.getIdCatalogo();
         ArrayList campos = Clases.CampoCatalogo.listar(idCat);
@@ -89,7 +89,7 @@ public class Modificar extends DispatchAction {
                 CampoCatalogo aux = nuevosCampos.get(i - 1);
                 System.out.println("El nombre es "+aux.getNombre());
                 if (aux.isNombreInvalido()) {
-                    cat.setMensaje("El campo adicional número " + i
+                    cat.setMensajeError("El campo adicional número " + i
                             + " contiene un nombre inválido");
                     return mapping.findForward(FAILURE);
                 } 

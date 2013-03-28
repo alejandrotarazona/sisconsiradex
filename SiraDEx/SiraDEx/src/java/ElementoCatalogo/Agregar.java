@@ -41,7 +41,7 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
-        e.setMensaje(null);
+        e.setMensajeError(null);
         int idCat = e.getIdCatalogo();
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
 
@@ -72,7 +72,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
 
-        e.setMensaje("No se pudo registrar el elemento. Por favor revise que "
+        e.setMensajeError("Error: No se pudo registrar el elemento. Por favor revise que "
                 + "los campos se han llenado correctamente.");
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);

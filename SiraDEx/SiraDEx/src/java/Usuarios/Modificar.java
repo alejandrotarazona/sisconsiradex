@@ -60,7 +60,7 @@ public class Modificar extends DispatchAction {
             u.setMensaje("El rol del Usuario se modificó con éxito.");
             return mapping.findForward(SUCCESS);
         }
-        u.setMensaje("No se pudo modificar el usuario.");
+        u.setMensajeError("Error: No se pudo modificar el usuario.");
         return mapping.findForward(PAGE);
     }
 }

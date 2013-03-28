@@ -708,8 +708,10 @@ ul.secondary {
   text-transform: uppercase;
 }
 .status {
-  background-color: #f8fff0;
-  color: #234600;
+  font-size: 1.231em;
+  text-align: center;
+  background-color: #d1ffd1; 
+  color: #2E8B57;
 }
 .warning {
   background-color: #fffce5;
@@ -717,8 +719,14 @@ ul.secondary {
   color: #840;
 }
 .error {
-  background-color: #fef5f1;
-  border-color: #ed541d;
+  font-size: 1.231em;
+  text-align: center;
+  /*background-color: #fef5f1;*/
+
+  /*background-color: #E9967A;*/
+  background-color: #FFA07A;
+   
+  /*border-color: #ed541d;*/
   color: #8c2e0b;
 }
 span.warning {

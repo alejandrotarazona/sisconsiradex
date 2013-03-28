@@ -46,7 +46,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             request.setAttribute("catalogos", cat);
             return mapping.findForward(SUCCESS);
         } else {
-            t.setMensaje("Error: El catálogo no pudo ser eliminado.");
+            t.setMensajeError("Error: El catálogo no pudo ser eliminado.");
             ArrayList cat = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cat);
             return mapping.findForward(FAILURE);

@@ -57,7 +57,7 @@ public class Rechazar extends org.apache.struts.action.Action {
             act.setMensaje("La Actividad ha sido rechazada.");
             return mapping.findForward(SUCCESS);
         } else {
-            act.setMensaje("Error: La Actividad no se pudo rechazar, intente de nuevo");
+            act.setMensajeError("Error: La Actividad no se pudo rechazar, intente de nuevo");
             return mapping.findForward(FAILURE);
         }
     }
