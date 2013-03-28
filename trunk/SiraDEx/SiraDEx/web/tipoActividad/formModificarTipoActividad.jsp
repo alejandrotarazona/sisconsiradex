@@ -31,43 +31,43 @@
             <table>
                 <tr>
                 <td>Nombre de la Actividad</td>
-            <td><html:text name="tipoActividadForm" property="nombreTipo">
-                    <bean:write name="tipoActividadForm" property="nombreTipo"/>
-                </html:text> </td>
+                <td><html:text name="tipoActividadForm" property="nombreTipo">
+                        <bean:write name="tipoActividadForm" property="nombreTipo"/>
+                    </html:text> </td>
+            </tr>
+            <tr>
+            <td>Descripción</td>
+            <td><html:textarea name="tipoActividadForm"  cols="80" rows="3"
+                           property="descripcion">
+                    <bean:write name="tipoActividadForm" property="descripcion"/>
+                </html:textarea>
+            </td>
         </tr>
         <tr>
-        <td>Descripción</td>
-        <td><html:textarea name="tipoActividadForm"  cols="80" rows="3"
-                       property="descripcion">
-                <bean:write name="tipoActividadForm" property="descripcion"/>
-            </html:textarea>
+        <td>Tipo</td>
+        <td><html:select property="tipoPR">
+                <html:option value ="${tipoActividadForm.tipoPR}">
+                    <bean:write name="tipoActividadForm" property="tipoPR"/>
+                </html:option>
+                <logic:equal name="tipoActividadForm" property="tipoPR" value="P">
+                    <html:option value="R">R</html:option>
+                </logic:equal>
+                <logic:equal name="tipoActividadForm" property="tipoPR" value="R">
+                    <html:option value="P">P</html:option>
+                </logic:equal>
+            </html:select>
         </td>
     </tr>
     <tr>
-    <td>Tipo</td>
-    <td><html:select property="tipoPR">
-            <html:option value ="${tipoActividadForm.tipoPR}">
-                <bean:write name="tipoActividadForm" property="tipoPR"/>
-            </html:option>
-            <logic:equal name="tipoActividadForm" property="tipoPR" value="P">
-                <html:option value="R">R</html:option>
-            </logic:equal>
-            <logic:equal name="tipoActividadForm" property="tipoPR" value="R">
-                <html:option value="P">P</html:option>
-            </logic:equal>
+    <td>Programa</td>
+    <td>
+        <html:select property="programa">
+            <html:option value ="${programa}" >
+                <bean:write name="tipoActividadForm" property="programa"/></html:option>
+            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+
         </html:select>
     </td>
-</tr>
-<tr>
-<td>Programa</td>
-<td>
-    <html:select property="programa">
-        <html:option value ="${programa}" >
-            <bean:write name="tipoActividadForm" property="programa"/></html:option>
-        <html:optionsCollection name="programas" label="contenido" value="contenido"/>
-
-    </html:select>
-</td>
 </tr>
 <tr>
 <td>Coordinación a validar</td>
@@ -89,10 +89,7 @@
 </td>       
 </tr>
 <tr>
-<td>Producto</td>
-<td><html:text name="tipoActividadForm" property="producto">
-        <bean:write name="tipoActividadForm" property="producto"/>
-    </html:text></td>
+
 </tr>
 </table>
 <table>
@@ -100,30 +97,52 @@
 <tr><td></td>
 <td><b>Nombre</b></td>
 <td><b>Tipo</b></td>
-<td><b>Catálogo</b></td>
 <td><b>Longitud</b></td>
-<td><b>Obligatoriedad</b></td></tr>
+<td><b>Obligatoriedad</b></td>
+<td><b>Catálogo</b></td>        
+</tr>
 <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                indexId="index">
 
-<tr><td></td>
-<td><html:text name="campos" property="nombre" indexed="true">
-        <bean:write name="campos" property="nombre"/>
-    </html:text> </td>
-<td>
-    <html:select name="campos" property="tipo" indexed="true">
-        <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                value="valor"/>
-    </html:select>
-</td>
-<td><html:text name="campos" property="longitud" indexed="true">
-        <bean:write name="campos" property="longitud"/>
-    </html:text></td>
+    <tr><td></td>
+    <td>
+        <html:text name="campos" property="nombre" indexed="true">
+            <bean:write name="campos" property="nombre"/>
+        </html:text> </td>
+    <td>
+        <logic:notEqual name="campos" property="tipo" value="producto">
+            <html:select name="campos"  property="tipo" indexed="true">
+                <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                        value="valor"/>
+            </html:select>   
+        </logic:notEqual>
 
-<td>
-    <html:checkbox name="campos" property="obligatorio" indexed="true" />
-    <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>
-</td>
+        <logic:equal name="campos" property="tipo" value="producto">
+            <html:select name="campos"  property="tipo" disabled="true" 
+                         indexed="true" >
+                <html:option value="producto">archivo</html:option>
+            </html:select>
+        </logic:equal>
+
+    </td>
+    <td>
+        <logic:notEqual name="campos" property="tipo" value="producto">
+            <html:text name="campos" property="longitud" indexed="true">
+                <bean:write name="campos" property="longitud"/>
+            </html:text>    
+        </logic:notEqual>
+    </td>
+
+    <td>
+        <logic:notEqual name="campos" property="tipo" value="producto">
+            <html:checkbox name="campos" property="obligatorio" indexed="true" />
+            <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>        
+        </logic:notEqual>
+
+        <logic:equal name="campos" property="tipo" value="producto">
+            <html:checkbox name="campos" property="obligatorio" disabled="true" indexed="true"/>
+        </logic:equal>
+    </td>
 
 
 </tr>
@@ -133,7 +152,7 @@
 <br>
 
 <div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el tipo de actividad?')"/></div>
+             onclick="return confirm('¿Está seguro que desea modificar el Tipo de Actividad?')"/></div>
 
 </html:form>
 </body>

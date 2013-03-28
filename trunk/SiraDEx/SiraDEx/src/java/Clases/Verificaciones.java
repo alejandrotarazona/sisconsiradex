@@ -146,27 +146,40 @@ public class Verificaciones {
             return false;
         }
 
-        respVerif = verifLV("'Producto'", ta.getProducto(), 50, true);
-        if (respVerif != null) {
-            ta.setMensaje(respVerif);
-            return false;
-        }
 
         Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
-        String nro = String.valueOf(ta.getNroCampos());
-        respVerif = verifPatron("'Número de Campos'", nro, numerico,
+         
+        String nro = String.valueOf(ta.getNroProductos());
+        respVerif = verifPatron("'Número de productos'", nro, numerico,
                 "debe contener sólo números.");
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;
         }
-
         if (nro.equals("0")) {
-            ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
+            ta.setMensaje("Error: El campo 'Número de productos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
-        respVerif = verifLV("'Número de Campos'", nro, 2, true);
+        respVerif = verifLV("'Número de productos'", nro, 1, true);
+        if (respVerif != null) {
+            ta.setMensaje(respVerif);
+            return false;
+        }
+        
+        nro = String.valueOf(ta.getNroCampos());
+        respVerif = verifPatron("'Número de campos'", nro, numerico,
+                "debe contener sólo números.");
+        if (respVerif != null) {
+            ta.setMensaje(respVerif);
+            return false;
+        }
+        if (nro.equals("0")) {
+            ta.setMensaje("Error: El campo 'Número de campos' debe contener al "
+                    + "menos 1 como valor.");
+            return false;
+        }
+        respVerif = verifLV("'Número de campos'", nro, 2, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;

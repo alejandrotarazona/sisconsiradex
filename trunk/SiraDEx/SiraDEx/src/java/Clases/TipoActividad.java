@@ -26,7 +26,7 @@ public class TipoActividad extends Root {
     private String[] permisos;
     private String programa;
     private String validador;
-    private String producto;
+    private int nroProductos;
     private ArrayList<Campo> campos;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
@@ -36,7 +36,7 @@ public class TipoActividad extends Root {
         "descripcion", //4
         "programa", //5
         "validador", //6
-        "producto" //7 
+        "nro_productos" //7 
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -140,12 +140,12 @@ public class TipoActividad extends Root {
         this.validador = validador;
     }
 
-    public String getProducto() {
-        return producto;
+    public int getNroProductos() {
+        return nroProductos;
     }
 
-    public void setProducto(String producto) {
-        this.producto = producto;
+    public void setNroProductos(int nroProductos) {
+        this.nroProductos = nroProductos;
     }
 
     private boolean checkPermiso(String rol) {
@@ -192,6 +192,25 @@ public class TipoActividad extends Root {
         } else {
             System.out.println("Salió null el ResultSet");
         }
+    }
+
+    /* metodo para instancias los camzzzy*/
+    public void setCampos() {
+        ArrayList<Campo> campos = new ArrayList<>();
+        for (int i = 0; i < nroCampos; i++) {
+            Campo c = new Campo();
+            c.setIdTipoActividad(id);
+            campos.add(c);
+        }
+
+        for (int i = 0; i < nroProductos; i++) {
+            Campo c = new Campo();
+            c.setIdTipoActividad(id);
+            c.setObligatorio(true);
+            c.setTipo("producto");
+            campos.add(c);
+        }
+        this.campos = campos;
     }
 
     public void setId() {
@@ -266,7 +285,7 @@ public class TipoActividad extends Root {
                 descripcion = rs.getString("descripcion");
                 programa = rs.getString("programa");
                 validador = rs.getString("validador");
-                producto = rs.getString("producto");
+                nroProductos = rs.getInt("nro_productos");
                 this.setPermisos();
                 rs.close();
             } catch (SQLException ex) {
@@ -317,7 +336,7 @@ public class TipoActividad extends Root {
             descripcion,
             programa,
             validador,
-            producto
+            nroProductos
         };
 
         System.out.println("No ha sido insertada previamente");
@@ -333,13 +352,6 @@ public class TipoActividad extends Root {
 
         if (resp = e.insertar2(aInsertar, valores)) {
             id = e.seleccionarMaxId(ATRIBUTOS[0]);
-
-            Campo c = new Campo();
-            c.setNombre(this.producto);
-            c.setIdTipoActividad(id);
-            c.setObligatorio(true);
-            c.setTipo("producto");
-            this.campos.add(c);
 
             System.out.println("Ya inserte el tipo de Actividad con ID " + id);
             Iterator it = campos.iterator();
@@ -400,7 +412,7 @@ public class TipoActividad extends Root {
                     t.setDescripcion(rs.getString(ATRIBUTOS[4]));
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
-                    t.setProducto(rs.getString(ATRIBUTOS[7]));
+                    t.setNroProductos(rs.getInt(ATRIBUTOS[7]));
                     t.setPermisos();
                     tipos.add(t);
                 }
@@ -454,48 +466,48 @@ public class TipoActividad extends Root {
         boolean resp = true;
 
         /*Entity ePermisos = new Entity(2, 18);//UPDATE TIENE_PERMISO
-        String[] condCol = {ATRIBUTOS[0], "id_permiso"};
-        Object[] valores = {id, 0};
-        String[] colModif = {"id_permiso"};
-        Object[] modif = {0};
+         String[] condCol = {ATRIBUTOS[0], "id_permiso"};
+         Object[] valores = {id, 0};
+         String[] colModif = {"id_permiso"};
+         Object[] modif = {0};
         
 
-        int menosLargo = Math.min(permisos.length, permisosNM.length);
-        for (int i = 0; i < menosLargo; i++) {
-            String permiso = permisos[i];
-            switch (permiso) {
-                case "estudiante":
-                    valores[1] = 1;
-                    break;
-                case "empleado":
-                    valores[1] = 2;
-                    break;
-                case "obrero":
-                    valores[1] = 3;
-                    break;
-                case "profesor":
-                    valores[1] = 4;
-                    break;
-            }
+         int menosLargo = Math.min(permisos.length, permisosNM.length);
+         for (int i = 0; i < menosLargo; i++) {
+         String permiso = permisos[i];
+         switch (permiso) {
+         case "estudiante":
+         valores[1] = 1;
+         break;
+         case "empleado":
+         valores[1] = 2;
+         break;
+         case "obrero":
+         valores[1] = 3;
+         break;
+         case "profesor":
+         valores[1] = 4;
+         break;
+         }
 
-            String permisoNM = permisosNM[i];
-            switch (permisoNM) {
-                case "estudiante":
-                    modif[0] = 1;
-                    break;
-                case "empleado":
-                    modif[0] = 2;
-                    break;
-                case "obrero":
-                    modif[0] = 3;
-                    break;
-                case "profesor":
-                    modif[0] = 4;
-                    break;
-            }
-            resp &= ePermisos.modificar(condCol, valores, colModif, modif);
-            System.out.println("Update del permiso " + permisosNM[i] + " por " + permisos[i] + " " + resp);
-        }*/
+         String permisoNM = permisosNM[i];
+         switch (permisoNM) {
+         case "estudiante":
+         modif[0] = 1;
+         break;
+         case "empleado":
+         modif[0] = 2;
+         break;
+         case "obrero":
+         modif[0] = 3;
+         break;
+         case "profesor":
+         modif[0] = 4;
+         break;
+         }
+         resp &= ePermisos.modificar(condCol, valores, colModif, modif);
+         System.out.println("Update del permiso " + permisosNM[i] + " por " + permisos[i] + " " + resp);
+         }*/
         return resp;
     }
 
@@ -524,7 +536,7 @@ public class TipoActividad extends Root {
             taNM.getDescripcion(),
             taNM.getPrograma(),
             taNM.getValidador(),
-            taNM.getProducto()
+            taNM.getNroProductos()
         };
         String[] colModificar = {
             ATRIBUTOS[1],
@@ -540,7 +552,7 @@ public class TipoActividad extends Root {
             descripcion,
             programa,
             validador,
-            producto
+            nroProductos
         };
 
         if (this.esTipoActividad()

@@ -26,7 +26,6 @@ public class Actividad extends Root {
     private String fechaCreacion;
     private String modificador;
     private String fechaModif;
-    private String producto;
     private ArrayList<String> participantes = new ArrayList<>(0);
     ;
     private ArrayList<CampoValor> camposValores;
@@ -41,9 +40,8 @@ public class Actividad extends Root {
         "fecha_creacion",//5
         "modificador", //6
         "fecha_modif", //7
-        "producto", //8
-        "descripcion", //9
-        "validador" //10
+        "descripcion", //8
+        "validador" //9
     };
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
@@ -140,14 +138,6 @@ public class Actividad extends Root {
         this.participantes = participantes;
     }
 
-    public String getProducto() {
-        return producto;
-    }
-
-    public void setProducto(String producto) {
-        this.producto = producto;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -211,18 +201,18 @@ public class Actividad extends Root {
         while (it.hasNext()) {
             p += (String) it.next() + ", ";
         }
-        p = p.substring(0, p.length() - 2)+".";
+        p = p.substring(0, p.length() - 2) + ".";
         return p;
     }
-    
+
     public String camposValoresToString() {
         String s = "";
         Iterator it = camposValores.iterator();
         while (it.hasNext()) {
-            CampoValor cv = (CampoValor)it.next();
+            CampoValor cv = (CampoValor) it.next();
             String tipo = cv.getCampo().getTipo();
             String valor = cv.getValor();
-            if (Clases.Verificaciones.esVacio(valor)){
+            if (Clases.Verificaciones.esVacio(valor)) {
                 continue;
             }
             switch (tipo) {
@@ -231,8 +221,8 @@ public class Actividad extends Root {
                     continue;
                 case "fecha":
                 case "checkbox":
-                    if (!valor.equals("false")){
-                    s += cv.getCampo().getNombre() + ", ";
+                    if (!valor.equals("false")) {
+                        s += cv.getCampo().getNombre() + ", ";
                     }
                     break;
                 default:
@@ -240,10 +230,12 @@ public class Actividad extends Root {
                     break;
             }
         }
-        s = s.substring(0, s.length() - 2)+".";
+        int tam = s.length();
+        if (tam > 1) {
+            s = s.substring(0, s.length() - 2) + ".";
+        }
         return s;
     }
-    
 
     public String getApellidoNombreCreador() {
 
@@ -289,8 +281,7 @@ public class Actividad extends Root {
                     fechaCreacion = rs.getString(ATRIBUTOS[5]);
                     modificador = rs.getString(ATRIBUTOS[6]);
                     fechaModif = rs.getString(ATRIBUTOS[7]);
-                    producto = rs.getString(ATRIBUTOS[8]);
-                    descripcion = rs.getString(ATRIBUTOS[9]);
+                    descripcion = rs.getString(ATRIBUTOS[8]);
                     camposValores = CampoValor.listarCamposValores(idActividad);
 
                 }
@@ -336,7 +327,7 @@ public class Actividad extends Root {
         Object[] actividad = {
             idTipoActividad,
             creador
-        };   
+        };
 
         if (resp = e.insertar2(columnas, actividad)) {
 
@@ -390,11 +381,11 @@ public class Actividad extends Root {
             ATRIBUTOS[3]
         };
         String val = "";
-        if (valida){
+        if (valida) {
             val = "Validada";
-        }else{
+        } else {
             val = "Rechazada";
-        } 
+        }
         Object[] modificaciones = {
             val
         };
@@ -426,9 +417,8 @@ public class Actividad extends Root {
                         a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
                         a.setModificador(rs.getString(ATRIBUTOS[6]));
                         a.setFechaModif(rs.getString(ATRIBUTOS[7]));
-                        a.setProducto(rs.getString(ATRIBUTOS[8]));
-                        a.setDescripcion(rs.getString(ATRIBUTOS[9]));
-                        a.setValidador(rs.getString(ATRIBUTOS[10]));
+                        a.setDescripcion(rs.getString(ATRIBUTOS[8]));
+                        a.setValidador(rs.getString(ATRIBUTOS[9]));
                         a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
                         a.setParticipantes(a.idActividad);
 
@@ -650,9 +640,9 @@ public class Actividad extends Root {
 
         for (int i = 0; it.hasNext() && resp; i++) {
             CampoValor campoNM = (CampoValor) it.next();
-            System.out.println("antes modif "+campoNM.getCampo().getNombre()+" "+resp);
+            System.out.println("antes modif " + campoNM.getCampo().getNombre() + " " + resp);
             resp &= camposValores.get(i).modificar(campoNM, idActividad);
-            System.out.println("luego modif "+campoNM.getCampo().getNombre()+" "+resp);
+            System.out.println("luego modif " + campoNM.getCampo().getNombre() + " " + resp);
         }
 
         Entity eActividad = new Entity(2, 2);
