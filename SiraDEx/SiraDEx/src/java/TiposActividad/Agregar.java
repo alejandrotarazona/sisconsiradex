@@ -52,6 +52,7 @@ public class Agregar extends DispatchAction {
         ArrayList<Elemento> coordinaciones;
         coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
+        
         return mapping.findForward(PAGE);
     }
 
@@ -77,7 +78,9 @@ public class Agregar extends DispatchAction {
         }
 
         ta.setCampos();
-
+        //hay que guardar permisos porque se pierde luego por el metodo reset()
+        request.getSession().setAttribute("permisos", ta.getPermisos());
+        
         return mapping.findForward(SUCCESS);
 
     }
@@ -88,7 +91,7 @@ public class Agregar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
-
+        ta.setPermisos((String[])request.getSession().getAttribute("permisos"));
         if (ta.agregarTipoActividad()) {
             
             ArrayList tipos = Clases.TipoActividad.listar();
