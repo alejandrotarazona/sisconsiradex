@@ -34,10 +34,12 @@
         <h1 class='title' id='page-title'>Edición del elemento del Catálogo <bean:write 
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
-        <logic:present name="elementoCatalogoForm" property="mensaje">
-            <br/> <div align="center"><b><bean:write name="elementoCatalogoForm" 
-                        property="mensaje" /></b></div><br/>
-                </logic:present>
+        <br><logic:present name="elementoCatalogoForm" property="mensaje">
+            <b><div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="elementoCatalogoForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div></b>
+            </logic:present>
 
         <html:form method="POST" action ="/ModificarElementoCatalogo?method=update">
             <table>

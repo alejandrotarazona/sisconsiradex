@@ -11,9 +11,14 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
-        <logic:present name="catalogoForm" property="mensaje">
-            <br/><bean:write name="catalogoForm" property="mensaje" /><br/>
-        </logic:present>
+        
+            <br><logic:present name="catalogoForm" property="mensaje">
+            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
+                </logic:present> 
+            <br><logic:present name="catalogoForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
+            </logic:present>
+            
         <table>
             <tr>
             <td><b>Nombre</b></td>

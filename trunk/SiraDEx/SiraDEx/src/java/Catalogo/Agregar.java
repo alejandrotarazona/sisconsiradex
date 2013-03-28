@@ -56,7 +56,7 @@ public class Agregar extends DispatchAction {
         if (cat.getNombre().contains(";") || cat.getNombre().contains("<")
                 || cat.getNombre().contains(">") || cat.getNombre().contains("'")
                 || cat.getNombre().contains("&") || cat.getNombre().contains("$")) {
-            cat.setMensaje("Error: El nombre tiene un caracter invalido, por favor "
+            cat.setMensajeError("Error: El nombre tiene un caracter invalido, por favor "
                     + "intente de nuevo.");
             return mapping.findForward(FAILURE);
 

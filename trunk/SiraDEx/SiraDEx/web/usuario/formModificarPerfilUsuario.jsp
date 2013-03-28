@@ -24,10 +24,12 @@
             <bean:write name="user" property="nombres"/>
         <bean:write name="user" property="apellidos"/> </h1>
         
-        <logic:present name="user" property="mensaje">
-            <br/> <div align="center"><b><bean:write name="usuarioForm" 
-                        property="mensaje" /></b></div><br/>
-                </logic:present>
+        <br><logic:present name="usuarioForm" property="mensaje">
+            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
+                </logic:present> 
+            <br><logic:present name="usuarioForm" property="mensajeError">
+            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
+            </logic:present>
                         
                         <html:form method="POST" 
                    action ="/ModificarPerfilUsuario?method=update">

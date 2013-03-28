@@ -157,13 +157,13 @@ public class Verificaciones {
             return false;
         }
         if (nro.equals("0")) {
-            ta.setMensaje("Error: El campo 'Número de productos' debe contener al "
+            ta.setMensajeError("Error: El campo 'Número de productos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
         respVerif = verifLV("'Número de productos'", nro, 1, true);
         if (respVerif != null) {
-            ta.setMensaje(respVerif);
+            ta.setMensajeError(respVerif);
             return false;
         }
         
