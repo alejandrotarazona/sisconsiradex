@@ -21,7 +21,6 @@
                     if(valor == "catalogo"){
                         $('#'+longitud).css("visibility", "hidden");
                         $('.'+mostrador).css("visibility", "visible");
-                        $('.tablaHeader').css("visibility", "visible");
                     } else if(valor == "texto" || valor=="textol" || valor=="numero"){
                         $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
@@ -58,8 +57,8 @@
             <td><b>Tipo</b></td>
             <td><b>Obligatoriedad</b></td>
             <td><b>Longitud</b></td>
-            <td><b><div class="tablaHeader" style="visibility: hidden">Catálogo</div></b></td>
-            <td><b><div class="tablaHeader" style="visibility: hidden">Lista</div></b></td>
+            <td><b>Catálogo</b></td>
+            <td><b>Lista</b></td>
 
 
         </tr>            
@@ -74,24 +73,53 @@
                     String l = "longitud" + i;
                 %>
                 <tr>
-                <td><html:text name="campo" property="nombre" indexed="true"/></td>
-                <td><html:select name="campo"  property="tipo" indexed="true" 
-                styleId="<%=s%>" styleClass="selector">
-                       <html:optionsCollection name="campo" property="tipos" 
-                                               label="etiqueta" value="valor"/>
-                    </html:select></td>
+                <td>
+                    <html:text name="campo" property="nombre" indexed="true"/>
+                </td>
 
-                <td><html:checkbox name="campo" property="obligatorio" indexed="true" 
-                               value="true"/></td>
+                <td>
+                    <logic:notEqual name="campo" property="tipo" value="producto">
+                     <html:select name="campo"  property="tipo" indexed="true" 
+                    styleId="<%=s%>" styleClass="selector">
+                        <html:optionsCollection name="campo" property="tipos" 
+                                                label="etiqueta" value="valor"/>
+                    </html:select>   
+                    </logic:notEqual>
+                    
+                    <logic:equal name="campo" property="tipo" value="producto">
+                        <html:select name="campo"  property="tipo" disabled="true" 
+                                     indexed="true" >
+                            <html:option value="producto">archivo</html:option>
+                            </html:select>
+                    </logic:equal>
+                </td>
 
-                <td><div id ="<%=l%>" style="visibility: visible">
+                <td>
+                    <logic:notEqual name="campo" property="tipo" value="producto">
+                    <html:checkbox name="campo" property="obligatorio" indexed="true"/>
+                    <html:hidden name="campo" property="obligatorio" value="false" 
+                                 indexed="true"/>
+                    </logic:notEqual>
+                    
+                    <logic:equal name="campo" property="tipo" value="producto">
+                        <html:checkbox name="campo" property="obligatorio" disabled="true" 
+                                       indexed="true"/>
+                    </logic:equal>
+
+                </td>
+
+                <td>
+                    <div id ="<%=l%>" style="visibility: visible">
+                        <logic:notEqual name="campo" property="tipo" value="producto">
                         <html:text name="campo" property="longitud" indexed="true"/>
+                        </logic:notEqual>
+
                     </div>
                 </td>
 
                 <td>
                     <div class="<%=m%>" style="visibility: hidden">
-                        <html:select name="campo" property="catalogo" indexed="true">
+                        <html:select name="campo" property="catalogo" indexed="true">      
                             <html:option value="">-- Seleccione --</html:option>
                             <html:optionsCollection name="catalogos" label="nombre" value="nombre"/>
                         </html:select>

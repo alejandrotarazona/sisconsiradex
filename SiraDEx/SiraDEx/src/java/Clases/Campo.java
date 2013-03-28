@@ -27,15 +27,15 @@ public class Campo implements Serializable {
     private String catalogo = "";
     private boolean lista;
     private final Par[] tipos = {
-            new Par("texto", "texto"),
-            new Par("catálogo", "catalogo"),
-            new Par("fecha", "fecha"),
-            new Par("número", "numero"),
-            new Par("texto largo", "textol"),
-            new Par("archivo", "archivo"),
-            new Par("checkbox", "checkbox")
-        }; 
-        
+        new Par("texto", "texto"),
+        new Par("catálogo", "catalogo"),
+        new Par("fecha", "fecha"),
+        new Par("número", "numero"),
+        new Par("texto largo", "textol"),
+        new Par("archivo", "archivo"),
+        new Par("checkbox", "checkbox")
+    };
+
     public static class Par implements Serializable {
 
         private String etiqueta;
@@ -54,7 +54,6 @@ public class Campo implements Serializable {
             return valor;
         }
     }
-    
     private static final String[] TIPOS = {
         "texto",
         "número",
@@ -166,7 +165,7 @@ public class Campo implements Serializable {
     public Par[] getTipos() {
         return tipos;
     }
-     
+
     @Override
     public String toString() {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
@@ -214,15 +213,12 @@ public class Campo implements Serializable {
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    String tipoCampo = rs.getString(ATRIBUTOS[3]);
-                    if (tipoCampo.equals("producto")){
-                        continue;
-                    }
+
                     Campo c = new Campo();
                     c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     c.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
                     c.setNombre(rs.getString(ATRIBUTOS[2]));
-                    c.setTipo(tipoCampo);
+                    c.setTipo(rs.getString(ATRIBUTOS[3]));
                     c.setLongitud(rs.getInt(ATRIBUTOS[4]));
                     c.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
                     c.setCatalogo(rs.getString(ATRIBUTOS[6]));

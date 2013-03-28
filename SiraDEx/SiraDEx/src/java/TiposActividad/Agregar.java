@@ -76,16 +76,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(FAILURE);
         }
 
-        int numeroCampos = ta.getNroCampos();
-        ArrayList<Campo> campos = new ArrayList<>();
-
-        for (int i = 0; i < numeroCampos; i++) {
-            Campo c = new Campo();
-            c.setIdTipoActividad(ta.getId());
-            campos.add(c);
-        }
-
-        ta.setCampos(campos);
+        ta.setCampos();
 
         return mapping.findForward(SUCCESS);
 
