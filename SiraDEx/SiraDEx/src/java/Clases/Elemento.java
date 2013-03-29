@@ -9,9 +9,11 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 
 /**
  *
@@ -19,7 +21,7 @@ import java.util.logging.Logger;
  */
 //Clase para ser usada como estructura para el pasaje de elementos de un catálogo
 //al momento de hacer una lista desplegable de optionsCollection
-public class Elemento implements Serializable {
+public class Elemento implements Serializable, Comparable<Elemento> {
 
     private String contenido;
 
@@ -75,12 +77,19 @@ public class Elemento implements Serializable {
                 contenidos.add(e);
                 j++;
             }
+            Collections.sort(contenidos);
             return contenidos;
         } catch (SQLException ex) {
             Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
+
+    public int compareTo(Elemento e) {
+
+        return contenido.compareTo(e.getContenido());
+    }
+    
 
     public static void main(String[] args) {
 
