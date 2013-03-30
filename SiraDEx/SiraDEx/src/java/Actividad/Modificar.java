@@ -6,7 +6,7 @@
 package Actividad;
 
 import Clases.Actividad;
-import Clases.Elemento;
+import Clases.ElementoCatalogo;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -53,7 +53,7 @@ public class Modificar extends DispatchAction {
         for (int i = 0; i < act.getCamposValores().size(); i++) {
             String nombreCat = act.getCamposValores().get(i).getCampo().getCatalogo();
             if (!nombreCat.equals("")) {
-                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
+                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 5);
                 //suponiendo que no hay un catalogo con mas de 5 campos por elemento
                 request.getSession().setAttribute("cat" + i, catalogo);
             }

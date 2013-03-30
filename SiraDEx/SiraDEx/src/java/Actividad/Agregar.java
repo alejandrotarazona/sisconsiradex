@@ -7,7 +7,7 @@ package Actividad;
 import Clases.Actividad;
 import Clases.Campo;
 import Clases.CampoValor;
-import Clases.Elemento;
+import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import Clases.Usuario;
 import java.util.ArrayList;
@@ -92,9 +92,8 @@ public class Agregar extends DispatchAction {
             String nombreCat = a.getCamposValores().get(i).getCampo().getCatalogo();
 
             if (!nombreCat.equals("")) {
-
-                ArrayList<Elemento> catalogo = Clases.Elemento.listarElementos(nombreCat, 5);
-                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
+                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+                
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
