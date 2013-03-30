@@ -26,11 +26,10 @@ public class Actividad extends Root {
     private String fechaCreacion;
     private String modificador;
     private String fechaModif;
-    private ArrayList<String> participantes = new ArrayList<>(0);
-    ;
-    private ArrayList<CampoValor> camposValores;
     private String descripcion;
     private String validador;
+    private ArrayList<String> participantes = new ArrayList<>(0);
+    private ArrayList<CampoValor> camposValores;
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
@@ -156,7 +155,8 @@ public class Actividad extends Root {
 
     @Override
     public String toString() {
-        return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + '}';
+        return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad 
+                + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + "}";
     }
 
     public void setParticipantes(int idAct) {

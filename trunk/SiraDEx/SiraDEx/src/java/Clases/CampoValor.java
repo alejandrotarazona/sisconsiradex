@@ -125,11 +125,8 @@ public class CampoValor implements Serializable {
 
             BufferedOutputStream bos;
             bos = new BufferedOutputStream(new FileOutputStream(valor));
-
             bos.write(data);
-
             bos.flush();
-
 
             System.out.println("File Name:" + ff.getFileName());
             System.out.println("File size:" + ff.getFileSize() + "bytes");
