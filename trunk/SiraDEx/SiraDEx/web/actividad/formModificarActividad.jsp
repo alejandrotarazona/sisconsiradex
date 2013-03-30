@@ -97,13 +97,11 @@
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-                <html:file name="camposValores" property="file" indexed="true" 
-                           maxlength="2024" size="2024"/>
+                <html:file name="camposValores" property="file" indexed="true"/>
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="producto">
-                <html:file name="camposValores" property="file" indexed="true" 
-                           maxlength="2024" size="2024"/>
+                <html:file name="camposValores" property="file" indexed="true"/>
             </logic:equal>
 
             <%   int i = (Integer) pageContext.findAttribute("index");
