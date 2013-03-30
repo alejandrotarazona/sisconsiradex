@@ -4,8 +4,7 @@
  */
 package TiposActividad;
 
-import Clases.Campo;
-import Clases.Elemento;
+import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import Clases.Verificaciones;
 import java.util.ArrayList;
@@ -46,11 +45,11 @@ public class Agregar extends DispatchAction {
             throws Exception {
         TipoActividad ta = (TipoActividad) form;
         ta.deleteSessions(request);
-        ArrayList<Elemento> programas;
-        programas = Clases.Elemento.listarElementos("Programas", 1);
+        ArrayList<ElementoCatalogo> programas;
+        programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
-        ArrayList<Elemento> coordinaciones;
-        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
+        ArrayList<ElementoCatalogo> coordinaciones;
+        coordinaciones = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
         
         return mapping.findForward(PAGE);

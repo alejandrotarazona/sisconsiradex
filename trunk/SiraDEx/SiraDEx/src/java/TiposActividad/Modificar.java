@@ -4,8 +4,7 @@
  */
 package TiposActividad;
 
-import Clases.Campo.Par;
-import Clases.Elemento;
+import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -39,11 +38,11 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ArrayList<Elemento> programas;
-        programas = Clases.Elemento.listarElementos("Programas", 1);
+        ArrayList<ElementoCatalogo> programas;
+        programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
-        ArrayList<Elemento> coordinaciones;
-        coordinaciones = Clases.Elemento.listarElementos("Coordinaciones", 1);
+        ArrayList<ElementoCatalogo> coordinaciones;
+        coordinaciones = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
