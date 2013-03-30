@@ -47,7 +47,7 @@
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestión de Actividades</title>
+        <title>SiraDEx | Gestión de Validaciones</title>
     </head>
     <body>
         <h1 class="title">Gestión de Validaciones</h1>

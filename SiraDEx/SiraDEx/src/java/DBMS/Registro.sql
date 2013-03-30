@@ -86,7 +86,7 @@ VALUES (4,'Informe de participación','producto',0, true);
 --Actividad
 
 /*INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, 
-fecha_creacion, modificador, fecha_modif) VALUES (15,2,null,'admin','10/01/13',null,null);*/
+fecha_creacion, modificador, fecha_modif) VALUES (15,2,'','admin','10/01/13','','');*/
 
 --Valor
 /*
@@ -129,9 +129,9 @@ VALUES ('07-41618', 'diana', 'estudiante', 1, 'Diana', 'Vainberg', '04126053552'
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('jf', 'jf', 'estudiante', 1, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('kdoming', 'kdoming', 'profesor',4, 'Kenyer', 'Dominguez', null, 'kdoming@usb.ve');
+VALUES ('kdoming', 'kdoming', 'profesor',4, 'Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('99-10000', 'pedrog', 'empleado',2, 'Pedro', 'Gomez',  null, '07-10000@usb.ve');
+VALUES ('99-10000', 'pedrog', 'CCTDS',2, 'Pedro', 'Gomez',  '', '07-10000@usb.ve');
 
 
 

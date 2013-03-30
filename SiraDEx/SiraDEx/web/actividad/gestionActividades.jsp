@@ -1,5 +1,5 @@
 <%-- 
-    Document   : gestionActividad
+    Document   : gestionActividades
     Created on : 31/10/2012, 08:41:09 AM
     Author     : SisCon
 --%>
@@ -37,7 +37,7 @@
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        /* Produucto */ null,
+                        /* Producto */ null,
                         /* Acciones */ 
                         { "bSortable": false },
                         { "bSortable": false }

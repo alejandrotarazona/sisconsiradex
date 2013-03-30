@@ -258,7 +258,7 @@ public class Usuario extends Root {
 
     }
     
-    //en el parámetro user recibe un Usuario no modificado
+    //en el parámetro userNM recibe un Usuario no modificado
     public boolean modificar(Usuario userNM) {
         
       
@@ -307,9 +307,11 @@ public class Usuario extends Root {
         resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         if (!resp) {
+                     
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
             return false;
         }
+                
         mensaje = "El perfil ha sido modificado con éxito.";
         
         return resp;

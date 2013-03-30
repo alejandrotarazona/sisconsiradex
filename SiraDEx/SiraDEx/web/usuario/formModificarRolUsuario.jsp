@@ -60,7 +60,7 @@
         <span align="left" class="ocultable" style="visibility: hidden">
             <b>   Dependencia o Unidad </b>
 
-            <html:select name="usuarioForm" property="username">
+            <html:select name="usuarioForm" property="rol">
                 <html:option value="">-- Seleccione --</html:option>
                 <html:option value="PSC">PSC</html:option>
                 <html:option value="CCTDS">CCTDS</html:option>
