@@ -10,7 +10,6 @@ import Clases.CampoValor;
 import Clases.Elemento;
 import Clases.TipoActividad;
 import Clases.Usuario;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
@@ -19,6 +18,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
+import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -115,12 +115,12 @@ public class Agregar extends DispatchAction {
         while (it.hasNext()) {
             CampoValor cv0 = (CampoValor) it.next();
             Campo c = cv0.getCampo();
-            if (c.getTipo().equalsIgnoreCase("archivo")) {
-                File f0 = cv0.getFile();
+            if (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
+                FormFile f0 = cv0.getFile();
 
-                double tamBasico = f0.length();
+                double tamBasico = f0.getFileSize();
                 double tamano = (tamBasico / divisor);
-                System.out.println("El tamano del archivo es: " + tamBasico);
+                System.out.println("Tamaño "+ f0.getFileName()+" "+ tamano +"MB");
                 if (tamano > 2.0) {
                     a.setMensajeError("Error: El tamaño del archivo debe ser menor a 2MB");
                     return mapping.findForward(FAILURE);

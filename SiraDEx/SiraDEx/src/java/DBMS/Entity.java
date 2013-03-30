@@ -102,8 +102,8 @@ public class Entity {
     public void setRespuesta(String[] respuesta) {
         this.respuesta = respuesta;
     }
-    
-    public String escapeSQL(Object o){
+
+    public String escapeSQL(Object o) {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
     }
 
@@ -259,6 +259,23 @@ public class Entity {
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
 
+        boolean resp = db.update(sql);
+        return resp;
+    }
+
+    public boolean borrar(String[] columnas, Object[] valores) {
+        
+        sql = ACCION + " FROM " + TABLA + " WHERE "
+                + columnas[0] + " = '" + escapeSQL(valores[0]) + "'";
+
+        for (int k = 1; k < columnas.length; k++) {
+            sql += " AND " + columnas[k] + " = '" + escapeSQL(valores[k]) + "' ";
+        }
+
+
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
         boolean resp = db.update(sql);
         return resp;
     }
