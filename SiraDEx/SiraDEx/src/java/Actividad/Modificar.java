@@ -53,8 +53,7 @@ public class Modificar extends DispatchAction {
         for (int i = 0; i < act.getCamposValores().size(); i++) {
             String nombreCat = act.getCamposValores().get(i).getCampo().getCatalogo();
             if (!nombreCat.equals("")) {
-                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 5);
-                //suponiendo que no hay un catalogo con mas de 5 campos por elemento
+                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
