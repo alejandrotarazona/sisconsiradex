@@ -624,15 +624,6 @@ public class Actividad extends Root {
         return resp;
     }
 
-    public static void imprimirLista(ArrayList<Actividad> lista) {
-        Iterator it = lista.iterator();
-        while (it.hasNext()) {
-            Actividad a = (Actividad) it.next();
-            System.out.println(a.getIdActividad());
-
-        }
-    }
-
     public boolean modificar(ArrayList camposNM) {
         boolean resp = true;
 

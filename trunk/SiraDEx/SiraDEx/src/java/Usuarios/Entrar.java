@@ -68,7 +68,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("07-10000");
+        u.setUsername("99-10000");
         u.setUsuario();
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);

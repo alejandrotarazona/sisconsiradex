@@ -47,17 +47,21 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        System.out.println("El nuevo usuario es: " + u.toString());
+        String rol = u.getRol();
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
-
-
+        u.setUsername(usuarioNM.getUsername());
+        u.setUsuario();
+        u.setRol(rol);
+        System.out.println("El nuevo usuario es: " + u.toString());
+        
         if (u.modificar(usuarioNM)) {
-
+   
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
-
+       
             u.setMensaje("El rol del Usuario se modificó con éxito.");
+            
             return mapping.findForward(SUCCESS);
         }
         u.setMensajeError("Error: No se pudo modificar el usuario.");

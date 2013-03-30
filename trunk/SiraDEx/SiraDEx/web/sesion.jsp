@@ -4,10 +4,19 @@
     Author     : SisCon
 --%>
 
+<%@page import="Clases.Usuario"%>
+<%@page import="org.apache.struts.tiles.taglib.GetAttributeTag"%>
 <%@taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<logic:equal name="user" property="rol" value="DEx">
+<% Usuario u = (Usuario) request.getSession().getAttribute("user");
+    String r = u.getRol();
+    if (r.equals("WM") || r.equals("profesor") || r.equals("obrero")
+            || r.equals("estudiante") || r.equals("empleado")) {
+        r = "";
+    }
+%>
+<logic:equal name="user" property="rol" value="<%= r%>">
     <jsp:forward page="AGestionActividades.do?method=listDex"/>
 </logic:equal>
 
