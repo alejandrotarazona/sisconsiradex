@@ -43,14 +43,12 @@ public class Eliminar extends org.apache.struts.action.Action {
         if (t.eliminarTipoActividad()) {
             ArrayList ta = Clases.TipoActividad.listar();
             request.setAttribute("tipos", ta);
-            t.setMensaje("El tipo de actividad ha sido eliminado");
             return mapping.findForward(SUCCESS);
-        } else {
-            ArrayList ta = Clases.TipoActividad.listar();
-            request.setAttribute("tipos", ta);
-            t.setMensajeError("Error: No se pudo eliminar el tipo de actividad");
-            return mapping.findForward(FAILURE);
         }
+        
+        ArrayList ta = Clases.TipoActividad.listar();
+        request.setAttribute("tipos", ta);
+        return mapping.findForward(FAILURE);
+
     }
 }
-  

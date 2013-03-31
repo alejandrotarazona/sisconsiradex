@@ -177,16 +177,16 @@ public class TipoActividad extends Root {
                         String permiso = rs.getString("nombre");
                         p.add(permiso);
                         System.out.print("Agregado el permiso " + permiso);
-                        System.out.println(" de la actividad "+ esteTipo);
+                        System.out.println(" de la actividad " + esteTipo);
                     }
                 }
                 rs.close();
                 permisos = new String[p.size()];
                 for (int i = 0; i < p.size(); i++) {
-                    permisos[i] = (String)p.get(i);
+                    permisos[i] = (String) p.get(i);
                     System.out.println(permisos[i]);
                 }
-                
+
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -196,7 +196,7 @@ public class TipoActividad extends Root {
     }
 
     /* metodo para instancias los campos de un tipo de actividad un ves se tiene
-      el numero de campos y productos */
+     el numero de campos y productos */
     public void setCampos() {
         ArrayList<Campo> cs = new ArrayList<>();
         for (int i = 0; i < nroCampos; i++) {
@@ -373,11 +373,11 @@ public class TipoActividad extends Root {
 
         } else if (!resp) {
             this.eliminarTipoActividad();
-            mensaje = "Error del sistema al intentar insertar la base de datos.";
+            mensajeError = "Error: El Tipo de Actividad '" + nombreTipo 
+                    + "' no pudo ser registrado.";
             return false;
         }
-        mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido "
-                + "registrado con éxito.";
+
         return resp;
     }
 
@@ -385,13 +385,12 @@ public class TipoActividad extends Root {
         Entity eTipoActividad = new Entity(5, 1);
 
         if (eTipoActividad.borrar(ATRIBUTOS[0], this.id)) {
-
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
             return true;
-        } else {
-
-            return false;
         }
 
+        mensajeError = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
+        return false;
     }
 
     /**
@@ -504,19 +503,20 @@ public class TipoActividad extends Root {
         }
         return resp;
     }
- 
- //Con esto es que puedo definir que cuando el multibox no tenga nada el arreglo
- //permisos tome el valor de nulo, pero como sobreescribe el reset de Root tuve 
- //que agregar lo que estaba en ese reset taambien
- public void reset(ActionMapping mapping, HttpServletRequest request){
-     try {       
+
+    //Con esto es que puedo definir que cuando el multibox no tenga nada el arreglo
+    //permisos tome el valor de nulo, pero como sobreescribe el reset de Root tuve 
+    //que agregar lo que estaba en ese reset taambien
+    public void reset(ActionMapping mapping, HttpServletRequest request) {
+        try {
             request.setCharacterEncoding("UTF-8");
         } catch (UnsupportedEncodingException ex) {
             Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
         }
-    permisos = null;
-}
+        permisos = null;
+    }
     //en el parámetro taNM recibe un TipoActividad No Modificado
+
     public boolean modificar(TipoActividad taNM) {
 
         if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
@@ -581,10 +581,9 @@ public class TipoActividad extends Root {
         }
 
         if (!resp) {
-            mensaje = "Error del sistema al intentar actualizar la base de datos.";
-            return false;
+            mensajeError = "Error: El Tipo de Actividad '" + nombreTipo + "' no pudo "
+                    + "ser modificado.";
         }
-        mensaje = "El Tipo de Actividad ha sido modificado con éxito.";
 
         return resp;
     }

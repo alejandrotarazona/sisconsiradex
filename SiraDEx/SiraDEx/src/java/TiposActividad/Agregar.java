@@ -66,23 +66,17 @@ public class Agregar extends DispatchAction {
         ta.setMensaje(null);
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
-        
-                
-        if (ta.esTipoActividad()) {
-            ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "
-                    + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
-                    + "intente con otro nombre.");
-            return mapping.findForward(FAILURE);
-        }
 
         if (!Verificaciones.verifCF(ta)) {
             return mapping.findForward(FAILURE);
         }
 
-        ta.setCampos();
+        ta.setCampos();//llena el arrayList campos con el numero de campos necesario.
+        
         //hay que guardar permisos porque se pierde luego por el metodo reset()
         request.getSession().setAttribute("permisos", ta.getPermisos());
         
+        ta.setMensajeError(null);
         return mapping.findForward(SUCCESS);
 
     }
@@ -92,17 +86,18 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensajeError(null);
         ta.setPermisos((String[])request.getSession().getAttribute("permisos"));
         if (ta.agregarTipoActividad()) {
             
             ArrayList tipos = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tipos);
+            String nombre = ta.getNombreTipo();
             ta.deleteSessions(request);
-            ta.setMensaje("El tipo de actividad ha sido registrado con éxito");
+            ta.setMensaje("El Tipo de Actividad '" + nombre + "' ha sido "
+                + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
-        ta.setMensajeError("Error: El tipo de actividad no pudo ser registrado");
+        
         return mapping.findForward(FAILURE2);
     }
 }
