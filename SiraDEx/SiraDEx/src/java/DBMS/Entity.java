@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -264,7 +265,7 @@ public class Entity {
     }
 
     public boolean borrar(String[] columnas, Object[] valores) {
-        
+
         sql = ACCION + " FROM " + TABLA + " WHERE "
                 + columnas[0] + " = '" + escapeSQL(valores[0]) + "'";
 
@@ -315,35 +316,20 @@ public class Entity {
     }
 
     /**
-     * Insert que se usa cuando se quiere agregar un archivo a una tabla dada.
-     *
-     * @param tabla Tabla donde se hará el INSERT
-     * @param valores Valores que deben de insertarse en la fila de la tabla.
-     * @param archivo Archivo que acompaña a los valores y tambien debe
-     * insertarse
-     * @return true si hace el insert, sino false.
+     * Inserta el valor de un campo tipo archivo o producto en la base de datos
+     * @param idCampo id del campo
+     * @param idActividad id de la actividad a la que pertenece el valor
+     * @param valor nombre del archivo
+     * @param file archivo a insertar
+     * @return 
      */
-    public boolean insert(String tabla, Object[] valores, File archivo) {
-        try {
-            int k;
-            sql = ACCION + " INTO " + TABLA
-                    + " VALUES (";
-            for (k = 0; k < (valores.length - 1); k++) {
-                sql += "'" + escapeSQL(valores[k]) + "' ,";
-            }
+    public boolean insertarArchivo(int idCampo, int idActividad, String valor, 
+            FormFile archivo) {
 
-            System.out.println(sql);
-            DataBase db = DataBase.getInstance();
-            boolean resp = db.update(sql, archivo);
-            return resp;
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
-            Logger.getLogger(Entity.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
+       DataBase db = DataBase.getInstance();
+       return db.update(idCampo, idActividad, valor, archivo); 
+    
+
     }
 
     public static void main(String[] args) {

@@ -34,13 +34,13 @@
         <h1 class='title' id='page-title'>Edición de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-       <br><logic:present name="actividadForm" property="mensaje">
+        <br><logic:present name="actividadForm" property="mensaje">
             <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="actividadForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="actividadForm" property="mensajeError">
             <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
-            </logic:present>
-        
+        </logic:present>
+
         <html:form method="POST" enctype="multipart/form-data" 
                    action ="/ModificarActividad?method=update">
             <table>
@@ -98,10 +98,14 @@
 
             <logic:equal name="camposValores" property="campo.tipo" value="archivo">
                 <html:file name="camposValores" property="file" indexed="true"/>
+                &nbsp;<b>Archivo previamente cargado:
+                <bean:write name="camposValores" property="valor"/></b> 
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="producto">
-                <html:file name="camposValores" property="file" indexed="true"/>
+                <html:file name="camposValores" property="file" indexed="true"/> 
+                &nbsp;<b>Archivo previamente cargado:
+                <bean:write name="camposValores" property="valor"/></b> 
             </logic:equal>
 
             <%   int i = (Integer) pageContext.findAttribute("index");
