@@ -38,12 +38,15 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        ArrayList<ElementoCatalogo> programas;
+        
+        ArrayList<ElementoCatalogo> programas;    
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
+        
         ArrayList<ElementoCatalogo> coordinaciones;
         coordinaciones = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
         request.getSession().setAttribute("coordinaciones", coordinaciones);
+       
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
 
@@ -73,24 +76,20 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
-        ta.deleteSessions(request);
         
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         if (ta.modificar(taNM)) {
-
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tas);
-            
-            ta.setMensaje("El tipo de actividad fue modificado con éxito");
+            String nombre = ta.getNombreTipo();
+            ta.deleteSessions(request);
+            ta.setMensaje("El Tipo de Actividad '"+nombre+"' ha sido modificado"
+                    + " con éxito.");
             return mapping.findForward(SUCCESS);
         }
 
         ta.setNombreTipo(taNM.getNombreTipo());
-
-        ta.setMensajeError("El tipo de actividad no pudo ser modificado");
         return mapping.findForward(FAILURE);
-
-
     }
 }

@@ -98,13 +98,13 @@
 
             <logic:equal name="camposValores" property="campo.tipo" value="archivo">
                 <html:file name="camposValores" property="file" indexed="true"/>
-                &nbsp;<b>Archivo previamente cargado:
+                <b>Archivo previamente cargado:
                 <bean:write name="camposValores" property="valor"/></b> 
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="producto">
                 <html:file name="camposValores" property="file" indexed="true"/> 
-                &nbsp;<b>Archivo previamente cargado:
+                <b>Archivo previamente cargado:
                 <bean:write name="camposValores" property="valor"/></b> 
             </logic:equal>
 

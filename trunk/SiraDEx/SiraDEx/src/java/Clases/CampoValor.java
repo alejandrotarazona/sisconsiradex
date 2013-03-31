@@ -6,6 +6,7 @@ package Clases;
 
 import DBMS.Entity;
 import java.io.BufferedOutputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class CampoValor implements Serializable {
         "id_campo", //0
         "id_actividad", //1
         "valor", //2
-        "archivo" //3
+        "archivo", //3
     };
     private static String[] TABLAS = {
         "VALOR",
@@ -72,8 +73,24 @@ public class CampoValor implements Serializable {
         this.valor = file.getFileName();
     }
 
-    public void setFile(final byte[] data) {
+    public static File bytesToFile(byte[] data, String path) {
         try {
+            File archivo = new File(path);
+            try (FileOutputStream fileOS = new FileOutputStream(path)) {
+                fileOS.write(data);
+                if (fileOS != null) {
+                    fileOS.close();
+                }
+            }
+            return archivo;
+        } catch (IOException ex) {
+            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+
+    public void setFile(final byte[] data) {
+
             FormFile ff = new FormFile() {
                 @Override
                 public String getContentType() {
@@ -112,7 +129,8 @@ public class CampoValor implements Serializable {
 
                 @Override
                 public InputStream getInputStream() throws FileNotFoundException, IOException {
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    File file = bytesToFile(data, valor);
+                    return new FileInputStream(file);
                 }
 
                 @Override
@@ -120,6 +138,7 @@ public class CampoValor implements Serializable {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }
             };
+            /*Escribe los archivos seteados por el form en el directorio dado
             String path = "/home/garcia/Escritorio/";
             BufferedOutputStream bos;
             bos = new BufferedOutputStream(new FileOutputStream(path + valor));
@@ -127,14 +146,11 @@ public class CampoValor implements Serializable {
             bos.flush();
             if (bos != null) {
                 bos.close();
-            }
+            }*/
             System.out.println("Nombre archivo:" + ff.getFileName());
             System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
             file = ff;
 
-        } catch (IOException ex) {
-            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }
 
     public boolean agregar(int idAct) {
@@ -288,7 +304,7 @@ public class CampoValor implements Serializable {
             resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         } else {
-            if (file.getFileSize() > 0) {
+           /*  {*/
                 e = new Entity(5, 6);//DELETE VALOR
                 String[] campos = {
                     ATRIBUTOS[0], //id_campo
@@ -306,10 +322,17 @@ public class CampoValor implements Serializable {
                         + " id_actividad = " + idAct);
 
                 e = new Entity(1, 6); //INSERT VALOR
-
+                if (file.getFileSize() > 0){
                 resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
-                System.out.println("Isercion de " + file.getFileName() + " " + resp);
-            }
+                System.out.println("Isercion cuando hay archivo " + file.getFileName()
+                        + " " + resp);
+                }else{
+                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, campoNM.getValor(),
+                        campoNM.getFile());
+                System.out.println("Isercion cuando no hay archivo " 
+                        + campoNM.getFile().getFileName() + " " + resp);
+                }
+            /*}*/
         }
 
         return resp;

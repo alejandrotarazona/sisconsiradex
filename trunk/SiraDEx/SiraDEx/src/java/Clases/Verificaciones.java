@@ -37,7 +37,7 @@ public class Verificaciones {
      *
      * @param nombreCampo Cadena con el nombre del campo a verificar.
      * @param valorCampo Cadena con el valor del campo.
-     * @return Mensaje de error en caso de que el valor del campo pasado como 
+     * @return Mensaje de error en caso de que el valor del campo pasado como
      * parámetro sea vacío, null en caso contrario.
      */
     public static String verifVacio(String nombreCampo, String valorCampo) {
@@ -76,8 +76,8 @@ public class Verificaciones {
      * @param valorCampo Cadena con el valor del campo.
      * @param longitud Entero que representa la longitud máxima del valor.
      * @param obliga Booleano que indica si el campo es obligatorio (no vacío).
-     * @return Mensaje de error en caso de que el valor del campo pasado como 
-     * parámetro sea más largo al parámetro longitud, no cumpla con el patrón 
+     * @return Mensaje de error en caso de que el valor del campo pasado como
+     * parámetro sea más largo al parámetro longitud, no cumpla con el patrón
      * dado o sea vacío, null en caso contrario.
      */
     public static String verifLV(String nombreCampo, String valorCampo, int longitud,
@@ -148,7 +148,7 @@ public class Verificaciones {
 
 
         Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
-         
+
         String nro = String.valueOf(ta.getNroProductos());
         respVerif = verifPatron("'Número de productos'", nro, numerico,
                 "debe contener sólo números.");
@@ -166,7 +166,7 @@ public class Verificaciones {
             ta.setMensajeError(respVerif);
             return false;
         }
-        
+
         nro = String.valueOf(ta.getNroCampos());
         respVerif = verifPatron("'Número de campos'", nro, numerico,
                 "debe contener sólo números.");
@@ -207,6 +207,14 @@ public class Verificaciones {
             String nombre = campo.getNombre();
             String nroCampo = "número " + String.valueOf(i);
 
+            /*verifica si hay un tipo de actividad con ese nombre*/
+            if (ta.esTipoActividad()) {
+                ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "
+                        + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
+                        + "intente con otro nombre.");
+                return false;
+            }
+
             /*verifica que el nombre sea válido (alfanumérico, no vacío, a lo 
              * sumo 100 caracteres)*/
 
@@ -229,7 +237,7 @@ public class Verificaciones {
                     ta.setMensajeError(respVerif);
                     return false;
                 }
-                
+
                 respVerif = verifLV(nroCampo, longitud, 3, true);
                 if (respVerif != null) {
                     ta.setMensajeError(respVerif);
@@ -243,7 +251,7 @@ public class Verificaciones {
                 }
             }
 
-            /*verifica que si el tipo es catálogo el valor de catalogo no sea vacío*/
+            /*verifica que si el tipo es catálogo, el valor de catalogo no sea vacío*/
             if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
                 ta.setMensajeError("Error: Debe seleccionar un catálogo para el "
                         + "campo número " + i + ".");
@@ -275,49 +283,36 @@ public class Verificaciones {
      *
      * ///FALTA TERMINAR }
      *
-     *Iterator itValores = this.camposValores.iterator();
-        int i = 0;
-        while (resp = (itValores.hasNext())) {
-
-            System.out.println("El campo " + camposValores.get(i).getCampo().getNombre());
-            System.out.println("El valor " + camposValores.get(i).getValor());
-            i++;
-            CampoValor cv = (CampoValor) itValores.next();
-            Campo campoVerif = (Campo) cv.getCampo();
-            String valorVerif = (String) cv.getValor();
-
-            /*if (campoVerif.isObligatorio() && valorVerif.equals("")) {
-             mensaje = "Todo campo obligatorio debe ser llenado";
-             return false;
-             }
-             resp &= Verificaciones.verif(campoVerif, valorVerif);
-             
-             ArrayList<CampoValor> cv = a.getCamposValores();
-        int divisor = 1024 * 1024;
-Iterator it = cv.iterator();
-        while (it.hasNext()) {
-            CampoValor cv0 = (CampoValor) it.next();
-            Campo c = cv0.getCampo();
-            if (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
-                FormFile f0 = cv0.getFile();
-
-                double tamBasico = f0.getFileSize();
-                double tamano = (tamBasico / divisor);
-                System.out.println("Tamaño "+ f0.getFileName()+" "+ tamano +"MB");
-                if (tamano > 2.0) {
-                    a.setMensajeError("Error: El tamaño del archivo debe ser menor a 2MB");
-                    return mapping.findForward(FAILURE);
-                }
-                if (!cv0.getValor().endsWith(".pdf")) {
-                    a.setMensajeError("Error: El archivo DEBE ser un archivo \".pdf\"");
-                    return mapping.findForward(FAILURE);
-                }
-
-            }
-        }
-             
-             */  
-    
+     * Iterator itValores = this.camposValores.iterator(); int i = 0; while
+     * (resp = (itValores.hasNext())) {
+     *
+     * System.out.println("El campo " +
+     * camposValores.get(i).getCampo().getNombre()); System.out.println("El
+     * valor " + camposValores.get(i).getValor()); i++; CampoValor cv =
+     * (CampoValor) itValores.next(); Campo campoVerif = (Campo) cv.getCampo();
+     * String valorVerif = (String) cv.getValor();
+     *
+     * /*if (campoVerif.isObligatorio() && valorVerif.equals("")) { mensaje =
+     * "Todo campo obligatorio debe ser llenado"; return false; } resp &=
+     * Verificaciones.verif(campoVerif, valorVerif);
+     *
+     * ArrayList<CampoValor> cv = a.getCamposValores(); int divisor = 1024 *
+     * 1024; Iterator it = cv.iterator(); while (it.hasNext()) { CampoValor cv0
+     * = (CampoValor) it.next(); Campo c = cv0.getCampo(); if
+     * (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
+     * FormFile f0 = cv0.getFile();
+     *
+     * double tamBasico = f0.getFileSize(); double tamano = (tamBasico /
+     * divisor); System.out.println("Tamaño "+ f0.getFileName()+" "+ tamano
+     * +"MB"); if (tamano > 2.0) { a.setMensajeError("Error: El tamaño del
+     * archivo debe ser menor a 2MB"); return mapping.findForward(FAILURE); } if
+     * (!cv0.getValor().endsWith(".pdf")) { a.setMensajeError("Error: El archivo
+     * DEBE ser un archivo \".pdf\""); return mapping.findForward(FAILURE); }
+     *
+     * }
+     * }
+     *
+     */
     /**
      * Funcion que verifica que el valor de una actividad se corresponda con el
      * tipo del campo respectivo.
@@ -405,8 +400,7 @@ Iterator it = cv.iterator();
 
         return resp;
     }
-    
-    
+
     public static void main(String[] args) {
 
         boolean resp;

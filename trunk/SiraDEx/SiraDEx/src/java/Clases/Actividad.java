@@ -155,7 +155,7 @@ public class Actividad extends Root {
 
     @Override
     public String toString() {
-        return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad 
+        return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad
                 + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + "}";
     }
 
@@ -656,7 +656,7 @@ public class Actividad extends Root {
         resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
-            mensaje = "Error del sistema al intentar actualizar la base de datos.";
+            mensajeError = "Error del sistema al intentar actualizar la base de datos.";
             return false;
         }
         return resp;
