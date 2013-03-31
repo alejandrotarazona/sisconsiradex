@@ -4,13 +4,12 @@
  */
 package DBMS;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -62,7 +61,7 @@ public class DataBase {
     }
 
     public ResultSet consult(String sql) {
-        try {        
+        try {
             Statement stmt = conexion.createStatement();
             ResultSet rs = stmt.executeQuery(sql);
             conexion.close();
@@ -75,41 +74,45 @@ public class DataBase {
     }
 
     public boolean update(String sql) {
-        try {       
+        try {    
             Statement stmt = conexion.createStatement();
             int filas = stmt.executeUpdate(sql);
-            System.out.println(sql);
-            if (filas > 0) {
-                conexion.close();
+            conexion.close();//RECORDAR PROBAR EL SISTEMA SIN EL close()
+            if (filas > 0) {     
                 return true;
             } else {
-                conexion.close();
                 return false;
             }
         } catch (SQLException ex) {
-            try {
-                conexion.close();
-            } catch (SQLException ex1) {
-                Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex1);
-            }
             Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-  
     }
 
-    public boolean update(String sql, File archivo) throws FileNotFoundException, SQLException, IOException {
-        boolean resp = true;
-        try (FileInputStream fis = new FileInputStream(archivo); 
-                PreparedStatement ps = conexion.prepareStatement(sql + "?, ?)")) {
-            ps.setString(1, archivo.getName());
-            ps.setBinaryStream(2, fis, archivo.length());
+    public boolean update(int idCampo, int idActividad, String valor,
+            FormFile file) {
+        try {
 
+            String sql = "INSERT INTO VALOR (id_campo,id_actividad,valor,archivo)"
+                    + " VALUES (?,?,?,?)";
+            PreparedStatement ps = conexion.prepareStatement(sql);
+            ps.setInt(1, idCampo);
+            ps.setInt(2, idActividad);
+            ps.setString(3, valor);
+            ps.setBinaryStream(4, file.getInputStream(), file.getFileSize());
             System.out.println(ps.toString());
-            resp = resp && ps.execute();
+            int filas = ps.executeUpdate();
+            conexion.close();//RECORDAR PROBAR EL SISTEMA SIN EL close()
+            if (filas > 0) {
+                return true;
+            }
+
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException | SQLException ex) {
+            Logger.getLogger(DataBase.class.getName()).log(Level.SEVERE, null, ex);
         }
-        conexion.close();
-        return resp;
+        return false;
     }
 
     public static void main(String[] args) {

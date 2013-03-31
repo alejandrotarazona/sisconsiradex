@@ -5,20 +5,18 @@
 package Actividad;
 
 import Clases.Actividad;
-import Clases.Campo;
 import Clases.CampoValor;
 import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import Clases.Usuario;
 import java.util.ArrayList;
-import java.util.Iterator;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
-import org.apache.struts.upload.FormFile;
+
 
 /**
  *
@@ -112,28 +110,6 @@ public class Agregar extends DispatchAction {
         
         ArrayList<CampoValor> cv = a.getCamposValores();
         int divisor = 1024 * 1024;
-
-        Iterator it = cv.iterator();
-        while (it.hasNext()) {
-            CampoValor cv0 = (CampoValor) it.next();
-            Campo c = cv0.getCampo();
-            if (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
-                FormFile f0 = cv0.getFile();
-
-                double tamBasico = f0.getFileSize();
-                double tamano = (tamBasico / divisor);
-                System.out.println("Tamaño "+ f0.getFileName()+" "+ tamano +"MB");
-                if (tamano > 2.0) {
-                    a.setMensajeError("Error: El tamaño del archivo debe ser menor a 2MB");
-                    return mapping.findForward(FAILURE);
-                }
-                if (!cv0.getValor().endsWith(".pdf")) {
-                    a.setMensajeError("Error: El archivo DEBE ser un archivo \".pdf\"");
-                    return mapping.findForward(FAILURE);
-                }
-
-            }
-        }
 
         if (a.agregarActividad()) {
 

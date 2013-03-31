@@ -290,7 +290,33 @@ public class Verificaciones {
              mensaje = "Todo campo obligatorio debe ser llenado";
              return false;
              }
-             resp &= Verificaciones.verif(campoVerif, valorVerif);*/  
+             resp &= Verificaciones.verif(campoVerif, valorVerif);
+             
+             ArrayList<CampoValor> cv = a.getCamposValores();
+        int divisor = 1024 * 1024;
+Iterator it = cv.iterator();
+        while (it.hasNext()) {
+            CampoValor cv0 = (CampoValor) it.next();
+            Campo c = cv0.getCampo();
+            if (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
+                FormFile f0 = cv0.getFile();
+
+                double tamBasico = f0.getFileSize();
+                double tamano = (tamBasico / divisor);
+                System.out.println("Tamaño "+ f0.getFileName()+" "+ tamano +"MB");
+                if (tamano > 2.0) {
+                    a.setMensajeError("Error: El tamaño del archivo debe ser menor a 2MB");
+                    return mapping.findForward(FAILURE);
+                }
+                if (!cv0.getValor().endsWith(".pdf")) {
+                    a.setMensajeError("Error: El archivo DEBE ser un archivo \".pdf\"");
+                    return mapping.findForward(FAILURE);
+                }
+
+            }
+        }
+             
+             */  
     
     /**
      * Funcion que verifica que el valor de una actividad se corresponda con el

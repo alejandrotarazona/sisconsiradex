@@ -6,19 +6,17 @@ package Clases;
 
 import DBMS.Entity;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.servlet.http.HttpServletRequest;
-import org.apache.struts.action.ActionMapping;
 import org.apache.struts.upload.FormFile;
 
 /**
@@ -122,33 +120,21 @@ public class CampoValor implements Serializable {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }
             };
-
+            String path = "/home/garcia/Escritorio/";
             BufferedOutputStream bos;
-            bos = new BufferedOutputStream(new FileOutputStream(valor));
+            bos = new BufferedOutputStream(new FileOutputStream(path + valor));
             bos.write(data);
             bos.flush();
-
-            System.out.println("File Name:" + ff.getFileName());
-            System.out.println("File size:" + ff.getFileSize() + "bytes");
+            if (bos != null) {
+                bos.close();
+            }
+            System.out.println("Nombre archivo:" + ff.getFileName());
+            System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
             file = ff;
 
-            if (bos != null) {
-
-                bos.close();
-
-            }
         } catch (IOException ex) {
             Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }
-
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        file = null;
     }
 
     public boolean agregar(int idAct) {
@@ -162,8 +148,7 @@ public class CampoValor implements Serializable {
             if (file.getFileSize() > 2097152) { //2097152 bytes = 2MB
                 return false;
             }
-            Object[] tupla = {idCampo, idActividad, valor, file};
-            resp = resp && eAgregar.insertar(tupla);
+            resp = resp && eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
         } else {
             Object[] tupla = {idCampo, idActividad, valor};
             resp = resp && eAgregar.insertar(tupla);
@@ -195,15 +180,21 @@ public class CampoValor implements Serializable {
                     c.setCatalogo(rs.getString("catalogo"));
                     CampoValor cv = new CampoValor(c);
                     listaValor.add(cv);
+
+
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(Actividad.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         try {
             rs.close();
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CampoValor.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return listaValor;
     }
@@ -246,7 +237,6 @@ public class CampoValor implements Serializable {
                                 || tipoCampo.equals("producto")))) {
                             byte[] data = rs.getBytes(ATRIBUTO[8]);
                             cv.setFile(data);
-
                         }
                         Campo c = new Campo();
                         c.setIdCampo(rs.getInt(ATRIBUTO[0]));
@@ -266,15 +256,18 @@ public class CampoValor implements Serializable {
             }
 
             return listaValor;
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(CampoValor.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CampoValor.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
 
     public boolean modificar(CampoValor campoNM, int idAct) {
         boolean resp = true;
-        Entity e = new Entity(2, 6);//Update valor
+        Entity e = new Entity(2, 6);//UPDATE VALOR
 
         String tipo = campoNM.getCampo().getTipo();
 
@@ -295,51 +288,28 @@ public class CampoValor implements Serializable {
             resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         } else {
-            /* PROBLEMAS CON EL FILE POR LO QUE NO FUNCIONA EL MODIFICAR CON UPDATE
-            String[] condColumnas = {
-                ATRIBUTOS[0], //id_campo
-                ATRIBUTOS[1], //id_actividad
-                ATRIBUTOS[2], //valor
-                ATRIBUTOS[3]
-            };
-            Object[] valores = {
-                campoNM.getCampo().getIdCampo(),
-                idAct,
-                campoNM.getValor(),
-                campoNM.getFile()
-            };
-            String[] colModificar = {ATRIBUTOS[2],ATRIBUTOS[3]}; //valor
-            Object[] modificaciones = {valor, file};
-            
-            resp &= e.modificar(condColumnas, valores, colModificar, modificaciones);
-            */
-            e = new Entity(5, 6);//DELETE VALOR
-            String[] campos = {
-                ATRIBUTOS[0], //id_campo
-                ATRIBUTOS[1] //id_actividad
-            };
-            Integer[] condicion = {
-                campoNM.getCampo().getIdCampo(),
-                idAct
-            };
+            if (file.getFileSize() > 0) {
+                e = new Entity(5, 6);//DELETE VALOR
+                String[] campos = {
+                    ATRIBUTOS[0], //id_campo
+                    ATRIBUTOS[1] //id_actividad
+                };
+                Integer[] condicion = {
+                    campoNM.getCampo().getIdCampo(),
+                    idAct
+                };
 
-            resp &= e.borrar(campos, condicion);
+                boolean RESPBORRAR = e.borrar(campos, condicion);
 
-            System.out.println("Borrado " + resp + " en VALOR la tupla "
-                    + "con id_campo = " + campoNM.getCampo().getIdCampo()
-                    + " id_actividad = " + idAct);
+                System.out.println("Borrado " + RESPBORRAR + " en VALOR la tupla "
+                        + "con id_campo = " + campoNM.getCampo().getIdCampo()
+                        + " id_actividad = " + idAct);
 
-            e = new Entity(1, 6); //INSERT VALOR
+                e = new Entity(1, 6); //INSERT VALOR
 
-            Object[] tuplaInsert = {
-                campo.getIdCampo(),
-                idAct,
-                valor,
-                file
-            };
-
-            resp &= e.insertar(tuplaInsert);
-            System.out.println("Isercion " + resp + " en VALOR");
+                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
+                System.out.println("Isercion de " + file.getFileName() + " " + resp);
+            }
         }
 
         return resp;
