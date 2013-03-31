@@ -41,10 +41,10 @@ public class Eliminar extends DispatchAction {
         Usuario u = (Usuario) form;
         
         if (u.eliminarUsuario()) {
-            u.setMensaje("El usuario ha sido eliminado.");
+            u.setMensaje("El usuario ha sido eliminado");
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensajeError("Error: El usuario que desea eliminar no existe.");
+            u.setMensajeError("Error: El usuario que desea eliminar no existe");
             return mapping.findForward(FAILURE);
         }
     }

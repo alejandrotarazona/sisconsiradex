@@ -42,6 +42,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
         e.setMensajeError(null);
+        e.setMensaje(null);
         int idCat = e.getIdCatalogo();
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
 
@@ -58,7 +59,7 @@ public class Agregar extends DispatchAction {
         ElementoCatalogo e = (ElementoCatalogo) form;
         int idCat = e.getIdCatalogo();
         if (e.agregar()) {
-            e.setMensaje("El elemento ha sido registrado con éxito.");
+            e.setMensaje("El elemento ha sido registrado con éxito");
             ArrayList<ElementoCatalogo> ec;
             ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);
@@ -73,7 +74,7 @@ public class Agregar extends DispatchAction {
         }
 
         e.setMensajeError("Error: No se pudo registrar el elemento. Por favor revise que "
-                + "los campos se han llenado correctamente.");
+                + "los campos se han llenado correctamente");
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         int tam = ec.size();
@@ -83,6 +84,7 @@ public class Agregar extends DispatchAction {
         } else {
             request.setAttribute("elementos", null);
         }
+        e.setMensajeError("Error: El elemento no pudo ser registrado");
         return mapping.findForward(FAILURE);
 
 

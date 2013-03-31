@@ -43,7 +43,7 @@ public class Eliminar extends org.apache.struts.action.Action {
         request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
 
         if (e.eliminar()) {
-            e.setMensaje("El elemento ha sido eliminado.");
+            e.setMensaje("El elemento ha sido eliminado");
             ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);
             int tam = ec.size();
@@ -55,7 +55,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             }
             return mapping.findForward(SUCCESS);
         }
-        e.setMensajeError("Error: El elemento no pudo ser eliminado.");
+        e.setMensajeError("Error: El elemento no pudo ser eliminado");
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         int tam = ec.size();

@@ -44,7 +44,9 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         TipoActividad ta = (TipoActividad) form;
-        ta.deleteSessions(request);
+        ta.setMensajeError(null);
+        ta.setMensaje(null);
+        
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
@@ -61,6 +63,7 @@ public class Agregar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
+        ta.setMensaje(null);
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
         
@@ -95,9 +98,11 @@ public class Agregar extends DispatchAction {
             
             ArrayList tipos = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tipos);
+            ta.deleteSessions(request);
+            ta.setMensaje("El tipo de actividad ha sido registrado con éxito");
             return mapping.findForward(SUCCESSFULL);
         }
-        
+        ta.setMensajeError("Error: El tipo de actividad no pudo ser registrado");
         return mapping.findForward(FAILURE2);
     }
 }

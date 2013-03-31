@@ -58,6 +58,9 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = new Usuario();
+        u.setMensaje(null);
+        u.setMensajeError(null);
         return mapping.findForward(PAGE);
     }
 }

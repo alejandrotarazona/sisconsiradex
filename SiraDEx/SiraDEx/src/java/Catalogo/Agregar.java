@@ -44,6 +44,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
         Catalogo cat = (Catalogo) form;
         cat.setMensajeError(null);
+        cat.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 
@@ -81,7 +82,8 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
         ArrayList<CampoCatalogo> c = cat.getCampos();
-
+        String nombreCat = cat.getNombre();
+        
         for (int i = 1; i <= cat.getNroCampos(); i++) {
 
                 CampoCatalogo aux = c.get(i-1);
@@ -91,15 +93,19 @@ public class Agregar extends DispatchAction {
                     return mapping.findForward(FAILURE2);
                 }
         }
+        
         if (cat.agregar()) {
             
-            cat.setMensaje("El catálogo '" + cat.getNombre() + "' ha sido "
-                    + "registrado con éxito.");
+            
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
+            
+            cat.deleteSessions(request);
+            cat.setMensaje("El catálogo '" + nombreCat + "' ha sido "
+                    + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
-        cat.setMensajeError("Error: El catálogo '" + cat.getNombre() + "' no ha sido"
+        cat.setMensajeError("Error: El catálogo '" + nombreCat + "' no ha sido"
                 + " registrado, verifique que no exista un catálogo con ese nombre.");
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);

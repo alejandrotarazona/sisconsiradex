@@ -40,13 +40,12 @@ public class Eliminar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String rol = u.getRol();
         ArrayList<Actividad> acts;
 
         if (act.eliminarActividad()) {
-            act.setMensaje("La actividad ha sido eliminada.");
+            act.setMensaje("La actividad ha sido eliminada");
 
             if (rol.equalsIgnoreCase("WM")) {
                 acts = Clases.Actividad.listarActividades();
@@ -73,7 +72,7 @@ public class Eliminar extends org.apache.struts.action.Action {
                 acts = act.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", acts);
-
+            act.setMensajeError("Error: La actividad no pudo ser eliminada");
             return mapping.findForward(FAILURE);
         }
     }

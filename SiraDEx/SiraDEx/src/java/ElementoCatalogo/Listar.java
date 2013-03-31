@@ -37,6 +37,7 @@ public class Listar extends org.apache.struts.action.Action {
             throws Exception {
         ElementoCatalogo e = (ElementoCatalogo) form;
         e.setMensajeError(null);
+        e.setMensaje(null);
         int idCat = e.getIdCatalogo();
         e.setIdCatalogo(idCat);
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
@@ -49,6 +50,7 @@ public class Listar extends org.apache.struts.action.Action {
         } else {
             request.setAttribute("elementos", null);
         }
+        
         return mapping.findForward(SUCCESS);
     }
 }

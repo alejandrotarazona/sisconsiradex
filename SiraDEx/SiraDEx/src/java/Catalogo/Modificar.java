@@ -39,7 +39,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Catalogo cat = (Catalogo) form;
-        cat.setMensajeError(null);
+        cat.setMensaje(null);
 
         int idCat = cat.getIdCatalogo();
         ArrayList campos = Clases.CampoCatalogo.listar(idCat);
@@ -82,7 +82,7 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
-
+        
         ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
         if (nuevosCampos != null) {
             for (int i = 1; i <= cat.getNroCampos(); i++) {
@@ -100,17 +100,16 @@ public class Modificar extends DispatchAction {
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
 
         if (cat.modificar(nombre, campos, nuevosCampos)) {
-
-            cat.setMensaje("El catálogo ha sido modificado con éxito.");
+        
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
-            cat.setNroCampos(0);
             cat.deleteSessions(request);
+            cat.setMensaje("El catálogo ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);
         }
         
         cat.setNombre(nombre);
-        
+        cat.setMensajeError("Error: El catálogo no pudo ser modificado");
         return mapping.findForward(FAILURE);
 
 

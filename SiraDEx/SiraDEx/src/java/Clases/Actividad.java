@@ -626,7 +626,6 @@ public class Actividad extends Root {
 
     public boolean modificar(ArrayList camposNM) {
         boolean resp = true;
-
         Iterator it = camposNM.iterator();
 
         for (int i = 0; it.hasNext() && resp; i++) {

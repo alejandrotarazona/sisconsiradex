@@ -48,7 +48,7 @@ public class Modificar extends DispatchAction {
         request.getSession().setAttribute("catalogos", catalogos);
 
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensajeError(null);
+        ta.setMensaje(null);
 
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();
@@ -73,19 +73,22 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
-
+        ta.deleteSessions(request);
+        
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         if (ta.modificar(taNM)) {
 
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tas);
-
+            
+            ta.setMensaje("El tipo de actividad fue modificado con éxito");
             return mapping.findForward(SUCCESS);
         }
 
         ta.setNombreTipo(taNM.getNombreTipo());
 
+        ta.setMensajeError("El tipo de actividad no pudo ser modificado");
         return mapping.findForward(FAILURE);
 
 
