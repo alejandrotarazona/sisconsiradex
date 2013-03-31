@@ -39,8 +39,7 @@ public class ModificarPerfil extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        
-        u.setMensajeError(null);
+        u.setMensaje(null);
         
         Usuario userNM = new Usuario();
         userNM.setUsername(u.getUsername());
@@ -55,18 +54,14 @@ public class ModificarPerfil extends DispatchAction {
             throws Exception {
       
         Usuario u = (Usuario) form;
+        u.deleteSessions(request);
         Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
             
         if (u.modificar(userNM)) {
-
-            u.setMensaje("El perfil ha sido modificado con éxito.");
-            
-            u.deleteSessions(request);
-            
+            u.setMensaje("El perfil ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);         
-      
         }
-        
+        u.setMensajeError("Error: El perfil no se pudo modificar");
         return mapping.findForward(FAILURE);
 
     }

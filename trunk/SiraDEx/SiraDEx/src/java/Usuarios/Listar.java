@@ -4,6 +4,7 @@
  */
 package Usuarios;
 
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,8 +36,10 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ArrayList usrs = Clases.Usuario.listarUsuario();
+        Usuario u = new Usuario();
         
         request.setAttribute("usuarios", usrs);
+        u.deleteSessions(request);
         return mapping.findForward(SUCCESS);
     }
 }

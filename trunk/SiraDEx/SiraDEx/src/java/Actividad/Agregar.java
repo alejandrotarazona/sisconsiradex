@@ -65,7 +65,9 @@ public class Agregar extends DispatchAction {
         }
         
         Actividad a = (Actividad) form;
+        a.setMensaje(null);
         a.setMensajeError(null);
+        
         
         return mapping.findForward(PAGE);
     }
@@ -107,6 +109,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
+        
         ArrayList<CampoValor> cv = a.getCamposValores();
         int divisor = 1024 * 1024;
 
@@ -134,8 +137,6 @@ public class Agregar extends DispatchAction {
 
         if (a.agregarActividad()) {
 
-            a.setMensaje("Su actividad ha sido registrado con éxito.");
-
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
             ArrayList<Actividad> act;
@@ -147,7 +148,8 @@ public class Agregar extends DispatchAction {
             }
             request.setAttribute("acts", act);
 
-
+            a.deleteSessions(request);
+            a.setMensaje("Su actividad ha sido registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
 
@@ -164,7 +166,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-
+        a.deleteSessions(request);
         if (a.agregarActividad()) {
 
             a.setMensaje("Su actividad ha sido registrado con éxito.");
@@ -179,7 +181,7 @@ public class Agregar extends DispatchAction {
                 act = a.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", act);
-            a.deleteSessions(request);
+            
             return mapping.findForward(SUCCESSFULL);
         }
 

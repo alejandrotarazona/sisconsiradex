@@ -42,7 +42,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-        act.setMensajeError(null);
+        act.setMensaje(null);
         act.setActividad();
                
         /*ArrayList con los valores no modificados*/
@@ -67,13 +67,12 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-        
+       
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
         if (act.modificar(campos)) {
-
-            act.setMensaje("La actividad ha sido modificada con éxito.");
+          
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
             ArrayList<Actividad> acts;
@@ -84,13 +83,16 @@ public class Modificar extends DispatchAction {
                 acts = act.listarActividadesDeUsuario();
             }
             request.setAttribute("acts", acts);
+            
             act.deleteSessions(request);
+            act.setMensaje("La actividad ha sido modificada con éxito");
             return mapping.findForward(SUCCESS);         
       
         }
         
         ArrayList ac = Clases.Actividad.listarActividades();
         request.setAttribute("actividades", ac);
+        act.setMensajeError("Error: La actividad no se pudo modificar");
         return mapping.findForward(FAILURE);
 
 

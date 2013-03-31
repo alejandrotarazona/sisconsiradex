@@ -38,7 +38,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
-        elemCat.setMensajeError(null);
+        elemCat.setMensaje(null);
 
         ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
         elemCat.setCamposValores(campos);
@@ -60,21 +60,21 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
-
+        
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
 
         if (elemCat.modificar(campos)) {
-
-            elemCat.setMensaje("El elemento ha sido modificado con éxito.");
+            
             ArrayList<ElementoCatalogo> ec;
             ec = Clases.ElementoCatalogo.listarElementosId(elemCat.getIdCatalogo());
             request.setAttribute("elementos", ec);
             request.setAttribute("campos", elemCat.getCamposValores());
 
-            //elemCat.deleteSessions(request);
+            elemCat.deleteSessions(request);
+            elemCat.setMensaje("El elemento ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);
         }
-
+        elemCat.setMensajeError("Error: El elemento no se pudo modificar");
         return mapping.findForward(FAILURE);
     }
 }

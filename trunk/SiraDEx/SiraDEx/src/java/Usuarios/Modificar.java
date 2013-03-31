@@ -32,6 +32,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
+        u.setMensaje(null);
         u.setUsuario();
         System.out.println("El usuario elegido es: " + u.toString());
         request.getSession().setAttribute("usuarioNM", u);
@@ -47,6 +48,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
+        
         String rol = u.getRol();
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
@@ -59,12 +61,12 @@ public class Modificar extends DispatchAction {
    
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
-       
-            u.setMensaje("El rol del Usuario se modificó con éxito.");
-            
+            u.deleteSessions(request);
+            u.setMensaje("El rol del Usuario se modificó con éxito");
+           
             return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("Error: No se pudo modificar el usuario.");
+        u.setMensajeError("Error: No se pudo modificar el usuario");
         return mapping.findForward(PAGE);
     }
 }
