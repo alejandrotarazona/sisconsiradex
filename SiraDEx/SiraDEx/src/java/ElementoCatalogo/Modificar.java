@@ -74,7 +74,7 @@ public class Modificar extends DispatchAction {
             elemCat.setMensaje("El elemento ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);
         }
-        elemCat.setMensajeError("Error: El elemento no se pudo modificar");
+        
         return mapping.findForward(FAILURE);
     }
 }

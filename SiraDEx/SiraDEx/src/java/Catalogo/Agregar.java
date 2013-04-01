@@ -53,6 +53,13 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
+        
+        /*verifica si hay un tipo de actividad con ese nombre*/
+        if (cat.esCatalogo()) {
+            cat.setMensajeError("Error: Ya existe un Catálogo con el Nombre "
+                    + cat.getNombre() + "'. Por favor intente con otro nombre.");
+             return mapping.findForward(FAILURE);
+        }
 
         if (cat.getNombre().contains(";") || cat.getNombre().contains("<")
                 || cat.getNombre().contains(">") || cat.getNombre().contains("'")

@@ -73,8 +73,8 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     public void setNombreCatalogo(String nombreCatalogo) {
         this.nombreCatalogo = nombreCatalogo;
     }
-    
-     public String getContenido() {
+
+    public String getContenido() {
         return contenido;
     }
 
@@ -82,8 +82,12 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         this.contenido = contenido;
     }
 
-
     public boolean agregar() {
+        
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
+        
         Entity eElemento = new Entity(1, 10);
         boolean resp = true;
 
@@ -105,14 +109,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         while (itValores.hasNext() && resp) {
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            resp &= Verificaciones.verif(ccv.getCampo(), ccv.getValor());
-            if (resp) {
-                resp &= ccv.agregar(this.idElemento);
-            } else {
-                this.eliminar();
-                return resp;
-            }
-
+            ccv.agregar(this.idElemento);
         }
 
         return resp;
@@ -183,22 +180,20 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public boolean modificar(ArrayList camposNM) {
-        boolean resp = true;
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
 
         Iterator it = camposNM.iterator();
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            resp &= camposValores.get(i).modificar(campoNM, idElemento);
+            camposValores.get(i).modificar(campoNM, idElemento);
         }
 
-        if (!resp) {
-            mensaje = "Error del sistema al intentar actualizar la base de datos.";
-        }
-        return resp;
+        return true;
     }
-    
-   
+
     //retorna una lista con los valores de los elementos del catalogo dado
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
             int valores) {
@@ -250,5 +245,4 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         return contenido.compareTo(e.getContenido());
     }
-    
 }

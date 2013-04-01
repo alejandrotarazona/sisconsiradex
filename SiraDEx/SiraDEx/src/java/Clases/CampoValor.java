@@ -160,10 +160,7 @@ public class CampoValor implements Serializable {
         Integer idCampo = new Integer(campo.getIdCampo());
         Integer idActividad = new Integer(idAct);
 
-        if (file != null) {
-            if (file.getFileSize() > 2097152) { //2097152 bytes = 2MB
-                return false;
-            }
+        if (file != null) {      
             resp = resp && eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
         } else {
             Object[] tupla = {idCampo, idActividad, valor};

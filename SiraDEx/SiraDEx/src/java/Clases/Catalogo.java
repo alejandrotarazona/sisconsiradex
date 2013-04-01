@@ -207,6 +207,11 @@ public class Catalogo extends Root {
     }
 
     public boolean agregar() {
+        
+        if (!Verificaciones.verifCF(this)) {
+            return false;
+        }
+        
         Entity eCatalogo = new Entity(1, 8);//INSERT CATALOGO
         boolean resp;
 
