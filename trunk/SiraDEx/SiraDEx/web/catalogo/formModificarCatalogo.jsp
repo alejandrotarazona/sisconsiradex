@@ -4,6 +4,7 @@
     Author     : SisCon
 --%>
 
+<%@page import="Clases.Catalogo"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -21,14 +22,14 @@
         <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
                 name="catalogoForm" property="nombre"/> </h1>
 
-         <br><logic:present name="catalogoForm" property="mensaje">
+        <br><logic:present name="catalogoForm" property="mensaje">
             <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="catalogoForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="catalogoForm" property="mensajeError">
             <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
-            </logic:present>
-                        
-                <html:form method="POST" action ="/ModificarCatalogo?method=add">
+        </logic:present>
+
+        <html:form method="POST" action ="/ModificarCatalogo?method=add">
 
         <tr>
         <td>Agregar nuevos campos <html:text name="catalogoForm" 
@@ -43,10 +44,18 @@
         <tr>
         <td><b>Nombre del cátalogo</b></td>
 
-        <td><html:text name="catalogoForm" property="nombre">
+        <td>
+            <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
+                String nombreCat = (String) c.getNombre();
+                boolean b = false;
+                if (nombreCat.equals("Coordinaciones") 
+                        || nombreCat.equals("Programas")) {
+                    b = true;
+                }%>
+            <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'>
                 <bean:write name="catalogoForm" property="nombre"/>
-            </html:text> 
-
+            </html:text>
+        </td>
             </tr>
         <tr><td><b>Campos</b></td></tr>
     <tr><td></td><td>Nombre</td><td>Tipo</td></tr>
@@ -83,19 +92,19 @@
 
         <tr>
         <tr><td><b>Nuevos campos</b></td></tr>
-    </tr>            
-    <logic:iterate name="catalogoForm" property="camposAux" id="camposAux" 
-                   indexId="index">
-        <tr><td></td>
-        <td><html:text name="camposAux" property="nombre" indexed="true"/></td>
+</tr>            
+<logic:iterate name="catalogoForm" property="camposAux" id="camposAux" 
+               indexId="index">
+    <tr><td></td>
+    <td><html:text name="camposAux" property="nombre" indexed="true"/></td>
 
-        <td><html:select name="camposAux" property="tipo" indexed="true">
-                <html:option value="texto">texto</html:option>
-                <html:option value="numero">numero</html:option>
-                <html:option value="fecha">fecha</html:option>
-            </html:select>
-        </td>
-    </tr>
+    <td><html:select name="camposAux" property="tipo" indexed="true">
+            <html:option value="texto">texto</html:option>
+            <html:option value="numero">numero</html:option>
+            <html:option value="fecha">fecha</html:option>
+        </html:select>
+    </td>
+</tr>
 </logic:iterate>
 
 </logic:greaterThan>

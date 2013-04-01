@@ -208,7 +208,7 @@ public class Catalogo extends Root {
 
     public boolean agregar() {
         
-        if (!Verificaciones.verifCF(this)) {
+        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
             return false;
         }
         
@@ -225,14 +225,9 @@ public class Catalogo extends Root {
             nCampos
         };
 
-        if (this.esCatalogo()) {
-            return false;
-        } else {
-            resp = eCatalogo.insertar2(columnas, valores);
-            if (resp) {
-                resp = agregarCampos(campos);
-            }
-        }
+        eCatalogo.insertar2(columnas, valores);
+        resp = agregarCampos(campos);
+        
         return resp;
     }
 
@@ -270,6 +265,11 @@ public class Catalogo extends Root {
     //el parámetro camposNM su lista de campos No Modificados
     public boolean modificar(String nombreNM, ArrayList camposNM,
             ArrayList camposNuevos) {
+        
+        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
+            return false;
+        }
+        
         boolean resp;
 
         Entity e = new Entity(2, 8);
@@ -279,22 +279,11 @@ public class Catalogo extends Root {
         String[] colModificar = {ATRIBUTOS[1]};
         String[] nombreCat = {nombre};
         if (this.esCatalogo() && !nombre.equals(nombreNM)) {
-            mensaje = "Error: Ya existe un catálogo llamado "
-                    + "" + nombre + ".\n Intente con otro nombre.";
+            mensajeError = "Error: Ya existe un Catálogo con el Nombre '" 
+                    + "" + nombre + "'.Por favor intente con otro nombre.";
             return false;
         }
-        if (nombreNM.equals("Coordinaciones") && !nombre.equals(nombreNM)) {
-            mensaje = "Error: El nombre del catálogo Coordinaciones no puede"
-                    + " ser modificado.\n Solo se permite modificar el nombre de"
-                    + " sus campos.";
-            return false;
-        }
-        if (nombreNM.equals("Programas") && !nombre.equals(nombreNM)) {
-            mensaje = "Error: El nombre del catálogo Programas no puede"
-                    + " ser modificado.\n Solo se permite modificar el nombre de"
-                    + " sus campos.";
-            return false;
-        }
+ 
         resp = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
         Iterator it = camposNM.iterator();

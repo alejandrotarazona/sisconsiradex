@@ -349,6 +349,29 @@ public class Verificaciones {
         return true;
 
     }
+    
+    /**
+     * 
+     * @param c
+     * @return 
+     */
+    public static boolean verifCV(Catalogo c) {
+
+        Iterator it = c.getCampos().iterator();
+        for (int i = 1; it.hasNext(); i++) {
+            CampoCatalogo campo = (CampoCatalogo) it.next();
+            String nombre = campo.getNombre();
+            String nroCampo = "número " + i;
+
+            /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
+            String respVerif = verifLV(nroCampo, nombre, 100, true);
+            if (respVerif != null) {
+                c.setMensajeError(respVerif);
+                return false;
+            }
+        }
+        return true;
+    }
 
     /**
      * 
