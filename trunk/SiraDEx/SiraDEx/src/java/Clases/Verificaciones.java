@@ -38,7 +38,7 @@ public class Verificaciones {
      * parámetro sea vacío, null en caso contrario.
      */
     public static String verifVacio(String nombreCampo, String valorCampo) {
-
+        
         if (esVacio(valorCampo)) {
             return "Error: El campo '" + nombreCampo + "' es obligatorio.";
         }
@@ -203,6 +203,8 @@ public class Verificaciones {
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
             String nroCampo = "número " + i;
+            System.out.println("#################################################\n"+
+                    nombre+" : "+ nroCampo+"\n#################################################\n\n");
 
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/

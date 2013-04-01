@@ -39,7 +39,8 @@ public class Eliminar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         TipoActividad t = (TipoActividad) form;
-
+        t.setTipoActividad();
+        t.setCampos();
         if (t.eliminarTipoActividad()) {
             ArrayList ta = Clases.TipoActividad.listar();
             request.setAttribute("tipos", ta);

@@ -22,7 +22,13 @@
                         $('.ocultable').css("visibility", "hidden");
                     }
                 }
-            )});              
+            )
+                $('.ocultable').change(function(){
+                   var val = $('.ocultable')[0].value;
+                   $('.selector')[0].value = val;
+                })
+            
+        });              
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición del Rol de 
@@ -45,6 +51,8 @@
 
         <html:form action="/ModificarUsuario?method=modificar">
             <b>Rol </b>
+            <% String valor = (String) pageContext.getAttribute("rol");
+            %>
 
             <html:select styleClass="selector"
                          name="usuarioForm" property="rol">
@@ -62,13 +70,9 @@
 
             <html:select name="usuarioForm" property="rol">
                 <html:option value="">-- Seleccione --</html:option>
-                <html:option value="PSC">PSC</html:option>
-                <html:option value="CCTDS">CCTDS</html:option>
-                <html:option value="USIDEx">USIDEx</html:option>
-                <html:option value="UPAS">UPAS</html:option>
-                <html:option value="BPDEx">BPDEx</html:option>
+                <html:optionsCollection name="coord" label="contenido" value="contenido"/>
+                    
             </html:select>
-
         </span>
         
         <div align="center"><html:submit>Modificar</html:submit></div>

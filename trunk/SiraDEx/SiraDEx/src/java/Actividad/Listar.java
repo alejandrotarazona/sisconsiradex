@@ -103,7 +103,7 @@ public class Listar extends DispatchAction {
         
         Actividad act = new Actividad();
         Clases.Root.deleteSessions(request, "");
-        ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getNombres());
+        ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getRol());
         
         request.setAttribute("acts", a);
         

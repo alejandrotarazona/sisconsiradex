@@ -31,6 +31,7 @@ public class TipoActividad extends Root {
     private String validador;
     private int nroProductos;
     private ArrayList<Campo> campos;
+    private boolean activo;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
         "nombre_tipo_actividad", //1
@@ -39,7 +40,8 @@ public class TipoActividad extends Root {
         "descripcion", //4
         "programa", //5
         "validador", //6
-        "nro_productos" //7 
+        "nro_productos", //7 
+        "activo" //8
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -107,6 +109,14 @@ public class TipoActividad extends Root {
         return descripcion;
     }
 
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
     public void setDescripcion(String descripcion) {
         this.descripcion = descripcion;
     }
@@ -149,6 +159,15 @@ public class TipoActividad extends Root {
 
     public void setNroProductos(int nroProductos) {
         this.nroProductos = nroProductos;
+    }
+
+    @Override
+    public TipoActividad clone() {
+        TipoActividad resp = new TipoActividad();
+        resp.setId(this.getId());
+        resp.setTipoActividad();
+
+        return resp;
     }
 
     private boolean checkPermiso(String rol) {
@@ -288,6 +307,7 @@ public class TipoActividad extends Root {
                 programa = rs.getString("programa");
                 validador = rs.getString("validador");
                 nroProductos = rs.getInt("nro_productos");
+                activo = rs.getBoolean("activo");
                 this.setPermisos();
                 rs.close();
             } catch (SQLException ex) {
@@ -381,15 +401,29 @@ public class TipoActividad extends Root {
     }
 
     public boolean eliminarTipoActividad() {
-        Entity eTipoActividad = new Entity(5, 1);
+        Entity eMod = new Entity(2, 1);
+        String[] condColumnas = {
+            ATRIBUTOS[0]
+        };
+        Object[] valores = {
+            this.id
+        };
+        String[] colModificar = {
+            ATRIBUTOS[8]
+        };
+        Object[] modificaciones = {
+            false
+        };
+        boolean b = eMod.modificar(condColumnas, valores, colModificar, modificaciones);
 
-        if (eTipoActividad.borrar(ATRIBUTOS[0], this.id)) {
+        if (b) {
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
             return true;
         }
 
         mensajeError = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
+
     }
 
     /**
@@ -413,8 +447,11 @@ public class TipoActividad extends Root {
                     t.setPrograma(rs.getString(ATRIBUTOS[5]));
                     t.setValidador(rs.getString(ATRIBUTOS[6]));
                     t.setNroProductos(rs.getInt(ATRIBUTOS[7]));
+                    t.setActivo(rs.getBoolean(ATRIBUTOS[8]));
                     t.setPermisos();
-                    tipos.add(t);
+                    if (t.isActivo()) {
+                        tipos.add(t);
+                    }
                 }
                 rs.close();
             } catch (SQLException ex) {
@@ -532,7 +569,8 @@ public class TipoActividad extends Root {
             ATRIBUTOS[4],
             ATRIBUTOS[5],
             ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[7],
+            ATRIBUTOS[8]
         };
         Object[] valores = {
             taNM.getNombreTipo(),
@@ -540,7 +578,8 @@ public class TipoActividad extends Root {
             taNM.getDescripcion(),
             taNM.getPrograma(),
             taNM.getValidador(),
-            taNM.getNroProductos()
+            taNM.getNroProductos(),
+            taNM.isActivo()
         };
         String[] colModificar = {
             ATRIBUTOS[1],
@@ -548,7 +587,8 @@ public class TipoActividad extends Root {
             ATRIBUTOS[4],
             ATRIBUTOS[5],
             ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[7],
+            ATRIBUTOS[8]
         };
         Object[] modificaciones = {
             nombreTipo,
@@ -556,7 +596,8 @@ public class TipoActividad extends Root {
             descripcion,
             programa,
             validador,
-            nroProductos
+            nroProductos,
+            activo
         };
 
         if (this.esTipoActividad()
@@ -586,25 +627,33 @@ public class TipoActividad extends Root {
         return resp;
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
         //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");
         //t.agregarTipoActividad();
 
         TipoActividad t = new TipoActividad("prueba1", 2, "pasantia");
-        t.setTipoPR("p");
-        ArrayList<Campo> cs = new ArrayList<>();
+        t.setId(1);
 
-        Campo c0 = new Campo("Nombre", "texto", 16, true);
-        Campo c1 = new Campo("Apellido", "texto", 16, false);
-        cs.add(c0);
-        cs.add(c1);
-        t.setCampos(cs);
+        //t.setTipoPR("p");
+        //ArrayList<Campo> cs = new ArrayList<>();
 
-        if (t.agregarTipoActividad()) {
+        //Campo c0 = new Campo("Nombre", "texto", 16, true);
+        //Campo c1 = new Campo("Apellido", "texto", 16, false);
+        //cs.add(c0);
+        //cs.add(c1);
+        //t.setCampos(cs);
+
+        t.setTipoActividad();
+
+        if (false) {
             System.out.println("\n\n\nExito");
         } else {
             System.out.println("\n\n\nFracaso");
         }
+
+        TipoActividad t0 = (TipoActividad) t.clone();
+        System.out.println(t.getNombreTipo());
+        System.out.println(t0.getNombreTipo());
 //        t.eliminarTipoActividad();
 
 
