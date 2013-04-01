@@ -38,7 +38,7 @@ public class Validar extends org.apache.struts.action.Action {
             throws Exception {
         Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String validador = user.getNombres();
+        String validador = user.getRol();
         System.out.println("El validador es: "+validador);
         boolean validacion = act.validar(true);
 

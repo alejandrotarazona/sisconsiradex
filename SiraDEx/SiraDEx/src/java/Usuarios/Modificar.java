@@ -4,6 +4,7 @@
  */
 package Usuarios;
 
+import Clases.ElementoCatalogo;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -36,6 +37,10 @@ public class Modificar extends DispatchAction {
         u.setUsuario();
         System.out.println("El usuario elegido es: " + u.toString());
         request.getSession().setAttribute("usuarioNM", u);
+
+        ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
+        request.setAttribute("coord", catalogo);
+
         return mapping.findForward(PAGE);
     }
 
@@ -48,22 +53,29 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        
+
+        String rol2 = (String) request.getAttribute("rol2");
+
         String rol = u.getRol();
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
         u.setUsername(usuarioNM.getUsername());
         u.setUsuario();
-        u.setRol(rol);
+
+        if (!rol.equalsIgnoreCase("DEx")) {
+            u.setRol(rol);
+        } else {
+            u.setRol(rol2);
+        }
         System.out.println("El nuevo usuario es: " + u.toString());
-        
+
         if (u.modificar(usuarioNM)) {
-   
+
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
-            Clases.Root.deleteSessions(request,"");
+            Clases.Root.deleteSessions(request, "");
             u.setMensaje("El rol del Usuario se modificó con éxito");
-           
+
             return mapping.findForward(SUCCESS);
         }
         u.setMensajeError("Error: No se pudo modificar el usuario");
