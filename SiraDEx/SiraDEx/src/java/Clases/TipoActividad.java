@@ -560,7 +560,7 @@ public class TipoActividad extends Root {
         };
 
         if (this.esTipoActividad()
-                && !modificaciones[0].equals(taNM.getNombreTipo())) {
+                && !nombreTipo.equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
                     + nombreTipo + "'. Por favor intente con otro nombre.";
             return false;

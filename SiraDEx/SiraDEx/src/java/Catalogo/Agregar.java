@@ -61,14 +61,13 @@ public class Agregar extends DispatchAction {
              return mapping.findForward(FAILURE);
         }
 
-        if (cat.getNombre().contains(";") || cat.getNombre().contains("<")
-                || cat.getNombre().contains(">") || cat.getNombre().contains("'")
-                || cat.getNombre().contains("&") || cat.getNombre().contains("$")) {
-            cat.setMensajeError("Error: El nombre tiene un caracter invalido, por favor "
-                    + "intente de nuevo.");
+       /*verifica si hay un tipo de actividad con ese nombre*/
+        if (cat.esCatalogo()) {
+            cat.setMensajeError("Error: Ya existe un Catálogo con el Nombre '" 
+                    + cat.getNombre() + "'. Por favor intente con otro nombre.");
             return mapping.findForward(FAILURE);
-
         }
+
         int numeroCampos = cat.getNroCampos();
         ArrayList<CampoCatalogo> campos = new ArrayList<>();
 
