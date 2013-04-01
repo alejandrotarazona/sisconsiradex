@@ -112,14 +112,6 @@ public class Verificaciones {
             return false;
         }
 
-        /*verifica si hay un tipo de actividad con ese nombre*/
-        if (ta.esTipoActividad()) {
-            ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "
-                    + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
-                    + "intente con otro nombre.");
-            return false;
-        }
-
         respVerif = verifLV("'Descripción'", ta.getDescripcion(), 200, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -320,22 +312,67 @@ public class Verificaciones {
 
         return true;
     }
+    
+     /**
+      * 
+      * @param c
+      * @return 
+      */
+    public static boolean verifCF(Catalogo c) {
+
+        /*verifica si el nombre del catalogo es válido*/
+        String respVerif = verifLV("'Nombre'", c.getNombre(),
+                140, true);
+        if (respVerif != null) {
+            c.setMensajeError(respVerif);
+            return false;
+        }
+
+        String nro = String.valueOf(c.getNroCampos());
+        respVerif = verifPatron("'Número de campos'", nro, "^[ ]*[0-9]+[ ]*$",
+                "debe contener sólo números.");
+        if (respVerif != null) {
+            c.setMensajeError(respVerif);
+            return false;
+        }
+        if (nro.equals("0")) {
+            c.setMensajeError("Error: El campo 'Número de campos' debe contener al "
+                    + "menos 1 como valor.");
+            return false;
+        }
+        respVerif = verifLV("'Número de campos'", nro, 1, true);
+        if (respVerif != null) {
+            c.setMensajeError(respVerif);
+            return false;
+        }
+
+        return true;
+
+    }
 
     /**
-     * Funcion que verifica que el valor de un elemento se corresponda con el
-     * tipo del campo del catalogo respectivo.
-     *
-     * @param campo CampoCatalogo con el que hacer la correspondencia.
-     * @param valor Valor del Elemento.
-     * @return true si hay correspondencia
-     * @return false si no hay correspondencia.
+     * 
+     * @param ec
+     * @return 
      */
-    public static boolean verif(CampoCatalogo campo, String valor) {
+    public static boolean verif(ElementoCatalogo ec) {
+        
+        
+        Iterator it = ec.getCamposValores().iterator();
+        
+         while (it.hasNext()) {
+
+            CampoCatalogoValor ccv = (CampoCatalogoValor) it.next();
+            String valor = ccv.getValor();
+            String tipo = ccv.getCampo().getTipo();
+            String nombre = "'" + ccv.getCampo().getNombre() + "'";
         
         /*verifica si el campo es tipo numero que su valor sea numérico*/
-        if (campo.getTipo().equals("numero")
-                && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
-            return false;
+            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
+                ec.setMensajeError("Error: El campo " + nombre + " debe contener "
+                        + "solo números.");
+                return false;
+            }      
         }
         return true;
     }

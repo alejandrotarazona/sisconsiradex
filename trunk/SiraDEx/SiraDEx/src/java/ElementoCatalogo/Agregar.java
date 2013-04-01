@@ -73,8 +73,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
 
-        e.setMensajeError("Error: No se pudo registrar el elemento. Por favor revise que "
-                + "los campos se han llenado correctamente");
+       
         ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
         request.setAttribute("elementos", ec);
         int tam = ec.size();
@@ -84,7 +83,7 @@ public class Agregar extends DispatchAction {
         } else {
             request.setAttribute("elementos", null);
         }
-        e.setMensajeError("Error: El elemento no pudo ser registrado");
+        e.setMensajeError("Error: El elemento no pudo ser registrado.");
         return mapping.findForward(FAILURE);
 
 
