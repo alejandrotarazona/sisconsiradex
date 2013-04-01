@@ -312,12 +312,12 @@ public class Verificaciones {
 
         return true;
     }
-    
-     /**
-      * 
-      * @param c
-      * @return 
-      */
+
+    /**
+     *
+     * @param c
+     * @return
+     */
     public static boolean verifCF(Catalogo c) {
 
         /*verifica si el nombre del catalogo es válido*/
@@ -349,11 +349,11 @@ public class Verificaciones {
         return true;
 
     }
-    
+
     /**
-     * 
+     *
      * @param c
-     * @return 
+     * @return
      */
     public static boolean verifCV(Catalogo c) {
 
@@ -370,32 +370,47 @@ public class Verificaciones {
                 return false;
             }
         }
+        
+        Iterator iter = c.getCamposAux().iterator();
+        for (int i = 1; iter.hasNext(); i++) {
+            CampoCatalogo campo = (CampoCatalogo) iter.next();
+            String nombre = campo.getNombre();
+            String nroCampo = "adicional número " + i;
+
+            /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
+            String respVerif = verifLV(nroCampo, nombre, 100, true);
+            if (respVerif != null) {
+                c.setMensajeError(respVerif);
+                return false;
+            }
+        }
+        
         return true;
     }
 
     /**
-     * 
+     *
      * @param ec
-     * @return 
+     * @return
      */
     public static boolean verif(ElementoCatalogo ec) {
-        
-        
+
+
         Iterator it = ec.getCamposValores().iterator();
-        
-         while (it.hasNext()) {
+
+        while (it.hasNext()) {
 
             CampoCatalogoValor ccv = (CampoCatalogoValor) it.next();
             String valor = ccv.getValor();
             String tipo = ccv.getCampo().getTipo();
             String nombre = "'" + ccv.getCampo().getNombre() + "'";
-        
-        /*verifica si el campo es tipo numero que su valor sea numérico*/
+
+            /*verifica si el campo es tipo numero que su valor sea numérico*/
             if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
                 ec.setMensajeError("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
-            }      
+            }
         }
         return true;
     }

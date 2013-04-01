@@ -86,33 +86,19 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Catalogo cat = (Catalogo) form;
-        ArrayList<CampoCatalogo> c = cat.getCampos();
-        String nombreCat = cat.getNombre();
-        
-        for (int i = 1; i <= cat.getNroCampos(); i++) {
-
-                CampoCatalogo aux = c.get(i-1);
-                if (aux.isNombreInvalido()) {
-                    cat.setMensajeError("El campo número " + i
-                            + " contiene un nombre inválido");
-                    return mapping.findForward(FAILURE2);
-                }
-        }
-        
-        if (cat.agregar()) {
-            
+        Catalogo cat = (Catalogo) form;       
+             
+        if (cat.agregar()) {   
             
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
             
             Clases.Root.deleteSessions(request,"catalogoForm");
-            cat.setMensaje("El catálogo '" + nombreCat + "' ha sido "
+            cat.setMensaje("El Catálogo '" + cat.getNombre() + "' ha sido "
                     + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
-        cat.setMensajeError("Error: El catálogo '" + nombreCat + "' no ha sido"
-                + " registrado.");
+
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);

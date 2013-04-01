@@ -112,11 +112,6 @@ public class CampoCatalogo implements Serializable {
         CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
     }
 
-    public boolean isNombreInvalido() {
-        boolean resp = nombre.equals("");
-        return resp;
-    }
-
     public boolean agregarCampo(int idCatalogo) {
         boolean resp = true;
         Entity eCampoCatalogo = new Entity(1, 9);
