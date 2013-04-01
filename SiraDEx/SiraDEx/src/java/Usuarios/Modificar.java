@@ -61,7 +61,7 @@ public class Modificar extends DispatchAction {
    
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
-            u.deleteSessions(request);
+            Clases.Root.deleteSessions(request,"");
             u.setMensaje("El rol del Usuario se modificó con éxito");
            
             return mapping.findForward(SUCCESS);

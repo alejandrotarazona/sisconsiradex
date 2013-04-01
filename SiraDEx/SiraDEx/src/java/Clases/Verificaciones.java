@@ -5,8 +5,6 @@
 package Clases;
 
 import java.util.Iterator;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  *
@@ -24,8 +22,7 @@ public class Verificaciones {
      */
     public static boolean esVacio(String cadena) {
 
-        Matcher match = Pattern.compile("^[ ]*$").matcher(cadena);
-        if (match.lookingAt()) {
+        if (cadena.matches("^[ ]*$")) {
             return true;
         }
         return false;
@@ -53,16 +50,15 @@ public class Verificaciones {
      *
      * @param nombreCampo Cadena con el nombre del campo a verificar.
      * @param valorCampo Cadena con el valor del campo.
-     * @param patron Patrón que debe cumplir el valor.
+     * @param patron Expresión regular que debe cumplir el valor.
      * @param desc Cadena que describe el patrón dado.
      * @return Mensaje de error en caso de que el valor del campo pasado como
      * parámetro no cumpla con el patrón dado, null en caso contrario.
      */
     public static String verifPatron(String nombreCampo, String valorCampo,
-            Pattern patron, String desc) {
+            String patron, String desc) {
 
-        Matcher match = patron.matcher(valorCampo);
-        if (!match.lookingAt()) {
+        if (!valorCampo.matches(patron)) {
             return "Error: El campo " + nombreCampo + " " + desc;
         }
         return null;
@@ -91,7 +87,8 @@ public class Verificaciones {
         }
 
         if (valorCampo.length() > longitud) {
-            return "Error: El campo " + nombreCampo + " puede contener "
+            return "Error: El campo " + nombreCampo + " tiene "
+                    + nombreCampo.length() + " caracteres y solo puede contener "
                     + "a lo sumo " + longitud + " carateres.";
         }
 
@@ -155,10 +152,10 @@ public class Verificaciones {
         }
 
 
-        Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
+        String patronNum = "^[ ]*[0-9]+[ ]*$";
 
         String nro = String.valueOf(ta.getNroProductos());
-        respVerif = verifPatron("'Número de productos'", nro, numerico,
+        respVerif = verifPatron("'Número de productos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -176,7 +173,7 @@ public class Verificaciones {
         }
 
         nro = String.valueOf(ta.getNroCampos());
-        respVerif = verifPatron("'Número de campos'", nro, numerico,
+        respVerif = verifPatron("'Número de campos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -213,26 +210,24 @@ public class Verificaciones {
             Campo campo = (Campo) it.next();
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
-            String nroCampo = "número " + String.valueOf(i);
+            String nroCampo = "número " + i;
 
 
-            /*verifica que el nombre sea válido (alfanumérico, no vacío, a lo 
-             * sumo 100 caracteres)*/
-
+            /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verifLV(nroCampo, nombre, 100, true);
             if (respVerif != null) {
                 ta.setMensajeError(respVerif);
                 return false;
             }
 
-            /*verifica que la longitud sea válida (numérica, no vacía, a lo 
-             * sumo 3 caracteres, mayor que 0)*/
+            /*verifica que la longitud sea válida (numérica, a lo sumo 3 caracteres,
+             * mayor que 0 que es lo mismo que no vacía)*/
             if (tipo.equals("texto") || tipo.equals("textol")
                     || tipo.equals("numero")) {
 
-                Pattern numerico = Pattern.compile("^[ ]*[0-9]+[ ]*$");
+                String patronNum = "^[ ]*[0-9]+[ ]*$";
                 String longitud = String.valueOf(campo.getLongitud());
-                respVerif = verifPatron(nroCampo, longitud, numerico,
+                respVerif = verifPatron(nroCampo, longitud, patronNum,
                         "debe contener sólo números.");
                 if (respVerif != null) {
                     ta.setMensajeError(respVerif);
@@ -268,142 +263,62 @@ public class Verificaciones {
      *
      * @param act Actividad a verificar
      * @return true si los valores son validos, de lo contrario retorna false.
-     
+     */
     public static boolean verif(Actividad act) {
 
         Iterator it = act.getCamposValores().iterator();
-        Pattern patron;
+
         while (it.hasNext()) {
 
-            CampoValor campoV = (CampoValor) it.next();
-            String tipo =
-                    campoV.getCampo().getTipo();
-            String nombre =
-                    campoV.getCampo().getNombre();
-            if (tipo.equals("texto") ||
-        {
-                if (tipo.equals("numero")) {
-                    patron =
-                            Pattern.compile("^[ ]*[0-9]+[ ]*$");
-                }
-            }
-            if (tipo.equals("catalogo")
-                    && campo.getCatalogo().equals("")) {
-                ta.setMensaje("");
+            CampoValor cv = (CampoValor) it.next();
+            String valor = cv.getValor();
+            String tipo = cv.getCampo().getTipo();
+            String nombre = "'" + cv.getCampo().getNombre() + "'";
+            int longitud = cv.getCampo().getLongitud();
+            boolean obligatorio = cv.getCampo().isObligatorio();
+            String respVerif;
+
+            /*verifica si el campo es obligatorio que no sea vacío*/
+            respVerif = verifVacio(nombre, valor);
+            if (obligatorio && respVerif != null) {
+                act.setMensajeError(respVerif);
+                return false;
             }
 
-            ///FALTA TERMINAR }
+            /*verifica que la longitud sea válida (solo aplica para campos tipo
+             * texto, texto largo y numero)*/
+            if ((tipo.equals("texto") || tipo.equals("textol")
+                    || tipo.equals("numero")) && valor.length() > longitud) {
+                act.setMensajeError("Error: El campo " + nombre + " tiene "
+                        + valor.length() + " caracteres y solo puede contener "
+                        + "a lo sumo " + longitud + " carateres.");
+                return false;
+            }
 
-            Iterator itValores = this.camposValores.iterator();
-            int i = 0;
-            while (resp = (itValores.hasNext())) {
+            /*verifica si el campo es tipo numero que su valor sea numérico*/
+            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
+                act.setMensajeError("Error: El campo " + nombre + " debe contener "
+                        + "solo números.");
+                return false;
+            }
 
-                System.out.println("El campo "
-                        + camposValores.get(i).getCampo().getNombre());
-                System.out.println(
-                "El
-      valor " + camposValores.get(i).getValor()); i++; CampoValor cv =
-      (CampoValor
-                ) itValores.next();
-                Campo campoVerif = (Campo) cv.getCampo();
-                String valorVerif = (String) cv.getValor();
+            /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
+            if (tipo.equals("producto") || tipo.equals("archivo")) {
+                if (cv.getFile().getFileSize() > 2097152) {
 
-                if (campoVerif.isObligatorio() && valorVerif.equals("")) {
-                    mensaje =
-                            "Todo campo obligatorio debe ser llenado";
+                    act.setMensajeError("Error: El tamaño del archivo del campo "
+                            + nombre + " debe ser menor de 2 MB.");
                     return false;
                 }
-                resp &=
-                        Verificaciones.verif(campoVerif, valorVerif);
-
-                ArrayList<CampoValor> cv = a.getCamposValores();
-                int divisor = 1024 *
-                        * 1024;
-                Iterator it = cv.iterator();
-                while (it.hasNext()) {
-                    CampoValor cv0 = (CampoValor) it.next();
-                    Campo c = cv0.getCampo();
-                    if (c.getTipo().equals("archivo") || c.getTipo().equals("producto")) {
-                        FormFile f0 = cv0.getFile();
-
-                        double tamBasico = f0.getFileSize();
-                        double tamano = (tamBasico
-                                / divisor);
-                        System.out.println("Tamaño " + f0.getFileName() + " " + tamano
-                                + "MB");
-                        if (tamano > 2.0) {
-                            a.setMensajeError(
-                            "Error: El tamaño del
-      archivo debe ser menor a 2MB
-                            "); return mapping.findForward(FAILURE); } if
-      (!cv0.getValor().endsWith(".pdf")
-                            
-                                ) { a.setMensajeError(
-                                "Error: El archivo
-      DEBE ser un archivo \".pdf\""); return mapping.findForward(FAILURE);
-                            }
-
-                        }
-                    }
+                if (!valor.endsWith(".pdf")) {
+                    act.setMensajeError("Error: El archivo subido al campo " + nombre
+                            + " debe ser extención .pdf");
+                    return false;
                 }
             }
-        }*/
-
-
-        /**
-         * Funcion que verifica que el valor de una actividad se corresponda con
-         * el tipo del campo respectivo.
-         *
-         * @param campo Campo con el que hacer la correspondencia.
-         * @param valor Valor de la actividad.
-         * @return true si hay correspondencia
-         * @return false si no hay correspondencia.
-         */
-    
-
-    public static boolean verif(Campo campo, String valor) {
-        boolean resp = true;
-
-        String tipo_campo = campo.getTipo();
-        String[] posibles_tipos = Campo.getTIPOS();
-
-        if (tipo_campo.equals(posibles_tipos[0])) {
-            Pattern limpiar = Pattern.compile("(([a-zA-Z0-9_-])+s*)*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-            resp = resp && valor.length() <= campo.getLongitud();
-
-        } else if (tipo_campo.equals(posibles_tipos[1])) {
-            Pattern limpiar = Pattern.compile("[0-9]*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-
-        } else if (tipo_campo.equals(posibles_tipos[2])) {
-            /**
-             * Pattern limpiar =
-             * Pattern.compile("([0-3][0-9])/([0-1][0-9])/([0-9][0-9][0-9][0-9])");
-             * Matcher buscar = limpiar.matcher(valor); resp = resp &&
-             * buscar.lookingAt(); Calendar corroboracion =
-             * Calendar.getInstance(); int dia =
-             * Integer.parseInt(buscar.group(1)); int mes =
-             * Integer.parseInt(buscar.group(2)); int ano =
-             * Integer.parseInt(buscar.group(3)); corroboracion.set(ano, mes,
-             * dia); resp = resp && (corroboracion != null);
-             */
-            resp = true;
-        } else if (tipo_campo.equals(posibles_tipos[3])) {
-            Pattern limpiar = Pattern.compile("([a-zA-Z0-9_-])+\\.pdf");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = true;
-        } else if (tipo_campo.equals(posibles_tipos[4])) {
-            Pattern limpiar = Pattern.compile("true|false");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
         }
 
-        resp = resp && valor.length() < 1400;
-
-        return resp;
+        return true;
     }
 
     /**
@@ -416,73 +331,15 @@ public class Verificaciones {
      * @return false si no hay correspondencia.
      */
     public static boolean verif(CampoCatalogo campo, String valor) {
-        boolean resp = true;
-
-        String tipo_campo = campo.getTipo();
-        String[] posibles_tipos = CampoCatalogo.getTIPOS();
-
-        if (tipo_campo.equals(posibles_tipos[0])) {
-            Pattern limpiar = Pattern.compile("(([a-zA-Z0-9_-])+s*)*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-
-        } else if (tipo_campo.equals(posibles_tipos[1])) {
-            Pattern limpiar = Pattern.compile("[0-9]*");
-            Matcher buscar = limpiar.matcher(valor);
-            resp = resp && buscar.lookingAt();
-
-        } else {
-            resp = true;
+        
+        /*verifica si el campo es tipo numero que su valor sea numérico*/
+        if (campo.getTipo().equals("numero")
+                && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
+            return false;
         }
-
-        resp = resp && valor.length() < 1400;
-
-        return resp;
+        return true;
     }
 
     public static void main(String[] args) {
-
-        boolean resp;
-        //Pattern patron = Pattern.compile("([a-zA-Z]|[0-9])+"); //alfanumerico de Alejandro
-        //problema: admite que sea cualquier cosa siempre y cuando haya un caracter alfanumerico 
-
-        Pattern patron = Pattern.compile("^[a-zA-Z áéíóúAÉÍÓÚÑñ0-9\\.,;\\+=\\-'\"\\?¿\\$!¡]+$");//alfanumerico de Jorge
-        //problema: admite que sea puros espacios en blanco, se usa otro patron en verifCF para resolverlo 
-
-        //Pattern patron = Pattern.compile("[0-9]+"); //numerico de Alejandro
-        //problema: admite que sea cualquier cosa siempre y cuando empiece con un numero
-
-        //Pattern patron = Pattern.compile("^[ ]*[0-9]+[ ]*$"); //numerico de Jorge
-        //no tiene problemas, admite espacios-numeros-espacios, numeros-espacios y espacios-numeros.
-
-        //Pattern patron = Pattern.compile("^[ ]*$");// vacío o espacios
-
-        String prueba1 = "ACVBó -',;.\"8mñ";
-        String prueba2 = "A%$<5>';&";
-        int i = -1;
-
-        String prueba3 = String.valueOf(i);
-        Matcher buscar = patron.matcher(prueba1);
-        resp = buscar.lookingAt();
-        if (!resp) {
-            System.out.println(prueba1 + " NO cumple con el patrón");
-        } else {
-            System.out.println(prueba1 + " cumple con el patrón");
-        }
-        buscar = patron.matcher(prueba2);
-        resp = buscar.lookingAt();
-        if (!resp) {
-            System.out.println(prueba2 + " NO cumple con el patrón");
-        } else {
-            System.out.println(prueba2 + " cumple con el patrón");
-        }
-        buscar = patron.matcher(prueba3);
-        resp = buscar.lookingAt();
-        if (!resp) {
-            System.out.println(prueba3 + " NO cumple con el patrón");
-        } else {
-            System.out.println(prueba3 + " cumple con el patrón");
-        }
-
     }
 }

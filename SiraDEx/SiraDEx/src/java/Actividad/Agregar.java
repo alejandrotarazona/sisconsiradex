@@ -45,14 +45,24 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        
+        Clases.Root.deleteSessions(request,"");
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         ArrayList<TipoActividad> ta;
-        if (u.getRol().equalsIgnoreCase("WM")) {
-            ta = Clases.TipoActividad.listar();
-        } else if (u.getRol().equalsIgnoreCase("DEx")) {
-            ta = Clases.TipoActividad.listarTiposActividad(u.getRol());
-        } else {
-            ta = Clases.TipoActividad.listarTiposActividad(u);
+        String rol = u.getRol();
+        switch (rol) {
+            case "WM":
+                ta = Clases.TipoActividad.listar();
+                break;
+            case "empleado":
+            case "obrero":
+            case "profesor":       
+            case "estudiante":
+                ta = Clases.TipoActividad.listarTiposActividad(u);
+                break;
+            default:
+                ta = Clases.TipoActividad.listarTiposActividad(rol);
+                break;
         }
 
         int tam = ta.size();
@@ -60,12 +70,7 @@ public class Agregar extends DispatchAction {
             request.setAttribute("tipos", ta);
         } else {
             request.setAttribute("tipos", null);
-        }
-        
-        Actividad a = (Actividad) form;
-        a.setMensaje(null);
-        a.setMensajeError(null);
-        
+        }    
         
         return mapping.findForward(PAGE);
     }
@@ -92,7 +97,8 @@ public class Agregar extends DispatchAction {
             String nombreCat = a.getCamposValores().get(i).getCampo().getCatalogo();
 
             if (!nombreCat.equals("")) {
-                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+                ArrayList<ElementoCatalogo> catalogo;
+                catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
                 
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
@@ -107,10 +113,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-        
-        ArrayList<CampoValor> cv = a.getCamposValores();
-        int divisor = 1024 * 1024;
-
+ 
         if (a.agregarActividad()) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
@@ -122,15 +125,16 @@ public class Agregar extends DispatchAction {
             } else {
                 act = a.listarActividadesDeUsuario();
             }
+            
             request.setAttribute("acts", act);
-
-            a.deleteSessions(request);
-            a.setMensaje("Su actividad ha sido registrado con éxito.");
+            String nombre = a.getNombreTipoActividad();
+            Clases.Root.deleteSessions(request,"actividadForm");
+            
+            a.setMensaje("La Actividad '"+nombre+"' ha sido registrada con éxito.");
+            
             return mapping.findForward(SUCCESSFULL);
         }
 
-        a.setMensajeError("Error: No se pudo registrar la actividad. Por favor revise que "
-                + "los campos se han llenado correctamente.");
         return mapping.findForward(FAILURE);
 
 
@@ -142,10 +146,10 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
-        a.deleteSessions(request);
+        
         if (a.agregarActividad()) {
-
-            a.setMensaje("Su actividad ha sido registrado con éxito.");
+            Clases.Root.deleteSessions(request,"actividadForm");
+            a.setMensaje("Su actividad ha sido registrada con éxito.");
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
@@ -161,8 +165,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESSFULL);
         }
 
-        a.setMensajeError("Error: No se pudo registrar la actividad. Por favor revise que "
-                + "los campos se han llenado correctamente.");
+        a.setMensajeError("Error: No se pudo registrar la actividad.");
         return mapping.findForward(FAILURE);
 
 

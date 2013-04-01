@@ -83,7 +83,7 @@ public class Modificar extends DispatchAction {
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tas);
             String nombre = ta.getNombreTipo();
-            ta.deleteSessions(request);
+            Clases.Root.deleteSessions(request,"tipoActividadForm");
             ta.setMensaje("El Tipo de Actividad '"+nombre+"' ha sido modificado"
                     + " con éxito.");
             return mapping.findForward(SUCCESS);

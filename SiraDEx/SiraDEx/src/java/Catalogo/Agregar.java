@@ -100,13 +100,13 @@ public class Agregar extends DispatchAction {
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
             
-            cat.deleteSessions(request);
+            Clases.Root.deleteSessions(request,"catalogoForm");
             cat.setMensaje("El catálogo '" + nombreCat + "' ha sido "
                     + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
         cat.setMensajeError("Error: El catálogo '" + nombreCat + "' no ha sido"
-                + " registrado, verifique que no exista un catálogo con ese nombre.");
+                + " registrado.");
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE);

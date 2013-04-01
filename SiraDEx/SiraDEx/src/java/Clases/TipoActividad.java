@@ -373,8 +373,7 @@ public class TipoActividad extends Root {
 
         } else if (!resp) {
             this.eliminarTipoActividad();
-            mensajeError = "Error: El Tipo de Actividad '" + nombreTipo 
-                    + "' no pudo ser registrado.";
+            mensajeError = "Error: El Tipo de Actividad no pudo ser registrado.";
             return false;
         }
 
@@ -562,8 +561,8 @@ public class TipoActividad extends Root {
 
         if (this.esTipoActividad()
                 && !modificaciones[0].equals(taNM.getNombreTipo())) {
-            mensaje = "Error: Ya existe un Tipo de Actividad llamado "
-                    + "" + modificaciones[0] + ". Por favor intente con otro nombre.";
+            mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
+                    + nombreTipo + "'. Por favor intente con otro nombre.";
             return false;
         }
 
@@ -581,8 +580,7 @@ public class TipoActividad extends Root {
         }
 
         if (!resp) {
-            mensajeError = "Error: El Tipo de Actividad '" + nombreTipo + "' no pudo "
-                    + "ser modificado.";
+            mensajeError = "Error: El Tipo de Actividad no pudo ser modificado.";
         }
 
         return resp;

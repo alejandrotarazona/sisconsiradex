@@ -19,11 +19,13 @@
     <body>
         <h1 class="title" id="page-title">Registro de Tipo de Actividad</h1>
 
-        <br><logic:present name="tipoActividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <b><div class ="status"><bean:write name="tipoActividadForm" 
+                        property="mensaje" /></div></b>
                 </logic:present> 
-            <br><logic:present name="tipoActividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
+            <logic:present name="tipoActividadForm" property="mensajeError"><br>
+            <b><div class ="error"><bean:write name="tipoActividadForm" 
+                        property="mensajeError" /></div></b>
             </logic:present><br>
 
                     <font size=2>Todos los campos son obligatorios.</font><br>
@@ -31,11 +33,12 @@
             <table>
                 <tr>
                 <td>Nombre de la Actividad</td>
-                <td><html:text name="tipoActividadForm" property="nombreTipo"></html:text></td>
+                <td><html:text name="tipoActividadForm" property="nombreTipo" 
+                           size="78"/></td>
             </tr>
             <tr>
             <td>Descripción</td>
-            <td><html:textarea name="tipoActividadForm"  cols="80" rows="4"
+            <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                            property="descripcion"></html:textarea>
                 </td>
             </tr>

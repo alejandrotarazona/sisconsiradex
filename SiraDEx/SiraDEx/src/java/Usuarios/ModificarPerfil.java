@@ -5,7 +5,6 @@
 package Usuarios;
 
 import Clases.Usuario;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -54,10 +53,11 @@ public class ModificarPerfil extends DispatchAction {
             throws Exception {
       
         Usuario u = (Usuario) form;
-        u.deleteSessions(request);
+        
         Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
             
         if (u.modificar(userNM)) {
+            Clases.Root.deleteSessions(request,"");
             u.setMensaje("El perfil ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);         
         }
