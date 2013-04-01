@@ -103,13 +103,13 @@ public class Modificar extends DispatchAction {
         
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
-            cat.deleteSessions(request);
-            cat.setMensaje("El catálogo ha sido modificado con éxito");
+            Clases.Root.deleteSessions(request,"catalogoForm");
+            cat.setMensaje("El catálogo ha sido modificado con éxito.");
             return mapping.findForward(SUCCESS);
         }
         
         cat.setNombre(nombre);
-        cat.setMensajeError("Error: El catálogo no pudo ser modificado");
+        cat.setMensajeError("Error: El catálogo no pudo ser modificado.");
         return mapping.findForward(FAILURE);
 
 

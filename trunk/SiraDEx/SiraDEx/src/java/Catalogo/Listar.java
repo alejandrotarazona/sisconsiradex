@@ -36,8 +36,7 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         
-        Catalogo c = (Catalogo) form;
-        c.deleteSessions(request);
+        Clases.Root.deleteSessions(request,"");
         ArrayList cat = Clases.Catalogo.listar();
         int tam = cat.size();
         if (tam != 0) {

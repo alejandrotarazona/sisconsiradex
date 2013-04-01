@@ -53,8 +53,9 @@ public class Root extends ActionForm {
         }
     }
 
-    /* método para eliminar los forms con session excepto el formUsuario y user*/
-    public void deleteSessions(HttpServletRequest _request) {
+    /* método para eliminar los forms con session excepto el form pasado como parametro
+     * el formUsuario y user*/
+    public static void deleteSessions(HttpServletRequest _request, String form) {
         String atributo;
         HttpSession session = _request.getSession();
         Enumeration e = session.getAttributeNames();
@@ -63,7 +64,8 @@ public class Root extends ActionForm {
 
             atributo = (String) e.nextElement();
 
-            if (!atributo.equals("usuarioForm") && !atributo.equals("user")) {
+            if (!atributo.equals("usuarioForm") && !atributo.equals("user")
+                    && !atributo.equals(form)) {
                 System.out.println("Eliminado el atributo con scope session " + atributo);
                 session.removeAttribute(atributo);
             }

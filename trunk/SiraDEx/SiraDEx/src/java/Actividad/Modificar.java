@@ -84,15 +84,17 @@ public class Modificar extends DispatchAction {
             }
             request.setAttribute("acts", acts);
             
-            act.deleteSessions(request);
-            act.setMensaje("La actividad ha sido modificada con éxito");
+            String nombre = act.getNombreTipoActividad();
+            Clases.Root.deleteSessions(request, "actividadForm");
+            
+            act.setMensaje("La Actividad '"+nombre+"' ha sido modificada con éxito.");
             return mapping.findForward(SUCCESS);         
       
         }
         
         ArrayList ac = Clases.Actividad.listarActividades();
         request.setAttribute("actividades", ac);
-        act.setMensajeError("Error: La actividad no se pudo modificar");
+ 
         return mapping.findForward(FAILURE);
 
 

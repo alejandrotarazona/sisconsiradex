@@ -35,9 +35,9 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        
+        Clases.Root.deleteSessions(request, "elementoCatalogoForm");
         ElementoCatalogo e = (ElementoCatalogo) form;
-        e.setMensajeError(null);
-        e.setMensaje(null);
         int idCat = e.getIdCatalogo();
         e.setIdCatalogo(idCat);
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));

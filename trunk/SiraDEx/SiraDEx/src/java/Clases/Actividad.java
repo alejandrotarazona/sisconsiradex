@@ -316,6 +316,11 @@ public class Actividad extends Root {
     }
 
     public boolean agregarActividad() {
+
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
+
         Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
         boolean resp;
 
@@ -338,6 +343,10 @@ public class Actividad extends Root {
             while ((itValores.hasNext())) {
                 CampoValor cv = (CampoValor) itValores.next();
                 resp = resp && cv.agregar(this.idActividad);
+            }
+
+            if (!resp) {
+                mensajeError = "Error: No se pudo registrar la Actividad.";
             }
 
             return resp;
@@ -625,6 +634,10 @@ public class Actividad extends Root {
     }
 
     public boolean modificar(ArrayList camposNM) {
+
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
         boolean resp = true;
         Iterator it = camposNM.iterator();
 
@@ -656,8 +669,7 @@ public class Actividad extends Root {
         resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
-            mensajeError = "Error del sistema al intentar actualizar la base de datos.";
-            return false;
+            mensajeError = "Error: No se pudo modificar la Actividad.";
         }
         return resp;
     }

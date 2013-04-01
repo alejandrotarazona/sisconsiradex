@@ -70,7 +70,7 @@ public class Modificar extends DispatchAction {
             request.setAttribute("elementos", ec);
             request.setAttribute("campos", elemCat.getCamposValores());
 
-            elemCat.deleteSessions(request);
+            Clases.Root.deleteSessions(request,"elementoCatalogoForm");
             elemCat.setMensaje("El elemento ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);
         }

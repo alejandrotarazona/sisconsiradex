@@ -92,7 +92,7 @@ public class Agregar extends DispatchAction {
             ArrayList tipos = Clases.TipoActividad.listar();
             request.setAttribute("tipos", tipos);
             String nombre = ta.getNombreTipo();
-            ta.deleteSessions(request);
+            Clases.Root.deleteSessions(request,"tipoActividadForm");
             ta.setMensaje("El Tipo de Actividad '" + nombre + "' ha sido "
                 + "registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
