@@ -84,17 +84,7 @@ public class Modificar extends DispatchAction {
         Catalogo cat = (Catalogo) form;
         
         ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
-        if (nuevosCampos != null) {
-            for (int i = 1; i <= cat.getNroCampos(); i++) {
-                CampoCatalogo aux = nuevosCampos.get(i - 1);
-                System.out.println("El nombre es "+aux.getNombre());
-                if (aux.isNombreInvalido()) {
-                    cat.setMensajeError("El campo adicional número " + i
-                            + " contiene un nombre inválido");
-                    return mapping.findForward(FAILURE);
-                } 
-            }
-        }
+        
         
         String nombre = (String) request.getSession().getAttribute("nombreNM");
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
@@ -104,12 +94,13 @@ public class Modificar extends DispatchAction {
             ArrayList cats = Clases.Catalogo.listar();
             request.setAttribute("catalogos", cats);
             Clases.Root.deleteSessions(request,"catalogoForm");
-            cat.setMensaje("El catálogo ha sido modificado con éxito.");
+            cat.setMensaje("El Catálogo '"+cat.getNombre()+"' ha sido modificado"
+                    + " con éxito.");
             return mapping.findForward(SUCCESS);
         }
         
         cat.setNombre(nombre);
-        cat.setMensajeError("Error: El catálogo no pudo ser modificado.");
+        
         return mapping.findForward(FAILURE);
 
 
