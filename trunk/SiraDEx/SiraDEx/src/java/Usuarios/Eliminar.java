@@ -5,6 +5,7 @@
 package Usuarios;
 
 import Clases.Usuario;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -52,6 +53,12 @@ public class Eliminar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) form;
+        u.setMensaje(null);
+        
+        ArrayList<Usuario> usuarios;
+        usuarios = Clases.Usuario.listarUsuario();
+        request.getSession().setAttribute("usuarios", usuarios);
         return mapping.findForward(PAGE);
     }
 }
