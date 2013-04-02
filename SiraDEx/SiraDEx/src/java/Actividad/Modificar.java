@@ -67,7 +67,8 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-       
+        act.setMensajeError(null);
+        
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
