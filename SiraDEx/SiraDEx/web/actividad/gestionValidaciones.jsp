@@ -144,7 +144,8 @@
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonValidar"
                                                  value=" "
-                                                 title="Validar"/>
+                                                 title="Validar"
+                                                 onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                                 </html:form>
                             </td>
                             <td align="center">

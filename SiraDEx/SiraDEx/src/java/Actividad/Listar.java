@@ -71,11 +71,8 @@ public class Listar extends DispatchAction {
         
         request.setAttribute("acts", a);
         
-        int tam = a.size();
-        if (tam > 0) {
-            Actividad act = a.get(0);
-            request.setAttribute("campos", act.getCamposValores());
-        } else {
+        if (a.isEmpty()) {
+         
             request.setAttribute("acts", null);
         }
         

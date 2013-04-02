@@ -52,13 +52,7 @@ public class Agregar extends DispatchAction {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setMensajeError(null);
-        if (u.getPassword().contains(";") || u.getPassword().contains("<")
-                || u.getPassword().contains(">") || u.getPassword().contains("'")
-                || u.getPassword().contains("&") || u.getPassword().contains("$")) {
-            u.setMensajeError("Error: La contraseña tiene un caracter inválido, por favor "
-                    + "intente de nuevo.");
-            return mapping.findForward(FAILURE);
-        }
+        
         if (u.agregarUsuario()) {
             u.setMensaje(null);
             u.setMensaje("El usuario ha sido registrado con éxito.");

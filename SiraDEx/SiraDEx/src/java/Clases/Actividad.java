@@ -220,6 +220,9 @@ public class Actividad extends Root {
                 case "producto":
                     continue;
                 case "fecha":
+                    s += cv.getCampo().getNombre() + ": "
+                            + cv.getValor() + ", ";
+                    break;
                 case "checkbox":
                     if (!valor.equals("false")) {
                         s += cv.getCampo().getNombre() + ", ";
@@ -373,11 +376,11 @@ public class Actividad extends Root {
 
     public boolean eliminarActividad() {
         Entity e = new Entity(5, 2);//DELETE ACTIVIDAD
-        if (e.borrar(ATRIBUTOS[0], idActividad)){
-            mensaje = "La Actividad '"+nombreTipoActividad+"' ha sido eliminada con éxito.";
+        if (e.borrar(ATRIBUTOS[0], idActividad)) {
+            mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
         }
-        mensajeError= "La Actividad '"+nombreTipoActividad+"' ha sid.";
+        mensajeError = "La Actividad '" + nombreTipoActividad + "' ha sid.";
         return false;
     }
 
