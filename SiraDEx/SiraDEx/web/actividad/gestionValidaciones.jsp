@@ -36,7 +36,6 @@
                         /* Detalles */ null,
                         /* Creación */ null,
                         /* Modificación */ null,
-                        /* Validación */ null,
                         /* Producto */ null,
                         /* Acciones */ 
                         { "bSortable": false },
@@ -52,16 +51,15 @@
     <body>
         <h1 class="title">Gestión de Validaciones</h1>
 
+        <h1>Actividades por validar de la <bean:write name="user" property="rol"/></h1>
 
-        <h1>Actividades registradas en el sistema</h1>
-        
         <br><logic:present name="actividadForm" property="mensaje">
             <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="actividadForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="actividadForm" property="mensajeError">
             <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
-            </logic:present>
-            
+        </logic:present>
+
         <logic:notPresent name="acts">
             <div align="center">No hay actividad que mostrar</div>
         </logic:notPresent>
@@ -76,7 +74,6 @@
                         <th>Detalles</th>
                         <th>Creación</th>
                         <th>Modificación</th>
-                        <th>Validación</th>
                         <th>Producto</th>
                         <th></th>
                         <th></th>
@@ -117,20 +114,17 @@
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                                </td>
-                                <td>
+                            </td>
+                            <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
                                 </logic:present>
 
                             </td>
-                            <td>
-                                <bean:write name="act" property="validacion"></bean:write>
-                                </td>
 
-                                <td align="center">
-                                 <logic:iterate name="act" property="camposValores" 
+                            <td align="center">
+                                <logic:iterate name="act" property="camposValores" 
                                                id="campoValor" indexId="index">
                                     <logic:equal name="campoValor" property="campo.tipo" 
                                                  value="producto">
@@ -144,7 +138,7 @@
                                         </html:form>
                                     </logic:equal>
                                 </logic:iterate>   
-                                </td>
+                            </td>
                             <td align="center">
                                 <html:form method="POST" action="/ValidarActividad">
                                     <html:hidden name="act" property="idActividad" />

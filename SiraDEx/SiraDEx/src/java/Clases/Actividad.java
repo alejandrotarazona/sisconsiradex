@@ -373,8 +373,12 @@ public class Actividad extends Root {
 
     public boolean eliminarActividad() {
         Entity e = new Entity(5, 2);//DELETE ACTIVIDAD
-        return e.borrar(ATRIBUTOS[0], idActividad);
-
+        if (e.borrar(ATRIBUTOS[0], idActividad)){
+            mensaje = "La Actividad '"+nombreTipoActividad+"' ha sido eliminada con éxito.";
+            return true;
+        }
+        mensajeError= "La Actividad '"+nombreTipoActividad+"' ha sid.";
+        return false;
     }
 
     public boolean validar(boolean valida) {

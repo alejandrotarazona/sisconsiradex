@@ -131,7 +131,8 @@ VALUES ('jf', 'jf', 'estudiante', 1, 'Jose', 'Fernandez', '04125555555', 'jf@usb
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('kdoming', 'kdoming', 'profesor',4, 'Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('99-10000', 'pedrog', 'CCTDS',2, 'Pedro', 'Gomez',  '', '07-10000@usb.ve');
+VALUES ('99-10000', 'pedrog', 'Unidad de Participación y Acción Social',2, 'Pedro', 
+'Gomez',  '', '07-10000@usb.ve');
 
 
 
