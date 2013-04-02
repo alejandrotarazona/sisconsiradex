@@ -19,7 +19,8 @@ programa,validador,nro_productos) VALUES ('Tutoría de pasantías cortas profesi
 --'Informe de pasantia corta del estudiante y acta de evaluación');
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
 programa,validador,nro_productos) VALUES ('Participación en actividades de voluntariado en representación de la USB',
-'R',4,'Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario','Unidad de Participación y Acción Social',1);
+'R',4,'Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario',
+'Unidad de Participación y Acción Social',1);
 --'Informe de participación'
 
 --Campo de un tipo de actividad
@@ -160,7 +161,7 @@ VALUES (2, 'Nombre', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (3, 'Nombre estudiante', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (3, 'Carnet', 'Texto');
+VALUES (3, 'Carnet', 'texto');
 
 --      Campos de profesores
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 

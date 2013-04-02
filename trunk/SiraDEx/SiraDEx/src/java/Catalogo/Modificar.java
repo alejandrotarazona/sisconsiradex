@@ -82,7 +82,7 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
-        
+        cat.setMensajeError(null);
         ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
         
         

@@ -80,7 +80,6 @@ public class Agregar extends DispatchAction {
         //hay que guardar permisos porque se pierde luego por el metodo reset()
         request.getSession().setAttribute("permisos", ta.getPermisos());
         
-        ta.setMensajeError(null);
         return mapping.findForward(SUCCESS);
 
     }
@@ -90,6 +89,9 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
+        ta.setMensajeError(null);
+        
+        
         ta.setPermisos((String[])request.getSession().getAttribute("permisos"));
         if (ta.agregarTipoActividad()) {
             

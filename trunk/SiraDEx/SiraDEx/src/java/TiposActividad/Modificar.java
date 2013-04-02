@@ -52,7 +52,8 @@ public class Modificar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensaje(null);
-
+        
+        
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();
         ArrayList campos = Clases.Campo.listar(idTA);
@@ -76,6 +77,7 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
+        ta.setMensajeError(null);
         
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
