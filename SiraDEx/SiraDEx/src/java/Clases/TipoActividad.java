@@ -344,7 +344,7 @@ public class TipoActividad extends Root {
 
     public boolean agregarTipoActividad() {
 
-        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
+        if (!Verificaciones.verifCV(this)) {
             return false;
         }
 

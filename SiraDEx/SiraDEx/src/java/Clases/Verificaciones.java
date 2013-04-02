@@ -153,11 +153,13 @@ public class Verificaciones {
             ta.setMensajeError(respVerif);
             return false;
         }
+        
         if (nro.equals("0")) {
             ta.setMensajeError("Error: El campo 'Número de productos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
+        
         respVerif = verifLV("'Número de productos'", nro, 1, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -203,9 +205,7 @@ public class Verificaciones {
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
             String nroCampo = "número " + i;
-            System.out.println("#################################################\n"+
-                    nombre+" : "+ nroCampo+"\n#################################################\n\n");
-
+ 
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verifLV(nroCampo, nombre, 100, true);
@@ -337,11 +337,7 @@ public class Verificaciones {
             c.setMensajeError(respVerif);
             return false;
         }
-        if (nro.equals("0")) {
-            c.setMensajeError("Error: El campo 'Número de campos' debe contener al "
-                    + "menos 1 como valor.");
-            return false;
-        }
+        
         respVerif = verifLV("'Número de campos'", nro, 1, true);
         if (respVerif != null) {
             c.setMensajeError(respVerif);
@@ -399,7 +395,7 @@ public class Verificaciones {
 
 
         Iterator it = ec.getCamposValores().iterator();
-
+        boolean todosVacios = true;
         while (it.hasNext()) {
 
             CampoCatalogoValor ccv = (CampoCatalogoValor) it.next();
@@ -413,6 +409,11 @@ public class Verificaciones {
                         + "solo números.");
                 return false;
             }
+            todosVacios &= Verificaciones.esVacio(valor);
+        }
+        if (todosVacios){
+            ec.setMensajeError("Error: Debe haber al menos un campo lleno para "
+                    + "agregar el elemento");
         }
         return true;
     }

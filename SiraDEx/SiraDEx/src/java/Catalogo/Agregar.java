@@ -6,6 +6,7 @@ package Catalogo;
 
 import Clases.CampoCatalogo;
 import Clases.Catalogo;
+import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -54,11 +55,14 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
         
-        /*verifica si hay un tipo de actividad con ese nombre*/
-        if (cat.esCatalogo()) {
-            cat.setMensajeError("Error: Ya existe un Catálogo con el Nombre "
-                    + cat.getNombre() + "'. Por favor intente con otro nombre.");
-             return mapping.findForward(FAILURE);
+        if(!Verificaciones.verifCV(cat)){
+            return mapping.findForward(FAILURE);
+        }
+        
+        if (String.valueOf(cat.getNroCampos()).equals("0")) {
+            cat.setMensajeError("Error: El campo 'Número de campos' debe contener al "
+                    + "menos 1 como valor.");
+            return mapping.findForward(FAILURE);
         }
 
        /*verifica si hay un tipo de actividad con ese nombre*/
@@ -101,7 +105,7 @@ public class Agregar extends DispatchAction {
 
         ArrayList cats = Clases.Catalogo.listar();
         request.setAttribute("catalogos", cats);
-        return mapping.findForward(FAILURE);
+        return mapping.findForward(FAILURE2);
 
 
     }
