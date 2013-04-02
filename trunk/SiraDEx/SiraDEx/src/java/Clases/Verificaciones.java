@@ -368,7 +368,7 @@ public class Verificaciones {
                 return false;
             }
         }
-        
+        if(c.getCamposAux()!=null) {
         Iterator iter = c.getCamposAux().iterator();
         for (int i = 1; iter.hasNext(); i++) {
             CampoCatalogo campo = (CampoCatalogo) iter.next();
@@ -381,6 +381,7 @@ public class Verificaciones {
                 c.setMensajeError(respVerif);
                 return false;
             }
+        }
         }
         
         return true;

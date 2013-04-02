@@ -38,17 +38,18 @@ public class Eliminar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Catalogo t = (Catalogo) form;
+        Catalogo cat = (Catalogo) form;
 
-        if (t.eliminar(t.getIdCatalogo())) {
-            t.setMensaje("El catálogo ha sido eliminado");
-            ArrayList cat = Clases.Catalogo.listar();
-            request.setAttribute("catalogos", cat);
+        if (cat.eliminar(cat.getIdCatalogo())) {
+            cat.setMensaje("El catálogo ha sido eliminado");
+            ArrayList cats = Clases.Catalogo.listar();
+            request.setAttribute("catalogos", cats);
+            cat.setMensajeError(null);
             return mapping.findForward(SUCCESS);
         } else {
-            t.setMensajeError("Error: El catálogo no pudo ser eliminado");
-            ArrayList cat = Clases.Catalogo.listar();
-            request.setAttribute("catalogos", cat);
+            cat.setMensajeError("Error: El catálogo no pudo ser eliminado");
+            ArrayList cats = Clases.Catalogo.listar();
+            request.setAttribute("catalogos", cats);
             return mapping.findForward(FAILURE);
         }
     }
