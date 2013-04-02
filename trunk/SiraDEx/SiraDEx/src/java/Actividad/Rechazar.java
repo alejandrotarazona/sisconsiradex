@@ -46,15 +46,13 @@ public class Rechazar extends org.apache.struts.action.Action {
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
         request.setAttribute("acts", acts);
 
-        int tam = acts.size();
-        if (tam > 0) {
-            act = acts.get(tam - 1);
-            request.setAttribute("campos", act.getCamposValores());
-        } else {
+        
+        if (acts.isEmpty()) {
             request.setAttribute("acts", null);
         }
         if (validacion) {
             act.setMensaje("La actividad ha sido rechazada.");
+            act.setMensajeError(null);
             return mapping.findForward(SUCCESS);
         } else {
             act.setMensajeError("Error: La actividad no se pudo rechazar, intente de nuevo");
