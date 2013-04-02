@@ -5,6 +5,7 @@
 package Usuarios;
 
 import Clases.Usuario;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -39,6 +40,8 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
+        u.setMensaje(null);
+        u.setMensajeError(null);
         if (u.getPassword().contains(";") || u.getPassword().contains("<")
                 || u.getPassword().contains(">") || u.getPassword().contains("'")
                 || u.getPassword().contains("&") || u.getPassword().contains("$")) {
@@ -47,9 +50,11 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(FAILURE);
         }
         if (u.agregarUsuario()) {
+            u.setMensaje(null);
             u.setMensaje("El usuario ha sido registrado con éxito.");
             return mapping.findForward(SUCCESS);
         } else {
+            u.setMensajeError(null);
             u.setMensajeError("Error: Falló el registro. El usuario ya existe en el sistema.");
             return mapping.findForward(FAILURE);
         }
@@ -61,6 +66,10 @@ public class Agregar extends DispatchAction {
         Usuario u = new Usuario();
         u.setMensaje(null);
         u.setMensajeError(null);
+        
+        ArrayList<Usuario> usuarios;
+        usuarios = Clases.Usuario.listarUsuario();
+        request.getSession().setAttribute("usuarios", usuarios);
         return mapping.findForward(PAGE);
     }
 }

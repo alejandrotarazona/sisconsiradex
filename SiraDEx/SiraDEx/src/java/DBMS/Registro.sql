@@ -5,7 +5,8 @@
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
 programa,validador,nro_productos) VALUES ('Formulacion de proyectos del BPDEx', 'R',12,
-'Proyecto del BPDEx','Acción social y desarrollo comunitario','BPDEx', 1);
+'Proyecto del BPDEx','Acción social y desarrollo comunitario',
+'Unidad de Participación y Acción Social', 1);
 --'Proyecto del BDPEx');*/
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
 programa,validador,nro_productos) VALUES ('Tutoría de Proyecto de Servicio Comunitario',

@@ -40,7 +40,9 @@ public class Listar extends org.apache.struts.action.Action {
         ArrayList usrs = Clases.Usuario.listarUsuario();
         
         request.setAttribute("usuarios", usrs);
-        
+        Usuario u = (Usuario) form;
+        u.setMensaje(null);
+        u.setMensajeError(null);
         return mapping.findForward(SUCCESS);
     }
 }
