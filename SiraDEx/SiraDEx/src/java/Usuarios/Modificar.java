@@ -38,8 +38,9 @@ public class Modificar extends DispatchAction {
         System.out.println("El usuario elegido es: " + u.toString());
         request.getSession().setAttribute("usuarioNM", u);
 
-        ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
-        request.setAttribute("coord", catalogo);
+        ArrayList<ElementoCatalogo> catalogo;
+        catalogo= Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
+        request.getSession().setAttribute("coord", catalogo);
 
         return mapping.findForward(PAGE);
     }
@@ -55,6 +56,10 @@ public class Modificar extends DispatchAction {
         Usuario u = (Usuario) form;
 
         String rol = u.getRol();
+        if (rol.equals("")){
+           u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
+           return mapping.findForward(PAGE);
+        }
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
         u.setUsername(usuarioNM.getUsername());
@@ -68,8 +73,8 @@ public class Modificar extends DispatchAction {
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
             Clases.Root.deleteSessions(request, "");
-            u.setMensaje("El rol del Usuario se modificó con éxito");
-
+            u.setMensaje("El rol del Usuario "+u.getUsername()+" se modificó con éxito");
+            u.setMensajeError("");
             return mapping.findForward(SUCCESS);
         }
         u.setMensajeError("Error: No se pudo modificar el usuario");
