@@ -324,7 +324,8 @@ public class CampoValor implements Serializable {
                 System.out.println("Isercion cuando hay archivo " + file.getFileName()
                         + " " + resp);
                 }else{
-                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, campoNM.getValor(),
+                valor = campoNM.getValor();   
+                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor,
                         campoNM.getFile());
                 System.out.println("Isercion cuando no hay archivo " 
                         + campoNM.getFile().getFileName() + " " + resp);

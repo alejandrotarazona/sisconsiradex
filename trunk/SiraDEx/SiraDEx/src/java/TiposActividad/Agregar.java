@@ -67,6 +67,9 @@ public class Agregar extends DispatchAction {
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);
 
+        if (!Verificaciones.verifCF(ta)){
+            return mapping.findForward(FAILURE);
+        }
          /*verifica si hay un tipo de actividad con ese nombre*/
         if (ta.esTipoActividad()) {
             ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "

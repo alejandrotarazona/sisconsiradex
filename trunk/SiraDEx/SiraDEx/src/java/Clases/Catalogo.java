@@ -208,7 +208,7 @@ public class Catalogo extends Root {
 
     public boolean agregar() {
         
-        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
+        if (!Verificaciones.verifCF(this)) {
             return false;
         }
         
