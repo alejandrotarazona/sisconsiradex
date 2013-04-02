@@ -131,7 +131,7 @@ public class Agregar extends DispatchAction {
             Clases.Root.deleteSessions(request,"actividadForm");
             
             a.setMensaje("La Actividad '"+nombre+"' ha sido registrada con éxito.");
-            
+            a.setMensajeError(null);
             return mapping.findForward(SUCCESSFULL);
         }
 

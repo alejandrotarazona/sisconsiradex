@@ -304,7 +304,7 @@ public class Verificaciones {
                             + nombre + " debe ser menor de 2 MB.");
                     return false;
                 }
-                if (!valor.endsWith(".pdf")) {
+                if (!valor.equals("") && !valor.endsWith(".pdf")) {
                     act.setMensajeError("Error: El archivo subido al campo " + nombre
                             + " debe ser extención .pdf");
                     return false;

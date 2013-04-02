@@ -55,11 +55,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             }
             request.setAttribute("acts", acts);
 
-            int tam = acts.size();
-            if (tam > 0) {
-                act = acts.get(tam - 1);
-                request.setAttribute("campos", act.getCamposValores());
-            } else {
+            if (acts.isEmpty()) {
                 request.setAttribute("acts", null);
             }
             return mapping.findForward(SUCCESS);

@@ -67,7 +67,6 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-        act.setMensajeError(null);
         
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
@@ -89,6 +88,7 @@ public class Modificar extends DispatchAction {
             Clases.Root.deleteSessions(request, "actividadForm");
             
             act.setMensaje("La Actividad '"+nombre+"' ha sido modificada con éxito.");
+            act.setMensajeError(null);
             return mapping.findForward(SUCCESS);         
       
         }
