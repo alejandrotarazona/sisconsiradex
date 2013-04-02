@@ -36,13 +36,26 @@ public class Eliminar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario u = (Usuario) form;
+        u.setMensaje(null);
+        u.setMensajeError(null);
+        return mapping.findForward(PAGE);
+    }
+    
     public ActionForward delete(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        
+        u.setMensajeError(null);
         if (u.eliminarUsuario()) {
             u.setMensaje("El usuario ha sido eliminado");
+            ArrayList<Usuario> usuarios;
+            usuarios = Clases.Usuario.listarUsuario();
+            request.getSession().setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
         } else {
             u.setMensajeError("Error: El usuario que desea eliminar no existe");
@@ -50,15 +63,5 @@ public class Eliminar extends DispatchAction {
         }
     }
 
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Usuario u = (Usuario) form;
-        u.setMensaje(null);
-        
-        ArrayList<Usuario> usuarios;
-        usuarios = Clases.Usuario.listarUsuario();
-        request.getSession().setAttribute("usuarios", usuarios);
-        return mapping.findForward(PAGE);
-    }
+    
 }
