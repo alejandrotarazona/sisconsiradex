@@ -36,6 +36,16 @@ public class Agregar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario u = new Usuario();
+        u.setMensaje(null);
+        u.setMensajeError(null);
+
+        return mapping.findForward(PAGE);
+    }
+
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -52,24 +62,14 @@ public class Agregar extends DispatchAction {
         if (u.agregarUsuario()) {
             u.setMensaje(null);
             u.setMensaje("El usuario ha sido registrado con éxito.");
+            ArrayList<Usuario> usuarios;
+            usuarios = Clases.Usuario.listarUsuario();
+            request.setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
         } else {
             u.setMensajeError(null);
             u.setMensajeError("Error: Falló el registro. El usuario ya existe en el sistema.");
             return mapping.findForward(FAILURE);
         }
-    }
-
-    public ActionForward page(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Usuario u = new Usuario();
-        u.setMensaje(null);
-        u.setMensajeError(null);
-        
-        ArrayList<Usuario> usuarios;
-        usuarios = Clases.Usuario.listarUsuario();
-        request.getSession().setAttribute("usuarios", usuarios);
-        return mapping.findForward(PAGE);
     }
 }
