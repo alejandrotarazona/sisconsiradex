@@ -54,19 +54,13 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Usuario u = (Usuario) form;
 
-        String rol2 = (String) request.getAttribute("rol2");
-
         String rol = u.getRol();
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
         u.setUsername(usuarioNM.getUsername());
         u.setUsuario();
 
-        if (!rol.equalsIgnoreCase("DEx")) {
-            u.setRol(rol);
-        } else {
-            u.setRol(rol2);
-        }
+        u.setRol(rol);
         System.out.println("El nuevo usuario es: " + u.toString());
 
         if (u.modificar(usuarioNM)) {

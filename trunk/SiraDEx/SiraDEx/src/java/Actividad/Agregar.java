@@ -140,34 +140,5 @@ public class Agregar extends DispatchAction {
 
     }
     
-    //Alejandro cuando puedas me explicas para qué hiciste este método
-    public ActionForward saveTipo(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-
-        Actividad a = (Actividad) form;
-        
-        if (a.agregarActividad()) {
-            Clases.Root.deleteSessions(request,"actividadForm");
-            a.setMensaje("Su actividad ha sido registrada con éxito.");
-
-            Usuario u = (Usuario) request.getSession().getAttribute("user");
-            String rol = u.getRol();
-            ArrayList<Actividad> act;
-
-            if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
-            } else {
-                act = a.listarActividadesDeUsuario();
-            }
-            request.setAttribute("acts", act);
-            
-            return mapping.findForward(SUCCESSFULL);
-        }
-
-        a.setMensajeError("Error: No se pudo registrar la actividad.");
-        return mapping.findForward(FAILURE);
-
-
-    }
+    
 }

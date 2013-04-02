@@ -45,13 +45,13 @@ public class Listar extends DispatchAction {
         String username = u.getUsername();
         act.setCreador(username);
         
-        ArrayList<Actividad> a = act.listarActividadesDeUsuario();
+        ArrayList<Actividad> acts = act.listarActividadesDeUsuario();
  
-        request.setAttribute("acts", a);
+        request.setAttribute("acts", acts);
         
-        int tam = a.size();
+        int tam = acts.size();
         if (tam > 0) {
-            act = a.get(tam - 1);
+            act = acts.get(0);
             request.setAttribute("campos", act.getCamposValores());
         } else {
             request.setAttribute("acts", null);
@@ -66,7 +66,6 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         
-        Actividad act = new Actividad();
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> a = Actividad.listarActividades();
         
@@ -74,7 +73,7 @@ public class Listar extends DispatchAction {
         
         int tam = a.size();
         if (tam > 0) {
-            act = a.get(tam - 1);
+            Actividad act = a.get(0);
             request.setAttribute("campos", act.getCamposValores());
         } else {
             request.setAttribute("acts", null);
@@ -101,7 +100,6 @@ public class Listar extends DispatchAction {
             throws Exception {
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         
-        Actividad act = new Actividad();
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getRol());
         
@@ -109,7 +107,7 @@ public class Listar extends DispatchAction {
         
         int tam = a.size();
         if (tam > 0) {
-            act = a.get(tam - 1);
+            Actividad act = a.get(0);
             request.setAttribute("campos", act.getCamposValores());
         } else {
             request.setAttribute("acts", null);
