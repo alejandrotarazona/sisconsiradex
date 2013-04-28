@@ -5,12 +5,14 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -30,6 +32,8 @@ public class Actividad extends Root {
     private String validador;
     private ArrayList<String> participantes = new ArrayList<>(0);
     private ArrayList<CampoValor> camposValores;
+    private ArrayList<Archivo> archivos = new ArrayList<>(0);
+    private int idArchivo;
     private static String[] ATRIBUTOS = {
         "id_actividad", //0
         "id_tipo_actividad", //1
@@ -151,6 +155,61 @@ public class Actividad extends Root {
 
     public void setValidador(String validador) {
         this.validador = validador;
+    }
+
+    public ArrayList<Archivo> getArchivos() {
+        return archivos;
+    }
+
+    public void setArchivos(ArrayList<Archivo> archivos) {
+        this.archivos = archivos;
+    }
+
+    public int getIdArchivo() {
+        return idArchivo;
+    }
+
+    public void setIdArchivo(int idArchivo) {
+        this.idArchivo = idArchivo;
+    }
+    
+
+    public static class Archivo implements Serializable {
+
+        private FormFile file;
+        private String nombre;
+        private String tipo;
+
+        public Archivo(FormFile file, String nombre, String tipo) {
+            this.file = file;
+            this.nombre = nombre;
+            this.tipo = tipo;
+        }
+
+        public FormFile getFile() {
+            return file;
+        }
+
+        public void setFile(FormFile file) {
+            this.file = file;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public void setNombre(String nombre) {
+            this.nombre = nombre;
+        }
+
+        public String getTipo() {
+            return tipo;
+        }
+
+        public void setTipo(String tipo) {
+            this.tipo = tipo;
+        }
+        
     }
 
     @Override
@@ -286,10 +345,24 @@ public class Actividad extends Root {
                     fechaModif = rs.getString(ATRIBUTOS[7]);
                     descripcion = rs.getString(ATRIBUTOS[8]);
                     camposValores = CampoValor.listarCamposValores(idActividad);
+                    
+                    Iterator iter = camposValores.iterator();
+                       
+                        while (iter.hasNext()) {
+                            CampoValor cv = (CampoValor) iter.next();
+                            String tipoCampo = cv.getCampo().getTipo();
+                            String nombre = cv.getValor();
+                            if (!nombre.equals("")
+                                    && ((tipoCampo.equals("archivo")
+                                    || tipoCampo.equals("producto")))) {
+                                Archivo arch = new Archivo(cv.getFile(), nombre,
+                                        cv.getCampo().getNombre());
+                                archivos.add(arch);
+                            }
+                        }
 
                 }
             }
-
         } catch (SQLException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -396,7 +469,7 @@ public class Actividad extends Root {
         String[] colModificar = {
             ATRIBUTOS[3]
         };
-        String val = "";
+        String val;
         if (valida) {
             val = "Validada";
         } else {
@@ -437,6 +510,22 @@ public class Actividad extends Root {
                         a.setValidador(rs.getString(ATRIBUTOS[9]));
                         a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
                         a.setParticipantes(a.idActividad);
+
+                        Iterator iter = a.getCamposValores().iterator();
+                        ArrayList<Archivo> archs = new ArrayList<>(0);
+                        while (iter.hasNext()) {
+                            CampoValor cv = (CampoValor) iter.next();
+                            String tipoCampo = cv.getCampo().getTipo();
+                            String nombre = cv.getValor();
+                            if (!nombre.equals("")
+                                    && ((tipoCampo.equals("archivo")
+                                    || tipoCampo.equals("producto")))) {
+                                Archivo arch = new Archivo(cv.getFile(), nombre,
+                                cv.getCampo().getNombre());
+                                archs.add(arch);
+                            }
+                        }
+                        a.setArchivos(archs);
 
                         listaActividad.add(a);
                     }

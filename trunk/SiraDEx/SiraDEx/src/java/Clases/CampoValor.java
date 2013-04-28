@@ -5,7 +5,6 @@
 package Clases;
 
 import DBMS.Entity;
-import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -138,15 +137,7 @@ public class CampoValor implements Serializable {
                     throw new UnsupportedOperationException("Not supported yet.");
                 }
             };
-            /*Escribe los archivos seteados por el form en el directorio dado
-            String path = "/home/garcia/Escritorio/";
-            BufferedOutputStream bos;
-            bos = new BufferedOutputStream(new FileOutputStream(path + valor));
-            bos.write(data);
-            bos.flush();
-            if (bos != null) {
-                bos.close();
-            }*/
+
             System.out.println("Nombre archivo:" + ff.getFileName());
             System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
             file = ff;
