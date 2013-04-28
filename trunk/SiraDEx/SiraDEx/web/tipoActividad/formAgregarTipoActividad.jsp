@@ -23,12 +23,12 @@
             <b><div class ="status"><bean:write name="tipoActividadForm" 
                         property="mensaje" /></div></b>
                 </logic:present> 
-            <logic:present name="tipoActividadForm" property="mensajeError"><br>
+                <logic:present name="tipoActividadForm" property="mensajeError"><br>
             <b><div class ="error"><bean:write name="tipoActividadForm" 
                         property="mensajeError" /></div></b>
-            </logic:present><br>
+        </logic:present><br>
 
-                    <font size=2>Todos los campos son obligatorios.</font><br>
+        <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
             <table>
                 <tr>
@@ -40,20 +40,17 @@
             <td>Descripción</td>
             <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                            property="descripcion"></html:textarea>
-                </td>
-            </tr>
-            <tr>
-            <td>Tipo</td>
-            <td><html:select property="tipoPR">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:option value="P">P</html:option>
-                <html:option value="R">R</html:option>
-            </html:select>
-        </td>
-    </tr>
-    <tr>
-    <td>Programa</td>
-    <td>
+            </td>
+        </tr>
+        <tr>
+        <td>Tipo</td>
+        <td><html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
+            <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+            </td>
+        </tr>
+        <tr>
+        <td>Programa</td>
+        <td>
         <html:select property="programa">
             <html:option value="">-- Seleccione --</html:option>
             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
@@ -77,15 +74,15 @@
     <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
     <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
     <html:multibox property="permisos">Obrero</html:multibox> Obreros 
-    </td>       
+</td>       
 </tr>
 <tr><td>Número de productos</td>
 <td><html:text name="tipoActividadForm" property="nroProductos" size="1" 
-               maxlength="1"/></td>
+           maxlength="1"/></td>
 </tr>
 <tr><td>Número de campos</td>
 <td><html:text name="tipoActividadForm" property="nroCampos" size="1" 
-               maxlength="2"/></td>
+           maxlength="2"/></td>
 </tr>
 </table>
 <br>

@@ -47,17 +47,8 @@
         </tr>
         <tr>
         <td>Tipo</td>
-        <td><html:select property="tipoPR">
-                <html:option value ="${tipoActividadForm.tipoPR}">
-                    <bean:write name="tipoActividadForm" property="tipoPR"/>
-                </html:option>
-                <logic:equal name="tipoActividadForm" property="tipoPR" value="P">
-                    <html:option value="R">R</html:option>
-                </logic:equal>
-                <logic:equal name="tipoActividadForm" property="tipoPR" value="R">
-                    <html:option value="P">P</html:option>
-                </logic:equal>
-            </html:select>
+        <td><html:radio property="tipoPR" value="P" bundle="P">P</html:radio>
+            <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
         </td>
     </tr>
     <tr>

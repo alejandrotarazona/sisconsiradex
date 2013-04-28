@@ -54,7 +54,8 @@ public class Entity {
         "COORDINACIONES", //17    ---------------------------------------
 
         "TIENE_PERMISO", //18
-        "PERMISOS" //19      ---------------Vista-------------------
+        "PERMISOS", //19      ---------------Vista-------------------
+        "LOG" //20                  Tabla del Log, no se por que no estaba antes
     };
 
     /*
