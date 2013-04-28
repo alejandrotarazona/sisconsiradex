@@ -141,16 +141,21 @@
             <forward name="failure" path="modificarActividad"/>    
         </action>
         
-        <action name="actividadForm" path="/ValidarActividad" 
-                 scope="request" type="Actividad.Validar">
+        <action path="/ValidarActividad" type="Actividad.Validar"
+                 scope="request" name="actividadForm">
             <forward name="success" path="gestionValidaciones"/>
             <forward name="failure" path="gestionValidaciones"/>
             
          </action>
-         <action name="actividadForm" path="/RechazarActividad" 
-                 scope="session" type="Actividad.Rechazar">
+         
+         <action path="/RechazarActividad" type="Actividad.Rechazar"
+                 scope="session" name="actividadForm">
             <forward name="success" path="gestionValidaciones"/>
             <forward name="failure" path="sgestionValidaciones"/>         
+         </action>
+         
+        <action path="/MostrarPDF" type="Actividad.MostrarPDF"
+                 scope="request" name="actividadForm">        
          </action>
          
         <!-- ====================CATALOGOS==================================-->

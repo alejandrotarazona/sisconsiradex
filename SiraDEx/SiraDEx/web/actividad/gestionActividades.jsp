@@ -115,8 +115,7 @@
                                     <logic:equal name="campoValor" property="campo.tipo" 
                                                  value="textol">
                                         <br>
-                                        <b><bean:write name="campoValor" 
-                                                    property="campo.nombre"/>: </b>
+                                        <bean:write name="campoValor" property="campo.nombre"/>: 
                                             <bean:write name="campoValor" property="valor"/>
                                         </logic:equal>
 
@@ -142,19 +141,19 @@
                             </td>
 
                             <td align="center">
-                                <logic:iterate name="act" property="camposValores" 
-                                               id="campoValor" indexId="index">
-                                    <logic:equal name="campoValor" property="campo.tipo" 
-                                                 value="producto">
-                                        <html:form method="POST" action="/AGestionActividades?method=listAll">
-                                            <html:hidden name="act" property="idActividad" />
+                                <logic:iterate name="act" property="archivos" 
+                                               id="archivo" indexId="index">
+                                   
+                                        <html:form method="POST" action="/MostrarPDF" >
+                                            <html:hidden name="act" property="idActividad"/>
+                                            <html:hidden name="act" property="idArchivo" value="${index}"/>
                                             <html:submit styleId="botonProducto"
                                                          value=" "
-                                                         title="${campoValor.valor}"/>
+                                                         title="${archivo.nombre}"/>
                                             <br>
-                                            <bean:write name="campoValor" property="campo.nombre"/>
+                                            <bean:write name="archivo" property="tipo"/>
                                         </html:form>
-                                    </logic:equal>
+                                  
                                 </logic:iterate>   
                             </td>
                             <td align="center">
