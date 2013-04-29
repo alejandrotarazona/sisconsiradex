@@ -124,20 +124,20 @@
                             </td>
 
                             <td align="center">
-                                <logic:iterate name="act" property="camposValores" 
-                                               id="campoValor" indexId="index">
-                                    <logic:equal name="campoValor" property="campo.tipo" 
-                                                 value="producto">
-                                        <html:form method="POST" action="/AGestionActividades?method=listDex">
-                                            <html:hidden name="act" property="idActividad" />
+                                <logic:iterate name="act" property="archivos" 
+                                               id="archivo" indexId="index">
+                                   
+                                        <html:form method="POST" action="/MostrarPDF" >
+                                            <html:hidden name="act" property="idActividad"/>
+                                            <html:hidden name="act" property="idArchivo" value="${index}"/>
                                             <html:submit styleId="botonProducto"
                                                          value=" "
-                                                         title="${campoValor.valor}"/>
+                                                         title="${archivo.nombre}"/>
                                             <br>
-                                            <bean:write name="campoValor" property="campo.nombre"/>
+                                            <bean:write name="archivo" property="tipo"/>
                                         </html:form>
-                                    </logic:equal>
-                                </logic:iterate>   
+                                  
+                                </logic:iterate>     
                             </td>
                             <td align="center">
                                 <html:form method="POST" action="/ValidarActividad">
