@@ -36,10 +36,17 @@
                     var val = $('.selector')[tg.slice("selector".length)].value;
                     visibilidad(val,mos, lon);
                 }
-            )            
+            );
+                $("#duplicate").dynamicForm("#plus", "#minus",
+                {
+                    limit:3,
+                    createColor: 'yellow',
+                    removeColor: 'red'
+                }
+            );
             });              
         </script>
-
+        <script type="text/javascript" src="Interfaz/Scripts/jquery-dynamic-form"></script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Campos del Tipo de Actividad</title>
     </head>
@@ -50,13 +57,13 @@
         <logic:present name="tipoActividadForm" property="mensaje"><br>
             <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
         </logic:present> 
-            
+
         <logic:present name="tipoActividadForm" property="mensajeError"><br>
             <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
         </logic:present>
-            
+
         <font size=2>Los campos 'Nombre' y 'Longitud' son obligatorios.</font><br>
-        
+
         <html:form action="/RegistrarTipoActividad?method=save2">
             <table>
                 <tr>
@@ -76,73 +83,78 @@
                     String m = "mostrador" + i;
                     String l = "longitud" + i;
                 %>
-                <tr>
-                <td>
-                    <html:text name="campo" property="nombre" indexed="true" size="30"/>
-                </td>
+                <div id="duplicate">
+                    <tr>
+                    <td>
+                        <html:text name="campo" property="nombre" indexed="true" size="30"/>
+                    </td>
 
-                <td>
-                    <logic:notEqual name="campo" property="tipo" value="producto">
-                        <html:select name="campo"  property="tipo" indexed="true" 
-                        styleId="<%=s%>" styleClass="selector">
-                            <html:optionsCollection name="campo" property="tipos" 
-                                                    label="etiqueta" value="valor"/>
-                        </html:select>   
-                    </logic:notEqual>
-
-                    <logic:equal name="campo" property="tipo" value="producto">
-                        <html:select name="campo"  property="tipo" disabled="true" 
-                                     indexed="true" >
-                            <html:option value="producto">archivo</html:option>
-                        </html:select>
-                    </logic:equal>
-                </td>
-
-                <td>
-                    <logic:notEqual name="campo" property="tipo" value="producto">
-                        <html:checkbox name="campo" property="obligatorio" indexed="true"/>
-                        <html:hidden name="campo" property="obligatorio" value="false" 
-                                     indexed="true"/>
-                    </logic:notEqual>
-
-                    <logic:equal name="campo" property="tipo" value="producto">
-                        <html:checkbox name="campo" property="obligatorio" disabled="true" 
-                                       indexed="true"/>
-                    </logic:equal>
-
-                </td>
-
-                <td>
-                    <div id ="<%=l%>" style="visibility: visible">
+                    <td>
                         <logic:notEqual name="campo" property="tipo" value="producto">
-                            <html:text name="campo" property="longitud" indexed="true"
-                                       size="3"/>
+                            <html:select name="campo"  property="tipo" indexed="true" 
+                            styleId="<%=s%>" styleClass="selector">
+                                <html:optionsCollection name="campo" property="tipos" 
+                                                        label="etiqueta" value="valor"/>
+                            </html:select>   
                         </logic:notEqual>
 
-                    </div>
-                </td>
+                        <logic:equal name="campo" property="tipo" value="producto">
+                            <html:select name="campo"  property="tipo" disabled="true" 
+                                         indexed="true" >
+                                <html:option value="producto">archivo</html:option>
+                            </html:select>
+                        </logic:equal>
+                    </td>
 
-                <td>
-                    <div class="<%=m%>" style="visibility: hidden">
-                        <html:select name="campo" property="catalogo" indexed="true">      
-                            <html:option value="">-- Seleccione --</html:option>
-                            <html:optionsCollection name="catalogos" label="nombre" 
-                                                    value="nombre"/>
-                        </html:select>
-                    </div>
-                </td>
-                <td>
-                    <div class="<%=m%>" style="visibility: hidden">
-                        <html:checkbox name="campo" property="lista" indexed="true" 
-                                       value="true"/>
-                    </div>
-                </td>
-            </tr>
-        </logic:iterate>
-    </table>
-    <br>
-    <div align="center"><html:submit>Registrar</html:submit></div>
+                    <td>
+                        <logic:notEqual name="campo" property="tipo" value="producto">
+                            <html:checkbox name="campo" property="obligatorio" indexed="true"/>
+                            <html:hidden name="campo" property="obligatorio" value="false" 
+                                         indexed="true"/>
+                        </logic:notEqual>
 
-</html:form>
+                        <logic:equal name="campo" property="tipo" value="producto">
+                            <html:checkbox name="campo" property="obligatorio" disabled="true" 
+                                           indexed="true"/>
+                        </logic:equal>
+
+                    </td>
+
+                    <td>
+                        <div id ="<%=l%>" style="visibility: visible">
+                            <logic:notEqual name="campo" property="tipo" value="producto">
+                                <html:text name="campo" property="longitud" indexed="true"
+                                           size="3"/>
+                            </logic:notEqual>
+
+                        </div>
+                    </td>
+
+                    <td>
+                        <div class="<%=m%>" style="visibility: hidden">
+                            <html:select name="campo" property="catalogo" indexed="true">      
+                                <html:option value="">-- Seleccione --</html:option>
+                                <html:optionsCollection name="catalogos" label="nombre" 
+                                                        value="nombre"/>
+                            </html:select>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="<%=m%>" style="visibility: hidden">
+                            <html:checkbox name="campo" property="lista" indexed="true" 
+                                           value="true"/>
+                        </div>
+                    </td>
+                    <td>
+                        <span><a id="minus">[-]</a> <a id="plus">[+]</a></span>
+                    </td>
+                    </tr>
+                </div>
+            </logic:iterate>
+        </table>
+        <br>
+        <div align="center"><html:submit>Registrar</html:submit></div>
+
+    </html:form>
 </body>
 </html>
