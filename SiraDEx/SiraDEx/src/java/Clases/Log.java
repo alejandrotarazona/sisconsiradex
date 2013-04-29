@@ -21,8 +21,8 @@ import java.util.logging.Logger;
  * @author SisCon
  */
 public class Log {
-    
-    private long idLog;
+
+    private BigDecimal idLog;
     private String accion;
     private Calendar fecha;
     private String ip;
@@ -31,12 +31,12 @@ public class Log {
     public Log() {
     }
 
-    public long getIdLog() {
+    public BigDecimal getIdLog() {
         return idLog;
     }
 
     private void setIdLog(BigDecimal idLog) {
-        this.idLog = idLog.longValue();
+        this.idLog = idLog;
     }
 
     public String getAccion() {
@@ -70,51 +70,85 @@ public class Log {
     private void setUsbid(String usbid) {
         this.usbid = usbid;
     }
-    
+
+    /**
+     * Método para agregar a la Base de Datos una instancia de Log de un usuario
+     * registrado del sistema
+     *
+     * @param ip IP desde donde se realiza la acción.
+     * @param query La acción que se solicita.
+     * @param usbid El usuario que solicita la acción.
+     * @return true en caso de agregar efectivamente la accion.
+     */
     public static boolean agregar(String ip, String query, String usbid) {
         boolean resp = true;
-        Entity eAgregar = new Entity(1,20);
+        Entity eAgregar = new Entity(1, 20);
         String[] columnas = {
             "accion",
             "ip",
             "usbid"
         };
-        
+
         String[] valores = {
             query,
             ip,
             usbid
         };
-        
+
         resp &= eAgregar.insertar2(columnas, valores);
-        
+
         return resp;
     }
-    
-    public static ArrayList<Log> listar(){
-        Entity eListar = new Entity(0,20);
-        ResultSet rs  = eListar.listar();
+
+    /**
+     * Método para agregar una instancia del Log cuando no es una solicitud
+     * de un usuario registrado
+     * @param ip    IP del sitio desde el cual se hace la solicitud.
+     * @param query Solicitud realizada al sistema.
+     * @return  true en caso de realizar la incersión de manera  satisfactoria.
+     */
+    public static boolean agregar(String ip, String query) {
+        boolean resp = true;
+        Entity eAgregar = new Entity(1, 20);
+        String[] columnas = {
+            "accion",
+            "ip"
+        };
+
+        String[] valores = {
+            query,
+            ip
+        };
+
+        resp &= eAgregar.insertar2(columnas, valores);
+
+        return resp;
+    }
+
+    public static ArrayList<Log> listar() {
+        Entity eListar = new Entity(0, 20);
+        ResultSet rs = eListar.listar();
         ArrayList<Log> resp = new ArrayList<>(0);
         try {
-            while(rs.next()){
+            while (rs.next()) {
                 Log actual = new Log();
                 Calendar ahora = null;
                 actual.setAccion(rs.getString("accion"));
                 actual.setIdLog(rs.getBigDecimal("id_log"));
                 actual.setIp(rs.getString("ip"));
-                ahora.setTimeInMillis(rs.getDate("fecha").getTime());
+                ahora.setTimeInMillis(rs.getDate("fecha").getTime() + rs.getDate("hora").getTime());
                 actual.setFecha(ahora);
                 actual.setUsbid(rs.getString("usbid"));
-                
+
                 resp.add(actual);
             }
             return resp;
         } catch (SQLException ex) {
             Logger.getLogger(Log.class.getName()).log(Level.SEVERE, null, ex);
-            return resp;
+            return null;
         }
     }
-    
+
     public static String getFechaHora() {
         TimeZone tz = TimeZone.getTimeZone("America/Caracas");
         Calendar calendar = new GregorianCalendar(tz);
@@ -133,5 +167,4 @@ public class Log {
         String seg = Integer.toString(calendar.get(Calendar.SECOND));
         return dia + "/" + mes + "/" + año + " " + hora + ":" + min + ":" + seg + am_pm;
     }
-    
 }
