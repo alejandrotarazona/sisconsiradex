@@ -14,6 +14,8 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <script type="text/javascript" src="Interfaz/Scripts/jquery-dynamic-form"></script>
+        <script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.8.2.custom.min.js"></script>
         <script>
             $(document).ready(function(){
                 function visibilidad(valor, mostrador, longitud){
@@ -39,14 +41,14 @@
             );
                 $("#duplicate").dynamicForm("#plus", "#minus",
                 {
-                    limit:3,
+                    limit:20,
                     createColor: 'yellow',
                     removeColor: 'red'
                 }
             );
             });              
         </script>
-        <script type="text/javascript" src="Interfaz/Scripts/jquery-dynamic-form"></script>
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Campos del Tipo de Actividad</title>
     </head>
@@ -74,7 +76,7 @@
                 <td><b>Catálogo</b></td>
                 <td><b>Lista</b></td>
             </tr>            
-
+            
             <logic:iterate name="tipoActividadForm" property="campos" id="campo"
                            indexId="index">
                 <%
@@ -83,13 +85,15 @@
                     String m = "mostrador" + i;
                     String l = "longitud" + i;
                 %>
-                <div id="duplicate">
+                
                     <tr>
-                    <td>
+                    <td><div id="duplicate">
                         <html:text name="campo" property="nombre" indexed="true" size="30"/>
+                        </div>
                     </td>
 
                     <td>
+                    <div id="duplicate">
                         <logic:notEqual name="campo" property="tipo" value="producto">
                             <html:select name="campo"  property="tipo" indexed="true" 
                             styleId="<%=s%>" styleClass="selector">
@@ -103,10 +107,11 @@
                                          indexed="true" >
                                 <html:option value="producto">archivo</html:option>
                             </html:select>
-                        </logic:equal>
+                        </logic:equal></div>
                     </td>
 
                     <td>
+                        <div id="duplicate">
                         <logic:notEqual name="campo" property="tipo" value="producto">
                             <html:checkbox name="campo" property="obligatorio" indexed="true"/>
                             <html:hidden name="campo" property="obligatorio" value="false" 
@@ -116,40 +121,41 @@
                         <logic:equal name="campo" property="tipo" value="producto">
                             <html:checkbox name="campo" property="obligatorio" disabled="true" 
                                            indexed="true"/>
-                        </logic:equal>
+                        </logic:equal></div>
 
                     </td>
 
                     <td>
+                        <div id="duplicate">
                         <div id ="<%=l%>" style="visibility: visible">
                             <logic:notEqual name="campo" property="tipo" value="producto">
                                 <html:text name="campo" property="longitud" indexed="true"
                                            size="3"/>
                             </logic:notEqual>
 
-                        </div>
+                        </div></div>
                     </td>
 
                     <td>
+                        <div id="duplicate">
                         <div class="<%=m%>" style="visibility: hidden">
                             <html:select name="campo" property="catalogo" indexed="true">      
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name="catalogos" label="nombre" 
                                                         value="nombre"/>
                             </html:select>
-                        </div>
+                        </div></div>
                     </td>
-                    <td>
+                    <td><div id="duplicate">
                         <div class="<%=m%>" style="visibility: hidden">
                             <html:checkbox name="campo" property="lista" indexed="true" 
                                            value="true"/>
-                        </div>
+                        </div></div>
                     </td>
                     <td>
                         <span><a id="minus">[-]</a> <a id="plus">[+]</a></span>
                     </td>
                     </tr>
-                </div>
             </logic:iterate>
         </table>
         <br>
