@@ -48,7 +48,7 @@
             <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
                 String nombreCat = (String) c.getNombre();
                 boolean b = false;
-                if (nombreCat.equals("Coordinaciones") 
+                if (nombreCat.equals("Dependencias") 
                         || nombreCat.equals("Programas")) {
                     b = true;
                 }%>

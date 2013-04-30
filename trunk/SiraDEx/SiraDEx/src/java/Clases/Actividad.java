@@ -483,7 +483,7 @@ public class Actividad extends Root {
         return resp;
     }
 
-    //modificado por Jorge el cinco de marzo
+    
     public static ArrayList<Actividad> listarActividades() {
         try {
             ArrayList<Actividad> listaActividad = new ArrayList<>(0);

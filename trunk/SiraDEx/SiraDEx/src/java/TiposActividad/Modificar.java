@@ -43,9 +43,9 @@ public class Modificar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
         
-        ArrayList<ElementoCatalogo> coordinaciones;
-        coordinaciones = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
-        request.getSession().setAttribute("coordinaciones", coordinaciones);
+        ArrayList<ElementoCatalogo> dependencias;
+        dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        request.getSession().setAttribute("dependencias", dependencias);
        
         ArrayList catalogos = Clases.Catalogo.listar();
         request.getSession().setAttribute("catalogos", catalogos);

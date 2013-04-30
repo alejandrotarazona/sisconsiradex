@@ -27,8 +27,10 @@
                 $(".textolargo").hide();
                 $(".mostrar").click(function(){
                     $(this).siblings('.textolargo').toggle();
-
+                    var $this = $(this);
+                    $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
                 });
+                
                 $('#datatab').dataTable({
                     "aoColumns": [       
                         /* Participantes */ null,
@@ -38,7 +40,6 @@
                         /* Modificación */ null,
                         /* Producto */ null,
                         /* Acciones */ 
-                        { "bSortable": false },
                         { "bSortable": false }
                        
                     ]});
@@ -76,7 +77,6 @@
                         <th>Modificación</th>
                         <th>Producto</th>
                         <th></th>
-                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,8 +91,8 @@
                             <td>
                                 <% out.print(a.camposValoresToString());%>
 
-                            <span class="textolargo">
-                                <b>Descripción: </b>
+                            <span class="textolargo"><br>
+                                Descripción:
                                 <bean:write name="act" property="descripcion"/>
 
                                 <logic:iterate name="act" property="camposValores" 
@@ -100,8 +100,8 @@
                                     <logic:equal name="campoValor" property="campo.tipo" 
                                                  value="textol">
                                         <br>
-                                        <b><bean:write name="campoValor" 
-                                                    property="campo.nombre"/>: </b>
+                                        <bean:write name="campoValor" 
+                                                    property="campo.nombre"/>:
                                             <bean:write name="campoValor" property="valor"/>
                                         </logic:equal>
 
@@ -109,7 +109,9 @@
                             </span>  
 
 
-                            <div class="mostrar" style=" cursor: pointer;"><a>Más detalles</a></div>
+                            <div class="mostrar" style=" cursor: pointer; color: #1c6ea0;">
+                                Más detalles
+                            </div>
                             </td>
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
@@ -132,9 +134,7 @@
                                             <html:hidden name="act" property="idArchivo" value="${index}"/>
                                             <html:submit styleId="botonProducto"
                                                          value=" "
-                                                         title="${archivo.nombre}"/>
-                                            <br>
-                                            <bean:write name="archivo" property="tipo"/>
+                                                         title="${archivo.tipo}"/>
                                         </html:form>
                                   
                                 </logic:iterate>     
@@ -147,8 +147,7 @@
                                                  title="Validar"
                                                  onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                                 </html:form>
-                            </td>
-                            <td align="center">
+                         
                                 <html:form method="POST" action="/RechazarActividad">
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonRechazar"

@@ -27,8 +27,11 @@
                 $(".textolargo").hide();
                 $(".mostrar").click(function(){
                     $(this).siblings('.textolargo').toggle();
-
+                    var $this = $(this);
+                    $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
                 });
+                
+                
                 $('#datatab').dataTable({
                     "aoColumns": [       
                         /* Participantes */ null,
@@ -38,8 +41,7 @@
                         /* Modificación */ null,
                         /* Validación */ null,
                         /* Producto */ null,
-                        /* Acciones */ 
-                        { "bSortable": false },
+                        /* Acciones */
                         { "bSortable": false }
                        
                     ]});
@@ -64,14 +66,14 @@
         </logic:present>
 
         <h1>Actividades registradas en el sistema</h1>
-        
+
         <br><logic:present name="actividadForm" property="mensaje">
             <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="actividadForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="actividadForm" property="mensajeError">
             <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
-            </logic:present>
-        
+        </logic:present>
+
         <logic:notPresent name="acts">
             <div align="center">No hay actividad que mostrar</div>
         </logic:notPresent>
@@ -89,7 +91,6 @@
                         <th>Validación</th>
                         <th>Producto</th>
                         <th></th>
-                        <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -105,8 +106,8 @@
 
                                 <% out.print(a.camposValoresToString());%>
 
-                            <span class="textolargo">
-                                <b>Descripción: </b>
+                            <span class="textolargo"><br>
+                                Descripción: 
                                 <bean:write name="act" property="descripcion"/>
 
                                 <logic:iterate name="act" property="camposValores" 
@@ -116,20 +117,22 @@
                                                  value="textol">
                                         <br>
                                         <bean:write name="campoValor" property="campo.nombre"/>: 
-                                            <bean:write name="campoValor" property="valor"/>
-                                        </logic:equal>
+                                        <bean:write name="campoValor" property="valor"/>
+                                    </logic:equal>
 
                                 </logic:iterate>
                             </span>  
 
 
-                            <div class="mostrar" style=" cursor: pointer;"><a>Más detalles</a></div>
+                            <div class="mostrar" style=" cursor: pointer; color: #1c6ea0;">
+                                Más detalles
+                            </div>
                             </td>
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                            </td>
-                            <td>
+                                </td>
+                                <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
@@ -138,22 +141,20 @@
                             </td>
                             <td>
                                 <bean:write name="act" property="validacion"></bean:write>
-                            </td>
+                                </td>
 
-                            <td align="center">
+                                <td align="center">
                                 <logic:iterate name="act" property="archivos" 
                                                id="archivo" indexId="index">
-                                   
-                                        <html:form method="POST" action="/MostrarPDF" >
-                                            <html:hidden name="act" property="idActividad"/>
-                                            <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                            <html:submit styleId="botonProducto"
-                                                         value=" "
-                                                         title="${archivo.nombre}"/>
-                                            <br>
-                                            <bean:write name="archivo" property="tipo"/>
-                                        </html:form>
-                                  
+
+                                    <html:form method="POST" action="/MostrarPDF" >
+                                        <html:hidden name="act" property="idActividad"/>
+                                        <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                        <html:submit styleId="botonProducto"
+                                                     value=" "
+                                                     title="${archivo.tipo}"/>
+                                    </html:form>
+
                                 </logic:iterate>   
                             </td>
                             <td align="center">
@@ -163,8 +164,7 @@
                                                  value=" "
                                                  title="Modificar"/>
                                 </html:form>
-                            </td>
-                            <td align="center">
+
                                 <html:form method="POST" action="/EliminarActividad">
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonEliminar"

@@ -39,7 +39,7 @@ public class Modificar extends DispatchAction {
         request.getSession().setAttribute("usuarioNM", u);
 
         ArrayList<ElementoCatalogo> catalogo;
-        catalogo= Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
+        catalogo= Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("coord", catalogo);
 
         return mapping.findForward(PAGE);

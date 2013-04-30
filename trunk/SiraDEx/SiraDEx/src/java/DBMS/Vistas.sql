@@ -15,7 +15,7 @@ CREATE OR REPLACE VIEW elementos
         natural join catalogo 
         natural join campo_catalogo;
 
-CREATE OR REPLACE VIEW coordinaciones
+CREATE OR REPLACE VIEW dependencias
                 (nombre_campo, tipo, id_elemento,valor)
     AS
     SELECT nombre_campo,
@@ -23,7 +23,7 @@ CREATE OR REPLACE VIEW coordinaciones
             id_elemento,
             valor
     FROM elementos
-    WHERE catalogo = 'Coordinaciones';
+    WHERE catalogo = 'Dependencias';
 
 CREATE OR REPLACE VIEW estudiantes
                 (nombre, apellido, telefono, email)

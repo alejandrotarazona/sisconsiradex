@@ -4,9 +4,6 @@
  */
 package DBMS;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -45,17 +42,17 @@ public class Entity {
         "CAMPO_CATALOGO", //9
         "ELEMENTO_CATALOGO", //10
         "VALOR_CATALOGO", //11
+        "TIENE_PERMISO", //12   
+        "LOG", //13
+        "BACKUP",//14
 
-        "ESTUDIANTES", //12             OJO!!!
-        "PROFESORES", //13              NO se puede hacer insert ni update
-        "OBREROS", //14                a traves de estas!!!
-        "PROGRAMAS", //15
-        "EMPLEADOS", //16
-        "COORDINACIONES", //17    ---------------------------------------
-
-        "TIENE_PERMISO", //18
-        "PERMISOS", //19      ---------------Vista-------------------
-        "LOG" //20                  Tabla del Log, no se por que no estaba antes
+        "PERMISOS", //15        ---------------Vista-------------------   
+        "ESTUDIANTES", //16         OJO!!!
+        "PROFESORES", //17          NO se puede hacer insert ni update
+        "OBREROS", //18             a traves de estas!!!
+        "PROGRAMAS", //19
+        "EMPLEADOS", //20
+        "DEPENDENCIAS" //21     ---------------------------------------
     };
 
     /*
@@ -318,18 +315,19 @@ public class Entity {
 
     /**
      * Inserta el valor de un campo tipo archivo o producto en la base de datos
+     *
      * @param idCampo id del campo
      * @param idActividad id de la actividad a la que pertenece el valor
      * @param valor nombre del archivo
      * @param file archivo a insertar
-     * @return 
+     * @return
      */
-    public boolean insertarArchivo(int idCampo, int idActividad, String valor, 
+    public boolean insertarArchivo(int idCampo, int idActividad, String valor,
             FormFile archivo) {
 
-       DataBase db = DataBase.getInstance();
-       return db.update(idCampo, idActividad, valor, archivo); 
-    
+        DataBase db = DataBase.getInstance();
+        return db.update(idCampo, idActividad, valor, archivo);
+
 
     }
 

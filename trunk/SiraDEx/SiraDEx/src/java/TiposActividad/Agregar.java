@@ -50,9 +50,9 @@ public class Agregar extends DispatchAction {
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
-        ArrayList<ElementoCatalogo> coordinaciones;
-        coordinaciones = Clases.ElementoCatalogo.listarElementos("Coordinaciones", 1);
-        request.getSession().setAttribute("coordinaciones", coordinaciones);
+        ArrayList<ElementoCatalogo> dependencias;
+        dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        request.getSession().setAttribute("dependencias", dependencias);
         
         return mapping.findForward(PAGE);
     }
