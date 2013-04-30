@@ -139,7 +139,7 @@ VALUES ('99-10000', 'pedrog', 'Unidad de Participación y Acción Social',2, 'Pe
 
 
 --Catalogo
-INSERT INTO catalogo (nombre, nro_campos) VALUES ('Coordinaciones', 2);
+INSERT INTO catalogo (nombre, nro_campos) VALUES ('Dependencias', 2);
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Programas', 1);
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Estudiantes', 2);
 INSERT INTO catalogo (nombre, nro_campos) VALUES ('Profesores', 2);
@@ -148,7 +148,7 @@ INSERT INTO catalogo (nombre, nro_campos) VALUES ('Obreros', 2);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Carreras', 1);
 --INSERT INTO catalogo (nombre, nro_campos) VALUES ('Departamentos', 1);
 
---      Campos de coordinaciones
+--      Campos de dependencias
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (1, 'Nombre', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
@@ -196,7 +196,7 @@ VALUES (5, 'Id jefe_dpto', 'texto');
 
 
 --Elementos de los catalogos
---  Catálogo de Coordinaciones
+--  Catálogo de Dependencias
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (1);
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (1);
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (1);
@@ -233,7 +233,7 @@ INSERT INTO elemento_catalogo (id_catalogo) VALUES (6);
 
 
 --Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
---Valores para los nombres de las coordinaciones del DEX (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
+--Valores para los nombres de las Dependencias del DEX (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) 
 VALUES (1,1,'Unidad de Comunicación, Imagen y Divulgación');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) 

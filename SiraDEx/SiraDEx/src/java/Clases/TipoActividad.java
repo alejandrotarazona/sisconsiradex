@@ -185,7 +185,7 @@ public class TipoActividad extends Root {
     }
 
     private void setPermisos() {
-        Entity ePermisos = new Entity(0, 19);
+        Entity ePermisos = new Entity(0, 15);
         ResultSet rs = ePermisos.listar();
         ArrayList p = new ArrayList<>(0);
         if (rs != null) {
@@ -319,7 +319,7 @@ public class TipoActividad extends Root {
 
     public boolean agregarPermisos() {
         boolean resp = true;
-        Entity ePermisos = new Entity(1, 18);
+        Entity ePermisos = new Entity(1, 12);
         Object[] valoresPermisos = {id, 0};
         for (int i = 0; i < permisos.length; i++) {
             String estePermiso = permisos[i];
@@ -508,10 +508,10 @@ public class TipoActividad extends Root {
      */
     public boolean modificarPermisos() {
 
-        Entity e = new Entity(5, 18);//DELETE TIENE_PERMISO
+        Entity e = new Entity(5, 12);//DELETE TIENE_PERMISO
         e.borrar("id_tipo_actividad", id);
 
-        e = new Entity(1, 18); //INSERT TIENE_PERMISO
+        e = new Entity(1, 12); //INSERT TIENE_PERMISO
         String[] columnas = {"id_tipo_actividad", "id_permiso"};
         Object[] valores = {id, null};
         boolean resp = true;
