@@ -131,7 +131,7 @@ public class Verificaciones {
             return false;
         }
 
-        respVerif = verifVacio("'Coordinación a validar'", ta.getValidador());
+        respVerif = verifVacio("'Dependencia a validar'", ta.getValidador());
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;

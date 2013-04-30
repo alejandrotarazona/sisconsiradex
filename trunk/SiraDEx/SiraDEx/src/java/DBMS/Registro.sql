@@ -233,7 +233,7 @@ INSERT INTO elemento_catalogo (id_catalogo) VALUES (6);
 
 
 --Valores de los elementos de los catalogos cada valor corresponde a un campo y a un catalogo
---Valores para los nombres de las Dependencias del DEX (asumiendo que 1 es el id campo catalogo de "Nombre de coordinacion"
+--Valores para los nombres de las Dependencias del DEX (asumiendo que 1 es el id campo catalogo de "Nombre de dependencia"
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) 
 VALUES (1,1,'Unidad de Comunicación, Imagen y Divulgación');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) 
