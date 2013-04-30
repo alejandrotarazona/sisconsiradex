@@ -59,7 +59,7 @@
     </td>
 </tr>
 <tr>
-<td>Coordinación a validar</td>
+<td>Dependencia a validar</td>
 <td>       
     <html:select property="validador">
         <html:option value="">-- Seleccione --</html:option>
