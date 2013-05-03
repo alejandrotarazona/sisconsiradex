@@ -4,7 +4,11 @@
  */
 package Clases;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -38,7 +42,7 @@ public class Verificaciones {
      * parámetro sea vacío, null en caso contrario.
      */
     public static String verifVacio(String nombreCampo, String valorCampo) {
-        
+
         if (esVacio(valorCampo)) {
             return "Error: El campo '" + nombreCampo + "' es obligatorio.";
         }
@@ -153,13 +157,13 @@ public class Verificaciones {
             ta.setMensajeError(respVerif);
             return false;
         }
-        
+
         if (nro.equals("0")) {
             ta.setMensajeError("Error: El campo 'Número de productos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
-        
+
         respVerif = verifLV("'Número de productos'", nro, 1, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -205,7 +209,7 @@ public class Verificaciones {
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
             String nroCampo = "número " + i;
- 
+
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verifLV(nroCampo, nombre, 100, true);
@@ -299,20 +303,39 @@ public class Verificaciones {
             /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
             if (tipo.equals("producto") || tipo.equals("archivo")) {
                 if (cv.getFile().getFileSize() > 2097152) {
-
                     act.setMensajeError("Error: El tamaño del archivo del campo "
                             + nombre + " debe ser menor de 2 MB.");
                     return false;
                 }
-                if (!valor.equals("") && !valor.endsWith(".pdf")) {
+
+                if (!esPDF(cv)) {
                     act.setMensajeError("Error: El archivo subido al campo " + nombre
-                            + " debe ser extención .pdf");
+                            + " debe ser de tipo PDF");
                     return false;
                 }
             }
         }
 
         return true;
+    }
+
+    private static boolean esPDF(CampoValor cv) {
+        try {
+            byte pdf[] = {0x25, 0x50, 0x44, 0x46};
+            byte data[] = cv.getFile().getFileData();
+            for (int i = 0; i < pdf.length; i++) {
+
+                if (pdf[i] != data[i]) {
+                    return false;
+                }
+            }
+            return true;
+        } catch (FileNotFoundException ex) {
+            Logger.getLogger(Verificaciones.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(Verificaciones.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
     }
 
     /**
@@ -337,7 +360,7 @@ public class Verificaciones {
             c.setMensajeError(respVerif);
             return false;
         }
-        
+
         respVerif = verifLV("'Número de campos'", nro, 1, true);
         if (respVerif != null) {
             c.setMensajeError(respVerif);
@@ -368,22 +391,22 @@ public class Verificaciones {
                 return false;
             }
         }
-        if(c.getCamposAux()!=null) {
-        Iterator iter = c.getCamposAux().iterator();
-        for (int i = 1; iter.hasNext(); i++) {
-            CampoCatalogo campo = (CampoCatalogo) iter.next();
-            String nombre = campo.getNombre();
-            String nroCampo = "adicional número " + i;
+        if (c.getCamposAux() != null) {
+            Iterator iter = c.getCamposAux().iterator();
+            for (int i = 1; iter.hasNext(); i++) {
+                CampoCatalogo campo = (CampoCatalogo) iter.next();
+                String nombre = campo.getNombre();
+                String nroCampo = "adicional número " + i;
 
-            /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
-            String respVerif = verifLV(nroCampo, nombre, 100, true);
-            if (respVerif != null) {
-                c.setMensajeError(respVerif);
-                return false;
+                /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
+                String respVerif = verifLV(nroCampo, nombre, 100, true);
+                if (respVerif != null) {
+                    c.setMensajeError(respVerif);
+                    return false;
+                }
             }
         }
-        }
-        
+
         return true;
     }
 
@@ -412,7 +435,7 @@ public class Verificaciones {
             }
             todosVacios &= Verificaciones.esVacio(valor);
         }
-        if (todosVacios){
+        if (todosVacios) {
             ec.setMensajeError("Error: Debe haber al menos un campo lleno para "
                     + "agregar el elemento");
         }
