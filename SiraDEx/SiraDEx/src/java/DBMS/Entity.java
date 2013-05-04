@@ -44,15 +44,14 @@ public class Entity {
         "VALOR_CATALOGO", //11
         "TIENE_PERMISO", //12   
         "LOG", //13
-        "BACKUP",//14
 
-        "PERMISOS", //15        ---------------Vista-------------------   
-        "ESTUDIANTES", //16         OJO!!!
-        "PROFESORES", //17          NO se puede hacer insert ni update
-        "OBREROS", //18             a traves de estas!!!
-        "PROGRAMAS", //19
-        "EMPLEADOS", //20
-        "DEPENDENCIAS" //21     ---------------------------------------
+        "PERMISOS", //14        ---------------Vista-------------------   
+        "ESTUDIANTES", //15         OJO!!!
+        "PROFESORES", //16          NO se puede hacer insert ni update
+        "OBREROS", //17             a traves de estas!!!
+        "PROGRAMAS", //18
+        "EMPLEADOS", //19
+        "DEPENDENCIAS" //20     ---------------------------------------
     };
 
     /*

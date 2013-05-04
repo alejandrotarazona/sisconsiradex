@@ -185,7 +185,7 @@ public class TipoActividad extends Root {
     }
 
     private void setPermisos() {
-        Entity ePermisos = new Entity(0, 15);
+        Entity ePermisos = new Entity(0, 14);
         ResultSet rs = ePermisos.listar();
         ArrayList p = new ArrayList<>(0);
         if (rs != null) {
