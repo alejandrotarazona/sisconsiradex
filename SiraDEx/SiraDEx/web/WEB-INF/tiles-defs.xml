@@ -23,11 +23,7 @@
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
     
-    <definition name="sesionCerrada" extends="plantilla">
-        <put name="body" value="/EntradaSiraDEx.jsp" />
-    </definition>
-    
-    <!-- ===================USUARIOS====================================-->
+    <!-- =======================USUARIO====================================-->
     
     <definition name="gestionUsuarios" extends="plantilla">
         <put name="body" value="/usuario/gestionUsuarios.jsp" />
@@ -53,7 +49,7 @@
         <put name="body" value="/usuario/formModificarRolUsuario.jsp" />
     </definition>
     
-    <!-- ===================TIPOS DE ACTIVIDAD==========================-->
+    <!-- =======================TIPO DE ACTIVIDAD==========================-->
     
     <definition name="gestionTiposActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/gestionTiposActividad.jsp" />
@@ -72,7 +68,7 @@
     </definition>
     
  
-    <!-- =====================ACTIVIDADES===============================-->
+    <!-- ==========================ACTIVIDAD===============================-->
  
     <definition name="gestionActividades" extends="plantilla">
         <put name="body" value="/actividad/gestionActividades.jsp" />
@@ -94,7 +90,7 @@
     </definition> 
 
     
-    <!-- ====================CATALOGOS==================================-->
+    <!-- ========================CATALOGO==================================-->
     
     <definition name="gestionCatalogos" extends="plantilla">
         <put name="body" value="/catalogo/gestionCatalogos.jsp" />
@@ -112,7 +108,7 @@
         <put name="body" value="/catalogo/formModificarCatalogo.jsp" />
     </definition>
     
-    <!-- ==================ELEMENTOS DE CATALOGO========================-->
+    <!-- =========================ELEMENTO CATALOGO========================-->
     
     <definition name="gestionElementos" extends="plantilla">
         <put name="body" value="/elementoCatalogo/gestionElementos.jsp" />
@@ -125,5 +121,11 @@
     <definition name="modificarElemento" extends="plantilla">
         <put name="body" value="/elementoCatalogo/formModificarElemento.jsp" />
     </definition> 
+    
+    <!-- =============================BACKUP==============================-->
+    
+    <definition name="gestionBackups" extends="plantilla">
+        <put name="body" value="/backup/gestionBackups.jsp" />
+    </definition>
 
 </tiles-definitions>

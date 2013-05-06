@@ -23,10 +23,22 @@ public class DataBase {
     private static final String username = "siradex";
     private static final String password = "siradex";
     static private Connection conexion;
-
+    static private DataBase instance = null;
+    
     protected DataBase() {
     }
-    static private DataBase instance = null;
+
+    public static String getHost() {
+        return host;
+    }
+
+    public static int getPort() {
+        return port;
+    }
+
+    public static String getDatabase() {
+        return database;
+    }
 
     static public DataBase getInstance() {
         if (null == DataBase.instance) {

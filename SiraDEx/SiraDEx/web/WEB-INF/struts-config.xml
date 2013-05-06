@@ -12,6 +12,7 @@
         <form-bean  name="actividadForm" type="Clases.Actividad"/>
         <form-bean  name="catalogoForm" type="Clases.Catalogo"/>
         <form-bean  name="elementoCatalogoForm" type="Clases.ElementoCatalogo"/>
+        <form-bean  name="backupForm" type="Clases.Backup"/>
     </form-beans>
     
     <global-exceptions>
@@ -25,50 +26,50 @@
 
     <action-mappings>
         
-        <!-- ===================USUARIOS====================================-->
+        <!-- ====================USUARIO====================================-->
         
-        <action path="/Login" type="Usuarios.Login" scope="session" 
+        <action path="/Login" type="Usuario.Login" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="/sesion.jsp"/>
             <forward name="page" path="/autenticacion.jsp"/>
             <forward name="failure" path="/autenticacion.jsp"/>
         </action>
         
-        <action path="/Entrar" type="Usuarios.Entrar" scope="session" 
+        <action path="/Entrar" type="Usuario.Entrar" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="/sesion.jsp"/>           
         </action>
         
-        <action path="/Logout" type="Usuarios.Logout" 
+        <action path="/Logout" type="Usuario.Logout" 
                 scope="session" name="usuarioForm">
-            <forward name="success" path="sesionCerrada"/>
+            <forward name="success" path="paginaInicial"/>
         </action>
 
-        <action path="/AGestionUsuarios" type="Usuarios.Listar"
+        <action path="/GestionUsuarios" type="Usuario.Listar"
                 scope="session" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
         </action>
         
-        <action path="/RegistrarUsuario" type="Usuarios.Agregar" scope="session"
+        <action path="/RegistrarUsuario" type="Usuario.Agregar" scope="session"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="failure" path="agregarUsuario"/>
             <forward name="page" path="agregarUsuario"/>
         </action>
         
-        <action path="/EliminarUsuario" type="Usuarios.Eliminar" scope="session"
+        <action path="/EliminarUsuario" type="Usuario.Eliminar" scope="session"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="failure" path="eliminarUsuario"/>
             <forward name="page" path="eliminarUsuario"/>
         </action>
         
-        <action path="/VerPerfilUsuario" type="Usuarios.VerPerfil" scope="session"
+        <action path="/VerPerfilUsuario" type="Usuario.VerPerfil" scope="session"
                 name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
         </action>
         
-        <action path="/ModificarPerfilUsuario" type="Usuarios.ModificarPerfil" 
+        <action path="/ModificarPerfilUsuario" type="Usuario.ModificarPerfil" 
                 scope="session" parameter="method" name="usuarioForm">
             <forward name="success" path="perfilUsuario"/>
             <forward name="failure" path="modificarPerfilUsuario"/>
@@ -76,19 +77,19 @@
         </action>
         
         <action path="/ModificarUsuario" name="usuarioForm" scope="request" 
-                type="Usuarios.Modificar" parameter="method">
+                type="Usuario.Modificar" parameter="method">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="page" path="modificarRolUsuario"/>
         </action>
         
-        <!-- ================TIPOS DE ACTIVIDAD=============================-->
+        <!-- =================TIPO DE ACTIVIDAD=============================-->
         
-        <action path="/AGestionTiposActividad" type="TiposActividad.Listar"
+        <action path="/GestionTiposActividad" type="TipoActividad.Listar"
                 scope="request" name="tipoActividadForm">
             <forward name="success" path="gestionTiposActividad"/>
         </action>   
         
-        <action path="/RegistrarTipoActividad" type="TiposActividad.Agregar" 
+        <action path="/RegistrarTipoActividad" type="TipoActividad.Agregar" 
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="success" path="agregarCampos"/>
             <forward name="successfull" path="gestionTiposActividad"/>
@@ -97,22 +98,22 @@
             <forward name="failureCampos" path="agregarCampos"/>
         </action>
         
-        <action path="/EliminarTipoActividad" type="TiposActividad.Eliminar"
+        <action path="/EliminarTipoActividad" type="TipoActividad.Eliminar"
                 scope="request" name="tipoActividadForm">
             <forward name="success" path="gestionTiposActividad"/>
             <forward name="failure" path="gestionTiposActividad"/>
         </action>
         
-        <action path="/ModificarTipoActividad" type="TiposActividad.Modificar" 
+        <action path="/ModificarTipoActividad" type="TipoActividad.Modificar" 
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="page" path="modificarTipoActividad"/>
             <forward name="success" path="gestionTiposActividad"/>
             <forward name="failure" path="modificarTipoActividad"/>    
         </action>
         
-        <!-- ======================ACTIVIDADES==============================-->
+        <!-- ========================ACTIVIDAD==============================-->
         
-        <action path="/AGestionActividades" type="Actividad.Listar"
+        <action path="/GestionActividades" type="Actividad.Listar"
                 scope="session" parameter="method" name="actividadForm">
             <forward name="success1" path="gestionActividades"/>
             <forward name="success2" path="gestionActividades"/>
@@ -151,16 +152,16 @@
          <action path="/RechazarActividad" type="Actividad.Rechazar"
                  scope="session" name="actividadForm">
             <forward name="success" path="gestionValidaciones"/>
-            <forward name="failure" path="sgestionValidaciones"/>         
+            <forward name="failure" path="gestionValidaciones"/>         
          </action>
          
         <action path="/MostrarPDF" type="Actividad.MostrarPDF"
                  scope="request" name="actividadForm">        
          </action>
          
-        <!-- ====================CATALOGOS==================================-->
+        <!-- ======================CATALOGO=================================-->
         
-        <action path="/AGestionCatalogos" type="Catalogo.Listar"
+        <action path="/GestionCatalogos" type="Catalogo.Listar"
                 scope="session" name="catalogoForm">
             <forward name="success" path="gestionCatalogos"/>
         </action>
@@ -187,9 +188,9 @@
             <forward name="failure" path="modificarCatalogo"/>    
         </action>
         
-        <!-- =================ELEMENTOS DE CATALOGO=========================-->
+        <!-- =====================ELEMENTO CATALOGO=========================-->
 
-        <action path="/AGestionElementos" type="ElementoCatalogo.Listar"
+        <action path="/GestionElementos" type="ElementoCatalogo.Listar"
                 scope="session" name="elementoCatalogoForm">
             <forward name="success" path="gestionElementos"/>
         </action>
@@ -212,7 +213,16 @@
             <forward name="page" path="modificarElemento"/>
             <forward name="success" path="gestionElementos"/>
             <forward name="failure" path="modificarElemento"/>    
-        </action>            
+        </action>       
+        
+        <!-- ===========================BACKUP==============================-->
+                    
+        <action path="/GestionBackups" type="Backup.Gestionar" 
+                scope="session" parameter="method" name="backupForm">
+            <forward name="page" path="gestionBackups"/>
+            <forward name="success" path="gestionBackups"/>
+            <forward name="failure" path="gestionBackups"/>    
+        </action>
         
         <!-- ===============================================================-->
           

@@ -68,10 +68,10 @@
         <h1>Actividades registradas en el sistema</h1>
 
         <br><logic:present name="actividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
+            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
         </logic:present> 
         <br><logic:present name="actividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
         </logic:present>
 
         <logic:notPresent name="acts">
@@ -123,10 +123,10 @@
                                 </logic:iterate>
                             </span>  
 
-
-                            <div class="mostrar" style=" cursor: pointer; color: #1c6ea0;">
+                            <br>
+                            <a class="mostrar" style=" cursor: pointer;">
                                 Más detalles
-                            </div>
+                            </a>
                             </td>
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
