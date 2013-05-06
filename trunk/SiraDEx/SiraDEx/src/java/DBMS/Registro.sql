@@ -120,7 +120,7 @@ INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email)
 VALUES ('00-00000', '123456', 'obrero', 3, 'Pablo', 'Perez', '04321234567', 
 '00-00000@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('05-38978', 'alejandro', 'estudiante', 1, 'Alejandro', 'Tarazona', '04121341842',
+VALUES ('05-38978', 'alejandro', 'empleado', 1, 'Alejandro', 'Tarazona', '04121341842',
  '05-38978@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES 
