@@ -26,13 +26,13 @@
                             %>
                             <logic:equal name="user" property="rol" value="<%= r%>"> <%--DEx--%>
                                 <li><h1 class="title">Gestionar:</h1></li>
-                                <li><html:link action="/AGestionActividades.do?method=listDex">
+                                <li><html:link action="/GestionActividades.do?method=listDex">
                                         Validaciones
                                     </html:link></li>
                             <%--    </logic:equal>
 
                             <logic:equal name="user" property="rol" value="DEx">--%>
-                                <li><html:link action="/AGestionTiposActividad">
+                                <li><html:link action="/GestionTiposActividad">
                                         Tipos de Actividad 
                                     </html:link></li><br>
 
@@ -43,7 +43,7 @@
                             </logic:equal>
 
                             <logic:equal name="user" property="rol" value="profesor">
-                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                <li><html:link action="/GestionActividades?method=listUser"> 
                                         Gestionar Actividades
                                     </html:link></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar Productividad Individual</a></li>
@@ -51,41 +51,43 @@
 
                             <logic:equal name="user" property="rol" value="WM">
                                 <li><h1 class="title">Gestionar:</h1></li>
-                                <li><html:link action="/AGestionTiposActividad"> 
+                                <li><html:link action="/GestionTiposActividad"> 
                                         Tipos de Actividad 
                                     </html:link></li>
 
-                                <li><html:link action="/AGestionActividades?method=listAll"> 
+                                <li><html:link action="/GestionActividades?method=listAll"> 
                                         Actividades
                                     </html:link></li>
 
-                                <li><html:link action="/AGestionCatalogos"> 
+                                <li><html:link action="/GestionCatalogos"> 
                                         Catálogos 
                                     </html:link></li>
 
-                                <li><html:link action="/AGestionUsuarios"> 
+                                <li><html:link action="/GestionUsuarios"> 
                                         Usuarios
                                     </html:link></li>
 
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Backup</a></li><br>
+                                <li><html:link action="/GestionBackups?method=page"> 
+                                        Backups 
+                                    </html:link></li><br>
                                 <li><h1 class="title"><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></h1></li>
 
                             </logic:equal> 
 
                             <logic:equal name="user" property="rol" value="obrero">
-                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                <li><html:link action="/GestionActividades?method=listUser"> 
                                         Gestionar Actividades
                                     </html:link></li>
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="estudiante">
-                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                <li><html:link action="/GestionActividades?method=listUser"> 
                                         Gestionar Actividades
                                     </html:link></li>
                                 </logic:equal>
 
                             <logic:equal name="user" property="rol" value="empleado">
-                                <li><html:link action="/AGestionActividades?method=listUser"> 
+                                <li><html:link action="/GestionActividades?method=listUser"> 
                                         Gestionar Actividades
                                     </html:link></li>
                                 </logic:equal>

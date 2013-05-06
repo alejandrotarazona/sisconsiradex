@@ -102,22 +102,23 @@
                                         <br>
                                         <bean:write name="campoValor" 
                                                     property="campo.nombre"/>:
-                                            <bean:write name="campoValor" property="valor"/>
-                                        </logic:equal>
+                                        <bean:write name="campoValor" property="valor"/>
+                                    </logic:equal>
 
                                 </logic:iterate>
                             </span>  
 
 
-                            <div class="mostrar" style=" cursor: pointer; color: #1c6ea0;">
+                            <br>
+                            <a class="mostrar" style=" cursor: pointer;">
                                 Más detalles
-                            </div>
+                            </a>
                             </td>
                             <td>
                                 <bean:write name="act" property="creador"></bean:write>, 
                                 <bean:write name="act" property="fechaCreacion"></bean:write>
-                            </td>
-                            <td>
+                                </td>
+                                <td>
                                 <logic:present  name="act" property="modificador">
                                     <bean:write name="act" property="modificador"></bean:write>, 
                                     <bean:write name="act" property="fechaModif"></bean:write>
@@ -128,15 +129,15 @@
                             <td align="center">
                                 <logic:iterate name="act" property="archivos" 
                                                id="archivo" indexId="index">
-                                   
-                                        <html:form method="POST" action="/MostrarPDF" >
-                                            <html:hidden name="act" property="idActividad"/>
-                                            <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                            <html:submit styleId="botonProducto"
-                                                         value=" "
-                                                         title="${archivo.tipo}"/>
-                                        </html:form>
-                                  
+
+                                    <html:form method="POST" action="/MostrarPDF" >
+                                        <html:hidden name="act" property="idActividad"/>
+                                        <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                        <html:submit styleId="botonProducto"
+                                                     value=" "
+                                                     title="${archivo.tipo}"/>
+                                    </html:form>
+
                                 </logic:iterate>     
                             </td>
                             <td align="center">
@@ -147,7 +148,7 @@
                                                  title="Validar"
                                                  onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                                 </html:form>
-                         
+
                                 <html:form method="POST" action="/RechazarActividad">
                                     <html:hidden name="act" property="idActividad" />
                                     <html:submit styleId="botonRechazar"

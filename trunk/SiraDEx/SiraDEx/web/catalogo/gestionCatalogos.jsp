@@ -44,7 +44,7 @@
                         </html:form>
                     </td>
                     <td>
-                        <html:form method="POST" action="/AGestionElementos">
+                        <html:form method="POST" action="/GestionElementos">
                             <html:hidden name="cat" property="idCatalogo" />
                             <html:submit styleId="botonExaminar"
                                          value=" "
