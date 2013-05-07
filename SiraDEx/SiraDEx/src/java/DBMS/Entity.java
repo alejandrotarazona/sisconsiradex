@@ -51,7 +51,10 @@ public class Entity {
         "OBREROS", //17             a traves de estas!!!
         "PROGRAMAS", //18
         "EMPLEADOS", //19
-        "DEPENDENCIAS" //20     ---------------------------------------
+        "DEPENDENCIAS", //20     
+        "TIPO_P", //21
+        "TIPO_R",   //22        
+        "TIPO_ACT__ACT" //23    --------------------------------------
     };
 
     /*

@@ -85,3 +85,23 @@ CREATE OR REPLACE VIEW permisos
     FROM permiso p
         NATURAL JOIN    tiene_permiso tp
         NATURAL JOIN    tipo_actividad ta;
+
+CREATE OR REPLACE VIEW tipo_p
+    AS
+    SELECT *
+    FROM actividad a
+        NATURAL JOIN    tipo_actividad ta
+        WHERE ta.tipo_p_r = 'P';
+
+CREATE OR REPLACE VIEW tipo_r
+    AS
+    SELECT *
+    FROM actividad a
+        NATURAL JOIN    tipo_actividad ta
+        WHERE ta.tipo_p_r = 'R';
+
+CREATE OR REPLACE VIEW tipo_act__act
+    AS
+    SELECT *
+    FROM actividad a
+        NATURAL JOIN    tipo_actividad ta;

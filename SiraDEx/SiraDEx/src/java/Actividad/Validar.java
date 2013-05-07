@@ -39,14 +39,14 @@ public class Validar extends org.apache.struts.action.Action {
         Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String validador = user.getRol();
-        System.out.println("El validador es: "+validador);
+        System.out.println("El validador es: " + validador);
         boolean validacion = act.validar(true);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
-       
+
         request.setAttribute("acts", acts);
-        
-               if (acts.isEmpty()) {
+
+        if (acts.isEmpty()) {
             request.setAttribute("acts", null);
         }
         if (validacion) {
