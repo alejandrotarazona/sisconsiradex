@@ -49,7 +49,8 @@ public class Actividad extends Root {
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
         "PARTICIPA", //1
-        "USUARIO" //3
+        "USUARIO", //3
+        "TIPO_ACTIVIDAD" //4
     };
 
     public Actividad() {
@@ -172,7 +173,6 @@ public class Actividad extends Root {
     public void setIdArchivo(int idArchivo) {
         this.idArchivo = idArchivo;
     }
-    
 
     public static class Archivo implements Serializable {
 
@@ -209,7 +209,6 @@ public class Actividad extends Root {
         public void setTipo(String tipo) {
             this.tipo = tipo;
         }
-        
     }
 
     @Override
@@ -345,21 +344,21 @@ public class Actividad extends Root {
                     fechaModif = rs.getString(ATRIBUTOS[7]);
                     descripcion = rs.getString(ATRIBUTOS[8]);
                     camposValores = CampoValor.listarCamposValores(idActividad);
-                    
+
                     Iterator iter = camposValores.iterator();
-                       
-                        while (iter.hasNext()) {
-                            CampoValor cv = (CampoValor) iter.next();
-                            String tipoCampo = cv.getCampo().getTipo();
-                            String nombre = cv.getValor();
-                            if (!nombre.equals("")
-                                    && ((tipoCampo.equals("archivo")
-                                    || tipoCampo.equals("producto")))) {
-                                Archivo arch = new Archivo(cv.getFile(), nombre,
-                                        cv.getCampo().getNombre());
-                                archivos.add(arch);
-                            }
+
+                    while (iter.hasNext()) {
+                        CampoValor cv = (CampoValor) iter.next();
+                        String tipoCampo = cv.getCampo().getTipo();
+                        String nombre = cv.getValor();
+                        if (!nombre.equals("")
+                                && ((tipoCampo.equals("archivo")
+                                || tipoCampo.equals("producto")))) {
+                            Archivo arch = new Archivo(cv.getFile(), nombre,
+                                    cv.getCampo().getNombre());
+                            archivos.add(arch);
                         }
+                    }
 
                 }
             }
@@ -483,7 +482,6 @@ public class Actividad extends Root {
         return resp;
     }
 
-    
     public static ArrayList<Actividad> listarActividades() {
         try {
             ArrayList<Actividad> listaActividad = new ArrayList<>(0);
@@ -521,7 +519,7 @@ public class Actividad extends Root {
                                     && ((tipoCampo.equals("archivo")
                                     || tipoCampo.equals("producto")))) {
                                 Archivo arch = new Archivo(cv.getFile(), nombre,
-                                cv.getCampo().getNombre());
+                                        cv.getCampo().getNombre());
                                 archs.add(arch);
                             }
                         }
@@ -540,7 +538,12 @@ public class Actividad extends Root {
         return null;
     }
 
-    //hecho por Alejandro falta revisarlo
+    /**
+     * Lista todas las actividades de un tipo especificado en el atributo de la
+     * actividad que lo llama.
+     *
+     * @return Lista con todas las actividades del mismo tipo que la actividad.
+     */
     public ArrayList<Actividad> listarActividadesDeTipo() {
         try {
             ArrayList<Actividad> listaActividad = new ArrayList<>(0);
@@ -599,7 +602,8 @@ public class Actividad extends Root {
     /**
      * Lista las actividades que tiene el usuario.
      *
-     * @return Lista con las actividades realizadas por un usuario.
+     * @return Lista con las actividades realizadas por un usuario. Tambien en
+     * las que participa.
      */
     public ArrayList<Actividad> listarActividadesDeUsuario() {
         ArrayList<Actividad> listaActividad = new ArrayList<>(0);
@@ -669,18 +673,13 @@ public class Actividad extends Root {
                     Actividad a = new Actividad();
 
                     a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-
                     int id = rs.getInt(Actividad.ATRIBUTOS[1]);
                     a.setIdTipoActividad(id);
-
+                    a.setNombreTipoActividad(rs.getString(Actividad.ATRIBUTOS[2]));
                     a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
-
                     a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
-
                     a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
-
                     a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
-
                     a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
 
                     String[] ta = {"nombre_tipo_actividad"};
@@ -729,6 +728,93 @@ public class Actividad extends Root {
         return resp;
     }
 
+    /**
+     * Lista las actividades según su clasificación para el DEx.
+     *
+     * @param tipo P o R. En caso de ser distinto arrojará null.
+     * @return Lista con las Actividades que sean del tipo indicado.
+     */
+    public static ArrayList<Actividad> listarActividadesPR(String tipo) {
+        Entity eBuscar;
+        ResultSet rs;
+        ArrayList<Actividad> resp;
+        switch (tipo) {
+            case "P":
+            case "p":
+                eBuscar = new Entity(0, 21);
+                break;
+            case "R":
+            case "r":
+                eBuscar = new Entity(0, 22);
+                break;
+            default:
+                return null;
+        }
+        rs = eBuscar.listar();
+        try {
+            resp = listar(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+        return resp;
+    }
+
+    /**
+     * Lista las actividades de un programa dado.
+     *
+     * @param programa
+     * @return Lista con las actividades que pertenezcan al programa dado.
+     */
+    public static ArrayList<Actividad> listarActividadesPrograma(String programa) {
+        ArrayList<Actividad> resp;
+        Entity eListar = new Entity(0, 23);
+        String[] columnas = {
+            "programa"
+        };
+        Object[] condiciones = {
+            programa
+        };
+
+        ResultSet rs = eListar.seleccionar(columnas, condiciones);
+        try {
+            resp = listar(rs);
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+        return resp;
+    }
+    
+    /**
+     * Lista las actividades que ha creado un usuario.
+     * @param creador El usuario a buscar.
+     * @return Lista con todas las actividades que ha creado el usaurio dado.
+     */
+    public static ArrayList<Actividad> listarActividadesDeCreador(String creador) {
+        ArrayList<Actividad> resp = new ArrayList<>(0);
+        Entity eSeleccionar = new Entity(0, 2);
+        ResultSet rs;
+        String[] columnas = {
+            ATRIBUTOS[4]
+        };
+
+        Object[] condicion = {
+            creador
+        };
+        rs = eSeleccionar.seleccionar(columnas, condicion);
+        try {
+            resp = listar(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            return null;
+        }
+
+        return resp;
+    }
+
     public boolean modificar(ArrayList camposNM) {
 
         if (!Verificaciones.verif(this)) {
@@ -768,6 +854,57 @@ public class Actividad extends Root {
             mensajeError = "Error: No se pudo modificar la Actividad.";
         }
         return resp;
+    }
+
+    /**
+     * Funcion que toma los valores de un ResultSet y crea una lista de
+     * Actividades a partir de ella.
+     *
+     * @param rs Resultado de una busqueda en la Base de Datos y que contenga la
+     * informacion de una o varias Actividades.
+     * @return Lista de las Actividades encontradas por la busqueda.
+     * @throws SQLException
+     */
+    public static ArrayList<Actividad> listar(ResultSet rs) throws SQLException {
+        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
+        if (rs != null) {
+
+            while (rs.next()) {
+                Actividad a = new Actividad();
+                a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
+                a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
+                a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
+                a.setValidacion(rs.getString(ATRIBUTOS[3]));
+                a.setCreador(rs.getString(ATRIBUTOS[4]));
+                a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
+                a.setModificador(rs.getString(ATRIBUTOS[6]));
+                a.setFechaModif(rs.getString(ATRIBUTOS[7]));
+                a.setDescripcion(rs.getString(ATRIBUTOS[8]));
+                a.setValidador(rs.getString(ATRIBUTOS[9]));
+                a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+                a.setParticipantes(a.idActividad);
+
+                Iterator iter = a.getCamposValores().iterator();
+                ArrayList<Archivo> archs = new ArrayList<>(0);
+                while (iter.hasNext()) {
+                    CampoValor cv = (CampoValor) iter.next();
+                    String tipoCampo = cv.getCampo().getTipo();
+                    String nombre = cv.getValor();
+                    if (!nombre.equals("")
+                            && ((tipoCampo.equals("archivo")
+                            || tipoCampo.equals("producto")))) {
+                        Archivo arch = new Archivo(cv.getFile(), nombre,
+                                cv.getCampo().getNombre());
+                        archs.add(arch);
+                    }
+                }
+                a.setArchivos(archs);
+
+                listaActividad.add(a);
+            }
+        }
+        rs.close();
+        return listaActividad;
     }
 
     public static void main(String args[]) {
