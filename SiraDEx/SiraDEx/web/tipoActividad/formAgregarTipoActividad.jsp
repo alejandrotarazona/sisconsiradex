@@ -82,7 +82,7 @@
 </tr>
 <tr><td>Número de campos</td>
 <td><html:text name="tipoActividadForm" property="nroCampos" size="1" 
-           maxlength="2"/></td>
+           maxlength="2"/>&nbsp; Nota: El usuario está por defecto como participante de la actividad</td>
 </tr>
 </table>
 <br>
