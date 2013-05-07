@@ -15,6 +15,7 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.struts.upload.FormFile;
@@ -90,57 +91,57 @@ public class CampoValor implements Serializable {
 
     public void setFile(final byte[] data) {
 
-            FormFile ff = new FormFile() {
-                @Override
-                public String getContentType() {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
+        FormFile ff = new FormFile() {
+            @Override
+            public String getContentType() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
 
-                @Override
-                public void setContentType(String contentType) {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
+            @Override
+            public void setContentType(String contentType) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
 
-                @Override
-                public int getFileSize() {
-                    return data.length;
-                }
+            @Override
+            public int getFileSize() {
+                return data.length;
+            }
 
-                @Override
-                public void setFileSize(int fileSize) {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
+            @Override
+            public void setFileSize(int fileSize) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
 
-                @Override
-                public String getFileName() {
-                    return valor;
-                }
+            @Override
+            public String getFileName() {
+                return valor;
+            }
 
-                @Override
-                public void setFileName(String fileName) {
-                    valor = fileName;
-                }
+            @Override
+            public void setFileName(String fileName) {
+                valor = fileName;
+            }
 
-                @Override
-                public byte[] getFileData() {
-                    return data;
-                }
+            @Override
+            public byte[] getFileData() {
+                return data;
+            }
 
-                @Override
-                public InputStream getInputStream() throws FileNotFoundException, IOException {
-                    File file = bytesToFile(data, valor);
-                    return new FileInputStream(file);
-                }
+            @Override
+            public InputStream getInputStream() throws FileNotFoundException, IOException {
+                File file = bytesToFile(data, valor);
+                return new FileInputStream(file);
+            }
 
-                @Override
-                public void destroy() {
-                    throw new UnsupportedOperationException("Not supported yet.");
-                }
-            };
+            @Override
+            public void destroy() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        };
 
-            System.out.println("Nombre archivo:" + ff.getFileName());
-            System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
-            file = ff;
+        System.out.println("Nombre archivo:" + ff.getFileName());
+        System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
+        file = ff;
 
     }
 
@@ -151,7 +152,7 @@ public class CampoValor implements Serializable {
         Integer idCampo = new Integer(campo.getIdCampo());
         Integer idActividad = new Integer(idAct);
 
-        if (file != null) {      
+        if (file != null) {
             resp = resp && eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
         } else {
             Object[] tupla = {idCampo, idActividad, valor};
@@ -292,38 +293,47 @@ public class CampoValor implements Serializable {
             resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         } else {
-           /*  {*/
-                e = new Entity(5, 6);//DELETE VALOR
-                String[] campos = {
-                    ATRIBUTOS[0], //id_campo
-                    ATRIBUTOS[1] //id_actividad
-                };
-                Integer[] condicion = {
-                    campoNM.getCampo().getIdCampo(),
-                    idAct
-                };
+            e = new Entity(5, 6);//DELETE VALOR
+            String[] campos = {
+                ATRIBUTOS[0], //id_campo
+                ATRIBUTOS[1] //id_actividad
+            };
+            Integer[] condicion = {
+                campoNM.getCampo().getIdCampo(),
+                idAct
+            };
 
-                boolean RESPBORRAR = e.borrar(campos, condicion);
+            boolean RESPBORRAR = e.borrar(campos, condicion);
 
-                System.out.println("Borrado " + RESPBORRAR + " en VALOR la tupla "
-                        + "con id_campo = " + campoNM.getCampo().getIdCampo()
-                        + " id_actividad = " + idAct);
+            System.out.println("Borrado " + RESPBORRAR + " en VALOR la tupla "
+                    + "con id_campo = " + campoNM.getCampo().getIdCampo()
+                    + " id_actividad = " + idAct);
 
-                e = new Entity(1, 6); //INSERT VALOR
-                if (file.getFileSize() > 0){
-                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
-                System.out.println("Isercion cuando hay archivo " + file.getFileName()
-                        + " " + resp);
-                }else{
-                valor = campoNM.getValor();   
-                resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor,
-                        campoNM.getFile());
-                System.out.println("Isercion cuando no hay archivo " 
-                        + campoNM.getFile().getFileName() + " " + resp);
-                }
-            /*}*/
+            e = new Entity(1, 6); //INSERT VALOR
+
+            resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
+
         }
 
         return resp;
+    }
+
+    //funcion auxiliar para solucionar el problema de que el tag html file no reconoce
+    //si el property file tiene un archivo y esto dificultaba la implementacion 
+    //de las verificaciones para los campos tipo archivo o producto 
+    public static void auxModificar(ArrayList camposNM, ArrayList campos) {
+        Iterator it = campos.iterator();
+        for (int i = 0; it.hasNext(); i++) {
+            CampoValor c = (CampoValor) it.next();
+            String tipo = c.getCampo().getTipo();
+            if (tipo.equals("archivo") || tipo.equals("producto")) {
+                CampoValor campoNM = (CampoValor) camposNM.get(i);
+                if (c.getValor().isEmpty() && !campoNM.getValor().isEmpty()) {
+                    c.setCampo(campoNM.getCampo());
+                    c.setFile(campoNM.getFile());
+                    c.setValor(campoNM.getValor());
+                }
+            }
+        }
     }
 }

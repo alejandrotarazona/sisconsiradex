@@ -97,16 +97,18 @@
             </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-                <html:file name="camposValores" property="file" indexed="true"/>
+                <html:file name="camposValores" property="file" accept="application/pdf"
+                           indexed="true"/>
                 <b>Archivo previamente cargado:
-                <bean:write name="camposValores" property="valor"/></b> 
-            </logic:equal>
+                    <bean:write name="camposValores" property="valor"/></b> 
+                </logic:equal>
 
             <logic:equal name="camposValores" property="campo.tipo" value="producto">
-                <html:file name="camposValores" property="file" indexed="true"/> 
+                <html:file name="camposValores" property="file" accept="application/pdf"
+                           indexed="true"/> 
                 <b>Archivo previamente cargado:
-                <bean:write name="camposValores" property="valor"/></b> 
-            </logic:equal>
+                    <bean:write name="camposValores" property="valor"/></b> 
+                </logic:equal>
 
             <%   int i = (Integer) pageContext.findAttribute("index");
                 String catalogoi = ("cat" + i);%>    
