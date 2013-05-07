@@ -35,11 +35,11 @@
 
         <br><logic:present name="actividadForm" property="mensaje">
             <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="actividadForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="actividadForm" property="mensajeError">
             <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
-            </logic:present>
-                    
+        </logic:present>
+
         <p>Los campos con el asterisco  <span style="color:red">*</span> son obligatorios.</p></br>
 <table>           
     <html:form method="POST"
@@ -85,7 +85,8 @@
         </logic:equal>
 
         <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-            <html:file name="camposValores" property="file" indexed="true"/>
+            <html:file name="camposValores" property="file" accept="application/pdf"
+                       indexed="true" />
         </logic:equal>
 
         <logic:equal name="camposValores" property="campo.tipo" value="producto">
