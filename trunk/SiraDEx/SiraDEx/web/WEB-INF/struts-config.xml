@@ -7,6 +7,7 @@
 
 <struts-config>
     <form-beans>
+        <form-bean name="busquedaAvanzadaForm" type="Clases.BusquedaActividad"/>
         <form-bean  name="usuarioForm" type="Clases.Usuario" />
         <form-bean  name="tipoActividadForm" type="Clases.TipoActividad"/>
         <form-bean  name="actividadForm" type="Clases.Actividad"/>
@@ -159,6 +160,8 @@
                  scope="request" name="actividadForm">        
          </action>
          
+         
+         
         <!-- ======================CATALOGO=================================-->
         
         <action path="/GestionCatalogos" type="Catalogo.Listar"
@@ -223,6 +226,11 @@
             <forward name="success" path="gestionBackups"/>
             <forward name="failure" path="gestionBackups"/>    
         </action>
+        <action name="busquedaAvanzadaForm" path="/BusquedaAvanzada" 
+                scope="session" type="Actividad.Buscar">
+            <forward name="page" path="buscarActividades1"/>
+            
+        </action>      
         
         <!-- ===============================================================-->
           

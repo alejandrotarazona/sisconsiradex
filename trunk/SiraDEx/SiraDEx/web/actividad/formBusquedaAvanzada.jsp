@@ -29,17 +29,17 @@
         <br>
         <br>
         <html:form action="/BuscarActividad">
-            <p>Tipo de actividad: </p> 
+            <p>Tipo de Actividad: </p> 
             <html:select name="busquedaActividadForm" property="nombreTipoActividad">
                 <html:option value="">-- Seleccione --</html:option>
                 <html:optionsCollection name="tiposdeactividad" label="contenido" value="contenido"/>
             </html:select>
             <br>
             <p>Participante: </p>
-            <html:select name="busquedaActividadForm" property="participantes">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name="usuarios" label="contenido" value="contenido"/>
-            </html:select>
+            <html:text name="busquedaActividadForm" property="participantes"/>
+            <br>
+            <p>Creador: </p>
+            <html:text name="busquedaActividadForm" property="creador"/>
             <br>
             <%--       <p>Fecha de Creación: </p>
         <span class="fecha_input">
@@ -59,22 +59,26 @@
             <html:hidden name="busquedaActividadForm" property="fechaModif" indexed="true"/>
         </span>
 <br> --%>
-        <p>Validador: </p>
-        <html:select name="busquedaActividadForm" property="validador">
-            <html:option value="">-- Seleccione --</html:option>
-            <html:optionsCollection name="validadores" label="contenido" value="contenido"/>
-        </html:select>
-        <br>
-        <p>Programa: </p>
-        <html:select name="busquedaActividadForm" property="programa">
-            <html:option value="">-- Seleccione --</html:option>
-            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
-        </html:select>
-        <div align="center"><html:submit>Buscar</html:submit></div>
+            <p>Tipo: </p>
+            <html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
+            <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+
+            <p>Validador: </p>
+            <html:select name="busquedaActividadForm" property="validador">
+                <html:option value="">-- Seleccione --</html:option>
+                <html:optionsCollection name="validadores" label="contenido" value="contenido"/>
+            </html:select>
+            <br>
+            <p>Programa: </p>
+            <html:select name="busquedaActividadForm" property="programa">
+                <html:option value="">-- Seleccione --</html:option>
+                <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+            </html:select>
+            <div align="center"><html:submit>Buscar</html:submit></div>
 
 
-    </html:form>
+        </html:form>
 
 
-</body>
+    </body>
 </html>

@@ -4,9 +4,15 @@
  */
 package Clases;
 
+import DBMS.Entity;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.TreeSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -123,84 +129,68 @@ public class BusquedaActividad {
      * @return Las páginas con las listas de Actividades por página segun la
      * busqueda establecida.
      */
-    public ArrayList<ArrayList<Actividad>> buscar() {
+    public void buscar() {
         libro = new ArrayList<>(0);
-        ArrayList<TreeSet<Actividad>> listasDeBusqueda = new ArrayList<>(0);
         totalPaginas = 0;
 
-        if (!this.nombreTipo.equals("") && this.nombreTipo != null) {
-            Actividad aux0 = new Actividad();
-            aux0.setNombreTipoActividad(nombreTipo);
-            TipoActividad auxTA0 = new TipoActividad();
-            auxTA0.setNombreTipo(nombreTipo);
-            auxTA0.setId();
-            aux0.setIdTipoActividad(auxTA0.getId());
+        Entity eBuscar = new Entity(0, 23);
+        ArrayList<String> auxColumnas = new ArrayList<>(0);
+        ArrayList<Object> auxCondiciones = new ArrayList<>(0);
 
-            ArrayList<Actividad> estaLista = aux0.listarActividadesDeTipo();
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+        if (!this.nombreTipo.equals("") && this.nombreTipo != null) {
+            auxColumnas.add("nombre_tipo_actividad");
+            auxCondiciones.add(nombreTipo);
         }
         if (!this.tipoPR.equals("") && this.tipoPR != null) {
-            ArrayList<Actividad> estaLista = Actividad.listarActividadesPR(tipoPR);
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+            auxColumnas.add("tipo_p_r");
+            auxCondiciones.add(tipoPR);
         }
         if (!this.programa.equals("") && this.programa != null) {
-            ArrayList<Actividad> estaLista = Actividad.listarActividadesPrograma(programa);
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+            auxColumnas.add("programa");
+            auxCondiciones.add(programa);
         }
         if (!this.validador.equals("") && this.validador != null) {
-            ArrayList<Actividad> estaLista = Actividad.listarActividadesDeValidador(validador);
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+            auxColumnas.add("validador");
+            auxCondiciones.add(validador);
         }
         if (!this.creador.equals("") && this.creador != null) {
-            ArrayList<Actividad> estaLista = Actividad.listarActividadesDeCreador(creador);
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+            auxColumnas.add("creador");
+            auxCondiciones.add(creador);
         }
+
+        String[] columnas = (String[]) auxColumnas.toArray();
+        Object[] condiciones = auxCondiciones.toArray(columnas);
+
+        ResultSet rs = eBuscar.seleccionar(columnas, condiciones);
+        
+        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);               //Resultado de la busqueda cochina y gigante//
+        try {
+            cjtoAux = Actividad.listar(rs);
+        } catch (SQLException ex) {
+            Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        ArrayList<Actividad> listaParticipantes = new ArrayList<Actividad>(0);
+
         if (this.participantes != null) {
             Actividad aux = new Actividad();
             aux.setCreador(creador);
-            ArrayList<Actividad> estaLista = aux.listarActividadesDeUsuario();
-            TreeSet<Actividad> esteConjunto = new TreeSet();
-            esteConjunto.addAll(estaLista);
-            listasDeBusqueda.add(esteConjunto);
+            listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes/
         }
+        
+        Iterator it = listaParticipantes.iterator();
+        ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
 
-        TreeSet<Actividad> cjtoAux = listasDeBusqueda.get(0);
-        Iterator it = listasDeBusqueda.iterator();
-
-        while (it.hasNext()) {                        //Intento de implementacion de la interseccion de conjuntos.
-            TreeSet<Actividad> aux0 = (TreeSet<Actividad>) it.next();
-            TreeSet<Actividad> aux1 = (TreeSet<Actividad>) cjtoAux.clone();
-            Iterator it0 = aux0.iterator();
-            while (it0.hasNext()) {
-                aux1.remove((Actividad) it0.next());    //Dejo los elementos no comunes.
-            }
-            Iterator it1 = aux1.iterator();
-            while (it1.hasNext()) {
-                cjtoAux.remove((Actividad) it1.next()); //Elimino los elementos no comunes del cjto que usaré.
+        while (it.hasNext() && !cjtoAux.isEmpty()) {                        //Intento de implementacion de la interseccion de conjuntos.
+            Actividad auxAct = (Actividad) it.next();
+            if(cjtoAux.contains(auxAct)){
+                listaInterceptada.add(auxAct);
+                cjtoAux.remove(auxAct);
             }
         }
-
-        it = cjtoAux.iterator();
-        while (it.hasNext()) {
-            ArrayList<Actividad> unaPagina = new ArrayList<>(0);
-            for (int i = 0; i < mostrarPorPagina && it.hasNext(); i++) {
-                Actividad act = (Actividad) it.next();
-                unaPagina.add(act);
-            }
-            libro.add(unaPagina);
-            totalPaginas++;
-        }
-        return libro;
+        
+        libro = paginar(listaInterceptada, mostrarPorPagina);
+        
     }
 
     /**
@@ -212,5 +202,64 @@ public class BusquedaActividad {
     public static ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda, int pagina) {
         ArrayList<Actividad> resp = busqueda.getLibro().get(pagina);
         return resp;
+    }
+
+    /**
+     * Vacía la información de todas las actividades en una lista en limpio
+     *
+     * @return Lista con todas las actividades generadas por la busqueda.
+     */
+    private ArrayList<Actividad> coleccion() {
+        Iterator it = libro.iterator();
+        ArrayList<Actividad> resp = new ArrayList<>(0);
+        while (it.hasNext()) {
+            ArrayList<Actividad> aux0 = (ArrayList<Actividad>) it.next();
+            resp.addAll(aux0);
+        }
+
+        return resp;
+    }
+    
+    /**
+     * Divide en paginas las actividades conseguidas en la busqueda.
+     * @param listaActividades Todas las actividades que se consiguieron en la busqueda.
+     * @param cantidadPorPagina El numero de actividades que se pueden mostrar por pagina.
+     * @return Una lista que, en cada posicion, contiene una lista de actividades. Representa
+     * las paginas que se han de mostrar.
+     */
+    public static ArrayList<ArrayList<Actividad>> paginar(ArrayList<Actividad> listaActividades,
+            int cantidadPorPagina){
+        ArrayList<ArrayList<Actividad>> resp = new ArrayList<>(0);
+        Iterator it = listaActividades.iterator();
+        
+        while(it.hasNext()){
+            ArrayList<Actividad> aux = new ArrayList<>(0);
+            for(int i = 0 ; i < cantidadPorPagina && it.hasNext(); i++){
+                aux.add((Actividad) it.next());
+            }
+            resp.add(aux);
+        }
+        
+        return resp;
+    }
+
+    /**
+     * Procedimineto para reconfigurar la paginacion de la busqueda.
+     *
+     * @param cantidadPorPagina Cantidad de actividades a mostrar por cada
+     * pagina
+     */
+    public void repaginar(int cantidadPorPagina) {
+        ArrayList<Actividad> compilacion = this.coleccion();
+        libro = new ArrayList<>(0);
+        Iterator it = compilacion.iterator();
+
+        while (it.hasNext()) {
+            ArrayList<Actividad> unaPagina = new ArrayList<>(0);
+            for (int i = 0; i < cantidadPorPagina && it.hasNext(); i++) {
+                unaPagina.add((Actividad) it.next());
+            }
+            libro.add(unaPagina);
+        }
     }
 }
