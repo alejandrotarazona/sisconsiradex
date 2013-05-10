@@ -1,4 +1,5 @@
 
+<%@page import="Clases.Usuario"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -6,12 +7,16 @@
 
 <header>
     <div id="block-system-main-menu" class="block block-system block-menu first">          
-                <ul class="menu">
-                    <table bgcolor= "#E0F2F7">
-                        <tr>
-                <td><logic:present name="user">
-                        Usuario <html:link action="/VerPerfilUsuario" title="Ver perfil">
-                            <bean:write name="user" property="nombres" /> <bean:write name="user" property="apellidos" />
+        <ul class="menu">
+            <table bgcolor= "#E0F2F7">
+                <tr>
+                <td>
+
+                    <logic:present name="user">
+
+                        <bean:write name="user" property="nombres" /> <bean:write name="user" property="apellidos" />
+                        <html:link action="/VerPerfilUsuario" title="Ver perfil">
+                            Perfil
                         </html:link>
                         <html:link action="/Logout">
                             (Cerrar Sesión)
@@ -20,12 +25,25 @@
                     </logic:present>
 
                     <html:link href="http://localhost:8080/SiraDEx/construccion.html">Contactenos</html:link> |
+
                     <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar busquedas públicas</html:link> |
+
+
                     <logic:present name="user" >
-                        <logic:equal name="user" property="rol" value="DEx">
+
+                        <% Usuario u = (Usuario) request.getSession().getAttribute("user");
+                            String r = u.getRol();
+                            if (r.equals("WM") || r.equals("profesor") || r.equals("obrero")
+                                    || r.equals("estudiante") || r.equals("empleado")) {
+                                r = "";
+                            }
+                        %>
+                        <logic:equal name="user" property="rol" value="<%= r%>">
                             <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar consultas avanzadas</html:link> |
                         </logic:equal>
+
                     </logic:present>
+
                     <html:link href="http://localhost:8080/SiraDEx/construccion.html">Ayuda</html:link>
                 </td>
                 </tr>
