@@ -8,9 +8,7 @@ import DBMS.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -18,7 +16,7 @@ import java.util.logging.Logger;
  *
  * @author SisCon
  */
-public class BusquedaActividad {
+public class BusquedaActividad extends Root {
 
     private String nombreTipo;
     private String tipoPR;
@@ -71,8 +69,8 @@ public class BusquedaActividad {
         return participantes;
     }
 
-    public void setParticipantes(ArrayList<String> participantes) {
-        this.participantes = participantes;
+    public void setParticipantes(String participantes) {
+        this.participantes.add(participantes);
     }
 
     public String getCreador() {
@@ -137,60 +135,82 @@ public class BusquedaActividad {
         ArrayList<String> auxColumnas = new ArrayList<>(0);
         ArrayList<Object> auxCondiciones = new ArrayList<>(0);
 
-        if (!this.nombreTipo.equals("") && this.nombreTipo != null) {
+        if (this.nombreTipo != null && !this.nombreTipo.equals("")) {
             auxColumnas.add("nombre_tipo_actividad");
             auxCondiciones.add(nombreTipo);
         }
-        if (!this.tipoPR.equals("") && this.tipoPR != null) {
+        if (this.tipoPR != null && !this.tipoPR.equals("")) {
             auxColumnas.add("tipo_p_r");
             auxCondiciones.add(tipoPR);
         }
-        if (!this.programa.equals("") && this.programa != null) {
+        if (this.programa != null && !this.programa.equals("")) {
             auxColumnas.add("programa");
             auxCondiciones.add(programa);
         }
-        if (!this.validador.equals("") && this.validador != null) {
+        if (this.validador != null && !this.validador.equals("")) {
             auxColumnas.add("validador");
             auxCondiciones.add(validador);
         }
-        if (!this.creador.equals("") && this.creador != null) {
+        if (this.creador != null && !this.creador.equals("")) {
             auxColumnas.add("creador");
             auxCondiciones.add(creador);
         }
 
-        String[] columnas = (String[]) auxColumnas.toArray();
-        Object[] condiciones = auxCondiciones.toArray(columnas);
+        int tam = auxColumnas.size();
+        String[] columnas = new String[tam];
+        for (int i = 0; i < tam; i++) {
+            columnas[i] = auxColumnas.get(i);
+        }
+
+        tam = auxCondiciones.size();
+        Object[] condiciones = new Object[tam];
+
+        for (int i = 0; i < tam; i++) {
+            condiciones[i] = auxCondiciones.get(i);
+        }
 
         ResultSet rs = eBuscar.seleccionar(columnas, condiciones);
-        
+
         ArrayList<Actividad> cjtoAux = new ArrayList<>(0);               //Resultado de la busqueda cochina y gigante//
         try {
             cjtoAux = Actividad.listar(rs);
         } catch (SQLException ex) {
             Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         ArrayList<Actividad> listaParticipantes = new ArrayList<Actividad>(0);
 
-        if (this.participantes != null) {
-            Actividad aux = new Actividad();
-            aux.setCreador(creador);
-            listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes/
+        if (this.participantes != null && !this.participantes.isEmpty()) {
+            Iterator itPart = participantes.iterator();
+            while (itPart.hasNext()) {
+                String estePart = (String) itPart.next();
+                if(estePart!=null && !estePart.equalsIgnoreCase("")){
+                Actividad aux = new Actividad();
+                aux.setCreador(creador);
+                listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes/
+                }
+            }
         }
-        
+
         Iterator it = listaParticipantes.iterator();
         ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
 
-        while (it.hasNext() && !cjtoAux.isEmpty()) {                        //Intento de implementacion de la interseccion de conjuntos.
-            Actividad auxAct = (Actividad) it.next();
-            if(cjtoAux.contains(auxAct)){
-                listaInterceptada.add(auxAct);
-                cjtoAux.remove(auxAct);
+        if (this.participantes != null && !this.participantes.isEmpty()) {
+            while (it.hasNext() && !cjtoAux.isEmpty()) {                        //Intento de implementacion de la interseccion de conjuntos.
+                Actividad auxAct = (Actividad) it.next();
+                if (cjtoAux.contains(auxAct)) {
+                    listaInterceptada.add(auxAct);
+                    cjtoAux.remove(auxAct);
+                }
             }
+            System.out.println("Si hubo interseccion...");
+        } else {
+            listaInterceptada = cjtoAux;
+            System.out.println("No hubo interseccion...");
         }
-        
+
         libro = paginar(listaInterceptada, mostrarPorPagina);
-        
+
     }
 
     /**
@@ -200,7 +220,10 @@ public class BusquedaActividad {
      * @return Lista de Actividades ubicadas en la Pagina solicitada.
      */
     public static ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda, int pagina) {
-        ArrayList<Actividad> resp = busqueda.getLibro().get(pagina);
+        ArrayList<Actividad> resp = new ArrayList<>(0);
+        if (busqueda.getLibro().size() > 0) {
+            busqueda.getLibro().get(pagina);
+        }
         return resp;
     }
 
@@ -219,27 +242,30 @@ public class BusquedaActividad {
 
         return resp;
     }
-    
+
     /**
      * Divide en paginas las actividades conseguidas en la busqueda.
-     * @param listaActividades Todas las actividades que se consiguieron en la busqueda.
-     * @param cantidadPorPagina El numero de actividades que se pueden mostrar por pagina.
-     * @return Una lista que, en cada posicion, contiene una lista de actividades. Representa
-     * las paginas que se han de mostrar.
+     *
+     * @param listaActividades Todas las actividades que se consiguieron en la
+     * busqueda.
+     * @param cantidadPorPagina El numero de actividades que se pueden mostrar
+     * por pagina.
+     * @return Una lista que, en cada posicion, contiene una lista de
+     * actividades. Representa las paginas que se han de mostrar.
      */
     public static ArrayList<ArrayList<Actividad>> paginar(ArrayList<Actividad> listaActividades,
-            int cantidadPorPagina){
+            int cantidadPorPagina) {
         ArrayList<ArrayList<Actividad>> resp = new ArrayList<>(0);
         Iterator it = listaActividades.iterator();
-        
-        while(it.hasNext()){
+
+        while (it.hasNext()) {
             ArrayList<Actividad> aux = new ArrayList<>(0);
-            for(int i = 0 ; i < cantidadPorPagina && it.hasNext(); i++){
+            for (int i = 0; i < cantidadPorPagina && it.hasNext(); i++) {
                 aux.add((Actividad) it.next());
             }
             resp.add(aux);
         }
-        
+
         return resp;
     }
 

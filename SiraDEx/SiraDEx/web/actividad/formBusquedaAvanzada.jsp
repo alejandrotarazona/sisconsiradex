@@ -25,60 +25,119 @@
         <title>SiraDEx | Búsquedas</title>
     </head>
     <body>
-        <h1>Indique los parámetros de su búsqueda</h1>
-        <br>
-        <br>
-        <html:form action="/BuscarActividad">
-            <p>Tipo de Actividad: </p> 
-            <html:select name="busquedaActividadForm" property="nombreTipoActividad">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name="tiposdeactividad" label="contenido" value="contenido"/>
-            </html:select>
-            <br>
-            <p>Participante: </p>
-            <html:text name="busquedaActividadForm" property="participantes"/>
-            <br>
-            <p>Creador: </p>
-            <html:text name="busquedaActividadForm" property="creador"/>
-            <br>
-            <%--       <p>Fecha de Creación: </p>
-        <span class="fecha_input">
-            <html:text name="busquedaActividadForm" property="fechaCreacion" indexed="true" 
-                       readonly="true" />
-        </span>
-        <span class="fecha_click">
-            <html:hidden name="busquedaActividadForm" property="fechaCreacion" indexed="true"/>
-        </span>
-        <br>
-        <p>Fecha de la última modificación:</p>
-        <span class="fecha_input">
-            <html:text name="busquedaActividadForm" property="fechaModif" indexed="true" 
-                       readonly="true" />
-        </span>
-        <span class="fecha_click">
-            <html:hidden name="busquedaActividadForm" property="fechaModif" indexed="true"/>
-        </span>
+        <h1 class="title" id="page-title">Indique los parámetros de su búsqueda</h1>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <b><div class ="status"><bean:write name="tipoActividadForm" 
+                        property="mensaje" /></div></b>
+                </logic:present> 
+                <logic:present name="tipoActividadForm" property="mensajeError"><br>
+            <b><div class ="error"><bean:write name="tipoActividadForm" 
+                        property="mensajeError" /></div></b>
+                </logic:present>
+
+        <html:form action="/BusquedaAvanzada.do?method=search">
+            <table>
+                <tr>
+                    <td>
+                        Tipo de Actividad: 
+                    </td>
+                    <td>
+                        <html:select name="busquedaAvanzadaForm" property="nombreTipo">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="tiposdeactividad" label="nombreTipo" value="nombreTipo"/>
+                        </html:select>
+                    </td> 
+                </tr>
+                <tr>
+                    <td>
+                        Creador:
+                    </td> 
+                    <td>
+                        <html:text name="busquedaAvanzadaForm" property="creador"/>
+                    </td> 
+                </tr>
+                <tr>
+                    <td>
+                        Participante(s):
+                    </td> 
+                    <td>
+                        <html:text name="busquedaAvanzadaForm" property="participantes" styleId="participantes1" value=""/>
+                    </td>
+                </tr>
+
+    <%--       <tr><td>Fecha de Creación:</td>
+<td><span class="fecha_input">
+    <html:text name="busquedaAvanzadaForm" property="fechaCreacion" indexed="true" 
+               readonly="true" />
+</span>
+<span class="fecha_click">
+    <html:hidden name="busquedaAvanzadaForm" property="fechaCreacion" indexed="true"/>
+</span></td></tr>
+<br>
+<tr><td>Fecha de la última modificación:</td>
+<td><span class="fecha_input">
+    <html:text name="busquedaAvanzadaForm" property="fechaModif" indexed="true" 
+               readonly="true" />
+</span>
+<span class="fecha_click">
+    <html:hidden name="busquedaAvanzadaForm" property="fechaModif" indexed="true"/>
+</span></td></tr>
 <br> --%>
-            <p>Tipo: </p>
-            <html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
-            <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+                <tr>
+                    <td>
+                        Tipo: 
+                    </td>
+                    <td>
+                        <html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
+                        <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+                    </td>
+                </tr>
 
-            <p>Validador: </p>
-            <html:select name="busquedaActividadForm" property="validador">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name="validadores" label="contenido" value="contenido"/>
-            </html:select>
-            <br>
-            <p>Programa: </p>
-            <html:select name="busquedaActividadForm" property="programa">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name="programas" label="contenido" value="contenido"/>
-            </html:select>
-            <div align="center"><html:submit>Buscar</html:submit></div>
+                <tr>
+                    <td>
+                        Validador: 
+                    </td>
+                    <td>
+                        <html:select name="busquedaAvanzadaForm" property="validador">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="validadores" label="contenido" value="contenido"/>
+                        </html:select>
+                    </td>
+                </tr>
 
-
+                <tr>
+                    <td>
+                        Programa: 
+                    </td>
+                    <td><html:select name="busquedaAvanzadaForm" property="programa">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+                        </html:select>
+                    </td>
+                </tr>
+        </table>
+                        Mostrar <html:text name="busquedaAvanzadaForm" property="mostrarPorPagina" size="1" maxlength="3" value="10"/> actividades por pagina.
+                <div align="center"><html:submit>Buscar</html:submit></div>
         </html:form>
-
-
+            <logic:present name="actividades">
+                <logic:empty name="actividades">
+                    No hay actividades que mostrar
+                </logic:empty>
+                <logic:notEmpty name="actividades">
+                    <logic:iterate name="actividades" id="act">
+                        <bean:write name="act" property="nombreTipo"/>, <br>
+                        <%-- <logic:iterate name="act" property="camposValores" id="campoV" indexId="index">
+                            <logic:notEqual name="campoV" property="campo.tipo" value="archivo">
+                                <bean:write name="campoV" property="valor"/>
+                            </logic:notEqual>
+                            <logic:equal name="campoV" property="campo.tipo" value="archivo">
+                                Archivo
+                            </logic:equal>
+                        </logic:iterate> --%>
+                        <br>
+                    </logic:iterate>
+                </logic:notEmpty>
+            </logic:present>
     </body>
+    
 </html>

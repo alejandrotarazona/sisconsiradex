@@ -39,7 +39,7 @@
                             }
                         %>
                         <logic:equal name="user" property="rol" value="<%= r%>">
-                            <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar consultas avanzadas</html:link> |
+                            <html:link action="/BusquedaAvanzada.do?method=page">Realizar consultas avanzadas</html:link> |
                         </logic:equal>
 
                     </logic:present>
