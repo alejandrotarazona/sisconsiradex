@@ -49,8 +49,8 @@ public class Actividad extends Root {
     private static String[] TABLAS = {
         "ACTIVIDAD", //0
         "PARTICIPA", //1
-        "USUARIO", //3
-        "TIPO_ACTIVIDAD" //4
+        "USUARIO", //2
+        "TIPO_ACTIVIDAD" //3
     };
 
     public Actividad() {
@@ -660,7 +660,8 @@ public class Actividad extends Root {
         eActividad = new Entity(0, 2);
         String[] tabABuscar = {
             TABLAS[0],
-            TABLAS[1]
+            TABLAS[1],
+            TABLAS[3]
         };
         String[] colCondicion = {TABLAS[1] + ".usbid"};
         String[] colValor = {this.creador};

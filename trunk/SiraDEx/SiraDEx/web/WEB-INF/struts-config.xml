@@ -160,6 +160,14 @@
                  scope="request" name="actividadForm">        
          </action>
          
+         <action name="busquedaAvanzadaForm" path="/BusquedaAvanzada" 
+                scope="request" type="Actividad.Buscar" parameter="method">
+            <forward name="page" path="buscarActividades1"/>
+            <forward name="success" path="buscarActividades1"/>
+            <forward name="failure" path="/BusquedaAvanzada.do?method=page"/>
+            
+        </action>
+         
          
          
         <!-- ======================CATALOGO=================================-->
@@ -226,11 +234,7 @@
             <forward name="success" path="gestionBackups"/>
             <forward name="failure" path="gestionBackups"/>    
         </action>
-        <action name="busquedaAvanzadaForm" path="/BusquedaAvanzada" 
-                scope="session" type="Actividad.Buscar">
-            <forward name="page" path="buscarActividades1"/>
-            
-        </action>      
+              
         
         <!-- ===============================================================-->
           

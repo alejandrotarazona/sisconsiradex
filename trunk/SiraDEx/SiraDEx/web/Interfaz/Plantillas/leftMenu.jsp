@@ -29,13 +29,13 @@
                                 <li><html:link action="/GestionActividades.do?method=listDex">
                                         Validaciones
                                     </html:link></li>
-                            <%--    </logic:equal>
+                                    <%--    </logic:equal>
 
                             <logic:equal name="user" property="rol" value="DEx">--%>
                                 <li><html:link action="/GestionTiposActividad">
-                                        Tipos de Actividad 
+                                        Tipos de Actividad
                                     </html:link></li><br>
-
+                                
                                 <li><h1 class="title">Mostrar Productividad:</h1></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">Individual</a></li>
                                 <li><a href="http://localhost:8080/SiraDEx/construccion.html">General</a></li>

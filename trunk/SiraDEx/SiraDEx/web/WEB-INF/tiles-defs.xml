@@ -91,7 +91,7 @@
     </definition>
     
     <definition name="buscarActividades1" extends="plantilla">
-        <put name="body" value="/actividad.formBusquedaAvanzada.jsp"/>
+        <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
     </definition> 
 
     
