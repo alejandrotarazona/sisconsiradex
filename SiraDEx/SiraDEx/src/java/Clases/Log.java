@@ -148,8 +148,9 @@ public class Log {
             return null;
         }
     }
-
-    public static String getFechaHora() {
+    
+    
+     public static String getDate() {
         TimeZone tz = TimeZone.getTimeZone("America/Caracas");
         Calendar calendar = new GregorianCalendar(tz);
         Date trialTime = new Date();
@@ -157,6 +158,14 @@ public class Log {
         String dia = Integer.toString(calendar.get(Calendar.DATE));
         String mes = Integer.toString(calendar.get(Calendar.MONTH) + 1);//Enero empieza en 0
         String año = Integer.toString(calendar.get(Calendar.YEAR));
+        return dia + "/" + mes + "/" + año;
+    }
+    
+    public static String getHora() {
+        TimeZone tz = TimeZone.getTimeZone("America/Caracas");
+        Calendar calendar = new GregorianCalendar(tz);
+        Date trialTime = new Date();
+        calendar.setTime(trialTime);
         int amopm = calendar.get(Calendar.AM_PM);
         String am_pm = " p.m.";
         if (amopm == 0) {
@@ -165,6 +174,10 @@ public class Log {
         String hora = Integer.toString(calendar.get(Calendar.HOUR));
         String min = Integer.toString(calendar.get(Calendar.MINUTE));
         String seg = Integer.toString(calendar.get(Calendar.SECOND));
-        return dia + "/" + mes + "/" + año + " " + hora + ":" + min + ":" + seg + am_pm;
+        return hora + ":" + min + ":" + seg + am_pm;
+    }
+     
+    public static String getFechaHora() {
+        return getDate() + " " + getHora();
     }
 }

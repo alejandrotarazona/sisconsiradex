@@ -38,7 +38,10 @@ public class Gestionar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Clases.Root.deleteSessions(request, "backupForm");
-        Backup b = (Backup) form; 
+        Backup b = (Backup) form;
+        b.inicializarFrecuencia();
+        System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
+        System.out.println(b.getFrecuencia()+"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
         b.setMensajeError(null);
         b.setMensaje(null);
                
@@ -70,6 +73,20 @@ public class Gestionar extends DispatchAction {
         b.setMensaje(null);
    
         if (b.restaurarDesdeBackup()) {
+            return mapping.findForward(SUCCESS);
+        }
+        
+        return mapping.findForward(FAILURE);
+    }
+    public ActionForward set(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        
+        Backup b = (Backup) form;
+        b.setMensajeError(null);
+        b.setMensaje(null);
+   
+        if (b.cambiarFrecuencia()) {
             return mapping.findForward(SUCCESS);
         }
         

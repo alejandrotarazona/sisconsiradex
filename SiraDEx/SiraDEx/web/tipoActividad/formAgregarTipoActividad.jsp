@@ -44,8 +44,8 @@
         </tr>
         <tr>
         <td>Tipo</td>
-        <td><html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
-            <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+        <td><html:radio property="tipoPR" value="P" >P</html:radio>
+            <html:radio property="tipoPR" value="R" >R</html:radio>
             </td>
         </tr>
         <tr>
