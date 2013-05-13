@@ -26,7 +26,7 @@
                             %>
                             <logic:equal name="user" property="rol" value="<%= r%>"> <%--DEx--%>
                                 <li><h1 class="title">Gestionar:</h1></li>
-                                <li><html:link action="/GestionActividades.do?method=listDex">
+                                <li><html:link action="/GestionActividades?method=listDex">
                                         Validaciones
                                     </html:link></li>
                                     <%--    </logic:equal>

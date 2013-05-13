@@ -33,13 +33,13 @@
 
                         <% Usuario u = (Usuario) request.getSession().getAttribute("user");
                             String r = u.getRol();
-                            if (r.equals("WM") || r.equals("profesor") || r.equals("obrero")
+                            if (r.equals("profesor") || r.equals("obrero")
                                     || r.equals("estudiante") || r.equals("empleado")) {
                                 r = "";
                             }
                         %>
                         <logic:equal name="user" property="rol" value="<%= r%>">
-                            <html:link action="/BusquedaAvanzada.do?method=page">Realizar consultas avanzadas</html:link> |
+                            <html:link action="/BusquedaAvanzada?method=page">Realizar consultas avanzadas</html:link> |
                         </logic:equal>
 
                     </logic:present>

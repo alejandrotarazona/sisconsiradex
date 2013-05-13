@@ -105,3 +105,10 @@ CREATE OR REPLACE VIEW tipo_act__act
     SELECT *
     FROM actividad a
         NATURAL JOIN    tipo_actividad ta;
+
+CREATE OR REPLACE VIEW act_participa
+    AS
+    SELECT *
+    FROM actividad a
+        NATURAL JOIN    participa p
+        NATURAL JOIN    tipo_actividad ta;

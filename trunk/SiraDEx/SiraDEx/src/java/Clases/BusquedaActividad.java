@@ -6,11 +6,8 @@ package Clases;
 
 import DBMS.Entity;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -171,14 +168,10 @@ public class BusquedaActividad extends Root {
 
         ResultSet rs = eBuscar.seleccionar(columnas, condiciones);
 
-        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);               //Resultado de la busqueda cochina y gigante//
-        try {
-            cjtoAux = Actividad.listar(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        ArrayList<Actividad> cjtoAux = Actividad.listar(rs);     //Resultado de la busqueda cochina y gigante//
+       
 
-        ArrayList<Actividad> listaParticipantes = new ArrayList<Actividad>(0);
+        ArrayList<Actividad> listaParticipantes = new ArrayList<>(0);
 
         if (this.participantes != null && !this.participantes.isEmpty()) {
             Iterator itPart = participantes.iterator();

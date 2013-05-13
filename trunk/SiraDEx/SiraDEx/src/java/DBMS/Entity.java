@@ -53,8 +53,9 @@ public class Entity {
         "EMPLEADOS", //19
         "DEPENDENCIAS", //20     
         "TIPO_P", //21
-        "TIPO_R",   //22        
-        "TIPO_ACT__ACT" //23    --------------------------------------
+        "TIPO_R", //22        
+        "TIPO_ACT__ACT", //23
+        "ACT_PARTICIPA" //24    --------------------------------------
     };
 
     /*
