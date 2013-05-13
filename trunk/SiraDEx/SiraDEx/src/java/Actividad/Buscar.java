@@ -40,12 +40,12 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        
+
         System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
                 + "a la pagina para mostrar.");
-        
-        request.setAttribute("validadores", dependencias);        
-        request.setAttribute("programas", programas);        
+
+        request.setAttribute("validadores", dependencias);
+        request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
         return mapping.findForward(PAGE);
     }
@@ -59,32 +59,32 @@ public class Buscar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
-        
-         ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
+
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        
+
         ba.buscar();
         ArrayList<String> pags = new ArrayList<>(0);
-        
-        for(int i = 1 ; i <= ba.getTotalPaginas(); i ++){
-            pags.add(""+i);
+
+        for (int i = 1; i <= ba.getTotalPaginas(); i++) {
+            pags.add("" + i);
         }
-        
+
         ArrayList<Actividad> acts = BusquedaActividad.buscarPagina(ba, 0);
-        
+
         System.out.println("Actividades para mostrar (nros):");
-        for(int i = 1 ; i<= acts.size() ; i++){
-            System.out.println(i+".- "+acts.get(i).getNombreTipoActividad());
-        }
-        
+        /*for (int i = 1; i <= acts.size(); i++) {
+            System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
+        }*/
+
         request.setAttribute("paginas", pags);
         request.setAttribute("actividades", acts);
         request.setAttribute("busqueda", ba);
-        request.setAttribute("validadores", dependencias);        
-        request.setAttribute("programas", programas);        
+        request.setAttribute("validadores", dependencias);
+        request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
         return mapping.findForward(PAGINA);
     }

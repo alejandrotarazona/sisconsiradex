@@ -169,7 +169,6 @@ public class BusquedaActividad extends Root {
         ResultSet rs = eBuscar.seleccionar(columnas, condiciones);
 
         ArrayList<Actividad> cjtoAux = Actividad.listar(rs);     //Resultado de la busqueda cochina y gigante//
-       
 
         ArrayList<Actividad> listaParticipantes = new ArrayList<>(0);
 
@@ -177,10 +176,10 @@ public class BusquedaActividad extends Root {
             Iterator itPart = participantes.iterator();
             while (itPart.hasNext()) {
                 String estePart = (String) itPart.next();
-                if(estePart!=null && !estePart.equalsIgnoreCase("")){
-                Actividad aux = new Actividad();
-                aux.setCreador(creador);
-                listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes/
+                if (estePart != null && !estePart.equalsIgnoreCase("")) {
+                    Actividad aux = new Actividad();
+                    aux.setCreador(creador);
+                    listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes/
                 }
             }
         }
@@ -188,7 +187,7 @@ public class BusquedaActividad extends Root {
         Iterator it = listaParticipantes.iterator();
         ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
 
-        if (this.participantes != null && !this.participantes.isEmpty()) {
+        if (!participantes.isEmpty()) {
             while (it.hasNext() && !cjtoAux.isEmpty()) {                        //Intento de implementacion de la interseccion de conjuntos.
                 Actividad auxAct = (Actividad) it.next();
                 if (cjtoAux.contains(auxAct)) {
@@ -199,8 +198,12 @@ public class BusquedaActividad extends Root {
             System.out.println("Si hubo interseccion...");
         } else {
             listaInterceptada = cjtoAux;
+            
             System.out.println("No hubo interseccion...");
         }
+        System.out.println("nombreTipo primera actividad" + cjtoAux.get(0).getNombreTipoActividad()
+                + " wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
+
 
         libro = paginar(listaInterceptada, mostrarPorPagina);
 
@@ -212,12 +215,13 @@ public class BusquedaActividad extends Root {
      * @param pagina La página que se desea revisar.
      * @return Lista de Actividades ubicadas en la Pagina solicitada.
      */
-    public static ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda, int pagina) {
-        ArrayList<Actividad> resp = new ArrayList<>(0);
+    public static ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda,
+            int pagina) {
+        //ArrayList<Actividad> resp = new ArrayList<>(0);
         if (busqueda.getLibro().size() > 0) {
-            busqueda.getLibro().get(pagina);
+            return busqueda.getLibro().get(pagina);
         }
-        return resp;
+        return null;
     }
 
     /**
