@@ -24,7 +24,6 @@ public class Buscar extends DispatchAction {
 
     /* forward name="success" path="" */
     private final static String PAGE = "page";
-    private final static String SUCCESS = "success";
     private final static String PAGINA = "pagina";
     private final static String FAILURE = "failure";
 
@@ -86,6 +85,6 @@ public class Buscar extends DispatchAction {
         request.setAttribute("validadores", dependencias);        
         request.setAttribute("programas", programas);        
         request.setAttribute("tiposdeactividad", ta);
-        return mapping.findForward(SUCCESS);
+        return mapping.findForward(PAGE);
     }
 }

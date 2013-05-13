@@ -7,13 +7,13 @@
 
 <struts-config>
     <form-beans>
-        <form-bean name="busquedaAvanzadaForm" type="Clases.BusquedaActividad"/>
         <form-bean  name="usuarioForm" type="Clases.Usuario" />
         <form-bean  name="tipoActividadForm" type="Clases.TipoActividad"/>
         <form-bean  name="actividadForm" type="Clases.Actividad"/>
         <form-bean  name="catalogoForm" type="Clases.Catalogo"/>
         <form-bean  name="elementoCatalogoForm" type="Clases.ElementoCatalogo"/>
         <form-bean  name="backupForm" type="Clases.Backup"/>
+        <form-bean name="busquedaActividadForm" type="Clases.BusquedaActividad"/>
     </form-beans>
     
     <global-exceptions>
@@ -163,8 +163,7 @@
          <action name="busquedaAvanzadaForm" path="/BusquedaAvanzada" 
                 scope="request" type="Actividad.Buscar" parameter="method">
             <forward name="page" path="buscarActividades1"/>
-            <forward name="success" path="buscarActividades1"/>
-            <forward name="failure" path="/BusquedaAvanzada.do?method=page"/>
+            <forward name="failure" path="buscarActividades1"/>
             
         </action>
          
@@ -233,8 +232,7 @@
             <forward name="page" path="gestionBackups"/>
             <forward name="success" path="gestionBackups"/>
             <forward name="failure" path="gestionBackups"/>    
-        </action>
-              
+        </action>     
         
         <!-- ===============================================================-->
           

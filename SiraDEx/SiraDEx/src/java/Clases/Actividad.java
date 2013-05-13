@@ -46,12 +46,6 @@ public class Actividad extends Root {
         "descripcion", //8
         "validador" //9
     };
-    private static String[] TABLAS = {
-        "ACTIVIDAD", //0
-        "PARTICIPA", //1
-        "USUARIO", //2
-        "TIPO_ACTIVIDAD" //3
-    };
 
     public Actividad() {
     }
@@ -482,60 +476,67 @@ public class Actividad extends Root {
         return resp;
     }
 
-    public static ArrayList<Actividad> listarActividades() {
+    /**
+     * Funcion que toma los valores de un ResultSet y crea una lista de
+     * Actividades a partir de ella.
+     *
+     * @param rs Resultado de una busqueda en la Base de Datos y que contenga la
+     * informacion de una o varias Actividades.
+     * @return Lista de las Actividades encontradas por la busqueda.
+     * @throws SQLException
+     */
+    public static ArrayList<Actividad> listar(ResultSet rs) {
         try {
-            ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-            Entity eActividad = new Entity(0, 2);//SELECT ACTIVIDAD
+            ArrayList<Actividad> acts = new ArrayList<>(0);
+            if (rs != null) {
 
-            String[] tabABuscar = {
-                "ACTIVIDAD",
-                "TIPO_ACTIVIDAD"
-            };
-            try (ResultSet rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar)) {
-                if (rs != null) {
+                while (rs.next()) {
+                    Actividad a = new Actividad();
+                    a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
+                    a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
+                    a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
+                    a.setValidacion(rs.getString(ATRIBUTOS[3]));
+                    a.setCreador(rs.getString(ATRIBUTOS[4]));
+                    a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
+                    a.setModificador(rs.getString(ATRIBUTOS[6]));
+                    a.setFechaModif(rs.getString(ATRIBUTOS[7]));
+                    a.setDescripcion(rs.getString(ATRIBUTOS[8]));
+                    a.setValidador(rs.getString(ATRIBUTOS[9]));
+                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
+                    a.setParticipantes(a.idActividad);
 
-                    while (rs.next()) {
-                        Actividad a = new Actividad();
-                        a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
-                        a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
-                        a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
-                        a.setValidacion(rs.getString(ATRIBUTOS[3]));
-                        a.setCreador(rs.getString(ATRIBUTOS[4]));
-                        a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
-                        a.setModificador(rs.getString(ATRIBUTOS[6]));
-                        a.setFechaModif(rs.getString(ATRIBUTOS[7]));
-                        a.setDescripcion(rs.getString(ATRIBUTOS[8]));
-                        a.setValidador(rs.getString(ATRIBUTOS[9]));
-                        a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
-                        a.setParticipantes(a.idActividad);
-
-                        Iterator iter = a.getCamposValores().iterator();
-                        ArrayList<Archivo> archs = new ArrayList<>(0);
-                        while (iter.hasNext()) {
-                            CampoValor cv = (CampoValor) iter.next();
-                            String tipoCampo = cv.getCampo().getTipo();
-                            String nombre = cv.getValor();
-                            if (!nombre.equals("")
-                                    && ((tipoCampo.equals("archivo")
-                                    || tipoCampo.equals("producto")))) {
-                                Archivo arch = new Archivo(cv.getFile(), nombre,
-                                        cv.getCampo().getNombre());
-                                archs.add(arch);
-                            }
+                    Iterator iter = a.getCamposValores().iterator();
+                    ArrayList<Archivo> archs = new ArrayList<>(0);
+                    while (iter.hasNext()) {
+                        CampoValor cv = (CampoValor) iter.next();
+                        String tipoCampo = cv.getCampo().getTipo();
+                        String nombre = cv.getValor();
+                        if (!nombre.equals("")
+                                && ((tipoCampo.equals("archivo")
+                                || tipoCampo.equals("producto")))) {
+                            Archivo arch = new Archivo(cv.getFile(), nombre,
+                                    cv.getCampo().getNombre());
+                            archs.add(arch);
                         }
-                        a.setArchivos(archs);
-
-                        listaActividad.add(a);
                     }
-                }
-                rs.close();
-            }
+                    a.setArchivos(archs);
 
-            return listaActividad;
+                    acts.add(a);
+                }
+            }
+            rs.close();
+            return acts;
         } catch (SQLException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    public static ArrayList<Actividad> listarActividades() {
+
+        Entity eActividad = new Entity(0, 23);
+        ResultSet rs = eActividad.listar();
+        return listar(rs);
     }
 
     /**
@@ -545,58 +546,13 @@ public class Actividad extends Root {
      * @return Lista con todas las actividades del mismo tipo que la actividad.
      */
     public ArrayList<Actividad> listarActividadesDeTipo() {
-        try {
-            ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-            Entity eActividad = new Entity(0, 2);
-            String[] columna = {Actividad.ATRIBUTOS[1]};
-            Integer[] condicion = {idTipoActividad};
 
-            ResultSet rs = eActividad.seleccionar(columna, condicion);
+        Entity eActividad = new Entity(0, 23);
+        String[] columna = {ATRIBUTOS[1]};
+        Integer[] condicion = {idTipoActividad};
 
-            if (rs != null) {
-                Entity eTipoAct = new Entity(0, 1);
-
-                while (rs.next()) {
-                    Actividad a = new Actividad();
-
-                    a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-
-                    int id = rs.getInt(Actividad.ATRIBUTOS[1]);
-                    a.setIdTipoActividad(id);
-
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
-
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
-
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
-
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
-
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
-
-                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
-
-                    a.setParticipantes(id);
-
-                    String[] ta = {"nombre_tipo_actividad"};
-                    String[] idTipoAct = {"id_tipo_actividad"};
-                    Integer[] idAct = {id};
-                    try (ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct)) {
-                        r.next();
-                        a.setNombreTipoActividad(r.getString(1));
-
-                        listaActividad.add(a);
-                    }
-                }
-
-            }
-            rs.close();
-
-            return listaActividad;
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
+        ResultSet rs = eActividad.seleccionar(columna, condicion);
+        return listar(rs);
     }
 
     /**
@@ -606,103 +562,20 @@ public class Actividad extends Root {
      * las que participa.
      */
     public ArrayList<Actividad> listarActividadesDeUsuario() {
-        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-        Entity eActividad = new Entity(0, 2);
-        String[] columna = {Actividad.ATRIBUTOS[4]};
+
+        Entity eActividad = new Entity(0, 23);
+        String[] columna = {ATRIBUTOS[4]};
         String[] condicion = {this.creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
+        ArrayList<Actividad> acts = listar(rs);
+        eActividad = new Entity(0, 24);
 
-        Entity eTipoAct = new Entity(0, 1);
-
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Actividad a = new Actividad();
-
-                    a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-
-                    int id = rs.getInt(Actividad.ATRIBUTOS[1]);
-                    a.setIdTipoActividad(id);
-
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
-
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
-
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
-
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
-
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
-
-                    a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
-
-                    a.setParticipantes(id);
-
-                    String[] ta = {"nombre_tipo_actividad"};
-                    String[] idTipoAct = {"id_tipo_actividad"};
-                    Integer[] idAct = {id};
-                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
-                    r.next();
-                    a.setNombreTipoActividad(r.getString(1));
-
-                    listaActividad.add(a);
-                    r.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-        } else {
-            System.out.println("RS NULO");
-        }
-
-        eActividad = new Entity(0, 2);
-        String[] tabABuscar = {
-            TABLAS[0],
-            TABLAS[1],
-            TABLAS[3]
-        };
-        String[] colCondicion = {TABLAS[1] + ".usbid"};
-        String[] colValor = {this.creador};
-
-        rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar, colCondicion, colValor);
-
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    Actividad a = new Actividad();
-
-                    a.setIdActividad(rs.getInt(Actividad.ATRIBUTOS[0]));
-                    int id = rs.getInt(Actividad.ATRIBUTOS[1]);
-                    a.setIdTipoActividad(id);
-                    a.setNombreTipoActividad(rs.getString(Actividad.ATRIBUTOS[2]));
-                    a.setValidacion(rs.getString(Actividad.ATRIBUTOS[3]));
-                    a.setCreador(rs.getString(Actividad.ATRIBUTOS[4]));
-                    a.setFechaCreacion(rs.getString(Actividad.ATRIBUTOS[5]));
-                    a.setModificador(rs.getString(Actividad.ATRIBUTOS[6]));
-                    a.setFechaModif(rs.getString(Actividad.ATRIBUTOS[7]));
-
-                    String[] ta = {"nombre_tipo_actividad"};
-                    String[] idTipoAct = {"id_tipo_actividad"};
-                    Integer[] idAct = {id};
-                    ResultSet r = eTipoAct.proyectar(ta, idTipoAct, idAct);
-                    r.next();
-                    a.setNombreTipoActividad(r.getString(1));
-
-                    listaActividad.add(a);
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-
-
-        } else {
-            System.out.println("RS NULO");
-        }
-
-
-        return listaActividad;
+        rs = eActividad.listar();
+        ArrayList<Actividad> actsParticipa = listar(rs);
+        acts.addAll(actsParticipa);
+        
+        return acts;
     }
 
     /**
@@ -713,20 +586,12 @@ public class Actividad extends Root {
      * @return Lista con las actividades realacionadas con el validador,
      */
     public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
-        ArrayList<Actividad> resp = new ArrayList<>(0);
-        ArrayList<Actividad> aux0 = listarActividades();
-        Iterator it = aux0.iterator();
-        Actividad a;
-        while (it.hasNext()) {
-            a = (Actividad) it.next();
-            System.out.println("El validador de la actividad es: " + a.getValidador());
-            if (a.getValidador().equalsIgnoreCase(validador)
-                    && a.getValidacion().equalsIgnoreCase("En espera")) {
-                resp.add(a);
-            }
-        }
+        Entity eActividad = new Entity(0, 23);
+        String[] columna = {ATRIBUTOS[3],ATRIBUTOS[9]}; //validacion, validador
+        String[] condicion = {"En espera", validador};
 
-        return resp;
+        ResultSet rs = eActividad.seleccionar(columna, condicion);
+        return listar(rs);
     }
 
     /**
@@ -738,7 +603,6 @@ public class Actividad extends Root {
     public static ArrayList<Actividad> listarActividadesPR(String tipo) {
         Entity eBuscar;
         ResultSet rs;
-        ArrayList<Actividad> resp;
         switch (tipo) {
             case "P":
             case "p":
@@ -752,13 +616,8 @@ public class Actividad extends Root {
                 return null;
         }
         rs = eBuscar.listar();
-        try {
-            resp = listar(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-        return resp;
+
+        return listar(rs);
     }
 
     /**
@@ -768,7 +627,7 @@ public class Actividad extends Root {
      * @return Lista con las actividades que pertenezcan al programa dado.
      */
     public static ArrayList<Actividad> listarActividadesPrograma(String programa) {
-        ArrayList<Actividad> resp;
+
         Entity eListar = new Entity(0, 23);
         String[] columnas = {
             "programa"
@@ -778,24 +637,18 @@ public class Actividad extends Root {
         };
 
         ResultSet rs = eListar.seleccionar(columnas, condiciones);
-        try {
-            resp = listar(rs);
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
 
-        return resp;
+        return listar(rs);
     }
-    
+
     /**
      * Lista las actividades que ha creado un usuario.
+     *
      * @param creador El usuario a buscar.
      * @return Lista con todas las actividades que ha creado el usaurio dado.
      */
     public static ArrayList<Actividad> listarActividadesDeCreador(String creador) {
-        ArrayList<Actividad> resp = new ArrayList<>(0);
+
         Entity eSeleccionar = new Entity(0, 2);
         ResultSet rs;
         String[] columnas = {
@@ -806,14 +659,8 @@ public class Actividad extends Root {
             creador
         };
         rs = eSeleccionar.seleccionar(columnas, condicion);
-        try {
-            resp = listar(rs);
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
 
-        return resp;
+        return listar(rs);
     }
 
     public boolean modificar(ArrayList camposNM) {
@@ -855,57 +702,6 @@ public class Actividad extends Root {
             mensajeError = "Error: No se pudo modificar la Actividad.";
         }
         return resp;
-    }
-
-    /**
-     * Funcion que toma los valores de un ResultSet y crea una lista de
-     * Actividades a partir de ella.
-     *
-     * @param rs Resultado de una busqueda en la Base de Datos y que contenga la
-     * informacion de una o varias Actividades.
-     * @return Lista de las Actividades encontradas por la busqueda.
-     * @throws SQLException
-     */
-    public static ArrayList<Actividad> listar(ResultSet rs) throws SQLException {
-        ArrayList<Actividad> listaActividad = new ArrayList<>(0);
-        if (rs != null) {
-
-            while (rs.next()) {
-                Actividad a = new Actividad();
-                a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
-                a.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
-                a.setNombreTipoActividad(rs.getString(ATRIBUTOS[2]));
-                a.setValidacion(rs.getString(ATRIBUTOS[3]));
-                a.setCreador(rs.getString(ATRIBUTOS[4]));
-                a.setFechaCreacion(rs.getString(ATRIBUTOS[5]));
-                a.setModificador(rs.getString(ATRIBUTOS[6]));
-                a.setFechaModif(rs.getString(ATRIBUTOS[7]));
-                a.setDescripcion(rs.getString(ATRIBUTOS[8]));
-                a.setValidador(rs.getString(ATRIBUTOS[9]));
-                a.setCamposValores(CampoValor.listarCamposValores(a.idActividad));
-                a.setParticipantes(a.idActividad);
-
-                Iterator iter = a.getCamposValores().iterator();
-                ArrayList<Archivo> archs = new ArrayList<>(0);
-                while (iter.hasNext()) {
-                    CampoValor cv = (CampoValor) iter.next();
-                    String tipoCampo = cv.getCampo().getTipo();
-                    String nombre = cv.getValor();
-                    if (!nombre.equals("")
-                            && ((tipoCampo.equals("archivo")
-                            || tipoCampo.equals("producto")))) {
-                        Archivo arch = new Archivo(cv.getFile(), nombre,
-                                cv.getCampo().getNombre());
-                        archs.add(arch);
-                    }
-                }
-                a.setArchivos(archs);
-
-                listaActividad.add(a);
-            }
-        }
-        rs.close();
-        return listaActividad;
     }
 
     public static void main(String args[]) {
