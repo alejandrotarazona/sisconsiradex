@@ -50,7 +50,7 @@
                 </tr>
                 <tr>
                     <td>
-                        Creador:
+                        Usuario que registró la Actividad:
                     </td> 
                     <td>
                         <html:text name="busquedaActividadForm" property="creador"/>

@@ -41,7 +41,8 @@ public class Buscar extends DispatchAction {
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         
-        System.out.println("Ya en la accion. Nombres preparados para ser pasados\na la pagina para mostrar.");
+        System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
+                + "a la pagina para mostrar.");
         
         request.setAttribute("validadores", dependencias);        
         request.setAttribute("programas", programas);        
@@ -85,6 +86,6 @@ public class Buscar extends DispatchAction {
         request.setAttribute("validadores", dependencias);        
         request.setAttribute("programas", programas);        
         request.setAttribute("tiposdeactividad", ta);
-        return mapping.findForward(PAGE);
+        return mapping.findForward(PAGINA);
     }
 }
