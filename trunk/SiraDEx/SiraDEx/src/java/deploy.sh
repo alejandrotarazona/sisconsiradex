@@ -1,7 +1,7 @@
 echo "Creando variables de entorno"
 echo ""
 
-files="Actividad/*.java Backup/*.java Catalogo/*.java Clases/*.java DBMS/*.java DMBD/*.sql ElementoCatalogo/*.java TipoActividad/*.java Usuario/*.java Usuarios/*.java"
+files="Actividad/*.java Backup/*.java Catalogo/*.java Clases/*.java DBMS/*.java DBMS/*.sql ElementoCatalogo/*.java TipoActividad/*.java Usuario/*.java Usuarios/*.java"
 
 echo "Variables de entorno creadas, compilando archivos"
 echo ""
