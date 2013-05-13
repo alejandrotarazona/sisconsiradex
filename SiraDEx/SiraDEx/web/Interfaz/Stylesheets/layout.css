@@ -14,7 +14,7 @@
 .container-16 {
   margin-left: auto;
   margin-right: auto;
-  width: 1018px;
+  width: 1018px; /*ancho de contenido*/
 }
 
 /* `Grid >> Global
@@ -121,7 +121,7 @@
 }
 
 .container-16 .grid-3 {
-  width: 130px;
+  width: 58px; /*posicion menu derecho*/
 }
 
 .container-16 .grid-5 {
@@ -141,7 +141,7 @@
 }
 
 .container-16 .grid-10 {
-  width: 840px;
+  width: 840px; /*posicion menu izquierdo*/
 }
 
 .container-16 .grid-11 {

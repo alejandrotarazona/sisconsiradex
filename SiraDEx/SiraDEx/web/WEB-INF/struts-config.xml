@@ -13,7 +13,7 @@
         <form-bean  name="catalogoForm" type="Clases.Catalogo"/>
         <form-bean  name="elementoCatalogoForm" type="Clases.ElementoCatalogo"/>
         <form-bean  name="backupForm" type="Clases.Backup"/>
-        <form-bean name="busquedaActividadForm" type="Clases.BusquedaActividad"/>
+        <form-bean  name="busquedaActividadForm" type="Clases.BusquedaActividad"/>
     </form-beans>
     
     <global-exceptions>
@@ -160,9 +160,10 @@
                  scope="request" name="actividadForm">        
          </action>
          
-         <action name="busquedaAvanzadaForm" path="/BusquedaAvanzada" 
+         <action name="busquedaActividadForm" path="/BusquedaAvanzada" 
                 scope="request" type="Actividad.Buscar" parameter="method">
             <forward name="page" path="buscarActividades1"/>
+            <forward name="pagina" path="buscarActividades1"/>
             <forward name="failure" path="buscarActividades1"/>
             
         </action>
