@@ -88,8 +88,8 @@
                         Tipo: 
                     </td>
                     <td>
-                        <html:radio property="tipoPR" value="P" bundle="P" >P</html:radio>
-                        <html:radio property="tipoPR" value="R" bundle="R">R</html:radio>
+                        <html:radio property="tipoPR" value="P">P</html:radio>
+                        <html:radio property="tipoPR" value="R">R</html:radio>
                     </td>
                 </tr>
 
@@ -125,15 +125,15 @@
                 </logic:empty>
                 <logic:notEmpty name="actividades">
                     <logic:iterate name="actividades" id="act">
-                        <bean:write name="act" property="nombreTipo"/>, <br>
-                        <%-- <logic:iterate name="act" property="camposValores" id="campoV" indexId="index">
+                        <bean:write name="act" property="nombreTipoActividad"/>, <br>
+                        <logic:iterate name="act" property="camposValores" id="campoV" indexId="index">
                             <logic:notEqual name="campoV" property="campo.tipo" value="archivo">
                                 <bean:write name="campoV" property="valor"/>
                             </logic:notEqual>
                             <logic:equal name="campoV" property="campo.tipo" value="archivo">
                                 Archivo
                             </logic:equal>
-                        </logic:iterate> --%>
+                        </logic:iterate>
                         <br>
                     </logic:iterate>
                 </logic:notEmpty>
