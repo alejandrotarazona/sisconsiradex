@@ -1,6 +1,6 @@
 <%-- 
-    Document   : template
-    Created on : 28/11/2012, 09:23:25 PM
+    Document   : templatePublic
+    Created on : 13/05/2013, 5:49:25 PM
     Author     : SisCon
 --%>
 
@@ -41,17 +41,9 @@
                                         <div class="field field-name-body field-type-text-with-summary field-label-hidden">
                                             <div class="field-items">
                                                 <div class="field-item even" property="content:encoded">
-                                                    <logic:present name="user">
-                                                        <tiles:insert attribute="body" />
-                                                    </logic:present>
-                                                    <logic:notPresent name="user">
-                                                        <br></br>
-                                                        <span class ="warning">Su sesión ha expirado, para regresar a la página principal , por favor
-                                                            <html:link action="/Welcome">haga click aquí</html:link>
-                                                        </span>
-                                                    </logic:notPresent>
+                                                    <tiles:insert attribute="body" />
                                                     <br>
-                                                    </br>
+                                                    <br>
                                                 </div>
                                             </div>
                                         </div>
@@ -60,7 +52,6 @@
                             </div>
                         </div>
                     </div>
-                    <tiles:insert attribute="leftMenu" />
                 </div>
                 <tiles:insert attribute="footer" />
             </div>
