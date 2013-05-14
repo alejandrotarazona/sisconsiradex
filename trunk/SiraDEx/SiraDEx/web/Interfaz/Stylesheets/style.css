@@ -731,7 +731,7 @@ span.warning {
   background: none;
   border: none;
   color: #fda61f;
-  font: bold 1em Tahoma, Verdana, Geneva;
+  font: bold 1.3em Tahoma, Verdana, Geneva;
   margin-left: 0.25em;
 }
 .ok {

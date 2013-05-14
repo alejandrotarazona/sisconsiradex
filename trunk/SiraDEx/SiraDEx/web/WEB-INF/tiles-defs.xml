@@ -19,7 +19,14 @@
         <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
     </definition>
     
-    <definition name="paginaInicial" extends="plantilla">
+    <definition name="plantillaPublica" path="/Interfaz/Plantillas/templatePublic.jsp">
+        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
+        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
+        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
+    </definition>
+    
+    <definition name="paginaInicial" extends="plantillaPublica">
         <put name="body" value="/EntradaSiraDEx.jsp" />
     </definition>
     
