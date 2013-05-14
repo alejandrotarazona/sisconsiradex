@@ -7,7 +7,7 @@
 
 <struts-config>
     <form-beans>
-        <form-bean  name="usuarioForm" type="Clases.Usuario" />
+        <form-bean  name="usuarioForm" type="Clases.Usuario"/>
         <form-bean  name="tipoActividadForm" type="Clases.TipoActividad"/>
         <form-bean  name="actividadForm" type="Clases.Actividad"/>
         <form-bean  name="catalogoForm" type="Clases.Catalogo"/>
