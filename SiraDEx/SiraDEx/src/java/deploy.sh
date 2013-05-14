@@ -2,7 +2,7 @@ echo "Creando variables de entorno"
 echo ""
 
 lib="Librerias/antlr-2.7.2.jar:Librerias/bsf-2.3.0.jar:Librerias/commons-beanutils-1.8.0.jar:Librerias/commons-chain-1.2.jar:Librerias/commons-digester-1.8.jar:Librerias/commons-fileupload-1.1.1.jar:Librerias/commons-io-1.1.jar:Librerias/commons-logging-1.0.4.jar:Librerias/commons-validator-1.3.1.jar:Librerias/jstl-1.0.2.jar:Librerias/oro-2.0.8.jar:Librerias/standard-1.0.6.jar:Librerias/struts-core-1.3.10.jar:Librerias/struts-el-1.3.10.jar:Librerias/struts-extras-1.3.10.jar:Librerias/struts-faces-1.3.10.jar:Librerias/struts-mailreader-dao-1.3.10.jar:Librerias/struts-struts-scripting-1.3.10.jar:Librerias/struts-struts-taglib-1.3.10.jar:Librerias/struts-tiles-1.3.10.jar"
-files="Actividad/*.java Backup/*.java Catalogo/*.java Clases/*.java DBMS/*.java DBMS/*.sql ElementoCatalogo/*.java TipoActividad/*.java Usuario/*.java Usuarios/*.java"
+files="Actividad/*.java Backup/*.java Catalogo/*.java Clases/*.java DBMS/*.java ElementoCatalogo/*.java TipoActividad/*.java Usuario/*.java"
 
 echo "Variables de entorno creadas, compilando archivos"
 echo ""
