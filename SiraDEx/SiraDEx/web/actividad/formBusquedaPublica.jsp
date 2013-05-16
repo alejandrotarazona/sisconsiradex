@@ -50,7 +50,7 @@
                         property="mensajeError" /></div></b>
                 </logic:present>
 
-        <html:form action="/BusquedaAvanzada?method=search">
+        <html:form action="/BusquedaPublica?method=publicSearch">
             <table>
                 <tr>
                 <td>
@@ -161,9 +161,6 @@ Mostrar <html:text name="busquedaActividadForm" property="mostrarPorPagina"
             <bean:write name="act" property="fechaModif"></bean:write>
         </logic:present>
 
-        <logic:equal name="act" property="validacion" value="En espera">
-            <b>Actividad sin validar.</b>
-        </logic:equal>
         <br>
         <div>
             <span class="textolargo">

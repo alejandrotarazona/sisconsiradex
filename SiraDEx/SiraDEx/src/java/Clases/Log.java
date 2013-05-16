@@ -82,7 +82,7 @@ public class Log {
      */
     public static boolean agregar(String ip, String query, String usbid) {
         boolean resp = true;
-        Entity eAgregar = new Entity(1, 13);
+        Entity eAgregar = new Entity(1, 11);
         String[] columnas = {
             "accion",
             "ip",
@@ -109,7 +109,7 @@ public class Log {
      */
     public static boolean agregar(String ip, String query) {
         boolean resp = true;
-        Entity eAgregar = new Entity(1, 13);
+        Entity eAgregar = new Entity(1, 11);
         String[] columnas = {
             "accion",
             "ip"
@@ -126,7 +126,7 @@ public class Log {
     }
 
     public static ArrayList<Log> listar() {
-        Entity eListar = new Entity(0, 13);
+        Entity eListar = new Entity(0, 11);
         ResultSet rs = eListar.listar();
         ArrayList<Log> resp = new ArrayList<>(0);
         try {

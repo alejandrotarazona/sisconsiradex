@@ -156,17 +156,23 @@
             <forward name="failure" path="gestionValidaciones"/>         
          </action>
          
-        <action path="/MostrarPDF" type="Actividad.MostrarPDF"
+         <action path="/MostrarPDF" type="Actividad.MostrarPDF"
                  scope="request" name="actividadForm">        
          </action>
          
-         <action name="busquedaActividadForm" path="/BusquedaAvanzada" 
-                scope="request" type="Actividad.Buscar" parameter="method">
-            <forward name="page" path="buscarActividades1"/>
-            <forward name="pagina" path="buscarActividades1"/>
-            <forward name="failure" path="buscarActividades1"/>
-            
-        </action>
+         <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="request"
+                 parameter="method" name="busquedaActividadForm">
+            <forward name="page" path="busquedaAvanzada"/>
+            <forward name="pagina" path="busquedaAvanzada"/>
+            <forward name="failure" path="busquedaAvanzada"/>   
+         </action>
+         
+         <action path="/BusquedaPublica" type="Actividad.Buscar" scope="request"
+                 parameter="method" name="busquedaActividadForm">
+            <forward name="page" path="busquedaPublica"/>
+            <forward name="pagina" path="busquedaPublica"/>
+            <forward name="failure" path="busquedaPublica"/>   
+         </action>
          
          
          

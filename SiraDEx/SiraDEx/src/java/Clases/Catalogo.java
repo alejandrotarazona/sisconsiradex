@@ -25,14 +25,15 @@ public class Catalogo extends Root {
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
-    
-    /*atributo auxiliar para agregar nuevos campos en el modificar*/
-    private ArrayList<CampoCatalogo> camposAux;
-                                                
+    private ArrayList<CampoCatalogo> camposAux; /*atributo auxiliar para agregar
+     * nuevos campos en el modificar*/
+
+    private boolean participantes; //especifica si es un catalogo de participantes
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
-        "nro_campos"
+        "nro_campos",
+        "participa"
     };
     private static final String[] tiposCampos = {//no lo usamos para nada
         "texto", //STRING
@@ -88,29 +89,29 @@ public class Catalogo extends Root {
 
     public void setIdCatalogo() {
         try {
-            Entity eId = new Entity(0, 8);
+            Entity eId = new Entity(0, 6);
 
-                String[] proyectar = {ATRIBUTOS[0]};
-                String[] columnas = {
-                    "nombre"
-                };
-                Object[] valores = {
-                    this.nombre
-                };
-                ResultSet rs = eId.proyectar(proyectar, columnas, valores);
+            String[] proyectar = {ATRIBUTOS[0]};
+            String[] columnas = {
+                "nombre"
+            };
+            Object[] valores = {
+                this.nombre
+            };
+            ResultSet rs = eId.proyectar(proyectar, columnas, valores);
 
-                if (rs.next()) {
+            if (rs.next()) {
 
-                        this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
-                
-                }
-                rs.close();
+                this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
+
+            }
+            rs.close();
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
-  
+
     }
-    
+
     public void setIdCatalogo(int idCatalogo) {
         this.idCatalogo = idCatalogo;
     }
@@ -121,7 +122,7 @@ public class Catalogo extends Root {
 
     public static String getNombre(int idCatalogo) {
         try {
-            Entity eCatalogo = new Entity(0, 8);
+            Entity eCatalogo = new Entity(0, 6);
             String[] nombre = {"nombre"};
             String[] idCat = {"id_cat"};
             Integer[] id = {idCatalogo};
@@ -164,6 +165,14 @@ public class Catalogo extends Root {
         this.camposAux = camposAux;
     }
 
+    public boolean isParticipantes() {
+        return participantes;
+    }
+
+    public void setParticipantes(boolean participantes) {
+        this.participantes = participantes;
+    }
+
     @Override
     public String toString() {
         return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
@@ -172,7 +181,7 @@ public class Catalogo extends Root {
     public boolean esCatalogo() {
 
         try {
-            Entity e = new Entity(0, 8);
+            Entity e = new Entity(0, 6);
 
             String[] atrib = {ATRIBUTOS[1]};
             String[] valor = {nombre};
@@ -207,12 +216,12 @@ public class Catalogo extends Root {
     }
 
     public boolean agregar() {
-        
+
         if (!Verificaciones.verifCF(this)) {
             return false;
         }
-        
-        Entity eCatalogo = new Entity(1, 8);//INSERT CATALOGO
+
+        Entity eCatalogo = new Entity(1, 6);//INSERT CATALOGO
         boolean resp;
 
         String[] columnas = {
@@ -227,28 +236,29 @@ public class Catalogo extends Root {
 
         eCatalogo.insertar2(columnas, valores);
         resp = agregarCampos(campos);
-        
+
         return resp;
     }
 
     public static ArrayList<Catalogo> listar() {
+
+        Entity eListar = new Entity(0, 6);//SELECT CATALOGO
+        ResultSet rs = eListar.listar();
+        ArrayList<Catalogo> cats = new ArrayList<>(0);
         try {
-            Entity eListar = new Entity(0, 8);//SELECT CATALOGO
-            ResultSet rs = eListar.listar();
-            ArrayList<Catalogo> tipos = new ArrayList<>(0);
-
             if (rs != null) {
-                    while (rs.next()) {
-                        Catalogo t = new Catalogo();
-                        t.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
-                        t.setNombre(rs.getString(ATRIBUTOS[1]));
-                        t.setNroCampos(rs.getInt(ATRIBUTOS[2]));
+                while (rs.next()) {
+                    Catalogo cat = new Catalogo();
+                    cat.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
+                    cat.setNombre(rs.getString(ATRIBUTOS[1]));
+                    cat.setNroCampos(rs.getInt(ATRIBUTOS[2]));
+                    cat.setParticipantes(rs.getBoolean(ATRIBUTOS[3]));
 
-                        tipos.add(t);
-                    }
+                    cats.add(cat);
+                }
             }
             rs.close();
-            return tipos;
+            return cats;
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -256,34 +266,34 @@ public class Catalogo extends Root {
     }
 
     public boolean eliminar(int idCat) {
-        Entity eEliminar = new Entity(5, 8);
+        Entity eEliminar = new Entity(5, 6);
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
 
     }
-    
+
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
     //el parámetro camposNM su lista de campos No Modificados
     public boolean modificar(String nombreNM, ArrayList camposNM,
             ArrayList camposNuevos) {
-        
+
         if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
             return false;
         }
-        
+
         boolean resp;
 
-        Entity e = new Entity(2, 8);
+        Entity e = new Entity(2, 6);
 
         String[] condColumnas = {ATRIBUTOS[1]};
         Object[] valores = {nombreNM};
         String[] colModificar = {ATRIBUTOS[1]};
         String[] nombreCat = {nombre};
         if (this.esCatalogo() && !nombre.equals(nombreNM)) {
-            mensajeError = "Error: Ya existe un Catálogo con el Nombre '" 
+            mensajeError = "Error: Ya existe un Catálogo con el Nombre '"
                     + "" + nombre + "'.Por favor intente con otro nombre.";
             return false;
         }
- 
+
         resp = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
         Iterator it = camposNM.iterator();

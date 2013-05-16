@@ -58,7 +58,7 @@
         <html:form method="POST" action ="/ModificarTipoActividad?method=update">
             <table>
                 <tr>
-                <td>Nombre de la Actividad</td>
+                <td>Nombre del Tipo de Actividad</td>
                 <td><html:text name="tipoActividadForm" property="nombreTipo">
                         <bean:write name="tipoActividadForm" property="nombreTipo"/>
                     </html:text> </td>

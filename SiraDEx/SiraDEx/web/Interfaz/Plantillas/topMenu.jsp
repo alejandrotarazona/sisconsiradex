@@ -15,18 +15,15 @@
                     <logic:present name="user">
 
                         <bean:write name="user" property="nombres" /> <bean:write name="user" property="apellidos" />
-                        <html:link action="/VerPerfilUsuario" title="Ver perfil">
-                            Perfil
-                        </html:link>
+                        
                         <html:link action="/Logout">
                             (Cerrar Sesión)
                         </html:link> |
+                        <html:link action="/VerPerfilUsuario">Ver Perfil</html:link> |
                         <html:link page="/Login.do?method=save">Inicio</html:link> |
                     </logic:present>
 
-                    <html:link href="http://localhost:8080/SiraDEx/construccion.html">Contactenos</html:link> |
-
-                    <html:link href="http://localhost:8080/SiraDEx/construccion.html">Realizar busquedas públicas</html:link> |
+                    <html:link action="/BusquedaPublica?method=page">Realizar busquedas públicas</html:link> |
 
 
                     <logic:present name="user" >
@@ -43,8 +40,10 @@
                         </logic:equal>
 
                     </logic:present>
+                            
+                    <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Contactenos</a> |
 
-                    <html:link href="http://localhost:8080/SiraDEx/construccion.html">Ayuda</html:link>
+                    <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Ayuda</a>
                 </td>
                 </tr>
             </table>

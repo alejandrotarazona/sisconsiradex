@@ -124,13 +124,18 @@ public class BusquedaActividad extends Root {
      * @return Las páginas con las listas de Actividades por página segun la
      * busqueda establecida.
      */
-    public void buscar() {
+    public void buscar(boolean validada) {
         libro = new ArrayList<>(0);
         totalPaginas = 0;
 
-        Entity eBuscar = new Entity(0, 23);
+        Entity eBuscar = new Entity(0, 21);
         ArrayList<String> auxColumnas = new ArrayList<>(0);
         ArrayList<Object> auxCondiciones = new ArrayList<>(0);
+
+        if (validada) {
+            auxColumnas.add("validacion");
+            auxCondiciones.add("Validada");
+        }
 
         if (this.nombreTipo != null && !this.nombreTipo.equals("")) {
             auxColumnas.add("nombre_tipo_actividad");
@@ -166,7 +171,13 @@ public class BusquedaActividad extends Root {
             condiciones[i] = auxCondiciones.get(i);
         }
 
-        ResultSet rs = eBuscar.seleccionar(columnas, condiciones);
+        ResultSet rs;
+        if (columnas.length > 0) {
+            rs = eBuscar.seleccionar(columnas, condiciones);
+        }
+        else{
+            rs = eBuscar.listar();
+        }
 
         ArrayList<Actividad> cjtoAux = Actividad.listar(rs);     //Resultado de la busqueda cochina y gigante//
 
@@ -198,12 +209,9 @@ public class BusquedaActividad extends Root {
             System.out.println("Si hubo interseccion...");
         } else {
             listaInterceptada = cjtoAux;
-            
+
             System.out.println("No hubo interseccion...");
         }
-        System.out.println("nombreTipo primera actividad" + cjtoAux.get(0).getNombreTipoActividad()
-                + " wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww");
-
 
         libro = paginar(listaInterceptada, mostrarPorPagina);
 

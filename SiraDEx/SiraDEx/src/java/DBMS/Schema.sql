@@ -122,8 +122,8 @@ WITH (
 );
 
 CREATE TABLE VALOR(
-    id_campo     integer NOT NULL,
-    id_actividad integer NOT NULL,
+    id_campo     INT NOT NULL,
+    id_actividad INT NOT NULL,
     valor        VARCHAR,
     archivo      BYTEA,
  
@@ -164,7 +164,8 @@ WITH (
 CREATE TABLE CATALOGO(
     id_cat      SERIAL PRIMARY KEY,
     nombre      VARCHAR(20) NOT NULL,
-    nro_campos  INT NOT NULL
+    nro_campos  INT NOT NULL,
+    participa   BOOLEAN DEFAULT FALSE
 )
 WITH (
   OIDS=FALSE
@@ -224,8 +225,11 @@ WITH (
 );
 
 CREATE TABLE PARTICIPA(
-    id_act          INT NOT NULL,
-    usbid         VARCHAR(20) NOT NULL,
+    id_act       INT NOT NULL,
+    usbid        VARCHAR(20) NOT NULL,
+    id_campo     INT NOT NULL,
+
+    
 
 CONSTRAINT PK_participa
             PRIMARY KEY (id_act, usbid),
@@ -234,9 +238,9 @@ CONSTRAINT FK_participa__actividad
             REFERENCES ACTIVIDAD
             ON UPDATE CASCADE
             ON DELETE CASCADE,
-CONSTRAINT FK_participa__usuario
-            FOREIGN KEY (usbid)
-            REFERENCES USUARIO
+CONSTRAINT FK_participa__campo
+            FOREIGN KEY (id_campo)
+            REFERENCES CAMPO
             ON UPDATE CASCADE
             ON DELETE CASCADE
 )

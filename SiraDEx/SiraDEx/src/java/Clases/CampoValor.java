@@ -146,7 +146,7 @@ public class CampoValor implements Serializable {
     }
 
     public boolean agregar(int idAct) {
-        Entity eAgregar = new Entity(1, 6);//INSERT VALOR
+        Entity eAgregar = new Entity(1, 4);//INSERT VALOR
         boolean resp = true;
 
         Integer idCampo = new Integer(campo.getIdCampo());
@@ -272,7 +272,7 @@ public class CampoValor implements Serializable {
 
     public boolean modificar(CampoValor campoNM, int idAct) {
         boolean resp = true;
-        Entity e = new Entity(2, 6);//UPDATE VALOR
+        Entity e = new Entity(2, 4);//UPDATE VALOR
 
         String tipo = campoNM.getCampo().getTipo();
 
@@ -293,7 +293,7 @@ public class CampoValor implements Serializable {
             resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         } else {
-            e = new Entity(5, 6);//DELETE VALOR
+            e = new Entity(5, 4);//DELETE VALOR
             String[] campos = {
                 ATRIBUTOS[0], //id_campo
                 ATRIBUTOS[1] //id_actividad
@@ -309,7 +309,7 @@ public class CampoValor implements Serializable {
                     + "con id_campo = " + campoNM.getCampo().getIdCampo()
                     + " id_actividad = " + idAct);
 
-            e = new Entity(1, 6); //INSERT VALOR
+            e = new Entity(1, 4); //INSERT VALOR
 
             resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
 

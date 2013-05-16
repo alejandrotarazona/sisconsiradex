@@ -32,7 +32,7 @@
         <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
             <table>
                 <tr>
-                <td>Nombre de la Actividad</td>
+                <td>Nombre del Tipo de Actividad</td>
                 <td><html:text name="tipoActividadForm" property="nombreTipo" 
                            size="78"/></td>
             </tr>

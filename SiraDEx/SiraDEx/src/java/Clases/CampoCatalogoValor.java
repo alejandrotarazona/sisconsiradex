@@ -60,7 +60,7 @@ public class CampoCatalogoValor implements Serializable {
         boolean resp = true;
         Integer elementoId = new Integer(idElemento);
 
-        Entity eValor = new Entity(1, 11);
+        Entity eValor = new Entity(1, 9);
         String[] ATRIBUTOS = {
             "id_campo",
             "id_elemento",
@@ -97,7 +97,7 @@ public class CampoCatalogoValor implements Serializable {
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoCatalogoValor> listarCamposValores(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 10);//SELECT ELEMENTO_CATALOGO
+        Entity eCampo = new Entity(0, 8);//SELECT ELEMENTO_CATALOGO
         String[] ATRIBUTOS = {
             "id_campo", //0
             "id_elemento", //1
@@ -141,7 +141,7 @@ public class CampoCatalogoValor implements Serializable {
     }
     
     public boolean modificar(CampoCatalogoValor campo, int idElem) {
-        Entity e = new Entity(2, 11);//Update valor_catalogo
+        Entity e = new Entity(2, 9);//Update valor_catalogo
 
         String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
         String val = campo.getValor(); 

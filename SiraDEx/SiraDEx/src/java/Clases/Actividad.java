@@ -217,7 +217,7 @@ public class Actividad extends Root {
         System.out.println("apellido y nombre del creador: " + participante);
         participantes.add(participante);
         if (participantes.size() > 1) {
-            Entity eBuscar = new Entity(0, 7); //SELECT PARTICIPA
+            Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
             String[] atrib = {
                 ATRIBUTOS[0]
             };
@@ -422,7 +422,7 @@ public class Actividad extends Root {
 
         }
 
-        Entity ePariticipa = new Entity(1, 7);//INSERT PARTICIPA
+        Entity ePariticipa = new Entity(1, 5);//INSERT PARTICIPA
         String[] columnas2 = {
             "id_act",
             "usuario"
@@ -534,7 +534,7 @@ public class Actividad extends Root {
 
     public static ArrayList<Actividad> listarActividades() {
 
-        Entity eActividad = new Entity(0, 23);
+        Entity eActividad = new Entity(0, 21);
         ResultSet rs = eActividad.listar();
         return listar(rs);
     }
@@ -547,7 +547,7 @@ public class Actividad extends Root {
      */
     public ArrayList<Actividad> listarActividadesDeTipo() {
 
-        Entity eActividad = new Entity(0, 23);
+        Entity eActividad = new Entity(0, 21);
         String[] columna = {ATRIBUTOS[1]};
         Integer[] condicion = {idTipoActividad};
 
@@ -563,13 +563,13 @@ public class Actividad extends Root {
      */
     public ArrayList<Actividad> listarActividadesDeUsuario() {
 
-        Entity eActividad = new Entity(0, 23);
+        Entity eActividad = new Entity(0, 21);
         String[] columna = {ATRIBUTOS[4]};
         String[] condicion = {this.creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
         ArrayList<Actividad> acts = listar(rs);
-        eActividad = new Entity(0, 24);
+        eActividad = new Entity(0, 22);
 
         rs = eActividad.listar();
         ArrayList<Actividad> actsParticipa = listar(rs);
@@ -586,7 +586,7 @@ public class Actividad extends Root {
      * @return Lista con las actividades realacionadas con el validador,
      */
     public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
-        Entity eActividad = new Entity(0, 23);
+        Entity eActividad = new Entity(0, 21);
         String[] columna = {ATRIBUTOS[3],ATRIBUTOS[9]}; //validacion, validador
         String[] condicion = {"En espera", validador};
 
@@ -606,11 +606,11 @@ public class Actividad extends Root {
         switch (tipo) {
             case "P":
             case "p":
-                eBuscar = new Entity(0, 21);
+                eBuscar = new Entity(0, 19);
                 break;
             case "R":
             case "r":
-                eBuscar = new Entity(0, 22);
+                eBuscar = new Entity(0, 20);
                 break;
             default:
                 return null;
@@ -628,7 +628,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesPrograma(String programa) {
 
-        Entity eListar = new Entity(0, 23);
+        Entity eListar = new Entity(0, 21);
         String[] columnas = {
             "programa"
         };

@@ -34,28 +34,26 @@ public class Entity {
         "TIPO_ACTIVIDAD", //1
         "ACTIVIDAD", //2
         "CAMPO", //3
-        "JEFE_DEPENDENCIA", //4
-        "COMUNIDAD_U", //5
-        "VALOR", //6
-        "PARTICIPA", //7
-        "CATALOGO", //8
-        "CAMPO_CATALOGO", //9
-        "ELEMENTO_CATALOGO", //10
-        "VALOR_CATALOGO", //11
-        "TIENE_PERMISO", //12   
-        "LOG", //13
+        "VALOR", //4
+        "PARTICIPA", //5
+        "CATALOGO", //6
+        "CAMPO_CATALOGO", //7
+        "ELEMENTO_CATALOGO", //8
+        "VALOR_CATALOGO", //9
+        "TIENE_PERMISO", //10   
+        "LOG", //11
 
-        "PERMISOS", //14        ---------------Vista-------------------   
-        "ESTUDIANTES", //15         OJO!!!
-        "PROFESORES", //16          NO se puede hacer insert ni update
-        "OBREROS", //17             a traves de estas!!!
-        "PROGRAMAS", //18
-        "EMPLEADOS", //19
-        "DEPENDENCIAS", //20     
-        "TIPO_P", //21
-        "TIPO_R", //22        
-        "TIPO_ACT__ACT", //23
-        "ACT_PARTICIPA" //24    --------------------------------------
+        "PERMISOS", //12        ---------------Vista-------------------   
+        "ESTUDIANTES", //13         OJO!!!
+        "PROFESORES", //14          NO se puede hacer insert ni update
+        "OBREROS", //15             a traves de estas!!!
+        "PROGRAMAS", //16
+        "EMPLEADOS", //17
+        "DEPENDENCIAS", //18     
+        "TIPO_P", //19
+        "TIPO_R", //20        
+        "TIPO_ACT__ACT", //21
+        "ACT_PARTICIPA" //22    --------------------------------------
     };
 
     /*
