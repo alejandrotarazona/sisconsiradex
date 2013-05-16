@@ -37,8 +37,14 @@
                                     </html:link></li><br>
                                 
                                 <li><h1 class="title">Mostrar Productividad:</h1></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Individual</a></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">General</a></li>
+                                <li><a title="No está disponible" 
+                                       style="cursor: pointer; text-decoration:underline">
+                                        Individual
+                                    </a></li>
+                                <li><a title="No está disponible" 
+                                       style="cursor: pointer; text-decoration:underline">
+                                        General
+                                    </a></li>
 
                             </logic:equal>
 
@@ -46,7 +52,10 @@
                                 <li><html:link action="/GestionActividades?method=listUser"> 
                                         Gestionar Actividades
                                     </html:link></li>
-                                <li><a href="http://localhost:8080/SiraDEx/construccion.html">Mostrar Productividad Individual</a></li>
+                                <li><a title="No está disponible" 
+                                       style="cursor: pointer; text-decoration:underline">
+                                        Mostrar Productividad Individual
+                                    </a></li>
                             </logic:equal>  
 
                             <logic:equal name="user" property="rol" value="WM">
@@ -70,7 +79,12 @@
                                 <li><html:link action="/GestionBackups?method=page"> 
                                         Backups 
                                     </html:link></li><br>
-                                <li><h1 class="title"><a href="http://localhost:8080/SiraDEx/construccion.html">Consultar Log</a></h1></li>
+                                <li><h1 class="title">
+                                    <a title="No está disponible" 
+                                       style="cursor: pointer; text-decoration:underline">
+                                        Consultar Log
+                                    </a>
+                                </h1></li>
 
                             </logic:equal> 
 

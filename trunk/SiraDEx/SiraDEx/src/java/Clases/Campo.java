@@ -31,6 +31,7 @@ public class Campo implements Serializable {
         new Par("catálogo", "catalogo"),
         new Par("fecha", "fecha"),
         new Par("número", "numero"),
+        new Par("participante", "participante"),
         new Par("texto largo", "textol"),
         new Par("archivo", "archivo"),
         new Par("checkbox", "checkbox")

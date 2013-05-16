@@ -109,7 +109,7 @@ public class Verificaciones {
     public static boolean verifCF(TipoActividad ta) {
 
 
-        String respVerif = verifLV("'Nombre de la Actividad'", ta.getNombreTipo(),
+        String respVerif = verifLV("'Nombre del Tipo de Actividad'", ta.getNombreTipo(),
                 140, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);

@@ -42,7 +42,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public void setIdElemento() {
-        Entity eElemento = new Entity(0, 10);
+        Entity eElemento = new Entity(0, 8);
         this.idElemento = eElemento.seleccionarMaxId("id_elemento");
     }
 
@@ -88,7 +88,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             return false;
         }
         
-        Entity eElemento = new Entity(1, 10);
+        Entity eElemento = new Entity(1, 8);
         boolean resp = true;
 
         String[] columnas = {
@@ -116,14 +116,14 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public boolean eliminar() {
-        Entity e = new Entity(5, 10);
+        Entity e = new Entity(5, 8);
         return e.borrar("id_elemento", idElemento);
     }
 
     public static ArrayList<ElementoCatalogo> listarElementos() {
         try {
             ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
-            Entity eElementoCatalogo = new Entity(0, 10);
+            Entity eElementoCatalogo = new Entity(0, 8);
 
             ResultSet rs = eElementoCatalogo.listar();
 
@@ -152,7 +152,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
         try {
             ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
-            Entity eBuscar = new Entity(0, 10);
+            Entity eBuscar = new Entity(0, 8);
             String[] columnas = {
                 ATRIBUTOS[1]
             };
@@ -198,7 +198,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
             int valores) {
         try {
-            Entity eCat = new Entity(0, 8);
+            Entity eCat = new Entity(0, 6);
 
 
             String[] cat = {"nombre"};

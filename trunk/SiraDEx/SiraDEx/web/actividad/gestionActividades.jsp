@@ -124,7 +124,7 @@
                             </span>  
 
                             <br>
-                            <a class="mostrar" style=" cursor: pointer;">
+                            <a class="mostrar" style=" cursor: pointer">
                                 Más detalles
                             </a>
                             </td>
