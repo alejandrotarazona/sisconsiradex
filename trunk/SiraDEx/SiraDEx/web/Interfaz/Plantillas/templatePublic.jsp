@@ -43,7 +43,7 @@
                                                 <div class="field-item even" property="content:encoded">
                                                     <tiles:insert attribute="body" />
                                                     <br>
-                                                    <br>
+                                                    </br>
                                                 </div>
                                             </div>
                                         </div>
@@ -52,8 +52,12 @@
                             </div>
                         </div>
                     </div>
+                    <logic:present name="user">
+                        <tiles:insert attribute="leftMenu" />
+                    </logic:present>
                 </div>
                 <tiles:insert attribute="footer" />
             </div>
+        </div>
     </body>
 </html>

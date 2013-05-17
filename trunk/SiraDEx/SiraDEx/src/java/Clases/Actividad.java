@@ -271,17 +271,14 @@ public class Actividad extends Root {
                 case "textol":
                 case "producto":
                     continue;
-                case "fecha":
-                    s += cv.getCampo().getNombre() + ": "
-                            + cv.getValor() + ", ";
-                    break;
                 case "checkbox":
                     if (!valor.equals("false")) {
                         s += cv.getCampo().getNombre() + ", ";
                     }
                     break;
                 default:
-                    s += valor + ", ";
+                    s += cv.getCampo().getNombre() + ": "
+                            + cv.getValor() + ", ";
                     break;
             }
         }
@@ -565,7 +562,7 @@ public class Actividad extends Root {
 
         Entity eActividad = new Entity(0, 21);
         String[] columna = {ATRIBUTOS[4]};
-        String[] condicion = {this.creador};
+        String[] condicion = {creador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);
         ArrayList<Actividad> acts = listar(rs);
@@ -574,7 +571,7 @@ public class Actividad extends Root {
         rs = eActividad.listar();
         ArrayList<Actividad> actsParticipa = listar(rs);
         acts.addAll(actsParticipa);
-        
+
         return acts;
     }
 
@@ -587,7 +584,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
         Entity eActividad = new Entity(0, 21);
-        String[] columna = {ATRIBUTOS[3],ATRIBUTOS[9]}; //validacion, validador
+        String[] columna = {ATRIBUTOS[3], ATRIBUTOS[9]}; //validacion, validador
         String[] condicion = {"En espera", validador};
 
         ResultSet rs = eActividad.seleccionar(columna, condicion);

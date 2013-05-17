@@ -88,18 +88,18 @@ public class Catalogo extends Root {
     }
 
     public void setIdCatalogo() {
+
+        Entity eId = new Entity(0, 6);
+
+        String[] proyectar = {ATRIBUTOS[0]};
+        String[] columnas = {
+            "nombre"
+        };
+        Object[] valores = {
+            this.nombre
+        };
+        ResultSet rs = eId.proyectar(proyectar, columnas, valores);
         try {
-            Entity eId = new Entity(0, 6);
-
-            String[] proyectar = {ATRIBUTOS[0]};
-            String[] columnas = {
-                "nombre"
-            };
-            Object[] valores = {
-                this.nombre
-            };
-            ResultSet rs = eId.proyectar(proyectar, columnas, valores);
-
             if (rs.next()) {
 
                 this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
@@ -121,15 +121,16 @@ public class Catalogo extends Root {
     }
 
     public static String getNombre(int idCatalogo) {
+
+        Entity eCatalogo = new Entity(0, 6);
+        String[] nombre = {"nombre"};
+        String[] idCat = {"id_cat"};
+        Integer[] id = {idCatalogo};
+        ResultSet rs = eCatalogo.proyectar(nombre, idCat, id);
         try {
-            Entity eCatalogo = new Entity(0, 6);
-            String[] nombre = {"nombre"};
-            String[] idCat = {"id_cat"};
-            Integer[] id = {idCatalogo};
-            ResultSet r = eCatalogo.proyectar(nombre, idCat, id);
-            r.next();
-            String resp = r.getString(1);
-            r.close();
+            rs.next();
+            String resp = rs.getString(1);
+            rs.close();
             return resp;
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -180,12 +181,13 @@ public class Catalogo extends Root {
 
     public boolean esCatalogo() {
 
-        try {
-            Entity e = new Entity(0, 6);
 
-            String[] atrib = {ATRIBUTOS[1]};
-            String[] valor = {nombre};
-            ResultSet rs = e.seleccionar(atrib, valor);
+        Entity e = new Entity(0, 6);
+
+        String[] atrib = {ATRIBUTOS[1]};
+        String[] valor = {nombre};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        try {
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[1]).equals(nombre)) {

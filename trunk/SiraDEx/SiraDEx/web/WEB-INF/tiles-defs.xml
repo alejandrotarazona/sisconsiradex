@@ -23,11 +23,12 @@
         <put name="head" value="/Interfaz/Plantillas/head.jsp" />
         <put name="header" value="/Interfaz/Plantillas/header.jsp" />
         <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="leftMenu" value="/Interfaz/Plantillas/leftMenu.jsp" />
         <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
     </definition>
     
     <definition name="paginaInicial" extends="plantillaPublica">
-        <put name="body" value="/EntradaSiraDEx.jsp" />
+        <put name="body" value="/entradaSiraDEx.jsp" />
     </definition>
     
     <!-- =======================USUARIO====================================-->

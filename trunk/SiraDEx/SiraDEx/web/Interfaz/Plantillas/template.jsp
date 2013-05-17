@@ -64,5 +64,6 @@
                 </div>
                 <tiles:insert attribute="footer" />
             </div>
+        </div>
     </body>
 </html>

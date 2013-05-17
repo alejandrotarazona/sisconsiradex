@@ -83,11 +83,11 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public boolean agregar() {
-        
+
         if (!Verificaciones.verif(this)) {
             return false;
         }
-        
+
         Entity eElemento = new Entity(1, 8);
         boolean resp = true;
 
@@ -121,12 +121,12 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public static ArrayList<ElementoCatalogo> listarElementos() {
+
+        ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
+        Entity eElementoCatalogo = new Entity(0, 8);
+
+        ResultSet rs = eElementoCatalogo.listar();
         try {
-            ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
-            Entity eElementoCatalogo = new Entity(0, 8);
-
-            ResultSet rs = eElementoCatalogo.listar();
-
             if (rs != null) {
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
@@ -150,28 +150,30 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
-        try {
-            ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
-            Entity eBuscar = new Entity(0, 8);
-            String[] columnas = {
-                ATRIBUTOS[1]
-            };
-            Integer id = new Integer(idCat);
-            Object[] valores = {
-                id
-            };
-            try (ResultSet rs = eBuscar.seleccionar(columnas, valores)) {
-                if (rs != null) {
-                    while (rs.next()) {
-                        ElementoCatalogo ec = new ElementoCatalogo();
-                        ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
 
-                        ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
-                        resp.add(ec);
-                    }
+        ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
+        Entity eBuscar = new Entity(0, 8);
+        String[] columnas = {
+            ATRIBUTOS[1]
+        };
+        Integer id = new Integer(idCat);
+        Object[] valores = {
+            id
+        };
+
+        ResultSet rs = eBuscar.seleccionar(columnas, valores);
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    ElementoCatalogo ec = new ElementoCatalogo();
+                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
+
+                    ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
+                    resp.add(ec);
                 }
-                rs.close();
             }
+            rs.close();
+
             return resp;
         } catch (SQLException ex) {
             Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -197,19 +199,20 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     //retorna una lista con los valores de los elementos del catalogo dado
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
             int valores) {
+
+        Entity eCat = new Entity(0, 6);
+
+
+        String[] cat = {"nombre"};
+        String[] idCatalogo = {"id_cat"};
+        String[] nombreCat = {catalogo};
+        int idCat;
+        ResultSet rs = eCat.proyectar(idCatalogo, cat, nombreCat);
         try {
-            Entity eCat = new Entity(0, 6);
+            rs.next();
+            idCat = rs.getInt(1);
+            rs.close();
 
-
-            String[] cat = {"nombre"};
-            String[] idCatalogo = {"id_cat"};
-            String[] nombreCat = {catalogo};
-            int idCat;
-            try (ResultSet rs = eCat.proyectar(idCatalogo, cat, nombreCat)) {
-                rs.next();
-                idCat = rs.getInt(1);
-                rs.close();
-            }
             ArrayList<ElementoCatalogo> elementos;
             elementos = Clases.ElementoCatalogo.listarElementosId(idCat);
             Iterator it = elementos.iterator();
@@ -244,5 +247,46 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     public int compareTo(ElementoCatalogo e) {
 
         return contenido.compareTo(e.getContenido());
+    }
+
+    public static ArrayList<ElementoCatalogo> listarUsuariosActivos() {
+
+        ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
+
+        Entity eBuscar = new Entity(0, 0); //SELECT USUARIO
+        String[] atrib = {
+            "usbid",
+            "nombres",
+            "apellidos"
+        };
+
+        String[] tablas = {
+            "ACTIVIDAD",
+            "USUARIO"
+        };
+
+        ResultSet rs = eBuscar.naturalJoin(atrib, tablas);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    ElementoCatalogo ec = new ElementoCatalogo();
+                    String usbid = rs.getString("usbid");
+                    String contenido = usbid + ", " + rs.getString("nombres")
+                            + " " + rs.getString("apellidos");
+
+                    ec.setMensaje(usbid);  
+                    ec.setContenido(contenido);                  
+
+                    listaElementoCatalogo.add(ec);
+                }
+
+                rs.close();
+
+                return listaElementoCatalogo;
+            } catch (SQLException ex) {
+                Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
     }
 }
