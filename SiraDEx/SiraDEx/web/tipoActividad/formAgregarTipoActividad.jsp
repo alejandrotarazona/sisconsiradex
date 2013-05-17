@@ -17,15 +17,15 @@
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registro de Tipo de Actividad</h1>
+        <h1 class="title">Registro de Tipo de Actividad</h1>
 
         <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <b><div class ="status"><bean:write name="tipoActividadForm" 
-                        property="mensaje" /></div></b>
+            <div class ="status"><bean:write name="tipoActividadForm" 
+                        property="mensaje" /></div>
                 </logic:present> 
                 <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <b><div class ="error"><bean:write name="tipoActividadForm" 
-                        property="mensajeError" /></div></b>
+            <div class ="error"><bean:write name="tipoActividadForm" 
+                        property="mensajeError" /></div>
         </logic:present><br>
 
         <font size=2>Todos los campos son obligatorios.</font><br>

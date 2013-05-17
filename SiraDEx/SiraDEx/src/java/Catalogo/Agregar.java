@@ -55,10 +55,6 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
 
-        if (!Verificaciones.verifCV(cat)) {
-            return mapping.findForward(FAILURE);
-        }
-
         if (String.valueOf(cat.getNroCampos()).equals("0")) {
             cat.setMensajeError("Error: El campo 'Número de campos' debe contener al "
                     + "menos 1 como valor.");
@@ -81,6 +77,7 @@ public class Agregar extends DispatchAction {
         }
 
         cat.setCampos(campos);
+        
         cat.setMensajeError(null);
         return mapping.findForward(SUCCESS);
 
@@ -92,6 +89,11 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
 
+                
+        if (!Verificaciones.verifCV(cat)) {
+            return mapping.findForward(FAILURE);
+        }
+        
         if (cat.agregar()) {
 
             ArrayList cats = Clases.Catalogo.listar();

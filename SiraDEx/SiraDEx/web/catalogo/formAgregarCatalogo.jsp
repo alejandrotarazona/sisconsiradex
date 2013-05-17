@@ -12,29 +12,31 @@
     </head>
 
     <body>
+
+        <logic:present name="catalogoForm" property="mensaje">
+            <br><div class ="status">
+                <bean:write name="catalogoForm" property="mensaje"/>
+            </div>
+        </logic:present> 
+        <logic:present name="catalogoForm" property="mensajeError">
+            <br><div class ="error">
+                <bean:write name="catalogoForm" property="mensajeError"/>
+            </div>
+        </logic:present><br>
+
         <h1 class="title" id="page-title">Registro de Catálogo</h1>
-        <p>Los campos con el asterisco  <span style="color:red">*</span> 
-    son obligatorios.</p>
-    
- <br><logic:present name="catalogoForm" property="mensaje">
-            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="catalogoForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
-            </logic:present>
-    
-<html:form method="POST" action ="/RegistrarCatalogo?method=save">
-    <table>
-        <tr>
-        <td>Nombre<span style="color:red">*</span> </td>
-    <td><html:text name="catalogoForm" property="nombre"/></td>
-</tr>
-<tr>
-<td>Número de campos<span style="color:red">*</span> </td>
-<td><html:text name="catalogoForm" property="nroCampos"/></td>
-</tr>
-</table>
-<br>
+        <font size=2>Los campos con el asterisco  <span style="color:red">*</span> 
+            son obligatorios.</font><br><br>
+        
+        <html:form method="POST" action ="/RegistrarCatalogo?method=save">
+            Marque la casilla para definir como un catálogo de usuarios
+                <html:checkbox name="catalogoForm" property="participantes"/>
+    <br><br>Nombre<span style="color:red">*</span>
+    <html:text name="catalogoForm" property="nombre"/>
+    &nbsp;&nbsp;&nbsp;&nbsp;
+    Número de campos<span style="color:red">*</span>
+<html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/>
+<br><br>
 <div align="center"><html:submit>Siguiente</html:submit></div>
 </html:form>
 </body>
