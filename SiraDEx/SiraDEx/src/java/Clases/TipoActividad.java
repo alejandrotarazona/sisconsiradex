@@ -240,11 +240,13 @@ public class TipoActividad extends Root {
         String[] seleccionar = {ATRIBUTOS[0]};
 
         String[] columnas = {
-            ATRIBUTOS[1]
+            ATRIBUTOS[1],
+            ATRIBUTOS[8]
         };
 
         Object[] valores = {
-            nombreTipo
+            nombreTipo,
+            "true"
         };
 
         ResultSet rs = eId.proyectar(seleccionar, columnas, valores);
@@ -266,12 +268,13 @@ public class TipoActividad extends Root {
     }
 
     public boolean esTipoActividad() {
-        try {
-            Entity e = new Entity(0, 1);
 
-            String[] atrib = {ATRIBUTOS[1]};
-            String[] valor = {nombreTipo};
-            ResultSet rs = e.seleccionar(atrib, valor);
+        Entity e = new Entity(0, 1);
+
+        String[] atrib = {ATRIBUTOS[1]};
+        String[] valor = {nombreTipo};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        try {
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[1]).equals(nombreTipo)) {

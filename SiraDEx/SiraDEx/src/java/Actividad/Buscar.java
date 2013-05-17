@@ -42,6 +42,8 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
+
 
         System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
                 + "a la pagina para mostrar.");
@@ -49,6 +51,7 @@ public class Buscar extends DispatchAction {
         request.setAttribute("validadores", dependencias);
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
+        request.setAttribute("usuarios", usuarios);//mientras tanto
         return mapping.findForward(PAGE);
     }
 
@@ -67,6 +70,8 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
+
 
         ba.buscar(false);
         ArrayList<String> pags = new ArrayList<>(0);
@@ -79,8 +84,8 @@ public class Buscar extends DispatchAction {
 
         System.out.println("Actividades para mostrar (nros):");
         /*for (int i = 1; i <= acts.size(); i++) {
-            System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
-        }*/
+         System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
+         }*/
 
         request.setAttribute("paginas", pags);
         request.setAttribute("actividades", acts);
@@ -88,9 +93,10 @@ public class Buscar extends DispatchAction {
         request.setAttribute("validadores", dependencias);
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
+        request.setAttribute("usuarios", usuarios);//mientras tanto
         return mapping.findForward(PAGINA);
     }
-    
+
     /**
      * This is the Struts action method called on
      * http://.../actionPath?method=myAction2, where "method" is the value
@@ -106,6 +112,7 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
 
         ba.buscar(true);
         ArrayList<String> pags = new ArrayList<>(0);
@@ -118,8 +125,8 @@ public class Buscar extends DispatchAction {
 
         System.out.println("Actividades para mostrar (nros):");
         /*for (int i = 1; i <= acts.size(); i++) {
-            System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
-        }*/
+         System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
+         }*/
 
         request.setAttribute("paginas", pags);
         request.setAttribute("actividades", acts);
@@ -127,6 +134,7 @@ public class Buscar extends DispatchAction {
         request.setAttribute("validadores", dependencias);
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
+        request.setAttribute("usuarios", usuarios);//mientras tanto
         return mapping.findForward(PAGINA);
     }
 }

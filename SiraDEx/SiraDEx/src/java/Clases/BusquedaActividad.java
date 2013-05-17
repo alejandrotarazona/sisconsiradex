@@ -21,8 +21,8 @@ public class BusquedaActividad extends Root {
     private String validador;
     private ArrayList<String> participantes = new ArrayList<>(0);
     private String creador; //usbid
-    private String fechaCreacion;
-    private String fechaModif;
+    private String fechaInic;
+    private String fechaFin;
     private int mostrarPorPagina;
     private int totalPaginas;
     private ArrayList<ArrayList<Actividad>> libro;
@@ -78,20 +78,20 @@ public class BusquedaActividad extends Root {
         this.creador = creador;
     }
 
-    public String getFechaCreacion() {
-        return fechaCreacion;
+    public String getFechaInic() {
+        return fechaInic;
     }
 
-    public void setFechaCreacion(String fechaCreacion) {
-        this.fechaCreacion = fechaCreacion;
+    public void setFechaInic(String fechaInic) {
+        this.fechaInic = fechaInic;
     }
 
-    public String getFechaModif() {
-        return fechaModif;
+    public String getFechaFin() {
+        return fechaFin;
     }
 
-    public void setFechaModif(String fechaModif) {
-        this.fechaModif = fechaModif;
+    public void setFechaFin(String fechaFin) {
+        this.fechaFin = fechaFin;
     }
 
     public int getMostrarPorPagina() {
@@ -229,7 +229,7 @@ public class BusquedaActividad extends Root {
         if (busqueda.getLibro().size() > 0) {
             return busqueda.getLibro().get(pagina);
         }
-        return null;
+        return new ArrayList<>(0);
     }
 
     /**

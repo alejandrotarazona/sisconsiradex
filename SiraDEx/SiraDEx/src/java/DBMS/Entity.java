@@ -53,7 +53,8 @@ public class Entity {
         "TIPO_P", //19
         "TIPO_R", //20        
         "TIPO_ACT__ACT", //21
-        "ACT_PARTICIPA" //22    --------------------------------------
+        "ACT_PARTICIPA", //22
+        "ELEMENTO_VALOR" //23    --------------------------------------
     };
 
     /*
@@ -117,7 +118,28 @@ public class Entity {
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
+        
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
 
+        return rs;
+    }
+    
+    //Revisar
+     public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String valor) {
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
+
+        int i;
+
+        for (i = 1; i < columnas.length; i++) {
+            sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
+        }
+
+        sql += "ORDER BY "+ valor;
+        
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -169,6 +191,33 @@ public class Entity {
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
+    
+    //Revisar
+    public ResultSet proyectarEnOrden(String[] seleccionar, String[] columnas,
+            Object[] valores, String valor) {
+
+        sql = ACCION + " " + seleccionar[0];
+
+        int i;
+        for (i = 1; i < seleccionar.length; i++) {
+            sql += " , " + seleccionar[i];
+        }
+
+        sql += " FROM " + TABLA
+                + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
+
+        for (i = 1; i < columnas.length; i++) {
+            sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
+        }
+        
+        sql += "ORDER BY "+ valor;
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();

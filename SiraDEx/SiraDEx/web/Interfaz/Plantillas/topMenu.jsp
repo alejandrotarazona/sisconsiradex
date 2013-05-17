@@ -20,10 +20,11 @@
                             (Cerrar Sesión)
                         </html:link> |
                         <html:link action="/VerPerfilUsuario">Ver Perfil</html:link> |
-                        <html:link page="/Login.do?method=save">Inicio</html:link> |
                     </logic:present>
 
-                    <html:link action="/BusquedaPublica?method=page">Realizar busquedas públicas</html:link> |
+                    <html:link action="/Welcome">Inicio</html:link> |
+                    
+                    <html:link action="/BusquedaPublica?method=page">Busquedas públicas</html:link> |
 
 
                     <logic:present name="user" >
@@ -36,7 +37,7 @@
                             }
                         %>
                         <logic:equal name="user" property="rol" value="<%= r%>">
-                            <html:link action="/BusquedaAvanzada?method=page">Realizar consultas avanzadas</html:link> |
+                            <html:link action="/BusquedaAvanzada?method=page">Busquedas avanzadas</html:link> |
                         </logic:equal>
 
                     </logic:present>

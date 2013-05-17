@@ -20,22 +20,27 @@
         </logic:notPresent>
 
 
-        
-        <p>Para ingresar al SiraDEx utilizando su USBID, por favor
+        <logic:notPresent name="user">
+            Para ingresar al SiraDEx utilizando su USBID, por favor
             <html:link action="/Login?method=page">haga click aquí</html:link>
-        </p><br>
+            <br><br>
+        </logic:notPresent> 
+        <logic:present name="user">
+            Para ingresar al SiraDEx con otro USBID, debe cerrar sesión
+                <br><br>
+        </logic:present>
 
         <html:link action="/Entrar?method=inEA">Entrar como Empleado Administrativo</html:link>
-        <br>
+            <br>
         <html:link action="/Entrar?method=inPO">Entrar como Personal Obrero</html:link>
-        <br>
+            <br>
         <html:link action="/Entrar?method=inES">Entrar como Estudiante</html:link>
-        <br>
+            <br>
         <html:link action="/Entrar?method=inProf">Entrar como Profesor</html:link>
-        <br>
+            <br>
         <html:link action="/Entrar?method=inDEx">Entrar como Personal del DEx</html:link>
-        <br>
+            <br>
         <html:link action="/Entrar?method=inWM">Entrar como Webmaster</html:link>
 
-    </body>
+        </body>
 </html:html>

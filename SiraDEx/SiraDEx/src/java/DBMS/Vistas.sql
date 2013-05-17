@@ -109,6 +109,12 @@ CREATE OR REPLACE VIEW tipo_act__act
 CREATE OR REPLACE VIEW act_participa
     AS
     SELECT *
-    FROM actividad a
-        NATURAL JOIN    participa p
-        NATURAL JOIN    tipo_actividad ta;
+    FROM actividad 
+        NATURAL JOIN    participa 
+        NATURAL JOIN    tipo_actividad;
+
+CREATE OR REPLACE VIEW  elemento_valor
+    AS
+    SELECT *
+    FROM elemento_catalogo 
+        NATURAL JOIN    valor_catalogo;
