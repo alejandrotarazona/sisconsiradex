@@ -854,3 +854,8 @@ ul.action-links:after,
     border: 0;
     background: url('iconos/pdf_26x26.png') no-repeat ;
 }
+
+#botonRestaurar{
+    border: 0;
+    background: url('iconos/restaurar.jpg') no-repeat ;
+}

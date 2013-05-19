@@ -418,7 +418,6 @@ public class TipoActividad extends Root {
             false
         };
         boolean b = eMod.modificar(condColumnas, valores, colModificar, modificaciones);
-
         if (b) {
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
             return true;
@@ -428,13 +427,34 @@ public class TipoActividad extends Root {
         return false;
 
     }
-
+    public static ArrayList<TipoActividad> listarCorto(boolean b){
+        Entity eListar = new Entity(0,1);//SELECT TIPO_ACTIVIDAD
+        String[] atrib = {ATRIBUTOS[8]};
+        Boolean[] valor = {b};
+        
+        ResultSet rs = eListar.seleccionar(atrib, valor);
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    TipoActividad t = new TipoActividad();
+                    t.setId(rs.getInt(ATRIBUTOS[0]));
+                    t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
+                    tipos.add(t);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return tipos;
+    }
     /**
      *
      * @return lista con todos los Tipos de Actividad disponibles en la BD
      */
     public static ArrayList<TipoActividad> listar() {
-        Entity eListar = new Entity(0, 1);
+        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
         ResultSet rs = eListar.listar();
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
@@ -630,6 +650,32 @@ public class TipoActividad extends Root {
         return resp;
     }
 
+    public boolean restaurarTipoActividad() {
+        
+        Entity eMod = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
+        
+        String[] condColumnas = {
+            ATRIBUTOS[0]
+        };
+        Object[] valores = {
+            this.id
+        };
+        String[] colModificar = {
+            ATRIBUTOS[8]
+        };
+        Object[] modificaciones = {
+            true
+        };
+        boolean b = eMod.modificar(condColumnas, valores, colModificar, modificaciones);
+        if (b) {
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido restaurado";
+            return true;
+        }
+
+        mensajeError = "Error: No se pudo restaurar el Tipo de Actividad '" + nombreTipo + "'.";
+        return false;
+    }
+    
     public static void main(String[] args) throws CloneNotSupportedException {
         //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");
         //t.agregarTipoActividad();
@@ -661,4 +707,5 @@ public class TipoActividad extends Root {
 
 
     }
+
 }

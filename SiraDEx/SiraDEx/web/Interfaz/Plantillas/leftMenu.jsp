@@ -34,6 +34,9 @@
                             <logic:equal name="user" property="rol" value="DEx">--%>
                                 <li><html:link action="/GestionTiposActividad">
                                         Tipos de Actividad
+                                    </html:link></li>
+                                <li><html:link action="/GestionPapelera"> 
+                                        Papelera 
                                     </html:link></li><br>
                                 
                                 <li><h1 class="title">Mostrar Productividad:</h1></li>
@@ -78,7 +81,11 @@
 
                                 <li><html:link action="/GestionBackups?method=page"> 
                                         Backups 
+                                    </html:link></li>
+                                <li><html:link action="/GestionPapelera"> 
+                                        Papelera 
                                     </html:link></li><br>
+                                
                                 <li><h1 class="title">
                                     <a title="No está disponible" 
                                        style="cursor: pointer; text-decoration:underline">

@@ -112,6 +112,17 @@
             <forward name="failure" path="modificarTipoActividad"/>    
         </action>
         
+        <action path="/GestionPapelera" type="TipoActividad.ListarDesactivados"
+                scope="request" name="tipoActividadForm">
+            <forward name="success" path="gestionPapelera"/>
+         </action>
+         
+         <action path="/RestaurarTipoActividad" type="TipoActividad.Restaurar"
+                scope="request" name="tipoActividadForm">
+            <forward name="success" path="gestionPapelera"/>
+            <forward name="failure" path="gestionPapelera"/>
+         </action>
+            
         <!-- ========================ACTIVIDAD==============================-->
         
         <action path="/GestionActividades" type="Actividad.Listar"
