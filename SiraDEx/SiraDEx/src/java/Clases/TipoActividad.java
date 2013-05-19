@@ -404,7 +404,7 @@ public class TipoActividad extends Root {
     }
 
     public boolean eliminarTipoActividad() {
-        Entity eMod = new Entity(2, 1);
+        Entity eMod = new Entity(2, 1); //UPDATE TIPO_ACTIVIDAD
         String[] condColumnas = {
             ATRIBUTOS[0]
         };
@@ -427,10 +427,15 @@ public class TipoActividad extends Root {
         return false;
 
     }
-    public static ArrayList<TipoActividad> listarCorto(boolean b){
+    
+    /**
+     *
+     * @return Lista con todos los Tipos de Actividad que no están activos
+     */
+    public static ArrayList<TipoActividad> listarDesactivados(){
         Entity eListar = new Entity(0,1);//SELECT TIPO_ACTIVIDAD
         String[] atrib = {ATRIBUTOS[8]};
-        Boolean[] valor = {b};
+        Boolean[] valor = {false};
         
         ResultSet rs = eListar.seleccionar(atrib, valor);
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
