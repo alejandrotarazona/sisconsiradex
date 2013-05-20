@@ -1,12 +1,42 @@
 
-<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@page import="Clases.Usuario"%>
+
+<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        
+        <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js"></script>
+        <script type="text/javascript" language="javascript" src="Interfaz/Scripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="Interfaz/Scripts/ColReorderWithResize.js"></script>
+        <style type="text/css" title="currentStyle">
+            @import "Interfaz/Stylesheets/demo_page.css";
+            @import "Interfaz/Stylesheets/demo_table_jui.css";
+        </style>
+        <script>
+            $(document).ready(function(){
+
+                $('#datatab').dataTable({
+                    "aoColumns": [       
+                        /* USB-ID */ null,
+                        /* Nombre(s) */ null,
+                        /* Apellidos */ null,
+                        /* Teléfono */ null,
+                        /* Correo */ null,
+                        /* Rol */ null,
+                        /* Acciones */
+                        { "bSortable": false }
+                       
+                    ]});
+            });
+        </script>
+        
+        
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Gestión de Usuarios</title>
     </head>
@@ -24,11 +54,9 @@
             Registrar usuario
         </html:link><br/> 
 
-        <html:link action="/EliminarUsuario?method=page"> 
-            Eliminar usuario
-        </html:link> 
-
+       
         <h1>Usuarios registrados en el sistema</h1>
+        
         <logic:notPresent name="usuarios">
             No hay usuarios que mostrar
         </logic:notPresent>
@@ -36,16 +64,51 @@
             <logic:empty name="usuarios">
                 No hay usuarios que mostrar
             </logic:empty>
-            <table>
-                <logic:iterate name="usuarios" id="usr">
-                    <tr>
-                    <h1><b>USB-ID: </b><html:link action="/ModificarUsuario?method=page" paramName="usr" 
-                               paramProperty="username" paramId="username">
-                            <bean:write name="usr" property="username"/>
-                        </html:link></h1>
-                </tr>
-            </logic:iterate>
-        </table>
+                
+                
+                 <div id="demo">
+                <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
+                    <thead>
+                        <tr>
+                        <th>USB-ID</th>
+                        <th>Nombre(s)</th>
+                        <th>Apellidos</th>
+                        <th>Teléfono</th>
+                        <th>Correo</th>
+                        <th>Rol</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <logic:iterate name="usuarios" id="usr">
+                            <tr>
+                            <td> <bean:write name="usr" property="username"/></td>
+                            <td> <bean:write name="usr" property="nombres"/></td>
+                            <td> <bean:write name="usr" property="apellidos"/></td>
+                            <td> <bean:write name="usr" property="telefono"/></td>
+                            <td> <bean:write name="usr" property="email"/></td>
+                            <td> <bean:write name="usr" property="rol"/></td>
+                            
+                            <td align="center">
+                                <html:form method="POST" action="/ModificarUsuario?method=page">
+                                    <html:hidden name="usr" property="username" />
+                                    <html:submit styleId="botonModificar"
+                                                 value=" "
+                                                 title="Modificar"/>
+                                </html:form>
+
+                                <html:form method="POST" action="/EliminarUsuario">
+                                    <html:hidden name="usr" property="username" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
+                                </html:form></td></tr>
+                            </logic:iterate>   
+                    </tbody> 
+                </table>
+            </div>
+                
     </logic:present>
 </body>
 </html>

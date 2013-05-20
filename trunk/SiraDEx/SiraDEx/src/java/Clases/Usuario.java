@@ -160,7 +160,7 @@ public class Usuario extends Root {
     
     public boolean esUsuario() {
         try {
-            Entity e = new Entity(0, 0);
+            Entity e = new Entity(0, 0);//SELECT USUARIO
 
             String[] col = {ATRIBUTOS[2]};
             String[] cond = {username};
@@ -245,8 +245,8 @@ public class Usuario extends Root {
     }
 
     public boolean eliminarUsuario() {
-        Entity e = new Entity(5, 0);
-
+        Entity e = new Entity(5, 0);//DELETE USUARIO
+       
         if (esUsuario()) {
             System.out.println(this.username + "ES USUARIO");
             boolean resp = e.borrar(ATRIBUTOS[2], this.username);

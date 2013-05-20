@@ -58,11 +58,10 @@
             <forward name="page" path="agregarUsuario"/>
         </action>
         
-        <action path="/EliminarUsuario" type="Usuario.Eliminar" scope="session"
-                parameter="method" name="usuarioForm">
+        <action path="/EliminarUsuario" type="Usuario.Eliminar" 
+                scope="request" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
-            <forward name="failure" path="eliminarUsuario"/>
-            <forward name="page" path="eliminarUsuario"/>
+            <forward name="failure" path="gestionUsuarios"/>
         </action>
         
         <action path="/VerPerfilUsuario" type="Usuario.VerPerfil" scope="session"

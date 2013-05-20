@@ -41,10 +41,6 @@
         <put name="body" value="/usuario/formAgregarUsuario.jsp" />
     </definition>
     
-    <definition name="eliminarUsuario" extends="plantilla">
-        <put name="body" value="/usuario/formEliminarUsuario.jsp" />
-    </definition>
-    
     <definition name="perfilUsuario" extends="plantilla">
         <put name="body" value="/usuario/formPerfilUsuario.jsp" />
     </definition>
