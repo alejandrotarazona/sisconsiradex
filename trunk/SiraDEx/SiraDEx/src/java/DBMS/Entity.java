@@ -118,16 +118,16 @@ public class Entity {
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
-        
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
         return rs;
     }
-    
+
     //Revisar
-     public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String valor) {
+    public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String valor) {
         sql = ACCION + " * "
                 + "FROM " + TABLA
                 + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
@@ -138,8 +138,8 @@ public class Entity {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
 
-        sql += "ORDER BY "+ valor;
-        
+        sql += "ORDER BY " + valor;
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -198,7 +198,7 @@ public class Entity {
 
         return rs;
     }
-    
+
     //Revisar
     public ResultSet proyectarEnOrden(String[] seleccionar, String[] columnas,
             Object[] valores, String valor) {
@@ -216,8 +216,8 @@ public class Entity {
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
-        
-        sql += "ORDER BY "+ valor;
+
+        sql += "ORDER BY " + valor;
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
@@ -379,6 +379,74 @@ public class Entity {
         return db.update(idCampo, idActividad, valor, archivo);
 
 
+    }
+    
+    /**
+     * Retorna el ResultSet con los valores que pertenezcan al rango
+     * establecido.
+     * @param columnaCondicion columna sobre la que se hace la seleccion
+     * @param rango condicion que debe cimplir la columna
+     * @return ResultSet con las tuplas que cumplan.
+     */
+    public ResultSet buscarRango(String columnaCondicion, Object[] rango) {
+        ResultSet rs;
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columnaCondicion + " BETWEEN '"
+                + escapeSQL(rango[0]) + "' "
+                + "AND '" + escapeSQL(rango[1])
+                + "'";
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        System.out.println(sql);
+        rs = db.consult(sql);
+
+        return rs;
+    }
+    
+    /**
+     * Retorna el ResultSet con los valores que sean mayores o iguales
+     * que el valor dado
+     * @param columnaCondicion columna sobre la que se hace la seleccion
+     * @param condicion condicion que debe cimplir la columna
+     * @return ResultSet con las tuplas que cumplan.
+     */
+    public ResultSet buscarMayorQue(String columnaCondicion, Object condicion) {
+        ResultSet rs;
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columnaCondicion + " >= '"
+                + condicion + "' ";
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        System.out.println(sql);
+        rs = db.consult(sql);
+
+        return rs;
+    }
+    
+    /**
+     * Retorna el ResultSet con los valores que sean menores o iguales
+     * que el valor dado
+     * @param columnaCondicion columna sobre la que se hace la seleccion
+     * @param condicion condicion que debe cimplir la columna
+     * @return ResultSet con las tuplas que cumplan.
+     */
+    public ResultSet buscarMenorQue(String columnaCondicion, Object condicion) {
+        ResultSet rs;
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columnaCondicion + " <= '"
+                + condicion + "' ";
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        System.out.println(sql);
+        rs = db.consult(sql);
+
+        return rs;
     }
 
     public static void main(String[] args) {

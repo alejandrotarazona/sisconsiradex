@@ -379,7 +379,7 @@ public class Verificaciones {
     public static boolean verifCV(Catalogo c) {
 
         Iterator it = c.getCampos().iterator();
-        for (int i = 1; it.hasNext(); i++) {
+        for (int i = 0; i < c.getCampos().size() && it.hasNext(); i++) {
             CampoCatalogo campo = (CampoCatalogo) it.next();
             String nombre = campo.getNombre();
             String nroCampo = "número " + i;

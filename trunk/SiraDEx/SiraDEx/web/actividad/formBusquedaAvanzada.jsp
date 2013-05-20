@@ -3,6 +3,7 @@
     Created on : May 2, 2013, 1:27:11 PM
     Author     : SisCon
 --%>
+<%@page import="Clases.BusquedaActividad"%>
 <%@page import="Clases.Actividad"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -171,7 +172,17 @@
                 Más detalles</a>
         </div>
 
-    </logic:iterate> 
+    </logic:iterate>
+    <html:form action="/BusquedaAvanzada?method=aPagina">
+        <%
+            BusquedaActividad ba = (BusquedaActividad) pageContext.findAttribute("busqueda");
+        %>
+        <p>
+            Existen <%out.print(ba.getTotalPaginas());%> paginas en la búsqueda. <br>
+            <html:text name="busquedaAvanzadaForm" property="pagina"
+                       value="1" size="1"/><html:submit>Ir a pagina</html:submit>
+        </p>
+    </html:form>
 </logic:present>
 </body>
 

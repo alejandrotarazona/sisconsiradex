@@ -6,20 +6,27 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <script>
+            function deleteRow(r)
+            {
+                var i=r.parentNode.parentNode.rowIndex;
+                document.getElementById('myTable').deleteRow(i);
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Campos del Catalogo</title>
     </head>
     <body>
         <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
-        
-            <br><logic:present name="catalogoForm" property="mensaje">
+
+        <br><logic:present name="catalogoForm" property="mensaje">
             <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="catalogoForm" property="mensajeError">
+        </logic:present> 
+        <br><logic:present name="catalogoForm" property="mensajeError">
             <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
-            </logic:present>
-            
-        <table>
+        </logic:present>
+
+        <table id="myTable">
             <tr>
             <td><b>Nombre</b></td>
             <td><b>Tipo</b></td>
@@ -37,9 +44,12 @@
                         <html:option value="fecha">fecha</html:option>
                     </html:select>
                 </td>
+                <td>
+                    <input type="button" value="Delete" onclick="deleteRow(this)">
+                </td>
             </tr>
         </logic:iterate>
-    </table>
+    </table>                    
     <br>
     <div align="center"><html:submit>Registrar</html:submit></div>
 
