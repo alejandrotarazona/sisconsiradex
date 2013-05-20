@@ -35,11 +35,12 @@ public class Modificar extends DispatchAction {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setUsuario();
+        
         System.out.println("El usuario elegido es: " + u.toString());
         request.getSession().setAttribute("usuarioNM", u);
 
         ArrayList<ElementoCatalogo> catalogo;
-        catalogo= Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("coord", catalogo);
 
         return mapping.findForward(PAGE);
@@ -56,10 +57,17 @@ public class Modificar extends DispatchAction {
         Usuario u = (Usuario) form;
 
         String rol = u.getRol();
-        if (rol.equals("")){
-           u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
-           return mapping.findForward(PAGE);
+        String rolDex = u.getRolDex();
+        System.out.println("rol " + rol + " rolDex " + rolDex + "----------------");
+        if (!rol.equals(rolDex) && !rolDex.equals("")) {
+            rol = rolDex;
+            u.setRol(rol);
         }
+        if (rol.equals("")) {
+            u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
+            return mapping.findForward(PAGE);
+        }
+
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());
         u.setUsername(usuarioNM.getUsername());
@@ -73,8 +81,9 @@ public class Modificar extends DispatchAction {
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);
             Clases.Root.deleteSessions(request, "");
-            u.setMensaje("El rol del Usuario "+u.getUsername()+" se modificó con éxito");
+            u.setMensaje("El rol de " + u.getUsername() + " se modificó a " + u.getRol());
             u.setMensajeError("");
+            request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);
         }
         u.setMensajeError("Error: No se pudo modificar el usuario");

@@ -51,7 +51,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             request.getSession().setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensajeError("Error: El usuario que desea eliminar no existe");
+            u.setMensajeError("Error: El usuario no pudo ser eliminado");
             return mapping.findForward(FAILURE);
         }
     }

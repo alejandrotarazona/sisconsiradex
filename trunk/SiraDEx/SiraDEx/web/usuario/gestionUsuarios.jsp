@@ -10,7 +10,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        
+
         <script type="text/javascript" src="Interfaz/Scripts/jquery.min.js"></script>
         <script type="text/javascript" language="javascript" src="Interfaz/Scripts/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="Interfaz/Scripts/ColReorderWithResize.js"></script>
@@ -35,38 +35,35 @@
                     ]});
             });
         </script>
-        
-        
+
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Gestión de Usuarios</title>
     </head>
     <body>
         <h1 class="title">Gestión de Usuarios</h1>
-        
-        <br><logic:present name="usuarioForm" property="mensaje">
-            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
-                </logic:present> 
-            <br><logic:present name="usuarioForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
-            </logic:present>
 
         <html:link action="/RegistrarUsuario?method=page"> 
             Registrar usuario
         </html:link><br/> 
 
-       
+
         <h1>Usuarios registrados en el sistema</h1>
-        
+
+        <logic:present name="usuarioForm" property="mensaje">
+            <br><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div>
+        </logic:present> 
+        <logic:present name="usuarioForm" property="mensajeError">
+            <br><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
+        </logic:present>
+
         <logic:notPresent name="usuarios">
             No hay usuarios que mostrar
         </logic:notPresent>
         <logic:present name="usuarios">
-            <logic:empty name="usuarios">
-                No hay usuarios que mostrar
-            </logic:empty>
-                
-                
-                 <div id="demo">
+
+
+            <div id="demo">
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
                     <thead>
                         <tr>
@@ -88,7 +85,7 @@
                             <td> <bean:write name="usr" property="telefono"/></td>
                             <td> <bean:write name="usr" property="email"/></td>
                             <td> <bean:write name="usr" property="rol"/></td>
-                            
+
                             <td align="center">
                                 <html:form method="POST" action="/ModificarUsuario?method=page">
                                     <html:hidden name="usr" property="username" />
@@ -108,7 +105,7 @@
                     </tbody> 
                 </table>
             </div>
-                
-    </logic:present>
-</body>
+
+        </logic:present>
+    </body>
 </html>

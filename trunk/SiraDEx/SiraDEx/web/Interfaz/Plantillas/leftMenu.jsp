@@ -29,16 +29,12 @@
                                 <li><html:link action="/GestionActividades?method=listDex">
                                         Validaciones
                                     </html:link></li>
-                                    <%--    </logic:equal>
 
-                            <logic:equal name="user" property="rol" value="DEx">--%>
                                 <li><html:link action="/GestionTiposActividad">
                                         Tipos de Actividad
                                     </html:link></li>
-                                <li><html:link action="/GestionPapelera"> 
-                                        Papelera 
-                                    </html:link></li><br>
-                                
+                                <br>
+
                                 <li><h1 class="title">Mostrar Productividad:</h1></li>
                                 <li><a title="No está disponible" 
                                        style="cursor: pointer; text-decoration:underline">
@@ -59,7 +55,7 @@
                                        style="cursor: pointer; text-decoration:underline">
                                         Mostrar Productividad Individual
                                     </a></li>
-                            </logic:equal>  
+                                </logic:equal>  
 
                             <logic:equal name="user" property="rol" value="WM">
                                 <li><h1 class="title">Gestionar:</h1></li>
@@ -82,10 +78,8 @@
                                 <li><html:link action="/GestionBackups?method=page"> 
                                         Backups 
                                     </html:link></li>
-                                <li><html:link action="/GestionPapelera"> 
-                                        Papelera 
-                                    </html:link></li><br>
-                                
+                                <br>
+
                                 <li><h1 class="title">
                                     <a title="No está disponible" 
                                        style="cursor: pointer; text-decoration:underline">

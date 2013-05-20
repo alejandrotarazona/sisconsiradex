@@ -6,12 +6,9 @@ package Clases;
 
 import DBMS.Entity;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import org.apache.strutsel.taglib.html.ELSelectTag;
+
 
 /**
  *
@@ -27,7 +24,7 @@ public class BusquedaActividad extends Root {
     private String creador; //usbid
     private String fechaInic;
     private String fechaFin;
-    private int mostrarPorPagina;
+    private int mostrarPorPagina = 10;
     private int totalPaginas;
     private ArrayList<ArrayList<Actividad>> libro;
     private int pagina;
@@ -252,9 +249,10 @@ public class BusquedaActividad extends Root {
             listas.add(listaRango);
         }
 
+        if (!listas.isEmpty()){
         ArrayList<Actividad> listaInterceptada = intersectar(listas);
-
         libro = paginar(listaInterceptada, mostrarPorPagina);
+        }
         totalPaginas = libro.size();
     }
 

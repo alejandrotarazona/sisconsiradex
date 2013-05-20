@@ -16,16 +16,14 @@
         <% Usuario u = (Usuario) pageContext.getSession().getAttribute("usuarioForm");
             String r = (String) u.getRol();
             String dex = r;
-            String modo = "visible";
             if (r.equals("WM") || r.equals("profesor") || r.equals("obrero")
                     || r.equals("estudiante") || r.equals("empleado")) {
-                modo = "hidden";
                 dex = "";
             }
         %>
         <script>
             $(document).ready(function(){
- 
+
                 $(".selector").change(function(){
                     var val = $('.selector')[0].value;
                     if(val=="<%=dex%>"){
@@ -33,20 +31,11 @@
                     }else {
                         $('.ocultable').css("visibility", "hidden");
                     }     
-                }
-            )
-                $('.ocultable').change(function(){
-                    var val = $('.ocultable')[0].value;
-                    $('.selector')[0].value = val;
                 })
-            
             });              
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición del Rol de 
-            <bean:write name="usuarioForm" property="nombres"/> 
-            <bean:write name="usuarioForm" property="apellidos"/>
-        </title>
+        <title>SiraDEx | Edición del Rol del Usuario</title>
     </head>
     <body>
         <h1 class="title">Edición del Rol de 
@@ -54,11 +43,11 @@
             <bean:write name="usuarioForm" property="apellidos"/>
         </h1>
 
-        <logic:present name="usuarioForm" property="mensajeError"><br>
-            <b><div class ="error">
-                    <bean:write name="usuarioForm" property="mensajeError" />
-                </div></b><br>
-            </logic:present>
+        <logic:present name="usuarioForm" property="mensajeError">
+            <br><div class ="error">
+                <bean:write name="usuarioForm" property="mensajeError" />
+            </div><br>
+        </logic:present>
 
         <html:form action="/ModificarUsuario?method=modificar">
             <table>
@@ -67,23 +56,24 @@
                 <td>
                     <html:select styleClass="selector"
                                  name="usuarioForm" property="rol">
-                        <html:option value="<%=dex%>">Personal del DEx</html:option>
-                        <html:option value="obrero">Obrero</html:option>
-                        <html:option value="profesor">Profesor</html:option>
                         <html:option value="empleado">Empleado Administrativo</html:option>
                         <html:option value="estudiante">Estudiante</html:option>
+                        <html:option value="obrero">Obrero</html:option>
+                        <html:option value="profesor">Profesor</html:option>
+                        <html:option value="<%=dex%>">Personal del DEx</html:option>
                         <html:option value="WM">Webmaster</html:option>
                     </html:select>
                 </td>
             </tr>
             <tr>
             <td>
-            <span align="left" class="ocultable" style="visibility: <%=modo%>">
+            <span align="left" class="ocultable" style="visibility: hidden">
                 <b>Dependencia o Unidad</b>
             </span></td>
         <td>
-        <span align="left" class="ocultable" style="visibility: <%=modo%>">
-            <html:select name="usuarioForm" property="rol">
+        <span align="left" class="ocultable" style="visibility: hidden">
+
+            <html:select name="usuarioForm" property="rolDex">
                 <html:option value="">-- Seleccione --</html:option>
                 <html:optionsCollection name="coord" label="contenido" value="contenido"/>
 

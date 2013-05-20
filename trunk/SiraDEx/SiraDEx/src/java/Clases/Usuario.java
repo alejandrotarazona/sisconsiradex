@@ -25,6 +25,7 @@ public class Usuario extends Root {
     private String telefono;
     private String email;
     private String rol;
+    private String rolDex;
     private static final String[] ATRIBUTOS = {
         "nombres", //0
         "apellidos", //1
@@ -117,12 +118,21 @@ public class Usuario extends Root {
         this.rol = rol;
     }
 
+    public String getRolDex() {
+        return rolDex;
+    }
+
+    public void setRolDex(String rolDex) {
+        this.rolDex = rolDex;
+    }   
+    
+
     @Override
     public String toString() {
-        return "Usuario{" + " username= " + username + ", password= " + password + ", rol= "+rol+ " }";
+        return "Usuario{" + " username= " + username + ", password= " + password + ", rol= " + rol + " }";
     }
-    
-    public Usuario clone(){
+
+    public Usuario clone() {
         Usuario res = new Usuario();
         res.setUsername(username);
         res.setUsuario();
@@ -156,8 +166,7 @@ public class Usuario extends Root {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
+
     public boolean esUsuario() {
         try {
             Entity e = new Entity(0, 0);//SELECT USUARIO
@@ -246,22 +255,20 @@ public class Usuario extends Root {
 
     public boolean eliminarUsuario() {
         Entity e = new Entity(5, 0);//DELETE USUARIO
-       
-        if (esUsuario()) {
-            System.out.println(this.username + "ES USUARIO");
-            boolean resp = e.borrar(ATRIBUTOS[2], this.username);
-            return resp;
-        } else {
-            System.out.println(this.username + "NO ES USUARIO");
-            return false;
+
+
+        if (e.borrar(ATRIBUTOS[2], this.username)) {
+            return true;
         }
 
+        return false;
+
     }
-    
+
     //en el parámetro userNM recibe un Usuario no modificado
     public boolean modificar(Usuario userNM) {
-        
-      
+
+
         boolean resp;
 
         Entity e = new Entity(2, 0);//UPDATE USUARIO
@@ -284,7 +291,7 @@ public class Usuario extends Root {
             userNM.getEmail(),
             userNM.getRol()
         };
-        
+
         String[] colModificar = {
             ATRIBUTOS[0],
             ATRIBUTOS[1],
@@ -307,16 +314,16 @@ public class Usuario extends Root {
         resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
 
         if (!resp) {
-                     
+
             mensaje = "Error del sistema al intentar actualizar la base de datos.";
             return false;
         }
-                
+
         mensaje = "El perfil ha sido modificado con éxito.";
-        
+
         return resp;
     }
-    
+
     public static void main(String[] args) {
         /*
          * probando probando 1 2 3 probando alo alo...
