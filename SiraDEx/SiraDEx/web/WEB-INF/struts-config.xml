@@ -14,6 +14,7 @@
         <form-bean  name="elementoCatalogoForm" type="Clases.ElementoCatalogo"/>
         <form-bean  name="backupForm" type="Clases.Backup"/>
         <form-bean  name="busquedaActividadForm" type="Clases.BusquedaActividad"/>
+        <form-bean  name="campoCatalogoForm" type="Clases.CampoCatalogo"/>
     </form-beans>
     
     <global-exceptions>
@@ -170,14 +171,14 @@
                  scope="request" name="actividadForm">        
          </action>
          
-         <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="request"
+         <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaAvanzada"/>
             <forward name="pagina" path="busquedaAvanzada"/>
             <forward name="failure" path="busquedaAvanzada"/>   
          </action>
          
-         <action path="/BusquedaPublica" type="Actividad.Buscar" scope="request"
+         <action path="/BusquedaPublica" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaPublica"/>
             <forward name="pagina" path="busquedaPublica"/>
@@ -214,7 +215,7 @@
             <forward name="success" path="gestionCatalogos"/>
             <forward name="failure" path="modificarCatalogo"/>    
         </action>
-        
+       
         <!-- =====================ELEMENTO CATALOGO=========================-->
 
         <action path="/GestionElementos" type="ElementoCatalogo.Listar"

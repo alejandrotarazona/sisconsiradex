@@ -520,8 +520,9 @@ public class Actividad extends Root {
 
                     acts.add(a);
                 }
+            } else {
+                acts = null;
             }
-            rs.close();
             return acts;
         } catch (SQLException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);

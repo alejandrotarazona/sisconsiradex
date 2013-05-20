@@ -118,3 +118,9 @@ CREATE OR REPLACE VIEW  elemento_valor
     SELECT *
     FROM elemento_catalogo 
         NATURAL JOIN    valor_catalogo;
+
+CREATE OR REPLACE VIEW participando 
+    AS 
+    SELECT * 
+    FROM participa p 
+    NATURAL LEFT OUTER JOIN usuario u

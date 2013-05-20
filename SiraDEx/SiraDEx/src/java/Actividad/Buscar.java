@@ -79,21 +79,27 @@ public class Buscar extends DispatchAction {
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
             pags.add("" + i);
         }
-
-        ArrayList<Actividad> acts = BusquedaActividad.buscarPagina(ba, 0);
+        
+        ArrayList<Actividad> acts = null;
+                
+        if (BusquedaActividad.buscarPagina(ba, 0) != null) {
+            acts = BusquedaActividad.buscarPagina(ba, 0);
+        } else {
+            acts = null;
+        }
 
         System.out.println("Actividades para mostrar (nros):");
-        /*for (int i = 1; i <= acts.size(); i++) {
-         System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
-         }*/
+        for (int i = 0; i < acts.size(); i++) {
+         System.out.println("\t" + i + ".- " + acts.get(i).getNombreTipoActividad());
+         }
 
-        request.setAttribute("paginas", pags);
-        request.setAttribute("actividades", acts);
-        request.setAttribute("busqueda", ba);
-        request.setAttribute("validadores", dependencias);
-        request.setAttribute("programas", programas);
-        request.setAttribute("tiposdeactividad", ta);
-        request.setAttribute("usuarios", usuarios);//mientras tanto
+        request.getSession().setAttribute("paginas", pags);
+        request.getSession().setAttribute("actividades", acts);
+        request.getSession().setAttribute("busqueda", ba);
+        request.getSession().setAttribute("validadores", dependencias);
+        request.getSession().setAttribute("programas", programas);
+        request.getSession().setAttribute("tiposdeactividad", ta);
+        request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
         return mapping.findForward(PAGINA);
     }
 
@@ -128,13 +134,32 @@ public class Buscar extends DispatchAction {
          System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
          }*/
 
-        request.setAttribute("paginas", pags);
-        request.setAttribute("actividades", acts);
-        request.setAttribute("busqueda", ba);
-        request.setAttribute("validadores", dependencias);
-        request.setAttribute("programas", programas);
-        request.setAttribute("tiposdeactividad", ta);
-        request.setAttribute("usuarios", usuarios);//mientras tanto
+        request.getSession().setAttribute("paginas", pags);
+        request.getSession().setAttribute("actividades", acts);
+        request.getSession().setAttribute("busqueda", ba);
+        request.getSession().setAttribute("validadores", dependencias);
+        request.getSession().setAttribute("programas", programas);
+        request.getSession().setAttribute("tiposdeactividad", ta);
+        request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
+        return mapping.findForward(PAGINA);
+    }
+    
+    public ActionForward aPagina (ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        
+        BusquedaActividad ba = (BusquedaActividad) form;
+        BusquedaActividad busquedaRealizada = (BusquedaActividad) request.getSession().getAttribute("busqueda");
+        
+        
+        ArrayList<Actividad> acts = ba.getPagina(ba.getPagina());
+        System.out.println("Actividades para mostrar (nros):");
+        /*for (int i = 1; i <= acts.size(); i++) {
+         System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
+         }*/
+        
+        request.getSession().setAttribute("actividades", acts);
+        
         return mapping.findForward(PAGINA);
     }
 }
