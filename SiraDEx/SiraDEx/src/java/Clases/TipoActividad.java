@@ -460,7 +460,9 @@ public class TipoActividad extends Root {
      */
     public static ArrayList<TipoActividad> listar() {
         Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
-        ResultSet rs = eListar.listar();
+        String[] atrib = {ATRIBUTOS[8]};
+        Boolean[] valor = {true};
+        ResultSet rs = eListar.seleccionar(atrib, valor);
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
         if (rs != null) {
@@ -477,9 +479,7 @@ public class TipoActividad extends Root {
                     t.setNroProductos(rs.getInt(ATRIBUTOS[7]));
                     t.setActivo(rs.getBoolean(ATRIBUTOS[8]));
                     t.setPermisos();
-                    if (t.isActivo()) {
-                        tipos.add(t);
-                    }
+                    tipos.add(t);
                 }
                 rs.close();
             } catch (SQLException ex) {

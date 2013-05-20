@@ -15,7 +15,7 @@ import org.apache.struts.action.ActionMapping;
 
 /**
  *
- * @author diana
+ * @author SisCon
  */
 public class Eliminar extends org.apache.struts.action.Action {
 

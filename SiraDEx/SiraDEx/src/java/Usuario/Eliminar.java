@@ -11,21 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import org.apache.struts.actions.DispatchAction;
 
 /**
  *
  * @author SisCon
  */
-public class Eliminar extends DispatchAction {
+public class Eliminar extends org.apache.struts.action.Action {
 
     /*
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    private static final String PAGE = "page";
-
+    
     /**
      * This is the action called from the Struts framework.
      *
@@ -37,23 +35,18 @@ public class Eliminar extends DispatchAction {
      * @return
      */
     
-    public ActionForward page(ActionMapping mapping, ActionForm form,
+    @Override
+    public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setMensajeError(null);
-        return mapping.findForward(PAGE);
-    }
-    
-    public ActionForward delete(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Usuario u = (Usuario) form;
-        u.setMensajeError(null);
+        ArrayList<Usuario> usuarios;
+        
         if (u.eliminarUsuario()) {
             u.setMensaje("El usuario ha sido eliminado");
-            ArrayList<Usuario> usuarios;
+           
             usuarios = Clases.Usuario.listarUsuario();
             request.getSession().setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
