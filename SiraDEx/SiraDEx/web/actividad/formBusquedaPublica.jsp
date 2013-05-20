@@ -104,7 +104,8 @@
     <br><br>
 
     Mostrar <html:text name="busquedaActividadForm" property="mostrarPorPagina" 
-               size="1" maxlength="3" value="10"/> actividades por pagina.
+               size="1" maxlength="3" value="${busquedaActividadForm.mostrarPorPagina}"/>
+     actividades por pagina.
     <div align="center"><html:submit>Buscar</html:submit></div>
 
 </html:form><br>
@@ -163,7 +164,15 @@
                 Más detalles</a>
         </div>
 
-    </logic:iterate> 
+    </logic:iterate>
+    <br>    
+    <html:form action="/BusquedaPublica?method=aPagina">
+
+        Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
+        <html:text name="busquedaAvanzadaForm" property="pagina"
+                   value="1" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
+
+    </html:form>
 </logic:present>
 </body>
 

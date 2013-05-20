@@ -38,11 +38,16 @@ public class Listar extends org.apache.struts.action.Action {
         
         Clases.Root.deleteSessions(request,"");
         ArrayList usrs = Clases.Usuario.listarUsuario();
-        
-        request.setAttribute("usuarios", usrs);
+             
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setMensajeError(null);
+        int tam = usrs.size();
+        if (tam != 0) {
+            request.setAttribute("usuarios", usrs);
+        } else {
+            request.setAttribute("usuarios", null);
+        }
         return mapping.findForward(SUCCESS);
     }
 }

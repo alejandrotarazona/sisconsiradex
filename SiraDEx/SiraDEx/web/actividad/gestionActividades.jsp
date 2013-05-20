@@ -75,7 +75,7 @@
         </logic:present>
 
         <logic:notPresent name="acts">
-            <div align="center">No hay actividad que mostrar</div>
+            <div align="center">No hay Actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="acts">
 

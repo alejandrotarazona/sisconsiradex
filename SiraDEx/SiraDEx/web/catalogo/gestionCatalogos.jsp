@@ -1,3 +1,4 @@
+<%@page import="Clases.Catalogo"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -52,6 +53,14 @@
                         </html:form>
                     </td>
                     <td>
+                         <% Catalogo c = (Catalogo) pageContext.findAttribute("cat");
+                         String nombreCat = c.getNombre(); 
+                                    if (nombreCat.equals("Programas") || nombreCat.equals("Dependencias")){
+                                nombreCat = "";
+                            }
+                        %>
+                        <logic:equal name="cat" property="nombre" value="<%= nombreCat%>">
+                           
                         <html:form method="POST" action="/EliminarCatalogo">
                             <html:hidden name="cat" property="idCatalogo" />
                             <html:submit styleId="botonEliminar"
@@ -59,6 +68,7 @@
                                          title="Eliminar"
                                          onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
                         </html:form>
+                            </logic:equal>
                     </td>
                 </tr>
             </logic:iterate>

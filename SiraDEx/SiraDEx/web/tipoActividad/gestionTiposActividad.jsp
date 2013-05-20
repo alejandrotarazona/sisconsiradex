@@ -14,22 +14,26 @@
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
-            Agregar Tipo de Actividad<br>
+            Agregar Tipo de Actividad
         </html:link>
-            
-        <br><logic:present name="tipoActividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
-                </logic:present> 
-            <br><logic:present name="tipoActividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
-            </logic:present>
-            
+        <br>
+        <html:link action="/GestionPapelera"> 
+            Papelera
+        </html:link>
+
+
         <h1>Tipos de Actividades registradas en el sistema</h1>
+        <logic:present name="tipoActividadForm" property="mensaje">
+            <br><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div>
+        </logic:present> 
+        <logic:present name="tipoActividadForm" property="mensajeError">
+            <br><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div>
+        </logic:present>
         <logic:notPresent name="tipos">
-            No hay tipos de actividad que mostrar
+            No hay Tipo de Actividad que mostrar
         </logic:notPresent>
         <logic:present name="tipos">
-           
+
             <table>
                 <logic:iterate name="tipos" id="ta">
                     <tr>
