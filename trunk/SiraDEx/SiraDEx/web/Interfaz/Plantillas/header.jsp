@@ -6,8 +6,6 @@
 
 <header id="header" class="section section-header clearfix" role="banner">
     <hgroup class="grid-10">
-        <a title="Inicio" rel="home">
-            <img src="http://www.dex.usb.ve/themes/sky/logo.png" alt="Inicio"/>
-        </a>
+        <img src="Interfaz/Imagenes/logo.png"/>
     </hgroup>
 </header>

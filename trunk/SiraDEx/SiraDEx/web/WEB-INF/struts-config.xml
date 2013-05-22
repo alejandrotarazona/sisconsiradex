@@ -186,7 +186,6 @@
          </action>
          
          
-         
         <!-- ======================CATALOGO=================================-->
         
         <action path="/GestionCatalogos" type="Catalogo.Listar"

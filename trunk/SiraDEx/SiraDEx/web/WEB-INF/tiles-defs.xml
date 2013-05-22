@@ -27,6 +27,20 @@
         <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
     </definition>
     
+    <definition name="plantillaBusquedaAvanzada" path="/Interfaz/Plantillas/templateAdvancedFind.jsp">
+        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
+        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
+        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
+    </definition>
+    
+    <definition name="plantillaBusquedaPublica" path="/Interfaz/Plantillas/templatePublicFind.jsp">
+        <put name="head" value="/Interfaz/Plantillas/head.jsp" />
+        <put name="header" value="/Interfaz/Plantillas/header.jsp" />
+        <put name="topMenu" value="/Interfaz/Plantillas/topMenu.jsp" />
+        <put name="footer" value="/Interfaz/Plantillas/footer.jsp" />
+    </definition>
+    
     <definition name="paginaInicial" extends="plantillaPublica">
         <put name="body" value="/entradaSiraDEx.jsp" />
     </definition>
@@ -97,13 +111,15 @@
         <put name="body" value="/actividad/formModificarActividad.jsp" />
     </definition>
     
-    <definition name="busquedaAvanzada" extends="plantilla">
+    <definition name="busquedaAvanzada" extends="plantillaBusquedaAvanzada">
         <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
+        <put name="leftMenu" value="/Interfaz/Plantillas/findAdvancedMenu.jsp"/>
     </definition>
     
-    <definition name="busquedaPublica" extends="plantillaPublica">
-        <put name="body" value="/actividad/formBusquedaPublica.jsp"/>
-    </definition>  
+    <definition name="busquedaPublica" extends="plantillaBusquedaPublica">
+        <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
+        <put name="leftMenu" value="/Interfaz/Plantillas/findPublicMenu.jsp"/>
+    </definition>
 
     
     <!-- ========================CATALOGO==================================-->

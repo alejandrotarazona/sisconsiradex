@@ -1,8 +1,9 @@
 <%-- 
-    Document   : template
-    Created on : 28/11/2012, 09:23:25 PM
+    Document   : templateAdvancedFind
+    Created on : 20/05/2013, 09:23:25 PM
     Author     : SisCon
 --%>
+
 
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -29,7 +30,7 @@
                 <tiles:insert attribute="header"/>
                 <tiles:insert attribute="topMenu"/>
                 <div id="main" class="section section-main clearfix" role="main">
-                    <div id="content" class="column grid-10 push-3">
+                    <div id="content" class="column grid-11 push-6">
                         <div class="inner">
                             <div id="main-content" class="clearfix">
                                 <div class="region region-content">
