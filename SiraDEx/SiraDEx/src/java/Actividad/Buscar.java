@@ -26,7 +26,6 @@ public class Buscar extends DispatchAction {
     /* forward name="success" path="" */
     private final static String PAGE = "page";
     private final static String PAGINA = "pagina";
-    private final static String FAILURE = "failure";
 
     /**
      * This is the Struts action method called on

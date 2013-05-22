@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-
 /**
  *
  * @author SisCon
@@ -249,11 +248,19 @@ public class BusquedaActividad extends Root {
             listas.add(listaRango);
         }
 
-        if (!listas.isEmpty()){
-        ArrayList<Actividad> listaInterceptada = intersectar(listas);
-        libro = paginar(listaInterceptada, mostrarPorPagina);
+        ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
+        if (listas.isEmpty()) {
+            if (hayParticipantes || hayColumnas || hayRango) {
+              libro = paginar(listaInterceptada, mostrarPorPagina);
+            } else {
+              libro = paginar(cjtoAux, mostrarPorPagina);  
+            }
+        } else {
+            listaInterceptada = intersectar(listas);
+            libro = paginar(listaInterceptada, mostrarPorPagina);
         }
         totalPaginas = libro.size();
+
     }
 
     /**

@@ -45,7 +45,6 @@ header {
 }
 header img {
   padding:30px;
-  height: 105px;
 }
 
 article, aside, details, figcaption, figure, footer, header, hgroup,
@@ -239,7 +238,7 @@ table p {
   padding: 0;
 }
 header {
-  padding: 0.1em 0 0 0;
+  padding: 0.9em 0 0 0;
 }
 .region-navigation {
   margin-top: 2em;
