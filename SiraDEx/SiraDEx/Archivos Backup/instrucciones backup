@@ -1,0 +1,102 @@
+Seguir los siguientes pasos para poder probar toda la gestion de backups del Siradex
+	
+	n paso
+	> comando
+
+	Pasos para poder probar la funcionalidades básicas (Crear y Restaurar)
+
+	1 abrir un terminal, volverse root con el comando su para luego poder crear una carpeta en /home   
+	> su
+	 
+	2 ir al directorio home 
+	> cd /home/
+
+	3 crear una carpeta que se llame bakcups_siradex
+	> mkdir bakcups_siradex
+
+	4 darle permisos de usuario al directorio
+	> chown nombredeusuario bakcups_siradex/
+
+
+	Pasos para activar el backup automatizado
+
+	1 copiar los archivos frecuencia.txt y respaldo_siradex.sh a la carpeta bakcups_siradex
+	  estos están en esta misma carpeta del DropBox
+
+	2 nuevamente desde la terminal como root modificar el crontab, puede ser con nano
+	> nano /etc/crontab
+
+		En el terminal aparecerá el contenido del archivo crontab, se debe agregar 
+		al final de este la línea siguiente:
+		0  3 * * * nombreusuario /home/backups_siradex/respaldo_siradex.sh
+
+		Luego con Ctrl+x sales y repondes con s o y (dependiendo si está en español o ingles)
+		a la pregunta de si deseas guardar, luego Enter
+		El comando describe lo siguiente: m h dom mon dow user  command
+ 
+		#minuto (0-59),                                          #
+		#|  hora (0-23),                                         #
+		#|  |  día del mes (1-31),                               #
+		#|  |  |  mes (1-12),                                    #
+		#|  |  |  |  día de la semana (0-6 donde 0=Domingo)      #
+		#|  |  |  |  |       comandos														 # 
+ 
+	Con esto debería ser suficiente si con esto aún no funciona puede deberse a problemas
+	de permisos que se pueden resolver con chmod o chown dependiendo del caso.
+	En el archivo frecuencia.txt puede cambiarse la segunda línea a 20130101 si quieren
+	probar varias veces el backup automático es decir el que se ejecuta desde el crontab,
+	en la tercera línea pueden poner su correo para probar que se envía el respaldo también.
+
+	Para que funcione el envío del backup automático al correo específicado en la tercera
+	línea de frecuencia.txt seguir los pasos siguientes 
+	(tomado de http://tuxtweaks.com/2012/10/send-gmail-from-the-linux-command-line/)
+
+	3 Instalar msmtp-mta package.
+	> sudo apt-get install msmtp-mta
+	
+	4 Completar lo necesario para usar por defecto una cuenta de Gmail. Para lo que se 
+		se necesita crear en home un archivo llamado .msmtprc
+	> nano ~/.msmtprc
+	
+	Pegue lo siguiente en el archivo que está creando. 
+
+	#Gmail account
+	defaults
+	logfile ~/msmtp.log
+	account gmail
+	auth on
+	host smtp.gmail.com
+	from siradexusb@gmail.com
+	auth on
+	tls on
+	tls_trust_file /usr/share/ca-certificates/mozilla/Equifax_Secure_CA.crt
+	user siradexusb@gmail.com
+	password miprimersistema
+	port 587
+	account default : gmail
+
+	Guarde el archivo y salga del editor de texto. 
+
+	5 Dado que este archivo contiene el password de la cuenta gmail cambie los permisos 
+		para que el archivo sea legible solo por usted.
+	> chmod 600 ~/.msmtprc
+
+	6 Instalar mailx
+	> sudo apt-get install heirloom-mailx
+	
+	7 Crear un archivo llamado mailrc para configurar que mailx use msmtp para enviar correos.
+	> nano ~/.mailrc
+
+	Pegue lo siguiente en el archivo y guardelo.
+
+	set sendmail="/usr/bin/msmtp"
+	set message-sendmail-extra-arguments="-a gmail"
+
+	Para probar que funciona pueden ejecutar en el terminal
+	mail -s "Subject" address@example.com
+	El cursor irá a una línea en blanco. Escriba el mensaje de correo electrónico.
+	Cuando hayas terminado, pulsa <Enter> para ir a una línea en blanco y después 
+	presione <Ctrl> + D para enviar su mensaje.
+
+
+
