@@ -3,8 +3,10 @@
     Created on : Oct 8, 2012, 10:54:16 PM
     Author     : SisCon
 --%>
+<%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
 <footer id="footer" class="section section-footer clearfix" role="footer">
+    <html:base/>
     <div class="region region-footer">
         <div id="block-block-1" class="block block-block first">
             <div class="inner">
@@ -13,7 +15,7 @@
                         <tr>
                         <td valign="bottom" width="95">
                             <a href="http://www.usb.ve">
-                                <img alt="" src="http://localhost:8080/SiraDEx/Interfaz/Imagenes/cebolla_70_45.jpg" />
+                                <img alt="" src="../Imagenes/cebolla_70_45.jpg" />
                             </a>
                         </td>
                         <td valign="bottom">

@@ -41,7 +41,7 @@ public class Modificar extends DispatchAction {
 
         ArrayList<ElementoCatalogo> catalogo;
         catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        request.getSession().setAttribute("coord", catalogo);
+        request.getSession().setAttribute("dependencias", catalogo);
 
         return mapping.findForward(PAGE);
     }

@@ -16,59 +16,57 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición del perfil de <bean:write name="user" property="nombres"/>
-        <bean:write name="user" property="apellidos"/></title>
+            <bean:write name="user" property="apellidos"/></title>
     </head>
     <body>
-        
+
         <h1 class='title' id='page-title'>Edición del perfil de 
             <bean:write name="user" property="nombres"/>
-        <bean:write name="user" property="apellidos"/> </h1>
-        
-        <br><logic:present name="usuarioForm" property="mensaje">
-            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
-                </logic:present> 
-            <br><logic:present name="usuarioForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
-            </logic:present>
-                        
-                        <html:form method="POST" 
+            <bean:write name="user" property="apellidos"/> </h1> <br>
+
+
+        <logic:present name="usuarioForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
+        </logic:present>
+
+        <html:form method="POST" 
                    action ="/ModificarPerfilUsuario?method=update">
-                        
+
             <table>
+                <tbody>
 
-                <tr>
-                <td>Nombres</td>
+                    <tr>
+                    <td width="15%" style="font-weight: bold">Nombres</td>
                     <td><html:text name="user" property="nombres">
-                        <bean:write name="user" property="nombres"/>
-                    </html:text></td>
-                </tr>
-                
-                <tr>
-                <td>Apellidos</td>
+                            <bean:write name="user" property="nombres"/>
+                        </html:text></td>
+                    </tr>
+
+                    <tr>
+                    <td style="font-weight: bold">Apellidos</td>
                     <td><html:text name="user" property="apellidos">
-                        <bean:write name="user" property="apellidos"/>
-                    </html:text></td>
-                </tr>
-                
-                <tr>
-                <td>Teléfono</td>
+                            <bean:write name="user" property="apellidos"/>
+                        </html:text></td>
+                    </tr>
+
+                    <tr>
+                    <td style="font-weight: bold">Teléfono</td>
                     <td><html:text name="user" property="telefono">
-                        <bean:write name="user" property="telefono"/>
-                    </html:text></td>
-                </tr>
-                <tr>
-                <td>Correo Electrónico</td>
+                            <bean:write name="user" property="telefono"/>
+                        </html:text></td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">Correo Electrónico</td>
                     <td><html:text name="user" property="email">
-                        <bean:write name="user" property="email"/>
-                    </html:text></td>
-                </tr>
-                
+                            <bean:write name="user" property="email"/>
+                        </html:text></td>
+                    </tr>
+                </tbody> 
             </table>  
-                    
+            
+            <br><html:submit value="Modificar"
+                         onclick="return confirm('¿Está seguro que desea modificar el perfil?')"/>
 
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el perfil?')"/></div>
-
-    </html:form>     
+        </html:form>     
     </body>
 </html>

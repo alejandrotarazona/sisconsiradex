@@ -4,43 +4,22 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 
-<html:html lang="true">
+<html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Entrada al SiraDEx</title>
-        <html:base/>
     </head>
-    <body style="background-color: white">
-
-        <logic:notPresent name="org.apache.struts.action.MESSAGE" scope="application">
-            <div  style="color: red">
-                ERROR:  Application resources not loaded -- check servlet container
-                logs for error messages.
-            </div>
-        </logic:notPresent>
-
+    <body>
 
         <logic:notPresent name="user">
-            Para ingresar al SiraDEx utilizando su USBID, por favor
-            <html:link action="/Login?method=page">haga click aquí</html:link>
             <br><br>
-        </logic:notPresent> 
-        <logic:present name="user">
-            Para ingresar al SiraDEx con otro USBID, debe cerrar sesión
-                <br><br>
-        </logic:present>
+            <font size=2>Para ingresar al SiraDEx utilizando su USBID, por favor
+                <html:link action="/Login?method=page">haga click aquí</html:link></font>   
+            </logic:notPresent> 
+            <logic:present name="user">
+            <br><br>
+            <font size=2>Para ingresar al SiraDEx con otro USBID, debe cerrar sesión
+            </logic:present></font>
 
-        <html:link action="/Entrar?method=inEA">Entrar como Empleado Administrativo</html:link>
-            <br>
-        <html:link action="/Entrar?method=inPO">Entrar como Personal Obrero</html:link>
-            <br>
-        <html:link action="/Entrar?method=inES">Entrar como Estudiante</html:link>
-            <br>
-        <html:link action="/Entrar?method=inProf">Entrar como Profesor</html:link>
-            <br>
-        <html:link action="/Entrar?method=inDEx">Entrar como Personal del DEx</html:link>
-            <br>
-        <html:link action="/Entrar?method=inWM">Entrar como Webmaster</html:link>
-
-        </body>
-</html:html>
+    </body>
+</html>

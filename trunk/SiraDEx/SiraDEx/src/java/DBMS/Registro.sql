@@ -124,7 +124,7 @@ VALUES ('05-38978', 'alejandro', 'empleado', 1, 'Alejandro', 'Tarazona', '041213
  '05-38978@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES 
-('05-38199', '123456', 'WM', 2, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
+('webmaster', 'webmaster', 'WM', 2, 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('07-41618', 'diana', 'estudiante', 1, 'Diana', 'Vainberg', '04126053552', 
 '07-41618@usb.ve');
