@@ -16,10 +16,10 @@
         <div id="block-system-main-menu" class="block block-system block-menu first">
             <div class="inner">
                 <div class="content">
-                    <script type="text/javascript" src="Interfaz/Scripts/jquery-1.8.3.js"></script>
-                    <script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.9.2.custom.js"></script>
+                    <script type="text/javascript" src="../Scripts/jquery-1.8.3.js"></script>
+                    <script type="text/javascript" src="../Scripts/jquery-ui-1.9.2.custom.js"></script>
                     <link rel="stylesheet" type="text/css" 
-                          href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
+                          href="<html:rewrite page="../Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
 
                     <script type="text/javascript">
                         $(function() {
