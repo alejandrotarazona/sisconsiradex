@@ -3,7 +3,6 @@
     Created on : 28/11/2012, 09:26:18 PM
     Author     : SisCon
 --%>
-<%@taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 
 <head profile="http://www.w3.org/1999/xhtml/vocab">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">

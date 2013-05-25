@@ -121,7 +121,7 @@
     </definition>
     
     <definition name="busquedaPublica" extends="plantillaBusquedaPublica">
-        <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
+        <put name="body" value="/actividad/formBusquedaPublica.jsp"/>
         <put name="leftMenu" value="/Interfaz/Plantillas/findPublicMenu.jsp"/>
     </definition>
 
