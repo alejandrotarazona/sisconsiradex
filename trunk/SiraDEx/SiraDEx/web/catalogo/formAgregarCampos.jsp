@@ -36,16 +36,33 @@
             <logic:iterate name="catalogoForm" property="campos" id="campos" 
                            indexId="index">
                 <tr>
-                <td><html:text name="campos" property="nombre" indexed="true"/></td>
+                <td><logic:notEqual name="campos" property="tipo" value="usbid">
+                        <html:text name="campos" property="nombre" indexed="true"/>
+                    </logic:notEqual>
+                    <logic:equal name="campos" property="tipo" value="usbid">
+                        <html:text name="campos" property="nombre" indexed="true" 
+                                   disabled="true"/> 
+                    </logic:equal>
+                </td>
 
-                <td><html:select name="campos" property="tipo" indexed="true">
-                        <html:option value="texto">texto</html:option>
-                        <html:option value="numero">numero</html:option>
-                        <html:option value="fecha">fecha</html:option>
-                    </html:select>
+                <td><logic:notEqual name="campos" property="tipo" value="usbid">
+                        <html:select name="campos" property="tipo" indexed="true">
+                            <html:option value="texto">texto</html:option>
+                            <html:option value="numero">numero</html:option>
+                            <html:option value="fecha">fecha</html:option>
+                        </html:select>
+                    </logic:notEqual>
+                    <logic:equal name="campos" property="tipo" value="usbid">
+                        <html:select name="campos" property="tipo" indexed="true" 
+                                     disabled="true">
+                            <html:option value="texto">texto</html:option>
+                        </html:select>
+                    </logic:equal>
                 </td>
                 <td>
-                    <input type="button" value="Delete" onclick="deleteRow(this)">
+                    <logic:notEqual name="campos" property="tipo" value="usbid">
+                        <input type="button" value="Delete" onclick="deleteRow(this)">
+                    </logic:notEqual>
                 </td>
             </tr>
         </logic:iterate>

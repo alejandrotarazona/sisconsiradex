@@ -71,13 +71,19 @@ public class Agregar extends DispatchAction {
         int numeroCampos = cat.getNroCampos();
         ArrayList<CampoCatalogo> campos = new ArrayList<>();
 
+        if (cat.isParticipantes()) {
+            CampoCatalogo c = new CampoCatalogo();
+            c.setNombre("USB-ID");
+            c.setTipo("usbid");
+            campos.add(c);
+        }
         for (int i = 0; i < numeroCampos; i++) {
             CampoCatalogo c = new CampoCatalogo();
             campos.add(c);
         }
 
         cat.setCampos(campos);
-        
+
         cat.setMensajeError(null);
         return mapping.findForward(SUCCESS);
 
@@ -89,11 +95,11 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
 
-                
+
         if (!Verificaciones.verifCV(cat)) {
-            return mapping.findForward(FAILURE);
+            return mapping.findForward(FAILURE2);
         }
-        
+
         if (cat.agregar()) {
 
             ArrayList cats = Clases.Catalogo.listar();
