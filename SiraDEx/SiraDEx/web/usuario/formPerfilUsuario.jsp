@@ -17,49 +17,47 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Perfil de <bean:write name="user" property="nombres"/>
-        <bean:write name="user" property="apellidos"/></title>
+            <bean:write name="user" property="apellidos"/></title>
     </head>
     <body>
         <h1 class="title" id="page-title">Perfil de <bean:write name="user" property="nombres"/>
-        <bean:write name="user" property="apellidos"/></h1>
-        
-        <br><logic:present name="usuarioForm" property="mensaje">
-            <b><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div></b>
-                </logic:present> 
-            <br><logic:present name="usuarioForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div></b>
-            </logic:present>
+            <bean:write name="user" property="apellidos"/></h1>
+
+        <logic:present name="usuarioForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div>
+        </logic:present> 
+        <logic:present name="usuarioForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
+        </logic:present>
 
 
-            
-            <html:link action="/ModificarPerfilUsuario?method=page">Editar perfil</html:link>
-            
+
+        <html:link action="/ModificarPerfilUsuario?method=page">Editar perfil</html:link>
+
         <br>
-        <table border="1">
-            <tr>
-            <td><b>USB-ID</b></td>
-            <td><bean:write name="user" property="username"/></td>
-        </tr>
-        <tr>
-        <td><b>Password</b></td>
-        <td><bean:write name="user" property="password"/></td>
-    </tr>
-    <tr>
-    <td><b>Nombre(s)</b></td>
-    <td><bean:write name="user" property="nombres"/></td>
-</tr>
-<tr>
-<td><b>Apellidos</b></td>
-<td><bean:write name="user" property="apellidos"/></td>
-</tr>
-<tr>
-<td><b>Teléfono</b></td>
-<td><bean:write name="user" property="telefono"/></td>
-</tr>
-<tr>
-<td><b>Correo electrónico</b></td>
-<td><bean:write name="user" property="email"/></td>
-</tr>
-</table>
-</body>
+        <table>
+            <tbody>
+                <tr>
+                <td width="15%" ><b>USB-ID</b></td>
+                <td><bean:write name="user" property="username"/></td>
+                </tr>
+                <tr>
+                <td><b>Nombre(s)</b></td>
+                <td><bean:write name="user" property="nombres"/></td>
+                </tr>
+                <tr>
+                <td><b>Apellidos</b></td>
+                <td><bean:write name="user" property="apellidos"/></td>
+                </tr>
+                <tr>
+                <td><b>Teléfono</b></td>
+                <td><bean:write name="user" property="telefono"/></td>
+                </tr>
+                <tr>
+                <td><b>Correo electrónico</b></td>
+                <td><bean:write name="user" property="email"/></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
 </html>

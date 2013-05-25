@@ -76,7 +76,7 @@
     <html:multibox property="permisos">Obrero</html:multibox> Obreros 
 </td>       
 </tr>
-<tr><td>Número de productos</td>
+<tr><td>Número de archivos del producto</td>
 <td><html:text name="tipoActividadForm" property="nroProductos" size="1" 
            maxlength="1"/></td>
 </tr>

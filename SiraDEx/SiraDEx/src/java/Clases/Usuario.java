@@ -124,8 +124,7 @@ public class Usuario extends Root {
 
     public void setRolDex(String rolDex) {
         this.rolDex = rolDex;
-    }   
-    
+    }
 
     @Override
     public String toString() {
@@ -140,26 +139,24 @@ public class Usuario extends Root {
     }
 
     public void setUsuario() {
+
+        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+
+        String[] atrib = {"usbid"};
+        String[] valor = {username};
+
+        ResultSet rs = eUsuario.seleccionar(atrib, valor);
         try {
-            Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
-
-            String[] tabABuscar = {
-                "USUARIO"
-            };
-            String[] atrib = {"usbid"};
-            String[] valor = {username};
-
-            try (ResultSet rs = eUsuario.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor)) {
-                if (rs != null) {
-                    rs.next();
-                    nombres = rs.getString(ATRIBUTOS[0]);
-                    apellidos = rs.getString(ATRIBUTOS[1]);
-                    password = rs.getString(ATRIBUTOS[3]);
-                    tipo = rs.getInt(ATRIBUTOS[4]);
-                    telefono = rs.getString(ATRIBUTOS[5]);
-                    email = rs.getString(ATRIBUTOS[6]);
-                    rol = rs.getString(ATRIBUTOS[7]);
-                }
+            if (rs != null) {
+                rs.next();
+                nombres = rs.getString(ATRIBUTOS[0]);
+                apellidos = rs.getString(ATRIBUTOS[1]);
+                password = rs.getString(ATRIBUTOS[3]);
+                tipo = rs.getInt(ATRIBUTOS[4]);
+                telefono = rs.getString(ATRIBUTOS[5]);
+                email = rs.getString(ATRIBUTOS[6]);
+                rol = rs.getString(ATRIBUTOS[7]);
+                rs.close();
             }
 
         } catch (SQLException ex) {
@@ -167,14 +164,72 @@ public class Usuario extends Root {
         }
     }
 
-    public boolean esUsuario() {
+    public boolean setUsuario(String rol) {
+
+        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+
+        String[] atrib = {"rol"};
+        String[] valor = {rol};
+
         try {
-            Entity e = new Entity(0, 0);//SELECT USUARIO
+            ResultSet rs = eUsuario.seleccionar(atrib, valor);
+            if (rs != null) {
+                rs.next();
+                nombres = rs.getString(ATRIBUTOS[0]);
+                apellidos = rs.getString(ATRIBUTOS[1]);
+                username = rs.getString(ATRIBUTOS[2]);
+                password = rs.getString(ATRIBUTOS[3]);
+                tipo = rs.getInt(ATRIBUTOS[4]);
+                telefono = rs.getString(ATRIBUTOS[5]);
+                email = rs.getString(ATRIBUTOS[6]);
+                this.rol = rs.getString(ATRIBUTOS[7]);
+                rs.close();
+                return true;
+            }
 
-            String[] col = {ATRIBUTOS[2]};
-            String[] cond = {username};
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
 
-            ResultSet rs = e.seleccionar(col, cond);
+    public boolean setUsuarioDEx() {
+
+        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+
+        String[] valor = {"empleado", "estudiante", "profesor", "obrero", "WM"};
+
+        ResultSet rs = eUsuario.seleccionarDistintos("rol", valor);
+        try {
+            if (rs != null) {
+                rs.next();
+                nombres = rs.getString(ATRIBUTOS[0]);
+                apellidos = rs.getString(ATRIBUTOS[1]);
+                username = rs.getString(ATRIBUTOS[2]);
+                password = rs.getString(ATRIBUTOS[3]);
+                tipo = rs.getInt(ATRIBUTOS[4]);
+                telefono = rs.getString(ATRIBUTOS[5]);
+                email = rs.getString(ATRIBUTOS[6]);
+                this.rol = rs.getString(ATRIBUTOS[7]);
+                rs.close();
+                return true;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
+    public boolean esUsuario() {
+
+        Entity e = new Entity(0, 0);//SELECT USUARIO
+
+        String[] col = {ATRIBUTOS[2]};
+        String[] cond = {username};
+
+        ResultSet rs = e.seleccionar(col, cond);
+        try {
             if (rs != null) {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[2]).equals(username)
@@ -244,12 +299,17 @@ public class Usuario extends Root {
 
     public boolean agregarUsuario() {
         Entity e = new Entity(1, 0);
-        String[] usuarios = {username, password, rol};
+        Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
+            mensajeError = "Ya existe un usuario registrado con el US-BID " + username;
             return false;
         } else {
-            boolean resp = e.insertar(usuarios);
-            return resp;
+            if (e.insertar(usuarios)) {
+                mensaje = "El usuario " + username + " ha sido registrado con éxito.";
+                return true;
+            }
+            mensajeError = "Error: No se pudo regristrar el usuario.";
+            return false;
         }
     }
 

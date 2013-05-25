@@ -25,26 +25,21 @@
 
     <tiles:insert attribute="head"/>
     <body class="html front not-logged-in two-sidebars page-node page-node- page-node-1 node-type-page" >
-        <div id="skip-link">
-            <a href="#main-content" class="element-invisible element-focusable">Pasar al contenido principal</a>
-        </div>
         <div id="container" class="container-16">
-            <div>
-                <tiles:insert attribute="header"/>
-                <tiles:insert attribute="topMenu"/>
-                <div id="main" class="section section-main clearfix" role="main">
-                    <div id="content" class="column grid-10 push-3">
-                        <div class="inner">
-                            <div id="main-content" class="clearfix">
-                                <div class="region region-content">
-                                    <div class="content clearfix">
-                                        <div class="field field-name-body field-type-text-with-summary field-label-hidden">
-                                            <div class="field-items">
-                                                <div class="field-item even" property="content:encoded">
-                                                    <tiles:insert attribute="body" />
-                                                    <br>
-                                                    </br>
-                                                </div>
+            <tiles:insert attribute="header"/>
+            <tiles:insert attribute="topMenu"/>
+            <div id="main" class="section section-main clearfix" role="main">
+                <div id="content" class="column grid-10 push-3">
+                    <div class="inner">
+                        <div id="main-content" class="clearfix">
+                            <div class="region region-content">
+                                <div class="content clearfix">
+                                    <div class="field field-name-body field-type-text-with-summary field-label-hidden">
+                                        <div class="field-items">
+                                            <div class="field-item even" property="content:encoded">
+                                                <tiles:insert attribute="body" />
+                                                <br>
+                                                </br>
                                             </div>
                                         </div>
                                     </div>
@@ -52,12 +47,12 @@
                             </div>
                         </div>
                     </div>
-                    <logic:present name="user">
-                        <tiles:insert attribute="leftMenu" />
-                    </logic:present>
                 </div>
-                <tiles:insert attribute="footer" />
+                <logic:present name="user">
+                    <tiles:insert attribute="leftMenu" />
+                </logic:present>
             </div>
+            <tiles:insert attribute="footer" />
         </div>
     </body>
 </html>

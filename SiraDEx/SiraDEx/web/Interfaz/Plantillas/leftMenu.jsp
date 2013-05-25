@@ -33,29 +33,9 @@
                                 <li><html:link action="/GestionTiposActividad">
                                         Tipos de Actividad
                                     </html:link></li>
-                                <br>
-
-                                <li><h1 class="title">Mostrar Productividad:</h1></li>
-                                <li><a title="No está disponible" 
-                                       style="cursor: pointer; text-decoration:underline">
-                                        Individual
-                                    </a></li>
-                                <li><a title="No está disponible" 
-                                       style="cursor: pointer; text-decoration:underline">
-                                        General
-                                    </a></li>
 
                             </logic:equal>
 
-                            <logic:equal name="user" property="rol" value="profesor">
-                                <li><html:link action="/GestionActividades?method=listUser"> 
-                                        Gestionar Actividades
-                                    </html:link></li>
-                                <li><a title="No está disponible" 
-                                       style="cursor: pointer; text-decoration:underline">
-                                        Mostrar Productividad Individual
-                                    </a></li>
-                                </logic:equal>  
 
                             <logic:equal name="user" property="rol" value="WM">
                                 <li><h1 class="title">Gestionar:</h1></li>
@@ -86,27 +66,31 @@
                                         Consultar Log
                                     </a>
                                 </h1></li>
+                                <li><h1 class="title">
+                                    <html:link action="/Entrar?method=page"> 
+                                        Entrar como otro Tipo de Usuario 
+                                    </html:link>
+                                </h1></li>
 
                             </logic:equal> 
 
+
+                            <logic:equal name="user" property="rol" value="profesor">
+                                <%--opciones para el menu de un empleado--%>
+                            </logic:equal> 
+
                             <logic:equal name="user" property="rol" value="obrero">
-                                <li><html:link action="/GestionActividades?method=listUser"> 
-                                        Gestionar Actividades
-                                    </html:link></li>
-                                </logic:equal>
+                                <%--opciones para el menu de un empleado--%>
+                            </logic:equal>
 
                             <logic:equal name="user" property="rol" value="estudiante">
-                                <li><html:link action="/GestionActividades?method=listUser"> 
-                                        Gestionar Actividades
-                                    </html:link></li>
-                                </logic:equal>
+                                <%--opciones para el menu de un empleado--%>
+                            </logic:equal>
 
                             <logic:equal name="user" property="rol" value="empleado">
-                                <li><html:link action="/GestionActividades?method=listUser"> 
-                                        Gestionar Actividades
-                                    </html:link></li>
-                                </logic:equal>
-                            </logic:present>
+                                <%--opciones para el menu de un empleado--%>
+                            </logic:equal>
+                        </logic:present>
                     </ul>    
                 </div>
             </div>

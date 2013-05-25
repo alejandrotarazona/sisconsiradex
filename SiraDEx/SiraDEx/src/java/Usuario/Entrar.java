@@ -21,6 +21,7 @@ public class Entrar extends DispatchAction {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
+    private static final String PAGE = "page";
 
     /**
      * This is the action called from the Struts framework.
@@ -33,34 +34,50 @@ public class Entrar extends DispatchAction {
      * @return
      */
 
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        return mapping.findForward(PAGE);
+    }
+    
     public ActionForward inPO(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("00-00000");
-        u.setUsuario();
+        String rol = "obrero";
+        if (u.setUsuario(rol)){
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
+        }
+        u.setMensajeError("No existe un usuario con el rol "+rol);
+        return mapping.findForward(PAGE);
     }
     
     public ActionForward inEA(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("05-38978");
-        u.setUsuario();
+        String rol = "empleado";
+        if (u.setUsuario(rol)){
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
+        }
+        u.setMensajeError("No existe un usuario con el rol "+rol);
+        return mapping.findForward(PAGE);
     }
     
     public ActionForward inES(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("07-41618");
-        u.setUsuario();
+        String rol = "estudiante";
+        if (u.setUsuario(rol)){
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
+        }
+        u.setMensajeError("No existe un usuario con el rol "+rol);
+        return mapping.findForward(PAGE);
     }
     
     
@@ -68,10 +85,12 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("99-10000");
-        u.setUsuario();
+        if (u.setUsuarioDEx()){
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
+        }
+        u.setMensajeError("No existe un usuario del DEX");
+        return mapping.findForward(PAGE);
     }
 
 
@@ -79,19 +98,13 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-        u.setUsername("kdoming");
-        u.setUsuario();
+        String rol = "profesor";
+        if (u.setUsuario(rol)){
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
+        }
+        u.setMensajeError("No existe un usuario con el rol "+rol);
+        return mapping.findForward(PAGE);
     }
 
-    public ActionForward inWM(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Usuario u = (Usuario) form;
-        u.setUsername("05-38199");
-        u.setUsuario();
-        request.getSession().setAttribute("user", u);
-        return mapping.findForward(SUCCESS);
-    }
 }

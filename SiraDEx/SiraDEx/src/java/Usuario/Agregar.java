@@ -4,6 +4,7 @@
  */
 package Usuario;
 
+import Clases.ElementoCatalogo;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +42,9 @@ public class Agregar extends DispatchAction {
             throws Exception {
         Usuario u = new Usuario();
         u.setMensaje(null);
-        u.setMensajeError(null);
+        ArrayList<ElementoCatalogo> catalogo;
+        catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
+        request.getSession().setAttribute("dependencias", catalogo);
 
         return mapping.findForward(PAGE);
     }
@@ -52,17 +55,27 @@ public class Agregar extends DispatchAction {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setMensajeError(null);
-        
+
+        String rol = u.getRol();
+        String rolDex = u.getRolDex();
+
+        if (rol.equals("dex") && !rolDex.equals("")) {
+            rol = rolDex;
+            u.setRol(rol);
+        }
+        if (rol.equals("")) {
+            u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
+            return mapping.findForward(PAGE);
+        }
+
+
         if (u.agregarUsuario()) {
-            u.setMensaje(null);
-            u.setMensaje("El usuario ha sido registrado con éxito.");
             ArrayList<Usuario> usuarios;
             usuarios = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usuarios);
+            request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensajeError(null);
-            u.setMensajeError("Error: Falló el registro. El usuario ya existe en el sistema.");
             return mapping.findForward(FAILURE);
         }
     }

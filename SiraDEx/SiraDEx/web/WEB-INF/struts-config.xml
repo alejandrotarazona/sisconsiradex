@@ -39,11 +39,12 @@
         
         <action path="/Entrar" type="Usuario.Entrar" scope="session" 
                 parameter="method" name="usuarioForm">
-            <forward name="success" path="/sesion.jsp"/>           
+            <forward name="success" path="/sesion.jsp"/>
+            <forward name="page" path="entrarDirecto"/>               
         </action>
         
         <action path="/Logout" type="Usuario.Logout" 
-                scope="session" name="usuarioForm">
+                scope="request" name="usuarioForm">
             <forward name="success" path="paginaInicial"/>
         </action>
 
@@ -52,7 +53,7 @@
             <forward name="success" path="gestionUsuarios"/>
         </action>
         
-        <action path="/RegistrarUsuario" type="Usuario.Agregar" scope="session"
+        <action path="/RegistrarUsuario" type="Usuario.Agregar" scope="request"
                 parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
             <forward name="failure" path="agregarUsuario"/>

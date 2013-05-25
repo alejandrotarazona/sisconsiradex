@@ -7,7 +7,7 @@
 
 <head profile="http://www.w3.org/1999/xhtml/vocab">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link rel="shortcut icon" href="Interfaz/Imagenes/favicon.ico" type="image/vnd.microsoft.icon" />
+    <link rel="shortcut icon" href="../Imagenes/favicon.ico" type="image/vnd.microsoft.icon" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta content="Decanato de Extensión" about="/node/1" property="dc:title" />
     <link rel="shortlink" href="/node/1" />

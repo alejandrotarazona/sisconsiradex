@@ -159,7 +159,7 @@ public class Verificaciones {
         }
 
         if (nro.equals("0")) {
-            ta.setMensajeError("Error: El campo 'Número de productos' debe contener al "
+            ta.setMensajeError("Error: El campo 'Número de archivos del producto' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }

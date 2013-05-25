@@ -67,6 +67,10 @@
         <put name="body" value="/usuario/formModificarRolUsuario.jsp" />
     </definition>
     
+    <definition name="entrarDirecto" extends="plantilla">
+        <put name="body" value="/usuario/entradaDirecta.jsp" />
+    </definition>
+    
     <!-- =======================TIPO DE ACTIVIDAD==========================-->
     
     <definition name="gestionTiposActividad" extends="plantilla">

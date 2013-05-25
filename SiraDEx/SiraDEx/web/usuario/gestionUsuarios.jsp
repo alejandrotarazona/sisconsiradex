@@ -30,6 +30,7 @@
                         /* Correo */ null,
                         /* Rol */ null,
                         /* Acciones */
+                        { "bSortable": false },
                         { "bSortable": false }
                        
                     ]});
@@ -55,7 +56,7 @@
         </logic:present> 
         <logic:present name="usuarioForm" property="mensajeError">
             <br><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
-        </logic:present>
+        </logic:present><br>
 
         <logic:notPresent name="usuarios">
             No hay usuarios que mostrar
@@ -67,12 +68,13 @@
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
                     <thead>
                         <tr>
-                        <th>USB-ID</th>
+                        <th>USBID</th>
                         <th>Nombre(s)</th>
                         <th>Apellidos</th>
                         <th>Teléfono</th>
-                        <th>Correo</th>
+                        <th>Correo electrónico</th>
                         <th>Rol</th>
+                        <th></th>
                         <th></th>
                         </tr>
                     </thead>
@@ -86,22 +88,25 @@
                             <td> <bean:write name="usr" property="email"/></td>
                             <td> <bean:write name="usr" property="rol"/></td>
 
-                            <td align="center">
+                            <td>
                                 <html:form method="POST" action="/ModificarUsuario?method=page">
                                     <html:hidden name="usr" property="username" />
                                     <html:submit styleId="botonModificar"
                                                  value=" "
                                                  title="Modificar"/>
                                 </html:form>
-
+                            </td>
+                            <td>
                                 <html:form method="POST" action="/EliminarUsuario">
                                     <html:hidden name="usr" property="username" />
                                     <html:submit styleId="botonEliminar"
                                                  value=" "
                                                  title="Eliminar"
                                                  onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
-                                </html:form></td></tr>
-                            </logic:iterate>   
+                                </html:form>
+                            </td>
+                            </tr>
+                        </logic:iterate>   
                     </tbody> 
                 </table>
             </div>

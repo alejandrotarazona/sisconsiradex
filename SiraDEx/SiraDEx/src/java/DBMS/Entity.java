@@ -146,6 +146,25 @@ public class Entity {
 
         return rs;
     }
+    
+    //Selecciona las tuplas donde la columna es distinta a los valores
+    public ResultSet seleccionarDistintos(String columna, Object[] valores) {
+        sql = ACCION + " * "
+                + "FROM " + TABLA
+                + " WHERE " + columna + " != '" + escapeSQL(valores[0]) + "' ";
+
+        int i;
+
+        for (i = 1; i < valores.length; i++) {
+            sql += " AND " + columna + " != '" + escapeSQL(valores[i]) + "' ";
+        }
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
 
     public int seleccionarMaxId(String id) {
         sql = "SELECT MAX (" + id + ") " + "FROM " + TABLA;

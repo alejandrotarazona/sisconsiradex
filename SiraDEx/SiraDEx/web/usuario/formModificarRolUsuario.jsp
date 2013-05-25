@@ -51,37 +51,41 @@
 
         <html:form action="/ModificarUsuario?method=modificar">
             <table>
-                <tr>
-                <td><b>Rol</b></td>
-                <td>
-                    <html:select styleClass="selector"
-                                 name="usuarioForm" property="rol">
-                        <html:option value="empleado">Empleado Administrativo</html:option>
-                        <html:option value="estudiante">Estudiante</html:option>
-                        <html:option value="obrero">Obrero</html:option>
-                        <html:option value="profesor">Profesor</html:option>
-                        <html:option value="<%=dex%>">Personal del DEx</html:option>
-                        <html:option value="WM">Webmaster</html:option>
-                    </html:select>
-                </td>
-            </tr>
-            <tr>
-            <td>
-            <span align="left" class="ocultable" style="visibility: hidden">
-                <b>Dependencia o Unidad</b>
-            </span></td>
-        <td>
-        <span align="left" class="ocultable" style="visibility: hidden">
+                <tbody>
+                    <tr>
+                    <td><b>Rol</b></td>
+                    <td>
+                        <html:select styleClass="selector"
+                                     name="usuarioForm" property="rol">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:option value="empleado">Empleado Administrativo</html:option>
+                            <html:option value="estudiante">Estudiante</html:option>
+                            <html:option value="obrero">Obrero</html:option>
+                            <html:option value="profesor">Profesor</html:option>
+                            <html:option value="<%=dex%>">Personal del DEx</html:option>
+                            <html:option value="WM">Webmaster</html:option>
+                        </html:select>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td>
+                    <span align="left" class="ocultable" style="visibility: hidden">
+                        <b>Dependencia o Unidad</b>
+                    </span></td>
+                    <td>
+                    <span align="left" class="ocultable" style="visibility: hidden">
 
-            <html:select name="usuarioForm" property="rolDex">
-                <html:option value="">-- Seleccione --</html:option>
-                <html:optionsCollection name="coord" label="contenido" value="contenido"/>
+                        <html:select name="usuarioForm" property="rolDex">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="dependencias" label="contenido" 
+                                                    value="contenido"/>
 
-            </html:select>
-        </span></td>
-</tr>
-</table>
-<div align="center"><html:submit>Modificar</html:submit></div>
-</html:form>
-</body>
+                        </html:select>
+                    </span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div align="center"><html:submit>Modificar</html:submit></div>
+        </html:form>
+    </body>
 </html>
