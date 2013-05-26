@@ -188,19 +188,13 @@ public class CampoValor implements Serializable {
 
 
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            rs.close();
 
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CampoValor.class
-                    .getName()).log(Level.SEVERE, null, ex);
-        }
         return listaValor;
     }
 

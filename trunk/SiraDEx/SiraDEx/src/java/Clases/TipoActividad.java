@@ -254,8 +254,8 @@ public class TipoActividad extends Root {
                         return true;
                     }
                 }
+                rs.close();
             }
-            rs.close();
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);

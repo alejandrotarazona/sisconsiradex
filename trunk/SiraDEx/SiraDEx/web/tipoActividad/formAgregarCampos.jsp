@@ -16,25 +16,33 @@
     <head>
         <script>
             $(document).ready(function(){
-                function visibilidad(valor, mostrador, longitud){
+                function visibilidad(valor, mostrador, mostrador2, longitud){
                     //var valor = $(this).val();
                     if(valor == "catalogo"){
                         $('#'+longitud).css("visibility", "hidden");
                         $('.'+mostrador).css("visibility", "visible");
+                        $('.'+mostrador2).css("visibility", "hidden");
+                    } else if(valor == "participante"){
+                        $('#'+longitud).css("visibility", "hidden");
+                        $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "visible");
                     } else if(valor == "texto" || valor=="textol" || valor=="numero"){
                         $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "hidden");
                     } else {
-                        $('.'+mostrador).css("visibility", "hidden");
                         $('#'+longitud).css("visibility", "hidden");
+                        $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "hidden");
                     }
                 }
                 $(".selector").change(function(evento){
                     var tg = evento.target.id;
                     var mos = "mostrador"+tg.slice("selector".length);
+                    var mos2 = "mostrador2"+tg.slice("selector".length);
                     var lon = "longitud"+tg.slice("selector".length);
                     var val = $('.selector')[tg.slice("selector".length)].value;
-                    visibilidad(val,mos, lon);
+                    visibilidad(val,mos,mos2,lon);
                 }
             );
             });              
@@ -74,6 +82,7 @@
                     int i = (Integer) pageContext.getAttribute("index");
                     String s = "selector" + i;
                     String m = "mostrador" + i;
+                    String m2 = "mostrador2" + i;
                     String l = "longitud" + i;
                 %>
 
@@ -130,12 +139,22 @@
                 <td>
 
                     <div class="<%=m%>" style="visibility: hidden">
-                        <html:select name="campo" property="catalogo" indexed="true">      
+                        <html:select name="campo" property="catalogo" indexed="true">                          
                             <html:option value="">-- Seleccione --</html:option>
+
                             <html:optionsCollection name="catalogos" label="nombre" 
                                                     value="nombre"/>
                         </html:select>
                     </div>
+                    <div class="<%=m2%>" style="visibility: hidden">
+                        <html:select name="campo" property="catalogo" indexed="true">                          
+                            <html:option value="">-- Seleccione --</html:option>
+
+                            <html:optionsCollection name="catalogosPart" label="nombre" 
+                                                    value="nombre"/>
+                        </html:select>
+                    </div>    
+
                 </td>
 
             </tr>

@@ -103,9 +103,9 @@ public class Catalogo extends Root {
             if (rs.next()) {
 
                 this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
-
+                rs.close();
             }
-            rs.close();
+
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -194,8 +194,8 @@ public class Catalogo extends Root {
                         return true;
                     }
                 }
+                rs.close();
             }
-            rs.close();
             return false;
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
@@ -280,8 +280,8 @@ public class Catalogo extends Root {
 
                     cats.add(cat);
                 }
+                rs.close();
             }
-            rs.close();
             return cats;
         } catch (SQLException ex) {
             Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -301,7 +301,7 @@ public class Catalogo extends Root {
         ResultSet rs = eListar.seleccionar(atrib, val);
         return listar(rs);
     }
-    
+
     /**
      *
      * @return lista con los Catálogos que cumplen la condicion dada
