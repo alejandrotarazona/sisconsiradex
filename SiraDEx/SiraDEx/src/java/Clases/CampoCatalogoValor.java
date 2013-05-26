@@ -26,13 +26,12 @@ public class CampoCatalogoValor implements Serializable {
         "CAMPO_CATALOGO", //1
         "ELEMENTO_CATALOGO" //2
     };
-    
     private static String[] ATRIBUTOS = {
         "id_campo", //0
         "id_elemento", //1
         "valor", //2
     };
-    
+
     public CampoCatalogoValor() {
     }
 
@@ -125,30 +124,26 @@ public class CampoCatalogoValor implements Serializable {
                     cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     cc.setTipo(rs.getString(ATRIBUTOS[4]));
                     cv.setCampo(cc);
-                    
+
                     listaValor.add(cv);
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-        try {
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(CampoCatalogoValor.class.getName()).log(Level.SEVERE, null, ex);
-        }
         return listaValor;
     }
-    
+
     public boolean modificar(CampoCatalogoValor campo, int idElem) {
         Entity e = new Entity(2, 9);//Update valor_catalogo
 
         String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
-        String val = campo.getValor(); 
+        String val = campo.getValor();
         Object[] valores = {campo.getCampo().getIdCampo(), idElem, val};
         String[] colModificar = {ATRIBUTOS[2]}; //valor
         String[] valorCampo = {valor};
-        
+
         return e.modificar(condColumnas, valores, colModificar, valorCampo);
     }
 }

@@ -225,14 +225,10 @@ public class Campo implements Serializable {
                     c.setCatalogo(rs.getString(ATRIBUTOS[6]));
                     resp.add(c);
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        try {
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(Campo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return resp;

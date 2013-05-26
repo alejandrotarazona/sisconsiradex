@@ -155,14 +155,10 @@ public class CampoCatalogo implements Serializable {
 
                     resp.add(cc);
                 }
+                rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        try {
-            rs.close();
-        } catch (SQLException ex) {
-            Logger.getLogger(CampoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return resp;
@@ -173,7 +169,7 @@ public class CampoCatalogo implements Serializable {
         Entity e = new Entity(2, 7);
 
         String[] condColumnas = ATRIBUTOS;
-        Object[] valores = {idCampo,idCat,campo.getNombre(),campo.getTipo()};
+        Object[] valores = {idCampo, idCat, campo.getNombre(), campo.getTipo()};
         String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
         String[] nombreCampo = {nombre, tipo};
 

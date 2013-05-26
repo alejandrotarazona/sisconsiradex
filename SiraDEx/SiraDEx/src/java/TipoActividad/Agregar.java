@@ -64,10 +64,10 @@ public class Agregar extends DispatchAction {
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
         ta.setMensaje(null);
-        ArrayList catalogos = Clases.Catalogo.listarCondicion("participantes",false);
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa",false);
         request.getSession().setAttribute("catalogos", catalogos);
         
-        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participantes",true);
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa",true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         if (!Verificaciones.verifCF(ta)){

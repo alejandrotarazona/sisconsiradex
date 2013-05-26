@@ -138,9 +138,8 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
                     listaElementoCatalogo.add(ec);
                 }
-
+                rs.close();
             }
-            rs.close();
 
             return listaElementoCatalogo;
         } catch (SQLException ex) {
@@ -171,9 +170,8 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                     ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
                     resp.add(ec);
                 }
+                rs.close();
             }
-            rs.close();
-
             return resp;
         } catch (SQLException ex) {
             Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
@@ -211,7 +209,9 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         try {
             rs.next();
             idCat = rs.getInt(1);
-            rs.close();
+            if (rs != null) {
+                rs.close();
+            }
 
             ArrayList<ElementoCatalogo> elementos;
             elementos = Clases.ElementoCatalogo.listarElementosId(idCat);
@@ -270,8 +270,8 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                     String contenido = usbid + ", " + rs.getString("nombres")
                             + " " + rs.getString("apellidos");
 
-                    ec.setMensaje(usbid);  
-                    ec.setContenido(contenido);                  
+                    ec.setMensaje(usbid);
+                    ec.setContenido(contenido);
 
                     listaElementoCatalogo.add(ec);
                 }

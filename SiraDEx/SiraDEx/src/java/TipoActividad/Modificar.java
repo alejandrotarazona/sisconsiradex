@@ -47,10 +47,10 @@ public class Modificar extends DispatchAction {
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", dependencias);
        
-        ArrayList catalogos = Clases.Catalogo.listarCondicion("participantes",false);
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa",false);
         request.getSession().setAttribute("catalogos", catalogos);
         
-        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participantes",true);
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa",true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         TipoActividad ta = (TipoActividad) form;
