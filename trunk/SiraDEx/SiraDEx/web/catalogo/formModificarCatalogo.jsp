@@ -21,100 +21,117 @@
     <body>
         <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
                 name="catalogoForm" property="nombre"/> </h1>
+        <font size=2>Los campos con el asterisco  <span style="color:red">*</span> 
+            son obligatorios.</font><br><br>
 
-        <br><logic:present name="catalogoForm" property="mensaje">
-            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
+        <logic:present name="catalogoForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div>
         </logic:present> 
-        <br><logic:present name="catalogoForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
+        <logic:present name="catalogoForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div>
         </logic:present>
 
         <html:form method="POST" action ="/ModificarCatalogo?method=add">
 
-        <tr>
-        <td>Agregar nuevos campos <html:text name="catalogoForm" 
-                   property="nroCampos" size="1" maxlength="2"/>
-            <html:submit styleId="botonAgregar"
-                         value=" "
-                         title="Agregar"/> </td></tr>
+            Agregar nuevos campos <html:text name="catalogoForm" 
+                       property="nroCampos" size="1" maxlength="2"/>
+            <html:submit styleId="botonAgregar" value=" " title="Agregar"/>
 
-</html:form>
-<html:form method="POST" action ="/ModificarCatalogo?method=update">
-    <table>
-        <tr>
-        <td><b>Nombre del cátalogo</b></td>
+        </html:form>
+        <html:form method="POST" action ="/ModificarCatalogo?method=update">
+            <table>
+                <tbody>
+                    <tr>
+                    <td width="20%">Catálogo de Usuarios</td>
 
-        <td>
-            <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
-                String nombreCat = (String) c.getNombre();
-                boolean b = false;
-                if (nombreCat.equals("Dependencias") 
-                        || nombreCat.equals("Programas")) {
-                    b = true;
-                }%>
-            <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'>
-                <bean:write name="catalogoForm" property="nombre"/>
-            </html:text>
-        </td>
-            </tr>
-        <tr><td><b>Campos</b></td></tr>
-    <tr><td></td><td>Nombre</td><td>Tipo</td></tr>
-    <logic:iterate name="catalogoForm" property="campos" id="campos" 
-                   indexId="index">
+                    <td>
+                        <html:checkbox name="catalogoForm" property="participantes"/>
+                        <html:hidden name="catalogoForm" property="participantes" value="false"/>  
+                    </td>
+                    </tr>
 
-    <tr><td></td>
-    <td><html:text name="campos" property="nombre" indexed="true">
-            <bean:write name="campos" property="nombre"/>
-        </html:text> </td>
-    <td><html:select name="campos" property="tipo" indexed="true">
-            <html:option value ="${campos.tipo}" >
-                <bean:write name="campos" property="tipo"/></html:option>
-            <logic:equal name="campos" property="tipo" value="texto">
-                <html:option value="numero">numero</html:option>
-                <html:option value="fecha">fecha</html:option>
-            </logic:equal>
-            <logic:equal name="campos" property="tipo" value="numero">
-                <html:option value="texto">texto</html:option>
-                <html:option value="fecha">fecha</html:option>
-            </logic:equal>
-            <logic:equal name="campos" property="tipo" value="fecha">
-                <html:option value="texto">texto</html:option>
-                <html:option value="numero">numero</html:option>
-            </logic:equal>
+                    <tr>
+                    <td>Nombre del cátalogo<span style="color:red">*</span></td>
 
-        </html:select>
-    </td>
-</tr>
-</logic:iterate>
+                    <td>
+                        <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
+                            String nombreCat = (String) c.getNombre();
+                            boolean b = false;
+                            if (nombreCat.equals("Dependencias")
+                                    || nombreCat.equals("Programas")) {
+                                b = true;
+                            }%>
+                        <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'>
+                            <bean:write name="catalogoForm" property="nombre"/>
+                        </html:text>
+                    </td>
+                    </tr>
+                    <tr><td><b>Campos</b></td></tr>
+                    <tr><td></td><td>Nombre</td><td>Tipo</td></tr>
+                    <logic:iterate name="catalogoForm" property="campos" id="campos" 
+                                   indexId="index">
 
-<logic:present  name="catalogoForm" property="camposAux">
-    <logic:greaterThan name="catalogoForm" property="nroCampos" value="0">
+                        <tr><td></td>
+                        <td>
+                            <logic:notEqual name="campos" property="tipo" value="usbid">
+                                <html:text name="campos" property="nombre" indexed="true">
+                                    <bean:write name="campos" property="nombre"/>
+                                </html:text> 
+                            </logic:notEqual>
+                            <logic:equal name="campos" property="tipo" value="usbid">
+                                <html:text name="campos" property="nombre" indexed="true" disabled="true">
+                                    <bean:write name="campos" property="nombre"/> 
+                                </html:text>                  
+                            </logic:equal>
 
-        <tr>
-        <tr><td><b>Nuevos campos</b></td></tr>
-</tr>            
-<logic:iterate name="catalogoForm" property="camposAux" id="camposAux" 
-               indexId="index">
-    <tr><td></td>
-    <td><html:text name="camposAux" property="nombre" indexed="true"/></td>
+                        </td>
+                        <td>
+                            <logic:notEqual name="campos" property="tipo" value="usbid">
+                                <html:select name="campos" property="tipo" indexed="true">
+                                    <html:option value="texto">texto</html:option>
+                                    <html:option value="numero">numero</html:option>
+                                    <html:option value="fecha">fecha</html:option>
+                                </html:select>
+                            </logic:notEqual>
+                            <logic:equal name="campos" property="tipo" value="usbid">
+                                <html:select name="campos" property="tipo" indexed="true" 
+                                             disabled="true">
+                                    <html:option value="texto">texto</html:option>
+                                </html:select>
+                            </logic:equal>
+                        </td>
+                        </tr>
+                    </logic:iterate>
 
-    <td><html:select name="camposAux" property="tipo" indexed="true">
-            <html:option value="texto">texto</html:option>
-            <html:option value="numero">numero</html:option>
-            <html:option value="fecha">fecha</html:option>
-        </html:select>
-    </td>
-</tr>
-</logic:iterate>
+                    <logic:present  name="catalogoForm" property="camposAux">
+                        <logic:greaterThan name="catalogoForm" property="nroCampos" value="0">
 
-</logic:greaterThan>
-</logic:present> 
-</table>
-<br>
+                            <tr>
+                            <tr><td><b>Nuevos campos</b></td></tr>
+                            </tr>            
+                            <logic:iterate name="catalogoForm" property="camposAux" id="camposAux" 
+                                           indexId="index">
+                                <tr><td></td>
+                                <td><html:text name="camposAux" property="nombre" indexed="true"/></td>
 
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+                                <td><html:select name="camposAux" property="tipo" indexed="true">
+                                        <html:option value="texto">texto</html:option>
+                                        <html:option value="numero">numero</html:option>
+                                        <html:option value="fecha">fecha</html:option>
+                                    </html:select>
+                                </td>
+                                </tr>
+                            </logic:iterate>
 
-</html:form>
-</body>
+                        </logic:greaterThan>
+                    </logic:present> 
+                </tbody>
+            </table>
+            <br>
+
+            <div align="center"><html:submit value="Modificar"
+                         onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+
+        </html:form>
+    </body>
 </html>

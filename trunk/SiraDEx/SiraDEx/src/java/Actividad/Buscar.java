@@ -19,7 +19,7 @@ import org.apache.struts.actions.DispatchAction;
 
 /**
  *
- * @author alejandro
+ * @author Siscon
  */
 public class Buscar extends DispatchAction {
 
@@ -36,12 +36,12 @@ public class Buscar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Root.deleteSessions(request, "busquedaActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
 
 
         System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
@@ -64,12 +64,12 @@ public class Buscar extends DispatchAction {
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
 
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
 
 
         ba.buscar(false);
@@ -112,12 +112,12 @@ public class Buscar extends DispatchAction {
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
 
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuariosActivos();
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
 
         ba.buscar(true);
         ArrayList<String> pags = new ArrayList<>(0);

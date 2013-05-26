@@ -17,7 +17,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
-
 /**
  *
  * @author SisCon
@@ -45,23 +44,23 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        Clases.Root.deleteSessions(request,"");
+
+        Clases.Root.deleteSessions(request, "");
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         ArrayList<TipoActividad> ta;
         String rol = u.getRol();
         switch (rol) {
             case "WM":
-                ta = Clases.TipoActividad.listar();
+                ta = Clases.TipoActividad.listarCondicion("activo",true);
                 break;
             case "empleado":
             case "obrero":
-            case "profesor":       
+            case "profesor":
             case "estudiante":
                 ta = Clases.TipoActividad.listarTiposActividad(u);
                 break;
             default:
-                ta = Clases.TipoActividad.listarTiposActividad(rol);
+                ta = Clases.TipoActividad.listarCondicion("validador", rol);
                 break;
         }
 
@@ -70,8 +69,8 @@ public class Agregar extends DispatchAction {
             request.setAttribute("tipos", ta);
         } else {
             request.setAttribute("tipos", null);
-        }    
-        
+        }
+
         return mapping.findForward(PAGE);
     }
 
@@ -99,7 +98,7 @@ public class Agregar extends DispatchAction {
             if (!nombreCat.equals("")) {
                 ArrayList<ElementoCatalogo> catalogo;
                 catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
-                
+
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
@@ -113,7 +112,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
- 
+
         if (a.agregarActividad()) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
@@ -125,12 +124,12 @@ public class Agregar extends DispatchAction {
             } else {
                 act = a.listarActividadesDeUsuario();
             }
-            
+
             request.setAttribute("acts", act);
             String nombre = a.getNombreTipoActividad();
-            Clases.Root.deleteSessions(request,"actividadForm");
-            
-            a.setMensaje("La Actividad '"+nombre+"' ha sido registrada con éxito.");
+            Clases.Root.deleteSessions(request, "actividadForm");
+
+            a.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
             a.setMensajeError(null);
             return mapping.findForward(SUCCESSFULL);
         }
@@ -139,6 +138,4 @@ public class Agregar extends DispatchAction {
 
 
     }
-    
-    
 }

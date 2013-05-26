@@ -102,7 +102,7 @@ public class Agregar extends DispatchAction {
 
         if (cat.agregar()) {
 
-            ArrayList cats = Clases.Catalogo.listar();
+            ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
 
             Clases.Root.deleteSessions(request, "catalogoForm");
@@ -112,7 +112,7 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESSFULL);
         }
 
-        ArrayList cats = Clases.Catalogo.listar();
+        ArrayList cats = Clases.Catalogo.listarCatalogos();
         request.setAttribute("catalogos", cats);
         return mapping.findForward(FAILURE2);
 

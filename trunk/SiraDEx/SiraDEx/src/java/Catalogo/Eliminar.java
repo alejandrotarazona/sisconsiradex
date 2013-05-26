@@ -42,13 +42,13 @@ public class Eliminar extends org.apache.struts.action.Action {
 
         if (cat.eliminar(cat.getIdCatalogo())) {
             cat.setMensaje("El catálogo ha sido eliminado");
-            ArrayList cats = Clases.Catalogo.listar();
+            ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
             cat.setMensajeError(null);
             return mapping.findForward(SUCCESS);
         } else {
             cat.setMensajeError("Error: El catálogo no pudo ser eliminado");
-            ArrayList cats = Clases.Catalogo.listar();
+            ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
             return mapping.findForward(FAILURE);
         }

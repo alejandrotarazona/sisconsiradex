@@ -64,8 +64,11 @@ public class Agregar extends DispatchAction {
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
         ta.setMensaje(null);
-        ArrayList catalogos = Clases.Catalogo.listar();
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participantes",false);
         request.getSession().setAttribute("catalogos", catalogos);
+        
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participantes",true);
+        request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         if (!Verificaciones.verifCF(ta)){
             return mapping.findForward(FAILURE);
@@ -98,7 +101,7 @@ public class Agregar extends DispatchAction {
         ta.setPermisos((String[])request.getSession().getAttribute("permisos"));
         if (ta.agregarTipoActividad()) {
             
-            ArrayList tipos = Clases.TipoActividad.listar();
+            ArrayList tipos = Clases.TipoActividad.listarCondicion("activo",true);
             request.setAttribute("tipos", tipos);
             String nombre = ta.getNombreTipo();
             Clases.Root.deleteSessions(request,"tipoActividadForm");

@@ -234,34 +234,6 @@ public class TipoActividad extends Root {
         campos = cs;
     }
 
-    public void setId() {
-        Entity eId = new Entity(0, 1);
-
-        String[] seleccionar = {ATRIBUTOS[0]};
-
-        String[] columnas = {
-            ATRIBUTOS[1],
-            ATRIBUTOS[8]
-        };
-
-        Object[] valores = {
-            nombreTipo,
-            "true"
-        };
-
-        ResultSet rs = eId.proyectar(seleccionar, columnas, valores);
-        if (rs != null) {
-            try {
-                if (rs.next()) {
-                    this.id = rs.getInt(ATRIBUTOS[0]);
-                    rs.close();
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
-
     @Override
     public String toString() {
         return "TipoActividad{" + "nombreTipo=" + nombreTipo + ", nroCampos=" + nroCampos + ", descripcion=" + descripcion + " }";
@@ -427,16 +399,16 @@ public class TipoActividad extends Root {
         return false;
 
     }
-    
+
     /**
      *
      * @return Lista con todos los Tipos de Actividad que no están activos
      */
-    public static ArrayList<TipoActividad> listarDesactivados(){
-        Entity eListar = new Entity(0,1);//SELECT TIPO_ACTIVIDAD
+    public static ArrayList<TipoActividad> listarDesactivos() {
+        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
         String[] atrib = {ATRIBUTOS[8]};
         Boolean[] valor = {false};
-        
+
         ResultSet rs = eListar.seleccionar(atrib, valor);
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         if (rs != null) {
@@ -454,15 +426,8 @@ public class TipoActividad extends Root {
         }
         return tipos;
     }
-    /**
-     *
-     * @return lista con todos los Tipos de Actividad disponibles en la BD
-     */
-    public static ArrayList<TipoActividad> listar() {
-        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
-        String[] atrib = {ATRIBUTOS[8]};
-        Boolean[] valor = {true};
-        ResultSet rs = eListar.seleccionar(atrib, valor);
+
+    private static ArrayList<TipoActividad> listar(ResultSet rs) {
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
         if (rs != null) {
@@ -490,15 +455,27 @@ public class TipoActividad extends Root {
     }
 
     /**
+     *
+     * @return lista con los Tipos de Actividad que cumplen la condicion dada
+     */
+    public static ArrayList<TipoActividad> listarCondicion(String atributo, Object valor) {
+        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
+        String[] atrib = {atributo};
+        Object[] val = {valor};
+        ResultSet rs = eListar.seleccionar(atrib, val);
+        return listar(rs);
+    }
+
+    /**
      * Lista los tipos de actividades que puede realizar el usuario.
      *
-     * @param usuario El usuario del cual se quieren listar las posibilidades de
-     * tipos de actividad.
+     * @param usuario El usuario del cual se quieren listarActivos las
+     * posibilidades de tipos de actividad.
      * @return Lista de los tipos de actividad que puede realizar el usuario
      * dado.
      */
     public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
-        ArrayList<TipoActividad> tiposAux = listar();
+        ArrayList<TipoActividad> tiposAux = listarCondicion(ATRIBUTOS[8], true);
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();
 
@@ -513,23 +490,9 @@ public class TipoActividad extends Root {
         return tipos;
     }
 
-    public static ArrayList<TipoActividad> listarTiposActividad(String validador) {
-        ArrayList<TipoActividad> tiposAux = listar();
-        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
-        Iterator it = tiposAux.iterator();
-
-        while (it.hasNext()) {
-            TipoActividad t = (TipoActividad) it.next();
-            if (t.getValidador().equals(validador)) {
-                tipos.add(t);
-            }
-        }
-        return tipos;
-    }
-
     /**
      * Modifica los permisos asociados a un tipo de actividad, eliminando
-     * primero los permisos previos dados a dicha actividad e insertand luego
+     * primero los permisos previos dados a dicha actividad e insertando luego
      * los nuevos permisos.
      *
      * @return true en caso de lograr la modificación de los permisos.
@@ -568,9 +531,9 @@ public class TipoActividad extends Root {
         return resp;
     }
 
-    //Con esto es que puedo definir que cuando el multibox no tenga nada el arreglo
+    //Con esto es que puedo definir que cuando el multibox no tenga nada, el arreglo
     //permisos tome el valor de nulo, pero como sobreescribe el reset de Root tuve 
-    //que agregar lo que estaba en ese reset taambien
+    //que agregar lo que estaba en ese reset de Root tambien
     public void reset(ActionMapping mapping, HttpServletRequest request) {
         try {
             request.setCharacterEncoding("UTF-8");
@@ -579,8 +542,8 @@ public class TipoActividad extends Root {
         }
         permisos = null;
     }
-    //en el parámetro taNM recibe un TipoActividad No Modificado
 
+    //en el parámetro taNM recibe un TipoActividad No Modificado
     public boolean modificar(TipoActividad taNM) {
 
         if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
@@ -656,9 +619,9 @@ public class TipoActividad extends Root {
     }
 
     public boolean restaurarTipoActividad() {
-        
+
         Entity eMod = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
-        
+
         String[] condColumnas = {
             ATRIBUTOS[0]
         };
@@ -680,7 +643,7 @@ public class TipoActividad extends Root {
         mensajeError = "Error: No se pudo restaurar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
-    
+
     public static void main(String[] args) throws CloneNotSupportedException {
         //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");
         //t.agregarTipoActividad();
@@ -712,5 +675,4 @@ public class TipoActividad extends Root {
 
 
     }
-
 }

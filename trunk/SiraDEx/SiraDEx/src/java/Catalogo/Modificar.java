@@ -42,18 +42,19 @@ public class Modificar extends DispatchAction {
         cat.setMensaje(null);
 
         int idCat = cat.getIdCatalogo();
+        cat.setCatalogo();
         ArrayList campos = Clases.CampoCatalogo.listar(idCat);
         cat.setCampos(campos);
-        String nombreCat = Clases.Catalogo.getNombre(idCat);
-        cat.setNombre(nombreCat);
-
+        
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 
          * del jsp debido a que ArrayList es un apuntador*/
-        ArrayList camposNM = Clases.CampoCatalogo.listar(idCat);
-        request.getSession().setAttribute("camposNM", camposNM);
-
-        request.getSession().setAttribute("nombreNM", nombreCat);
+        ArrayList camposNM = Clases.Campo.listar(idCat);
+        Catalogo catNM = new Catalogo();
+        catNM.setIdCatalogo(idCat);
+        catNM.setCatalogo();
+        catNM.setCampos(camposNM);
+        request.getSession().setAttribute("catNM", catNM);
         return mapping.findForward(PAGE);
     }
 
@@ -83,15 +84,12 @@ public class Modificar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
         cat.setMensajeError(null);
-        ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
         
-        
-        String nombre = (String) request.getSession().getAttribute("nombreNM");
-        ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
+        Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
 
-        if (cat.modificar(nombre, campos, nuevosCampos)) {
+        if (cat.modificar(catNM)) {
         
-            ArrayList cats = Clases.Catalogo.listar();
+            ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
             Clases.Root.deleteSessions(request,"catalogoForm");
             cat.setMensaje("El Catálogo '"+cat.getNombre()+"' ha sido modificado"
@@ -99,7 +97,7 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
         
-        cat.setNombre(nombre);
+        cat.setNombre(catNM.getNombre());
         
         return mapping.findForward(FAILURE);
 
