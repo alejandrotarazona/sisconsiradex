@@ -37,7 +37,7 @@ public class Listar extends org.apache.struts.action.Action {
             throws Exception {
      
         Clases.Root.deleteSessions(request,"tipoActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listar();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
         
         int tam = ta.size();
         if (tam != 0) {

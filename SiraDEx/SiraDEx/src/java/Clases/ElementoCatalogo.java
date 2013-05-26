@@ -249,23 +249,19 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return contenido.compareTo(e.getContenido());
     }
 
-    public static ArrayList<ElementoCatalogo> listarUsuariosActivos() {
+    public static ArrayList<ElementoCatalogo> listarParticipantes() {
 
         ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
 
         Entity eBuscar = new Entity(0, 0); //SELECT USUARIO
-        String[] atrib = {
-            "usbid",
-            "nombres",
-            "apellidos"
-        };
 
         String[] tablas = {
-            "ACTIVIDAD",
-            "USUARIO"
+            "ACTIVIDAD"
         };
+        String cols = "usbid, nombres, apellidos";
+        String join = "usbid=creador";
 
-        ResultSet rs = eBuscar.naturalJoin(atrib, tablas);
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, join);
         if (rs != null) {
             try {
                 while (rs.next()) {

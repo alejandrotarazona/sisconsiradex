@@ -26,7 +26,7 @@ public class Catalogo extends Root {
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
     private ArrayList<CampoCatalogo> camposAux; /*atributo auxiliar para agregar
-     * nuevos campos en el modificar*/
+     nuevos campos en el modificar*/
 
     private boolean participantes; //especifica si es un catalogo de participantes
     private static final String[] ATRIBUTOS = {
@@ -123,8 +123,8 @@ public class Catalogo extends Root {
     public static String getNombre(int idCatalogo) {
 
         Entity eCatalogo = new Entity(0, 6);
-        String[] nombre = {"nombre"};
-        String[] idCat = {"id_cat"};
+        String[] nombre = {ATRIBUTOS[1]};
+        String[] idCat = {ATRIBUTOS[0]};
         Integer[] id = {idCatalogo};
         ResultSet rs = eCatalogo.proyectar(nombre, idCat, id);
         try {
@@ -203,6 +203,28 @@ public class Catalogo extends Root {
         return false;
     }
 
+    //teniendo el id hace un set del resto de atributos del Catálogo
+    public void setCatalogo() {
+
+        Entity e = new Entity(0, 6);
+
+        String[] atrib = {ATRIBUTOS[0]};
+        Integer[] valor = {idCatalogo};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        if (rs != null) {
+            try {
+                rs.next();
+                idCatalogo = rs.getInt(ATRIBUTOS[0]);
+                nombre = rs.getString(ATRIBUTOS[1]);
+                nroCampos = rs.getInt(ATRIBUTOS[2]);
+                participantes = rs.getBoolean(ATRIBUTOS[3]);
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+
     public boolean agregarCampos(ArrayList campos) {
         boolean resp = true;
         setIdCatalogo();
@@ -227,13 +249,15 @@ public class Catalogo extends Root {
         boolean resp;
 
         String[] columnas = {
-            "nombre",
-            "nro_campos"
+            ATRIBUTOS[1],
+            ATRIBUTOS[2],
+            ATRIBUTOS[3]
         };
-        Integer nCampos = new Integer(this.nroCampos);
+
         Object[] valores = {
-            this.nombre,
-            nCampos
+            nombre,
+            nroCampos,
+            participantes
         };
 
         eCatalogo.insertar2(columnas, valores);
@@ -242,10 +266,8 @@ public class Catalogo extends Root {
         return resp;
     }
 
-    public static ArrayList<Catalogo> listar() {
+    private static ArrayList<Catalogo> listar(ResultSet rs) {
 
-        Entity eListar = new Entity(0, 6);//SELECT CATALOGO
-        ResultSet rs = eListar.listar();
         ArrayList<Catalogo> cats = new ArrayList<>(0);
         try {
             if (rs != null) {
@@ -267,6 +289,30 @@ public class Catalogo extends Root {
         return null;
     }
 
+    /**
+     *
+     * @return lista con los Catálogos que cumplen la condicion dada
+     */
+    public static ArrayList<Catalogo> listarCondicion(String atributo, Object valor) {
+
+        Entity eListar = new Entity(0, 6);//SELECT CATALOGO
+        String[] atrib = {atributo};
+        Object[] val = {valor};
+        ResultSet rs = eListar.seleccionar(atrib, val);
+        return listar(rs);
+    }
+    
+    /**
+     *
+     * @return lista con los Catálogos que cumplen la condicion dada
+     */
+    public static ArrayList<Catalogo> listarCatalogos() {
+
+        Entity eListar = new Entity(0, 6);//SELECT CATALOGO
+        ResultSet rs = eListar.listar();
+        return listar(rs);
+    }
+
     public boolean eliminar(int idCat) {
         Entity eEliminar = new Entity(5, 6);
         return eEliminar.borrar(ATRIBUTOS[0], idCat);
@@ -275,8 +321,7 @@ public class Catalogo extends Root {
 
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
     //el parámetro camposNM su lista de campos No Modificados
-    public boolean modificar(String nombreNM, ArrayList camposNM,
-            ArrayList camposNuevos) {
+    public boolean modificar(Catalogo catNM) {
 
         if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
             return false;
@@ -286,11 +331,11 @@ public class Catalogo extends Root {
 
         Entity e = new Entity(2, 6);
 
-        String[] condColumnas = {ATRIBUTOS[1]};
-        Object[] valores = {nombreNM};
-        String[] colModificar = {ATRIBUTOS[1]};
-        String[] nombreCat = {nombre};
-        if (this.esCatalogo() && !nombre.equals(nombreNM)) {
+        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[3]};
+        Object[] valores = {catNM.getNombre(), catNM.isParticipantes()};
+        String[] colModificar = {ATRIBUTOS[1], ATRIBUTOS[3]};
+        Object[] nombreCat = {nombre, participantes};
+        if (this.esCatalogo() && !nombre.equals(catNM.getNombre())) {
             mensajeError = "Error: Ya existe un Catálogo con el Nombre '"
                     + "" + nombre + "'.Por favor intente con otro nombre.";
             return false;
@@ -298,7 +343,7 @@ public class Catalogo extends Root {
 
         resp = e.modificar(condColumnas, valores, colModificar, nombreCat);
 
-        Iterator it = camposNM.iterator();
+        Iterator it = catNM.getCampos().iterator();
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogo campoNM = (CampoCatalogo) it.next();

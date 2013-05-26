@@ -232,7 +232,7 @@ CREATE TABLE PARTICIPA(
     
 
 CONSTRAINT PK_participa
-            PRIMARY KEY (id_act, usbid),
+            PRIMARY KEY (id_act, usbid, id_campo),
 CONSTRAINT FK_participa__actividad
             FOREIGN KEY (id_act)
             REFERENCES ACTIVIDAD

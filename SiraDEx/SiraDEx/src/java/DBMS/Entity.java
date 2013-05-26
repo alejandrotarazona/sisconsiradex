@@ -146,7 +146,7 @@ public class Entity {
 
         return rs;
     }
-    
+
     //Selecciona las tuplas donde la columna es distinta a los valores
     public ResultSet seleccionarDistintos(String columna, Object[] valores) {
         sql = ACCION + " * "
@@ -159,6 +159,29 @@ public class Entity {
             sql += " AND " + columna + " != '" + escapeSQL(valores[i]) + "' ";
         }
 
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
+
+    //creada para seleccionar el usbid, nombres y apellidos de los distintos particpantes
+    //select distinct usbid, nombres, apellidos from participa join usuario on usbid=creador
+    public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols, String join) {
+        sql = ACCION + " DISTINCT " + cols
+                + " FROM " + TABLA;
+        int tam = TABLAS.length;
+        if (tam > 0) {
+
+            sql += " JOIN " + TABLAS[0];
+
+            for (int i = 1; i < tam; i++) {
+                sql += "AND JOIN " + TABLAS[i];
+            }
+
+            sql += " ON " + join;
+        }
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -399,10 +422,11 @@ public class Entity {
 
 
     }
-    
+
     /**
      * Retorna el ResultSet con los valores que pertenezcan al rango
      * establecido.
+     *
      * @param columnaCondicion columna sobre la que se hace la seleccion
      * @param rango condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.
@@ -423,10 +447,11 @@ public class Entity {
 
         return rs;
     }
-    
+
     /**
-     * Retorna el ResultSet con los valores que sean mayores o iguales
-     * que el valor dado
+     * Retorna el ResultSet con los valores que sean mayores o iguales que el
+     * valor dado
+     *
      * @param columnaCondicion columna sobre la que se hace la seleccion
      * @param condicion condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.
@@ -445,10 +470,11 @@ public class Entity {
 
         return rs;
     }
-    
+
     /**
-     * Retorna el ResultSet con los valores que sean menores o iguales
-     * que el valor dado
+     * Retorna el ResultSet con los valores que sean menores o iguales que el
+     * valor dado
+     *
      * @param columnaCondicion columna sobre la que se hace la seleccion
      * @param condicion condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.

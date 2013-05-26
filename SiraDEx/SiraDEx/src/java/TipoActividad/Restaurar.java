@@ -29,12 +29,12 @@ public class Restaurar extends org.apache.struts.action.Action {
         t.setTipoActividad();
         t.setCampos();
         if (t.restaurarTipoActividad()) {
-            ArrayList ta = Clases.TipoActividad.listarDesactivados();
+            ArrayList ta = Clases.TipoActividad.listarDesactivos();
             request.setAttribute("tipos", ta);
             return mapping.findForward(SUCCESS);
         }
         
-        ArrayList ta = Clases.TipoActividad.listarDesactivados();
+        ArrayList ta = Clases.TipoActividad.listarDesactivos();
         request.setAttribute("tipos", ta);
         return mapping.findForward(FAILURE);
 

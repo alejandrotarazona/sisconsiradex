@@ -77,12 +77,10 @@
 </td>       
 </tr>
 <tr><td>Número de archivos del producto</td>
-<td><html:text name="tipoActividadForm" property="nroProductos" size="1" 
-           maxlength="1"/></td>
+<td><html:text name="tipoActividadForm" property="nroProductos" size="1" maxlength="1"/></td>
 </tr>
 <tr><td>Número de campos</td>
-<td><html:text name="tipoActividadForm" property="nroCampos" size="1" 
-           maxlength="2"/>&nbsp; Nota: El usuario está por defecto como participante de la actividad</td>
+<td><html:text name="tipoActividadForm" property="nroCampos" size="1" maxlength="2"/></td>
 </tr>
 </table>
 <br>

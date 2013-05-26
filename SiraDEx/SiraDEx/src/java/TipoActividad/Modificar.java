@@ -47,8 +47,11 @@ public class Modificar extends DispatchAction {
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", dependencias);
        
-        ArrayList catalogos = Clases.Catalogo.listar();
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participantes",false);
         request.getSession().setAttribute("catalogos", catalogos);
+        
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participantes",true);
+        request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensaje(null);
@@ -82,7 +85,7 @@ public class Modificar extends DispatchAction {
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         if (ta.modificar(taNM)) {
-            ArrayList<TipoActividad> tas = Clases.TipoActividad.listar();
+            ArrayList<TipoActividad> tas = Clases.TipoActividad.listarCondicion("activo",true);
             request.setAttribute("tipos", tas);
             String nombre = ta.getNombreTipo();
             Clases.Root.deleteSessions(request,"tipoActividadForm");

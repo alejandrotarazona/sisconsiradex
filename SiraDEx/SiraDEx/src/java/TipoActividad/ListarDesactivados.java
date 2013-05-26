@@ -37,7 +37,7 @@ public class ListarDesactivados extends org.apache.struts.action.Action {
             throws Exception {
      
         Clases.Root.deleteSessions(request,"tipoActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarDesactivados();
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarDesactivos();
         
         int tam = ta.size();
         if (tam != 0) {
