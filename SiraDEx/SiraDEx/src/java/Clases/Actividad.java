@@ -221,8 +221,8 @@ public class Actividad extends Root {
         };
         String cols = "nombres, apellidos";
         String[] joins = {"p.id_act=a.id_actividad","p.usbid=u.usbid"};
-
-        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, "");
+        String cond = "id_actividad="+idAct;
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, cond);
         if (rs != null) {
             try {
                 while (rs.next()) {
