@@ -117,12 +117,12 @@
     
     <definition name="busquedaAvanzada" extends="plantillaBusquedaAvanzada">
         <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
-        <put name="leftMenu" value="/Interfaz/Plantillas/findAdvancedMenu.jsp"/>
+        <put name="leftMenu" value="/actividad/formAdvancedMenu.jsp"/>
     </definition>
     
     <definition name="busquedaPublica" extends="plantillaBusquedaPublica">
         <put name="body" value="/actividad/formBusquedaPublica.jsp"/>
-        <put name="leftMenu" value="/Interfaz/Plantillas/findPublicMenu.jsp"/>
+        <put name="leftMenu" value="/actividad/formPublicMenu.jsp"/>
     </definition>
 
     

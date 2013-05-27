@@ -153,10 +153,17 @@ public class CampoValor implements Serializable {
         Integer idActividad = new Integer(idAct);
 
         if (file != null) {
-            resp = resp && eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
+            resp  &= eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
         } else {
             Object[] tupla = {idCampo, idActividad, valor};
-            resp = resp && eAgregar.insertar(tupla);
+            resp  &= eAgregar.insertar(tupla);
+        }
+        
+        if (campo.getTipo().equals("participante")){
+        Entity e = new Entity(1, 5);//INSERT PARTICIPA
+
+        Object[] tupla = {idAct, valor, campo.getIdCampo()};
+        resp &= e.insertar(tupla);
         }
 
         return resp;

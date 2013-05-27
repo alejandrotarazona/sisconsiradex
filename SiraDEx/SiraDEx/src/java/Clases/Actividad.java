@@ -213,45 +213,35 @@ public class Actividad extends Root {
 
     public void setParticipantes(int idAct) {
 
-        String participante = getApellidoNombreCreador();
-        System.out.println("apellido y nombre del creador: " + participante);
-        participantes.add(participante);
-        if (participantes.size() > 1) {
-            Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
-            String[] atrib = {
-                ATRIBUTOS[0]
-            };
 
-            Object[] valor = {
-                idAct
-            };
-            String[] tabABuscar = {
-                "ACTIVIDAD",
-                "PARTICIPA",
-                "USUARIO"
-            };
+        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
+        String[] tablas = {
+            "ACTIVIDAD",
+            "USUARIO"
+        };
+        String cols = "nombres, apellidos";
+        String[] joins = {"p.id_act=a.id_actividad","p.usbid=u.usbid"};
 
-            ResultSet rs = eBuscar.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor);
-            if (rs != null) {
-                try {
-                    while (rs.next()) {
-                        participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
-                        participantes.add(participante);
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, "");
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    String participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
+                    System.out.print(participante+"##############################################");
+                    participantes.add(participante);
 
-                    }
-                } catch (SQLException ex) {
-                    Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
-
     }
 
     public String participantesToString() {
         String p = "";
         Iterator it = participantes.iterator();
         while (it.hasNext()) {
-            p += (String) it.next() + ", ";
+            p += (String) it.next() + "; ";
         }
         p = p.substring(0, p.length() - 2) + ".";
         return p;
@@ -408,7 +398,7 @@ public class Actividad extends Root {
 
             while ((itValores.hasNext())) {
                 CampoValor cv = (CampoValor) itValores.next();
-                resp = resp && cv.agregar(this.idActividad);
+                resp  &= cv.agregar(this.idActividad);
             }
 
             if (!resp) {
@@ -417,21 +407,6 @@ public class Actividad extends Root {
 
             return resp;
 
-        }
-
-        Entity ePariticipa = new Entity(1, 5);//INSERT PARTICIPA
-        String[] columnas2 = {
-            "id_act",
-            "usuario"
-        };
-        if (resp) {
-            Iterator itParticipantes = this.participantes.iterator();
-            while (resp &= itParticipantes.hasNext()) {
-                String participante = (String) itParticipantes.next();
-                Object[] tuplaInsertar = {idActividad, participante};
-
-                resp &= ePariticipa.insertar2(columnas2, tuplaInsertar);
-            }
         }
 
         return resp;
@@ -559,21 +534,18 @@ public class Actividad extends Root {
      * @return Lista con las actividades realizadas por un usuario. Tambien en
      * las que participa.
      */
-    public ArrayList<Actividad> listarActividadesDeUsuario() {
+    public static ArrayList<Actividad> listarActividadesDeUsuario(String usbid) {
 
-        Entity eActividad = new Entity(0, 21);
-        String[] columna = {ATRIBUTOS[4]};
-        String[] condicion = {creador};
-
-        ResultSet rs = eActividad.seleccionar(columna, condicion);
-        ArrayList<Actividad> acts = listar(rs);
-        eActividad = new Entity(0, 22);
-
-        rs = eActividad.listar();
-        ArrayList<Actividad> actsParticipa = listar(rs);
-        acts.addAll(actsParticipa);
-
-        return acts;
+        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
+        String[] tablas = {
+            "ACTIVIDAD",
+            "TIPO_ACTIVIDAD"
+        };
+        String cols = "*";
+        String[] joins = {"p.id_act=a.id_actividad","t.id_tipo_actividad=a.id_tipo_actividad"};
+        String conds = "p.usbid="+"'"+usbid+"'";
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, conds);
+        return listar(rs);
     }
 
     /**

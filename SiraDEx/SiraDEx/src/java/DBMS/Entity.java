@@ -166,22 +166,27 @@ public class Entity {
         return rs;
     }
 
-    //creada para seleccionar el usbid, nombres y apellidos de los distintos particpantes
-    //select distinct usbid, nombres, apellidos from participa join usuario on usbid=creador
-    public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols, String join) {
+    /*select * from participa p 
+     join usuario u on p.usbid=u.usbid
+     join actividad a on p.id_act=a.id_actividad 
+     where u.usbid = 'x' and ...*/
+    public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols, String[] joins, String conds) {
         sql = ACCION + " DISTINCT " + cols
-                + " FROM " + TABLA;
+                + " FROM " + TABLA + " " + TABLA.substring(0, 1);
         int tam = TABLAS.length;
         if (tam > 0) {
 
-            sql += " JOIN " + TABLAS[0];
+            sql += " JOIN " + TABLAS[0] + " " + TABLAS[0].substring(0, 1) + " ON " + joins[0];
 
             for (int i = 1; i < tam; i++) {
-                sql += "AND JOIN " + TABLAS[i];
+                sql += " JOIN " + TABLAS[i] + " " + TABLAS[i].substring(0, 1) + " ON " + joins[i];
             }
-
-            sql += " ON " + join;
         }
+
+        if (!conds.equals("")) {
+            sql += " WHERE " + conds;
+        }
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);

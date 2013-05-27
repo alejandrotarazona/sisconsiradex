@@ -18,6 +18,7 @@
             $(document).ready(function(){
                 function visibilidad(valor, mostrador, mostrador2, longitud){
                     //var valor = $(this).val();
+                    
                     if(valor == "catalogo"){
                         $('#'+longitud).css("visibility", "hidden");
                         $('.'+mostrador).css("visibility", "visible");
@@ -43,8 +44,7 @@
                     var lon = "longitud"+tg.slice("selector".length);
                     var val = $('.selector')[tg.slice("selector".length)].value;
                     visibilidad(val,mos,mos2,lon);
-                }
-            );
+                });
             });              
         </script>
 
@@ -137,7 +137,6 @@
                 </td>
 
                 <td>
-
                     <div class="<%=m%>" style="visibility: hidden">
                         <html:select name="campo" property="catalogo" indexed="true">                          
                             <html:option value="">-- Seleccione --</html:option>
@@ -146,8 +145,9 @@
                                                     value="nombre"/>
                         </html:select>
                     </div>
+
                     <div class="<%=m2%>" style="visibility: hidden">
-                        <html:select name="campo" property="catalogo" indexed="true">                          
+                        <html:select name="campo" property="catalogoPart" indexed="true">                          
                             <html:option value="">-- Seleccione --</html:option>
 
                             <html:optionsCollection name="catalogosPart" label="nombre" 

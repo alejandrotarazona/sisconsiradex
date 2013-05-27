@@ -104,6 +104,13 @@
                                         value="contenido"/>
             </html:select>
         </logic:equal>
+        <logic:equal name="camposValores" property="campo.tipo" value="participante">
+            <html:select name="camposValores" property="valor" indexed="true">
+                <html:option value="">-- Seleccione --</html:option>
+                <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
+                                        value="mensaje"/>
+            </html:select>
+        </logic:equal>
     </td>
 </tr>
 </logic:iterate>

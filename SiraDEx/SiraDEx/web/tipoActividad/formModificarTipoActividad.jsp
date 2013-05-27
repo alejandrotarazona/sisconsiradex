@@ -4,6 +4,7 @@
     Author     : SisCon
 --%>
 
+<%@page import="Clases.Campo"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -15,28 +16,37 @@
 
         <script>
             $(document).ready(function(){
-                function visibilidad(valor, mostrador, longitud){
+                function visibilidad(valor, mostrador, mostrador2, longitud){
                     //var valor = $(this).val();
+                    
                     if(valor == "catalogo"){
                         $('#'+longitud).css("visibility", "hidden");
                         $('.'+mostrador).css("visibility", "visible");
+                        $('.'+mostrador2).css("visibility", "hidden");
+                    } else if(valor == "participante"){
+                        $('#'+longitud).css("visibility", "hidden");
+                        $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "visible");
                     } else if(valor == "texto" || valor=="textol" || valor=="numero"){
                         $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "hidden");
                     } else {
-                        $('.'+mostrador).css("visibility", "hidden");
                         $('#'+longitud).css("visibility", "hidden");
+                        $('.'+mostrador).css("visibility", "hidden");
+                        $('.'+mostrador2).css("visibility", "hidden");
                     }
                 }
-                $(".selector").change(function(evento){
+                $(".selector").on('focus change',function(evento){
                     var tg = evento.target.id;
                     var mos = "mostrador"+tg.slice("selector".length);
+                    var mos2 = "mostrador2"+tg.slice("selector".length);
                     var lon = "longitud"+tg.slice("selector".length);
                     var val = $('.selector')[tg.slice("selector".length)].value;
-                    visibilidad(val,mos, lon);
-                }
-            );
-            });              
+                    visibilidad(val,mos,mos2,lon);
+                });
+        
+            });        
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición del Tipo de Actividad  <bean:write name="tipoActividadForm"
@@ -121,6 +131,7 @@
         int i = (Integer) pageContext.getAttribute("index");
         String s = "selector" + i;
         String m = "mostrador" + i;
+        String m2 = "mostrador2" + i;
         String l = "longitud" + i;
     %>
 
@@ -168,12 +179,24 @@
             <html:checkbox name="campos" property="obligatorio" disabled="true" indexed="true"/>
         </logic:equal>
     </td>
-    <td>
+    <td>     
+
 
         <div class="<%=m%>" style="visibility: hidden">
-            <html:select name="campos" property="catalogo" indexed="true">      
+            <html:select name="campos" property="catalogo" indexed="true">                          
                 <html:option value="">-- Seleccione --</html:option>
+
                 <html:optionsCollection name="catalogos" label="nombre" 
+                                        value="nombre"/>
+            </html:select>
+        </div>
+
+
+        <div class="<%=m2%>" style="visibility: hidden">
+            <html:select name="campos" property="catalogoPart" indexed="true">                          
+                <html:option value="">-- Seleccione --</html:option>
+
+                <html:optionsCollection name="catalogosPart" label="nombre" 
                                         value="nombre"/>
             </html:select>
         </div>
