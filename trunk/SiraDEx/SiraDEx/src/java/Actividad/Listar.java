@@ -45,7 +45,7 @@ public class Listar extends DispatchAction {
         String username = u.getUsername();
         act.setCreador(username);
         
-        ArrayList<Actividad> acts = act.listarActividadesDeUsuario();
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
  
         request.setAttribute("acts", acts);
         

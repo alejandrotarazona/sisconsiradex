@@ -243,8 +243,8 @@ public class TipoActividad extends Root {
 
         Entity e = new Entity(0, 1);
 
-        String[] atrib = {ATRIBUTOS[1]};
-        String[] valor = {nombreTipo};
+        String[] atrib = {ATRIBUTOS[1],ATRIBUTOS[8]};
+        Object[] valor = {nombreTipo, true};
         ResultSet rs = e.seleccionar(atrib, valor);
         try {
             if (rs != null) {

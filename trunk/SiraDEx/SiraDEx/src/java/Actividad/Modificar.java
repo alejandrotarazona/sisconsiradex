@@ -83,7 +83,7 @@ public class Modificar extends DispatchAction {
             if (rol.equalsIgnoreCase("WM")) {
                 acts = Clases.Actividad.listarActividades();
             } else {
-                acts = act.listarActividadesDeUsuario();
+                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
             request.setAttribute("acts", acts);
             

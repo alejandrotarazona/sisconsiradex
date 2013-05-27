@@ -25,6 +25,7 @@ public class Campo implements Serializable {
     private int longitud;
     private boolean obligatorio;
     private String catalogo = "";
+    private String catalogoPart = "";
     private boolean lista;
     private final Par[] tipos = {
         new Par("texto", "texto"),
@@ -146,6 +147,14 @@ public class Campo implements Serializable {
         this.catalogo = catalogo;
     }
 
+    public String getCatalogoPart() {
+        return catalogoPart;
+    }
+
+    public void setCatalogoPart(String catalogoPart) {
+        this.catalogoPart = catalogoPart;
+    }
+
     public static String[] getTIPOS() {
         return TIPOS;
     }
@@ -176,6 +185,9 @@ public class Campo implements Serializable {
         System.out.println("Agrego un Campo");
         Entity e = new Entity(1, 3);
         Integer idTA = new Integer(idTipoActividad);
+        if (!catalogoPart.isEmpty()){
+            catalogo = catalogoPart;
+        }
         Object[] valores = {
             idTA,
             nombre,
@@ -219,10 +231,15 @@ public class Campo implements Serializable {
                     c.setIdCampo(rs.getInt(ATRIBUTOS[0]));
                     c.setIdTipoActividad(rs.getInt(ATRIBUTOS[1]));
                     c.setNombre(rs.getString(ATRIBUTOS[2]));
-                    c.setTipo(rs.getString(ATRIBUTOS[3]));
+                    String t = rs.getString(ATRIBUTOS[3]);
+                    c.setTipo(t);
                     c.setLongitud(rs.getInt(ATRIBUTOS[4]));
                     c.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
-                    c.setCatalogo(rs.getString(ATRIBUTOS[6]));
+                    String cat = rs.getString(ATRIBUTOS[6]);
+                    c.setCatalogo(cat);
+                    if (t.equals("participante")){
+                      c.setCatalogoPart(cat);  
+                    }     
                     resp.add(c);
                 }
                 rs.close();
@@ -255,7 +272,9 @@ public class Campo implements Serializable {
             ATRIBUTOS[5],
             ATRIBUTOS[6]
         };
-
+        if (tipo.equals("participante")){
+          catalogo = catalogoPart;  
+        }
         Object[] modificaciones = {
             nombre,
             tipo,

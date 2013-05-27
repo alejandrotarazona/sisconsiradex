@@ -122,7 +122,7 @@ public class Agregar extends DispatchAction {
             if (rol.equalsIgnoreCase("WM")) {
                 act = Clases.Actividad.listarActividades();
             } else {
-                act = a.listarActividadesDeUsuario();
+                act = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
 
             request.setAttribute("acts", act);

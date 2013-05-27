@@ -228,7 +228,7 @@ public class BusquedaActividad extends Root {
                 if (estePart != null && !estePart.equalsIgnoreCase("")) {
                     Actividad aux = new Actividad();
                     aux.setCreador(creador);
-                    listaParticipantes.addAll(aux.listarActividadesDeUsuario());    //Resultado de la busqueda de participantes//
+                    listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(creador));    //Resultado de la busqueda de participantes//
                 }
             }
         }

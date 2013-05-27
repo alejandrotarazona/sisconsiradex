@@ -233,6 +233,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                 ElementoCatalogo e = new ElementoCatalogo(valor);
                 valor = valor.substring(0, valor.length() - 2);
                 e.setContenido(valor);
+                e.setMensaje(elem.get(0).getValor());
                 contenidos.add(e);
                 j++;
             }
@@ -259,9 +260,9 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             "ACTIVIDAD"
         };
         String cols = "usbid, nombres, apellidos";
-        String join = "usbid=creador";
+        String[] join = {"usbid=creador"};
 
-        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, join);
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, join, "");
         if (rs != null) {
             try {
                 while (rs.next()) {

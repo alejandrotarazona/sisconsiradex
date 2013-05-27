@@ -51,7 +51,7 @@ public class Eliminar extends org.apache.struts.action.Action {
                 acts = Clases.Actividad.listarActividades();
             } else {
                 act.setCreador(u.getUsername());
-                acts = act.listarActividadesDeUsuario();
+                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
             request.setAttribute("acts", acts);
 
@@ -65,7 +65,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             if (rol.equalsIgnoreCase("WM")) {
                 acts = Clases.Actividad.listarActividades();
             } else {
-                acts = act.listarActividadesDeUsuario();
+                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
             request.setAttribute("acts", acts);
             act.setMensajeError("Error: La actividad no pudo ser eliminada");
