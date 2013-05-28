@@ -20,11 +20,11 @@ public class DataBase {
     private static final String host = "localhost";
     private static final int port = 5432;
     private static final String database = "bdsiradex";
-    private static final String username = "postgres";
-    private static final String password = "postgres";
+    private static final String username = "siradex";
+    private static final String password = "siradex";
     static private Connection conexion;
     static private DataBase instance = null;
-    
+
     protected DataBase() {
     }
 
@@ -86,11 +86,11 @@ public class DataBase {
     }
 
     public boolean update(String sql) {
-        try {    
+        try {
             Statement stmt = conexion.createStatement();
             int filas = stmt.executeUpdate(sql);
             conexion.close();//RECORDAR PROBAR EL SISTEMA SIN EL close()
-            if (filas > 0) {     
+            if (filas > 0) {
                 return true;
             } else {
                 return false;

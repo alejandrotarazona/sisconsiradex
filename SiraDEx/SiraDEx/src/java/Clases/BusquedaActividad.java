@@ -7,7 +7,11 @@ package Clases;
 import DBMS.Entity;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -22,8 +26,7 @@ public class BusquedaActividad extends Root {
     private String tipoPR;
     private String programa;
     private String validador;
-    private ArrayList<String> participantes = new ArrayList<>(0);
-    private String creador; //usbid
+    private String participante; //usbid
     private String fechaInic;
     private String fechaFin;
     private int mostrarPorPagina = 10;
@@ -66,20 +69,12 @@ public class BusquedaActividad extends Root {
         this.validador = validador;
     }
 
-    public ArrayList<String> getParticipantes() {
-        return participantes;
+    public String getParticipante() {
+        return participante;
     }
 
-    public void setParticipantes(String participantes) {
-        this.participantes.add(participantes);
-    }
-
-    public String getCreador() {
-        return creador;
-    }
-
-    public void setCreador(String creador) {
-        this.creador = creador;
+    public void setParticipante(String participante) {
+        this.participante = participante;
     }
 
     public String getFechaInic() {
@@ -171,9 +166,9 @@ public class BusquedaActividad extends Root {
             auxColumnas.add("validador");
             auxCondiciones.add(validador);
         }
-        if (this.creador != null && !this.creador.equals("")) {
+        if (this.participante != null && !this.participante.equals("")) {
             auxColumnas.add("creador");
-            auxCondiciones.add(creador);
+            auxCondiciones.add(participante);
         }
 
         int tam = auxColumnas.size();
@@ -197,61 +192,115 @@ public class BusquedaActividad extends Root {
             rs = eBuscar.listar();
         }
 
-        ResultSet rsRango;
+        String[] columna = {
+            "tipo_campo"
+        };
+        Object[] condicion = {
+            "fecha"
+        };
+
         Entity eRango = new Entity(0, 24);
+        ResultSet rsRango = eRango.seleccionar(columna, condicion);
+        ArrayList<Integer> listaIds = new ArrayList<>(0);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
             if (this.fechaFin != null && !this.fechaFin.equals("")) {
-                Object[] condRango = {
-                    fechaInic,
-                    fechaFin
-                };
-                rsRango = eRango.buscarRango(condRango);
-                hayRango = true;
+                try {
+                    while (rsRango.next()) {
+                        String fecha = rsRango.getString("valor");
+                        try {
+                            if (antesDe(fechaInic, fecha) && despuesDe(fechaFin, fecha)) {
+                                listaIds.add(rsRango.getInt("id_actividad"));
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        hayRango = true;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+                }
             } else {
-                rsRango = eRango.buscarMayorQue(fechaInic);
-                hayRango = true;
+                try {
+                    while (rsRango.next()) {
+                        String fecha = rsRango.getString("valor");
+                        try {
+                            if (antesDe(fechaInic, fecha)) {
+                                listaIds.add(rsRango.getInt("id_actividad"));
+                            }
+                        } catch (ParseException ex) {
+                            Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                        hayRango = true;
+                    }
+                } catch (SQLException ex) {
+                    Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
+
         } else if (this.fechaFin != null && !this.fechaFin.equals("")) {
-            rsRango = eRango.buscarMenorQue(fechaFin);
+            try {
+                while (rsRango.next()) {
+                    String fecha = rsRango.getString("valor");
+                    try {
+                        if (despuesDe(fechaFin, fecha)) {
+                            listaIds.add(rsRango.getInt("id_actividad"));
+                        }
+                    } catch (ParseException ex) {
+                        Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
             hayRango = true;
         } else {
             rsRango = eBuscar.listar();
+            hayRango = false;
         }
 
         ArrayList<Actividad> cjtoAux = Actividad.listar(rs);     //Resultado de la busqueda cochina y gigante//
-        ArrayList<Actividad> listaRango = Actividad.listar(rsRango); //Resultado de la busqueda de rango//
+        ArrayList<Actividad> listaRango = new ArrayList<>(0);
+        if (hayRango){
+            Iterator it = listaIds.iterator();
+            while (it.hasNext()){
+                Integer id = (Integer) it.next();
+                Actividad act = new Actividad();
+                act.setIdActividad(id.intValue());
+                act.setActividad();
+                listaRango.add(act);
+            }
+        } else {
+            listaRango.addAll(Actividad.listar(rsRango));
+        }
 
         ArrayList<Actividad> listaParticipantes = new ArrayList<>(0);
 
-        if (this.participantes != null && !this.participantes.isEmpty()) {
-            Iterator itPart = participantes.iterator();
+        if (this.participante != null && !this.participante.equals("")) {
             hayParticipantes = true;
-            while (itPart.hasNext()) {
-                String estePart = (String) itPart.next();
-                if (estePart != null && !estePart.equalsIgnoreCase("")) {
-                    Actividad aux = new Actividad();
-                    aux.setCreador(creador);
-                    listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(creador));    //Resultado de la busqueda de participantes//
-                }
-            }
+            listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));    //Resultado de la busqueda de participantes//
         }
 
         ArrayList<ArrayList<Actividad>> listas = new ArrayList<>(0);
-
         //De aqui pa'lante, el fume fue tan grande que ni yo mismo lo entiendo. Alejandro
         //Lo que trato de hacer es revisar las distintas formas en que pueden quedar las
         //listas para poder discernir cual(es) lista(s) es(son) vacia(s).
-        if (listaParticipantes != null && !listaParticipantes.isEmpty() && hayParticipantes) {
+        if (listaParticipantes
+                != null && !listaParticipantes.isEmpty()
+                && hayParticipantes) {
             listas.add(listaParticipantes);
         }
-        if (cjtoAux != null && !cjtoAux.isEmpty() && hayColumnas) {
+        if (cjtoAux
+                != null && !cjtoAux.isEmpty()
+                && hayColumnas) {
             listas.add(cjtoAux);
         }
-        if (listaRango != null && !listaRango.isEmpty() && hayRango) {
+        if (listaRango
+                != null && !listaRango.isEmpty()
+                && hayRango) {
             listas.add(listaRango);
         }
-
         ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
+
         if (listas.isEmpty()) {
             if (hayParticipantes || hayColumnas || hayRango) {
                 libro = paginar(listaInterceptada, mostrarPorPagina);
@@ -264,7 +313,6 @@ public class BusquedaActividad extends Root {
         }
         totalPaginas = libro.size();
         pagina = 1;
-
     }
 
     /**
@@ -368,6 +416,50 @@ public class BusquedaActividad extends Root {
             }
         }
         return interseccion;
+    }
+
+    /**
+     * Funcion que parsea y compara dos fechas.
+     *
+     * @param fechaIni
+     * @param fechaFin
+     * @return true en caso de que las fechas esten en orden.
+     * @throws ParseException
+     */
+    private static boolean antesDe(String fechaIni, String fechaFin) throws ParseException {
+        boolean resp = false;
+        Calendar cIni = Calendar.getInstance();
+        Calendar cFin = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        cIni.setTime(sdf.parse(fechaIni));
+        cFin.setTime(sdf.parse(fechaFin));
+
+        resp = cIni.before(cFin);
+
+        return resp;
+
+    }
+
+    /**
+     * Funcion que parsea y compara dos fechas.
+     *
+     * @param fechaIni
+     * @param fechaFin
+     * @return true en caso de que las fechas esten en el orden deseado.
+     * @throws ParseException
+     */
+    private static boolean despuesDe(String fechaIni, String fechaFin) throws ParseException {
+        boolean resp = false;
+        Calendar cIni = Calendar.getInstance();
+        Calendar cFin = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        cIni.setTime(sdf.parse(fechaIni));
+        cFin.setTime(sdf.parse(fechaFin));
+
+        resp = cIni.after(cFin);
+
+        return resp;
+
     }
 
     public static String[] cantidadActividadesPorTipo() {
