@@ -12,6 +12,8 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
+
+
 <head>
     <script type="text/javascript">
         $(document).ready(function(){
@@ -42,6 +44,20 @@
         <div class ="error"><bean:write name="tipoActividadForm" 
                     property="mensajeError" /></div>
         </logic:present>
+
+    <logic:present name="actividades"> 
+        <% String chd = (String) request.getSession().getAttribute("estadisticaCantidad");
+            String chl = (String) request.getSession().getAttribute("estadisticaNombres");
+            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+            String chtt = "Actividades%20de%20extensión&";
+            String chco = "chco=ff0000&";
+            String chdl = chl;
+            s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
+        %>
+        <center>
+        <html:img src="<%=s%>"/>
+        </center>
+    </logic:present>
 <fieldset>
     <logic:notPresent name="actividades">
         <div align="center">

@@ -6,8 +6,11 @@ package Clases;
 
 import DBMS.Entity;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -251,9 +254,9 @@ public class BusquedaActividad extends Root {
         ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
         if (listas.isEmpty()) {
             if (hayParticipantes || hayColumnas || hayRango) {
-              libro = paginar(listaInterceptada, mostrarPorPagina);
+                libro = paginar(listaInterceptada, mostrarPorPagina);
             } else {
-              libro = paginar(cjtoAux, mostrarPorPagina);  
+                libro = paginar(cjtoAux, mostrarPorPagina);
             }
         } else {
             listaInterceptada = intersectar(listas);
@@ -365,5 +368,34 @@ public class BusquedaActividad extends Root {
             }
         }
         return interseccion;
+    }
+
+    public static String[] cantidadActividadesPorTipo() {
+
+        String[] estadistica = new String[2];
+        String nombres = "";
+        String cantidad = "";
+        Entity eSelec = new Entity(0, 2);
+        ResultSet rs = eSelec.seleccionarNumActividades();
+
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    nombres += rs.getString("nombre_tipo_actividad") + "|";
+                    cantidad += rs.getString("cantidad") + ",";
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (nombres.length() != 0 && cantidad.length() != 0) {
+            nombres = nombres.substring(0, nombres.length() - 1) + "&";
+            cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
+        }
+
+        estadistica[0] = nombres;
+        estadistica[1] = cantidad;
+        return estadistica;
     }
 }

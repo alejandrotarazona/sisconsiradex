@@ -42,8 +42,8 @@ public class Buscar extends DispatchAction {
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-
-
+        
+        
         System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
                 + "a la pagina para mostrar.");
 
@@ -51,6 +51,7 @@ public class Buscar extends DispatchAction {
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
         request.setAttribute("usuarios", usuarios);//mientras tanto
+        
         return mapping.findForward(PAGE);
     }
 
@@ -70,8 +71,8 @@ public class Buscar extends DispatchAction {
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-
-
+        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        
         ba.buscar(false);
         ArrayList<String> pags = new ArrayList<>(0);
 
@@ -99,6 +100,8 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("programas", programas);
         request.getSession().setAttribute("tiposdeactividad", ta);
         request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
+        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
+        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
         return mapping.findForward(PAGINA);
     }
 
@@ -118,7 +121,8 @@ public class Buscar extends DispatchAction {
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-
+        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        
         ba.buscar(true);
         ArrayList<String> pags = new ArrayList<>(0);
 
@@ -140,6 +144,8 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("programas", programas);
         request.getSession().setAttribute("tiposdeactividad", ta);
         request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
+        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
+        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
         return mapping.findForward(PAGINA);
     }
     
@@ -149,7 +155,8 @@ public class Buscar extends DispatchAction {
         
         BusquedaActividad ba = (BusquedaActividad) form;
         BusquedaActividad busquedaRealizada = (BusquedaActividad) request.getSession().getAttribute("busqueda");
-        
+        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+
         
         ArrayList<Actividad> acts = ba.getPagina(ba.getPagina());
         System.out.println("Actividades para mostrar (nros):");
@@ -158,6 +165,8 @@ public class Buscar extends DispatchAction {
          }*/
         
         request.getSession().setAttribute("actividades", acts);
+        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
+        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
         
         return mapping.findForward(PAGINA);
     }
