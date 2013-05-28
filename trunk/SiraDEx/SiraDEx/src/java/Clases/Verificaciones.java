@@ -271,6 +271,7 @@ public class Verificaciones {
 
             CampoValor cv = (CampoValor) it.next();
             String valor = cv.getValor();
+            String valorAux = cv.getValorAux();
             String tipo = cv.getCampo().getTipo();
             String nombre = "'" + cv.getCampo().getNombre() + "'";
             int longitud = cv.getCampo().getLongitud();
@@ -278,7 +279,11 @@ public class Verificaciones {
             String respVerif;
 
             /*verifica si el campo es obligatorio que no sea vacío*/
-            respVerif = verifVacio(nombre, valor);
+            String val = valor;
+            if (valorAux!=null & valor.isEmpty()){
+                val = valorAux;
+            }
+            respVerif = verifVacio(nombre, val);
             if (obligatorio && respVerif != null) {
                 act.setMensajeError(respVerif);
                 return false;
@@ -289,7 +294,7 @@ public class Verificaciones {
             if ((tipo.equals("texto")
                     || tipo.equals("textol")
                     || tipo.equals("numero")
-                    || (tipo.equals("participante") && !esVacio(cv.getValorAux())))
+                    || (tipo.equals("participante") && !esVacio(valorAux)))
                     && valor.length() > longitud) {
                 act.setMensajeError("Error: El campo " + nombre + " tiene "
                         + valor.length() + " caracteres y solo puede contener "
@@ -303,9 +308,9 @@ public class Verificaciones {
                         + "solo números.");
                 return false;
             }
-            
+
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
-            if (tipo.equals("participante") && !cv.getValorAux().equals("Apellido(s), Nombre(s)")
+            if (tipo.equals("participante") && !valorAux.equals("Apellido(s), Nombre(s)")
                     && !valor.isEmpty()) {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "
                         + "datos en uno de sus dos campos, no puede contener en ambos.");
@@ -331,11 +336,12 @@ public class Verificaciones {
                     return false;
                 }
             }
-            if (!creador) {
-                act.setMensajeError("Error: El usuario que registra la actividad debe "
-                        + "estar presente en alguno de los campos desplegables de participante.");
-                return false;
-            }
+
+        }
+        if (!creador) {
+            act.setMensajeError("Error: El usuario que registra la actividad debe "
+                    + "estar presente en alguno de los campos desplegables de participante.");
+            return false;
         }
 
         return true;
