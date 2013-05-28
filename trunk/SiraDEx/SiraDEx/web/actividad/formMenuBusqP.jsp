@@ -52,7 +52,7 @@
                         </html:select><br><br> 
 
                         Participante:<br>
-                        <html:select name="busquedaActividadForm" property="creador">
+                        <html:select name="busquedaActividadForm" property="participante">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="usuarios" label="contenido" value="mensaje"/>
                         </html:select><br><br>

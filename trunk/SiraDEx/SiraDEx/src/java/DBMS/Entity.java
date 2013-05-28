@@ -105,7 +105,7 @@ public class Entity {
         this.respuesta = respuesta;
     }
 
-    public String escapeSQL(Object o) {
+    public static String escapeSQL(Object o) {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
     }
 
@@ -518,7 +518,7 @@ public class Entity {
 
         return rs;
     }
-
+    
     public static void main(String[] args) {
         /*
          * este es un main para pruebas. manejalo para hacer las pruebas que
