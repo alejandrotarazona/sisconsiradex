@@ -278,10 +278,32 @@ public class Verificaciones {
             boolean obligatorio = cv.getCampo().isObligatorio();
             String respVerif;
 
+
+            if (tipo.equals("participante") 
+                    && (valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux))) {
+                valorAux = "";
+                cv.setValorAux(valorAux);
+            }
+            
+            /*verifica si el campo es tipo participante tenga datos en un solo campo*/
+            if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
+                act.setMensajeError("Error: El campo " + nombre + " debe contener "
+                        + "datos en uno de sus dos campos, no puede contener en ambos.");
+                return false;
+            }
+
+            /*verifica si el creador de la actividad esta presente*/
+            String usbid = valor.split(",")[0];
+            if (tipo.equals("participante") && act.getCreador().equals(usbid)) {
+                creador = true;
+            }
+            
             /*verifica si el campo es obligatorio que no sea vacío*/
             String val = valor;
-            if (valorAux!=null & valor.isEmpty()){
-                val = valorAux;
+            if (tipo.equals("participante")) {
+                if (valor.isEmpty()) {
+                    val = valorAux;
+                }
             }
             respVerif = verifVacio(nombre, val);
             if (obligatorio && respVerif != null) {
@@ -309,18 +331,6 @@ public class Verificaciones {
                 return false;
             }
 
-            /*verifica si el campo es tipo participante tenga datos en un solo campo*/
-            if (tipo.equals("participante") && !valorAux.equals("Apellido(s), Nombre(s)")
-                    && !valor.isEmpty()) {
-                act.setMensajeError("Error: El campo " + nombre + " debe contener "
-                        + "datos en uno de sus dos campos, no puede contener en ambos.");
-                return false;
-            }
-
-            String usbid = valor.split(",")[0];
-            if (tipo.equals("participante") && act.getCreador().equals(usbid)) {
-                creador = true;
-            }
 
             /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
             if (tipo.equals("producto") || tipo.equals("archivo")) {

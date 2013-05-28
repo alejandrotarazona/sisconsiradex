@@ -52,6 +52,7 @@
                             <logic:equal name="camposValores" property="campo.tipo" value="usbid">
                                 <html:text name="camposValores" property="valor" indexed="true"/>  
                             </logic:equal>
+                            
                             <logic:equal name="camposValores" property="campo.tipo" value="texto">
                                 <html:text name="camposValores" property="valor" indexed="true"/>  
                             </logic:equal>

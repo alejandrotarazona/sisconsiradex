@@ -253,22 +253,28 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
 
-        Entity eBuscar = new Entity(0, 0); //SELECT USUARIO
-
+        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
         String[] tablas = {
-            "ACTIVIDAD"
+            "ACTIVIDAD",
+            "USUARIO"
         };
-        String cols = "usbid, nombres, apellidos";
-        String[] join = {"usbid=creador"};
-
-        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, "JOIN", join, "");
+        String cols = "p.usbid, nombres, apellidos";
+        String[] joins = {"p.id_act=a.id_actividad", "p.usbid=u.usbid"};
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, "LEFT OUTER JOIN", joins, "");
         if (rs != null) {
             try {
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
+
+                    String contenido;
                     String usbid = rs.getString("usbid");
-                    String contenido = usbid + ", " + rs.getString("nombres")
-                            + " " + rs.getString("apellidos");
+
+                    if (rs.getString("nombres") != null) {//el participante es usuario
+                        contenido = usbid + ", " + rs.getString("nombres")
+                                + " " + rs.getString("apellidos");
+                    } else {//el participante no es usuario
+                        contenido = usbid + " (No es usuario)";
+                    }
 
                     ec.setMensaje(usbid);
                     ec.setContenido(contenido);

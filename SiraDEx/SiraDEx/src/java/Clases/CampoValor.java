@@ -174,17 +174,14 @@ public class CampoValor implements Serializable {
         }
 
         if (campo.getTipo().equals("participante")) {
-            if (!valor.isEmpty() && !valorAux.isEmpty()) {
+
+            if (!valor.isEmpty() || !valorAux.isEmpty()) {
                 Entity e = new Entity(1, 5);//INSERT PARTICIPA
                 String usbid;
-                if (valorAux.equals("Apellido(s), Nombre(s)")) {
-                    valorAux = "";
-                }
-                if (Verificaciones.esVacio(valorAux)) {
+                if (valorAux.isEmpty()) {
                     usbid = valor.split(",")[0];
                 } else {
-                    valor = valorAux;
-                    usbid = valor;
+                    usbid = valorAux;
                 }
                 Object[] tupla = {idAct, usbid, idCampo};
                 resp &= e.insertar(tupla);
