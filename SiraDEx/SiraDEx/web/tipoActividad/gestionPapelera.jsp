@@ -12,40 +12,41 @@
     </head>
     <body>
         <h1 class="title" id="page-title">Gestion de Tipos de Actividad Eliminados</h1>
-        
-        <br><logic:present name="tipoActividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
-                </logic:present> 
-            <br><logic:present name="tipoActividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
-            </logic:present>
-            
-            <h1>Tipos de Actividades eliminadas del sistema</h1>
+
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div>
+        </logic:present> 
+        <logic:present name="tipoActividadForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div>
+        </logic:present>
+
+        <h1>Tipos de Actividades eliminadas del sistema</h1>
         <logic:notPresent name="tipos">
-            No hay tipos de actividad que mostrar
+            <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>
-        <logic:present name="tipos">
-           
+        <logic:present name="tipos">        
             <table>
-                <logic:iterate name="tipos" id="ta">
-                    <tr>
-                    <td>
-                        <bean:write name="ta" property="nombreTipo"/>
-                    </td>
-                  
-                    <td><html:form method="POST" action="/RestaurarTipoActividad">
-                            <html:hidden name="ta" property="id" />
-                            <html:submit styleId="botonRestaurar"
-                                         value=" "
-                                         title="Restaurar"
-                                         onclick="return confirm('¿Está seguro que desea restaurar el Tipo de Actividad?')" />
-                        </html:form>
-                    </td>
-                </tr>
-            </logic:iterate>
-        </table>
-    </logic:present>
-            
-            
+                <tbody>
+                    <logic:iterate name="tipos" id="ta">
+                        <tr>
+                        <td width="50%">
+                            <bean:write name="ta" property="nombreTipo"/>
+                        </td>
+
+                        <td><html:form method="POST" action="/RestaurarTipoActividad">
+                                <html:hidden name="ta" property="id" />
+                                <html:submit styleId="botonRestaurar"
+                                             value=" "
+                                             title="Restaurar"
+                                             onclick="return confirm('¿Está seguro que desea restaurar el Tipo de Actividad?')" />
+                            </html:form>
+                        </td>
+                        </tr>
+                    </logic:iterate>
+                </tbody>
+            </table>
+        </logic:present>
+
+
     </body>
 </html>

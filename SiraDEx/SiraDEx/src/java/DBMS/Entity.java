@@ -170,16 +170,16 @@ public class Entity {
      join usuario u on p.usbid=u.usbid
      join actividad a on p.id_act=a.id_actividad 
      where u.usbid = 'x' and ...*/
-    public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols, String[] joins, String conds) {
+    public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols,
+            String JOIN, String[] joins, String conds) {
+
         sql = ACCION + " DISTINCT " + cols
                 + " FROM " + TABLA + " " + TABLA.substring(0, 1);
         int tam = TABLAS.length;
         if (tam > 0) {
-
-            sql += " JOIN " + TABLAS[0] + " " + TABLAS[0].substring(0, 1) + " ON " + joins[0];
-
-            for (int i = 1; i < tam; i++) {
-                sql += " JOIN " + TABLAS[i] + " " + TABLAS[i].substring(0, 1) + " ON " + joins[i];
+            for (int i = 0; i < tam; i++) {
+                sql += " " + JOIN + " " + TABLAS[i] + " " + TABLAS[i].substring(0, 1)
+                        + " ON " + joins[i];
             }
         }
 

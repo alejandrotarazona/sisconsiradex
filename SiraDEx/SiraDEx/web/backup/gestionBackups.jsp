@@ -53,7 +53,7 @@
          
         </html:form>
 
-        <br><h1>Configurar la creación Backups automáticos</h1>
+        <br><h1>Configurar la creación de Backups automáticos</h1>
 
         <html:form method="POST" action="/GestionBackups?method=set" >        
             Frecuencia&nbsp;

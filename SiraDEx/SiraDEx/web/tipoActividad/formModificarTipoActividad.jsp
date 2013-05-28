@@ -24,7 +24,7 @@
                         $('.'+mostrador).css("visibility", "visible");
                         $('.'+mostrador2).css("visibility", "hidden");
                     } else if(valor == "participante"){
-                        $('#'+longitud).css("visibility", "hidden");
+                        $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
                         $('.'+mostrador2).css("visibility", "visible");
                     } else if(valor == "texto" || valor=="textol" || valor=="numero"){
@@ -69,13 +69,13 @@
             <table>
                 <tr>
                 <td>Nombre del Tipo de Actividad</td>
-                <td><html:text name="tipoActividadForm" property="nombreTipo">
+                <td><html:text name="tipoActividadForm" property="nombreTipo" size="78">
                         <bean:write name="tipoActividadForm" property="nombreTipo"/>
                     </html:text> </td>
             </tr>
             <tr>
             <td>Descripción</td>
-            <td><html:textarea name="tipoActividadForm"  cols="80" rows="3"
+            <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                            property="descripcion">
                     <bean:write name="tipoActividadForm" property="descripcion"/>
                 </html:textarea>

@@ -219,15 +219,20 @@ public class Actividad extends Root {
             "ACTIVIDAD",
             "USUARIO"
         };
-        String cols = "nombres, apellidos";
-        String[] joins = {"p.id_act=a.id_actividad","p.usbid=u.usbid"};
-        String cond = "id_actividad="+idAct;
-        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, cond);
+        String cols = "p.usbid, nombres, apellidos";
+        String[] joins = {"p.id_act=a.id_actividad", "p.usbid=u.usbid"};
+        String cond = "id_actividad=" + idAct;
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, "LEFT OUTER JOIN", joins, cond);
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    String participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
-                    System.out.print(participante+"##############################################");
+                    String participante;
+
+                    if (rs.getString("nombres") != null) {
+                        participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
+                    } else {
+                        participante = rs.getString("usbid");
+                    }
                     participantes.add(participante);
 
                 }
@@ -235,6 +240,7 @@ public class Actividad extends Root {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+
     }
 
     public String participantesToString() {
@@ -398,7 +404,7 @@ public class Actividad extends Root {
 
             while ((itValores.hasNext())) {
                 CampoValor cv = (CampoValor) itValores.next();
-                resp  &= cv.agregar(this.idActividad);
+                resp &= cv.agregar(this.idActividad);
             }
 
             if (!resp) {
@@ -542,9 +548,9 @@ public class Actividad extends Root {
             "TIPO_ACTIVIDAD"
         };
         String cols = "*";
-        String[] joins = {"p.id_act=a.id_actividad","t.id_tipo_actividad=a.id_tipo_actividad"};
-        String conds = "p.usbid="+"'"+usbid+"'";
-        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, joins, conds);
+        String[] joins = {"p.id_act=a.id_actividad", "t.id_tipo_actividad=a.id_tipo_actividad"};
+        String conds = "p.usbid=" + "'" + usbid + "'";
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, "JOIN", joins, conds);
         return listar(rs);
     }
 
@@ -672,6 +678,14 @@ public class Actividad extends Root {
             mensajeError = "Error: No se pudo modificar la Actividad.";
         }
         return resp;
+    }
+
+    public static void imprimirLista(ArrayList<String> lista) {
+        Iterator it = lista.iterator();
+        while (it.hasNext()) {
+            System.out.println(it.next());
+
+        }
     }
 
     public static void main(String args[]) {

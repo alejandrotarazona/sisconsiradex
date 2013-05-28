@@ -17,10 +17,10 @@ import org.apache.struts.action.ActionMapping;
  * @author SisCon
  */
 public class Restaurar extends org.apache.struts.action.Action {
-    
+
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    
+
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
@@ -30,14 +30,17 @@ public class Restaurar extends org.apache.struts.action.Action {
         t.setCampos();
         if (t.restaurarTipoActividad()) {
             ArrayList ta = Clases.TipoActividad.listarDesactivos();
-            request.setAttribute("tipos", ta);
+            if (ta.isEmpty()) {
+                request.setAttribute("tipos", null);
+            } else {
+                request.setAttribute("tipos", ta);
+            }
             return mapping.findForward(SUCCESS);
         }
-        
+
         ArrayList ta = Clases.TipoActividad.listarDesactivos();
         request.setAttribute("tipos", ta);
         return mapping.findForward(FAILURE);
 
     }
-    
 }
