@@ -195,21 +195,21 @@ public class BusquedaActividad extends Root {
         }
 
         ResultSet rsRango;
-        Entity eRango = new Entity(0, 21);
+        Entity eRango = new Entity(0, 24);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
             if (this.fechaFin != null && !this.fechaFin.equals("")) {
                 Object[] condRango = {
                     fechaInic,
                     fechaFin
                 };
-                rsRango = eRango.buscarRango("fecha_creacion", condRango);
+                rsRango = eRango.buscarRango(condRango);
                 hayRango = true;
             } else {
-                rsRango = eRango.buscarMayorQue("fecha_creacion", fechaInic);
+                rsRango = eRango.buscarMayorQue(fechaInic);
                 hayRango = true;
             }
         } else if (this.fechaFin != null && !this.fechaFin.equals("")) {
-            rsRango = eRango.buscarMenorQue("fecha_creacion", fechaFin);
+            rsRango = eRango.buscarMenorQue(fechaFin);
             hayRango = true;
         } else {
             rsRango = eBuscar.listar();
@@ -260,6 +260,7 @@ public class BusquedaActividad extends Root {
             libro = paginar(listaInterceptada, mostrarPorPagina);
         }
         totalPaginas = libro.size();
+        pagina = 1;
 
     }
 

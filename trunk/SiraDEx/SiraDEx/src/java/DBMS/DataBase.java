@@ -20,8 +20,8 @@ public class DataBase {
     private static final String host = "localhost";
     private static final int port = 5432;
     private static final String database = "bdsiradex";
-    private static final String username = "siradex";
-    private static final String password = "siradex";
+    private static final String username = "postgres";
+    private static final String password = "postgres";
     static private Connection conexion;
     static private DataBase instance = null;
     
