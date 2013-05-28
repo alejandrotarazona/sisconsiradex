@@ -30,7 +30,7 @@
             <br><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div>
         </logic:present>
         <logic:notPresent name="tipos">
-            No hay Tipo de Actividad que mostrar
+            <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="tipos">
 

@@ -221,7 +221,7 @@ public class Verificaciones {
             /*verifica que la longitud sea válida (numérica, a lo sumo 3 caracteres,
              * mayor que 0 que es lo mismo que no vacía)*/
             if (tipo.equals("texto") || tipo.equals("textol")
-                    || tipo.equals("numero")) {
+                    || tipo.equals("numero") || tipo.equals("participante")) {
 
                 String patronNum = "^[ ]*[0-9]+[ ]*$";
                 String longitud = String.valueOf(campo.getLongitud());
@@ -264,6 +264,7 @@ public class Verificaciones {
      */
     public static boolean verif(Actividad act) {
 
+        boolean creador = false;
         Iterator it = act.getCamposValores().iterator();
 
         while (it.hasNext()) {
@@ -285,8 +286,11 @@ public class Verificaciones {
 
             /*verifica que la longitud sea válida (solo aplica para campos tipo
              * texto, texto largo y numero)*/
-            if ((tipo.equals("texto") || tipo.equals("textol")
-                    || tipo.equals("numero")) && valor.length() > longitud) {
+            if ((tipo.equals("texto")
+                    || tipo.equals("textol")
+                    || tipo.equals("numero")
+                    || (tipo.equals("participante") && !esVacio(cv.getValorAux())))
+                    && valor.length() > longitud) {
                 act.setMensajeError("Error: El campo " + nombre + " tiene "
                         + valor.length() + " caracteres y solo puede contener "
                         + "a lo sumo " + longitud + " carateres.");
@@ -298,6 +302,19 @@ public class Verificaciones {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
+            }
+            
+            /*verifica si el campo es tipo participante tenga datos en un solo campo*/
+            if (tipo.equals("participante") && !cv.getValorAux().equals("Apellido(s), Nombre(s)")
+                    && !valor.isEmpty()) {
+                act.setMensajeError("Error: El campo " + nombre + " debe contener "
+                        + "datos en uno de sus dos campos, no puede contener en ambos.");
+                return false;
+            }
+
+            String usbid = valor.split(",")[0];
+            if (tipo.equals("participante") && act.getCreador().equals(usbid)) {
+                creador = true;
             }
 
             /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
@@ -313,6 +330,11 @@ public class Verificaciones {
                             + " debe ser de tipo PDF");
                     return false;
                 }
+            }
+            if (!creador) {
+                act.setMensajeError("Error: El usuario que registra la actividad debe "
+                        + "estar presente en alguno de los campos desplegables de participante.");
+                return false;
             }
         }
 

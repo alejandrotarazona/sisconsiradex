@@ -67,11 +67,11 @@
 
         <h1>Actividades registradas en el sistema</h1>
 
-        <br><logic:present name="actividadForm" property="mensaje">
-            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
+        <logic:present name="actividadForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
         </logic:present> 
-        <br><logic:present name="actividadForm" property="mensajeError">
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
+        <logic:present name="actividadForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
         </logic:present>
 
         <logic:notPresent name="acts">

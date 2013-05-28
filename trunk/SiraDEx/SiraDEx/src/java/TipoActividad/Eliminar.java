@@ -42,14 +42,17 @@ public class Eliminar extends org.apache.struts.action.Action {
         t.setTipoActividad();
         t.setCampos();
         if (t.eliminarTipoActividad()) {
-            ArrayList ta = Clases.TipoActividad.listarCondicion("activo",true);
-            request.setAttribute("tipos", ta);
+            ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
+            if (ta.isEmpty()) {
+                request.setAttribute("tipos", null);
+            } else {
+                request.setAttribute("tipos", ta);
+            }
             return mapping.findForward(SUCCESS);
         }
-        
-        ArrayList ta = Clases.TipoActividad.listarCondicion("activo",true);
+
+        ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
         request.setAttribute("tipos", ta);
         return mapping.findForward(FAILURE);
-
     }
 }

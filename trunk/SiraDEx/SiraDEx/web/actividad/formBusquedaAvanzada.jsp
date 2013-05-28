@@ -42,8 +42,8 @@
         <div class ="error"><bean:write name="tipoActividadForm" 
                     property="mensajeError" /></div>
         </logic:present>
-
-    <logic:notPresent name="actividades"><br><br>
+<fieldset>
+    <logic:notPresent name="actividades">
         <div align="center">
             Para realizar una consulta, seleccione o rellene los campos mostrados a 
             la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
@@ -128,6 +128,7 @@
             </html:form>
         </logic:notEqual>
     </logic:present>
+</fieldset>
 </body>
 
 

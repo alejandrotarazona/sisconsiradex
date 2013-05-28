@@ -226,7 +226,7 @@ WITH (
 
 CREATE TABLE PARTICIPA(
     id_act       INT NOT NULL,
-    usbid        VARCHAR(20) NOT NULL,
+    usbid        VARCHAR(80) NOT NULL,
     id_campo     INT NOT NULL,
 
     

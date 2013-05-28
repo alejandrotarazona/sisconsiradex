@@ -41,8 +41,8 @@
         <div class ="error"><bean:write name="tipoActividadForm" 
                     property="mensajeError" /></div>
         </logic:present>
-
-    <logic:notPresent name="actividades"><br><br>
+<fieldset>
+    <logic:notPresent name="actividades">
         <div align="center">
             Para realizar una consulta, seleccione o rellene los campos mostrados a 
             la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
@@ -64,55 +64,56 @@
             <br>
             <div align="center">No hay actividad que mostrar que coincida con los
                 parámetros de la búsqueda</div>
-            </logic:empty>        <logic:iterate name="actividades" id="act">
-            <br><br>
-            <b>
-                <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                out.print(a.participantesToString());%>
-            </b>
-            "<bean:write name="act" property="nombreTipoActividad"/>",
+
+            </logic:empty>  <ol >     
+            <logic:iterate name="actividades" id="act">
+                <br><br>
+                <b><li>
+                        <% Actividad a = (Actividad) pageContext.findAttribute("act");
+                            out.print(a.participantesToString());%>
+                </b>
+                "<bean:write name="act" property="nombreTipoActividad"/>",
 
 
-            <% out.print(a.camposValoresToString());%>
+                <% out.print(a.camposValoresToString());%>
 
-            <br>
-            <div>
-                <span class="textolargo">
+                 </li>
+                <div>
+                    <span class="textolargo">
 
-                    <b>Descripción:</b> 
-                    <bean:write name="act" property="descripcion"/>
+                        <b>Descripción:</b> 
+                        <bean:write name="act" property="descripcion"/>
 
-                    <logic:iterate name="act" property="camposValores" 
-                                   id="campoValor" indexId="index">
+                        <logic:iterate name="act" property="camposValores" 
+                                       id="campoValor" indexId="index">
 
-                        <logic:equal name="campoValor" property="campo.tipo" 
-                                     value="textol">
-                            <br>
-                            <bean:write name="campoValor" property="campo.nombre"/>: 
-                            <bean:write name="campoValor" property="valor"/>
-                        </logic:equal>
+                            <logic:equal name="campoValor" property="campo.tipo" 
+                                         value="textol">
+                                <br>
+                                <bean:write name="campoValor" property="campo.nombre"/>: 
+                                <bean:write name="campoValor" property="valor"/>
+                            </logic:equal>
 
-                    </logic:iterate>
-                    <logic:iterate name="act" property="archivos" 
-                                   id="archivo" indexId="index">
+                        </logic:iterate>
+                        <logic:iterate name="act" property="archivos" 
+                                       id="archivo" indexId="index">
 
-                        <html:form method="POST">
-                            <html:hidden name="act" property="idActividad"/>
-                            <html:hidden name="act" property="idArchivo" value="${index}"/>
-                            <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
-                                       paramId="idActividad" title="Descargar">
-                                ${archivo.tipo}
-                            </html:link> 
-                        </html:form>
+                            <html:form method="POST">
+                                <html:hidden name="act" property="idActividad"/>
+                                <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
+                                           paramId="idActividad" title="Descargar">
+                                    ${archivo.tipo}
+                                </html:link> 
+                            </html:form>
 
-                    </logic:iterate>
-                </span> 
+                        </logic:iterate>
+                    </span> 
 
-                <a class="mostrar" style=" cursor: pointer; text-decoration:underline">
-                    Más detalles</a>
-            </div>
-
-        </logic:iterate>
+                    <a class="mostrar" style=" cursor: pointer; text-decoration:underline">
+                        Más detalles</a>
+                </div>
+            </logic:iterate></ol>
         <br>    
         <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
             <html:form action="/BusquedaPublica?method=aPagina">
@@ -123,5 +124,6 @@
         </logic:notEqual>
 
     </logic:present>
+</fieldset>
 </body>
 

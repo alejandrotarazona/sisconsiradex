@@ -30,7 +30,7 @@
                 <tiles:insert attribute="header"/>
                 <tiles:insert attribute="topMenu"/>
                 <div id="main" class="section section-main clearfix" role="main">
-                    <div id="content" class="column grid-11 push-6">
+                    <div id="content" class="column grid-11 push-5">
                         <div class="inner">
                             <div id="main-content" class="clearfix">
                                 <div class="region region-content">

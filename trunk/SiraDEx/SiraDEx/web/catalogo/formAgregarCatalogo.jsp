@@ -46,7 +46,10 @@
                     </tr>
                     <tr>
                     <td>Número de campos<span style="color:red">*</span></td>
-                    <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/></td>
+                    <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/>
+                    <span style="color:red">Si marcó la opción</span> <b>Catálogo de Usuarios</b> 
+                    <span style="color:red">tendrá por defecto un campo para el usb-id del usuario.</span>
+                    </td>
                     </tr>
                 </tbody>
             </table>

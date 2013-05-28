@@ -28,6 +28,9 @@ public class CampoValor implements Serializable {
 
     private Campo campo;
     private String valor;
+    private String valorAux; /*atributo auxiliar para setearlo al momento llenar
+     un campo e texto de tipo participante*/
+
     private FormFile file = null;
     private static String[] ATRIBUTOS = {
         "id_campo", //0
@@ -66,6 +69,14 @@ public class CampoValor implements Serializable {
 
     public FormFile getFile() {
         return file;
+    }
+
+    public String getValorAux() {
+        return valorAux;
+    }
+
+    public void setValorAux(String valorAux) {
+        this.valorAux = valorAux;
     }
 
     public void setFile(FormFile file) {
@@ -146,24 +157,38 @@ public class CampoValor implements Serializable {
     }
 
     public boolean agregar(int idAct) {
+
+
+
         Entity eAgregar = new Entity(1, 4);//INSERT VALOR
         boolean resp = true;
 
-        Integer idCampo = new Integer(campo.getIdCampo());
-        Integer idActividad = new Integer(idAct);
+        Integer idCampo = campo.getIdCampo();
+
 
         if (file != null) {
-            resp  &= eAgregar.insertarArchivo(idCampo, idActividad, valor, file);
+            resp &= eAgregar.insertarArchivo(idCampo, idAct, valor, file);
         } else {
-            Object[] tupla = {idCampo, idActividad, valor};
-            resp  &= eAgregar.insertar(tupla);
+            Object[] tupla = {idCampo, idAct, valor};
+            resp &= eAgregar.insertar(tupla);
         }
-        
-        if (campo.getTipo().equals("participante")){
-        Entity e = new Entity(1, 5);//INSERT PARTICIPA
 
-        Object[] tupla = {idAct, valor, campo.getIdCampo()};
-        resp &= e.insertar(tupla);
+        if (campo.getTipo().equals("participante")) {
+            if (!valor.isEmpty() && !valorAux.isEmpty()) {
+                Entity e = new Entity(1, 5);//INSERT PARTICIPA
+                String usbid;
+                if (valorAux.equals("Apellido(s), Nombre(s)")) {
+                    valorAux = "";
+                }
+                if (Verificaciones.esVacio(valorAux)) {
+                    usbid = valor.split(",")[0];
+                } else {
+                    valor = valorAux;
+                    usbid = valor;
+                }
+                Object[] tupla = {idAct, usbid, idCampo};
+                resp &= e.insertar(tupla);
+            }
         }
 
         return resp;

@@ -24,7 +24,7 @@
                         $('.'+mostrador).css("visibility", "visible");
                         $('.'+mostrador2).css("visibility", "hidden");
                     } else if(valor == "participante"){
-                        $('#'+longitud).css("visibility", "hidden");
+                        $('#'+longitud).css("visibility", "visible");
                         $('.'+mostrador).css("visibility", "hidden");
                         $('.'+mostrador2).css("visibility", "visible");
                     } else if(valor == "texto" || valor=="textol" || valor=="numero"){
@@ -37,7 +37,7 @@
                         $('.'+mostrador2).css("visibility", "hidden");
                     }
                 }
-                $(".selector").change(function(evento){
+                $(".selector").on('focus change',function(evento){
                     var tg = evento.target.id;
                     var mos = "mostrador"+tg.slice("selector".length);
                     var mos2 = "mostrador2"+tg.slice("selector".length);
