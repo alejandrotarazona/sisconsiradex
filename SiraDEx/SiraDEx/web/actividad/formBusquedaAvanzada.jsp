@@ -56,7 +56,7 @@
             <html:form action="/BusquedaAvanzada?method=aPagina">
                 Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
                 <html:text name="busquedaActividadForm" property="pagina"
-                           value="1" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
+                           value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
             </html:form>
         </logic:notEqual>
 
@@ -124,7 +124,7 @@
             <html:form action="/BusquedaAvanzada?method=aPagina">
                 Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
                 <html:text name="busquedaActividadForm" property="pagina"
-                           value="1" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
+                           value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
             </html:form>
         </logic:notEqual>
     </logic:present>

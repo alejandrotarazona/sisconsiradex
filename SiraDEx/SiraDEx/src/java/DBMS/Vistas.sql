@@ -106,6 +106,18 @@ CREATE OR REPLACE VIEW tipo_act__act
     FROM actividad a
         NATURAL JOIN    tipo_actividad ta;
 
+CREATE OR REPLACE VIEW campo__valor
+    AS
+    SELECT *
+    FROM campo c
+        NATURAL JOIN    valor v;
+
+CREATE OR REPLACE VIEW act_completa
+    AS
+    SELECT *
+    FROM tipo_act__act taa
+        NATURAL JOIN campo__valor cv;
+
 CREATE OR REPLACE VIEW act_participa
     AS
     SELECT *

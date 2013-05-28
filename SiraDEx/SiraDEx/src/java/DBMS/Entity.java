@@ -54,7 +54,8 @@ public class Entity {
         "TIPO_R", //20        
         "TIPO_ACT__ACT", //21
         "ACT_PARTICIPA", //22
-        "ELEMENTO_VALOR" //23    --------------------------------------
+        "ELEMENTO_VALOR", //23    
+        "ACT_COMPLETA"//24      --------------------------------------
     };
 
     /*
@@ -436,11 +437,11 @@ public class Entity {
      * @param rango condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.
      */
-    public ResultSet buscarRango(String columnaCondicion, Object[] rango) {
+    public ResultSet buscarRango(Object[] rango) {
         ResultSet rs;
         sql = ACCION + " * "
                 + "FROM " + TABLA
-                + " WHERE " + columnaCondicion + " BETWEEN '"
+                + " WHERE tipo_campo = 'fecha' AND valor BETWEEN '"
                 + escapeSQL(rango[0]) + "' "
                 + "AND '" + escapeSQL(rango[1])
                 + "'";
@@ -461,11 +462,11 @@ public class Entity {
      * @param condicion condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.
      */
-    public ResultSet buscarMayorQue(String columnaCondicion, Object condicion) {
+    public ResultSet buscarMayorQue(Object condicion) {
         ResultSet rs;
         sql = ACCION + " * "
                 + "FROM " + TABLA
-                + " WHERE " + columnaCondicion + " >= '"
+                + " WHERE tipo_campo = 'fecha' AND valor  >= '"
                 + condicion + "' ";
 
         System.out.println(sql);
@@ -484,11 +485,11 @@ public class Entity {
      * @param condicion condicion que debe cimplir la columna
      * @return ResultSet con las tuplas que cumplan.
      */
-    public ResultSet buscarMenorQue(String columnaCondicion, Object condicion) {
+    public ResultSet buscarMenorQue(Object condicion) {
         ResultSet rs;
         sql = ACCION + " * "
                 + "FROM " + TABLA
-                + " WHERE " + columnaCondicion + " <= '"
+                + " WHERE tipo_campo = 'fecha' AND valor  <= '"
                 + condicion + "' ";
 
         System.out.println(sql);
