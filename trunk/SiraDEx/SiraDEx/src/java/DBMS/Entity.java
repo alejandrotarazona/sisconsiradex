@@ -109,6 +109,25 @@ public class Entity {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
     }
 
+    
+     /* PARA USAR CON GOOGLE CHARTS 
+      * Obtiene el numero de actividades por tipo de actividad
+      */
+       
+    public ResultSet seleccionarNumActividades() {
+        sql = ACCION + " nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
+                + "FROM " + TABLA + " NATURAL JOIN tipo_actividad " 
+                + "GROUP BY id_tipo_actividad, "
+                + "nombre_tipo_actividad";
+      
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
+     
+    
     public ResultSet seleccionar(String[] columnas, Object[] valores) {
         sql = ACCION + " * "
                 + "FROM " + TABLA
@@ -505,5 +524,11 @@ public class Entity {
          * este es un main para pruebas. manejalo para hacer las pruebas que
          * requieras.
          */
+        /*
+        Entity e = new Entity(0,2);
+        ResultSet rs = e.seleccionarNumActividades();
+        System.out.println(rs);
+        */
+       
     }
 }

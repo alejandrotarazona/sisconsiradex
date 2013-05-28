@@ -32,7 +32,7 @@
 </head>
 <body>
     <h1 class="title">Búsquedas Públicas</h1> 
-    <h1>Indique los parámetros de su búsqueda</h1>
+  
     <logic:present name="busquedaActividadForm" property="mensaje"><br>
         <div class ="status"><bean:write name="tipoActividadForm" 
                     property="mensaje" /></div>
@@ -41,6 +41,21 @@
         <div class ="error"><bean:write name="tipoActividadForm" 
                     property="mensajeError" /></div>
         </logic:present>
+       
+         <logic:present name="actividades"> 
+        <% String chd = (String) request.getSession().getAttribute("estadisticaCantidad");
+            String chl = (String) request.getSession().getAttribute("estadisticaNombres");
+            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+            String chtt = "Actividades%20de%20extensión&";
+            String chco = "chco=ff0000&";
+            String chdl = chl;
+            s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
+        %>
+        <center>
+        <html:img src="<%=s%>"/>
+        </center>
+    </logic:present>
+        
 <fieldset>
     <logic:notPresent name="actividades">
         <div align="center">
@@ -49,9 +64,10 @@
         </div>
     </logic:notPresent>
 
-
+    
     <logic:present name="actividades">
 
+        
         <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
             <html:form action="/BusquedaPublica?method=aPagina">
                 Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
