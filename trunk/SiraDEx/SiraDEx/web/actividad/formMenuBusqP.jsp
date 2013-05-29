@@ -58,7 +58,7 @@
                         </html:select><br><br>
 
 
-                        Validador:<br> 
+                        Dependencia a la que pertenece::<br> 
                         <html:select name="busquedaActividadForm" property="validador">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="validadores" label="contenido" value="contenido"/>

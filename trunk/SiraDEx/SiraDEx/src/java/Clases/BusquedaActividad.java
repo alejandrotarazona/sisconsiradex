@@ -200,7 +200,7 @@ public class BusquedaActividad extends Root {
         };
 
         Entity eRango = new Entity(0, 24);
-        ResultSet rsRango = eRango.seleccionar(columna, condicion);
+        ResultSet rsRango = eRango.seleccionar(columna, condicion);//ESTA TIRANDO UN ERROR EN EL OUTPUT
         ArrayList<Integer> listaIds = new ArrayList<>(0);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
             if (this.fechaFin != null && !this.fechaFin.equals("")) {
@@ -267,6 +267,7 @@ public class BusquedaActividad extends Root {
                 Actividad act = new Actividad();
                 act.setIdActividad(id.intValue());
                 act.setActividad();
+                act.setParticipantes(id.intValue());
                 listaRango.add(act);
             }
         } else {
