@@ -18,7 +18,6 @@
         <script type="text/javascript" language="javascript" src="../Scripts/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../Scripts/ColReorderWithResize.js"></script>
         <style type="text/css" title="currentStyle">
-            @import "../Stylesheets/demo_page.css";
             @import "../Stylesheets/demo_table_jui.css";
         </style>
         <script>
@@ -79,7 +78,6 @@
         </logic:notPresent>
         <logic:present name="acts">
 
-            <div id="demo">
                 <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
                     <thead>
                         <tr>
@@ -175,7 +173,6 @@
                             </logic:iterate>   
                     </tbody> 
                 </table>
-            </div>
         </logic:present>
     </body>
 </html>

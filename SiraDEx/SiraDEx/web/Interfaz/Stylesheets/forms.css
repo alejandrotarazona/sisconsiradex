@@ -129,6 +129,7 @@ select[multiple=multiple] {
     border-radius: 3px;
 }
 select {
+    width:200px;
     max-width: 100%;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
