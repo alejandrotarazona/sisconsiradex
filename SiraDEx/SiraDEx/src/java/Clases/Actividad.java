@@ -249,7 +249,7 @@ public class Actividad extends Root {
         while (it.hasNext()) {
             p += (String) it.next() + "; ";
         }
-        p = p.substring(0, p.length()) + ".";
+        p = p.substring(0, p.length()-2) + ".";
         return p;
     }
 

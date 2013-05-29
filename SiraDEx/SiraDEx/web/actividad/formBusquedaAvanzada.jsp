@@ -24,6 +24,12 @@
                 var $this = $(this);
                 $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
             });
+            $(".grafica").hide();
+            $(".ver").click(function(){
+                $(this).siblings('.grafica').toggle();
+                var $this = $(this);
+                $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
+            });
         });
     
     </script>
@@ -54,10 +60,14 @@
             String chdl = chl;
             s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
         %>
+        <a class="ver" style=" cursor: pointer; text-decoration:underline">
+            Mostrar Gráfica</a>
+    <span class="grafica">
         <center>
-        <html:img src="<%=s%>"/>
+            <html:img src="<%=s%>"/>
         </center>
-    </logic:present>
+    </span>
+</logic:present>
 <fieldset>
     <logic:notPresent name="actividades">
         <div align="center">
