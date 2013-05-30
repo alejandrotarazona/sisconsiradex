@@ -12,17 +12,27 @@
     <link rel="shortlink" href="/node/1" />
     <meta name="Generator" content="Drupal 7 (http://drupal.org)" />
     <link rel="canonical" href="/node/1" />
-    <style type="text/css" media="all">@import url("Interfaz/Stylesheets/base.css");</style>
-    <style type="text/css" media="all">@import url("Interfaz/Stylesheets/field.css");
+    <style type="text/css" media="all">
+        @import url("Interfaz/Stylesheets/base.css");
+    </style>
+    <style type="text/css" media="all">
+        @import url("Interfaz/Stylesheets/field.css");
         @import url("Interfaz/Stylesheets/user.css");
-        @import url("Interfaz/Stylesheets/views.css");</style>
-    <style type="text/css" media="all">@import url("Interfaz/Stylesheets/ckeditor.css");
-        @import url("Interfaz/Stylesheets/ctools.css");</style>
-    <style type="text/css" media="all">@import url("Interfaz/Stylesheets/layout.css");
+        @import url("Interfaz/Stylesheets/views.css");
+    </style>
+    <style type="text/css" media="all">
+        @import url("Interfaz/Stylesheets/ckeditor.css");
+        @import url("Interfaz/Stylesheets/ctools.css");
+    </style>
+    <style type="text/css" media="all">
+        @import url("Interfaz/Stylesheets/layout.css");
         @import "Interfaz/Stylesheets/style.css";
         @import url("Interfaz/Stylesheets/forms.css");
-        @import url("Interfaz/Stylesheets/colors.css");</style>
-    <style type="text/css" media="print">@import url("Interfaz/Stylesheets/print.css");</style>
+        @import url("Interfaz/Stylesheets/colors.css");
+    </style>
+    <style type="text/css" media="print">
+        @import url("Interfaz/Stylesheets/print.css");
+    </style>
 
     <!--[if lte IE 7]>
     <link type="text/css" rel="stylesheet" href="http://www.dex.usb.ve/themes/sky/css/ie.css?max621" media="all" />

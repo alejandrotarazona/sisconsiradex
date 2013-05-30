@@ -28,8 +28,8 @@ public class CampoValor implements Serializable {
 
     private Campo campo;
     private String valor;
-    private String valorAux; /*atributo auxiliar para setearlo al momento llenar
-     un campo e texto de tipo participante*/
+    private String valorAux = ""; /*atributo auxiliar para setearlo al momento llenar
+     un campo de texto de tipo participante*/
 
     private FormFile file = null;
     private static String[] ATRIBUTOS = {
@@ -169,6 +169,9 @@ public class CampoValor implements Serializable {
         if (file != null) {
             resp &= eAgregar.insertarArchivo(idCampo, idAct, valor, file);
         } else {
+            if (!valorAux.isEmpty()) {
+                valor = "$" + valorAux;
+            }
             Object[] tupla = {idCampo, idAct, valor};
             resp &= eAgregar.insertar(tupla);
         }
@@ -181,7 +184,7 @@ public class CampoValor implements Serializable {
                 if (valorAux.isEmpty()) {
                     usbid = valor.split(",")[0];
                 } else {
-                    usbid = valorAux;
+                    usbid = "$" + valorAux;
                 }
                 Object[] tupla = {idAct, usbid, idCampo};
                 resp &= e.insertar(tupla);
@@ -255,11 +258,15 @@ public class CampoValor implements Serializable {
                 if (rs != null) {
                     while (rs.next()) {
                         CampoValor cv = new CampoValor();
-                        cv.setValor(rs.getString(ATRIBUTO[6]));
-
-
-
+                        String valor = rs.getString(ATRIBUTO[6]);
                         String tipoCampo = rs.getString(ATRIBUTO[3]);
+
+                        if (tipoCampo.equals("participante")
+                                && valor.startsWith("$")) { //participante que no es usuario
+                            cv.setValorAux(valor.substring(1));
+                            valor = "";
+                        }
+                        cv.setValor(valor);
                         if (!cv.getValor().equals("")
                                 && ((tipoCampo.equals(ATRIBUTO[8])
                                 || tipoCampo.equals("producto")))) {
@@ -295,7 +302,7 @@ public class CampoValor implements Serializable {
 
     public boolean modificar(CampoValor campoNM, int idAct) {
         boolean resp = true;
-        Entity e = new Entity(2, 4);//UPDATE VALOR
+        Entity eValor = new Entity(2, 4);//UPDATE VALOR
 
         String tipo = campoNM.getCampo().getTipo();
 
@@ -305,46 +312,117 @@ public class CampoValor implements Serializable {
                 ATRIBUTOS[1], //id_actividad
                 ATRIBUTOS[2] //valor
             };
+
+            String valorNM = campoNM.getValor();
+            String val = valor;
+            if (tipo.equals("participante")) {
+                if (!campoNM.getValorAux().isEmpty()) {
+                    valorNM = "$" + campoNM.getValorAux();
+                }
+                if (!valorAux.isEmpty()) {
+                    val = "$" + valorAux;
+                }
+            }
+
             Object[] valores = {
                 campoNM.getCampo().getIdCampo(),
                 idAct,
-                campoNM.getValor()
+                valorNM
             };
             String[] colModificar = {ATRIBUTOS[2]}; //valor
-            String[] modificaciones = {valor};
+            String[] modificaciones = {val};
 
-            resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
+            resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+
+            if (tipo.equals("participante")) {
+                resp &= modificarParticipante(campoNM, idAct);
+                System.out.println("--------Luego de modificar " + valor + " " + resp);
+            }
 
         } else {
-            e = new Entity(5, 4);//DELETE VALOR
-            String[] campos = {
-                ATRIBUTOS[0], //id_campo
-                ATRIBUTOS[1] //id_actividad
-            };
-            Integer[] condicion = {
-                campoNM.getCampo().getIdCampo(),
-                idAct
-            };
-
-            boolean RESPBORRAR = e.borrar(campos, condicion);
-
-            System.out.println("Borrado " + RESPBORRAR + " en VALOR la tupla "
-                    + "con id_campo = " + campoNM.getCampo().getIdCampo()
-                    + " id_actividad = " + idAct);
-
-            e = new Entity(1, 4); //INSERT VALOR
-
-            resp &= e.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
-
+            resp &= modificarArchivo(campoNM, idAct);
         }
 
         return resp;
     }
 
+    private boolean modificarArchivo(CampoValor campoNM, int idAct) {
+        Entity eValor = new Entity(5, 4);//DELETE VALOR
+        String[] campos = {
+            ATRIBUTOS[0], //id_campo
+            ATRIBUTOS[1] //id_actividad
+        };
+        Integer[] condicion = {
+            campoNM.getCampo().getIdCampo(),
+            idAct
+        };
+
+        boolean resp = eValor.borrar(campos, condicion);
+
+        eValor = new Entity(1, 4); //INSERT VALOR
+
+        resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
+
+        return resp;
+    }
+
+    private boolean modificarParticipante(CampoValor campoNM, int idAct) {
+        String usbid;
+        if (valorAux.isEmpty()) {
+            usbid = valor.split(",")[0];
+        } else {
+            usbid = "$" + valorAux;
+        }
+        String valorNM = campoNM.getValor();
+
+        if (campoNM.getValorAux().isEmpty()) {
+            valorNM = valorNM.split(",")[0];
+        } else {
+            valorNM = "$" + campoNM.getValorAux();
+        }
+
+        if (valorAux.isEmpty() && valor.isEmpty()) {
+
+            Entity eValor = new Entity(5, 5);//DELETE PARTICIPA
+            String[] campos = {
+                ATRIBUTOS[0], //id_campo
+                "id_act",
+                "usbid"
+            };
+            Object[] condicion = {
+                campoNM.getCampo().getIdCampo(),
+                idAct,
+                valorNM
+            };
+
+            return eValor.borrar(campos, condicion);
+        } else {
+
+            Entity eValor = new Entity(2, 5);//UPDATE PARTICIPA
+
+            String[] condColumnas = {
+                ATRIBUTOS[0], //id_campo
+                "id_act",
+                "usbid"
+            };
+
+            Object[] valores = {
+                campoNM.getCampo().getIdCampo(),
+                idAct,
+                valorNM
+            };
+
+            String[] colModificar = {"usbid"};
+            String[] modificaciones = {usbid};
+
+            return eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+        }
+    }
+
     //funcion auxiliar para solucionar el problema de que el tag html file no reconoce
     //si el property file tiene un archivo y esto dificultaba la implementacion 
     //de las verificaciones para los campos tipo archivo o producto 
-    public static void auxModificar(ArrayList camposNM, ArrayList campos) {
+    public static void auxModificarArchivo(ArrayList camposNM, ArrayList campos) {
         Iterator it = campos.iterator();
         for (int i = 0; it.hasNext(); i++) {
             CampoValor c = (CampoValor) it.next();

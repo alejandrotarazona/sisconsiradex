@@ -163,9 +163,11 @@
          </action>
          
          <action path="/RechazarActividad" type="Actividad.Rechazar"
-                 scope="request" name="actividadForm">
+                 scope="session" parameter="method" name="actividadForm">
+            <forward name="page" path="/actividad/formRechazar.jsp"/>
+            <forward name="failure1" path="/actividad/formRechazar.jsp"/>
             <forward name="success" path="gestionValidaciones"/>
-            <forward name="failure" path="gestionValidaciones"/>         
+            <forward name="failure2" path="gestionValidaciones"/>         
          </action>
          
          <action path="/MostrarPDF" type="Actividad.MostrarPDF"

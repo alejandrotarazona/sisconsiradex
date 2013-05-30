@@ -362,7 +362,7 @@ public class Entity {
         }
 
         DataBase db = DataBase.getInstance();
-        //System.out.println(sql);
+        System.out.println(sql);
         boolean resp = db.update(sql);
         return resp;
     }

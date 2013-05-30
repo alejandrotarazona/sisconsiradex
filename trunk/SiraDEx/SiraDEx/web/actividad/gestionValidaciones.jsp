@@ -43,6 +43,16 @@
                        
                     ]});
             });
+            var ventanaNueva = false
+            function abrirVentana(url){
+                if(!ventanaNueva || ventanaNueva.closed) {
+                    ventanaNueva = window.open(url, 'Ventana Emergente',
+                    'width=500, height=500, resizable=no,scrollbars=yes')
+                } else {
+                    ventanaNueva.location.href = url;
+                    ventanaNueva.focus();
+                }
+            }
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -53,11 +63,11 @@
 
         <h1>Actividades por validar de la <bean:write name="user" property="rol"/></h1>
 
-        <br><logic:present name="actividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
+        <logic:present name="actividadForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
         </logic:present> 
-        <br><logic:present name="actividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+        <logic:present name="actividadForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
         </logic:present>
 
         <logic:notPresent name="acts">
@@ -81,7 +91,7 @@
                     <logic:iterate name="acts" id="act">
                         <tr><td>
                             <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                    out.print(a.participantesToString());%>
+                                out.print(a.participantesToString());%>
                         </td>
                         <td>
                             <bean:write name="act" property="nombreTipoActividad"/>
@@ -115,8 +125,8 @@
                         <td>
                             <bean:write name="act" property="creador"></bean:write>, 
                             <bean:write name="act" property="fechaCreacion"></bean:write>
-                            </td>
-                            <td>
+                        </td>
+                        <td>
                             <logic:present  name="act" property="modificador">
                                 <bean:write name="act" property="modificador"></bean:write>, 
                                 <bean:write name="act" property="fechaModif"></bean:write>
@@ -147,12 +157,12 @@
                                              onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                             </html:form>
 
-                            <html:form method="POST" action="/RechazarActividad">
+                        <html:form method="POST" action="/GestionActividades?method=listDex" 
+                                   onsubmit="abrirVentana('../../RechazarActividad.do?method=page');">
                                 <html:hidden name="act" property="idActividad" />
                                 <html:submit styleId="botonRechazar"
                                              value=" "
-                                             title="Rechazar"
-                                             onclick="return confirm('¿Está seguro que desea rechazar la actividad?')"/>
+                                             title="Rechazar"/>
                             </html:form></td></tr>
                         </logic:iterate>   
                 </tbody> 
