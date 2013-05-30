@@ -166,17 +166,12 @@ public class BusquedaActividad extends Root {
             auxColumnas.add("validador");
             auxCondiciones.add(validador);
         }
-        if (this.participante != null && !this.participante.equals("")) {
-            auxColumnas.add("creador");
-            auxCondiciones.add(participante);
-        }
 
         int tam = auxColumnas.size();
         String[] columnas = new String[tam];
         for (int i = 0; i < tam; i++) {
             columnas[i] = auxColumnas.get(i);
         }
-
         tam = auxCondiciones.size();
         Object[] condiciones = new Object[tam];
 
@@ -184,14 +179,14 @@ public class BusquedaActividad extends Root {
             condiciones[i] = auxCondiciones.get(i);
         }
 
-        ResultSet rs;
+        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);     //Resultado de la busqueda cochina y gigante//
+        ResultSet rs = null;
         if (columnas.length > 0) {
             rs = eBuscar.seleccionar(columnas, condiciones);
+            cjtoAux = Actividad.listar(rs);
             hayColumnas = true;
-        } else {
-            rs = eBuscar.listar();
         }
-
+        
         String[] columna = {
             "tipo_campo"
         };
@@ -254,15 +249,22 @@ public class BusquedaActividad extends Root {
             }
             hayRango = true;
         } else {
-            rsRango = eBuscar.listar();
             hayRango = false;
         }
+        
+        System.out.println("#################################################################################################\n"
+                + "###################################################################################################\n"
+                + "Actividades obtenidas en la busqueda:");
+        for (int i = 0; i < cjtoAux.size(); i++) {
+            System.out.println(cjtoAux.get(i).toString());
+        }
+        System.out.println("#################################################################################################\n"
+                + "###################################################################################################");
 
-        ArrayList<Actividad> cjtoAux = Actividad.listar(rs);     //Resultado de la busqueda cochina y gigante//
         ArrayList<Actividad> listaRango = new ArrayList<>(0);
-        if (hayRango){
+        if (hayRango) {
             Iterator it = listaIds.iterator();
-            while (it.hasNext()){
+            while (it.hasNext()) {
                 Integer id = (Integer) it.next();
                 Actividad act = new Actividad();
                 act.setIdActividad(id.intValue());
@@ -285,19 +287,13 @@ public class BusquedaActividad extends Root {
         //De aqui pa'lante, el fume fue tan grande que ni yo mismo lo entiendo. Alejandro
         //Lo que trato de hacer es revisar las distintas formas en que pueden quedar las
         //listas para poder discernir cual(es) lista(s) es(son) vacia(s).
-        if (listaParticipantes
-                != null && !listaParticipantes.isEmpty()
-                && hayParticipantes) {
+        if (hayParticipantes) {
             listas.add(listaParticipantes);
         }
-        if (cjtoAux
-                != null && !cjtoAux.isEmpty()
-                && hayColumnas) {
+        if (hayColumnas) {
             listas.add(cjtoAux);
         }
-        if (listaRango
-                != null && !listaRango.isEmpty()
-                && hayRango) {
+        if (hayRango) {
             listas.add(listaRango);
         }
         ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
@@ -403,19 +399,30 @@ public class BusquedaActividad extends Root {
     private static ArrayList<Actividad> intersectar(ArrayList<ArrayList<Actividad>> listas) {
         ArrayList<Actividad> interseccion = new ArrayList<>(0);
         ArrayList<Actividad> unaLista = listas.get(0);
+        System.out.println("#################################################################################################\n"
+                + "###################################################################################################");
+        System.out.println("El tamaño de la lista de listas es: " + listas.size());
         Iterator it = unaLista.iterator();
         while (it.hasNext()) {
-            Actividad unaActividad = (Actividad) it.next();
+            Actividad unaActividad = (Actividad) it.next();         //Tomo la 1ra actividad de la primera lista (pivote)
             boolean agregar = true;
             Iterator itAux = listas.iterator();
+            itAux.next();                                           //Salto la primera lista del iterator, ya fue tomada anteriormente
             while (itAux.hasNext() && agregar) {
-                ArrayList<Actividad> aComparar = (ArrayList<Actividad>) itAux.next();
-                agregar &= aComparar.contains(unaActividad);
+                ArrayList<Actividad> aComparar = (ArrayList<Actividad>) itAux.next();   //Tomo a partir de la segunda lista
+                if(aComparar.isEmpty()){
+                    return new ArrayList<>(0);
+                }
+                agregar &= unaActividad.contenidoEn(aComparar);                //Reviso existencia
+                System.out.println(unaActividad.toString() + "\t" + agregar);
             }
             if (agregar) {
-                interseccion.add(unaActividad);
+                System.out.println("Agregando una actividad!!!\n\t" + unaActividad.toString());
+                interseccion.add(unaActividad);                 //Agrego
             }
         }
+        System.out.println("#################################################################################################\n"
+                + "###################################################################################################");
         return interseccion;
     }
 

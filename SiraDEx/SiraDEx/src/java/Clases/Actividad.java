@@ -210,6 +210,21 @@ public class Actividad extends Root {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad
                 + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + "}";
     }
+    
+    public boolean equals(Actividad a){
+        return idActividad == a.getIdActividad();
+    }
+    
+    public boolean contenidoEn(ArrayList<Actividad> lista){
+        Iterator it = lista.iterator();
+        boolean conseguido = false;
+        
+        while(it.hasNext() && !conseguido){
+            Actividad act = (Actividad) it.next();
+            conseguido = equals(act);
+        }
+        return conseguido;
+    }
 
     public void setParticipantes(int idAct) {
 
