@@ -12,16 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  *
  * @author SisCon
  */
-public class Rechazar extends org.apache.struts.action.Action {
+public class Rechazar extends DispatchAction {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
+    private static final String FAILURE1 = "failure1";
+    private static final String PAGE = "page";
+        private static final String FAILURE2 = "failure2";
 
     /**
      * This is the action called from the Struts framework.
@@ -33,8 +36,15 @@ public class Rechazar extends org.apache.struts.action.Action {
      * @throws java.lang.Exception
      * @return
      */
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
+    public ActionForward page(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+            return mapping.findForward(PAGE);
+
+    }
+
+    public ActionForward reject(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
@@ -42,21 +52,21 @@ public class Rechazar extends org.apache.struts.action.Action {
         String validador = user.getRol();
         System.out.println("El validador es: " + validador);
 
-        boolean validacion = act.validar(false);
+      
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
         request.setAttribute("acts", acts);
 
-        
+
         if (acts.isEmpty()) {
             request.setAttribute("acts", null);
         }
-        if (validacion) {
+        if (act.validar(false)) {
             act.setMensaje("La actividad ha sido rechazada.");
             act.setMensajeError(null);
             return mapping.findForward(SUCCESS);
         } else {
             act.setMensajeError("Error: La actividad no se pudo rechazar, intente de nuevo");
-            return mapping.findForward(FAILURE);
+            return mapping.findForward(FAILURE1);
         }
     }
 }

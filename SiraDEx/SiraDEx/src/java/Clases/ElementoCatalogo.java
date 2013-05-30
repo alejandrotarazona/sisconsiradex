@@ -273,7 +273,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                         contenido = usbid + ", " + rs.getString("nombres")
                                 + " " + rs.getString("apellidos");
                     } else {//el participante no es usuario
-                        contenido = usbid + " (No es usuario)";
+                        contenido = usbid.substring(1) + " (No es usuario)";
                     }
 
                     ec.setMensaje(usbid);

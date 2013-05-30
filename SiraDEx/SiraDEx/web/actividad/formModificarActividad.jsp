@@ -34,100 +34,125 @@
         <h1 class='title' id='page-title'>Edición de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <br><logic:present name="actividadForm" property="mensaje">
-            <b><div class ="status"><bean:write name="actividadForm" property="mensaje"/></div></b>
-        </logic:present> 
-        <br><logic:present name="actividadForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div></b>
+        <logic:present name="actividadForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
+            <br>
         </logic:present>
+
+        <font size=2>
+            Los campos con el asterisco  <span style="color:red">*</span> 
+            son obligatorios.<br><br>
+        </font>
+        Los campos con el nombre en <b>negrita</b> sirven para ingresar a los participantes de la 
+        Actividad, el usuario que está registrando la Actividad debe ser ingresado en al menos una 
+        de las listas desplegables de dichos campos.
+        <br><br>
 
         <html:form method="POST" enctype="multipart/form-data" 
                    action ="/ModificarActividad?method=update">
             <table>
+                <tbody>
+                    <tr>
+                    <th><b>Nombre</b></th>
+                    <th><b>Valor</b></th>
 
-                <tr>
-                <th><b>Nombre</b></th>
-                <th><b>Valor</b></th>
+                    </tr>
+                    <logic:iterate name="actividadForm" property="camposValores" 
+                                   id="camposValores" indexId="index">
+                        <tr>
+                        <td>
+                            <logic:equal name="camposValores" property="campo.tipo" value="participante">
+                                <b><bean:write name="camposValores" property="campo.nombre"/></b>
+                            </logic:equal>
+                            <logic:notEqual name="camposValores" property="campo.tipo" value="participante">
+                                <bean:write name="camposValores" property="campo.nombre"/>
+                            </logic:notEqual>
+                            <logic:equal name="camposValores" property="campo.obligatorio" value="true">
+                            <span style="color:red">*</span>  
+                        </logic:equal>
+                        </td>
+                        <td>
+                            <logic:equal name="camposValores" property="campo.tipo" value="texto">
+                                <html:text name="camposValores" property="valor" indexed="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text>
+                            </logic:equal>
 
-            </tr>
-            <logic:iterate name="actividadForm" property="camposValores" 
-                           id="camposValores" indexId="index">
-                <tr>
-                <td><bean:write name="camposValores" property="campo.nombre"></bean:write>
-                    <logic:equal name="camposValores" property="campo.obligatorio" 
-                                 value="true">
-                    <span style="color:red">*</span>  
-                </logic:equal>
-            </td>
-            <td><logic:equal name="camposValores" property="campo.tipo" value="texto">
-                    <html:text name="camposValores" property="valor" indexed="true">
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text>
-                </logic:equal>
+                            <logic:equal name="camposValores" property="campo.tipo" value="numero">
+                                <html:text name="camposValores" property="valor" indexed="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text> 
+                            </logic:equal>
 
-                <logic:equal name="camposValores" property="campo.tipo" value="numero">
-                    <html:text name="camposValores" property="valor" indexed="true">
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text> 
-                </logic:equal>
+                            <logic:equal name="camposValores" property="campo.tipo" value="fecha">
+                            <span class="fecha_input">
+                                <html:text name="camposValores" property="valor" indexed="true"
+                                           readonly="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text>
+                            </span>
+                            <span class="fecha_click">
+                                <html:hidden name="camposValores" property="valor" indexed="true" />
+                            </span>
+                        </logic:equal>
 
-                <logic:equal name="camposValores" property="campo.tipo" value="fecha">
-                <span class="fecha_input">
-                    <html:text name="camposValores" property="valor" indexed="true"
-                               readonly="true">
-                        <bean:write name="camposValores" property="valor"/>
-                    </html:text>
-                </span>
-                <span class="fecha_click">
-                    <html:hidden name="camposValores" property="valor" indexed="true" />
-                </span>
-            </logic:equal>
+                        <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
+                            <html:checkbox name="camposValores" property="valor" indexed="true" />
+                            <html:hidden name="camposValores" property="valor" value="false" 
+                                         indexed="true"/>
+                        </logic:equal>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="checkbox">
-                <html:checkbox name="camposValores" property="valor" indexed="true" />
-                <html:hidden name="camposValores" property="valor" value="false" 
-                             indexed="true"/>
-            </logic:equal>
+                        <logic:equal name="camposValores" property="campo.tipo" value="textol">
+                            <html:textarea name="camposValores"  cols="campo.longitud" rows="4"
+                                           property="valor" indexed="true">
+                                <bean:write name="camposValores" property="valor"/>
+                            </html:textarea>
+                        </logic:equal>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="textol">
-                <html:textarea name="camposValores"  cols="campo.longitud" rows="4"
-                               property="valor" indexed="true">
-                    <bean:write name="camposValores" property="valor"/>
-                </html:textarea>
-            </logic:equal>
+                        <logic:equal name="camposValores" property="campo.tipo" value="archivo">
+                            <html:file name="camposValores" property="file" accept="application/pdf"
+                                       indexed="true"/>
+                            <b>Archivo previamente cargado:
+                                <bean:write name="camposValores" property="valor"/></b> 
+                            </logic:equal>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="archivo">
-                <html:file name="camposValores" property="file" accept="application/pdf"
-                           indexed="true"/>
-                <b>Archivo previamente cargado:
-                    <bean:write name="camposValores" property="valor"/></b> 
-                </logic:equal>
+                        <logic:equal name="camposValores" property="campo.tipo" value="producto">
+                            <html:file name="camposValores" property="file" accept="application/pdf"
+                                       indexed="true"/> 
+                            <b>Archivo previamente cargado:
+                                <bean:write name="camposValores" property="valor"/></b> 
+                            </logic:equal>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="producto">
-                <html:file name="camposValores" property="file" accept="application/pdf"
-                           indexed="true"/> 
-                <b>Archivo previamente cargado:
-                    <bean:write name="camposValores" property="valor"/></b> 
-                </logic:equal>
+                        <%   int i = (Integer) pageContext.findAttribute("index");
+                            String catalogoi = ("cat" + i);%>    
 
-            <%   int i = (Integer) pageContext.findAttribute("index");
-                String catalogoi = ("cat" + i);%>    
+                        <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
+                            <html:select name="camposValores" property="valor" indexed="true">
+                                <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
+                                                        value="contenido"/>
+                            </html:select>
+                        </logic:equal>
+                        <logic:equal name="camposValores" property="campo.tipo" value="participante">
+                            <html:text name="camposValores" property="valorAux" indexed="true"
+                                       maxlength="${camposValores.campo.longitud}">
+                                <bean:write name="camposValores" property="valorAux"/>
+                            </html:text>
+                            <html:select name="camposValores" property="valor" indexed="true">
+                                <html:option value="">-- Seleccione --</html:option>
+                                <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
+                                                        value="contenido"/>
+                            </html:select>
+                        </logic:equal>
+                        </td>  
+                        </tr>
+                    </logic:iterate>
+                </tbody>
+            </table>
+            <br>
 
-            <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
-                <html:select name="camposValores" property="valor" indexed="true">
-                    <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
-                                            value="contenido"/>
-                </html:select>
-            </logic:equal>
-        </td>  
-    </tr>
-</logic:iterate>
-</table>
-<br>
+            <div align="center"><html:submit value="Modificar"
+                         onclick="return confirm('¿Está seguro que desea modificar la actividad?')"/></div>
 
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar la actividad?')"/></div>
-
-</html:form>
-</body>
+        </html:form>
+    </body>
 </html>

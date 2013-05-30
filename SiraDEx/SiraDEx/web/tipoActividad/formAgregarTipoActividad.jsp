@@ -39,7 +39,7 @@
             <tr>
             <td>Descripción</td>
             <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
-                           property="descripcion"></html:textarea>
+                           property="descripcion"/>
             </td>
         </tr>
         <tr>

@@ -231,7 +231,7 @@ public class Actividad extends Root {
                     if (rs.getString("nombres") != null) {
                         participante = rs.getString("apellidos") + ", " + rs.getString("nombres");
                     } else {
-                        participante = rs.getString("usbid");
+                        participante = rs.getString("usbid").substring(1);
                     }
                     participantes.add(participante);
 
@@ -249,7 +249,7 @@ public class Actividad extends Root {
         while (it.hasNext()) {
             p += (String) it.next() + "; ";
         }
-        p = p.substring(0, p.length()-2) + ".";
+        p = p.substring(0, p.length() - 2) + ".";
         return p;
     }
 
@@ -267,6 +267,14 @@ public class Actividad extends Root {
                 case "textol":
                 case "producto":
                     continue;
+                case "participante":
+                    s += cv.getCampo().getNombre() + ": ";
+                    if (!cv.getValorAux().isEmpty()) {
+                        s += cv.getValor().substring(1) + ", ";
+                    } else {
+                        s += cv.getValor() + ", ";
+                    }
+                    break;
                 case "checkbox":
                     if (!valor.equals("false")) {
                         s += cv.getCampo().getNombre() + ", ";
@@ -384,8 +392,6 @@ public class Actividad extends Root {
         }
 
         Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
-        boolean resp;
-
         String[] columnas = {
             "id_tipo_actividad",
             "creador"
@@ -396,7 +402,7 @@ public class Actividad extends Root {
             creador
         };
 
-        if (resp = e.insertar2(columnas, actividad)) {
+        if (e.insertar2(columnas, actividad)) {
 
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
@@ -404,18 +410,16 @@ public class Actividad extends Root {
 
             while ((itValores.hasNext())) {
                 CampoValor cv = (CampoValor) itValores.next();
-                resp &= cv.agregar(this.idActividad);
+
+                if (!cv.agregar(this.idActividad)) {
+                    mensajeError = "Error: La Actividad '" + nombreTipoActividad
+                            + "' no pudo ser resgistrada.";
+                    eliminarActividad();
+                    return false;
+                }
             }
-
-            if (!resp) {
-                mensajeError = "Error: No se pudo registrar la Actividad.";
-            }
-
-            return resp;
-
         }
-
-        return resp;
+        return true;
     }
 
     public boolean eliminarActividad() {
@@ -424,12 +428,12 @@ public class Actividad extends Root {
             mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
         }
-        mensajeError = "La Actividad '" + nombreTipoActividad + "' ha sid.";
+        mensajeError = "La Actividad '" + nombreTipoActividad + "' no pudo ser eliminada.";
         return false;
     }
 
     public boolean validar(boolean valida) {
-        boolean resp = true;
+
         Entity eValidar = new Entity(2, 2); //UPDATE ACTIVIDAD
         String[] condColumn = {
             ATRIBUTOS[0]
@@ -444,14 +448,14 @@ public class Actividad extends Root {
         if (valida) {
             val = "Validada";
         } else {
-            val = "Rechazada";
+            val = "Rechazada. Motivo: " + descripcion;
         }
         Object[] modificaciones = {
             val
         };
 
-        resp = resp && eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
-        return resp;
+        return eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
+
     }
 
     /**
@@ -505,8 +509,15 @@ public class Actividad extends Root {
                 acts = null;
             }
             return acts;
+
+
+
+
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Actividad.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -680,16 +691,17 @@ public class Actividad extends Root {
         return resp;
     }
 
-    public static void imprimirLista(ArrayList<String> lista) {
-        Iterator it = lista.iterator();
-        while (it.hasNext()) {
-            System.out.println(it.next());
-
-        }
-    }
-
     public static void main(String args[]) {
-        /*Campo c = new Campo("Blah", "Entero", true);
+        /*
+         public static void imprimirLista(ArrayList<String> lista) {
+         Iterator it = lista.iterator();
+         while (it.hasNext()) {
+         System.out.println(it.next());
+
+         }
+         }
+         
+         Campo c = new Campo("Blah", "Entero", true);
          String prueba = "1989";
          String prueba2 = "Adios1987425";
 

@@ -13,7 +13,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-
+        <style>
+            .selector {width: 80px;}
+        </style>
         <script>
             $(document).ready(function(){
                 function visibilidad(valor, mostrador, mostrador2, longitud){
@@ -122,7 +124,7 @@
 <td><b>Nombre</b></td>
 <td><b>Tipo</b></td>
 <td><b>Longitud</b></td>
-<td><b>Obligatoriedad</b></td>
+<td><b>Obligatorio</b></td>
 <td><b>Catálogo</b></td>        
 </tr>
 <logic:iterate name="tipoActividadForm" property="campos" id="campos"
@@ -151,7 +153,7 @@
 
         <logic:equal name="campos" property="tipo" value="producto">
             <html:select name="campos"  property="tipo" disabled="true" 
-                         indexed="true" >
+                         indexed="true" styleClass="selector">
                 <html:option value="producto">archivo</html:option>
             </html:select>
         </logic:equal>
@@ -161,7 +163,7 @@
 
         <div id="<%=l%>" style="visibility: visible">
             <logic:notEqual name="campos" property="tipo" value="producto">
-                <html:text name="campos" property="longitud" indexed="true">
+                <html:text name="campos" property="longitud" indexed="true" size="3">
                     <bean:write name="campos" property="longitud"/>
                 </html:text>    
             </logic:notEqual>

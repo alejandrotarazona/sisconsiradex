@@ -10,7 +10,10 @@
 /* `Containers
 ----------------------------------------------------------------------------------------------------*/
 
-.container-12,
+.container-12 {
+  margin-left: auto;
+  margin-right: auto;
+}
 .container-16 {
   margin-left: auto;
   margin-right: auto;

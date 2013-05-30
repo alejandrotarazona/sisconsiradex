@@ -26,7 +26,7 @@
             });
             $(".grafica").hide();
             $(".ver").click(function(){
-                $(this).siblings('.grafica').toggle();
+                $('.grafica').toggle();
                 var $this = $(this);
                 $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
             });

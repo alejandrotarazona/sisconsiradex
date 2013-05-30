@@ -14,6 +14,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <style>
+            .selector {width: 80px;}
+        </style>
         <script>
             $(document).ready(function(){
                 function visibilidad(valor, mostrador, mostrador2, longitud){
@@ -104,7 +107,7 @@
 
                     <logic:equal name="campo" property="tipo" value="producto">
                         <html:select name="campo"  property="tipo" disabled="true" 
-                                     indexed="true" >
+                                     indexed="true" styleClass="selector">
                             <html:option value="producto">archivo</html:option>
                         </html:select>
                     </logic:equal>

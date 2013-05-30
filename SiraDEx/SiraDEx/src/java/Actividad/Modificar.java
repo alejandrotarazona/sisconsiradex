@@ -72,7 +72,7 @@ public class Modificar extends DispatchAction {
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
-        CampoValor.auxModificar(campos, act.getCamposValores());
+        CampoValor.auxModificarArchivo(campos, act.getCamposValores());
         
         if (act.modificar(campos)) {
           
