@@ -79,6 +79,7 @@ public class Modificar extends DispatchAction {
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
             ArrayList<Actividad> acts;
+            String [] estadistica = u.cantidadActividadesPorTipo();
 
             if (rol.equalsIgnoreCase("WM")) {
                 acts = Clases.Actividad.listarActividades();
@@ -86,6 +87,8 @@ public class Modificar extends DispatchAction {
                 acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
             request.setAttribute("acts", acts);
+            request.setAttribute("estadisticaNombres", estadistica[0]);
+            request.setAttribute("estadisticaCantidad", estadistica[1]);
             
             String nombre = act.getNombreTipoActividad();
             Clases.Root.deleteSessions(request, "actividadForm");

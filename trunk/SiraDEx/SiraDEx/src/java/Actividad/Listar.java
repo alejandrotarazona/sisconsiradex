@@ -46,8 +46,11 @@ public class Listar extends DispatchAction {
         act.setCreador(username);
         
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
- 
+        String [] estadistica = u.cantidadActividadesPorTipo();
+        
         request.setAttribute("acts", acts);
+        request.setAttribute("estadisticaNombres", estadistica[0]);
+        request.setAttribute("estadisticaCantidad", estadistica[1]);
         
         int tam = acts.size();
         if (tam > 0) {
@@ -86,9 +89,11 @@ public class Listar extends DispatchAction {
         Actividad a = new Actividad();
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> act = a.listarActividadesDeTipo();
+        
 
         request.setAttribute("acts", act);
         request.setAttribute("TipoAct", a);
+        
         return mapping.findForward(SUCCESS3);
     }
     
@@ -99,6 +104,7 @@ public class Listar extends DispatchAction {
         
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getRol());
+        
         
         request.setAttribute("acts", a);
         
