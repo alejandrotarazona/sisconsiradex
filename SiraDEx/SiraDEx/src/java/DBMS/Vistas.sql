@@ -118,12 +118,14 @@ CREATE OR REPLACE VIEW act_completa
     FROM tipo_act__act taa
         NATURAL JOIN campo__valor cv;
 
+
 CREATE OR REPLACE VIEW act_participa
     AS
     SELECT *
-    FROM actividad 
-        NATURAL JOIN    participa 
-        NATURAL JOIN    tipo_actividad;
+    FROM actividad a 
+    join participa p on a.id_actividad = p.id_act 
+    natural join tipo_actividad;
+
 
 CREATE OR REPLACE VIEW  elemento_valor
     AS

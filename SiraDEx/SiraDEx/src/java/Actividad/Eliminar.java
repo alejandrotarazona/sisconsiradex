@@ -43,6 +43,7 @@ public class Eliminar extends org.apache.struts.action.Action {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String rol = u.getRol();
         ArrayList<Actividad> acts;
+        String [] estadistica = u.cantidadActividadesPorTipo();
 
         if (act.eliminarActividad()) {
             act.setMensaje("La actividad ha sido eliminada");
@@ -54,7 +55,9 @@ public class Eliminar extends org.apache.struts.action.Action {
                 acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
             request.setAttribute("acts", acts);
-
+            request.setAttribute("estadisticaNombres", estadistica[0]);
+            request.setAttribute("estadisticaCantidad", estadistica[1]);
+            
             if (acts.isEmpty()) {
                 request.setAttribute("acts", null);
             }

@@ -44,6 +44,14 @@
                         { "bSortable": false }
                        
                     ]});
+                
+                $(".grafica").hide();
+            $(".ver").click(function(){
+                $('.grafica').toggle();
+                var $this = $(this);
+                $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
+            });
+            
             });
         </script>
 
@@ -64,6 +72,24 @@
             </html:form>
         </logic:present>
 
+         <logic:present name="acts"> 
+        <% String chd = (String) request.getAttribute("estadisticaCantidad");
+            String chl = (String) request.getAttribute("estadisticaNombres");
+            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+            String chtt = "Actividades%20de%20extensión&";
+            String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
+            String chdl = chl;
+            s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
+        %>
+        <a class="ver" style=" cursor: pointer">
+            Mostrar Gráfica</a>
+    <span class="grafica">
+        <center>
+            <html:img src="<%=s%>"/>
+        </center>
+    </span>
+</logic:present>       
+                
         <h1>Actividades registradas en el sistema</h1>
 
         <logic:present name="actividadForm" property="mensaje"><br>

@@ -118,7 +118,8 @@ public class Agregar extends DispatchAction {
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
             ArrayList<Actividad> act;
-
+            String [] estadistica = u.cantidadActividadesPorTipo();
+            
             if (rol.equalsIgnoreCase("WM")) {
                 act = Clases.Actividad.listarActividades();
             } else {
@@ -126,6 +127,9 @@ public class Agregar extends DispatchAction {
             }
 
             request.setAttribute("acts", act);
+            request.setAttribute("estadisticaNombres", estadistica[0]);
+            request.setAttribute("estadisticaCantidad", estadistica[1]);
+            
             String nombre = a.getNombreTipoActividad();
             Clases.Root.deleteSessions(request, "actividadForm");
 

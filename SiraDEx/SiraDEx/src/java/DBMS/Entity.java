@@ -116,10 +116,8 @@ public class Entity {
        
     public ResultSet seleccionarNumActividades() {
         sql = ACCION + " nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
-                + "FROM " + TABLA + " NATURAL JOIN tipo_actividad " 
-                + "GROUP BY id_tipo_actividad, "
-                + "nombre_tipo_actividad";
-      
+                + "FROM " + TABLA + " GROUP BY nombre_tipo_actividad";
+               
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
@@ -127,6 +125,18 @@ public class Entity {
         return rs;
     }
      
+    
+     public ResultSet seleccionarNumActividadesUsuario(String usbid) {
+        sql = ACCION + " nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
+                + "FROM " + TABLA + " WHERE usbid = " +  "'" + usbid + "'"  
+                + " GROUP BY nombre_tipo_actividad";
+               
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
     
     public ResultSet seleccionar(String[] columnas, Object[] valores) {
         sql = ACCION + " * "
