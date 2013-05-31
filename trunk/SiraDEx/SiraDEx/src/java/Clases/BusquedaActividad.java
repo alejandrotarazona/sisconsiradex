@@ -302,6 +302,8 @@ public class BusquedaActividad extends Root {
             if (hayParticipantes || hayColumnas || hayRango) {
                 libro = paginar(listaInterceptada, mostrarPorPagina);
             } else {
+                rs = eBuscar.listar();
+                cjtoAux = Actividad.listar(rs);
                 libro = paginar(cjtoAux, mostrarPorPagina);
             }
         } else {
