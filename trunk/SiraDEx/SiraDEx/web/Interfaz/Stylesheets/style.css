@@ -859,3 +859,8 @@ ul.action-links:after,
     border: 0;
     background: url('iconos/restaurar.jpg') no-repeat ;
 }
+
+#botonEspera{
+    border: 0;
+    background: url('iconos/espera.png') no-repeat ;
+}
