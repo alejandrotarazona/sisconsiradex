@@ -167,5 +167,11 @@
     <definition name="gestionBackups" extends="plantilla">
         <put name="body" value="/backup/gestionBackups.jsp" />
     </definition>
+    
+    <!-- ===============================LOG================================-->
+    
+    <definition name="gestionLog" extends="plantilla">
+        <put name="body" value="/log/gestionLog.jsp" />
+    </definition>
 
 </tiles-definitions>

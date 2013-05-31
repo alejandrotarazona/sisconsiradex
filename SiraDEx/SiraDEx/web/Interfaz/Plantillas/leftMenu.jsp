@@ -60,12 +60,18 @@
                                     </html:link></li>
                                 <br>
 
-                                <li><h1 class="title">
+                                <li><html:link action="/GestionLog?method=page">
+                                        Consultar Log
+                                    </html:link></li>
+                                
+                                <%-- <li><h1 class="title">
                                     <a title="No está disponible" 
                                        style="cursor: pointer; text-decoration:underline">
                                         Consultar Log
                                     </a>
                                 </h1></li>
+                                --%>
+                                
                                 <li><h1 class="title">
                                     <html:link action="/Entrar?method=page"> 
                                         Entrar como otro Tipo de Usuario 
