@@ -325,7 +325,7 @@ public class CampoValor implements Serializable {
             }
 
             Object[] valores = {
-                campoNM.getCampo().getIdCampo(),
+                campo.getIdCampo(),
                 idAct,
                 valorNM
             };
@@ -333,10 +333,13 @@ public class CampoValor implements Serializable {
             String[] modificaciones = {val};
 
             resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+            System.out.println("--------Luego de modificar valor"
+                    + campoNM.getValor() + " " + resp);
 
             if (tipo.equals("participante")) {
                 resp &= modificarParticipante(campoNM, idAct);
-                System.out.println("--------Luego de modificar " + valor + " " + resp);
+                System.out.println("--------Luego de modificar participante"
+                        + campoNM.getValor() + " " + resp);
             }
 
         } else {
@@ -367,21 +370,24 @@ public class CampoValor implements Serializable {
     }
 
     private boolean modificarParticipante(CampoValor campoNM, int idAct) {
-        String usbid;
-        if (valorAux.isEmpty()) {
-            usbid = valor.split(",")[0];
-        } else {
-            usbid = "$" + valorAux;
-        }
+
         String valorNM = campoNM.getValor();
-
-        if (campoNM.getValorAux().isEmpty()) {
-            valorNM = valorNM.split(",")[0];
-        } else {
-            valorNM = "$" + campoNM.getValorAux();
+        String valorAuxNM = campoNM.getValorAux();
+        if (valorAuxNM.isEmpty() && valorNM.isEmpty()
+                && valorAux.isEmpty() && valor.isEmpty()) { //no se modifica
+            return true;
         }
+        boolean resp = true;
+        String usbid;
 
-        if (valorAux.isEmpty() && valor.isEmpty()) {
+        if ((!valorAuxNM.isEmpty() || !valorNM.isEmpty())
+                && (valorAux.isEmpty() && valor.isEmpty())) {//Se debe eliminar al participante
+
+            if (!valorNM.isEmpty()) {// Decide si es un usuario o no
+                usbid = valorNM.split(",")[0];
+            } else {
+                usbid = "$" + campoNM.getValorAux();
+            }
 
             Entity eValor = new Entity(5, 5);//DELETE PARTICIPA
             String[] campos = {
@@ -390,38 +396,70 @@ public class CampoValor implements Serializable {
                 "usbid"
             };
             Object[] condicion = {
-                campoNM.getCampo().getIdCampo(),
+                campo.getIdCampo(),
                 idAct,
-                valorNM
+                usbid
             };
+            resp &= eValor.borrar(campos, condicion);
+            System.out.println("---------DELETE PARTICIPA " + campo.getNombre() + " " + resp);
+        }
 
-            return eValor.borrar(campos, condicion);
-        } else {
+        if (((valorAuxNM.isEmpty() && valorNM.isEmpty())
+                && ((!valorAux.isEmpty()) || !valor.isEmpty()))) { //Se debe insertar un nuevo particpante
+
+            if (!valor.isEmpty()) {// Decide si es un usuario o no
+                usbid = valor.split(",")[0];
+            } else {
+                usbid = "$" + valorAux;
+            }
+
+            Entity eValor = new Entity(1, 5);//INSERT PARTICIPA
+
+            Object[] tupla = {campo.getIdCampo(), idAct, usbid};
+            resp &= eValor.insertar(tupla);
+            System.out.println("---------INSERT PARTICIPA " + campo.getNombre() + " " + resp);
+            return resp;
+        }
+
+        if (((!valorAuxNM.isEmpty() || !valorNM.isEmpty())
+                && ((!valorAux.isEmpty()) || !valor.isEmpty()))) { //Se debe actualizar al participante
+
+            if (!valor.isEmpty()) { //Decide si es un usuario o no
+                usbid = valor.split(",")[0];
+            } else {
+                usbid = "$" + valorAux;
+            }
+
+            if (!valorNM.isEmpty()) {// Decide si es un usuario o no
+                valorNM = valorNM.split(",")[0];
+            } else {
+                valorNM = "$" + campoNM.getValorAux();
+            }
 
             Entity eValor = new Entity(2, 5);//UPDATE PARTICIPA
-
             String[] condColumnas = {
                 ATRIBUTOS[0], //id_campo
                 "id_act",
                 "usbid"
             };
-
             Object[] valores = {
-                campoNM.getCampo().getIdCampo(),
+                campo.getIdCampo(),
                 idAct,
                 valorNM
             };
 
             String[] colModificar = {"usbid"};
             String[] modificaciones = {usbid};
-
-            return eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+            resp &= eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+            System.out.println("---------UPDATE PARTICIPA " + campo.getNombre() + " " + resp);
         }
+        return resp;
+
     }
 
-    //funcion auxiliar para solucionar el problema de que el tag html file no reconoce
-    //si el property file tiene un archivo y esto dificultaba la implementacion 
-    //de las verificaciones para los campos tipo archivo o producto 
+//funcion auxiliar para solucionar el problema de que el tag html file no reconoce
+//si el property file tiene un archivo y esto dificultaba la implementacion 
+//de las verificaciones para los campos tipo archivo o producto 
     public static void auxModificarArchivo(ArrayList camposNM, ArrayList campos) {
         Iterator it = campos.iterator();
         for (int i = 0; it.hasNext(); i++) {

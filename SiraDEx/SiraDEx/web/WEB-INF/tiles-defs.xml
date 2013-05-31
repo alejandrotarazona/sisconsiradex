@@ -115,6 +115,10 @@
         <put name="body" value="/actividad/formModificarActividad.jsp" />
     </definition>
     
+    <definition name="rechazarActividad" extends="plantilla">
+        <put name="body" value="/actividad/formRechazar.jsp" />
+    </definition>
+    
     <definition name="busquedaAvanzada" extends="plantillaBusquedaAvanzada">
         <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
         <put name="leftMenu" value="/actividad/formMenuBusqA.jsp"/>

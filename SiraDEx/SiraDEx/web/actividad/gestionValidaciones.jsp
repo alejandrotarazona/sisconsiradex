@@ -64,10 +64,10 @@
         <h1>Actividades por validar de la <bean:write name="user" property="rol"/></h1>
 
         <logic:present name="actividadForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
+            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
         </logic:present> 
         <logic:present name="actividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
+            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
         </logic:present>
 
         <logic:notPresent name="acts">
@@ -157,8 +157,7 @@
                                              onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                             </html:form>
 
-                        <html:form method="POST" action="/GestionActividades?method=listDex" 
-                                   onsubmit="abrirVentana('../../RechazarActividad.do?method=page');">
+                            <html:form method="POST" action="/RechazarActividad.do?method=page">
                                 <html:hidden name="act" property="idActividad" />
                                 <html:submit styleId="botonRechazar"
                                              value=" "

@@ -22,9 +22,8 @@ public class Rechazar extends DispatchAction {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAILURE1 = "failure1";
+    private static final String FAILURE = "failure1";
     private static final String PAGE = "page";
-        private static final String FAILURE2 = "failure2";
 
     /**
      * This is the action called from the Struts framework.
@@ -40,7 +39,7 @@ public class Rechazar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-            return mapping.findForward(PAGE);
+        return mapping.findForward(PAGE);
 
     }
 
@@ -52,7 +51,7 @@ public class Rechazar extends DispatchAction {
         String validador = user.getRol();
         System.out.println("El validador es: " + validador);
 
-      
+
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
         request.setAttribute("acts", acts);
 
@@ -65,8 +64,12 @@ public class Rechazar extends DispatchAction {
             act.setMensajeError(null);
             return mapping.findForward(SUCCESS);
         } else {
+            if (act.getDescripcion().length() > 2000) {
+                act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
+                return mapping.findForward(FAILURE);
+            }
             act.setMensajeError("Error: La actividad no se pudo rechazar, intente de nuevo");
-            return mapping.findForward(FAILURE1);
+            return mapping.findForward(FAILURE);
         }
     }
 }
