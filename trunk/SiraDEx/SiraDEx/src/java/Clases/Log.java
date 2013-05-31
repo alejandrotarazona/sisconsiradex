@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  *
  * @author SisCon
  */
-public class Log {
+public class Log extends Root{
 
     private BigDecimal idLog;
     private String accion;
