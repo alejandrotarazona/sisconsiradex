@@ -160,7 +160,7 @@ public class CampoValor implements Serializable {
 
 
 
-        Entity eAgregar = new Entity(1, 4);//INSERT VALOR
+        Entity eAgregar = new Entity(4);//VALOR
         boolean resp = true;
 
         Integer idCampo = campo.getIdCampo();
@@ -179,7 +179,7 @@ public class CampoValor implements Serializable {
         if (campo.getTipo().equals("participante")) {
 
             if (!valor.isEmpty() || !valorAux.isEmpty()) {
-                Entity e = new Entity(1, 5);//INSERT PARTICIPA
+                Entity e = new Entity(5);//PARTICIPA
                 String usbid;
                 if (valorAux.isEmpty()) {
                     usbid = valor.split(",")[0];
@@ -198,7 +198,7 @@ public class CampoValor implements Serializable {
      es pasado por parametro*/
     public static ArrayList<CampoValor> listarCampos(int idTipoActividad) {
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 3);//SELECT CAMPO
+        Entity eCampo = new Entity(3);//CAMPO
         String[] columnas = {"id_tipo_actividad"};
         Integer[] condiciones = {idTipoActividad};
 
@@ -235,7 +235,7 @@ public class CampoValor implements Serializable {
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
         try {
             ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-            Entity eCampo = new Entity(0, 2);//SELECT CAMPO
+            Entity eCampo = new Entity(2);//CAMPO
             String[] ATRIBUTO = {
                 "id_campo",
                 "id_tipo_actividad",
@@ -302,7 +302,7 @@ public class CampoValor implements Serializable {
 
     public boolean modificar(CampoValor campoNM, int idAct) {
         boolean resp = true;
-        Entity eValor = new Entity(2, 4);//UPDATE VALOR
+        Entity eValor = new Entity(4);//VALOR
 
         String tipo = campoNM.getCampo().getTipo();
 
@@ -350,7 +350,7 @@ public class CampoValor implements Serializable {
     }
 
     private boolean modificarArchivo(CampoValor campoNM, int idAct) {
-        Entity eValor = new Entity(5, 4);//DELETE VALOR
+        Entity eValor = new Entity(4);//VALOR
         String[] campos = {
             ATRIBUTOS[0], //id_campo
             ATRIBUTOS[1] //id_actividad
@@ -361,8 +361,6 @@ public class CampoValor implements Serializable {
         };
 
         boolean resp = eValor.borrar(campos, condicion);
-
-        eValor = new Entity(1, 4); //INSERT VALOR
 
         resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
 
@@ -389,7 +387,7 @@ public class CampoValor implements Serializable {
                 usbid = "$" + campoNM.getValorAux();
             }
 
-            Entity eValor = new Entity(5, 5);//DELETE PARTICIPA
+            Entity eValor = new Entity(5);//PARTICIPA
             String[] campos = {
                 ATRIBUTOS[0], //id_campo
                 "id_act",
@@ -413,7 +411,7 @@ public class CampoValor implements Serializable {
                 usbid = "$" + valorAux;
             }
 
-            Entity eValor = new Entity(1, 5);//INSERT PARTICIPA
+            Entity eValor = new Entity(5);//PARTICIPA
 
             Object[] tupla = {campo.getIdCampo(), idAct, usbid};
             resp &= eValor.insertar(tupla);
@@ -436,7 +434,7 @@ public class CampoValor implements Serializable {
                 valorNM = "$" + campoNM.getValorAux();
             }
 
-            Entity eValor = new Entity(2, 5);//UPDATE PARTICIPA
+            Entity eValor = new Entity(5);//PARTICIPA
             String[] condColumnas = {
                 ATRIBUTOS[0], //id_campo
                 "id_act",

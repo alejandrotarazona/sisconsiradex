@@ -40,8 +40,6 @@ public class Gestionar extends DispatchAction {
         Clases.Root.deleteSessions(request, "backupForm");
         Backup b = (Backup) form;
         b.inicializarFrecuencia();
-        System.out.println("mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
-        System.out.println(b.getFrecuencia()+"mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm");
         b.setMensajeError(null);
         b.setMensaje(null);
                

@@ -183,7 +183,7 @@ public class Campo implements Serializable {
 
     public boolean agregarCampo(int idTipoActividad) {
         System.out.println("Agrego un Campo");
-        Entity e = new Entity(1, 3);
+        Entity e = new Entity(3);//CAMPO
         Integer idTA = new Integer(idTipoActividad);
         if (!catalogoPart.isEmpty()){
             catalogo = catalogoPart;
@@ -212,7 +212,7 @@ public class Campo implements Serializable {
     public static ArrayList<Campo> listar(int idTA) {
 
         ArrayList<Campo> resp = new ArrayList<>(0);
-        Entity eListar = new Entity(0, 3);//SELECT CAMPO
+        Entity eListar = new Entity(3);//CAMPO
 
         String[] columnas = {
             ATRIBUTOS[1]
@@ -253,7 +253,7 @@ public class Campo implements Serializable {
 
     //en el parámetro campo recibe un campo no modificado del tipo de actividad
     public boolean modificar(Campo campo, int idTA) {
-        Entity e = new Entity(2, 3);
+        Entity e = new Entity(3);//CAMPO
 
         String[] condColumnas = ATRIBUTOS;
         Object[] valores = {

@@ -49,7 +49,7 @@ public class Modificar extends DispatchAction {
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 
          * del jsp debido a que ArrayList es un apuntador*/
-        ArrayList camposNM = Clases.Campo.listar(idCat);
+        ArrayList camposNM = Clases.CampoCatalogo.listar(idCat);
         Catalogo catNM = new Catalogo();
         catNM.setIdCatalogo(idCat);
         catNM.setCatalogo();

@@ -121,17 +121,18 @@ VALUES ('00-00000', '123456', 'obrero', 3, 'Pablo', 'Perez', '04321234567',
 '00-00000@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('05-38978', 'alejandro', 'empleado', 1, 'Alejandro', 'Tarazona', '04121341842',
- '05-38978@usb.ve');
+ 'alejandrotarazona@gmail.com');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES 
 ('webmaster', 'webmaster', 'WM', 2, 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('07-41618', 'diana', 'estudiante', 1, 'Diana', 'Vainberg', '04126053552', 
-'07-41618@usb.ve');
+'dianak90@gmail.com');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('jf', 'jf', 'estudiante', 1, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('05-38199', '123456', 'estudiante', 2, 'Jorge', 'García', '04141360451', '05-38199@usb.ve');
+VALUES ('05-38199', '123456', 'estudiante', 2, 'Jorge', 'García', '04141360451', 
+'jorgedgb@gmail.com');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('kdoming', 'kdoming', 'profesor',4, 'Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
@@ -152,19 +153,19 @@ INSERT INTO catalogo (nombre, nro_campos, participa) VALUES ('Obreros', 2, true)
 
 --      Campos de dependencias
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (1, 'Nombre y Apellido', 'texto');
+VALUES (1, 'Nombre', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (1, 'Id coordinador', 'texto');
 
 --      Campos de programas
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (2, 'Nombre y Apellido', 'texto');
+VALUES (2, 'Nombre', 'texto');
 
 --      Campos de estudiantes
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (3, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (3, 'Nombre', 'texto');
+VALUES (3, 'Nombre y Apellido', 'texto');
 
 --      Campos de profesores
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
@@ -176,25 +177,13 @@ VALUES (4, 'Nombre y Apellido', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (5, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (5, 'Nombre', 'texto');
+VALUES (5, 'Nombre y Apellido', 'texto');
 
 --      Campos de obreros
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (6, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (6, 'Nombre y Apellido', 'texto');
-
---      Campos de carreras
---INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (4, 'Nombre carrera', 'texto');
---INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (4, 'Id carrera', 'texto');
-
---      Campos de departamentos
---INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (5, 'Nombre departamento', 'texto');
---INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (5, 'Id jefe_dpto', 'texto');
 
 
 --Elementos de los catalogos

@@ -43,7 +43,7 @@
             </td>
         </tr>
         <tr>
-        <td>Tipo</td>
+        <td>Tipo de Producto</td>
         <td><html:radio property="tipoPR" value="P" >P</html:radio>
             <html:radio property="tipoPR" value="R" >R</html:radio>
             </td>

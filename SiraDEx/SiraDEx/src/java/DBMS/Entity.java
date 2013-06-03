@@ -16,19 +16,10 @@ import org.apache.struts.upload.FormFile;
  */
 public class Entity {
 
-    private final String ACCION;
     private final String TABLA;
     private boolean ok;
     private String[] respuesta;
     private String sql;
-    private final String[] ACCIONES = {
-        "SELECT", //0
-        "INSERT", //1
-        "UPDATE", //2
-        "DROP", //3
-        "NATURAL JOIN", //4
-        "DELETE", //5 
-    };
     private final String[] TABLAS = {
         "USUARIO", //0
         "TIPO_ACTIVIDAD", //1
@@ -68,17 +59,8 @@ public class Entity {
      * boolean b = rs.next(); return b; } catch(Exception e){
      * System.out.println(e.getMessage()); return false; } } return false; }
      */
-    public Entity(int ACCION, int TABLA) {
-        this.ACCION = ACCIONES[ACCION];
+    public Entity(int TABLA) {
         this.TABLA = TABLAS[TABLA];
-    }
-
-    public String getACCION() {
-        return ACCION;
-    }
-
-    public String[] getACCIONES() {
-        return ACCIONES;
     }
 
     public String getTABLA() {
@@ -109,37 +91,34 @@ public class Entity {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
     }
 
-    
-     /* PARA USAR CON GOOGLE CHARTS 
-      * Obtiene el numero de actividades por tipo de actividad
-      */
-       
+    /* PARA USAR CON GOOGLE CHARTS 
+     * Obtiene el numero de actividades por tipo de actividad
+     */
     public ResultSet seleccionarNumActividades() {
-        sql = ACCION + " nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
+        sql = "SELECT nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
                 + "FROM " + TABLA + " GROUP BY nombre_tipo_actividad";
-               
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
         return rs;
     }
-     
-    
-     public ResultSet seleccionarNumActividadesUsuario(String usbid) {
-        sql = ACCION + " nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
-                + "FROM " + TABLA + " WHERE usbid = " +  "'" + usbid + "'"  
+
+    public ResultSet seleccionarNumActividadesUsuario(String usbid) {
+        sql = "SELECT nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
+                + "FROM " + TABLA + " WHERE usbid = " + "'" + usbid + "'"
                 + " GROUP BY nombre_tipo_actividad";
-               
+
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
         ResultSet rs = db.consult(sql);
 
         return rs;
     }
-    
+
     public ResultSet seleccionar(String[] columnas, Object[] valores) {
-        sql = ACCION + " * "
+        sql = "SELECT * "
                 + "FROM " + TABLA
                 + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
@@ -158,7 +137,7 @@ public class Entity {
 
     //Revisar
     public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String valor) {
-        sql = ACCION + " * "
+        sql = "SELECT * "
                 + "FROM " + TABLA
                 + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
@@ -179,7 +158,7 @@ public class Entity {
 
     //Selecciona las tuplas donde la columna es distinta a los valores
     public ResultSet seleccionarDistintos(String columna, Object[] valores) {
-        sql = ACCION + " * "
+        sql = "SELECT * "
                 + "FROM " + TABLA
                 + " WHERE " + columna + " != '" + escapeSQL(valores[0]) + "' ";
 
@@ -203,7 +182,7 @@ public class Entity {
     public ResultSet seleccionarSinRepeticion(String[] TABLAS, String cols,
             String JOIN, String[] joins, String conds) {
 
-        sql = ACCION + " DISTINCT " + cols
+        sql = "SELECT DISTINCT " + cols
                 + " FROM " + TABLA + " " + TABLA.substring(0, 1);
         int tam = TABLAS.length;
         if (tam > 0) {
@@ -242,8 +221,7 @@ public class Entity {
     }
 
     public ResultSet listar() {
-        sql = ACCION + " * "
-                + "FROM " + TABLA;
+        sql = "SELECT * FROM " + TABLA;
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
@@ -255,7 +233,7 @@ public class Entity {
     public ResultSet proyectar(String[] seleccionar, String[] columnas,
             Object[] valores) {
 
-        sql = ACCION + " " + seleccionar[0];
+        sql = "SELECT " + seleccionar[0];
 
         int i;
         for (i = 1; i < seleccionar.length; i++) {
@@ -280,7 +258,7 @@ public class Entity {
     public ResultSet proyectarEnOrden(String[] seleccionar, String[] columnas,
             Object[] valores, String valor) {
 
-        sql = ACCION + " " + seleccionar[0];
+        sql = "SELECT " + seleccionar[0];
 
         int i;
         for (i = 1; i < seleccionar.length; i++) {
@@ -306,7 +284,7 @@ public class Entity {
     public ResultSet naturalJoin(String[] seleccionar, String[] tablas,
             String[] columnas, Object[] valores) {
 
-        sql = ACCION + " " + seleccionar[0];
+        sql = "SELECT " + seleccionar[0];
         int i;
 
         for (i = 1; i < seleccionar.length; i++) {
@@ -332,7 +310,7 @@ public class Entity {
 
     public ResultSet naturalJoin(String[] seleccionar, String[] tablas) {
 
-        sql = ACCION + " " + seleccionar[0];
+        sql = "SELECT " + seleccionar[0];
         int i;
 
         for (i = 1; i < seleccionar.length; i++) {
@@ -354,7 +332,7 @@ public class Entity {
     public boolean modificar(String[] condColumnas, Object[] valores,
             String[] colModificar, Object[] modificaciones) {
 
-        sql = ACCION + " " + TABLA + " SET " + colModificar[0] + " = '"
+        sql = "UPDATE " + TABLA + " SET " + colModificar[0] + " = '"
                 + escapeSQL(modificaciones[0]) + "' ";
 
         int indice;
@@ -379,7 +357,7 @@ public class Entity {
 
     public boolean borrar(String columna, Object valor) {
 
-        sql = ACCION + " FROM " + TABLA
+        sql = "DELETE FROM " + TABLA
                 + " WHERE " + columna + " = '" + escapeSQL(valor) + "'";
 
         System.out.println(sql);
@@ -391,7 +369,7 @@ public class Entity {
 
     public boolean borrar(String[] columnas, Object[] valores) {
 
-        sql = ACCION + " FROM " + TABLA + " WHERE "
+        sql = "DELETE FROM " + TABLA + " WHERE "
                 + columnas[0] + " = '" + escapeSQL(valores[0]) + "'";
 
         for (int k = 1; k < columnas.length; k++) {
@@ -408,7 +386,7 @@ public class Entity {
 
     public boolean insertar(Object[] valores) {
         int k;
-        sql = ACCION + " INTO " + TABLA
+        sql = "INSERT INTO " + TABLA
                 + " VALUES (";
         for (k = 0; k < (valores.length - 1); k++) {
             sql += "'" + escapeSQL(valores[k]) + "' ,";
@@ -423,7 +401,7 @@ public class Entity {
 
     public boolean insertar2(String[] columnas, Object[] valores) {
         int k;
-        sql = ACCION + " INTO " + TABLA + '(';
+        sql = "INSERT INTO " + TABLA + '(';
         for (k = 0; k < columnas.length - 1; k++) {
             sql += columnas[k] + ',';
         }
@@ -458,87 +436,15 @@ public class Entity {
 
     }
 
-    /**
-     * Retorna el ResultSet con los valores que pertenezcan al rango
-     * establecido.
-     *
-     * @param columnaCondicion columna sobre la que se hace la seleccion
-     * @param rango condicion que debe cimplir la columna
-     * @return ResultSet con las tuplas que cumplan.
-     */
-    public ResultSet buscarRango(Object[] rango) {
-        ResultSet rs;
-        sql = ACCION + " * "
-                + "FROM " + TABLA
-                + " WHERE tipo_campo = 'fecha' AND valor BETWEEN '"
-                + escapeSQL(rango[0]) + "' "
-                + "AND '" + escapeSQL(rango[1])
-                + "'";
-
-        System.out.println(sql);
-        DataBase db = DataBase.getInstance();
-        System.out.println(sql);
-        rs = db.consult(sql);
-
-        return rs;
-    }
-
-    /**
-     * Retorna el ResultSet con los valores que sean mayores o iguales que el
-     * valor dado
-     *
-     * @param columnaCondicion columna sobre la que se hace la seleccion
-     * @param condicion condicion que debe cimplir la columna
-     * @return ResultSet con las tuplas que cumplan.
-     */
-    public ResultSet buscarMayorQue(Object condicion) {
-        ResultSet rs;
-        sql = ACCION + " * "
-                + "FROM " + TABLA
-                + " WHERE tipo_campo = 'fecha' AND valor  >= '"
-                + condicion + "' ";
-
-        System.out.println(sql);
-        DataBase db = DataBase.getInstance();
-        System.out.println(sql);
-        rs = db.consult(sql);
-
-        return rs;
-    }
-
-    /**
-     * Retorna el ResultSet con los valores que sean menores o iguales que el
-     * valor dado
-     *
-     * @param columnaCondicion columna sobre la que se hace la seleccion
-     * @param condicion condicion que debe cimplir la columna
-     * @return ResultSet con las tuplas que cumplan.
-     */
-    public ResultSet buscarMenorQue(Object condicion) {
-        ResultSet rs;
-        sql = ACCION + " * "
-                + "FROM " + TABLA
-                + " WHERE tipo_campo = 'fecha' AND valor  <= '"
-                + condicion + "' ";
-
-        System.out.println(sql);
-        DataBase db = DataBase.getInstance();
-        System.out.println(sql);
-        rs = db.consult(sql);
-
-        return rs;
-    }
-    
     public static void main(String[] args) {
         /*
          * este es un main para pruebas. manejalo para hacer las pruebas que
          * requieras.
          */
         /*
-        Entity e = new Entity(0,2);
-        ResultSet rs = e.seleccionarNumActividades();
-        System.out.println(rs);
-        */
-       
+         Entity e = new Entity(0,2);
+         ResultSet rs = e.seleccionarNumActividades();
+         System.out.println(rs);
+         */
     }
 }

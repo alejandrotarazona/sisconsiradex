@@ -27,18 +27,17 @@ public class Restaurar extends org.apache.struts.action.Action {
             throws Exception {
         TipoActividad t = (TipoActividad) form;
         t.setTipoActividad();
-        t.setCampos();
+      
         if (t.restaurarTipoActividad()) {
-            ArrayList ta = Clases.TipoActividad.listarDesactivos();
+            ArrayList ta = Clases.TipoActividad.listarCondicion("activo", false);
             if (ta.isEmpty()) {
-                request.setAttribute("tipos", null);
-            } else {
-                request.setAttribute("tipos", ta);
+                ta = null;
             }
+            request.setAttribute("tipos", ta);
             return mapping.findForward(SUCCESS);
         }
 
-        ArrayList ta = Clases.TipoActividad.listarDesactivos();
+        ArrayList ta = Clases.TipoActividad.listarCondicion("activo", false);
         request.setAttribute("tipos", ta);
         return mapping.findForward(FAILURE);
 

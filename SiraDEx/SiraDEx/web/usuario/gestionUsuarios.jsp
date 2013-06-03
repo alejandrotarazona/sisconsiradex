@@ -63,7 +63,7 @@
         <logic:present name="usuarios">
 
 
-            <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
+            <table class="display" id="datatab">
                 <thead>
                     <tr>
                     <th>USBID</th>

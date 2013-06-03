@@ -7,8 +7,26 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <script type="text/javascript" src="../Scripts/jquery.min.js"></script>
+        <script type="text/javascript" language="javascript" src="../Scripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../Scripts/ColReorderWithResize.js"></script>
+        <style type="text/css" title="currentStyle">
+            @import "../Stylesheets/demo_table_jui.css";
+        </style>
+        <script>
+            $(document).ready(function(){
+                
+                $('#datatab').dataTable({
+                    aoColumnDefs: [
+                        { bSortable: true, aTargets: [ '_all' ]},
+                        { bSortable: false, aTargets: [ -1 ]},
+                        { bSortable: false, aTargets: [ -2 ]}
+                    ]});
+            });
+
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        
+
         <title>SiraDEx | Consulta del Catálogo <bean:write name="elementoCatalogoForm"
                     property="nombreCatalogo"/></title>
 
@@ -25,36 +43,40 @@
 
         </logic:equal>
 
-        <br><logic:present name="elementoCatalogoForm" property="mensaje">
-            <b><div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div></b>
-                </logic:present> 
-            <br><logic:present name="elementoCatalogoForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div></b>
-            </logic:present>
+        <logic:present name="elementoCatalogoForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div><br>
+        </logic:present> 
+        <logic:present name="elementoCatalogoForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div><br>
+        </logic:present>
 
-        <h1>Elementos del Catálogo</h1>
         <logic:notPresent name="elementos">
-            <p align="center">No hay elementos que mostrar.</p>
-        </logic:notPresent>
-        <logic:present name="elementos">
-            <table>
-                <tr>
-                    <logic:iterate name="campos" id="campo">
-                    <td>
-                        <b><bean:write name="campo" property="campo.nombre"/></b>
-                    </td>    
-                </logic:iterate>  
-            </tr>
-            <logic:iterate name="elementos" id="elem">
+        <span align="center">No hay elementos que mostrar</span>
+    </logic:notPresent>
+    <logic:present name="elementos">
+        <h1>Elementos del Catálogo</h1>
+        <table class="display" id="datatab">
+            <thead>
 
-                <tr>
-                    <logic:iterate name="elem" property="camposValores" 
-                                   id="campoValor" indexId="index">
-                    <td>
-                        <bean:write name="campoValor" property="valor"/>
-                    </td>
-                </logic:iterate>
-                 <td>
+                <logic:iterate name="campos" id="campo">
+                    <th>
+                        <bean:write name="campo" property="campo.nombre"/>
+                    </th>    
+                </logic:iterate> 
+                <th></th>
+                <th></th>
+            </thead>
+            <tbody>
+                <logic:iterate name="elementos" id="elem">
+
+                    <tr>
+                        <logic:iterate name="elem" property="camposValores" 
+                                       id="campoValor" indexId="index">
+                        <td>
+                            <bean:write name="campoValor" property="valor"/>
+                        </td>
+                    </logic:iterate>
+                    <td align="center">
                         <html:form method="POST" action="/ModificarElementoCatalogo?method=page">
                             <html:hidden name="elem" property="idElemento" />
                             <html:submit styleId="botonModificar"
@@ -62,20 +84,21 @@
                                          title="Modificar"/>
                         </html:form>
                     </td>    
-                <td>
-                    <html:form method="POST" action="/EliminarElemento">
-                        <html:hidden name="elem" property="idElemento" />
-                        <html:submit styleId="botonEliminar"
-                                     value=" "
-                                     title="Eliminar"
-                                     onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
-                    </html:form>
-                </td>
-            </tr>
+                    <td align="center">
+                        <html:form method="POST" action="/EliminarElemento">
+                            <html:hidden name="elem" property="idElemento" />
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
+                        </html:form>
+                    </td>
+                    </tr>
 
-        </logic:iterate>
-    </table>
-</logic:present>
+                </logic:iterate>
+            </tbody>
+        </table>
+    </logic:present>
 
 </body>
 </html>

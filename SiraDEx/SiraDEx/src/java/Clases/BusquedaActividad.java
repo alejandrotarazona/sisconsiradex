@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
@@ -141,7 +140,7 @@ public class BusquedaActividad extends Root {
 
         boolean hayColumnas = false, hayParticipantes = false, hayRango = false;
 
-        Entity eBuscar = new Entity(0, 21);
+        Entity eBuscar = new Entity(21);//TIPO_ACT__ACT
         ArrayList<String> auxColumnas = new ArrayList<>(0);
         ArrayList<Object> auxCondiciones = new ArrayList<>(0);
 
@@ -179,7 +178,7 @@ public class BusquedaActividad extends Root {
             condiciones[i] = auxCondiciones.get(i);
         }
 
-        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);     //Resultado de la busqueda cochina y gigante//
+        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);
         ResultSet rs = null;
         if (columnas.length > 0) {
             rs = eBuscar.seleccionar(columnas, condiciones);
@@ -194,8 +193,8 @@ public class BusquedaActividad extends Root {
             "fecha"
         };
 
-        Entity eRango = new Entity(0, 24);
-        ResultSet rsRango = eRango.seleccionar(columna, condicion);//ESTA TIRANDO UN ERROR EN EL OUTPUT
+        Entity eRango = new Entity(24);//ACT_COMPLETA
+        ResultSet rsRango = eRango.seleccionar(columna, condicion);
         ArrayList<Integer> listaIds = new ArrayList<>(0);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
             if (this.fechaFin != null && !this.fechaFin.equals("")) {
@@ -477,7 +476,7 @@ public class BusquedaActividad extends Root {
         String[] estadistica = new String[2];
         String nombres = "";
         String cantidad = "";
-        Entity eSelec = new Entity(0, 2);
+        Entity eSelec = new Entity(2);//ACTIVIDAD
         ResultSet rs = eSelec.seleccionarNumActividades();
 
         try {

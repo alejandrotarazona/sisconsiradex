@@ -23,7 +23,7 @@ public class Usuario extends Root {
     private String password;
     private int tipo;
     private String telefono;
-    private String email;
+    private String email = "";
     private String rol;
     private String rolDex;
     private static final String[] ATRIBUTOS = {
@@ -140,7 +140,7 @@ public class Usuario extends Root {
 
     public void setUsuario() {
 
-        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+        Entity eUsuario = new Entity(0);//USUARIO
 
         String[] atrib = {"usbid"};
         String[] valor = {username};
@@ -166,7 +166,7 @@ public class Usuario extends Root {
 
     public boolean setUsuario(String rol) {
 
-        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+        Entity eUsuario = new Entity(0);//USUARIO
 
         String[] atrib = {"rol"};
         String[] valor = {rol};
@@ -195,7 +195,7 @@ public class Usuario extends Root {
 
     public boolean setUsuarioDEx() {
 
-        Entity eUsuario = new Entity(0, 0);//SELECT USUARIO
+        Entity eUsuario = new Entity(0);//USUARIO
 
         String[] valor = {"empleado", "estudiante", "profesor", "obrero", "WM"};
 
@@ -223,7 +223,7 @@ public class Usuario extends Root {
 
     public boolean esUsuario() {
 
-        Entity e = new Entity(0, 0);//SELECT USUARIO
+        Entity e = new Entity(0);//USUARIO
 
         String[] col = {ATRIBUTOS[2]};
         String[] cond = {username};
@@ -247,7 +247,7 @@ public class Usuario extends Root {
 
     public boolean usuarioLogin() {
         try {
-            Entity e = new Entity(0, 0);
+            Entity e = new Entity(0);//USUARIO
             String[] col = {ATRIBUTOS[2], ATRIBUTOS[3]};
             String[] cond = {username, password};
             ResultSet rs = e.seleccionar(col, cond);
@@ -270,7 +270,7 @@ public class Usuario extends Root {
     }
 
     public static ArrayList<Usuario> listarUsuario() {
-        Entity eUsuario = new Entity(0, 0);
+        Entity eUsuario = new Entity(0);//USUARIO
         ArrayList<Usuario> listaUsuarios = new ArrayList<>(0);
 
         ResultSet rs = eUsuario.listar();
@@ -298,7 +298,7 @@ public class Usuario extends Root {
     }
 
     public boolean agregarUsuario() {
-        Entity e = new Entity(1, 0);
+        Entity e = new Entity(0);//USUARIO
         Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
             mensajeError = "Ya existe un usuario registrado con el US-BID " + username;
@@ -314,7 +314,7 @@ public class Usuario extends Root {
     }
 
     public boolean eliminarUsuario() {
-        Entity e = new Entity(5, 0);//DELETE USUARIO
+        Entity e = new Entity(0);//USUARIO
 
 
         if (e.borrar(ATRIBUTOS[2], this.username)) {
@@ -331,7 +331,7 @@ public class Usuario extends Root {
 
         boolean resp;
 
-        Entity e = new Entity(2, 0);//UPDATE USUARIO
+        Entity e = new Entity(0);//USUARIO
 
         String[] condColumnas = {
             ATRIBUTOS[0],
@@ -384,18 +384,18 @@ public class Usuario extends Root {
         return resp;
     }
 
-     public String[] cantidadActividadesPorTipo() {
+    public String[] cantidadActividadesPorTipo() {
 
         String[] estadistica = new String[2];
-        String nombres = "";
+        String nombre = "";
         String cantidad = "";
-        Entity eSelec = new Entity(0, 22);
+        Entity eSelec = new Entity(22);//ACT_PARTICIPA
         ResultSet rs = eSelec.seleccionarNumActividadesUsuario(username);
 
         try {
             if (rs != null) {
                 while (rs.next()) {
-                    nombres += rs.getString("nombre_tipo_actividad") + "|";
+                    nombre += rs.getString("nombre_tipo_actividad") + "|";
                     cantidad += rs.getString("cantidad") + ",";
                 }
             }
@@ -403,16 +403,16 @@ public class Usuario extends Root {
         } catch (SQLException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if (nombres.length() != 0 && cantidad.length() != 0) {
-            nombres = nombres.substring(0, nombres.length() - 1) + "&";
+        if (nombre.length() != 0 && cantidad.length() != 0) {
+            nombre = nombre.substring(0, nombre.length() - 1) + "&";
             cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
         }
 
-        estadistica[0] = nombres;
+        estadistica[0] = nombre;
         estadistica[1] = cantidad;
         return estadistica;
     }
-    
+
     public static void main(String[] args) {
         /*
          * probando probando 1 2 3 probando alo alo...

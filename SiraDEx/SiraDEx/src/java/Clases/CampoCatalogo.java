@@ -112,9 +112,9 @@ public class CampoCatalogo implements Serializable {
         CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
     }
 
-    public boolean agregarCampo(int idCatalogo) {
+    public boolean agregar(int idCatalogo) {
         boolean resp = true;
-        Entity eCampoCatalogo = new Entity(1, 7);
+        Entity eCampoCatalogo = new Entity(7);//CAMPO_CATALOGO
         Integer idCat = new Integer(idCatalogo);
         Object[] valores = {
             idCat,
@@ -132,9 +132,22 @@ public class CampoCatalogo implements Serializable {
         return resp;
     }
 
+    //en el parámetro campo recibe un campo no modificado del catalogo
+    public boolean modificar(CampoCatalogo campo, int idCat) {
+        Entity e = new Entity(7);//CAMPO_CATALOGO
+
+        String[] condColumnas = ATRIBUTOS;
+        Object[] valores = {idCampo, idCat, campo.getNombre(), campo.getTipo()};
+        String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
+        String[] nombreCampo = {nombre, tipo};
+
+        return e.modificar(condColumnas, valores, colModificar, nombreCampo);
+    }
+    
+    
     public static ArrayList<CampoCatalogo> listar(int idCat) {
         ArrayList<CampoCatalogo> resp = new ArrayList<>(0);
-        Entity eListar = new Entity(0, 7);
+        Entity eListar = new Entity(7);//CAMPO_CATALOGO
 
         String[] columnas = {
             ATRIBUTOS[1]
@@ -162,17 +175,5 @@ public class CampoCatalogo implements Serializable {
         }
 
         return resp;
-    }
-
-    //en el parámetro campo recibe un campo no modificado del catalogo
-    public boolean modificar(CampoCatalogo campo, int idCat) {
-        Entity e = new Entity(2, 7);
-
-        String[] condColumnas = ATRIBUTOS;
-        Object[] valores = {idCampo, idCat, campo.getNombre(), campo.getTipo()};
-        String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
-        String[] nombreCampo = {nombre, tipo};
-
-        return e.modificar(condColumnas, valores, colModificar, nombreCampo);
     }
 }

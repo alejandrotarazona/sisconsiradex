@@ -7,58 +7,87 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <script type="text/javascript" src="../Scripts/jquery.min.js"></script>
+        <script type="text/javascript" language="javascript" src="../Scripts/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="../Scripts/ColReorderWithResize.js"></script>
+        <style type="text/css" title="currentStyle">
+            @import "../Stylesheets/demo_table_jui.css";
+        </style>
+        <script>
+            $(document).ready(function(){
+                
+                $('#datatab').dataTable({
+                    "aoColumns": [       
+                        /* Nombre */ null,
+                        /* Modificar */ { "bSortable": false },
+                        /* Eliminar */ { "bSortable": false }
+                    ]});
+            });
+
+        </script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Gestion de Tipos de Actividad</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Gestion de Tipos de Actividad</h1>
+        <h1 class="title"">Gestion de Tipos de Actividad</h1>
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
             Agregar Tipo de Actividad
         </html:link>
         <br>
-        <html:link action="/GestionPapelera"> 
+        <html:link action="/GestionTiposActividad?method=listDisable"> 
             Papelera
-        </html:link>
+        </html:link><br>
 
-
-        <h1>Tipos de Actividades registradas en el sistema</h1>
-        <logic:present name="tipoActividadForm" property="mensaje">
-            <br><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div>
+        <logic:present name="mensaje"><br>
+            <div class ="status"><bean:write name="mensaje"/></div><br>
+        </logic:present>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div><br>
         </logic:present> 
-        <logic:present name="tipoActividadForm" property="mensajeError">
-            <br><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div>
+        <logic:present name="tipoActividadForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div><br>
         </logic:present>
         <logic:notPresent name="tipos">
             <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="tipos">
-
-            <table>
-                <logic:iterate name="tipos" id="ta">
+            <h1>Tipos de Actividades registradas en el sistema</h1>
+            <table class="display" id="datatab">
+                <thead>
                     <tr>
-                    <td>
-                        <bean:write name="ta" property="nombreTipo"/>
-                    </td>
-                    <td>
-                        <html:form method="POST" action="/ModificarTipoActividad?method=page">
-                            <html:hidden name="ta" property="id" />
-                            <html:submit styleId="botonModificar"
-                                         value=" "
-                                         title="Modificar"/>
-                        </html:form>
-                    </td>
-                    <td><html:form method="POST" action="/EliminarTipoActividad">
-                            <html:hidden name="ta" property="id" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar el Tipo de Actividad?')" />
-                        </html:form>
-                    </td>
-                </tr>
-            </logic:iterate>
-        </table>
-    </logic:present>
-</body>
+                    <th>Nombre</th>
+                    <th></th>
+                    <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <logic:iterate name="tipos" id="ta">
+                        <tr>
+                        <td>
+                            <bean:write name="ta" property="nombreTipo"/>
+                        </td>
+                        <td align="center">
+                            <html:form method="POST" action="/ModificarTipoActividad?method=page">
+                                <html:hidden name="ta" property="id" />
+                                <html:submit styleId="botonModificar"
+                                             value=" "
+                                             title="Modificar"/>
+                            </html:form>
+                        </td>
+                        <td align="center"><html:form method="POST" action="/EliminarTipoActividad">
+                                <html:hidden name="ta" property="id" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está seguro que desea eliminar el Tipo de Actividad?')" />
+                            </html:form>
+                        </td>
+                        </tr>
+                    </logic:iterate>
+                </tbody>
+            </table>
+        </logic:present>
+    </body>
 </html>

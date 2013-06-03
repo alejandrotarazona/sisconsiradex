@@ -812,11 +812,6 @@ ul.action-links:after,
 /* Botones
 -------------------------------------------------------------------------*/
 
-#botonGuardar{
-    border: 0;
-    background: url(iconos/Save_26x26.png) no-repeat;
-}
-
 #botonEliminar{
     border: 0;
     background: url(iconos/Eliminar_26x26.png) no-repeat;
@@ -831,10 +826,7 @@ ul.action-links:after,
     border: 0;
     background: url('iconos/Edit_26x26.png') no-repeat ;
 }
-#botonResponder{
-    border: 0;
-    background: url('iconos/Responder.png') no-repeat ;
-}
+
 #botonExaminar{
     border: 0;
     background: url(iconos/Examine_26x26.png) no-repeat ;
@@ -857,7 +849,7 @@ ul.action-links:after,
 
 #botonRestaurar{
     border: 0;
-    background: url('iconos/restaurar.jpg') no-repeat ;
+    background: url('iconos/restaurar.png') no-repeat ;
 }
 
 #botonEspera{

@@ -39,22 +39,23 @@ public class Validar extends org.apache.struts.action.Action {
         Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String validador = user.getRol();
-        System.out.println("El validador es: " + validador);
+        
         boolean validacion = act.validar(true);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
 
-        request.setAttribute("acts", acts);
-
         if (acts.isEmpty()) {
-            request.setAttribute("acts", null);
+            acts = null;
         }
+        request.setAttribute("acts", acts);
+        
         if (validacion) {
-            act.setMensaje("La actividad ha sido validada");
+            act.setMensaje("La Actividad ha sido validada.");
             act.setMensajeError(null);
+            //act.enviarCorreo(3);
             return mapping.findForward(SUCCESS);
         } else {
-            act.setMensajeError("Error: La actividad no se pudo validar, intente de nuevo");
+            act.setMensajeError("Error: La Actividad no se pudo validar, intente de nuevo.");
             return mapping.findForward(FAILURE);
         }
     }

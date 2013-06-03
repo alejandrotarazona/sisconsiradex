@@ -49,18 +49,18 @@ public class Backup extends Root {
     
 
     public String inicializarFrecuencia() {
-
-        String[] cmd = {
+        String cmd = "cat " + dir + "frecuencia.txt | head -1";
+        String[] comando = {
             "/bin/sh",
             "-c",
-            "cat " + dir + "frecuencia.txt | head -1"
+            cmd
         };
         System.out.println(cmd);
         byte b[] = new byte[4];
         
         try {
             Process p;
-            p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(comando);
             p.getInputStream().read(b);
       
             try {
@@ -88,12 +88,12 @@ public class Backup extends Root {
         String db = DataBase.getDatabase();
         String fecha = Log.getDate();
         fecha = "_" + fecha.replace("/", "-");
-        String cmd = "pg_dump -i -h " + host + " -U " + user + " --format=c -f "
+        String comando = "pg_dump -i -h " + host + " -U " + user + " --format=c -f "
                 + dir + db + fecha + ".backup " + db;
-        System.out.println(cmd);
+        System.out.println(comando);
         try {
             Process p;
-            p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
                     mensajeError = "Error: No se pudo crear el backup.";
@@ -121,12 +121,12 @@ public class Backup extends Root {
         String host = DataBase.getHost();
         String db = DataBase.getDatabase();
         int port = DataBase.getPort();
-        String cmd = "pg_restore -i -h " + host + " -p " + port + " -U " + user
+        String comando = "pg_restore -i -h " + host + " -p " + port + " -U " + user
                 + " -c -d  " + db + " " + dir + backup.getFileName();
-        System.out.println(cmd);
+        System.out.println(comando);
         try {
             Process p;
-            p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
                     mensajeError = "Error: La restauración no se pudo realizar.";
@@ -151,16 +151,16 @@ public class Backup extends Root {
 
     public boolean cambiarFrecuencia() {
 
-        
-        String[] cmd = {
+        String cmd = "sed -i '1s/.*/"+frecuencia+"/' /home/backups_siradex/frecuencia.txt";
+        String[] comando = {
             "/bin/sh",
             "-c",
-            "sed -i '1s/.*/"+frecuencia+"/' /home/backups_siradex/frecuencia.txt"
+            cmd
         };
         System.out.println(cmd);
         try {
             Process p;
-            p = Runtime.getRuntime().exec(cmd);
+            p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
                     mensajeError = "Error: No se pudo cambiar la frecuencia.";
