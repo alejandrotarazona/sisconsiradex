@@ -112,6 +112,10 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             ccv.agregar(idElemento);
         }
 
+        if (!resp) {
+            mensajeError = "Error: El elemento no pudo ser registrado.";
+        }
+
         return resp;
     }
 
@@ -119,7 +123,6 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         Entity e = new Entity(8);//ELEMENTO_CATALOGO
         return e.borrar("id_elemento", idElemento);
     }
-
 
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
 

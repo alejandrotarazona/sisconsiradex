@@ -76,6 +76,47 @@ public class CampoCatalogoValor implements Serializable {
         return resp;
     }
 
+    public boolean modificar(CampoCatalogoValor campo, int idElem) {
+        Entity e = new Entity(9);//VALOR_CATALOGO
+
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
+        String val = campo.getValor();
+        Object[] valores = {campo.getCampo().getIdCampo(), idElem, val};
+        String[] colModificar = {ATRIBUTOS[2]}; //valor
+        String[] valorCampo = {valor};
+
+        return e.modificar(condColumnas, valores, colModificar, valorCampo);
+    }
+
+    // agrega el campo a cada elemento del catalogo al que se le haya agregado un campo
+    public static boolean actualizarElementos(int idCampo, int idCatalogo) {
+        Entity e = new Entity(8);//ELEMENTO_CATALOGO
+        boolean resp = true;
+        String[] atrib = {"id_catalogo"};
+        Integer[] valor = {idCatalogo};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        if (rs != null) {
+            try {
+                while (rs.next() && resp) {
+                    int idElemento = rs.getInt("id_elemento");
+                    e = new Entity(9);//VALOR_CATALOGO
+
+                    Object[] valores = {
+                        idCampo,
+                        idElemento,
+                        ""
+                    };
+
+                    resp &= e.insertar(valores);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return resp;
+    }
+
     //Crea una lista de CampoCatalogoValor para agregar un nuevo elemento al 
     //catalogo cuyo id es pasado por parametro, solo los campos son seteados.
     public static ArrayList<CampoCatalogoValor> listar(int idCatalogo) {
@@ -133,17 +174,5 @@ public class CampoCatalogoValor implements Serializable {
             }
         }
         return listaValor;
-    }
-
-    public boolean modificar(CampoCatalogoValor campo, int idElem) {
-        Entity e = new Entity(9);//VALOR_CATALOGO
-
-        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
-        String val = campo.getValor();
-        Object[] valores = {campo.getCampo().getIdCampo(), idElem, val};
-        String[] colModificar = {ATRIBUTOS[2]}; //valor
-        String[] valorCampo = {valor};
-
-        return e.modificar(condColumnas, valores, colModificar, valorCampo);
     }
 }

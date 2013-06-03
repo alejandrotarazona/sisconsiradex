@@ -478,8 +478,8 @@ public class Verificaciones {
             todosVacios &= Verificaciones.esVacio(valor);
         }
         if (todosVacios) {
-            ec.setMensajeError("Error: Debe haber al menos un campo lleno para "
-                    + "agregar el elemento");
+            ec.setMensajeError("Error: Por favor, llene al menos un campo");
+            return false;
         }
         return true;
     }

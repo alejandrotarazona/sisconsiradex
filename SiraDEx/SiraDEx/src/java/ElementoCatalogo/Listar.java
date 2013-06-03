@@ -35,22 +35,23 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Clases.Root.deleteSessions(request, "elementoCatalogoForm");
         ElementoCatalogo e = (ElementoCatalogo) form;
         int idCat = e.getIdCatalogo();
         e.setIdCatalogo(idCat);
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
-        ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
-        request.setAttribute("elementos", ec);
-        int tam = ec.size();
-        if (tam > 0) {
-            e = ec.get(tam - 1);
-            request.setAttribute("campos", e.getCamposValores());
+        ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
+        
+        if (elemsc.isEmpty()) {
+            elemsc = null;
         } else {
-            request.setAttribute("elementos", null);
+            request.setAttribute("campos", elemsc.get(0).getCamposValores());
         }
         
+        request.setAttribute("elementos", elemsc);
+        
+
         return mapping.findForward(SUCCESS);
     }
 }

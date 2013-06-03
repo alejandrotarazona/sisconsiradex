@@ -35,11 +35,14 @@
                     <tr>
                     <td width="20%">Catálogo de Usuarios</td>
                     <td>
-                        <html:checkbox name="catalogoForm" property="participantes"/>
-                        <html:hidden name="catalogoForm" property="participantes" value="false"/>  
+                        <html:checkbox name="catalogoForm" property="participantes" value="off"
+                                       onclick="if (this.value == 'off') { this.value = 'on'
+                                       document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
+                                       } else {document.getElementById('aviso').innerHTML='', this.value = 'off'}"/>
+                        <html:hidden name="catalogoForm" property="participantes" value="false"/>
+                    <span id="aviso"></span>
                     </td>
                     </tr>
-
                     <tr>
                     <td>Nombre del cátalogo<span style="color:red">*</span></td>
                     <td><html:text name="catalogoForm" property="nombre"/></td>
@@ -47,8 +50,6 @@
                     <tr>
                     <td>Número de campos<span style="color:red">*</span></td>
                     <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/>
-                    <span style="color:red">Si marcó la opción</span> <b>Catálogo de Usuarios</b> 
-                    <span style="color:red">tendrá por defecto un campo para el usb-id del usuario.</span>
                     </td>
                     </tr>
                 </tbody>

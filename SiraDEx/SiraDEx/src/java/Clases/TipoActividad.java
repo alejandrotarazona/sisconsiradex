@@ -364,12 +364,12 @@ public class TipoActividad extends Root {
             resp &= agregarPermisos();
 
             if (!resp) {
-                mensajeError = "Error: El Tipo de Actividad '" + nombreTipo 
+                mensajeError = "Error: El Tipo de Actividad '" + nombreTipo
                         + "'no pudo ser registrado.";
-                if(eliminarTipoActividad()){
-                      mensajeError = " Error: El Tipo de Actividad '" + nombreTipo
+                if (eliminarTipoActividad()) {
+                    mensajeError = " Error: El Tipo de Actividad '" + nombreTipo
                             + "' no pudo ser resgistrado satisfactoriamente, debe"
-                              + " eliminarlo mediante el sistema.";
+                            + " eliminarlo mediante el sistema.";
                 }
             }
         }
@@ -380,20 +380,12 @@ public class TipoActividad extends Root {
 
     public boolean eliminarTipoActividad() {
         Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
-        String[] condColumnas = {
-            ATRIBUTOS[0]
-        };
-        Object[] valores = {
-            this.id
-        };
-        String[] colModificar = {
-            ATRIBUTOS[8]
-        };
-        Object[] modificaciones = {
-            false
-        };
-        boolean b = eMod.modificar(condColumnas, valores, colModificar, modificaciones);
-        if (b) {
+        String[] condColumnas = {ATRIBUTOS[0]};
+        Object[] valores = {id};
+        String[] colModificar = {ATRIBUTOS[8]};
+        Object[] modificaciones = {false};
+
+        if (eMod.modificar(condColumnas, valores, colModificar, modificaciones)) {
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
             return true;
         }

@@ -6,13 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        <script>
-            function deleteRow(r)
-            {
-                var i=r.parentNode.parentNode.rowIndex;
-                document.getElementById('myTable').deleteRow(i);
-            }
-        </script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Campos del Catalogo</title>
     </head>
@@ -26,7 +20,7 @@
             <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
         </logic:present>
 
-        <table id="myTable">
+        <table>
             <tr>
             <td><b>Nombre</b></td>
             <td><b>Tipo</b></td>
@@ -58,11 +52,6 @@
                             <html:option value="texto">texto</html:option>
                         </html:select>
                     </logic:equal>
-                </td>
-                <td>
-                    <logic:notEqual name="campos" property="tipo" value="usbid">
-                        <input type="button" value="Delete" onclick="deleteRow(this)">
-                    </logic:notEqual>
                 </td>
             </tr>
         </logic:iterate>

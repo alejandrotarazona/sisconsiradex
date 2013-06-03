@@ -44,10 +44,10 @@ public class Eliminar extends org.apache.struts.action.Action {
         if (t.eliminarTipoActividad()) {
             ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
             if (ta.isEmpty()) {
-                request.setAttribute("tipos", null);
-            } else {
-                request.setAttribute("tipos", ta);
+                ta = null;
             }
+            request.setAttribute("tipos", ta);
+
             return mapping.findForward(SUCCESS);
         }
 
