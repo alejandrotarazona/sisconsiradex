@@ -43,16 +43,6 @@
                        
                     ]});
             });
-            var ventanaNueva = false
-            function abrirVentana(url){
-                if(!ventanaNueva || ventanaNueva.closed) {
-                    ventanaNueva = window.open(url, 'Ventana Emergente',
-                    'width=500, height=500, resizable=no,scrollbars=yes')
-                } else {
-                    ventanaNueva.location.href = url;
-                    ventanaNueva.focus();
-                }
-            }
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -61,7 +51,7 @@
     <body>
         <h1 class="title">Gestión de Validaciones</h1>
 
-        <h1>Actividades por validar de la <bean:write name="user" property="rol"/></h1>
+        <h1><bean:write name="user" property="rol"/></h1>
 
         <logic:present name="actividadForm" property="mensaje"><br>
             <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
@@ -70,16 +60,18 @@
             <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
         </logic:present>
 
-        <logic:notPresent name="acts">
-            <div align="center">No hay actividad que mostrar</div>
+        <logic:notPresent name="acts"><br>
+            <div align="center">No hay actividad pendiente por validar</div>
         </logic:notPresent>
         <logic:present name="acts">
 
-            <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
+            <h1>Actividades por validar</h1> 
+
+            <table class="display" id="datatab">
                 <thead>
                     <tr>
                     <th>Participantes</th>
-                    <th>Actividad</th>
+                    <th>Tipo de Actividad</th>
                     <th>Detalles</th>
                     <th>Creación</th>
                     <th>Modificación</th>
@@ -125,8 +117,8 @@
                         <td>
                             <bean:write name="act" property="creador"></bean:write>, 
                             <bean:write name="act" property="fechaCreacion"></bean:write>
-                        </td>
-                        <td>
+                            </td>
+                            <td>
                             <logic:present  name="act" property="modificador">
                                 <bean:write name="act" property="modificador"></bean:write>, 
                                 <bean:write name="act" property="fechaModif"></bean:write>
@@ -151,14 +143,16 @@
                         <td align="center">
                             <html:form method="POST" action="/ValidarActividad">
                                 <html:hidden name="act" property="idActividad" />
+                                <html:hidden name="act" property="nombreTipoActividad" />
                                 <html:submit styleId="botonValidar"
                                              value=" "
                                              title="Validar"
                                              onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                             </html:form>
 
-                            <html:form method="POST" action="/RechazarActividad.do?method=page">
+                            <html:form method="POST" action="/RechazarActividad?method=page">
                                 <html:hidden name="act" property="idActividad" />
+                                <html:hidden name="act" property="nombreTipoActividad" />
                                 <html:submit styleId="botonRechazar"
                                              value=" "
                                              title="Rechazar"/>

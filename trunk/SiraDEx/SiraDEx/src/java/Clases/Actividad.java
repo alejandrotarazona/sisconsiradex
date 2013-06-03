@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -210,16 +211,16 @@ public class Actividad extends Root {
         return "Actividad\n\t{" + "idTipoActividad=" + idTipoActividad
                 + "\n\t idActividad=" + idActividad + "\n\t usbid=" + creador + "}";
     }
-    
-    public boolean equals(Actividad a){
+
+    public boolean equals(Actividad a) {
         return idActividad == a.getIdActividad();
     }
-    
-    public boolean contenidoEn(ArrayList<Actividad> lista){
+
+    public boolean contenidoEn(ArrayList<Actividad> lista) {
         Iterator it = lista.iterator();
         boolean conseguido = false;
-        
-        while(it.hasNext() && !conseguido){
+
+        while (it.hasNext() && !conseguido) {
             Actividad act = (Actividad) it.next();
             conseguido = equals(act);
         }
@@ -229,7 +230,7 @@ public class Actividad extends Root {
     public void setParticipantes(int idAct) {
 
 
-        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
+        Entity eBuscar = new Entity(5); //PARTICIPA
         String[] tablas = {
             "ACTIVIDAD",
             "USUARIO"
@@ -310,7 +311,7 @@ public class Actividad extends Root {
 
     public String getApellidoNombreCreador() {
 
-        Entity e = new Entity(0, 0);//SELECT USUARIO
+        Entity e = new Entity(0);//USUARIO
 
         String[] col = {"usbid"};
         Object[] condicion = {creador};
@@ -333,7 +334,7 @@ public class Actividad extends Root {
     //teniendo el idActividad hace un set del resto de atributos de la Actividad
     public void setActividad() {
         try {
-            Entity eActividad = new Entity(0, 2);//SELECT ACTIVIDAD
+            Entity eActividad = new Entity(2);//ACTIVIDAD
 
             String[] tabABuscar = {
                 "ACTIVIDAD",
@@ -379,7 +380,7 @@ public class Actividad extends Root {
 
     public boolean esActividadUsuario() {
         try {
-            Entity e = new Entity(0, 2);//SELECT ACTIVIDAD
+            Entity e = new Entity(2);//ACTIVIDAD
 
             String[] col = {ATRIBUTOS[0], ATRIBUTOS[4]};
             Object[] condicion = {idActividad, creador};
@@ -400,13 +401,13 @@ public class Actividad extends Root {
         return false;
     }
 
-    public boolean agregarActividad() {
+    public boolean agregar() {
 
         if (!Verificaciones.verif(this)) {
             return false;
         }
 
-        Entity e = new Entity(1, 2);//INSERT ACTIVIDAD
+        Entity e = new Entity(2);//ACTIVIDAD
         String[] columnas = {
             "id_tipo_actividad",
             "creador"
@@ -416,29 +417,32 @@ public class Actividad extends Root {
             idTipoActividad,
             creador
         };
-
-        if (e.insertar2(columnas, actividad)) {
+        boolean resp;
+        if (resp = e.insertar2(columnas, actividad)) {
 
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
-            Iterator itValores = this.camposValores.iterator();
+            Iterator itValores = camposValores.iterator();
 
-            while ((itValores.hasNext())) {
+            while ((itValores.hasNext()) && resp) {
                 CampoValor cv = (CampoValor) itValores.next();
-
-                if (!cv.agregar(this.idActividad)) {
+                resp &= cv.agregar(idActividad);
+                if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
-                    eliminarActividad();
-                    return false;
+                    if (!eliminarActividad()){
+                         mensajeError = " Error: La Actividad '" + nombreTipoActividad
+                            + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
+                                 + " mediante el sistema.";
+                    }
                 }
             }
         }
-        return true;
+        return resp;
     }
 
     public boolean eliminarActividad() {
-        Entity e = new Entity(5, 2);//DELETE ACTIVIDAD
+        Entity e = new Entity(2);//ACTIVIDAD
         if (e.borrar(ATRIBUTOS[0], idActividad)) {
             mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
@@ -447,9 +451,147 @@ public class Actividad extends Root {
         return false;
     }
 
+    public boolean modificar(ArrayList camposNM) {
+
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
+        boolean resp = true;
+        Iterator it = camposNM.iterator();
+
+        for (int i = 0; it.hasNext() && resp; i++) {
+            CampoValor campoNM = (CampoValor) it.next();
+            System.out.println("antes modif " + campoNM.getCampo().getNombre() + " " + resp);
+            resp &= camposValores.get(i).modificar(campoNM, idActividad);
+            System.out.println("luego modif " + campoNM.getCampo().getNombre() + " " + resp);
+        }
+
+        Entity eActividad = new Entity(2);//ACTIVIDAD
+        fechaModif = Clases.Log.getFechaHora();
+        String[] condColumn = {
+            ATRIBUTOS[0]
+        };
+        Object[] condValores = {
+            idActividad
+        };
+        String[] colModif = {
+            ATRIBUTOS[3],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
+        };
+        Object[] modValor = {
+            "En espera",
+            modificador,
+            fechaModif
+        };
+        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
+
+        if (!resp) {
+            mensajeError = "Error: No se pudo modificar la Actividad.";
+        }
+        return resp;
+    }
+
+    private String obtenerCorreos() {
+
+        String correos = "";
+
+        Entity eBuscar = new Entity(5); //PARTICIPA
+        String[] tablas = {
+            "ACTIVIDAD",
+            "USUARIO"
+        };
+        String cols = "p.usbid, email";
+        String[] joins = {"p.id_act=a.id_actividad", "p.usbid=u.usbid"};
+        String cond = "id_actividad=" + idActividad;
+        ResultSet rs = eBuscar.seleccionarSinRepeticion(tablas, cols, "LEFT OUTER JOIN", joins, cond);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    String usbid = rs.getString("usbid");
+
+                    if (!usbid.startsWith("$")) {
+                        correos += usbid + "@usb.ve ";
+                        String email = rs.getString("email");
+                        if (email != null || !email.equals("")) {
+                            correos += email + " ";
+                        }
+                    }
+
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return correos;
+
+    }
+
+    public boolean enviarCorreo(int accion) {
+
+        String titulo = "Notificación del SiraDEx (Sistema de Registro de Actividades de"
+                + " Extensión de la Universidad Simón Bolívar)";
+        String contenido = "";
+        String correos = obtenerCorreos();
+        if (accion == 0) { //actividad registrada o en espera
+            contenido = "Ha sido registrada la Actividad '" + nombreTipoActividad + "' "
+                    + "en la cual usted fue agregado como partipante, esta pasará a ser validada "
+                    + "por el Decanato de Extensión.\nSerá notificado del resultado de la "
+                    + "validación por esta misma vía.";
+        }
+        if (accion == 1) { //actividad modificada
+            contenido = "Ha sido modificada la Actividad '" + nombreTipoActividad + "' "
+                    + "de la cual usted es participante, esta pasará a ser validada por el"
+                    + " Decanato de Extensión.\nSerá notificado del resultado de la validación"
+                    + " por esta misma vía.";
+        }
+        if (accion == 2) { //actividad rechazada
+            String motivo = descripcion.replace("\"","'").replace("\r", "");
+            contenido = "Ha sido rechazada la validación de la Actividad '" + nombreTipoActividad 
+                    + "' de la cual usted es participante, por el motivo siguiente:\n" + motivo
+                    + "\nModifique la Actividad para corregir el problema y esperar "
+                    + "nuevamente por la validación.";
+        }
+        if (accion == 3) { //actividad validada
+            contenido = "Ha sido validada la Actividad '" + nombreTipoActividad + "' de la cual "
+                    + "usted es participante.";
+        }
+        String cmd = "echo \"" + contenido + "\" | mail -s " + " \"" + titulo + "\" " + correos;
+
+        String[] comando = {
+            "/bin/sh",
+            "-c",
+            cmd
+        };
+
+        System.out.println(cmd);
+        try {
+            Process p;
+            p = Runtime.getRuntime().exec(comando);
+            try {
+                if (p.waitFor() != 0) {
+                    mensajeError = " Error: No se pudo enviar la notificación por correo. ";
+                    return false;
+                }
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+                mensajeError = " Error: No se pudo enviar la notificación por correo. " + ex;
+                return false;
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            mensajeError = " Error: No se pudo enviar la notificación por correo. " + ex;
+            return false;
+        }
+        mensaje += " Se le ha enviado una notificación por correo a los usuarios participantes de la Actividad.";
+        return true;
+
+    }
+
     public boolean validar(boolean valida) {
 
-        Entity eValidar = new Entity(2, 2); //UPDATE ACTIVIDAD
+        Entity eValidar = new Entity(2); //ACTIVIDAD
         String[] condColumn = {
             ATRIBUTOS[0]
         };
@@ -463,7 +605,7 @@ public class Actividad extends Root {
         if (valida) {
             val = "Validada";
         } else {
-            val = "Rechazada. Motivo: " + descripcion;
+            val = "Rechazada. Motivo: " + descripcion.replace("\"","'");
         }
         Object[] modificaciones = {
             val
@@ -539,7 +681,7 @@ public class Actividad extends Root {
 
     public static ArrayList<Actividad> listarActividades() {
 
-        Entity eActividad = new Entity(0, 21);
+        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
         ResultSet rs = eActividad.listar();
         return listar(rs);
     }
@@ -552,7 +694,7 @@ public class Actividad extends Root {
      */
     public ArrayList<Actividad> listarActividadesDeTipo() {
 
-        Entity eActividad = new Entity(0, 21);
+        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
         String[] columna = {ATRIBUTOS[1]};
         Integer[] condicion = {idTipoActividad};
 
@@ -568,7 +710,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesDeUsuario(String usbid) {
 
-        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
+        Entity eBuscar = new Entity(5); //PARTICIPA
         String[] tablas = {
             "ACTIVIDAD",
             "TIPO_ACTIVIDAD"
@@ -588,11 +730,18 @@ public class Actividad extends Root {
      * @return Lista con las actividades realacionadas con el validador,
      */
     public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
-        Entity eActividad = new Entity(0, 21);
-        String[] columna = {ATRIBUTOS[3], ATRIBUTOS[9]}; //validacion, validador
-        String[] condicion = {"En espera", validador};
+        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
+        ResultSet rs;
+        if (validador.equals("WM")) {
+            String[] columna = {ATRIBUTOS[3]}; //validacion, validador
+            String[] condicion = {"En espera"};
+            rs = eActividad.seleccionar(columna, condicion);
+        } else {
+            String[] columna = {ATRIBUTOS[3], ATRIBUTOS[9]}; //validacion, validador
+            String[] condicion = {"En espera", validador};
+            rs = eActividad.seleccionar(columna, condicion);
+        }
 
-        ResultSet rs = eActividad.seleccionar(columna, condicion);
         return listar(rs);
     }
 
@@ -608,11 +757,11 @@ public class Actividad extends Root {
         switch (tipo) {
             case "P":
             case "p":
-                eBuscar = new Entity(0, 19);
+                eBuscar = new Entity(19);//TIPO_P
                 break;
             case "R":
             case "r":
-                eBuscar = new Entity(0, 20);
+                eBuscar = new Entity(20);//TIPO_R
                 break;
             default:
                 return null;
@@ -630,7 +779,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesPrograma(String programa) {
 
-        Entity eListar = new Entity(0, 21);
+        Entity eListar = new Entity(21);//TIPO_ACT__ACT
         String[] columnas = {
             "programa"
         };
@@ -651,7 +800,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesDeCreador(String creador) {
 
-        Entity eSeleccionar = new Entity(0, 2);
+        Entity eSeleccionar = new Entity(2);//ACTIVIDAD
         ResultSet rs;
         String[] columnas = {
             ATRIBUTOS[4]
@@ -663,47 +812,6 @@ public class Actividad extends Root {
         rs = eSeleccionar.seleccionar(columnas, condicion);
 
         return listar(rs);
-    }
-
-    public boolean modificar(ArrayList camposNM) {
-
-        if (!Verificaciones.verif(this)) {
-            return false;
-        }
-        boolean resp = true;
-        Iterator it = camposNM.iterator();
-
-        for (int i = 0; it.hasNext() && resp; i++) {
-            CampoValor campoNM = (CampoValor) it.next();
-            System.out.println("antes modif " + campoNM.getCampo().getNombre() + " " + resp);
-            resp &= camposValores.get(i).modificar(campoNM, idActividad);
-            System.out.println("luego modif " + campoNM.getCampo().getNombre() + " " + resp);
-        }
-
-        Entity eActividad = new Entity(2, 2);
-        fechaModif = Clases.Log.getFechaHora();
-        String[] condColumn = {
-            ATRIBUTOS[0]
-        };
-        Object[] condValores = {
-            idActividad
-        };
-        String[] colModif = {
-            ATRIBUTOS[3],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
-        };
-        Object[] modValor = {
-            "En espera",
-            modificador,
-            fechaModif
-        };
-        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
-
-        if (!resp) {
-            mensajeError = "Error: No se pudo modificar la Actividad.";
-        }
-        return resp;
     }
 
     public static void main(String args[]) {

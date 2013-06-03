@@ -26,11 +26,12 @@
                             %>
                             <logic:equal name="user" property="rol" value="<%= r%>"> <%--DEx--%>
                                 <li><h1 class="title">Gestionar:</h1></li>
+
                                 <li><html:link action="/GestionActividades?method=listDex">
                                         Validaciones
                                     </html:link></li>
 
-                                <li><html:link action="/GestionTiposActividad">
+                                <li><html:link action="/GestionTiposActividad?method=listActive">
                                         Tipos de Actividad
                                     </html:link></li>
 
@@ -39,12 +40,16 @@
 
                             <logic:equal name="user" property="rol" value="WM">
                                 <li><h1 class="title">Gestionar:</h1></li>
-                                <li><html:link action="/GestionTiposActividad"> 
+                                <li><html:link action="/GestionTiposActividad?method=listActive"> 
                                         Tipos de Actividad 
                                     </html:link></li>
 
                                 <li><html:link action="/GestionActividades?method=listAll"> 
                                         Actividades
+                                    </html:link></li>
+
+                                <li><html:link action="/GestionActividades?method=listDex">
+                                        Validaciones
                                     </html:link></li>
 
                                 <li><html:link action="/GestionCatalogos"> 
@@ -60,18 +65,11 @@
                                     </html:link></li>
                                 <br>
 
-                                <li><html:link action="/GestionLog?method=page">
+                                <li><h1 class="title">
+                                    <html:link action="/GestionLog?method=page">
                                         Consultar Log
-                                    </html:link></li>
-                                
-                                <%-- <li><h1 class="title">
-                                    <a title="No está disponible" 
-                                       style="cursor: pointer; text-decoration:underline">
-                                        Consultar Log
-                                    </a>
-                                </h1></li>
-                                --%>
-                                
+                                    </html:link></h1></li>
+
                                 <li><h1 class="title">
                                     <html:link action="/Entrar?method=page"> 
                                         Entrar como otro Tipo de Usuario 
@@ -96,6 +94,7 @@
                             <logic:equal name="user" property="rol" value="empleado">
                                 <%--opciones para el menu de un empleado--%>
                             </logic:equal>
+
                         </logic:present>
                     </ul>    
                 </div>

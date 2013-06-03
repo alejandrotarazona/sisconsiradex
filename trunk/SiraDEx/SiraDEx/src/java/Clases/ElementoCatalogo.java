@@ -42,7 +42,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public void setIdElemento() {
-        Entity eElemento = new Entity(0, 8);
+        Entity eElemento = new Entity(8);//ELEMENTO_CATALOGO
         this.idElemento = eElemento.seleccionarMaxId("id_elemento");
     }
 
@@ -88,7 +88,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             return false;
         }
 
-        Entity eElemento = new Entity(1, 8);
+        Entity eElemento = new Entity(8);//ELEMENTO_CATALOGO
         boolean resp = true;
 
         String[] columnas = {
@@ -109,55 +109,27 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         while (itValores.hasNext() && resp) {
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            ccv.agregar(this.idElemento);
+            ccv.agregar(idElemento);
         }
 
         return resp;
     }
 
     public boolean eliminar() {
-        Entity e = new Entity(5, 8);
+        Entity e = new Entity(8);//ELEMENTO_CATALOGO
         return e.borrar("id_elemento", idElemento);
     }
 
-    public static ArrayList<ElementoCatalogo> listarElementos() {
-
-        ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
-        Entity eElementoCatalogo = new Entity(0, 8);
-
-        ResultSet rs = eElementoCatalogo.listar();
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    ElementoCatalogo ec = new ElementoCatalogo();
-
-                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
-
-                    int id = rs.getInt(ElementoCatalogo.ATRIBUTOS[1]);
-                    ec.setIdCatalogo(id);
-
-                    listaElementoCatalogo.add(ec);
-                }
-                rs.close();
-            }
-
-            return listaElementoCatalogo;
-        } catch (SQLException ex) {
-            Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return null;
-    }
 
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
 
         ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
-        Entity eBuscar = new Entity(0, 8);
+        Entity eBuscar = new Entity(8);//ELEMENTO_CATALOGO
         String[] columnas = {
             ATRIBUTOS[1]
         };
-        Integer id = new Integer(idCat);
         Object[] valores = {
-            id
+            idCat
         };
 
         ResultSet rs = eBuscar.seleccionar(columnas, valores);
@@ -165,8 +137,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             if (rs != null) {
                 while (rs.next()) {
                     ElementoCatalogo ec = new ElementoCatalogo();
-                    ec.setIdElemento(rs.getInt(ElementoCatalogo.ATRIBUTOS[0]));
-
+                    ec.idElemento = rs.getInt(ATRIBUTOS[0]);
                     ec.camposValores = CampoCatalogoValor.listarCamposValores(ec.idElemento);
                     resp.add(ec);
                 }
@@ -198,7 +169,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
             int valores) {
 
-        Entity eCat = new Entity(0, 6);
+        Entity eCat = new Entity(6);//CATALOGO
 
 
         String[] cat = {"nombre"};
@@ -253,7 +224,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
 
-        Entity eBuscar = new Entity(0, 5); //SELECT PARTICIPA
+        Entity eBuscar = new Entity(5);//PARTICIPA
         String[] tablas = {
             "ACTIVIDAD",
             "USUARIO"

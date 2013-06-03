@@ -46,11 +46,11 @@
                     ]});
                 
                 $(".grafica").hide();
-            $(".ver").click(function(){
-                $('.grafica').toggle();
-                var $this = $(this);
-                $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
-            });
+                $(".ver").click(function(){
+                    $('.grafica').toggle();
+                    var $this = $(this);
+                    $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
+                });
             
             });
         </script>
@@ -72,144 +72,163 @@
             </html:form>
         </logic:present>
 
-         <logic:present name="acts"> 
-        <% String chd = (String) request.getAttribute("estadisticaCantidad");
-            String chl = (String) request.getAttribute("estadisticaNombres");
-            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-            String chtt = "Actividades%20de%20extensión&";
-            String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-            String chdl = chl;
-            s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
-        %>
-        <a class="ver" style=" cursor: pointer">
-            Mostrar Gráfica</a>
-    <span class="grafica">
-        <center>
-            <html:img src="<%=s%>"/>
-        </center>
-    </span>
-</logic:present>       
-                
-        <h1>Actividades registradas en el sistema</h1>
+        <logic:present name="acts"> 
+            <% String chd = (String) request.getAttribute("estadisticaCantidad");
+                String chl = (String) request.getAttribute("estadisticaNombres");
+                String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+                String chtt = "Actividades%20de%20extensión&";
+                String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
+                String chdl = chl;
+                s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
+            %>
+            <a class="ver" style=" cursor: pointer">
+                Mostrar Gráfica</a>
+        <span class="grafica">
+            <center>
+                <html:img src="<%=s%>"/>
+            </center>
+        </span>
+    </logic:present>       
 
-        <logic:present name="mensaje"><br>
-            <div class ="status"><bean:write name="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="actividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
-        </logic:present>
+    <h1>Actividades registradas en el sistema</h1>
 
-        <logic:notPresent name="acts">
-            <div align="center">No hay Actividad que mostrar</div>
-        </logic:notPresent>
-        <logic:present name="acts">
+    <logic:present name="mensaje"><br>
+        <div class ="status"><bean:write name="mensaje"/></div><br>
+    </logic:present> 
+    <logic:present name="actividadForm" property="mensaje"><br>
+        <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
+    </logic:present>
+    <logic:present name="actividadForm" property="mensajeError"><br>
+        <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
+    </logic:present>
 
-            <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
-                <thead>
-                    <tr>
-                    <th>Participantes</th>
-                    <th>Actividad</th>
-                    <th>Detalles</th>
-                    <th>Creación</th>
-                    <th>Modificación</th>
-                    <th>Validación</th>
-                    <th>Producto</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <logic:iterate name="acts" id="act">
-                        <tr><td>
-                            <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                out.print(a.participantesToString());%>
-                        </td>
-                        <td>
-                            <bean:write name="act" property="nombreTipoActividad"/>
-                        </td>
-                        <td>
+    <logic:notPresent name="acts">
+        <div align="center">No hay Actividad que mostrar</div>
+    </logic:notPresent>
+    <logic:present name="acts">
 
-                            <% out.print(a.camposValoresToString());%>
+        <table class="display" id="datatab">
+            <thead>
+                <tr>
+                <th>Participantes</th>
+                <th>Tipo de Actividad</th>
+                <th>Detalles</th>
+                <th>Creación</th>
+                <th>Modificación</th>
+                <th>Validación</th>
+                <th>Producto</th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <logic:iterate name="acts" id="act">
+                    <tr><td>
+                        <% Actividad a = (Actividad) pageContext.findAttribute("act");
+                            out.print(a.participantesToString());%>
+                    </td>
+                    <td>
+                        <bean:write name="act" property="nombreTipoActividad"/>
+                    </td>
+                    <td>
 
-                        <span class="textolargo"><br>
-                            Descripción: 
-                            <bean:write name="act" property="descripcion"/>
+                        <% out.print(a.camposValoresToString());%>
 
-                            <logic:iterate name="act" property="camposValores" 
-                                           id="campoValor" indexId="index">
+                    <span class="textolargo"><br>
+                        Descripción: 
+                        <bean:write name="act" property="descripcion"/>
 
-                                <logic:equal name="campoValor" property="campo.tipo" 
-                                             value="textol">
-                                    <br>
-                                    <bean:write name="campoValor" property="campo.nombre"/>: 
-                                    <bean:write name="campoValor" property="valor"/>
-                                </logic:equal>
+                        <logic:iterate name="act" property="camposValores" 
+                                       id="campoValor" indexId="index">
 
-                            </logic:iterate>
-                        </span>  
-
-                        <br>
-                        <a class="mostrar" style=" cursor: pointer">
-                            Más detalles
-                        </a>
-                        </td>
-                        <td>
-                            <bean:write name="act" property="creador"></bean:write>, 
-                            <bean:write name="act" property="fechaCreacion"></bean:write>
-                        </td>
-                        <td>
-                            <logic:present  name="act" property="modificador">
-                                <bean:write name="act" property="modificador"></bean:write>, 
-                                <bean:write name="act" property="fechaModif"></bean:write>
-                            </logic:present>
-
-                        </td>
-                        <td align="center">
-                            <logic:equal name="act" property="validacion" value="En espera">
-                                <html:image src="../Stylesheets/iconos/espera.png" title="En espera"/> 
+                            <logic:equal name="campoValor" property="campo.tipo" 
+                                         value="textol">
+                                <br>
+                                <bean:write name="campoValor" property="campo.nombre"/>: 
+                                <bean:write name="campoValor" property="valor"/>
                             </logic:equal>
-                            <logic:equal name="act" property="validacion" value="Validada">
-                                <html:image src="../Stylesheets/iconos/check_26x26.png" title="Validada"/> 
-                            </logic:equal>
-                            <logic:notEqual name="act" property="validacion" value="En espera">
-                                <logic:notEqual name="act" property="validacion" value="Validada">
-                                    <html:image src="../Stylesheets/iconos/Delete_26x26.png" title="${act.validacion}"/> 
-                                </logic:notEqual>
+
+                        </logic:iterate>
+                    </span>  
+
+                    <br>
+                    <a class="mostrar" style=" cursor: pointer">
+                        Más detalles
+                    </a>
+                    </td>
+                    <td>
+                        <bean:write name="act" property="creador"></bean:write>, 
+                        <bean:write name="act" property="fechaCreacion"></bean:write>
+                        </td>
+                        <td>
+                        <logic:present  name="act" property="modificador">
+                            <bean:write name="act" property="modificador"></bean:write>, 
+                            <bean:write name="act" property="fechaModif"></bean:write>
+                        </logic:present>
+
+                    </td>
+                    <td align="center">
+                        <logic:equal name="act" property="validacion" value="En espera">
+                            <html:image src="../Stylesheets/iconos/espera.png" title="En espera"/> 
+                        </logic:equal>
+                        <logic:equal name="act" property="validacion" value="Validada">
+                            <html:image src="../Stylesheets/iconos/check_26x26.png" title="Validada"/> 
+                        </logic:equal>
+                        <logic:notEqual name="act" property="validacion" value="En espera">
+                            <logic:notEqual name="act" property="validacion" value="Validada">
+                                <html:image src="../Stylesheets/iconos/Delete_26x26.png" title="${act.validacion}"/> 
                             </logic:notEqual>
+                        </logic:notEqual>
 
-                        </td>
+                    </td>
 
-                        <td align="center">
-                            <logic:iterate name="act" property="archivos" 
-                                           id="archivo" indexId="index">
+                    <td align="center">
+                        <logic:iterate name="act" property="archivos" 
+                                       id="archivo" indexId="index">
 
-                                <html:form method="POST" action="/MostrarPDF" >
-                                    <html:hidden name="act" property="idActividad"/>
-                                    <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                    <html:submit styleId="botonProducto"
-                                                 value=" "
-                                                 title="${archivo.tipo}"/>
-                                </html:form>
-
-                            </logic:iterate>   
-                        </td>
-                        <td align="center">
-                            <html:form method="POST" action="/ModificarActividad?method=page">
-                                <html:hidden name="act" property="idActividad" />
-                                <html:submit styleId="botonModificar"
+                            <html:form method="POST" action="/MostrarPDF" >
+                                <html:hidden name="act" property="idActividad"/>
+                                <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                <html:submit styleId="botonProducto"
                                              value=" "
-                                             title="Modificar"/>
+                                             title="${archivo.tipo}"/>
                             </html:form>
 
+                        </logic:iterate>   
+                    </td>
+                    <td align="center">
+                        <html:form method="POST" action="/ModificarActividad?method=page">
+                            <html:hidden name="act" property="idActividad" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+
+                        <logic:notEqual name="user" property="rol" value="WM">
+                            <logic:notEqual name="act" property="validacion" value="Validada">
+                                <html:form method="POST" action="/EliminarActividad">
+                                    <html:hidden name="act" property="idActividad" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
+                                </html:form>
+                            </logic:notEqual>
+                        </logic:notEqual>
+                        <logic:equal name="user" property="rol" value="WM">                   
                             <html:form method="POST" action="/EliminarActividad">
                                 <html:hidden name="act" property="idActividad" />
                                 <html:submit styleId="botonEliminar"
                                              value=" "
                                              title="Eliminar"
                                              onclick="return confirm('¿Está seguro que desea eliminar la actividad?')" />
-                            </html:form></td></tr>
-                        </logic:iterate>   
-                </tbody> 
-            </table>
-        </logic:present>
-    </body>
+                            </html:form>
+                        </logic:equal>
+
+
+                    </td></tr>
+                </logic:iterate>   
+            </tbody> 
+        </table>
+    </logic:present>
+</body>
 </html>

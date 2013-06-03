@@ -185,7 +185,7 @@ public class TipoActividad extends Root {
     }
 
     private void setPermisos() {
-        Entity ePermisos = new Entity(0, 12);
+        Entity ePermisos = new Entity(12);//PERMISOS
         ResultSet rs = ePermisos.listar();
         ArrayList p = new ArrayList<>(0);
         if (rs != null) {
@@ -241,9 +241,9 @@ public class TipoActividad extends Root {
 
     public boolean esTipoActividad() {
 
-        Entity e = new Entity(0, 1);
+        Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
-        String[] atrib = {ATRIBUTOS[1],ATRIBUTOS[8]};
+        String[] atrib = {ATRIBUTOS[1], ATRIBUTOS[8]};
         Object[] valor = {nombreTipo, true};
         ResultSet rs = e.seleccionar(atrib, valor);
         try {
@@ -267,7 +267,7 @@ public class TipoActividad extends Root {
     //teniendo el id hace un set del resto de atributos del Tipo de Actividad
     public void setTipoActividad() {
 
-        Entity e = new Entity(0, 1);
+        Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
         String[] atrib = {"id_tipo_actividad"};
         Integer[] valor = {id};
@@ -294,7 +294,7 @@ public class TipoActividad extends Root {
 
     public boolean agregarPermisos() {
         boolean resp = true;
-        Entity ePermisos = new Entity(1, 10);
+        Entity ePermisos = new Entity(10);//TIENE_PERMISO
         Object[] valoresPermisos = {id, 0};
         for (int i = 0; i < permisos.length; i++) {
             String estePermiso = permisos[i];
@@ -323,7 +323,7 @@ public class TipoActividad extends Root {
             return false;
         }
 
-        Entity e = new Entity(1, 1);
+        Entity e = new Entity(1);//TIPO_ACTIVIDAD
         boolean resp;
 
         Object[] valores = {
@@ -352,31 +352,34 @@ public class TipoActividad extends Root {
 
             System.out.println("Ya inserte el tipo de Actividad con ID " + id);
             Iterator it = campos.iterator();
-            System.out.println("Creo el iterador");
             while (it.hasNext() && resp) {
                 System.out.println("Voy iterando");
                 Campo cAgregar = (Campo) it.next();
                 resp &= cAgregar.agregarCampo(id);
                 if (!resp) {
                     System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
-                    this.eliminarTipoActividad();
                 }
             }
 
-
             resp &= agregarPermisos();
 
-        } else if (!resp) {
-            this.eliminarTipoActividad();
-            mensajeError = "Error: El Tipo de Actividad no pudo ser registrado.";
-            return false;
+            if (!resp) {
+                mensajeError = "Error: El Tipo de Actividad '" + nombreTipo 
+                        + "'no pudo ser registrado.";
+                if(eliminarTipoActividad()){
+                      mensajeError = " Error: El Tipo de Actividad '" + nombreTipo
+                            + "' no pudo ser resgistrado satisfactoriamente, debe"
+                              + " eliminarlo mediante el sistema.";
+                }
+            }
         }
 
         return resp;
+
     }
 
     public boolean eliminarTipoActividad() {
-        Entity eMod = new Entity(2, 1); //UPDATE TIPO_ACTIVIDAD
+        Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
         String[] condColumnas = {
             ATRIBUTOS[0]
         };
@@ -397,34 +400,6 @@ public class TipoActividad extends Root {
 
         mensajeError = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
-
-    }
-
-    /**
-     *
-     * @return Lista con todos los Tipos de Actividad que no están activos
-     */
-    public static ArrayList<TipoActividad> listarDesactivos() {
-        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
-        String[] atrib = {ATRIBUTOS[8]};
-        Boolean[] valor = {false};
-
-        ResultSet rs = eListar.seleccionar(atrib, valor);
-        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    TipoActividad t = new TipoActividad();
-                    t.setId(rs.getInt(ATRIBUTOS[0]));
-                    t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
-                    tipos.add(t);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return tipos;
     }
 
     private static ArrayList<TipoActividad> listar(ResultSet rs) {
@@ -459,7 +434,7 @@ public class TipoActividad extends Root {
      * @return lista con los Tipos de Actividad que cumplen la condicion dada
      */
     public static ArrayList<TipoActividad> listarCondicion(String atributo, Object valor) {
-        Entity eListar = new Entity(0, 1);//SELECT TIPO_ACTIVIDAD
+        Entity eListar = new Entity(1);//TIPO_ACTIVIDAD
         String[] atrib = {atributo};
         Object[] val = {valor};
         ResultSet rs = eListar.seleccionar(atrib, val);
@@ -499,10 +474,9 @@ public class TipoActividad extends Root {
      */
     public boolean modificarPermisos() {
 
-        Entity e = new Entity(5, 10);//DELETE TIENE_PERMISO
+        Entity e = new Entity(10);//TIENE_PERMISO
         e.borrar("id_tipo_actividad", id);
 
-        e = new Entity(1, 10); //INSERT TIENE_PERMISO
         String[] columnas = {"id_tipo_actividad", "id_permiso"};
         Object[] valores = {id, null};
         boolean resp = true;
@@ -552,7 +526,7 @@ public class TipoActividad extends Root {
 
         boolean resp = true;
 
-        Entity e = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
+        Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
         String[] condColumnas = {
             ATRIBUTOS[1],
@@ -591,8 +565,7 @@ public class TipoActividad extends Root {
             activo
         };
 
-        if (this.esTipoActividad()
-                && !nombreTipo.equals(taNM.getNombreTipo())) {
+        if (esTipoActividad() && !nombreTipo.equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
                     + nombreTipo + "'. Por favor intente con otro nombre.";
             return false;
@@ -620,7 +593,7 @@ public class TipoActividad extends Root {
 
     public boolean restaurarTipoActividad() {
 
-        Entity eMod = new Entity(2, 1);//UPDATE TIPO_ACTIVIDAD
+        Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
 
         String[] condColumnas = {
             ATRIBUTOS[0]

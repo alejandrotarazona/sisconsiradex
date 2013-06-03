@@ -28,7 +28,7 @@ CREATE TABLE USUARIO(
     nombres     VARCHAR(50),
     apellidos   VARCHAR(50),
     telefono    VARCHAR(15),
-    email       VARCHAR(20),
+    email       VARCHAR(50),
    
 
 CONSTRAINT PK_usbid PRIMARY KEY (usbid)

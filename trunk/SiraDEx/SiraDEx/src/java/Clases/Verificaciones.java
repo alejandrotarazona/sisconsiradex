@@ -279,12 +279,12 @@ public class Verificaciones {
             String respVerif;
 
 
-            if (tipo.equals("participante") 
+            if (tipo.equals("participante")
                     && (valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux))) {
                 valorAux = "";
                 cv.setValorAux(valorAux);
             }
-            
+
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "
@@ -297,7 +297,7 @@ public class Verificaciones {
             if (tipo.equals("participante") && act.getCreador().equals(usbid)) {
                 creador = true;
             }
-            
+
             /*verifica si el campo es obligatorio que no sea vacío*/
             String val = valor;
             if (tipo.equals("participante")) {
@@ -348,8 +348,12 @@ public class Verificaciones {
             }
 
         }
+        String accion = "registró";
+        if (act.getCreador() == null) {
+            accion = "registra";
+        }
         if (!creador) {
-            act.setMensajeError("Error: El usuario que registra la actividad debe "
+            act.setMensajeError("Error: El usuario que " + accion + " la actividad debe "
                     + "estar presente en alguno de los campos desplegables de participante.");
             return false;
         }

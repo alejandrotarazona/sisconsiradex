@@ -23,8 +23,6 @@ public class Listar extends DispatchAction {
     /* forward name="success" path="" */
     private static final String SUCCESS1 = "success1";
     private static final String SUCCESS2 = "success2";
-    private static final String SUCCESS3 = "success3";
-    private static final String SUCCESS4 = "success4";
 
     /**
      * This is the action called from the Struts framework.
@@ -44,78 +42,53 @@ public class Listar extends DispatchAction {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         act.setCreador(username);
-        
+
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-        String [] estadistica = u.cantidadActividadesPorTipo();
-        
+        String[] estadistica = u.cantidadActividadesPorTipo();
+
         request.setAttribute("acts", acts);
         request.setAttribute("estadisticaNombres", estadistica[0]);
         request.setAttribute("estadisticaCantidad", estadistica[1]);
-        
-        int tam = acts.size();
-        if (tam > 0) {
-            act = acts.get(0);
-            request.setAttribute("campos", act.getCamposValores());
-        } else {
+
+        if (acts.isEmpty()) {
             request.setAttribute("acts", null);
         }
-        
-        return mapping.findForward(SUCCESS1);
 
-        
+        return mapping.findForward(SUCCESS1);
     }
 
     public ActionForward listAll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Clases.Root.deleteSessions(request, "");
-        ArrayList<Actividad> a = Actividad.listarActividades();
-        
-        request.setAttribute("acts", a);
-        
-        if (a.isEmpty()) {
-         
+        ArrayList<Actividad> acts = Actividad.listarActividades();
+
+        request.setAttribute("acts", acts);
+
+        if (acts.isEmpty()) {
             request.setAttribute("acts", null);
         }
-        
-        
-        return mapping.findForward(SUCCESS2);
+
+
+        return mapping.findForward(SUCCESS1);
     }
 
-    public ActionForward listType(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Actividad a = new Actividad();
-        Clases.Root.deleteSessions(request, "");
-        ArrayList<Actividad> act = a.listarActividadesDeTipo();
-        
-
-        request.setAttribute("acts", act);
-        request.setAttribute("TipoAct", a);
-        
-        return mapping.findForward(SUCCESS3);
-    }
-    
     public ActionForward listDex(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        
+
         Clases.Root.deleteSessions(request, "");
-        ArrayList<Actividad> a = Actividad.listarActividadesDeValidador(user.getRol());
-        
-        
-        request.setAttribute("acts", a);
-        
-        int tam = a.size();
-        if (tam > 0) {
-            Actividad act = a.get(0);
-            request.setAttribute("campos", act.getCamposValores());
-        } else {
+
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(user.getRol());
+
+        request.setAttribute("acts", acts);
+
+        if (acts.isEmpty()) {
             request.setAttribute("acts", null);
-        }    
-        
-        return mapping.findForward(SUCCESS4);
+        }
+
+        return mapping.findForward(SUCCESS2);
     }
 }

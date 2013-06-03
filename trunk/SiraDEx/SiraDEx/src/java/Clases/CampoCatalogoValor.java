@@ -59,8 +59,8 @@ public class CampoCatalogoValor implements Serializable {
         boolean resp = true;
         Integer elementoId = new Integer(idElemento);
 
-        Entity eValor = new Entity(1, 9);
-        String[] ATRIBUTOS = {
+        Entity eValor = new Entity(9);//VALOR_CATALOGO
+        String[] campos = {
             "id_campo",
             "id_elemento",
             "valor"
@@ -71,7 +71,7 @@ public class CampoCatalogoValor implements Serializable {
             valor
         };
 
-        resp &= eValor.insertar2(ATRIBUTOS, valores);
+        resp &= eValor.insertar2(campos, valores);
 
         return resp;
     }
@@ -96,8 +96,8 @@ public class CampoCatalogoValor implements Serializable {
     //elemento cuyo id es pasado por parametro, los campos y valores son seteados
     public static ArrayList<CampoCatalogoValor> listarCamposValores(int idElem) {
         ArrayList<CampoCatalogoValor> listaValor = new ArrayList<>(0);
-        Entity eCampo = new Entity(0, 8);//SELECT ELEMENTO_CATALOGO
-        String[] ATRIBUTOS = {
+        Entity eCampo = new Entity(8);//ELEMENTO_CATALOGO
+        String[] ATRIBUTO = {
             "id_campo", //0
             "id_elemento", //1
             "valor", //2
@@ -112,17 +112,17 @@ public class CampoCatalogoValor implements Serializable {
         String[] colCondicion = {"id_elemento"};
         Object[] colValor = {idElem};
 
-        ResultSet rs = eCampo.naturalJoin(ATRIBUTOS, tabABuscar, colCondicion, colValor);
+        ResultSet rs = eCampo.naturalJoin(ATRIBUTO, tabABuscar, colCondicion, colValor);
 
         if (rs != null) {
             try {
                 while (rs.next()) {
                     CampoCatalogoValor cv = new CampoCatalogoValor();
-                    cv.setValor(rs.getString(ATRIBUTOS[2]));
+                    cv.setValor(rs.getString(ATRIBUTO[2]));
                     CampoCatalogo cc = new CampoCatalogo();
-                    cc.setNombre(rs.getString(ATRIBUTOS[3]));
-                    cc.setIdCampo(rs.getInt(ATRIBUTOS[0]));
-                    cc.setTipo(rs.getString(ATRIBUTOS[4]));
+                    cc.setNombre(rs.getString(ATRIBUTO[3]));
+                    cc.setIdCampo(rs.getInt(ATRIBUTO[0]));
+                    cc.setTipo(rs.getString(ATRIBUTO[4]));
                     cv.setCampo(cc);
 
                     listaValor.add(cv);
@@ -136,7 +136,7 @@ public class CampoCatalogoValor implements Serializable {
     }
 
     public boolean modificar(CampoCatalogoValor campo, int idElem) {
-        Entity e = new Entity(2, 9);//Update valor_catalogo
+        Entity e = new Entity(9);//VALOR_CATALOGO
 
         String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
         String val = campo.getValor();

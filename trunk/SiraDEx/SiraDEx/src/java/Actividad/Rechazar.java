@@ -22,7 +22,7 @@ public class Rechazar extends DispatchAction {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure1";
+    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -38,7 +38,6 @@ public class Rechazar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
         return mapping.findForward(PAGE);
 
     }
@@ -47,29 +46,32 @@ public class Rechazar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Actividad act = (Actividad) form;
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String validador = user.getRol();
-        System.out.println("El validador es: " + validador);
 
-
-        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
-        request.setAttribute("acts", acts);
-
-
-        if (acts.isEmpty()) {
-            request.setAttribute("acts", null);
-        }
-        if (act.validar(false)) {
-            act.setMensaje("La actividad ha sido rechazada.");
-            act.setMensajeError(null);
-            return mapping.findForward(SUCCESS);
-        } else {
-            if (act.getDescripcion().length() > 2000) {
-                act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
-                return mapping.findForward(FAILURE);
-            }
-            act.setMensajeError("Error: La actividad no se pudo rechazar, intente de nuevo");
+        if (act.getDescripcion().replace("\n", "").length() > 2001) {
+            act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
             return mapping.findForward(FAILURE);
         }
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String validador = user.getRol();
+
+        boolean validacion = act.validar(false);
+
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
+       
+        if (acts.isEmpty()) {
+            acts = null;
+        }
+        request.setAttribute("acts", acts);
+
+        if (validacion) {
+            act.setMensaje("La Actividad ha sido rechazada.");
+            act.setMensajeError(null);
+            //act.enviarCorreo(2);
+            return mapping.findForward(SUCCESS);
+        }
+
+        act.setMensajeError("Error: La Actividad no se pudo rechazar, intente de nuevo.");
+        return mapping.findForward(FAILURE);
     }
 }

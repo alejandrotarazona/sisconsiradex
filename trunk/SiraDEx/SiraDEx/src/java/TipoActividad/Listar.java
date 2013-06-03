@@ -11,15 +11,17 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.actions.DispatchAction;
 
 /**
  *
  * @author SisCon
  */
-public class Listar extends org.apache.struts.action.Action {
+public class Listar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
+    private static final String SUCCESS1 = "success1";
+    private static final String SUCCESS2 = "success2";
 
     /**
      * This is the action called from the Struts framework.
@@ -31,20 +33,33 @@ public class Listar extends org.apache.struts.action.Action {
      * @throws java.lang.Exception
      * @return
      */
-    @Override
-    public ActionForward execute(ActionMapping mapping, ActionForm form,
+    public ActionForward listActive(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-     
-        Clases.Root.deleteSessions(request,"tipoActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
-        
-        int tam = ta.size();
-        if (tam != 0) {
-            request.setAttribute("tipos", ta);
-        } else {
-            request.setAttribute("tipos", null);
+
+        Clases.Root.deleteSessions(request, "tipoActividadForm");
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
+
+        if (ta.isEmpty()) {
+            ta = null;
         }
-        return mapping.findForward(SUCCESS);
+        request.setAttribute("tipos", ta);
+
+        return mapping.findForward(SUCCESS1);
+    }
+
+    public ActionForward listDisable(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "tipoActividadForm");
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", false);
+
+        if (ta.isEmpty()) {
+            ta = null;
+        }
+        request.setAttribute("tipos", ta);
+
+        return mapping.findForward(SUCCESS2);
     }
 }

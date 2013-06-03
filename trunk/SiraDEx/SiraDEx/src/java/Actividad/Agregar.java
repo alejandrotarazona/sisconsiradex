@@ -113,7 +113,7 @@ public class Agregar extends DispatchAction {
 
         Actividad a = (Actividad) form;
 
-        if (a.agregarActividad()) {
+        if (a.agregar()) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
@@ -135,6 +135,7 @@ public class Agregar extends DispatchAction {
 
             a.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
             a.setMensajeError(null);
+            //a.enviarCorreo(0);
             return mapping.findForward(SUCCESSFULL);
         }
 

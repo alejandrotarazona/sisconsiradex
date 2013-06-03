@@ -40,7 +40,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             throws Exception {
         TipoActividad t = (TipoActividad) form;
         t.setTipoActividad();
-        t.setCampos();
+
         if (t.eliminarTipoActividad()) {
             ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
             if (ta.isEmpty()) {
