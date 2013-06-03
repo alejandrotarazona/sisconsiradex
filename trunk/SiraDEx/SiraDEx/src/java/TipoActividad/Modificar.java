@@ -38,25 +38,25 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        ArrayList<ElementoCatalogo> programas;    
+
+        ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
-        
+
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", dependencias);
-       
-        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa",false);
+
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa", false);
         request.getSession().setAttribute("catalogos", catalogos);
-        
-        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa",true);
+
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa", true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensaje(null);
-        
-        
+
+
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();
         ArrayList campos = Clases.Campo.listar(idTA);
@@ -70,7 +70,7 @@ public class Modificar extends DispatchAction {
         taNM.setId(idTA);
         taNM.setTipoActividad();
         taNM.setCampos(camposNM);
-        request.getSession().setAttribute("taNM", taNM); 
+        request.getSession().setAttribute("taNM", taNM);
 
         return mapping.findForward(PAGE);
     }
@@ -81,16 +81,16 @@ public class Modificar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
-        
+
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         if (ta.modificar(taNM)) {
-            ArrayList<TipoActividad> tas = Clases.TipoActividad.listarCondicion("activo",true);
+            ArrayList<TipoActividad> tas = Clases.TipoActividad.listarCondicion("activo", true);
             request.setAttribute("tipos", tas);
             String nombre = ta.getNombreTipo();
-            Clases.Root.deleteSessions(request,"tipoActividadForm");
-            request.setAttribute("mensaje","El Tipo de Actividad '"+nombre+"' ha sido modificado"
-                    + " con éxito.");
+            Clases.Root.deleteSessions(request, "");
+            request.setAttribute("mensaje", "El Tipo de Actividad '" + nombre
+                    + "' ha sido modificado con éxito.");
             return mapping.findForward(SUCCESS);
         }
 

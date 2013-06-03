@@ -13,10 +13,13 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+        <style>
+            .selector {width: 70px;}
+        </style>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición del Catálogo  <bean:write name="catalogoForm"
                     property="nombre"/></title>
-
     </head>
     <body>
         <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
@@ -31,13 +34,7 @@
             <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div>
         </logic:present>
 
-        <html:form method="POST" action ="/ModificarCatalogo?method=add">
 
-            Agregar nuevos campos <html:text name="catalogoForm" 
-                       property="nroCampos" size="1" maxlength="2"/>
-            <html:submit styleId="botonAgregar" value=" " title="Agregar"/>
-
-        </html:form>
         <html:form method="POST" action ="/ModificarCatalogo?method=update">
             <table>
                 <tbody>
@@ -67,7 +64,7 @@
                     </td>
                     </tr>
                     <tr><td><b>Campos</b></td></tr>
-                    <tr><td></td><td>Nombre</td><td>Tipo</td></tr>
+                    <tr><td></td><td width="30%">Nombre</td><td>Tipo</td></tr>
                     <logic:iterate name="catalogoForm" property="campos" id="campos" 
                                    indexId="index">
 
@@ -87,7 +84,8 @@
                         </td>
                         <td>
                             <logic:notEqual name="campos" property="tipo" value="usbid">
-                                <html:select name="campos" property="tipo" indexed="true">
+                                <html:select name="campos" property="tipo" styleClass="selector" 
+                                             indexed="true">
                                     <html:option value="texto">texto</html:option>
                                     <html:option value="numero">numero</html:option>
                                     <html:option value="fecha">fecha</html:option>
@@ -95,7 +93,7 @@
                             </logic:notEqual>
                             <logic:equal name="campos" property="tipo" value="usbid">
                                 <html:select name="campos" property="tipo" indexed="true" 
-                                             disabled="true">
+                                             styleClass="selector" disabled="true">
                                     <html:option value="texto">texto</html:option>
                                 </html:select>
                             </logic:equal>
@@ -114,7 +112,8 @@
                                 <tr><td></td>
                                 <td><html:text name="camposAux" property="nombre" indexed="true"/></td>
 
-                                <td><html:select name="camposAux" property="tipo" indexed="true">
+                                <td><html:select name="camposAux" property="tipo" styleClass="selector" 
+                                             indexed="true">
                                         <html:option value="texto">texto</html:option>
                                         <html:option value="numero">numero</html:option>
                                         <html:option value="fecha">fecha</html:option>
@@ -129,8 +128,14 @@
             </table>
             <br>
 
-            <div align="center"><html:submit value="Modificar"
-                         onclick="return confirm('¿Está seguro que desea modificar el catálogo?')"/></div>
+            Nuevos campos <html:text name="catalogoForm" 
+                       property="nroCampos" value="0" size="1" maxlength="2"
+                       onkeyup="if(this.value > 0) {document.catalogoForm.submitButton.value='Agregar'} else {document.catalogoForm.submitButton.value='Modificar'}"/>
+            <br>
+            <div align="center">
+                <input type="submit" name="submitButton" value="Modificar"
+                       onclick="if (document.catalogoForm.nroCampos.value==0) return confirm('¿Está seguro que desea modificar el catálogo?')">
+            </div>
 
         </html:form>
     </body>

@@ -4,7 +4,6 @@
  */
 package Catalogo;
 
-import Clases.Catalogo;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,16 +34,15 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        Clases.Root.deleteSessions(request,"");
-        ArrayList cat = Clases.Catalogo.listarCatalogos();
-        int tam = cat.size();
-        if (tam != 0) {
-            request.setAttribute("catalogos", cat);
-        } else {
-            request.setAttribute("catalogos", null);
+
+        Clases.Root.deleteSessions(request, "");
+        ArrayList cats = Clases.Catalogo.listarCatalogos();
+
+        if (cats.isEmpty()) {
+            cats = null;
         }
+        request.setAttribute("catalogos", cats);
+
         return mapping.findForward(SUCCESS);
     }
-    
 }

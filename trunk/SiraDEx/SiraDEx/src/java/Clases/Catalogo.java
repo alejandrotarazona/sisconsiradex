@@ -265,9 +265,15 @@ public class Catalogo extends Root {
         return resp;
     }
 
-    public boolean eliminar(int idCat) {
+    public boolean eliminar() {
         Entity eEliminar = new Entity(6);//CATALOGO
-        return eEliminar.borrar(ATRIBUTOS[0], idCat);
+        if ( eEliminar.borrar(ATRIBUTOS[0], idCatalogo)) {
+            mensaje = "El Catálogo '" + nombre + "' ha sido eliminado";
+            return true;
+        }
+
+        mensajeError = "Error: No se pudo eliminar el Catálogo '" + nombre + "'.";
+        return false;
 
     }
 
@@ -301,8 +307,8 @@ public class Catalogo extends Root {
             CampoCatalogo campoNM = (CampoCatalogo) it.next();
             resp &= campos.get(i).modificar(campoNM, idCatalogo);
         }
-        //En modificar se usa nroCampos para agregar nuevos campos
-        if (nroCampos != 0) {
+        
+        if (!camposAux.isEmpty()) {
             resp &= agregarCampos(camposAux);
         }
         if (!resp) {

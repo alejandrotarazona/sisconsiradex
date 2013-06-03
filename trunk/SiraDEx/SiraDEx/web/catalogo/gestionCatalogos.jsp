@@ -36,6 +36,9 @@
             Agregar Catálogo
         </html:link><br/>
 
+        <logic:present name="mensaje"><br>
+            <div class ="status"><bean:write name="mensaje"/></div><br>
+        </logic:present>
         <logic:present name="catalogoForm" property="mensaje"><br>
             <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div><br>
         </logic:present> 
@@ -44,61 +47,76 @@
         </logic:present>
 
         <logic:notPresent name="catalogos">
-            <span align="center">No hay catálogos que mostrar</span>
-        </logic:notPresent>
-        <logic:present name="catalogos">
-            <h1>Catálogos registrados en el sistema</h1>
+        <span align="center">No hay catálogos que mostrar</span>
+    </logic:notPresent>
+    <logic:present name="catalogos">
+        <h1>Catálogos registrados en el sistema</h1>
 
-            <table class="display" id="datatab">
-                <thead>
+        <table class="display" id="datatab">
+            <thead>
+                <tr>
+                <th>Nombre</th>
+                <th width="10%"></th>
+                <th width="10%"></th>
+                <th width="10%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <logic:iterate name="catalogos" id="cat">
                     <tr>
-                    <th>Nombre</th>
-                    <th width="10%"></th>
-                    <th width="10%"></th>
-                    <th width="10%"></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <logic:iterate name="catalogos" id="cat">
-                        <tr>
-                        <td>
-                            <bean:write name="cat" property="nombre" />
-                        </td>
-                        <td align="center">
-                            <html:form method="POST" action="/ModificarCatalogo?method=page">
-                                <html:hidden name="cat" property="idCatalogo" />
-                                <html:submit styleId="botonModificar"
-                                             value=" "
-                                             title="Modificar"/>
-                            </html:form>
-                        </td>
-                        <td align="center">
-                            <html:form method="POST" action="/GestionElementos">
-                                <html:hidden name="cat" property="idCatalogo" />
-                                <html:submit styleId="botonExaminar"
-                                             value=" "
-                                             title="Consultar"/>
-                            </html:form>
-                        </td>
-                        <td align="center">
-
-                            <logic:notEqual name="cat" property="nombre" value="Dependencias">
-                                <logic:notEqual name="cat" property="nombre" value="Programas">
-
-                                    <html:form method="POST" action="/EliminarCatalogo">
-                                        <html:hidden name="cat" property="idCatalogo" />
-                                        <html:submit styleId="botonEliminar"
-                                                     value=" "
-                                                     title="Eliminar"
-                                                     onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
-                                    </html:form>
-                                </logic:notEqual>
+                    <td>
+                        <logic:notEqual name="cat" property="nombre" value="Dependencias">
+                            <logic:notEqual name="cat" property="nombre" value="Programas">
+                                <bean:write name="cat" property="nombre" />
                             </logic:notEqual>
-                        </td>
-                        </tr>
-                    </logic:iterate>
-                </tbody>
-            </table>
-        </logic:present>
-    </body>
+                        </logic:notEqual>
+                        <logic:equal name="cat" property="nombre" value="Dependencias">
+                        <span title="No puede ser eliminado ni cambiado de nombre">
+                            <span style="color:red">*</span><bean:write name="cat" property="nombre"/> 
+                        </span>
+                    </logic:equal>
+                    <logic:equal name="cat" property="nombre" value="Programas">
+                        <span title="No puede ser eliminado ni cambiado de nombre">
+                            <span style="color:red">*</span><bean:write name="cat" property="nombre"/> 
+                        </span>
+                    </logic:equal>
+                    </td>
+                    <td align="center">
+                        <html:form method="POST" action="/ModificarCatalogo?method=page">
+                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td>
+                    <td align="center">
+                        <html:form method="POST" action="/GestionElementos">
+                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:submit styleId="botonExaminar"
+                                         value=" "
+                                         title="Consultar"/>
+                        </html:form>
+                    </td>
+                    <td align="center">
+
+                        <logic:notEqual name="cat" property="nombre" value="Dependencias">
+                            <logic:notEqual name="cat" property="nombre" value="Programas">
+
+                                <html:form method="POST" action="/EliminarCatalogo">
+                                    <html:hidden name="cat" property="idCatalogo" />
+                                    <html:hidden name="cat" property="nombre" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
+                                </html:form>
+                            </logic:notEqual>
+                        </logic:notEqual>
+                    </td>
+                    </tr>
+                </logic:iterate>
+            </tbody>
+        </table>
+    </logic:present>
+</body>
 </html>

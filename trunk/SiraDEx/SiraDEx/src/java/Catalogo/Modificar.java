@@ -45,7 +45,7 @@ public class Modificar extends DispatchAction {
         cat.setCatalogo();
         ArrayList campos = Clases.CampoCatalogo.listar(idCat);
         cat.setCampos(campos);
-        
+
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 
          * del jsp debido a que ArrayList es un apuntador*/
@@ -58,47 +58,43 @@ public class Modificar extends DispatchAction {
         return mapping.findForward(PAGE);
     }
 
-    public ActionForward add(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-
-        Catalogo cat = (Catalogo) form;
-
-        int numeroCampos = cat.getNroCampos();
-        ArrayList<CampoCatalogo> nuevosCampos = new ArrayList<>();
-
-        for (int i = 0; i < numeroCampos; i++) {
-            CampoCatalogo c = new CampoCatalogo();
-            nuevosCampos.add(c);
-        }
-
-        cat.setCamposAux(nuevosCampos);
-
-        return mapping.findForward(PAGE);
-
-    }
-
     public ActionForward update(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
         cat.setMensajeError(null);
-        
+
+        int numeroCampos = cat.getNroCampos();
+        if (numeroCampos > 0) {
+            ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
+            if (nuevosCampos==null) {
+                nuevosCampos = new ArrayList<>();
+            }
+            for (int i = 0; i < numeroCampos; i++) {
+                CampoCatalogo c = new CampoCatalogo();
+                nuevosCampos.add(c);
+            }
+
+            cat.setCamposAux(nuevosCampos);
+
+            return mapping.findForward(PAGE);
+        }
+
         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
 
         if (cat.modificar(catNM)) {
-        
+
             ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
-            Clases.Root.deleteSessions(request,"catalogoForm");
-            cat.setMensaje("El Catálogo '"+cat.getNombre()+"' ha sido modificado"
-                    + " con éxito.");
+            Clases.Root.deleteSessions(request, "");
+            request.setAttribute("mensaje", "El Catálogo '" + cat.getNombre() 
+                    + "' ha sido modificado con éxito.");
             return mapping.findForward(SUCCESS);
         }
-        
+
         cat.setNombre(catNM.getNombre());
-        
+
         return mapping.findForward(FAILURE);
 
 

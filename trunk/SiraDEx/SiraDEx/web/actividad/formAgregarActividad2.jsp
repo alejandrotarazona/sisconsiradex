@@ -115,10 +115,11 @@
                             </html:select>
                         </logic:equal>
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
-                            <html:text onfocus="if (this.value=='Apellido(s), Nombre(s)') this.value = ''" 
-                                       onblur="if (this.value=='') this.value = 'Apellido(s), Nombre(s)'" 
-                                       value="Apellido(s), Nombre(s)" name="camposValores" property="valorAux" indexed="true"
-                                       maxlength="${camposValores.campo.longitud}" />  
+                            <html:text onfocus="if (this.value=='Apellido(s), Nombre(s)') this.value = '', this.style.color='black'" 
+                                       onblur="if (this.value=='', this.style.color='black') this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
+                                       value="Apellido(s), Nombre(s)" name="camposValores" property="valorAux"
+                                       style="color:gray;"
+                                       indexed="true" maxlength="${camposValores.campo.longitud}" />  
                             <html:select name="camposValores" property="valor" indexed="true">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 

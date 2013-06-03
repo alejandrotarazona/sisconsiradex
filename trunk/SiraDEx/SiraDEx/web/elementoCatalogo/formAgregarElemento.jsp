@@ -30,14 +30,13 @@
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
         <logic:present name="elementoCatalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div>
+            <div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div><br>
         </logic:present> 
         <logic:present name="elementoCatalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div>
+            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div><br>
         </logic:present>
 
-        <font size=2>Los campos con el asterisco  <span style="color:red">*</span> 
-            son obligatorios.</font><br><br>
+        <font size=2>Debe llenar al menos un campo.</font><br><br>
 
         <html:form action="/RegistrarElemento?method=save">
             <table>    
@@ -45,8 +44,7 @@
                     <logic:iterate name="elementoCatalogoForm" property="camposValores" 
                                    id="camposValores" indexId="index">
                         <tr>
-                        <td><bean:write name="camposValores" property="campo.nombre"/>
-                        <span style="color:red">*</span>  
+                        <td><bean:write name="camposValores" property="campo.nombre"/> 
                         </td>
                         <td>
                             <logic:equal name="camposValores" property="campo.tipo" value="usbid">

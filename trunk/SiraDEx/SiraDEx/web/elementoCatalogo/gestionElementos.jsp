@@ -51,54 +51,54 @@
         </logic:present>
 
         <logic:notPresent name="elementos">
-        <span align="center">No hay elementos que mostrar</span>
-    </logic:notPresent>
-    <logic:present name="elementos">
-        <h1>Elementos del Catálogo</h1>
-        <table class="display" id="datatab">
-            <thead>
+            <div align="center">No hay elementos que mostrar</div>
+        </logic:notPresent>
+        <logic:present name="elementos">
+            <h1>Elementos del Catálogo</h1>
+            <table class="display" id="datatab">
+                <thead>
 
-                <logic:iterate name="campos" id="campo">
-                    <th>
-                        <bean:write name="campo" property="campo.nombre"/>
-                    </th>    
-                </logic:iterate> 
-                <th></th>
-                <th></th>
-            </thead>
-            <tbody>
-                <logic:iterate name="elementos" id="elem">
+                    <logic:iterate name="campos" id="campo">
+                        <th>
+                            <bean:write name="campo" property="campo.nombre"/>
+                        </th>    
+                    </logic:iterate> 
+                    <th></th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    <logic:iterate name="elementos" id="elem">
 
-                    <tr>
-                        <logic:iterate name="elem" property="camposValores" 
-                                       id="campoValor" indexId="index">
-                        <td>
-                            <bean:write name="campoValor" property="valor"/>
+                        <tr>
+                            <logic:iterate name="elem" property="camposValores" 
+                                           id="campoValor" indexId="index">
+                            <td>
+                                <bean:write name="campoValor" property="valor"/>
+                            </td>
+                        </logic:iterate>
+                            <td align="center" width="10%">
+                            <html:form method="POST" action="/ModificarElementoCatalogo?method=page">
+                                <html:hidden name="elem" property="idElemento" />
+                                <html:submit styleId="botonModificar"
+                                             value=" "
+                                             title="Modificar"/>
+                            </html:form>
+                        </td>    
+                        <td align="center" width="10%">
+                            <html:form method="POST" action="/EliminarElemento">
+                                <html:hidden name="elem" property="idElemento" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
+                            </html:form>
                         </td>
+                        </tr>
+
                     </logic:iterate>
-                    <td align="center">
-                        <html:form method="POST" action="/ModificarElementoCatalogo?method=page">
-                            <html:hidden name="elem" property="idElemento" />
-                            <html:submit styleId="botonModificar"
-                                         value=" "
-                                         title="Modificar"/>
-                        </html:form>
-                    </td>    
-                    <td align="center">
-                        <html:form method="POST" action="/EliminarElemento">
-                            <html:hidden name="elem" property="idElemento" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar el elemento?')" />
-                        </html:form>
-                    </td>
-                    </tr>
+                </tbody>
+            </table>
+        </logic:present>
 
-                </logic:iterate>
-            </tbody>
-        </table>
-    </logic:present>
-
-</body>
+    </body>
 </html>

@@ -128,6 +128,9 @@ public class CampoCatalogo implements Serializable {
         };
 
         resp &= eCampoCatalogo.insertar2(columnas, valores);
+        
+        int id_Campo =  eCampoCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
+        resp &= CampoCatalogoValor.actualizarElementos(id_Campo, idCatalogo);
 
         return resp;
     }
