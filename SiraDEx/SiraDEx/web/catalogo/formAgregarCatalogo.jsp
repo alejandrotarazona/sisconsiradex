@@ -36,7 +36,7 @@
                     <td width="20%">Catálogo de Usuarios</td>
                     <td>
                         <html:checkbox name="catalogoForm" property="participantes" value="off"
-                                       onclick="if (this.value == 'off') { this.value = 'on'
+                                       onclick="if (this.checked) { this.value = 'on'
                                        document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
                                        } else {document.getElementById('aviso').innerHTML='', this.value = 'off'}"/>
                         <html:hidden name="catalogoForm" property="participantes" value="false"/>

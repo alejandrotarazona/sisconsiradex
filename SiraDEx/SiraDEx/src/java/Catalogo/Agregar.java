@@ -6,6 +6,7 @@ package Catalogo;
 
 import Clases.CampoCatalogo;
 import Clases.Catalogo;
+import Clases.Root;
 import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -43,9 +44,8 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Root.deleteSessions(request, "");
         Catalogo cat = (Catalogo) form;
-        cat.setMensajeError(null);
-        cat.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 

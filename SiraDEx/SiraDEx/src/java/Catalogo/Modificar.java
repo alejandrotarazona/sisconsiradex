@@ -68,7 +68,7 @@ public class Modificar extends DispatchAction {
         int numeroCampos = cat.getNroCampos();
         if (numeroCampos > 0) {
             ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
-            if (nuevosCampos==null) {
+            if (nuevosCampos == null) {
                 nuevosCampos = new ArrayList<>();
             }
             for (int i = 0; i < numeroCampos; i++) {
@@ -88,7 +88,7 @@ public class Modificar extends DispatchAction {
             ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);
             Clases.Root.deleteSessions(request, "");
-            request.setAttribute("mensaje", "El Catálogo '" + cat.getNombre() 
+            request.setAttribute("mensaje", "El Catálogo '" + cat.getNombre()
                     + "' ha sido modificado con éxito.");
             return mapping.findForward(SUCCESS);
         }
