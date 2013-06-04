@@ -420,6 +420,7 @@ public class Verificaciones {
      */
     public static boolean verifCV(Catalogo c) {
 
+        boolean eliminarTodos = true;
         Iterator it = c.getCampos().iterator();
         for (int i = 1; i < c.getCampos().size() && it.hasNext(); i++) {
             CampoCatalogo campo = (CampoCatalogo) it.next();
@@ -431,6 +432,10 @@ public class Verificaciones {
             if (respVerif != null) {
                 c.setMensajeError(respVerif);
                 return false;
+            }
+
+            if (!campo.isEliminado()) {
+                eliminarTodos = false;
             }
         }
         if (c.getCamposAux() != null) {
@@ -446,9 +451,17 @@ public class Verificaciones {
                     c.setMensajeError(respVerif);
                     return false;
                 }
+                if (!campo.isEliminado()) {
+                    eliminarTodos = false;
+                }
             }
         }
 
+        /*verifica que no se pueda eliminar todos los campos del catálogo a modificar*/
+        if (eliminarTodos) {
+            c.setMensajeError("Error: El Catálogo debe conservar al menos un campo");
+            return false;
+        }
         return true;
     }
 

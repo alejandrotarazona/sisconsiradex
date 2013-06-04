@@ -24,6 +24,7 @@ public class CampoCatalogo implements Serializable {
     private int idCampo;
     private String nombre;
     private String tipo;
+    private boolean eliminado = false;
     private static String[] TABLAS = {
         "CATALOGO",//0
         "CAMPO_CATALOGO", //1
@@ -88,6 +89,14 @@ public class CampoCatalogo implements Serializable {
         this.tipo = tipo;
     }
 
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
     public static String[] getTIPOS() {
         return TIPOS;
     }
@@ -128,11 +137,20 @@ public class CampoCatalogo implements Serializable {
         };
 
         resp &= eCampoCatalogo.insertar2(columnas, valores);
-        
-        int id_Campo =  eCampoCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
+
+        int id_Campo = eCampoCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
         resp &= CampoCatalogoValor.actualizarElementos(id_Campo, idCatalogo);
 
         return resp;
+    }
+
+    public boolean eliminar() {
+        Entity eCampoCatalogo = new Entity(7);//CAMPO_CATALOGO
+        if (eCampoCatalogo.borrar(ATRIBUTOS[0], idCampo)) {
+            return true;
+        }
+        return false;
+
     }
 
     //en el parámetro campo recibe un campo no modificado del catalogo
@@ -146,8 +164,7 @@ public class CampoCatalogo implements Serializable {
 
         return e.modificar(condColumnas, valores, colModificar, nombreCampo);
     }
-    
-    
+
     public static ArrayList<CampoCatalogo> listar(int idCat) {
         ArrayList<CampoCatalogo> resp = new ArrayList<>(0);
         Entity eListar = new Entity(7);//CAMPO_CATALOGO

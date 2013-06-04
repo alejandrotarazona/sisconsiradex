@@ -124,6 +124,21 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return e.borrar("id_elemento", idElemento);
     }
 
+    public boolean modificar(ArrayList camposNM) {
+        if (!Verificaciones.verif(this)) {
+            return false;
+        }
+
+        Iterator it = camposNM.iterator();
+
+        for (int i = 0; it.hasNext(); i++) {
+            CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
+            camposValores.get(i).modificar(campoNM, idElemento);
+        }
+
+        return true;
+    }
+
     public static ArrayList<ElementoCatalogo> listarElementosId(int idCat) {
 
         ArrayList<ElementoCatalogo> resp = new ArrayList<>(0);
@@ -153,24 +168,11 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return null;
     }
 
-    public boolean modificar(ArrayList camposNM) {
-        if (!Verificaciones.verif(this)) {
-            return false;
-        }
-
-        Iterator it = camposNM.iterator();
-
-        for (int i = 0; it.hasNext(); i++) {
-            CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            camposValores.get(i).modificar(campoNM, idElemento);
-        }
-
-        return true;
-    }
-
-    //retorna una lista con los valores de los elementos del catalogo dado
+    //retorna una lista donde cada elemento tiene en el atributo contenido la cantidad dada
+    //de valores concatenados de cada elemento del catalogo dado, concatena al principio de la cadena
+    //el valor del campo USB-ID de ser un catalogo con dicho campo.
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
-            int valores) {
+            int cantidad) {
 
         Entity eCat = new Entity(6);//CATALOGO
 
@@ -197,13 +199,26 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                 ArrayList<CampoCatalogoValor> elem = ec.getCamposValores();
                 int i;
                 String valor = "";
-                if (valores == 0) {
-                    //si valores es 0 se cargan todos los valores para cada elemento
-                    valores = elem.size();
+                if (cantidad == 0) {
+                    //si cantidad es 0 se cargan todos los cantidad para cada elemento
+                    cantidad = elem.size();
                 }
-                for (i = 0; i < valores; i++) {
-                    valor += elem.get(i).getValor() + ", ";
+                String usbid = "~";
+                for (i = 0; i < cantidad; i++) {
+                    String val = elem.get(i).getValor();
+                    if (Verificaciones.esVacio(val)) {
+                        val = "(vacío)";
+                    }
+                    if (elem.get(i).getCampo().getNombre().equals("USB-ID")) {
+                        usbid = val;
+                        continue;
+                    }
+                    valor += val + ", ";
                 }
+                if (!usbid.equals("~")) {
+                    valor = usbid + ", " + valor;
+                }
+
                 ElementoCatalogo e = new ElementoCatalogo(valor);
                 valor = valor.substring(0, valor.length() - 2);
                 e.setContenido(valor);
