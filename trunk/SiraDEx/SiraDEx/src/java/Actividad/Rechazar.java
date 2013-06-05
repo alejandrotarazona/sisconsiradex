@@ -67,7 +67,7 @@ public class Rechazar extends DispatchAction {
         if (validacion) {
             act.setMensaje("La Actividad ha sido rechazada.");
             act.setMensajeError(null);
-            //act.enviarCorreo(2);
+            act.enviarCorreo(2);
             return mapping.findForward(SUCCESS);
         }
 

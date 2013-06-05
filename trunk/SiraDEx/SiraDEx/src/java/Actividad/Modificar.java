@@ -88,7 +88,7 @@ public class Modificar extends DispatchAction {
             request.setAttribute("estadisticaCantidad", estadistica[1]);
 
             String nombre = act.getNombreTipoActividad();
-            //act.enviarCorreo(1);
+            act.enviarCorreo(1);
             Clases.Root.deleteSessions(request, "");
             request.setAttribute("mensaje", "La Actividad '" + nombre + "' ha sido modificada con éxito.");
             act.setMensajeError(null);
