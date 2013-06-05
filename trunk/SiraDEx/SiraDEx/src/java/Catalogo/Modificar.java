@@ -63,25 +63,23 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
-        cat.setMensajeError(null);
+        
+         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
+
+        int elimino = cat.eliminarCamposMarcados(catNM);
+        if (elimino > 0) {
+            cat.setMensajeError("");
+            return mapping.findForward(PAGE);
+        } else if (elimino < 0) {
+            return mapping.findForward(FAILURE);
+        }
 
         int numeroCampos = cat.getNroCampos();
         if (numeroCampos > 0) {
-            ArrayList<CampoCatalogo> nuevosCampos = cat.getCamposAux();
-            if (nuevosCampos == null) {
-                nuevosCampos = new ArrayList<>();
-            }
-            for (int i = 0; i < numeroCampos; i++) {
-                CampoCatalogo c = new CampoCatalogo();
-                nuevosCampos.add(c);
-            }
-
-            cat.setCamposAux(nuevosCampos);
-
+            cat.agregarCamposNuevos();
+            cat.setMensajeError("");
             return mapping.findForward(PAGE);
         }
-
-        Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
 
         if (cat.modificar(catNM)) {
 

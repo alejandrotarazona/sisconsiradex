@@ -142,14 +142,14 @@ VALUES ('99-10000', 'pedrog', 'Unidad de Participación y Acción Social',2, 'Pe
 
 
 --Catalogo
-INSERT INTO catalogo (nombre, nro_campos) VALUES ('Dependencias', 2);
-INSERT INTO catalogo (nombre, nro_campos) VALUES ('Programas', 1);
-INSERT INTO catalogo (nombre, nro_campos, participa) VALUES ('Estudiantes', 2, true);
-INSERT INTO catalogo (nombre, nro_campos, participa) VALUES ('Profesores', 2, true);
-INSERT INTO catalogo (nombre, nro_campos, participa) VALUES ('Empleados', 2, true);
-INSERT INTO catalogo (nombre, nro_campos, participa) VALUES ('Obreros', 2, true);
---INSERT INTO catalogo (nombre, nro_campos) VALUES ('Carreras', 1);
---INSERT INTO catalogo (nombre, nro_campos) VALUES ('Departamentos', 1);
+INSERT INTO catalogo (nombre) VALUES ('Dependencias');
+INSERT INTO catalogo (nombre) VALUES ('Programas');
+INSERT INTO catalogo (nombre, participa) VALUES ('Estudiantes', true);
+INSERT INTO catalogo (nombre, participa) VALUES ('Profesores', true);
+INSERT INTO catalogo (nombre, participa) VALUES ('Empleados', true);
+INSERT INTO catalogo (nombre, participa) VALUES ('Obreros', true);
+--INSERT INTO catalogo (nombre) VALUES ('Carreras');
+--INSERT INTO catalogo (nombre) VALUES ('Departamentos');
 
 --      Campos de dependencias
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 

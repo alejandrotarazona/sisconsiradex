@@ -25,12 +25,10 @@ public class Catalogo extends Root {
     private String nombre;
     private int nroCampos;
     private ArrayList<CampoCatalogo> campos;
-    private ArrayList<CampoCatalogo> camposAux; //atributo auxiliar para agregar nuevos campos en el modificar
     private boolean participantes; //especifica si es un catalogo de participantes
     private static final String[] ATRIBUTOS = {
         "id_cat",
         "nombre",
-        "nro_campos",
         "participa"
     };
     private static final String[] tiposCampos = {//no lo usamos para nada
@@ -156,14 +154,6 @@ public class Catalogo extends Root {
         this.campos = campos;
     }
 
-    public ArrayList<CampoCatalogo> getCamposAux() {
-        return camposAux;
-    }
-
-    public void setCamposAux(ArrayList<CampoCatalogo> camposAux) {
-        this.camposAux = camposAux;
-    }
-
     public boolean isParticipantes() {
         return participantes;
     }
@@ -174,7 +164,7 @@ public class Catalogo extends Root {
 
     @Override
     public String toString() {
-        return "Catalogo{" + "nombre=" + nombre + ", nroCampos=" + nroCampos + '}';
+        return "Catalogo{" + "nombre=" + nombre + ", participantes=" + participantes + '}';
     }
 
     public boolean esCatalogo() {
@@ -213,8 +203,7 @@ public class Catalogo extends Root {
                 rs.next();
                 idCatalogo = rs.getInt(ATRIBUTOS[0]);
                 nombre = rs.getString(ATRIBUTOS[1]);
-                nroCampos = rs.getInt(ATRIBUTOS[2]);
-                participantes = rs.getBoolean(ATRIBUTOS[3]);
+                participantes = rs.getBoolean(ATRIBUTOS[2]);
                 rs.close();
             } catch (SQLException ex) {
                 Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -229,37 +218,57 @@ public class Catalogo extends Root {
         }
 
         Entity eCatalogo = new Entity(6);//CATALOGO
-        boolean resp;
 
         String[] columnas = {
             ATRIBUTOS[1],
-            ATRIBUTOS[2],
-            ATRIBUTOS[3]
+            ATRIBUTOS[2]
         };
 
         Object[] valores = {
             nombre,
-            nroCampos,
             participantes
         };
 
-        eCatalogo.insertar2(columnas, valores);
-        resp = agregarCampos(campos);
+        boolean resp = eCatalogo.insertar2(columnas, valores);
+        resp &= agregarCampos();
 
         return resp;
     }
 
-    private boolean agregarCampos(ArrayList campos) {
+    private boolean agregarCampos() {
         boolean resp = true;
         setIdCatalogo();
-        Iterator itCampos;
-        if (campos != null) {
-            itCampos = campos.iterator();
-            while (itCampos.hasNext() && resp) {
-                CampoCatalogo campo = (CampoCatalogo) itCampos.next();
-                if (!campo.isEliminado()) {
-                    resp &= campo.agregar(idCatalogo);
-                }
+        Iterator itCampos = campos.iterator();
+        while (itCampos.hasNext() && resp) {
+            CampoCatalogo campo = (CampoCatalogo) itCampos.next();
+            if (!campo.isEliminado()) {
+                resp &= campo.agregar(idCatalogo);
+            }
+        }
+        return resp;
+    }
+
+    // los agregar al form para ser enviados desde el action a la vista
+    public void agregarCamposNuevos() {
+        for (int i = 0; i < nroCampos; i++) {
+            CampoCatalogo c = new CampoCatalogo();
+            campos.add(c);
+        }
+    }
+
+    // los agrega a la base de datos al modificar el catálogo
+    private boolean agregarCamposNuevos(int nroCamposCatNM) {
+        boolean resp = true;
+        setIdCatalogo();
+        Iterator itCampos = campos.iterator();
+        for (int i = 0; i < nroCamposCatNM; i++) {
+            itCampos.next();
+        }
+
+        while (itCampos.hasNext() && resp) {
+            CampoCatalogo campo = (CampoCatalogo) itCampos.next();
+            if (!campo.isEliminado()) {
+                resp &= campo.agregar(idCatalogo);
             }
         }
         return resp;
@@ -285,7 +294,6 @@ public class Catalogo extends Root {
             return false;
         }
 
-
         if (this.esCatalogo() && !nombre.equals(catNM.getNombre())) {
             mensajeError = "Error: Ya existe un Catálogo con el Nombre '"
                     + "" + nombre + "'.Por favor, intente con otro nombre.";
@@ -296,12 +304,12 @@ public class Catalogo extends Root {
             CampoCatalogo c = new CampoCatalogo();
             c.setNombre("USB-ID");
             c.setTipo("usbid");
-            camposAux = new ArrayList<>(0);
-            camposAux.add(c);
+            campos.add(c);
         }
 
+        Iterator it;
         if (catNM.isParticipantes() && !participantes) {//se cambia el catalogo de usuarios a uno normal
-            Iterator it = campos.iterator();
+            it = campos.iterator();
             while (it.hasNext()) {
                 CampoCatalogo campo = (CampoCatalogo) it.next();
                 if (campo.getTipo().equals("usbid")) {
@@ -313,25 +321,22 @@ public class Catalogo extends Root {
 
         Entity eCatalogo = new Entity(6);//CATALOGO
 
-        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[3]};
+        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[2]};
         Object[] valores = {catNM.getNombre(), catNM.isParticipantes()};
-        String[] colModificar = {ATRIBUTOS[1], ATRIBUTOS[3]};
+        String[] colModificar = {ATRIBUTOS[1], ATRIBUTOS[2]};
         Object[] nombreCat = {nombre, participantes};
 
         boolean resp = eCatalogo.modificar(condColumnas, valores, colModificar, nombreCat);
 
-        Iterator it = catNM.getCampos().iterator();
-
-        for (int i = 0; it.hasNext(); i++) {
-            CampoCatalogo campoNM = (CampoCatalogo) it.next();
-            resp &= campos.get(i).modificar(campoNM, idCatalogo);
+        it = campos.iterator();
+        Iterator itNM = catNM.getCampos().iterator();
+        while (itNM.hasNext()) {
+            CampoCatalogo campoNM = (CampoCatalogo) itNM.next();
+            CampoCatalogo campo = (CampoCatalogo) it.next();
+            resp &= campo.modificar(campoNM, idCatalogo);
         }
 
-        if (camposAux != null) {
-            resp &= agregarCampos(camposAux);
-        }
-
-        resp &= eliminarCamposMarcados();
+        resp &= agregarCamposNuevos(catNM.campos.size());
 
         if (!resp) {
             mensaje = "Error: No se pudo modificar el Catálogo satisfactoriamente.";
@@ -339,15 +344,53 @@ public class Catalogo extends Root {
         return resp;
     }
 
-    private boolean eliminarCamposMarcados() {
+    private boolean eliminarTodosLosCampos() {
+        boolean resp = true;
 
         Iterator it = campos.iterator();
-        boolean resp = true;
         while (it.hasNext()) {
             CampoCatalogo campo = (CampoCatalogo) it.next();
-            if (campo.isEliminado() && resp) {
-                resp &= campo.eliminar();
+            if (!campo.isEliminado()) {
+                resp = false;
             }
+        }
+        if (resp) {
+            mensajeError = "Error: El Catálogo debe conservar al menos un campo";
+        }
+        return resp;
+    }
+
+    //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
+    //de lo contrario retorna 1, y -1 si ocurre un error.
+    public int eliminarCamposMarcados(Catalogo catNM) {
+
+        if (eliminarTodosLosCampos()) {
+            return -1;
+        }
+
+        ArrayList<CampoCatalogo> camposNM = catNM.getCampos();
+        boolean bien = true;
+        int resp = 0;
+        int i = 0;
+        for (; i < catNM.campos.size(); i++) {//campos registrados en la base de datos
+            if (campos.get(i).isEliminado() && bien) {
+                resp = 1;
+                bien &= campos.get(i).eliminar();//se elimina de la base de datos
+                camposNM.remove(i); //se elimina de campos del atributo catNM
+                campos.remove(i);   //se elimina de campos del form
+                i--;
+            }
+        }
+        for (; i < campos.size(); i++) {//campos no registrados en la base de datos
+            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + i);
+            if (campos.get(i).isEliminado()) {
+                resp = 1;
+                campos.remove(i);   //se elimina de campos del form
+                i--;
+            }
+        }
+        if (!bien) {
+            resp = -1;
         }
         return resp;
     }
@@ -361,8 +404,7 @@ public class Catalogo extends Root {
                     Catalogo cat = new Catalogo();
                     cat.setIdCatalogo(rs.getInt(ATRIBUTOS[0]));
                     cat.setNombre(rs.getString(ATRIBUTOS[1]));
-                    cat.setNroCampos(rs.getInt(ATRIBUTOS[2]));
-                    cat.setParticipantes(rs.getBoolean(ATRIBUTOS[3]));
+                    cat.setParticipantes(rs.getBoolean(ATRIBUTOS[2]));
 
                     cats.add(cat);
                 }
