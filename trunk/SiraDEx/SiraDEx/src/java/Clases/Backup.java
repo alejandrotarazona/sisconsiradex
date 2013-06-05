@@ -83,7 +83,7 @@ public class Backup extends Root {
     
     public boolean hacerBackup() {
 
-        String user = "postgres";
+        String user = "siradex";
         String host = DataBase.getHost();
         String db = DataBase.getDatabase();
         String fecha = Log.getDate();
@@ -117,7 +117,7 @@ public class Backup extends Root {
 
     public boolean restaurarDesdeBackup() {
 
-        String user = "postgres";
+        String user = "siradex";
         String host = DataBase.getHost();
         String db = DataBase.getDatabase();
         int port = DataBase.getPort();
