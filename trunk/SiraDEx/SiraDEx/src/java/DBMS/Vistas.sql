@@ -1,10 +1,9 @@
 CREATE OR REPLACE VIEW elementos
-                (id_catalogo, catalogo, nro_campos, id_campo, 
+                (id_catalogo, catalogo, id_campo, 
                     nombre_campo, tipo, id_elemento,valor) 
     AS
     SELECT id_catalogo as idcat, 
             nombre as catalogo, 
-            nro_campos, 
             id_campo as idcamp, 
             nombre_campo, 
             tipo_campo as tipo, 
