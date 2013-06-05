@@ -135,7 +135,7 @@ public class Agregar extends DispatchAction {
 
             a.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
             a.setMensajeError(null);
-            //a.enviarCorreo(0);
+            a.enviarCorreo(0);
             return mapping.findForward(SUCCESSFULL);
         }
 

@@ -52,7 +52,7 @@ public class Validar extends org.apache.struts.action.Action {
         if (validacion) {
             act.setMensaje("La Actividad ha sido validada.");
             act.setMensajeError(null);
-            //act.enviarCorreo(3);
+            act.enviarCorreo(3);
             return mapping.findForward(SUCCESS);
         } else {
             act.setMensajeError("Error: La Actividad no se pudo validar, intente de nuevo.");

@@ -28,7 +28,7 @@ Seguir los siguientes pasos para poder probar toda la gestion de backups del Sir
 
 		En el terminal aparecerá el contenido del archivo crontab, se debe agregar 
 		al final de este la línea siguiente:
-		0  3 * * * nombreusuario /home/backups_siradex/respaldo_siradex.sh
+		0  3 * * *   /home/backups_siradex/respaldo_siradex.sh
 
 		Luego con Ctrl+x sales y repondes con s o y (dependiendo si está en español o ingles)
 		a la pregunta de si deseas guardar, luego Enter
