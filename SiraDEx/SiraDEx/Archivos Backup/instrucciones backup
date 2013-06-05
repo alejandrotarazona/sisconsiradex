@@ -11,16 +11,16 @@ Seguir los siguientes pasos para poder probar toda la gestion de backups del Sir
 	2 ir al directorio home 
 	> cd /home/
 
-	3 crear una carpeta que se llame bakcups_siradex
-	> mkdir bakcups_siradex
+	3 crear una carpeta que se llame backups_siradex
+	> mkdir backups_siradex
 
 	4 darle permisos de usuario al directorio
-	> chown nombredeusuario bakcups_siradex/
+	> chown nombredeusuario backups_siradex/
 
 
 	Pasos para activar el backup automatizado
 
-	1 copiar los archivos frecuencia.txt y respaldo_siradex.sh a la carpeta bakcups_siradex
+	1 copiar los archivos frecuencia.txt y respaldo_siradex.sh a la carpeta backups_siradex
 	  estos están en esta misma carpeta del DropBox
 
 	2 nuevamente desde la terminal como root modificar el crontab, puede ser con nano
