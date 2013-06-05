@@ -3,7 +3,7 @@
 # Script Backup Databases PostgreSQL - Tomeu Roig (modificado po Jorge García)      
 #=============================================================================================
 
-USER="postgres"
+USER="siradex"
 HOST="localhost"
 DB="bdsiradex"
 FH=`date '+_%d_%m_%Y'`
