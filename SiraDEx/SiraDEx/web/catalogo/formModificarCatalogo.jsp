@@ -39,9 +39,9 @@
             <table>
                 <tbody>
                     <tr>
-                    <td width="20%">Catálogo de Usuarios</td>
+                    <td width="18%">Catálogo de Usuarios</td>
 
-                    <td colspan="3">
+                    <td>
                         <logic:equal name="catalogoForm" property="participantes" value="false">
                             <html:checkbox name="catalogoForm" property="participantes" value="off"
                                            onclick="if (this.checked) { 
@@ -74,41 +74,43 @@
                                     || nombreCat.equals("Programas")) {
                                 b = true;
                             }%>
-                        <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'>
+                        <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'
+                                   maxlength="100">
                             <bean:write name="catalogoForm" property="nombre"/>
                         </html:text>
                     </td>
                     </tr>
+                </tbody>
+            </table>   
+
+            <b>Campos</b>
+            <table>
+                <tbody>
                     <tr>
-                    <td><b>Campos</b></td>
-                    <td></td>
+                    <td width="25%" align="center"><b>Nombre</b></td>
+                    <td width="10%" align="center"><b>Tipo</b></td>
+                    <td width="10%" align="center">Eliminar</td>
                     <td></td>
                     </tr>
-                    <tr>
-                    <td></td>
-                    <td width="25%"><b>Nombre</b></td>
-                    <td width="15%"><b>Tipo</b></td>
-                    <td>Eliminar</td>
-                    </tr>
+
                     <logic:iterate name="catalogoForm" property="campos" id="campos" 
                                    indexId="index">
 
-                        <tr><td></td>
-                        <td>
-                            <logic:notEqual name="campos" property="tipo" value="usbid">
-                                <html:text name="campos" property="nombre" indexed="true">
-                                    <bean:write name="campos" property="nombre"/>
-                                </html:text> 
-                            </logic:notEqual>
-                            <logic:equal name="campos" property="tipo" value="usbid">
-                                <html:text name="campos" property="nombre" indexed="true" 
-                                           disabled="true">
-                                    <bean:write name="campos" property="nombre"/> 
-                                </html:text>                  
-                            </logic:equal>
-
-                        </td>
-                        <td>
+                        <tr>
+                        <td align="center"><span style="color: gray;font-size:10px">${index+1}</span>
+                        <logic:notEqual name="campos" property="tipo" value="usbid">
+                            <html:text name="campos" property="nombre" indexed="true" maxlength="100">
+                                <bean:write name="campos" property="nombre"/>
+                            </html:text> 
+                        </logic:notEqual>
+                        <logic:equal name="campos" property="tipo" value="usbid">
+                            <html:text name="campos" property="nombre" indexed="true" 
+                                       disabled="true">
+                                <bean:write name="campos" property="nombre"/> 
+                            </html:text>                  
+                        </logic:equal>
+                        </td> 
+                        <td align="center">
                             <logic:notEqual name="campos" property="tipo" value="usbid">
                                 <html:select name="campos" property="tipo" styleClass="selector" 
                                              indexed="true">
@@ -124,62 +126,51 @@
                                 </html:select>
                             </logic:equal>
                         </td>
-                        <td>
+                        <td td align="center">
                             <logic:notEqual name="campos" property="tipo" value="usbid">
-                                <html:checkbox name="campos" property="eliminado" indexed="true"/>
+                                <html:checkbox name="campos" property="eliminado" indexed="true"
+                                               onclick="if (this.checked) {
+                                               anterior = document.catalogoForm.submitButton.value;
+                                               document.catalogoForm.submitButton.value='Eliminar'
+                                               } else {
+                                               document.catalogoForm.submitButton.value=anterior
+                                               }"/>
                                 <html:hidden name="campos" property="eliminado" value="false" 
                                              indexed="true"/>
                             </logic:notEqual>
                         </td>
+                        <td></td> 
                         </tr>
+
                     </logic:iterate>
 
-                    <logic:present  name="catalogoForm" property="camposAux">
-                        <logic:greaterThan name="catalogoForm" property="nroCampos" value="0">
-
-                            <tr>
-                            <td><b>Nuevos campos</b></td>
-                            </tr>
-
-                            <logic:iterate name="catalogoForm" property="camposAux" id="camposAux" 
-                                           indexId="index">
-                                <tr><td></td>
-                                <td>
-                                    <html:text name="camposAux" property="nombre" indexed="true"/>
-                                </td>
-
-                                <td>
-                                    <html:select name="camposAux" property="tipo" styleClass="selector" 
-                                                 indexed="true">
-                                        <html:option value="texto">texto</html:option>
-                                        <html:option value="numero">numero</html:option>
-                                        <html:option value="fecha">fecha</html:option>
-                                    </html:select>
-                                </td>
-                                <td>
-                                    <html:checkbox name="camposAux" property="eliminado" indexed="true"/>
-                                    <html:hidden name="campos" property="eliminado" value="false" 
-                                                 indexed="true"/>
-                                </td>
-                                </tr>
-                            </logic:iterate>
-
-                        </logic:greaterThan>
-                    </logic:present> 
+                    <tr>
+                    <td>
+                        <br>
+                        Nuevos campos <html:text name="catalogoForm" 
+                                   property="nroCampos" value="0" size="1" maxlength="2"
+                                   onkeyup="if(this.value > 0 
+                                   && document.catalogoForm.submitButton.value!='Eliminar') {
+                                   document.catalogoForm.submitButton.value='Agregar'
+                                   } else if (this.value <= 0 
+                                   && document.catalogoForm.submitButton.value!='Eliminar'){
+                                   document.catalogoForm.submitButton.value='Modificar'
+                                   }"/>
+                        <br><br>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td colspan="3" align="center">
+                        <input type="submit" name="submitButton" value="Modificar"
+                               onclick="if (this.value=='Modificar') 
+                                   return confirm('¿Está seguro que desea modificar el catálogo?');
+                                   if (this.value=='Eliminar') 
+                                       return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
+                                   confirm('¿Está seguro que desea eliminar los campos seleccionados?')">
+                    </td>
+                    </tr>
                 </tbody>
             </table>
-            <br>
-
-            Nuevos campos <html:text name="catalogoForm" 
-                       property="nroCampos" value="0" size="1" maxlength="2"
-                       onkeyup="if(this.value > 0) {document.catalogoForm.submitButton.value='Agregar'
-                       } else {document.catalogoForm.submitButton.value='Modificar'}"/>
-            <br>
-            <div align="center">
-                <input type="submit" name="submitButton" value="Modificar"
-                       onclick="if (this.value=='Modificar') 
-                           return confirm('¿Está seguro que desea modificar el catálogo?')">
-            </div>
 
         </html:form>
     </body>

@@ -6,7 +6,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-
+        <style>
+            .selector {width: 70px;}
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Campos del Catalogo</title>
     </head>
@@ -40,7 +42,8 @@
                 </td>
 
                 <td><logic:notEqual name="campos" property="tipo" value="usbid">
-                        <html:select name="campos" property="tipo" indexed="true">
+                        <html:select name="campos" property="tipo" indexed="true"
+                                     styleClass="selector">
                             <html:option value="texto">texto</html:option>
                             <html:option value="numero">numero</html:option>
                             <html:option value="fecha">fecha</html:option>
@@ -48,7 +51,7 @@
                     </logic:notEqual>
                     <logic:equal name="campos" property="tipo" value="usbid">
                         <html:select name="campos" property="tipo" indexed="true" 
-                                     disabled="true">
+                                     disabled="true" styleClass="selector">
                             <html:option value="texto">texto</html:option>
                         </html:select>
                     </logic:equal>

@@ -164,7 +164,6 @@ WITH (
 CREATE TABLE CATALOGO(
     id_cat      SERIAL PRIMARY KEY,
     nombre      VARCHAR(20) NOT NULL,
-    nro_campos  INT NOT NULL,
     participa   BOOLEAN DEFAULT FALSE
 )
 WITH (
