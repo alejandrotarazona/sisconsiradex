@@ -170,7 +170,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
     //retorna una lista donde cada elemento tiene en el atributo contenido la cantidad dada
     //de valores concatenados de cada elemento del catalogo dado, concatena al principio de la cadena
-    //el valor del campo USB-ID de ser un catalogo con dicho campo.
+    //el valor del campo tipo usbid de ser un catalogo de usuarios.
     public static ArrayList<ElementoCatalogo> listarElementos(String catalogo,
             int cantidad) {
 
@@ -203,20 +203,23 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                     //si cantidad es 0 se cargan todos los cantidad para cada elemento
                     cantidad = elem.size();
                 }
-                String usbid = "~";
+                String valusbid = "";
+                boolean usbid = false;
                 for (i = 0; i < cantidad; i++) {
                     String val = elem.get(i).getValor();
                     if (Verificaciones.esVacio(val)) {
                         val = "(vacío)";
                     }
-                    if (elem.get(i).getCampo().getNombre().equals("USB-ID")) {
-                        usbid = val;
+                    if (!usbid
+                            && elem.get(i).getCampo().getTipo().equals("usbid")) {
+                        valusbid = val;
+                        usbid = true;
                         continue;
                     }
                     valor += val + ", ";
                 }
-                if (!usbid.equals("~")) {
-                    valor = usbid + ", " + valor;
+                if (usbid) {
+                    valor = valusbid + ", " + valor;
                 }
 
                 ElementoCatalogo e = new ElementoCatalogo(valor);
