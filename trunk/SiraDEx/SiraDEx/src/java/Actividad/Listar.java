@@ -63,8 +63,11 @@ public class Listar extends DispatchAction {
 
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> acts = Actividad.listarActividades();
+        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
 
         request.setAttribute("acts", acts);
+        request.setAttribute("estadisticaNombres", estadistica[0]);
+        request.setAttribute("estadisticaCantidad", estadistica[1]);
 
         if (acts.isEmpty()) {
             request.setAttribute("acts", null);

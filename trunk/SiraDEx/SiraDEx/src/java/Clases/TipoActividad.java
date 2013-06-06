@@ -39,8 +39,7 @@ public class TipoActividad extends Root {
         "descripcion", //3
         "programa", //4
         "validador", //5
-        "nro_productos", //6 
-        "activo" //7
+        "activo" //6
     };
     private static final String[] tiposCampos = {
         "texto", //STRING
@@ -242,7 +241,7 @@ public class TipoActividad extends Root {
 
         Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
-        String[] atrib = {ATRIBUTOS[1], ATRIBUTOS[7]};
+        String[] atrib = {ATRIBUTOS[1], ATRIBUTOS[6]};
         Object[] valor = {nombreTipo, true};
         ResultSet rs = e.seleccionar(atrib, valor);
         try {
@@ -276,11 +275,9 @@ public class TipoActividad extends Root {
                 rs.next();
                 nombreTipo = rs.getString("nombre_tipo_actividad");
                 tipoPR = rs.getString("tipo_p_r");
-                nroCampos = rs.getInt("nro_campos");
                 descripcion = rs.getString("descripcion");
                 programa = rs.getString("programa");
                 validador = rs.getString("validador");
-                nroProductos = rs.getInt("nro_productos");
                 activo = rs.getBoolean("activo");
                 this.setPermisos();
                 rs.close();
@@ -328,21 +325,18 @@ public class TipoActividad extends Root {
         Object[] valores = {
             nombreTipo,
             tipoPR,
-            nroCampos,
             descripcion,
             programa,
-            validador,
-            nroProductos
+            validador
         };
 
         System.out.println("No ha sido insertada previamente");
         String[] aInsertar = {
             ATRIBUTOS[1],
             ATRIBUTOS[2],
+            ATRIBUTOS[3],
             ATRIBUTOS[4],
-            ATRIBUTOS[5],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[5]
         };
 
         if (resp = e.insertar2(aInsertar, valores)) {
@@ -383,7 +377,7 @@ public class TipoActividad extends Root {
         Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
         String[] condColumnas = {ATRIBUTOS[0]};
         Object[] valores = {id};
-        String[] colModificar = {ATRIBUTOS[7]};
+        String[] colModificar = {ATRIBUTOS[6]};
         Object[] modificaciones = {false};
 
         if (eMod.modificar(condColumnas, valores, colModificar, modificaciones)) {
@@ -411,8 +405,7 @@ public class TipoActividad extends Root {
                     t.setDescripcion(rs.getString(ATRIBUTOS[3]));
                     t.setPrograma(rs.getString(ATRIBUTOS[4]));
                     t.setValidador(rs.getString(ATRIBUTOS[5]));
-                    t.setNroProductos(rs.getInt(ATRIBUTOS[6]));
-                    t.setActivo(rs.getBoolean(ATRIBUTOS[7]));
+                    t.setActivo(rs.getBoolean(ATRIBUTOS[6]));
                     t.setPermisos();
                     tipos.add(t);
                 }
@@ -445,7 +438,7 @@ public class TipoActividad extends Root {
      * dado.
      */
     public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
-        ArrayList<TipoActividad> tiposAux = listarCondicion(ATRIBUTOS[7], true);
+        ArrayList<TipoActividad> tiposAux = listarCondicion(ATRIBUTOS[6], true);
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
         Iterator it = tiposAux.iterator();
 
@@ -532,8 +525,7 @@ public class TipoActividad extends Root {
             ATRIBUTOS[3],
             ATRIBUTOS[4],
             ATRIBUTOS[5],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[6]
         };
         Object[] valores = {
             taNM.getNombreTipo(),
@@ -541,7 +533,6 @@ public class TipoActividad extends Root {
             taNM.getDescripcion(),
             taNM.getPrograma(),
             taNM.getValidador(),
-            taNM.getNroProductos(),
             taNM.isActivo()
         };
         String[] colModificar = {
@@ -550,8 +541,7 @@ public class TipoActividad extends Root {
             ATRIBUTOS[3],
             ATRIBUTOS[4],
             ATRIBUTOS[5],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[6]
         };
         Object[] modificaciones = {
             nombreTipo,
@@ -559,7 +549,6 @@ public class TipoActividad extends Root {
             descripcion,
             programa,
             validador,
-            nroProductos,
             activo
         };
 
@@ -603,7 +592,7 @@ public class TipoActividad extends Root {
             this.id
         };
         String[] colModificar = {
-            ATRIBUTOS[7]
+            ATRIBUTOS[6]
         };
         Object[] modificaciones = {
             true
