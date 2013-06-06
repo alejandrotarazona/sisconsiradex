@@ -24,12 +24,12 @@ public class TipoActividad extends Root {
     private int id;
     private String nombreTipo;
     private String tipoPR;
-    private int nroCampos;
+    private int nroCampos = 1;
     private String descripcion;
     private String[] permisos;
     private String programa;
     private String validador;
-    private int nroProductos;
+    private int nroProductos = 1;
     private ArrayList<Campo> campos;
     private boolean activo;
     private static final String[] ATRIBUTOS = {
