@@ -4,24 +4,24 @@
 --Tipo de actividad
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador,nro_productos) VALUES ('Formulacion de proyectos del BPDEx', 'R',
+programa,validador) VALUES ('Formulacion de proyectos del BPDEx', 'R',
 'Proyecto del BPDEx','Acción social y desarrollo comunitario',
-'Unidad de Participación y Acción Social', 1);
+'Unidad de Participación y Acción Social');
 --'Proyecto del BDPEx');*/
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador,nro_productos) VALUES ('Tutoría de Proyecto de Servicio Comunitario',
+programa,validador) VALUES ('Tutoría de Proyecto de Servicio Comunitario',
 'P','Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario',
-'Coordinación de Formación Complementaria General', 1);
+'Coordinación de Formación Complementaria General');
 --'Informe de Servicio Comunitario del estudiante y acta de evaluación');*/
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador,nro_productos) VALUES ('Tutoría de pasantías cortas profesionales',
+programa,validador) VALUES ('Tutoría de pasantías cortas profesionales',
 'R','Tutoria de pasantías cortas','Cooperación técnica',
-'Coordinación de Cooperación Técnica', 2);
+'Coordinación de Cooperación Técnica');
 --'Informe de pasantia corta del estudiante y acta de evaluación');
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador,nro_productos) VALUES ('Participación en actividades de voluntariado en representación de la USB',
+programa,validador) VALUES ('Participación en actividades de voluntariado en representación de la USB',
 'R','Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario',
-'Unidad de Participación y Acción Social',1);
+'Unidad de Participación y Acción Social');
 --'Informe de participación'
 
 --Campo de un tipo de actividad

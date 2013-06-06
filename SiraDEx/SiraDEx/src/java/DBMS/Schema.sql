@@ -45,7 +45,6 @@ CREATE TABLE TIPO_ACTIVIDAD(
     descripcion             VARCHAR(2000) NOT NULL,
     programa                VARCHAR(140) NOT NULL,
     validador               VARCHAR(140) NOT NULL,
-    nro_productos           SMALLINT NOT NULL,
     activo                  BOOLEAN DEFAULT TRUE
     
 )
