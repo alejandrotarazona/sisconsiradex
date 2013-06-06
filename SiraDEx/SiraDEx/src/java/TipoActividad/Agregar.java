@@ -70,7 +70,7 @@ public class Agregar extends DispatchAction {
         ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa",true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
-        if (!Verificaciones.verifCF(ta)){
+        if (!Verificaciones.verificarCamposFijos(ta)){
             return mapping.findForward(FAILURE);
         }
          /*verifica si hay un tipo de actividad con ese nombre*/

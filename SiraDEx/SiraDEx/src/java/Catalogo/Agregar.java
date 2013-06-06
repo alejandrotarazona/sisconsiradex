@@ -96,7 +96,7 @@ public class Agregar extends DispatchAction {
         Catalogo cat = (Catalogo) form;
 
 
-        if (!Verificaciones.verifCV(cat)) {
+        if (!Verificaciones.verificarCamposVariables(cat)) {
             return mapping.findForward(FAILURE2);
         }
 

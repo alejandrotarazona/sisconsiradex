@@ -52,27 +52,6 @@ public class Catalogo extends Root {
     public Catalogo() {
     }
 
-    public static Catalogo leer() throws IOException {
-        Catalogo resp;
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-        System.out.println("Introduzca el nombre del catalogo:");
-        String name = br.readLine();
-        System.out.println("");
-        System.out.println("Introduzca el nro de campos: ");
-        int nro = Integer.parseInt(br.readLine());
-        System.out.println("");
-
-        resp = new Catalogo(name, nro);
-        resp.campos = new ArrayList<>();
-        for (int i = 0; i < nro; i++) {
-            CampoCatalogo cc = CampoCatalogo.leer();
-            resp.campos.add(cc);
-        }
-
-
-        return resp;
-    }
 
     public Catalogo(String nombre, int nroCampos) {
         this.nombre = nombre;
@@ -213,7 +192,7 @@ public class Catalogo extends Root {
 
     public boolean agregar() {
 
-        if (!Verificaciones.verifCF(this)) {
+        if (!Verificaciones.verificarCamposFijos(this)) {
             return false;
         }
 
@@ -290,7 +269,7 @@ public class Catalogo extends Root {
     //el parámetro camposNM su lista de campos No Modificados
     public boolean modificar(Catalogo catNM) {
 
-        if (!Verificaciones.verifCF(this) || !Verificaciones.verifCV(this)) {
+        if (!Verificaciones.verificarCamposFijos(this) || !Verificaciones.verificarCamposVariables(this)) {
             return false;
         }
 
@@ -442,17 +421,6 @@ public class Catalogo extends Root {
     }
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        System.out.print("Introduzca la cantidad de catalogos a agregar: ");
-        int tam = Integer.parseInt(br.readLine());
-        System.out.println("");
-        Catalogo[] c = new Catalogo[tam];
-
-        for (int i = 0; i < tam; i++) {
-            c[i] = Catalogo.leer();
-            System.out.println("agregando: " + c[i].toString());
-            c[i].agregar();
-        }
 
 
     }

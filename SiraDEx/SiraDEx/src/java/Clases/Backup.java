@@ -17,7 +17,6 @@ import org.apache.struts.upload.FormFile;
 public class Backup extends Root {
 
     private FormFile backup;
-    private String dir = "/home/backups_siradex/";
     private String frecuencia = inicializarFrecuencia(); //1 diario, 7 semanal, 30 mensual
 
     public Backup() {
@@ -38,18 +37,10 @@ public class Backup extends Root {
     public void setFrecuencia(String frecuencia) {
         this.frecuencia = frecuencia;
     }
-
-    public String getDir() {
-        return dir;
-    }
-
-    public void setDir(String dir) {
-        this.dir = dir;
-    }
     
 
     public String inicializarFrecuencia() {
-        String cmd = "cat " + dir + "frecuencia.txt | head -1";
+        String cmd = "cat /home/backups_siradex/frecuencia.txt | head -1";
         String[] comando = {
             "/bin/sh",
             "-c",
@@ -89,7 +80,7 @@ public class Backup extends Root {
         String fecha = Log.getDate();
         fecha = "_" + fecha.replace("/", "-");
         String comando = "pg_dump -i -h " + host + " -U " + user + " --format=c -f "
-                + dir + db + fecha + ".backup " + db;
+                + "/home/backups_siradex/" + db + fecha + ".backup " + db;
         System.out.println(comando);
         try {
             Process p;
@@ -122,7 +113,7 @@ public class Backup extends Root {
         String db = DataBase.getDatabase();
         int port = DataBase.getPort();
         String comando = "pg_restore -i -h " + host + " -p " + port + " -U " + user
-                + " -c -d  " + db + " " + dir + backup.getFileName();
+                + " -c -d  " + db + " /home/backups_siradex/" + backup.getFileName();
         System.out.println(comando);
         try {
             Process p;

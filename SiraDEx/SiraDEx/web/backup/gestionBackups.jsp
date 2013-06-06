@@ -25,47 +25,69 @@
             <br><div class ="error"><bean:write name="backupForm" property="mensajeError"/></div>
         </logic:present>
 
-        <h1>Crear Backup</h1>
+        <table>
+            <tbody>
+                <tr>
+                <td colspan="2">
+                    <h1 class="title">Crear Backup</h1>
+                </td>
+                </tr>
+                <tr>
+                <td width="45%">
+                    <html:form method="POST" action="/GestionBackups?method=make" >
+                        El Backup se creará en el directorio <b>/home/backups_siradex/</b> del servidor. 
+                    </td>
+                    <td>
+                        <html:submit style="width: 100px;">
+                            Crear
+                        </html:submit>    
+                    </html:form><br><br><br>
+                </td>
+                </tr> 
+                <tr>
+                <td colspan="2">
+                    <h1 class="title">Restaurar a partir de un Backup</h1>
+                </td>
+                </tr>
+                <tr>
+                <td>
+                    <html:form method="POST" enctype="multipart/form-data" 
+                               action="/GestionBackups?method=restore">
 
-        <html:form method="POST" action="/GestionBackups?method=make" >
-            Directorio donde se guardará el Backup
-            <html:text  property="dir" size="78">
-                <bean:write  name="backupForm" property="dir"/>
-            </html:text>
-            <br>
-                <html:submit>
-                    Crear
-                </html:submit>
-         
-        </html:form>
-
-        <br><h1>Restaurar sistema a partir de un Backup</h1>
-
-        <html:form method="POST" enctype="multipart/form-data" 
-                   action="/GestionBackups?method=restore">
-
-            Elija el Backup
-            <html:file property="backup" accept="application/backup"/>
-            <br>
-                <html:submit onclick="return confirm('¿Está seguro que desea restaurar el sistema?')" >
-                    Restaurar
-                </html:submit>
-         
-        </html:form>
-
-        <br><h1>Configurar la creación de Backups automáticos</h1>
-
-        <html:form method="POST" action="/GestionBackups?method=set" >        
-            Frecuencia&nbsp;
-            <html:radio property="frecuencia" value="1">diaria</html:radio>
-            <html:radio property="frecuencia" value="7">semanal</html:radio>
-            <html:radio property="frecuencia" value="30">mensual</html:radio>
-            <br>
-                <html:submit onclick="return confirm('¿Está seguro que desea cambiar la frecuencia?')" >
-                    Cambiar
-                </html:submit>
-     
-        </html:form>
-
+                        <b>Elija el Backup</b>
+                        <html:file property="backup" accept="application/backup"/><br>
+                        (El archivo debe estar en el directorio <b>/home/backups_siradex/</b> del servidor.) 
+                    </td>
+                    <td>       
+                        <html:submit style="width: 100px;"
+                                     onclick="return confirm('¿Está seguro que desea restaurar el sistema?')" >
+                            Restaurar
+                        </html:submit>
+                    </html:form><br><br><br><br>
+                </td>
+                </tr>  
+                <tr>
+                <td>  
+                    <h1 class="title">Configurar la creación de Backups automáticos</h1>
+                </td>  
+                </tr>
+                <tr>
+                <td>
+                    <html:form method="POST" action="/GestionBackups?method=set" >  
+                        <b>Frecuencia&nbsp;</b>
+                        <html:radio property="frecuencia" value="1">diaria</html:radio>
+                        <html:radio property="frecuencia" value="7">semanal</html:radio>
+                        <html:radio property="frecuencia" value="30">mensual</html:radio>
+                    </td>
+                    <td>
+                        <html:submit style="width: 100px;"
+                                     onclick="return confirm('¿Está seguro que desea cambiar la frecuencia?')" >
+                            Cambiar
+                        </html:submit>
+                    </td>
+                </html:form>
+                </tr>
+            </tbody>
+        </table>
     </body>
 </html>

@@ -42,7 +42,6 @@ CREATE TABLE TIPO_ACTIVIDAD(
     id_tipo_actividad       SERIAL PRIMARY KEY,
     nombre_tipo_actividad   VARCHAR(140) NOT NULL,
     tipo_p_r                VARCHAR(1) NOT NULL,
-    nro_campos              SMALLINT NOT NULL,
     descripcion             VARCHAR(2000) NOT NULL,
     programa                VARCHAR(140) NOT NULL,
     validador               VARCHAR(140) NOT NULL,
