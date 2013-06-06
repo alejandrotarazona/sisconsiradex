@@ -297,7 +297,7 @@ public class Usuario extends Root {
         return listaUsuarios;
     }
 
-    public boolean agregarUsuario() {
+    public boolean agregarUsuario(String ip, String user) {
         Entity e = new Entity(0);//USUARIO
         Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
@@ -305,6 +305,9 @@ public class Usuario extends Root {
             return false;
         } else {
             if (e.insertar(usuarios)) {
+                e.setIp(ip);
+                e.setUser(user);
+                e.log();
                 mensaje = "El usuario " + username + " ha sido registrado con éxito.";
                 return true;
             }
@@ -313,11 +316,14 @@ public class Usuario extends Root {
         }
     }
 
-    public boolean eliminarUsuario() {
+    public boolean eliminarUsuario(String ip, String user) {
         Entity e = new Entity(0);//USUARIO
 
 
         if (e.borrar(ATRIBUTOS[2], this.username)) {
+            e.setIp(ip);
+            e.setUser(user);
+            e.log();
             return true;
         }
 
@@ -326,7 +332,7 @@ public class Usuario extends Root {
     }
 
     //en el parámetro userNM recibe un Usuario no modificado
-    public boolean modificar(Usuario userNM) {
+    public boolean modificar(Usuario userNM, String ip, String user) {
 
 
         boolean resp;
@@ -372,6 +378,9 @@ public class Usuario extends Root {
         };
 
         resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
+        e.setIp(ip);
+        e.setUser(user);
+        e.log();
 
         if (!resp) {
 
@@ -416,7 +425,7 @@ public class Usuario extends Root {
          * probando probando 1 2 3 probando alo alo...
          */
         Usuario u = new Usuario("j", "p");
-        if (u.eliminarUsuario()) {
+        if (u.eliminarUsuario("prueba", "de .java")) {
             System.out.println("usuario eliminado");
         } else {
             System.out.println("usuario no eliminado");

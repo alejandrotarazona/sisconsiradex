@@ -9,6 +9,7 @@ import Clases.BusquedaActividad;
 import Clases.ElementoCatalogo;
 import Clases.Root;
 import Clases.TipoActividad;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,14 +37,14 @@ public class Buscar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Root.deleteSessions(request, "busquedaActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-        
-        
+
+
         System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
                 + "a la pagina para mostrar.");
 
@@ -51,7 +52,7 @@ public class Buscar extends DispatchAction {
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
         request.setAttribute("usuarios", usuarios);//mientras tanto
-        
+
         return mapping.findForward(PAGE);
     }
 
@@ -64,24 +65,27 @@ public class Buscar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
-        
-        ba.buscar(false);
+        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+
+        ba.buscar(false, ip, usuario);
         ArrayList<String> pags = new ArrayList<>(0);
 
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
             pags.add("" + i);
         }
-        
+
         ArrayList<Actividad> acts = null;
-                
+
         if (BusquedaActividad.buscarPagina(ba, 0) != null) {
             acts = BusquedaActividad.buscarPagina(ba, 0);
         } else {
@@ -90,8 +94,8 @@ public class Buscar extends DispatchAction {
 
         System.out.println("Actividades para mostrar (nros):");
         for (int i = 0; i < acts.size(); i++) {
-         System.out.println("\t" + i + ".- " + acts.get(i).getNombreTipoActividad());
-         }
+            System.out.println("\t" + i + ".- " + acts.get(i).getNombreTipoActividad());
+        }
 
         request.getSession().setAttribute("paginas", pags);
         request.getSession().setAttribute("actividades", acts);
@@ -115,15 +119,18 @@ public class Buscar extends DispatchAction {
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
 
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo",true);
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
-        
-        ba.buscar(true);
+        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        ba.buscar(true, ip, usuario);
         ArrayList<String> pags = new ArrayList<>(0);
 
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
@@ -148,26 +155,26 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
         return mapping.findForward(PAGINA);
     }
-    
-    public ActionForward aPagina (ActionMapping mapping, ActionForm form,
+
+    public ActionForward aPagina(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         BusquedaActividad ba = (BusquedaActividad) form;
         BusquedaActividad busquedaRealizada = (BusquedaActividad) request.getSession().getAttribute("busqueda");
-        String [] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
 
-        
+
         ArrayList<Actividad> acts = ba.getPagina(ba.getPagina());
         System.out.println("Actividades para mostrar (nros):");
         /*for (int i = 1; i <= acts.size(); i++) {
          System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
          }*/
-        
+
         request.getSession().setAttribute("actividades", acts);
         request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
         request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
-        
+
         return mapping.findForward(PAGINA);
     }
 }

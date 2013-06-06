@@ -20,6 +20,8 @@ public class Entity {
     private boolean ok;
     private String[] respuesta;
     private String sql;
+    private String ip;
+    private String user;
     private final String[] TABLAS = {
         "USUARIO", //0
         "TIPO_ACTIVIDAD", //1
@@ -87,6 +89,26 @@ public class Entity {
         this.respuesta = respuesta;
     }
 
+    public void setUser(String user) {
+        this.user = user;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
+    }
+
+    public String getSql() {
+        return sql;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public String getUser() {
+        return user;
+    }
+    
     public static String escapeSQL(Object o) {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
     }
@@ -434,6 +456,21 @@ public class Entity {
         return db.update(idCampo, idActividad, valor, archivo);
 
 
+    }
+    
+    public boolean log(){
+        boolean b = false;
+        String query = "INSERT INTO LOG (accion, ip, usbid) VALUES ('" + escapeSQL(sql) +"', '"
+                + ip + "'" ;
+         if(user != null && !user.equals("")){
+             query += ",'" + user + "'";
+         }
+         query += ")";
+         
+         DataBase db = DataBase.getInstance();
+         b = db.update(query);
+        
+        return b;
     }
 
     public static void main(String[] args) {

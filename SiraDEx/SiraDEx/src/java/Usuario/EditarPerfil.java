@@ -56,8 +56,11 @@ public class EditarPerfil extends DispatchAction {
         Usuario u = (Usuario) form;
         
         Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
             
-        if (u.modificar(userNM)) {
+        if (u.modificar(userNM, ip, usuario)) {
             Clases.Root.deleteSessions(request,"");
             request.getSession().setAttribute("mensaje", "El perfil ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);         

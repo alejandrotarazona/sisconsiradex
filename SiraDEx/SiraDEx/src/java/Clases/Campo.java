@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.omg.PortableInterceptor.USER_EXCEPTION;
 
 /**
  *
@@ -181,7 +182,7 @@ public class Campo implements Serializable {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
     }
 
-    public boolean agregarCampo(int idTipoActividad) {
+    public boolean agregarCampo(int idTipoActividad, String ip, String user) {
         System.out.println("Agrego un Campo");
         Entity e = new Entity(3);//CAMPO
         Integer idTA = new Integer(idTipoActividad);
@@ -205,6 +206,9 @@ public class Campo implements Serializable {
             ATRIBUTOS[6]
         };
         boolean resp = e.insertar2(columnas, valores);
+        e.setIp(ip);
+        e.setUser(user);
+        e.log();
         return resp;
 
     }
@@ -252,7 +256,7 @@ public class Campo implements Serializable {
     }
 
     //en el parámetro campo recibe un campo no modificado del tipo de actividad
-    public boolean modificar(Campo campo, int idTA) {
+    public boolean modificar(Campo campo, int idTA, String ip, String user) {
         Entity e = new Entity(3);//CAMPO
 
         String[] condColumnas = ATRIBUTOS;
@@ -283,6 +287,9 @@ public class Campo implements Serializable {
             catalogo
         };
 
-        return e.modificar(condColumnas, valores, colModificar, modificaciones);
+        boolean b = e.modificar(condColumnas, valores, colModificar, modificaciones);
+        e.setIp(ip);
+        e.setUser(user);
+        return b;
     }
 }

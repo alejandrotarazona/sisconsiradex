@@ -7,6 +7,7 @@ package Catalogo;
 import Clases.CampoCatalogo;
 import Clases.Catalogo;
 import Clases.Root;
+import Clases.Usuario;
 import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -95,12 +96,16 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
 
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
 
         if (!Verificaciones.verificarCamposVariables(cat)) {
             return mapping.findForward(FAILURE2);
         }
 
-        if (cat.agregar()) {
+        if (cat.agregar(ip, usuario)) {
 
             ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);

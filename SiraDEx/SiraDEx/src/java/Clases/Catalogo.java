@@ -52,7 +52,6 @@ public class Catalogo extends Root {
     public Catalogo() {
     }
 
-
     public Catalogo(String nombre, int nroCampos) {
         this.nombre = nombre;
         this.nroCampos = nroCampos;
@@ -190,7 +189,7 @@ public class Catalogo extends Root {
         }
     }
 
-    public boolean agregar() {
+    public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificarCamposFijos(this)) {
             return false;
@@ -209,19 +208,23 @@ public class Catalogo extends Root {
         };
 
         boolean resp = eCatalogo.insertar2(columnas, valores);
-        resp &= agregarCampos();
+        eCatalogo.setIp(ip);
+        eCatalogo.setUser(user);
+        eCatalogo.log();
+
+        resp &= agregarCampos(ip, user);
 
         return resp;
     }
 
-    private boolean agregarCampos() {
+    private boolean agregarCampos(String ip, String user) {
         boolean resp = true;
         setIdCatalogo();
         Iterator itCampos = campos.iterator();
         while (itCampos.hasNext() && resp) {
             CampoCatalogo campo = (CampoCatalogo) itCampos.next();
             if (!campo.isEliminado()) {
-                resp &= campo.agregar(idCatalogo);
+                resp &= campo.agregar(idCatalogo, ip, user);
             }
         }
         return resp;
@@ -236,7 +239,7 @@ public class Catalogo extends Root {
     }
 
     // los agrega a la base de datos al modificar el catálogo
-    private boolean agregarCamposNuevos(int nroCamposCatNM) {
+    private boolean agregarCamposNuevos(int nroCamposCatNM, String ip, String user) {
         boolean resp = true;
         setIdCatalogo();
         Iterator itCampos = campos.iterator();
@@ -247,15 +250,18 @@ public class Catalogo extends Root {
         while (itCampos.hasNext() && resp) {
             CampoCatalogo campo = (CampoCatalogo) itCampos.next();
             if (!campo.isEliminado()) {
-                resp &= campo.agregar(idCatalogo);
+                resp &= campo.agregar(idCatalogo, ip, user);
             }
         }
         return resp;
     }
 
-    public boolean eliminar() {
+    public boolean eliminar(String ip, String user) {
         Entity eEliminar = new Entity(6);//CATALOGO
         if (eEliminar.borrar(ATRIBUTOS[0], idCatalogo)) {
+            eEliminar.setIp(ip);
+            eEliminar.setUser(user);
+            eEliminar.log();
             mensaje = "El Catálogo '" + nombre + "' ha sido eliminado";
             return true;
         }
@@ -267,7 +273,7 @@ public class Catalogo extends Root {
 
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
     //el parámetro camposNM su lista de campos No Modificados
-    public boolean modificar(Catalogo catNM) {
+    public boolean modificar(Catalogo catNM, String ip, String user) {
 
         if (!Verificaciones.verificarCamposFijos(this) || !Verificaciones.verificarCamposVariables(this)) {
             return false;
@@ -315,7 +321,7 @@ public class Catalogo extends Root {
             resp &= campo.modificar(campoNM, idCatalogo);
         }
 
-        resp &= agregarCamposNuevos(catNM.campos.size());
+        resp &= agregarCamposNuevos(catNM.campos.size(), ip, user);
 
         if (!resp) {
             mensaje = "Error: No se pudo modificar el Catálogo satisfactoriamente.";
@@ -421,7 +427,5 @@ public class Catalogo extends Root {
     }
 
     public static void main(String[] args) throws IOException {
-
-
     }
 }

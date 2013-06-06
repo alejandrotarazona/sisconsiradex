@@ -68,8 +68,11 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
-        if (u.agregarUsuario()) {
+        if (u.agregarUsuario(ip, usuario)) {
             ArrayList<Usuario> usuarios;
             usuarios = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usuarios);

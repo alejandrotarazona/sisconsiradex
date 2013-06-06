@@ -6,6 +6,7 @@ package TipoActividad;
 
 import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -81,10 +82,13 @@ public class Modificar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
-        if (ta.modificar(taNM)) {
+        if (ta.modificar(taNM, ip, usuario)) {
             ArrayList<TipoActividad> tas = Clases.TipoActividad.listarCondicion("activo", true);
             request.setAttribute("tipos", tas);
             String nombre = ta.getNombreTipo();

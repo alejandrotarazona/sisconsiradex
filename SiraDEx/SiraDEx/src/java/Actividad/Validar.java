@@ -38,9 +38,11 @@ public class Validar extends org.apache.struts.action.Action {
             throws Exception {
         Actividad act = (Actividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
         String validador = user.getRol();
-        
-        boolean validacion = act.validar(true);
+
+        boolean validacion = act.validar(true, ip, usuario);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
 
@@ -48,7 +50,7 @@ public class Validar extends org.apache.struts.action.Action {
             acts = null;
         }
         request.setAttribute("acts", acts);
-        
+
         if (validacion) {
             act.setMensaje("La Actividad ha sido validada.");
             act.setMensajeError(null);

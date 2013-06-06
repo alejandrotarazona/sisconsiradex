@@ -55,7 +55,7 @@ public class CampoCatalogoValor implements Serializable {
         this.valor = valor;
     }
 
-    public boolean agregar(int idElemento) {
+    public boolean agregar(int idElemento, String ip, String user) {
         boolean resp = true;
         Integer elementoId = new Integer(idElemento);
 
@@ -72,11 +72,14 @@ public class CampoCatalogoValor implements Serializable {
         };
 
         resp &= eValor.insertar2(campos, valores);
+        eValor.setIp(ip);
+        eValor.setUser(user);
+        eValor.log();
 
         return resp;
     }
 
-    public boolean modificar(CampoCatalogoValor campo, int idElem) {
+    public boolean modificar(CampoCatalogoValor campo, int idElem, String ip, String user) {
         Entity e = new Entity(9);//VALOR_CATALOGO
 
         String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
@@ -85,12 +88,19 @@ public class CampoCatalogoValor implements Serializable {
         String[] colModificar = {ATRIBUTOS[2]}; //valor
         String[] valorCampo = {valor};
 
-        return e.modificar(condColumnas, valores, colModificar, valorCampo);
+        boolean b = e.modificar(condColumnas, valores, colModificar, valorCampo);
+        e.setIp(ip);
+        e.setUser(user);
+        e.log();
+        
+        return b;
     }
 
     // agrega el campo a cada elemento del catalogo al que se le haya agregado un campo
-    public static boolean actualizarElementos(int idCampo, int idCatalogo) {
+    public static boolean actualizarElementos(int idCampo, int idCatalogo, String ip, String user) {
         Entity e = new Entity(8);//ELEMENTO_CATALOGO
+        e.setIp(ip);
+        e.setUser(user);
         boolean resp = true;
         String[] atrib = {"id_catalogo"};
         Integer[] valor = {idCatalogo};
@@ -108,6 +118,7 @@ public class CampoCatalogoValor implements Serializable {
                     };
 
                     resp &= e.insertar(valores);
+                    e.log();
                 }
                 rs.close();
             } catch (SQLException ex) {
