@@ -16,11 +16,10 @@ import org.apache.struts.actions.DispatchAction;
  *
  * @author Siscon
  */
-public class ModificarPerfil extends DispatchAction {
+public class EditarPerfil extends DispatchAction {
   
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -37,8 +36,10 @@ public class ModificarPerfil extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Clases.Root.deleteSessions(request,"mensaje");
         Usuario u = (Usuario) form;
         u.setMensaje(null);
+        u.setMensajeError(null);
         
         Usuario userNM = new Usuario();
         userNM.setUsername(u.getUsername());
@@ -58,11 +59,10 @@ public class ModificarPerfil extends DispatchAction {
             
         if (u.modificar(userNM)) {
             Clases.Root.deleteSessions(request,"");
-            u.setMensaje("El perfil ha sido modificado con éxito");
+            request.getSession().setAttribute("mensaje", "El perfil ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);         
         }
-        u.setMensajeError("Error: El perfil no se pudo modificar");
-        return mapping.findForward(FAILURE);
+        return mapping.findForward(PAGE);
 
     }
     

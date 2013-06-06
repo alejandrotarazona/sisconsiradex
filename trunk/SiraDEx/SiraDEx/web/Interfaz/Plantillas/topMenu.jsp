@@ -25,7 +25,7 @@
                         <html:link action="/Logout">
                             (Cerrar Sesión)
                         </html:link> |
-                        <html:link action="/VerPerfilUsuario">Ver Perfil</html:link> |
+                        <html:link action="/VerPerfilUsuario?method=page">Ver Perfil</html:link> |
 
 
                         <logic:equal name="user" property="rol" value="<%= r%>"> <%--DEx--%>
