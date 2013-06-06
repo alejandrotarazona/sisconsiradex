@@ -824,7 +824,7 @@ ul.action-links:after,
 
 #botonModificar{
     border: 0;
-    background: url('iconos/Edit_26x26.png') no-repeat ;
+    background: url(iconos/Edit_26x26.png) no-repeat ;
 }
 
 #botonExaminar{
@@ -834,25 +834,20 @@ ul.action-links:after,
 
 #botonValidar{
     border: 0;
-    background: url('iconos/check_26x26.png') no-repeat ;
+    background: url(iconos/check_26x26.png) no-repeat ;
 }
 
 #botonRechazar{
     border: 0;
-    background: url('iconos/Delete_26x26.png') no-repeat ;
+    background: url(iconos/Delete_26x26.png) no-repeat ;
 }
 
 #botonProducto{
     border: 0;
-    background: url('iconos/pdf_26x26.png') no-repeat ;
+    background: url(iconos/pdf_26x26.png) no-repeat ;
 }
 
 #botonRestaurar{
     border: 0;
-    background: url('iconos/restaurar.png') no-repeat ;
-}
-
-#botonEspera{
-    border: 0;
-    background: url('iconos/espera.png') no-repeat ;
+    background: url(iconos/restaurar.png) no-repeat ;
 }

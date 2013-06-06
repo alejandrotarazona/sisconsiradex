@@ -3,24 +3,24 @@
 
 --Tipo de actividad
 
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
-programa,validador,nro_productos) VALUES ('Formulacion de proyectos del BPDEx', 'R',12,
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
+programa,validador,nro_productos) VALUES ('Formulacion de proyectos del BPDEx', 'R',
 'Proyecto del BPDEx','Acción social y desarrollo comunitario',
 'Unidad de Participación y Acción Social', 1);
 --'Proyecto del BDPEx');*/
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador,nro_productos) VALUES ('Tutoría de Proyecto de Servicio Comunitario',
-'P',6,'Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario',
+'P','Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario',
 'Coordinación de Formación Complementaria General', 1);
 --'Informe de Servicio Comunitario del estudiante y acta de evaluación');*/
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador,nro_productos) VALUES ('Tutoría de pasantías cortas profesionales',
-'R',3,'Tutoria de pasantías cortas','Cooperación técnica',
+'R','Tutoria de pasantías cortas','Cooperación técnica',
 'Coordinación de Cooperación Técnica', 2);
 --'Informe de pasantia corta del estudiante y acta de evaluación');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,nro_campos,descripcion,
+INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador,nro_productos) VALUES ('Participación en actividades de voluntariado en representación de la USB',
-'R',4,'Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario',
+'R','Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario',
 'Unidad de Participación y Acción Social',1);
 --'Informe de participación'
 

@@ -41,7 +41,7 @@ public class Verificaciones {
      * @return Mensaje de error en caso de que el valor del campo pasado como
      * parámetro sea vacío, null en caso contrario.
      */
-    public static String verifVacio(String nombreCampo, String valorCampo) {
+    public static String verificarVacio(String nombreCampo, String valorCampo) {
 
         if (esVacio(valorCampo)) {
             return "Error: El campo '" + nombreCampo + "' es obligatorio.";
@@ -59,7 +59,7 @@ public class Verificaciones {
      * @return Mensaje de error en caso de que el valor del campo pasado como
      * parámetro no cumpla con el patrón dado, null en caso contrario.
      */
-    public static String verifPatron(String nombreCampo, String valorCampo,
+    public static String verificarPatron(String nombreCampo, String valorCampo,
             String patron, String desc) {
 
         if (!valorCampo.matches(patron)) {
@@ -80,11 +80,11 @@ public class Verificaciones {
      * parámetro sea más largo al parámetro longitud, no cumpla con el patrón
      * dado o sea vacío, null en caso contrario.
      */
-    public static String verifLV(String nombreCampo, String valorCampo, int longitud,
+    public static String verificarLongitudVacio(String nombreCampo, String valorCampo, int longitud,
             boolean obliga) {
 
         if (obliga) {
-            String respVerif = verifVacio(nombreCampo, valorCampo);
+            String respVerif = verificarVacio(nombreCampo, valorCampo);
             if (respVerif != null) {
                 return respVerif;
             }
@@ -106,36 +106,36 @@ public class Verificaciones {
      * @param ta Tipo de Actividad a verificar.
      * @return true si los valores son validos, de lo contrario retorna false.
      */
-    public static boolean verifCF(TipoActividad ta) {
+    public static boolean verificarCamposFijos(TipoActividad ta) {
 
 
-        String respVerif = verifLV("'Nombre del Tipo de Actividad'", ta.getNombreTipo(),
+        String respVerif = verificarLongitudVacio("'Nombre del Tipo de Actividad'", ta.getNombreTipo(),
                 140, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
         }
 
-        respVerif = verifLV("'Descripción'", ta.getDescripcion(), 200, true);
+        respVerif = verificarLongitudVacio("'Descripción'", ta.getDescripcion(), 200, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
         }
 
 
-        respVerif = verifVacio("'Tipo'", ta.getTipoPR());
+        respVerif = verificarVacio("'Tipo'", ta.getTipoPR());
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
         }
 
-        respVerif = verifVacio("'Programa'", ta.getPrograma());
+        respVerif = verificarVacio("'Programa'", ta.getPrograma());
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
         }
 
-        respVerif = verifVacio("'Dependencia a validar'", ta.getValidador());
+        respVerif = verificarVacio("'Dependencia a validar'", ta.getValidador());
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
@@ -151,7 +151,7 @@ public class Verificaciones {
         String patronNum = "^[ ]*[0-9]+[ ]*$";
 
         String nro = String.valueOf(ta.getNroProductos());
-        respVerif = verifPatron("'Número de productos'", nro, patronNum,
+        respVerif = verificarPatron("'Número de productos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -164,14 +164,14 @@ public class Verificaciones {
             return false;
         }
 
-        respVerif = verifLV("'Número de productos'", nro, 1, true);
+        respVerif = verificarLongitudVacio("'Número de productos'", nro, 1, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
         }
 
         nro = String.valueOf(ta.getNroCampos());
-        respVerif = verifPatron("'Número de campos'", nro, patronNum,
+        respVerif = verificarPatron("'Número de campos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
@@ -182,7 +182,7 @@ public class Verificaciones {
                     + "menos 1 como valor.");
             return false;
         }
-        respVerif = verifLV("'Número de campos'", nro, 2, true);
+        respVerif = verificarLongitudVacio("'Número de campos'", nro, 2, true);
         if (respVerif != null) {
             ta.setMensajeError(respVerif);
             return false;
@@ -201,7 +201,7 @@ public class Verificaciones {
      * @return true si los nombres y valores son validos, de lo contrario
      * retorna false.
      */
-    public static boolean verifCV(TipoActividad ta) {
+    public static boolean verificarCamposVariables(TipoActividad ta) {
 
         Iterator it = ta.getCampos().iterator();
         for (int i = 1; it.hasNext(); i++) {
@@ -212,7 +212,7 @@ public class Verificaciones {
 
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
-            String respVerif = verifLV(nroCampo, nombre, 100, true);
+            String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
             if (respVerif != null) {
                 ta.setMensajeError(respVerif);
                 return false;
@@ -225,14 +225,14 @@ public class Verificaciones {
 
                 String patronNum = "^[ ]*[0-9]+[ ]*$";
                 String longitud = String.valueOf(campo.getLongitud());
-                respVerif = verifPatron(nroCampo, longitud, patronNum,
+                respVerif = verificarPatron(nroCampo, longitud, patronNum,
                         "debe contener sólo números.");
                 if (respVerif != null) {
                     ta.setMensajeError(respVerif);
                     return false;
                 }
 
-                respVerif = verifLV(nroCampo, longitud, 3, true);
+                respVerif = verificarLongitudVacio(nroCampo, longitud, 3, true);
                 if (respVerif != null) {
                     ta.setMensajeError(respVerif);
                     return false;
@@ -262,7 +262,7 @@ public class Verificaciones {
      * @param act Actividad a verificar
      * @return true si los valores son validos, de lo contrario retorna false.
      */
-    public static boolean verif(Actividad act) {
+    public static boolean verificar(Actividad act) {
 
         boolean creador = false;
         Iterator it = act.getCamposValores().iterator();
@@ -305,7 +305,7 @@ public class Verificaciones {
                     val = valorAux;
                 }
             }
-            respVerif = verifVacio(nombre, val);
+            respVerif = verificarVacio(nombre, val);
             if (obligatorio && respVerif != null) {
                 act.setMensajeError(respVerif);
                 return false;
@@ -385,10 +385,10 @@ public class Verificaciones {
      * @param c
      * @return
      */
-    public static boolean verifCF(Catalogo c) {
+    public static boolean verificarCamposFijos(Catalogo c) {
 
         /*verifica si el nombre del catalogo es válido*/
-        String respVerif = verifLV("'Nombre'", c.getNombre(),
+        String respVerif = verificarLongitudVacio("'Nombre'", c.getNombre(),
                 140, true);
         if (respVerif != null) {
             c.setMensajeError(respVerif);
@@ -396,14 +396,14 @@ public class Verificaciones {
         }
 
         String nro = String.valueOf(c.getNroCampos());
-        respVerif = verifPatron("'Número de campos'", nro, "^[ ]*[0-9]+[ ]*$",
+        respVerif = verificarPatron("'Número de campos'", nro, "^[ ]*[0-9]+[ ]*$",
                 "debe contener sólo números.");
         if (respVerif != null) {
             c.setMensajeError(respVerif);
             return false;
         }
 
-        respVerif = verifLV("'Número de campos'", nro, 1, true);
+        respVerif = verificarLongitudVacio("'Número de campos'", nro, 1, true);
         if (respVerif != null) {
             c.setMensajeError(respVerif);
             return false;
@@ -418,7 +418,7 @@ public class Verificaciones {
      * @param c
      * @return
      */
-    public static boolean verifCV(Catalogo c) {
+    public static boolean verificarCamposVariables(Catalogo c) {
 
         Iterator it = c.getCampos().iterator();
         for (int i = 1; i <= c.getCampos().size() && it.hasNext(); i++) {
@@ -427,7 +427,7 @@ public class Verificaciones {
             String nroCampo = "número " + i;
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
-            String respVerif = verifLV(nroCampo, nombre, 100, true);
+            String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
             if (respVerif != null) {
                 c.setMensajeError(respVerif);
                 return false;
@@ -442,7 +442,7 @@ public class Verificaciones {
      * @param ec
      * @return
      */
-    public static boolean verif(ElementoCatalogo ec) {
+    public static boolean verificar(ElementoCatalogo ec) {
 
 
         Iterator it = ec.getCamposValores().iterator();
@@ -463,7 +463,7 @@ public class Verificaciones {
             todosVacios &= Verificaciones.esVacio(valor);
         }
         if (todosVacios) {
-            ec.setMensajeError("Error: Por favor, llene al menos un campo");
+            ec.setMensajeError("Error: Debe llenar al menos un campo");
             return false;
         }
         return true;

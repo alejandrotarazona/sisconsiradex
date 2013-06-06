@@ -84,7 +84,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
     public boolean agregar() {
 
-        if (!Verificaciones.verif(this)) {
+        if (!Verificaciones.verificar(this)) {
             return false;
         }
 
@@ -125,7 +125,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public boolean modificar(ArrayList camposNM) {
-        if (!Verificaciones.verif(this)) {
+        if (!Verificaciones.verificar(this)) {
             return false;
         }
 

@@ -14,32 +14,25 @@
     <link rel="canonical" href="/node/1" />
     <style type="text/css" media="all">
         @import url("Interfaz/Stylesheets/base.css");
-    </style>
-    <style type="text/css" media="all">
         @import url("Interfaz/Stylesheets/field.css");
         @import url("Interfaz/Stylesheets/user.css");
         @import url("Interfaz/Stylesheets/views.css");
-    </style>
-    <style type="text/css" media="all">
         @import url("Interfaz/Stylesheets/ckeditor.css");
         @import url("Interfaz/Stylesheets/ctools.css");
-    </style>
-    <style type="text/css" media="all">
         @import url("Interfaz/Stylesheets/layout.css");
-        @import "Interfaz/Stylesheets/style.css";
+        @import url("Interfaz/Stylesheets/style.css");
         @import url("Interfaz/Stylesheets/forms.css");
         @import url("Interfaz/Stylesheets/colors.css");
+        @import url("Interfaz/Stylesheets/jquery-ui.css");
     </style>
-    <style type="text/css" media="print">
-        @import url("Interfaz/Stylesheets/print.css");
-    </style>
+
 
     <!--[if lte IE 7]>
     <link type="text/css" rel="stylesheet" href="http://www.dex.usb.ve/themes/sky/css/ie.css?max621" media="all" />
     <![endif]-->
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.1/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="Interfaz/Scripts/jquery-1.8.3.js"></script>
+    <script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.9.2.custom.js"></script>
     <script type="text/javascript" src="Interfaz/Scripts/jquery.js"></script>
     <script type="text/javascript" src="Interfaz/Scripts/jquery.once.js"></script>
     <script type="text/javascript" src="Interfaz/Scripts/drupal.js"></script>
@@ -68,7 +61,6 @@
                     "themes\/sky\/css\/style.css":1,
                     "themes\/sky\/css\/forms.css":1,
                     "themes\/sky\/css\/colors.css":1,
-                    "themes\/sky\/css\/print.css":1,
                     "themes\/sky\/css\/ie.css":1
                 }
             }

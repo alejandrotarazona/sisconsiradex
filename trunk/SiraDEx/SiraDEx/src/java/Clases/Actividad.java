@@ -403,7 +403,7 @@ public class Actividad extends Root {
 
     public boolean agregar() {
 
-        if (!Verificaciones.verif(this)) {
+        if (!Verificaciones.verificar(this)) {
             return false;
         }
 
@@ -453,7 +453,7 @@ public class Actividad extends Root {
 
     public boolean modificar(ArrayList camposNM) {
 
-        if (!Verificaciones.verif(this)) {
+        if (!Verificaciones.verificar(this)) {
             return false;
         }
         boolean resp = true;

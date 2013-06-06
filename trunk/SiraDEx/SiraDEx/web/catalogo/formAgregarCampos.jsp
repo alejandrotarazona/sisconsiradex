@@ -15,16 +15,18 @@
     <body>
         <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
 
-        <br><logic:present name="catalogoForm" property="mensaje">
-            <b><div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div></b>
+        <logic:present name="catalogoForm" property="mensaje"><br>
+            <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div>
+            <br>
         </logic:present> 
-        <br><logic:present name="catalogoForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div></b>
+        <logic:present name="catalogoForm" property="mensajeError"><br>
+            <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div>
+            <br>
         </logic:present>
 
         <table>
             <tr>
-            <td><b>Nombre</b></td>
+            <td width="25%"><b>Nombre</b></td>
             <td><b>Tipo</b></td>
         </tr>            
 
@@ -32,35 +34,36 @@
             <logic:iterate name="catalogoForm" property="campos" id="campos" 
                            indexId="index">
                 <tr>
-                <td><logic:notEqual name="campos" property="tipo" value="usbid">
-                        <html:text name="campos" property="nombre" indexed="true"/>
-                    </logic:notEqual>
-                    <logic:equal name="campos" property="tipo" value="usbid">
-                        <html:text name="campos" property="nombre" indexed="true" 
-                                   disabled="true"/> 
-                    </logic:equal>
-                </td>
+                <td><span style="color: gray;font-size:10px">${index+1}</span>
+                <logic:notEqual name="campos" property="tipo" value="usbid">
+                    <html:text name="campos" property="nombre" indexed="true"/>
+                </logic:notEqual>
+                <logic:equal name="campos" property="tipo" value="usbid">
+                    <html:text name="campos" property="nombre" indexed="true" 
+                               disabled="true"/> 
+                </logic:equal>
+            </td>
 
-                <td><logic:notEqual name="campos" property="tipo" value="usbid">
-                        <html:select name="campos" property="tipo" indexed="true"
-                                     styleClass="selector">
-                            <html:option value="texto">texto</html:option>
-                            <html:option value="numero">numero</html:option>
-                            <html:option value="fecha">fecha</html:option>
-                        </html:select>
-                    </logic:notEqual>
-                    <logic:equal name="campos" property="tipo" value="usbid">
-                        <html:select name="campos" property="tipo" indexed="true" 
-                                     disabled="true" styleClass="selector">
-                            <html:option value="texto">texto</html:option>
-                        </html:select>
-                    </logic:equal>
-                </td>
-            </tr>
-        </logic:iterate>
-    </table>                    
-    <br>
-    <div align="center"><html:submit>Registrar</html:submit></div>
+            <td><logic:notEqual name="campos" property="tipo" value="usbid">
+                    <html:select name="campos" property="tipo" indexed="true"
+                                 styleClass="selector">
+                        <html:option value="texto">texto</html:option>
+                        <html:option value="numero">numero</html:option>
+                        <html:option value="fecha">fecha</html:option>
+                    </html:select>
+                </logic:notEqual>
+                <logic:equal name="campos" property="tipo" value="usbid">
+                    <html:select name="campos" property="tipo" indexed="true" 
+                                 disabled="true" styleClass="selector">
+                        <html:option value="texto">texto</html:option>
+                    </html:select>
+                </logic:equal>
+            </td>
+        </tr>
+    </logic:iterate>
+</table>                    
+<br>
+<div align="center"><html:submit>Registrar</html:submit></div>
 
 </html:form>
 </body>
