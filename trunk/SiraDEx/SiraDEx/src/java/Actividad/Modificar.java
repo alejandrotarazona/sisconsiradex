@@ -71,7 +71,11 @@ public class Modificar extends DispatchAction {
         act.setModificador(modificador.getUsername());
         CampoValor.auxModificarArchivo(campos, act.getCamposValores());
 
-        if (act.modificar(campos)) {
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (act.modificar(campos, ip, usuario)) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
@@ -92,7 +96,7 @@ public class Modificar extends DispatchAction {
             Clases.Root.deleteSessions(request, "");
             request.setAttribute("mensaje", "La Actividad '" + nombre + "' ha sido modificada con éxito.");
             act.setMensajeError(null);
-            
+
             return mapping.findForward(SUCCESS);
 
         }

@@ -51,7 +51,7 @@ public class Agregar extends DispatchAction {
         String rol = u.getRol();
         switch (rol) {
             case "WM":
-                ta = Clases.TipoActividad.listarCondicion("activo",true);
+                ta = Clases.TipoActividad.listarCondicion("activo", true);
                 break;
             case "empleado":
             case "obrero":
@@ -112,14 +112,17 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
-        if (a.agregar()) {
+        if (a.agregar(ip, usuario)) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
             ArrayList<Actividad> act;
-            String [] estadistica = u.cantidadActividadesPorTipo();
-            
+            String[] estadistica = u.cantidadActividadesPorTipo();
+
             if (rol.equalsIgnoreCase("WM")) {
                 act = Clases.Actividad.listarActividades();
             } else {
@@ -129,7 +132,7 @@ public class Agregar extends DispatchAction {
             request.setAttribute("acts", act);
             request.setAttribute("estadisticaNombres", estadistica[0]);
             request.setAttribute("estadisticaCantidad", estadistica[1]);
-            
+
             String nombre = a.getNombreTipoActividad();
             Clases.Root.deleteSessions(request, "actividadForm");
 

@@ -6,6 +6,7 @@ package ElementoCatalogo;
 
 import Clases.CampoCatalogoValor;
 import Clases.ElementoCatalogo;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -56,9 +57,13 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
         ElementoCatalogo e = (ElementoCatalogo) form;
         int idCat = e.getIdCatalogo();
-        if (e.agregar()) {
+        if (e.agregar(ip, usuario)) {
             e.setMensaje("El elemento ha sido registrado con éxito");
             ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
 
@@ -69,7 +74,7 @@ public class Agregar extends DispatchAction {
             request.setAttribute("elementos", elemsc);
 
             request.setAttribute("campos", elemsc.get(0).getCamposValores());
-            
+
             e.setMensajeError(null);
 
             return mapping.findForward(SUCCESS);
@@ -78,15 +83,15 @@ public class Agregar extends DispatchAction {
 
         ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
 
-         if (elemsc.isEmpty()) {
+        if (elemsc.isEmpty()) {
             elemsc = null;
         } else {
             request.setAttribute("campos", elemsc.get(0).getCamposValores());
         }
-        
+
         request.setAttribute("elementos", elemsc);
 
-      
+
         return mapping.findForward(FAILURE);
     }
 }

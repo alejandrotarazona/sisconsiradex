@@ -5,6 +5,7 @@
 package Catalogo;
 
 import Clases.Catalogo;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -40,7 +41,11 @@ public class Eliminar extends org.apache.struts.action.Action {
             throws Exception {
         Catalogo cat = (Catalogo) form;
 
-        if (cat.eliminar()) {
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (cat.eliminar(ip, usuario)) {
             ArrayList cats = Clases.Catalogo.listarCatalogos();
             if (cats.isEmpty()) {
                 cats = null;

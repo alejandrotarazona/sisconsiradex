@@ -5,6 +5,7 @@
 package ElementoCatalogo;
 
 import Clases.ElementoCatalogo;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -42,7 +43,11 @@ public class Eliminar extends org.apache.struts.action.Action {
         int idCat = e.getIdCatalogo();
         request.setAttribute("nombreCat", Clases.Catalogo.getNombre(idCat));
 
-        if (e.eliminar()) {
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (e.eliminar(ip, usuario)) {
             e.setMensaje("El elemento ha sido eliminado");
             ArrayList<ElementoCatalogo> ec = Clases.ElementoCatalogo.listarElementosId(idCat);
             request.setAttribute("elementos", ec);

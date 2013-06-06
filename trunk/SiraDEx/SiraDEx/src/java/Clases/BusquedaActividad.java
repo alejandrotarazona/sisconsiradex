@@ -134,7 +134,7 @@ public class BusquedaActividad extends Root {
      * @return Las páginas con las listas de Actividades por página segun la
      * busqueda establecida.
      */
-    public void buscar(boolean validada) {
+    public void buscar(boolean validada, String ip, String user) {
         libro = new ArrayList<>(0);
         totalPaginas = 0;
 
@@ -178,14 +178,21 @@ public class BusquedaActividad extends Root {
             condiciones[i] = auxCondiciones.get(i);
         }
 
+
+
         ArrayList<Actividad> cjtoAux = new ArrayList<>(0);
         ResultSet rs = null;
         if (columnas.length > 0) {
             rs = eBuscar.seleccionar(columnas, condiciones);
+            eBuscar.setIp(ip);
+            if (user != null) {
+                eBuscar.setUser(user);
+            }
+            eBuscar.log();
             cjtoAux = Actividad.listar(rs);
             hayColumnas = true;
         }
-        
+
         String[] columna = {
             "tipo_campo"
         };
@@ -250,15 +257,6 @@ public class BusquedaActividad extends Root {
         } else {
             hayRango = false;
         }
-        
-        System.out.println("#################################################################################################\n"
-                + "###################################################################################################\n"
-                + "Actividades obtenidas en la busqueda:");
-        for (int i = 0; i < cjtoAux.size(); i++) {
-            System.out.println(cjtoAux.get(i).toString());
-        }
-        System.out.println("#################################################################################################\n"
-                + "###################################################################################################");
 
         ArrayList<Actividad> listaRango = new ArrayList<>(0);
         if (hayRango) {
@@ -411,7 +409,7 @@ public class BusquedaActividad extends Root {
             itAux.next();                                           //Salto la primera lista del iterator, ya fue tomada anteriormente
             while (itAux.hasNext() && agregar) {
                 ArrayList<Actividad> aComparar = (ArrayList<Actividad>) itAux.next();   //Tomo a partir de la segunda lista
-                if(aComparar.isEmpty()){
+                if (aComparar.isEmpty()) {
                     return new ArrayList<>(0);
                 }
                 agregar &= unaActividad.contenidoEn(aComparar);                //Reviso existencia

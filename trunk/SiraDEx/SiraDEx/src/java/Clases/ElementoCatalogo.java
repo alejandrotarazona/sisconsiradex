@@ -82,7 +82,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         this.contenido = contenido;
     }
 
-    public boolean agregar() {
+    public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificar(this)) {
             return false;
@@ -109,7 +109,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         while (itValores.hasNext() && resp) {
             CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            ccv.agregar(idElemento);
+            ccv.agregar(idElemento, ip, user);
         }
 
         if (!resp) {
@@ -119,12 +119,17 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return resp;
     }
 
-    public boolean eliminar() {
+    public boolean eliminar(String ip, String user) {
         Entity e = new Entity(8);//ELEMENTO_CATALOGO
-        return e.borrar("id_elemento", idElemento);
+        
+        boolean b = e.borrar("id_elemento", idElemento);
+        e.setIp(ip);
+        e.setUser(user);
+        e.log();
+        return b;
     }
 
-    public boolean modificar(ArrayList camposNM) {
+    public boolean modificar(ArrayList camposNM, String ip, String user) {
         if (!Verificaciones.verificar(this)) {
             return false;
         }
@@ -133,7 +138,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            camposValores.get(i).modificar(campoNM, idElemento);
+            camposValores.get(i).modificar(campoNM, idElemento, ip, user);
         }
 
         return true;

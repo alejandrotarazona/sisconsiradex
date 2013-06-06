@@ -316,7 +316,7 @@ public class TipoActividad extends Root {
         return resp;
     }
 
-    public boolean agregarTipoActividad() {
+    public boolean agregarTipoActividad(String ip, String user) {
 
         if (!Verificaciones.verificarCamposVariables(this)) {
             return false;
@@ -346,6 +346,9 @@ public class TipoActividad extends Root {
         };
 
         if (resp = e.insertar2(aInsertar, valores)) {
+            e.setIp(ip);
+            e.setUser(user);
+            e.log();
             id = e.seleccionarMaxId(ATRIBUTOS[0]);
 
             System.out.println("Ya inserte el tipo de Actividad con ID " + id);
@@ -353,7 +356,7 @@ public class TipoActividad extends Root {
             while (it.hasNext() && resp) {
                 System.out.println("Voy iterando");
                 Campo cAgregar = (Campo) it.next();
-                resp &= cAgregar.agregarCampo(id);
+                resp &= cAgregar.agregarCampo(id, ip, user);
                 if (!resp) {
                     System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
                 }
@@ -364,7 +367,7 @@ public class TipoActividad extends Root {
             if (!resp) {
                 mensajeError = "Error: El Tipo de Actividad '" + nombreTipo
                         + "'no pudo ser registrado.";
-                if (eliminarTipoActividad()) {
+                if (eliminarTipoActividad("ERORO DE SISTEMA", "SISTEMA")) {
                     mensajeError = " Error: El Tipo de Actividad '" + nombreTipo
                             + "' no pudo ser resgistrado satisfactoriamente, debe"
                             + " eliminarlo mediante el sistema.";
@@ -376,7 +379,7 @@ public class TipoActividad extends Root {
 
     }
 
-    public boolean eliminarTipoActividad() {
+    public boolean eliminarTipoActividad(String ip, String user) {
         Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
         String[] condColumnas = {ATRIBUTOS[0]};
         Object[] valores = {id};
@@ -385,6 +388,9 @@ public class TipoActividad extends Root {
 
         if (eMod.modificar(condColumnas, valores, colModificar, modificaciones)) {
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
+            eMod.setIp(ip);
+            eMod.setUser(user);
+            eMod.log();
             return true;
         }
 
@@ -461,10 +467,12 @@ public class TipoActividad extends Root {
      *
      * @return true en caso de lograr la modificación de los permisos.
      */
-    public boolean modificarPermisos() {
+    public boolean modificarPermisos(String ip, String user) {
 
         Entity e = new Entity(10);//TIENE_PERMISO
         e.borrar("id_tipo_actividad", id);
+        e.setIp(ip);
+        e.setUser(user);
 
         String[] columnas = {"id_tipo_actividad", "id_permiso"};
         Object[] valores = {id, null};
@@ -490,6 +498,7 @@ public class TipoActividad extends Root {
                     resp &= e.insertar2(columnas, valores);
                     break;
             }
+            e.log();
         }
         return resp;
     }
@@ -507,7 +516,7 @@ public class TipoActividad extends Root {
     }
 
     //en el parámetro taNM recibe un TipoActividad No Modificado
-    public boolean modificar(TipoActividad taNM) {
+    public boolean modificar(TipoActividad taNM, String ip, String user) {
 
         if (!Verificaciones.verificarCamposFijos(this) || !Verificaciones.verificarCamposVariables(this)) {
             return false;
@@ -561,15 +570,18 @@ public class TipoActividad extends Root {
         }
 
         resp &= e.modificar(condColumnas, valores, colModificar, modificaciones);
+        e.setIp(ip);
+        e.setUser(user);
+        e.log();
         System.out.println("modificacion de campos fijos sin permisos " + resp);
         Iterator it = taNM.getCampos().iterator();
 
-        resp &= this.modificarPermisos();
+        resp &= this.modificarPermisos(ip, user);
         System.out.println("modificacion de permisos " + resp);
 
         for (int i = 0; it.hasNext() && resp; i++) {
             Campo campoNM = (Campo) it.next();
-            resp &= campos.get(i).modificar(campoNM, id);
+            resp &= campos.get(i).modificar(campoNM, id, ip, user);
             System.out.println("Update " + resp + " " + campoNM.getNombre());
         }
 

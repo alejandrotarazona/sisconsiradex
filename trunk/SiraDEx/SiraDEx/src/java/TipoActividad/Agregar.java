@@ -6,6 +6,7 @@ package TipoActividad;
 
 import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
+import Clases.Usuario;
 import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -46,14 +47,14 @@ public class Agregar extends DispatchAction {
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
         ta.setMensaje(null);
-        
+
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", dependencias);
-        
+
         return mapping.findForward(PAGE);
     }
 
@@ -64,16 +65,16 @@ public class Agregar extends DispatchAction {
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
         ta.setMensaje(null);
-        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa",false);
+        ArrayList catalogos = Clases.Catalogo.listarCondicion("participa", false);
         request.getSession().setAttribute("catalogos", catalogos);
-        
-        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa",true);
+
+        ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa", true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
-        if (!Verificaciones.verificarCamposFijos(ta)){
+        if (!Verificaciones.verificarCamposFijos(ta)) {
             return mapping.findForward(FAILURE);
         }
-         /*verifica si hay un tipo de actividad con ese nombre*/
+        /*verifica si hay un tipo de actividad con ese nombre*/
         if (ta.esTipoActividad()) {
             ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "
                     + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
@@ -82,10 +83,10 @@ public class Agregar extends DispatchAction {
         }
 
         ta.setCampos();//llena el arrayList campos con el numero de campos necesario.
-        
+
         //hay que guardar permisos porque se pierde luego por el metodo reset()
         request.getSession().setAttribute("permisos", ta.getPermisos());
-        
+
         return mapping.findForward(SUCCESS);
 
     }
@@ -95,21 +96,24 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         TipoActividad ta = (TipoActividad) form;
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
         ta.setMensajeError(null);
-        
-        
-        ta.setPermisos((String[])request.getSession().getAttribute("permisos"));
-        if (ta.agregarTipoActividad()) {
-            
-            ArrayList tipos = Clases.TipoActividad.listarCondicion("activo",true);
+
+
+        ta.setPermisos((String[]) request.getSession().getAttribute("permisos"));
+        if (ta.agregarTipoActividad(ip, usuario)) {
+
+            ArrayList tipos = Clases.TipoActividad.listarCondicion("activo", true);
             request.setAttribute("tipos", tipos);
             String nombre = ta.getNombreTipo();
-            Clases.Root.deleteSessions(request,"");
-            request.setAttribute("mensaje","El Tipo de Actividad '" + nombre 
+            Clases.Root.deleteSessions(request, "");
+            request.setAttribute("mensaje", "El Tipo de Actividad '" + nombre
                     + "' ha sido registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
-        
+
         return mapping.findForward(FAILURE2);
     }
 }

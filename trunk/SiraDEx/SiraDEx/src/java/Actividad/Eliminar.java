@@ -44,8 +44,12 @@ public class Eliminar extends org.apache.struts.action.Action {
         String rol = u.getRol();
         ArrayList<Actividad> acts;
         String [] estadistica = u.cantidadActividadesPorTipo();
+        
+         Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
-        if (act.eliminarActividad()) {
+        if (act.eliminarActividad(ip, usuario)) {
             act.setMensaje("La actividad ha sido eliminada");
 
             if (rol.equalsIgnoreCase("WM")) {

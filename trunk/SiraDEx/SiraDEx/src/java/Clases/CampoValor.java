@@ -300,9 +300,11 @@ public class CampoValor implements Serializable {
         return null;
     }
 
-    public boolean modificar(CampoValor campoNM, int idAct) {
+    public boolean modificar(CampoValor campoNM, int idAct, String ip, String user) {
         boolean resp = true;
         Entity eValor = new Entity(4);//VALOR
+        eValor.setIp(ip);
+        eValor.setUser(user);
 
         String tipo = campoNM.getCampo().getTipo();
 
@@ -333,6 +335,7 @@ public class CampoValor implements Serializable {
             String[] modificaciones = {val};
 
             resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+            eValor.log();
             System.out.println("--------Luego de modificar valor"
                     + campoNM.getValor() + " " + resp);
 
@@ -343,14 +346,16 @@ public class CampoValor implements Serializable {
             }
 
         } else {
-            resp &= modificarArchivo(campoNM, idAct);
+            resp &= modificarArchivo(campoNM, idAct, ip, user);
         }
 
         return resp;
     }
 
-    private boolean modificarArchivo(CampoValor campoNM, int idAct) {
+    private boolean modificarArchivo(CampoValor campoNM, int idAct, String ip, String user) {
         Entity eValor = new Entity(4);//VALOR
+        eValor.setIp(ip);
+        eValor.setUser(user);
         String[] campos = {
             ATRIBUTOS[0], //id_campo
             ATRIBUTOS[1] //id_actividad
@@ -363,6 +368,7 @@ public class CampoValor implements Serializable {
         boolean resp = eValor.borrar(campos, condicion);
 
         resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
+        eValor.log();
 
         return resp;
     }

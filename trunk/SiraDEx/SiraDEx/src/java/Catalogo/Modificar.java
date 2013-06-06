@@ -6,6 +6,7 @@ package Catalogo;
 
 import Clases.CampoCatalogo;
 import Clases.Catalogo;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,8 +64,12 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         Catalogo cat = (Catalogo) form;
-        
-         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
 
         int elimino = cat.eliminarCamposMarcados(catNM);
         if (elimino > 0) {
@@ -81,7 +86,7 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
-        if (cat.modificar(catNM)) {
+        if (cat.modificar(catNM, ip, usuario)) {
 
             ArrayList cats = Clases.Catalogo.listarCatalogos();
             request.setAttribute("catalogos", cats);

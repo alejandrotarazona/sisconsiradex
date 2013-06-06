@@ -121,7 +121,7 @@ public class CampoCatalogo implements Serializable {
         CampoCatalogo.ATRIBUTOS = ATRIBUTOS;
     }
 
-    public boolean agregar(int idCatalogo) {
+    public boolean agregar(int idCatalogo, String ip, String user) {
         boolean resp = true;
         Entity eCampoCatalogo = new Entity(7);//CAMPO_CATALOGO
         Integer idCat = new Integer(idCatalogo);
@@ -137,9 +137,12 @@ public class CampoCatalogo implements Serializable {
         };
 
         resp &= eCampoCatalogo.insertar2(columnas, valores);
+        eCampoCatalogo.setIp(ip);
+        eCampoCatalogo.setUser(user);
+        eCampoCatalogo.log();
 
         int id_Campo = eCampoCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
-        resp &= CampoCatalogoValor.actualizarElementos(id_Campo, idCatalogo);
+        resp &= CampoCatalogoValor.actualizarElementos(id_Campo, idCatalogo, ip, user);
 
         return resp;
     }

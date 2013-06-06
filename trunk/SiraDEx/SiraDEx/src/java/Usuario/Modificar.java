@@ -35,7 +35,7 @@ public class Modificar extends DispatchAction {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setUsuario();
-        
+
         System.out.println("El usuario elegido es: " + u.toString());
         request.getSession().setAttribute("usuarioNM", u);
 
@@ -55,7 +55,11 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
-
+        
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+        
         String rol = u.getRol();
         String rolDex = u.getRolDex();
         System.out.println("rol " + rol + " rolDex " + rolDex + "----------------");
@@ -76,7 +80,7 @@ public class Modificar extends DispatchAction {
         u.setRol(rol);
         System.out.println("El nuevo usuario es: " + u.toString());
 
-        if (u.modificar(usuarioNM)) {
+        if (u.modificar(usuarioNM, ip, usuario)) {
 
             ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
             request.setAttribute("usuarios", usrs);

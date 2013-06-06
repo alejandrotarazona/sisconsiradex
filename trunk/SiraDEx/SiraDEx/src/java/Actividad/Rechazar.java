@@ -47,6 +47,7 @@ public class Rechazar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
 
+
         if (act.getDescripcion().replace("\n", "").length() > 2001) {
             act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
             return mapping.findForward(FAILURE);
@@ -54,11 +55,13 @@ public class Rechazar extends DispatchAction {
 
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String validador = user.getRol();
-
-        boolean validacion = act.validar(false);
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+        
+        boolean validacion = act.validar(false, ip, usuario);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
-       
+
         if (acts.isEmpty()) {
             acts = null;
         }

@@ -5,6 +5,7 @@
 package ElementoCatalogo;
 
 import Clases.ElementoCatalogo;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -60,21 +61,25 @@ public class Modificar extends DispatchAction {
             throws Exception {
 
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
-        
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
 
-        if (elemCat.modificar(campos)) {
-            
+        if (elemCat.modificar(campos, ip, usuario)) {
+
             ArrayList<ElementoCatalogo> ec;
             ec = Clases.ElementoCatalogo.listarElementosId(elemCat.getIdCatalogo());
             request.setAttribute("elementos", ec);
             request.setAttribute("campos", elemCat.getCamposValores());
 
-            Clases.Root.deleteSessions(request,"elementoCatalogoForm");
+            Clases.Root.deleteSessions(request, "elementoCatalogoForm");
             elemCat.setMensaje("El elemento ha sido modificado con éxito");
             return mapping.findForward(SUCCESS);
         }
-        
+
         return mapping.findForward(FAILURE);
     }
 }

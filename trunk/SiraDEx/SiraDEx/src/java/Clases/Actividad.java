@@ -401,13 +401,15 @@ public class Actividad extends Root {
         return false;
     }
 
-    public boolean agregar() {
+    public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificar(this)) {
             return false;
         }
 
         Entity e = new Entity(2);//ACTIVIDAD
+        e.setIp(ip);
+        e.setUser(user);
         String[] columnas = {
             "id_tipo_actividad",
             "creador"
@@ -419,7 +421,7 @@ public class Actividad extends Root {
         };
         boolean resp;
         if (resp = e.insertar2(columnas, actividad)) {
-
+            e.log();
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
             Iterator itValores = camposValores.iterator();
@@ -430,7 +432,7 @@ public class Actividad extends Root {
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
-                    if (!eliminarActividad()){
+                    if (!eliminarActividad("Error al agregar", "SISTEMA")){
                          mensajeError = " Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
                                  + " mediante el sistema.";
@@ -441,9 +443,12 @@ public class Actividad extends Root {
         return resp;
     }
 
-    public boolean eliminarActividad() {
+    public boolean eliminarActividad(String ip, String user) {
         Entity e = new Entity(2);//ACTIVIDAD
-        if (e.borrar(ATRIBUTOS[0], idActividad)) {
+        e.setIp(ip);
+        e.setUser(user);
+        if (e.borrar(ATRIBUTOS[0], idActividad) && e.log()) {
+
             mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
         }
@@ -451,7 +456,7 @@ public class Actividad extends Root {
         return false;
     }
 
-    public boolean modificar(ArrayList camposNM) {
+    public boolean modificar(ArrayList camposNM, String ip, String usuario) {
 
         if (!Verificaciones.verificar(this)) {
             return false;
@@ -462,7 +467,7 @@ public class Actividad extends Root {
         for (int i = 0; it.hasNext() && resp; i++) {
             CampoValor campoNM = (CampoValor) it.next();
             System.out.println("antes modif " + campoNM.getCampo().getNombre() + " " + resp);
-            resp &= camposValores.get(i).modificar(campoNM, idActividad);
+            resp &= camposValores.get(i).modificar(campoNM, idActividad, ip, usuario);
             System.out.println("luego modif " + campoNM.getCampo().getNombre() + " " + resp);
         }
 
@@ -484,6 +489,9 @@ public class Actividad extends Root {
             modificador,
             fechaModif
         };
+        eActividad.setIp(ip);
+        eActividad.setUser(usuario);
+        eActividad.log();
         resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
@@ -589,7 +597,7 @@ public class Actividad extends Root {
 
     }
 
-    public boolean validar(boolean valida) {
+    public boolean validar(boolean valida, String ip, String user) {
 
         Entity eValidar = new Entity(2); //ACTIVIDAD
         String[] condColumn = {
@@ -611,7 +619,11 @@ public class Actividad extends Root {
             val
         };
 
-        return eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
+        boolean b = eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
+        eValidar.setIp(ip);
+        eValidar.setUser(user);
+        eValidar.log();
+        return b;
 
     }
 

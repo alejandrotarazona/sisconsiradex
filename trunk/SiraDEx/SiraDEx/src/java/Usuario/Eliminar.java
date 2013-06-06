@@ -23,7 +23,7 @@ public class Eliminar extends org.apache.struts.action.Action {
      */
     private static final String SUCCESS = "success";
     private static final String FAILURE = "failure";
-    
+
     /**
      * This is the action called from the Struts framework.
      *
@@ -34,7 +34,6 @@ public class Eliminar extends org.apache.struts.action.Action {
      * @throws java.lang.Exception
      * @return
      */
-    
     @Override
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
@@ -43,10 +42,14 @@ public class Eliminar extends org.apache.struts.action.Action {
         u.setMensaje(null);
         u.setMensajeError(null);
         ArrayList<Usuario> usuarios;
-        
-        if (u.eliminarUsuario()) {
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        String usuario = user.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (u.eliminarUsuario(ip, usuario)) {
             u.setMensaje("El usuario ha sido eliminado");
-           
+
             usuarios = Clases.Usuario.listarUsuario();
             request.getSession().setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
@@ -55,6 +58,4 @@ public class Eliminar extends org.apache.struts.action.Action {
             return mapping.findForward(FAILURE);
         }
     }
-
-    
 }
