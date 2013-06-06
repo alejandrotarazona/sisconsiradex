@@ -26,7 +26,7 @@
 
         <table>
             <tr>
-            <td width="25%"><b>Nombre</b></td>
+            <td width="25%"><b>&nbsp;&nbsp;&nbsp;&nbsp;Nombre</b></td>
             <td><b>Tipo</b></td>
         </tr>            
 

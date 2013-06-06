@@ -67,16 +67,10 @@
             <forward name="failure" path="gestionUsuarios"/>
         </action>
         
-        <action path="/VerPerfilUsuario" type="Usuario.VerPerfil" scope="session"
-                name="usuarioForm">
-            <forward name="success" path="perfilUsuario"/>
-        </action>
-        
-        <action path="/ModificarPerfilUsuario" type="Usuario.ModificarPerfil" 
+        <action path="/VerPerfilUsuario" type="Usuario.EditarPerfil" 
                 scope="session" parameter="method" name="usuarioForm">
-            <forward name="success" path="perfilUsuario"/>
-            <forward name="failure" path="modificarPerfilUsuario"/>
-            <forward name="page" path="modificarPerfilUsuario"/>
+            <forward name="success" path="VerPerfilUsuario.do?method=page" redirect="true"/>
+            <forward name="page" path="perfilUsuario"/>
         </action>
         
         <action path="/ModificarUsuario" name="usuarioForm" scope="request" 

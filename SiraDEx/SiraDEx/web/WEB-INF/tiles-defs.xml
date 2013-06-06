@@ -59,10 +59,6 @@
         <put name="body" value="/usuario/formPerfilUsuario.jsp" />
     </definition>
     
-    <definition name="modificarPerfilUsuario" extends="plantilla">
-        <put name="body" value="/usuario/formModificarPerfilUsuario.jsp" />
-    </definition>
-    
     <definition name="modificarRolUsuario" extends="plantilla">
         <put name="body" value="/usuario/formModificarRolUsuario.jsp" />
     </definition>

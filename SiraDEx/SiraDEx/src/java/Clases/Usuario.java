@@ -379,8 +379,6 @@ public class Usuario extends Root {
             return false;
         }
 
-        mensaje = "El perfil ha sido modificado con éxito.";
-
         return resp;
     }
 

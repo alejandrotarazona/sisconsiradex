@@ -16,48 +16,96 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Perfil de <bean:write name="user" property="nombres"/>
-            <bean:write name="user" property="apellidos"/></title>
+        <title>SiraDEx | Mi Perfil</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Perfil de <bean:write name="user" property="nombres"/>
-            <bean:write name="user" property="apellidos"/></h1>
+        <h1 class="title">Mi Perfil</h1>
 
+        <logic:present name="mensaje"><br>
+            <div class ="status"><bean:write name="mensaje"/></div><br>
+        </logic:present> 
         <logic:present name="usuarioForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div>
+            <div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div><br>
         </logic:present> 
         <logic:present name="usuarioForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
+            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div><br>
         </logic:present>
 
 
 
-        <html:link action="/ModificarPerfilUsuario?method=page">Editar perfil</html:link>
+        <a style=" cursor: pointer"
+           onclick="document.getElementsByClassName('modificar')[0].disabled=false;
+               document.getElementsByClassName('modificar')[1].disabled=false;
+               document.getElementsByClassName('modificar')[2].disabled=false;
+               document.getElementsByClassName('modificar')[3].disabled=false;
+               document.getElementById('boton').style.visibility= 'visible';">
+            <html:image src="../Stylesheets/iconos/Edit_26x26.png"/>  
+            <b>Editar perfil</b>
+        </a>   
+        <html:form method="POST" 
+                   action ="/VerPerfilUsuario?method=update">
 
-        <br>
-        <table>
-            <tbody>
-                <tr>
-                <td width="15%" ><b>USB-ID</b></td>
-                <td><bean:write name="user" property="username"/></td>
-                </tr>
-                <tr>
-                <td><b>Nombre(s)</b></td>
-                <td><bean:write name="user" property="nombres"/></td>
-                </tr>
-                <tr>
-                <td><b>Apellidos</b></td>
-                <td><bean:write name="user" property="apellidos"/></td>
-                </tr>
-                <tr>
-                <td><b>Teléfono</b></td>
-                <td><bean:write name="user" property="telefono"/></td>
-                </tr>
-                <tr>
-                <td><b>Correo electrónico</b></td>
-                <td><bean:write name="user" property="email"/></td>
-                </tr>
-            </tbody>
-        </table>
+            <table>
+                <tbody>
+                    <tr>
+                    <td width="15%" style="font-weight: bold">USB-ID</td>
+                    <td>
+                        <input type="text" name="email" value="${user.username}" disabled="disabled">
+                    </td>
+                    </tr>
+                    <tr>
+                    <td width="15%" style="font-weight: bold">Nombres</td>
+                    <td><html:text name="user" property="nombres" disabled="true"
+                               styleClass="modificar" maxlength="50">
+                            <bean:write name="user" property="nombres"/>
+                        </html:text></td>
+                    </tr>
+
+                    <tr>
+                    <td style="font-weight: bold">Apellidos</td>
+                    <td><html:text name="user" property="apellidos" disabled="true"
+                               styleClass="modificar" maxlength="50">
+                            <bean:write name="user" property="apellidos"/>
+                        </html:text></td>
+                    </tr>
+
+                    <tr>
+                    <td style="font-weight: bold">Teléfono</td>
+                    <td><html:text name="user" property="telefono" disabled="true"
+                               styleClass="modificar" maxlength="15">
+                            <bean:write name="user" property="telefono"/>
+                        </html:text></td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">Correo Institucional</td>
+                    <td>
+                        <input type="text" name="email" value="${user.username}@usb.ve" disabled="disabled">
+                    </td>
+                    </tr>
+                    <tr>
+                    <td style="font-weight: bold">Otro Correo</td>
+                    <td><html:text name="user" property="email" disabled="true" 
+                               styleClass="modificar" maxlength="50"
+                               onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
+                               if(this.value != '' && !x.test(this.value)){
+                               document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
+                               document.getElementById('boton').style.visibility= 'hidden';
+                               }
+                               if(this.value != '' && x.test(this.value)){
+                               document.getElementById('error').innerHTML='';
+                               document.getElementById('boton').style.visibility= 'visible';
+                               }">
+                            <bean:write name="user" property="email"/>
+                        </html:text>
+                    <span style="color: red" id="error"></span>
+                    </td>
+                    </tr>
+                </tbody> 
+            </table> 
+            <div id="boton" style="visibility: hidden" align="center">
+                <html:submit value="Modificar"
+                             onclick="return confirm('¿Está seguro que desea modificar el perfil?')"/>
+            </div>
+        </html:form>     
     </body>
 </html>
