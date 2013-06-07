@@ -474,7 +474,7 @@ public class BusquedaActividad extends Root {
         String[] estadistica = new String[2];
         String nombres = "";
         String cantidad = "";
-        Entity eSelec = new Entity(2);//ACTIVIDAD
+        Entity eSelec = new Entity(22);//ACT_PARTICIPA
         ResultSet rs = eSelec.seleccionarNumActividades();
 
         try {
