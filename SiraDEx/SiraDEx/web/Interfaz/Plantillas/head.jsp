@@ -23,14 +23,13 @@
         @import url("Interfaz/Stylesheets/style.css");
         @import url("Interfaz/Stylesheets/forms.css");
         @import url("Interfaz/Stylesheets/colors.css");
-        @import url("Interfaz/Stylesheets/jquery-ui.css");
+        @import url("Interfaz/Stylesheets/jquery-ui-1.10.3.custom.css");
     </style>
 
 
     <!--[if lte IE 7]>
     <link type="text/css" rel="stylesheet" href="http://www.dex.usb.ve/themes/sky/css/ie.css?max621" media="all" />
     <![endif]-->
-
     <script type="text/javascript" src="Interfaz/Scripts/jquery-1.8.3.js"></script>
     <script type="text/javascript" src="Interfaz/Scripts/jquery-ui-1.9.2.custom.js"></script>
     <script type="text/javascript" src="Interfaz/Scripts/jquery.js"></script>
