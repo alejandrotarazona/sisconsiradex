@@ -218,6 +218,7 @@ INSERT INTO elemento_catalogo (id_catalogo) VALUES (4);
 
 --  Catálogo de Empleados
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (5);
+INSERT INTO elemento_catalogo (id_catalogo) VALUES (5);
 
 --  Catálogo de Obreros
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (6);
@@ -302,11 +303,13 @@ INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (7,20,'Kenyer D
 
 --      Valor del campo Id de un empleado
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,21,'99-10000');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,22,'webmaster');
 --      Valor del campo Nombre de un empleado
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,21,'Pedro Gomez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,22,'Gerson Salazar');
 
 --      Valor del campo Id de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,22,'00-00000');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'00-00000');
 --      Valor del campo Nombre de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,22,'Pablo Perez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,23,'Pablo Perez');
 

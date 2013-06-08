@@ -69,11 +69,11 @@ public class Gestionar extends DispatchAction {
             throws Exception {
         
         Clases.Root.deleteSessions(request, "");
-        ArrayList<Log> a = Log.listar();
+        ArrayList<Log> logs = Log.listar();
         
-        request.setAttribute("logs", a);
+        request.setAttribute("logs", logs);
         
-        if (a.isEmpty()) {
+        if (logs.isEmpty()) {
          
             request.setAttribute("logs", null);
         }
