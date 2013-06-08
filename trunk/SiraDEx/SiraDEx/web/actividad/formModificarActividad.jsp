@@ -130,7 +130,13 @@
                         </logic:equal>
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
                             <html:text name="camposValores" property="valorAux" indexed="true"
-                                       maxlength="${camposValores.campo.longitud}">
+                                       maxlength="80" style="color:gray;"
+                                       onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                       this.value = ''}
+                                       if (this.style.color='gray'){
+                                       this.style.color='black'}" 
+                                       onblur="if (this.value=='') 
+                                       this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" >
                                 <bean:write name="camposValores" property="valorAux"/>
                             </html:text>
                             <html:select name="camposValores" property="valor" indexed="true">

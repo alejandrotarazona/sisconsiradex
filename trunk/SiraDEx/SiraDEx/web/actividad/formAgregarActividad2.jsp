@@ -26,9 +26,12 @@
                     property="nombreTipoActividad"/></title>
     </head>
     <body>
-        <h1 class='title' id='page-title'>Registro de <bean:write 
+        <html:link title="Elegir otro Tipo de Actividad" action="/RegistrarActividad?method=page"> 
+            <html:image src="../Stylesheets/iconos/regresar.png"/>
+        </html:link><br>
+        <h1 class='title'>Registro de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
- 
+
         <logic:present name="actividadForm" property="mensajeError"><br>
             <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
         </logic:present>
@@ -111,16 +114,33 @@
                             </html:select>
                         </logic:equal>
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
-                            <html:text onfocus="if (this.value=='Apellido(s), Nombre(s)') this.value = '', this.style.color='black'" 
-                                       onblur="if (this.value=='', this.style.color='black') this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
-                                       value="Apellido(s), Nombre(s)" name="camposValores" property="valorAux"
-                                       style="color:gray;"
-                                       indexed="true" maxlength="${camposValores.campo.longitud}" />  
+                            <html:text  name="camposValores" property="valorAux" indexed="true"
+                                        maxlength="80" style="color:gray;" 
+                                        onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                        this.value = ''}
+                                        if (this.style.color='gray'){
+                                        this.style.color='black'}" 
+                                        onblur="if (this.value=='') 
+                                        this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
+                                        />
                             <html:select name="camposValores" property="valor" indexed="true">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
                                                         value="contenido"/>
                             </html:select>
+                            <logic:greaterThan name="camposValores" property="campo.longitud" value="1">
+                                <html:hidden name="camposValores" styleId="${index}" 
+                                             property="campo.longitud" indexed="true"/>
+                                <html:submit styleId="botonSumar" value=" " title="Agregar"
+                                             onclick="document.getElementById('${index}').value=document.getElementById('${index}').value-1"/>
+                            </logic:greaterThan>
+                            <logic:equal name="camposValores" property="campo.longitud" value="-1">
+                                <html:hidden name="camposValores" styleId="${index}" 
+                                             property="campo.longitud" indexed="true"/>
+                                <html:submit styleId="botonRestar" value=" " title="Eliminar"
+                                             onclick="document.getElementById('${index}').value=0"/>
+                            </logic:equal>
+
                         </logic:equal>
                         </td>
                         </tr>

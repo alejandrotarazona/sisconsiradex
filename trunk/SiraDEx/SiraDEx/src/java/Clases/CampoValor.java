@@ -194,6 +194,172 @@ public class CampoValor implements Serializable {
         return resp;
     }
 
+    public boolean modificar(CampoValor campoNM, int idAct, String ip, String user) {
+        boolean resp = true;
+        Entity eValor = new Entity(4);//VALOR
+        eValor.setIp(ip);
+        eValor.setUser(user);
+
+        String tipo = campoNM.getCampo().getTipo();
+
+        if (!tipo.equals("archivo") && !tipo.equals("producto")) {
+            String[] condColumnas = {
+                ATRIBUTOS[0], //id_campo
+                ATRIBUTOS[1], //id_actividad
+                ATRIBUTOS[2] //valor
+            };
+
+            String valorNM = campoNM.getValor();
+            String val = valor;
+            if (tipo.equals("participante")) {
+                if (!campoNM.getValorAux().isEmpty()
+                        && !campoNM.getValorAux().equals("Apellido(s), Nombre(s)")) {
+                    valorNM = "$" + campoNM.getValorAux();
+                }
+                if (!valorAux.isEmpty()) {
+                    val = "$" + valorAux;
+                }
+            }
+
+            Object[] valores = {
+                campo.getIdCampo(),
+                idAct,
+                valorNM
+            };
+            String[] colModificar = {ATRIBUTOS[2]}; //valor
+            String[] modificaciones = {val};
+
+            resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
+            eValor.log();
+            System.out.println("--------Luego de modificar valor "
+                    + campoNM.getValor() + " " + resp);
+
+            if (tipo.equals("participante")) {
+                resp &= modificarParticipante(campoNM, idAct);
+                System.out.println("--------Luego de modificar participante "
+                        + campoNM.getValor() + " " + resp);
+            }
+
+        } else {
+            resp &= modificarArchivo(campoNM, idAct, ip, user);
+        }
+
+        return resp;
+    }
+
+    private boolean modificarArchivo(CampoValor campoNM, int idAct, String ip, String user) {
+        Entity eValor = new Entity(4);//VALOR
+        eValor.setIp(ip);
+        eValor.setUser(user);
+        String[] campos = {
+            ATRIBUTOS[0], //id_campo
+            ATRIBUTOS[1] //id_actividad
+        };
+        Integer[] condicion = {
+            campoNM.getCampo().getIdCampo(),
+            idAct
+        };
+
+        boolean resp = eValor.borrar(campos, condicion);
+
+        resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
+        eValor.log();
+
+        return resp;
+    }
+
+    private boolean modificarParticipante(CampoValor campoNM, int idAct) {
+
+        String valorNM = campoNM.getValor();
+        String valorAuxNM = campoNM.getValorAux();
+        if (valorAuxNM.isEmpty() && valorNM.isEmpty()
+                && valorAux.isEmpty() && valor.isEmpty()) { //no se modifica
+            return true;
+        }
+        boolean resp = true;
+        String usbid;
+
+        //Se elimina al participante
+
+        if (!valorNM.isEmpty()) {// Decide si es un usuario o no
+            usbid = valorNM.split(",")[0];
+        } else {
+            usbid = "$" + campoNM.getValorAux();
+        }
+
+        Entity eValor = new Entity(5);//PARTICIPA
+        String[] campos = {
+            ATRIBUTOS[0], //id_campo
+            "id_act",
+            "usbid"
+        };
+        Object[] condicion = {
+            campo.getIdCampo(),
+            idAct,
+            usbid
+        };
+        resp &= eValor.borrar(campos, condicion);
+        System.out.println("---------DELETE PARTICIPA " + campo.getNombre() + " " + resp);
+
+
+        //Se inserta al particpante
+
+        if (!valor.isEmpty()) {// Decide si es un usuario o no
+            usbid = valor.split(",")[0];
+        } else {
+            usbid = "$" + valorAux;
+        }
+
+
+        Object[] tupla = {idAct, usbid, campo.getIdCampo()};
+        resp &= eValor.insertar(tupla);
+        System.out.println("---------INSERT PARTICIPA " + campo.getNombre() + " " + resp);
+
+
+        return resp;
+
+    }
+
+//funcion auxiliar para solucionar el problema de que el tag html file no reconoce
+//si el property file tiene un archivo y esto dificultaba la implementacion 
+//de las verificaciones para los campos tipo archivo o producto 
+    public static void auxModificarArchivo(ArrayList camposNM, ArrayList campos) {
+        Iterator it = campos.iterator();
+        for (int i = 0; it.hasNext(); i++) {
+            CampoValor c = (CampoValor) it.next();
+            String tipo = c.getCampo().getTipo();
+            if (tipo.equals("archivo") || tipo.equals("producto")) {
+                CampoValor campoNM = (CampoValor) camposNM.get(i);
+                if (c.getValor().isEmpty() && !campoNM.getValor().isEmpty()) {
+                    c.setCampo(campoNM.getCampo());
+                    c.setFile(campoNM.getFile());
+                    c.setValor(campoNM.getValor());
+                }
+            }
+        }
+    }
+
+    public static ArrayList<CampoValor> clonar(ArrayList<CampoValor> campos) {
+
+        ArrayList<CampoValor> clonCampos = new ArrayList<>();
+        for (int i = 0; i < campos.size(); i++) {
+            Campo campo = campos.get(i).getCampo();
+            CampoValor cv = new CampoValor();
+            Campo campoClon = new Campo();
+            campoClon.setIdCampo(campo.getIdCampo());
+            campoClon.setIdTipoActividad(campo.getIdTipoActividad());
+            campoClon.setNombre(campo.getNombre());
+            campoClon.setTipo(campo.getTipo());
+            campoClon.setLongitud(campo.getLongitud());
+            campoClon.setObligatorio(campo.isObligatorio());
+            campoClon.setCatalogo(campo.getCatalogo());
+            cv.setCampo(campoClon);
+            clonCampos.add(cv);
+        }
+        return clonCampos;
+    }
+
+
     /*Crea una lista de CampoValor con los campos del tipo de actividad cuyo id 
      es pasado por parametro*/
     public static ArrayList<CampoValor> listarCampos(int idTipoActividad) {
@@ -211,13 +377,16 @@ public class CampoValor implements Serializable {
                     c.setIdCampo(rs.getInt("id_campo"));
                     c.setIdTipoActividad(rs.getInt("id_tipo_actividad"));
                     c.setNombre(rs.getString("nombre_campo"));
-                    c.setTipo(rs.getString("tipo_campo"));
+                    String tipo = rs.getString("tipo_campo");
+                    c.setTipo(tipo);
                     c.setLongitud(rs.getInt("longitud"));
                     c.setObligatorio(rs.getBoolean("obligatorio"));
                     c.setCatalogo(rs.getString("catalogo"));
                     CampoValor cv = new CampoValor(c);
+                    if (tipo.equals("participante")) {
+                        cv.valorAux = "Apellido(s), Nombre(s)";
+                    }
                     listaValor.add(cv);
-
 
                 }
                 rs.close();
@@ -261,9 +430,10 @@ public class CampoValor implements Serializable {
                         String valor = rs.getString(ATRIBUTO[6]);
                         String tipoCampo = rs.getString(ATRIBUTO[3]);
 
+                        cv.valorAux = "Apellido(s), Nombre(s)";
                         if (tipoCampo.equals("participante")
                                 && valor.startsWith("$")) { //participante que no es usuario
-                            cv.setValorAux(valor.substring(1));
+                            cv.valorAux = valor.substring(1);
                             valor = "";
                         }
                         cv.setValor(valor);
@@ -277,7 +447,7 @@ public class CampoValor implements Serializable {
                         c.setIdCampo(rs.getInt(ATRIBUTO[0]));
                         c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
                         c.setNombre(rs.getString(ATRIBUTO[2]));
-                        c.setTipo(rs.getString(ATRIBUTO[3]));
+                        c.setTipo(tipoCampo);
                         c.setLongitud(rs.getInt(ATRIBUTO[4]));
                         c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
                         c.setCatalogo(rs.getString(ATRIBUTO[7]));
@@ -298,185 +468,5 @@ public class CampoValor implements Serializable {
                     .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
-    }
-
-    public boolean modificar(CampoValor campoNM, int idAct, String ip, String user) {
-        boolean resp = true;
-        Entity eValor = new Entity(4);//VALOR
-        eValor.setIp(ip);
-        eValor.setUser(user);
-
-        String tipo = campoNM.getCampo().getTipo();
-
-        if (!tipo.equals("archivo") && !tipo.equals("producto")) {
-            String[] condColumnas = {
-                ATRIBUTOS[0], //id_campo
-                ATRIBUTOS[1], //id_actividad
-                ATRIBUTOS[2] //valor
-            };
-
-            String valorNM = campoNM.getValor();
-            String val = valor;
-            if (tipo.equals("participante")) {
-                if (!campoNM.getValorAux().isEmpty()) {
-                    valorNM = "$" + campoNM.getValorAux();
-                }
-                if (!valorAux.isEmpty()) {
-                    val = "$" + valorAux;
-                }
-            }
-
-            Object[] valores = {
-                campo.getIdCampo(),
-                idAct,
-                valorNM
-            };
-            String[] colModificar = {ATRIBUTOS[2]}; //valor
-            String[] modificaciones = {val};
-
-            resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
-            eValor.log();
-            System.out.println("--------Luego de modificar valor"
-                    + campoNM.getValor() + " " + resp);
-
-            if (tipo.equals("participante")) {
-                resp &= modificarParticipante(campoNM, idAct);
-                System.out.println("--------Luego de modificar participante"
-                        + campoNM.getValor() + " " + resp);
-            }
-
-        } else {
-            resp &= modificarArchivo(campoNM, idAct, ip, user);
-        }
-
-        return resp;
-    }
-
-    private boolean modificarArchivo(CampoValor campoNM, int idAct, String ip, String user) {
-        Entity eValor = new Entity(4);//VALOR
-        eValor.setIp(ip);
-        eValor.setUser(user);
-        String[] campos = {
-            ATRIBUTOS[0], //id_campo
-            ATRIBUTOS[1] //id_actividad
-        };
-        Integer[] condicion = {
-            campoNM.getCampo().getIdCampo(),
-            idAct
-        };
-
-        boolean resp = eValor.borrar(campos, condicion);
-
-        resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
-        eValor.log();
-
-        return resp;
-    }
-
-    private boolean modificarParticipante(CampoValor campoNM, int idAct) {
-
-        String valorNM = campoNM.getValor();
-        String valorAuxNM = campoNM.getValorAux();
-        if (valorAuxNM.isEmpty() && valorNM.isEmpty()
-                && valorAux.isEmpty() && valor.isEmpty()) { //no se modifica
-            return true;
-        }
-        boolean resp = true;
-        String usbid;
-
-        if ((!valorAuxNM.isEmpty() || !valorNM.isEmpty())
-                && (valorAux.isEmpty() && valor.isEmpty())) {//Se debe eliminar al participante
-
-            if (!valorNM.isEmpty()) {// Decide si es un usuario o no
-                usbid = valorNM.split(",")[0];
-            } else {
-                usbid = "$" + campoNM.getValorAux();
-            }
-
-            Entity eValor = new Entity(5);//PARTICIPA
-            String[] campos = {
-                ATRIBUTOS[0], //id_campo
-                "id_act",
-                "usbid"
-            };
-            Object[] condicion = {
-                campo.getIdCampo(),
-                idAct,
-                usbid
-            };
-            resp &= eValor.borrar(campos, condicion);
-            System.out.println("---------DELETE PARTICIPA " + campo.getNombre() + " " + resp);
-        }
-
-        if (((valorAuxNM.isEmpty() && valorNM.isEmpty())
-                && ((!valorAux.isEmpty()) || !valor.isEmpty()))) { //Se debe insertar un nuevo particpante
-
-            if (!valor.isEmpty()) {// Decide si es un usuario o no
-                usbid = valor.split(",")[0];
-            } else {
-                usbid = "$" + valorAux;
-            }
-
-            Entity eValor = new Entity(5);//PARTICIPA
-
-            Object[] tupla = {campo.getIdCampo(), idAct, usbid};
-            resp &= eValor.insertar(tupla);
-            System.out.println("---------INSERT PARTICIPA " + campo.getNombre() + " " + resp);
-            return resp;
-        }
-
-        if (((!valorAuxNM.isEmpty() || !valorNM.isEmpty())
-                && ((!valorAux.isEmpty()) || !valor.isEmpty()))) { //Se debe actualizar al participante
-
-            if (!valor.isEmpty()) { //Decide si es un usuario o no
-                usbid = valor.split(",")[0];
-            } else {
-                usbid = "$" + valorAux;
-            }
-
-            if (!valorNM.isEmpty()) {// Decide si es un usuario o no
-                valorNM = valorNM.split(",")[0];
-            } else {
-                valorNM = "$" + campoNM.getValorAux();
-            }
-
-            Entity eValor = new Entity(5);//PARTICIPA
-            String[] condColumnas = {
-                ATRIBUTOS[0], //id_campo
-                "id_act",
-                "usbid"
-            };
-            Object[] valores = {
-                campo.getIdCampo(),
-                idAct,
-                valorNM
-            };
-
-            String[] colModificar = {"usbid"};
-            String[] modificaciones = {usbid};
-            resp &= eValor.modificar(condColumnas, valores, colModificar, modificaciones);
-            System.out.println("---------UPDATE PARTICIPA " + campo.getNombre() + " " + resp);
-        }
-        return resp;
-
-    }
-
-//funcion auxiliar para solucionar el problema de que el tag html file no reconoce
-//si el property file tiene un archivo y esto dificultaba la implementacion 
-//de las verificaciones para los campos tipo archivo o producto 
-    public static void auxModificarArchivo(ArrayList camposNM, ArrayList campos) {
-        Iterator it = campos.iterator();
-        for (int i = 0; it.hasNext(); i++) {
-            CampoValor c = (CampoValor) it.next();
-            String tipo = c.getCampo().getTipo();
-            if (tipo.equals("archivo") || tipo.equals("producto")) {
-                CampoValor campoNM = (CampoValor) camposNM.get(i);
-                if (c.getValor().isEmpty() && !campoNM.getValor().isEmpty()) {
-                    c.setCampo(campoNM.getCampo());
-                    c.setFile(campoNM.getFile());
-                    c.setValor(campoNM.getValor());
-                }
-            }
-        }
     }
 }

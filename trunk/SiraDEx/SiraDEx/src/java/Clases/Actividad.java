@@ -284,8 +284,12 @@ public class Actividad extends Root {
                 case "producto":
                     continue;
                 case "participante":
-                    s += cv.getCampo().getNombre() + ": ";
-                    if (!cv.getValorAux().isEmpty()) {
+                    String nombre = cv.getCampo().getNombre();
+                    if (!nombre.isEmpty()) {
+                        s += cv.getCampo().getNombre() + ": ";
+                    }
+                    if (!cv.getValorAux().isEmpty()
+                            && !cv.getValorAux().equals("Apellido(s), Nombre(s)")) {
                         s += cv.getValor().substring(1) + ", ";
                     } else {
                         s += cv.getValor() + ", ";
@@ -432,10 +436,10 @@ public class Actividad extends Root {
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
-                    if (!eliminarActividad("Error al agregar", "SISTEMA")){
-                         mensajeError = " Error: La Actividad '" + nombreTipoActividad
-                            + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
-                                 + " mediante el sistema.";
+                    if (!eliminarActividad("Error al agregar", "SISTEMA")) {
+                        mensajeError = " Error: La Actividad '" + nombreTipoActividad
+                                + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
+                                + " mediante el sistema.";
                     }
                 }
             }
@@ -554,8 +558,8 @@ public class Actividad extends Root {
                     + " por esta misma vía.";
         }
         if (accion == 2) { //actividad rechazada
-            String motivo = descripcion.replace("\"","'").replace("\r", "");
-            contenido = "Ha sido rechazada la validación de la Actividad '" + nombreTipoActividad 
+            String motivo = descripcion.replace("\"", "'").replace("\r", "");
+            contenido = "Ha sido rechazada la validación de la Actividad '" + nombreTipoActividad
                     + "' de la cual usted es participante, por el motivo siguiente:\n" + motivo
                     + "\nModifique la Actividad para corregir el problema y esperar "
                     + "nuevamente por la validación.";
@@ -613,7 +617,7 @@ public class Actividad extends Root {
         if (valida) {
             val = "Validada";
         } else {
-            val = "Rechazada. Motivo: " + descripcion.replace("\"","'");
+            val = "Rechazada. Motivo: " + descripcion.replace("\"", "'");
         }
         Object[] modificaciones = {
             val
@@ -624,7 +628,62 @@ public class Actividad extends Root {
         eValidar.setUser(user);
         eValidar.log();
         return b;
+    }
 
+    public boolean modificarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+
+        if (agregarCampoParticipante(camposAntes)) {
+            return true;
+        }
+        return eliminarCampoParticipante(camposAntes);
+    }
+
+    private boolean agregarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+
+        for (int i = 0; i < camposValores.size(); i++) {
+            Campo campo = camposValores.get(i).getCampo();
+            Campo campoA = camposAntes.get(i).getCampo();
+            System.out.println(campoA.getLongitud() + " " + campo.getLongitud() + "+++++");
+
+            if (campo.getLongitud() < campoA.getLongitud()
+                    && campo.getLongitud() != -1
+                    && campoA.getLongitud() != -1) {//agrega un nuevo campo
+                System.out.println("Entra a agregar ++++++");
+                CampoValor cv = new CampoValor();
+                Campo c = new Campo();
+                c.setTipo("participante");
+                c.setLongitud(-1);
+                c.setObligatorio(false);
+                c.setCatalogo(campo.getCatalogo());
+                cv.setCampo(c);
+                cv.setValorAux("Apellido(s), Nombre(s)");
+                camposValores.add(i + 1, cv);
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private boolean eliminarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+        for (int i = 0; i < camposValores.size(); i++) {
+            Campo campo = camposValores.get(i).getCampo();
+            Campo campoA = camposAntes.get(i).getCampo();
+            System.out.println(campoA.getLongitud() + " " + campo.getLongitud() + "----------");
+            if (campo.getLongitud() == 0 && campoA.getLongitud() == -1) {//elimina el nuevo campo
+                System.out.println("Entra a eliminar -----------");
+                camposValores.remove(i);
+                for (; i > 0; i--) {
+                    Campo c = camposValores.get(i - 1).getCampo();
+                    int longitud = c.getLongitud();
+                    if (c.getTipo().equals("participante") && longitud != -1) {
+                        c.setLongitud(longitud + 1);
+                    }
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -637,10 +696,10 @@ public class Actividad extends Root {
      * @throws SQLException
      */
     public static ArrayList<Actividad> listar(ResultSet rs) {
-        try {
-            ArrayList<Actividad> acts = new ArrayList<>(0);
-            if (rs != null) {
 
+        ArrayList<Actividad> acts = new ArrayList<>(0);
+        if (rs != null) {
+            try {
                 while (rs.next()) {
                     Actividad a = new Actividad();
                     a.setIdActividad(rs.getInt(ATRIBUTOS[0]));
@@ -674,21 +733,19 @@ public class Actividad extends Root {
 
                     acts.add(a);
                 }
-            } else {
-                acts = null;
+                rs.close();
+
+
+
+
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
-            return acts;
-
-
-
-
-
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class
-                    .getName()).log(Level.SEVERE, null, ex);
+        } else {
+            acts = null;
         }
-        return null;
+        return acts;
     }
 
     public static ArrayList<Actividad> listarActividades() {
