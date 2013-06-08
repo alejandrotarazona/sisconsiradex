@@ -367,7 +367,6 @@ public class Catalogo extends Root {
             }
         }
         for (; i < campos.size(); i++) {//campos no registrados en la base de datos
-            System.out.println("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&" + i);
             if (campos.get(i).isEliminado()) {
                 resp = 1;
                 campos.remove(i);   //se elimina de campos del form

@@ -66,7 +66,6 @@ public class Listar extends DispatchAction {
         String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
 
         request.setAttribute("acts", acts);
-        System.out.println(estadistica[0]+" "+estadistica[1]+"&&&&&&&&&&&&&&&&&&&&&&&&&&");
         request.setAttribute("estadisticaNombres", estadistica[0]);
         request.setAttribute("estadisticaCantidad", estadistica[1]);
 

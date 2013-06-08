@@ -27,7 +27,6 @@ public class Campo implements Serializable {
     private boolean obligatorio;
     private String catalogo = "";
     private String catalogoPart = "";
-    private boolean lista;
     private final Par[] tipos = {
         new Par("texto", "texto"),
         new Par("catálogo", "catalogo"),
@@ -163,14 +162,6 @@ public class Campo implements Serializable {
     public boolean isNombreInvalido() {
         boolean resp = nombre.equals("");
         return resp;
-    }
-
-    public boolean isLista() {
-        return lista;
-    }
-
-    public void setLista(boolean lista) {
-        this.lista = lista;
     }
 
     public Par[] getTipos() {

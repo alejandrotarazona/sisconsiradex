@@ -84,9 +84,8 @@ public class Agregar extends DispatchAction {
         ta.setId(id);
         ta.setTipoActividad();
         a.setNombreTipoActividad(ta.getNombreTipo());
-        ArrayList<CampoValor> valores = Clases.CampoValor.listarCampos(id);
-        a.setCamposValores(valores);
-
+        ArrayList<CampoValor> campos = Clases.CampoValor.listarCampos(id);
+        a.setCamposValores(campos);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
         a.setCreador(username);
@@ -103,6 +102,9 @@ public class Agregar extends DispatchAction {
             }
         }
 
+        ArrayList<CampoValor> camposActuales = Clases.CampoValor.listarCampos(id);
+        request.getSession().setAttribute("camposAntes", camposActuales);
+
         return mapping.findForward(SUCCESS);
 
     }
@@ -112,6 +114,27 @@ public class Agregar extends DispatchAction {
             throws Exception {
 
         Actividad a = (Actividad) form;
+
+        ArrayList<CampoValor> camposAntes;
+        camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
+
+        if (a.modificarCampoParticipante(camposAntes)) {
+            ArrayList<CampoValor> camposActuales = a.getCamposValores();
+            request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
+            for (int i = 0; i < camposActuales.size(); i++) {
+
+                String nombreCat = camposActuales.get(i).getCampo().getCatalogo();
+
+                if (!nombreCat.equals("")) {
+                    ArrayList<ElementoCatalogo> catalogo;
+                    catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+
+                    request.getSession().setAttribute("cat" + i, catalogo);
+                }
+            }
+            return mapping.findForward(SUCCESS);
+        }
+
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
@@ -138,7 +161,7 @@ public class Agregar extends DispatchAction {
 
             a.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
             a.setMensajeError(null);
-            a.enviarCorreo(0);
+            //a.enviarCorreo(0);
             return mapping.findForward(SUCCESSFULL);
         }
 

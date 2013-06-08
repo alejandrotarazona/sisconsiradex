@@ -817,9 +817,14 @@ ul.action-links:after,
     background: url(iconos/Eliminar_26x26.png) no-repeat;
 }
 
-#botonAgregar{
+#botonSumar{
     border: 0;
     background: url(iconos/Add_26x26.png) no-repeat ;
+}
+
+#botonRestar{
+    border: 0;
+    background: url(iconos/minus.png) no-repeat ;
 }
 
 #botonModificar{
