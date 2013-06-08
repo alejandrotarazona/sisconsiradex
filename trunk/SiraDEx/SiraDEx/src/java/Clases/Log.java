@@ -8,6 +8,8 @@ import DBMS.Entity;
 import java.math.BigDecimal;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,7 +26,8 @@ public class Log extends Root {
 
     private BigDecimal idLog;
     private String accion;
-    private Calendar fecha;
+    private String query;
+    private String fecha;
     private String ip;
     private String usbid;
 
@@ -47,11 +50,11 @@ public class Log extends Root {
         this.accion = accion;
     }
 
-    public Calendar getFecha() {
+    public String getFecha() {
         return fecha;
     }
 
-    private void setFecha(Calendar fecha) {
+    private void setFecha(String fecha) {
         this.fecha = fecha;
     }
 
@@ -69,6 +72,14 @@ public class Log extends Root {
 
     private void setUsbid(String usbid) {
         this.usbid = usbid;
+    }
+
+    public String getQuery() {
+        return query;
+    }
+
+    public void setQuery(String query) {
+        this.query = query;
     }
 
     /**
@@ -133,14 +144,13 @@ public class Log extends Root {
         try {
             while (rs.next()) {
                 Log actual = new Log();
-                Calendar ahora = null;
                 actual.setAccion(rs.getString("accion"));
+                actual.setQuery(rs.getString("query"));
+                actual.setFecha(rs.getString("fecha") + " " + rs.getString("hora").substring(0, 8));
                 actual.setIdLog(rs.getBigDecimal("id_log"));
                 actual.setIp(rs.getString("ip"));
-                ahora.setTimeInMillis(rs.getDate("fecha").getTime() + rs.getDate("hora").getTime());
-                actual.setFecha(ahora);
                 actual.setUsbid(rs.getString("usbid"));
-
+                
                 resp.add(actual);
             }
             return resp;

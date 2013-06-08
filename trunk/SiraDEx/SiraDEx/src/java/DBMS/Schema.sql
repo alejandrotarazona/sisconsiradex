@@ -143,7 +143,8 @@ WITH (
 
 CREATE TABLE LOG(
     id_log  BIGSERIAL,
-    accion  VARCHAR(4000) NOT NULL,
+    accion  TEXT NOT NULL,
+    query   TEXT NOT NULL,
     fecha   DATE DEFAULT CURRENT_DATE,
     hora    TIME DEFAULT CURRENT_TIME,
     ip      VARCHAR(15) NOT NULL,

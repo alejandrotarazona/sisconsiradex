@@ -15,7 +15,7 @@
         <form-bean  name="backupForm" type="Clases.Backup"/>
         <form-bean  name="busquedaActividadForm" type="Clases.BusquedaActividad"/>
         <form-bean  name="campoCatalogoForm" type="Clases.CampoCatalogo"/>
-        <!-- <form-bean  name="logForm" type="Clases.Log"/> -->
+        <form-bean  name="logForm" type="Clases.Log"/>
     </form-beans>
     
     <global-exceptions>
@@ -245,7 +245,7 @@
         <!-- ==============================LOG==============================-->
         
         <action path="/GestionLog" type="Log.Gestionar"
-                scope="session" parameter="method" name="actividadForm">
+                scope="session" parameter="method" name="logForm">
             <forward name="page" path="gestionLog"/>
             <forward name="success" path="gestionLog"/>
             <forward name="failure" path="gestionLog"/>

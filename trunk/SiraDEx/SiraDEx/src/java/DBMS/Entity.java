@@ -108,9 +108,13 @@ public class Entity {
     public String getUser() {
         return user;
     }
-    
+
     public static String escapeSQL(Object o) {
         return String.valueOf(o).replace("\\", "\\\\").replace("'", "\\'");
+    }
+
+    public static String escapeLog(Object o) {
+        return String.valueOf(o).replace("\\", "\\\\").replace("'", "");
     }
 
     /* PARA USAR CON GOOGLE CHARTS 
@@ -457,19 +461,28 @@ public class Entity {
 
 
     }
-    
-    public boolean log(){
-        boolean b = false;
-        String query = "INSERT INTO LOG (accion, ip, usbid) VALUES ('" + escapeSQL(sql) +"', '"
-                + ip + "'" ;
-         if(user != null && !user.equals("")){
-             query += ",'" + user + "'";
-         }
-         query += ")";
-         
-         DataBase db = DataBase.getInstance();
-         b = db.update(query);
-        
+
+    public boolean log() {
+
+        System.out.println("Entrando en el Log.");
+        boolean b;
+
+        String[] tok = sql.split(" ");
+
+        String query = "INSERT INTO LOG (accion, query, ip, usbid) VALUES ('" + tok[0] + "', '" + escapeLog(sql) + "', '"
+                + ip + "'";
+        if (user != null && !user.equals("")) {
+            query += ",'" + user + "'";
+        }
+        query += ")";
+        System.out.println("Query a insertar: " + query);
+        System.out.println("\tIp: " + ip);
+        System.out.println("\tUsuairo: " + user);
+
+        System.out.println("Saliendo del Log.");
+        DataBase db = DataBase.getInstance();
+        b = db.update(query);
+
         return b;
     }
 

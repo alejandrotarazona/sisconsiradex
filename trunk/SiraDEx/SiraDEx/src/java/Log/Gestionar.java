@@ -5,6 +5,7 @@
 package Log;
 
 import Clases.Actividad;
+import Clases.Log;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -68,13 +69,13 @@ public class Gestionar extends DispatchAction {
             throws Exception {
         
         Clases.Root.deleteSessions(request, "");
-        ArrayList<Actividad> a = Actividad.listarActividades();
+        ArrayList<Log> a = Log.listar();
         
-        request.setAttribute("acts", a);
+        request.setAttribute("logs", a);
         
         if (a.isEmpty()) {
          
-            request.setAttribute("acts", null);
+            request.setAttribute("logs", null);
         }
         
         
