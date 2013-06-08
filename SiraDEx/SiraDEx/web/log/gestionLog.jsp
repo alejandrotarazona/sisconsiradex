@@ -22,6 +22,13 @@
         <script>
             $(document).ready(function() {
 
+                $(".textolargo").hide();
+                $(".mostrar").click(function() {
+                    $(this).siblings('.textolargo').toggle();
+                    var $this = $(this);
+                    $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
+                });
+
                 $('#datatab').dataTable({
                     "aoColumns": [
                         /* Id */ null,
@@ -58,23 +65,32 @@
 
                     <logic:iterate name="logs" id="log">
                         <tr>
-                            <td>
-                                <bean:write name="log" property="idLog"/>
+                        <td>
+                            <bean:write name="log" property="idLog"/>
 
+                        </td>
+                        <td>
+                            <bean:write name="log" property="ip"></bean:write>
                             </td>
                             <td>
-                                <bean:write name="log" property="ip"></bean:write>
+                            <bean:write name="log" property="usbid"></bean:write>
                             </td>
                             <td>
-                                <bean:write name="log" property="usbid"></bean:write>
+                            <bean:write name="log" property="accion"></bean:write>
+                            <span class="textolargo"><br>
+                                Descripción: <br>
+                            <bean:write name="log" property="query"/>
+                            </span>  
+
+                            <br>
+                            <a class="mostrar" style=" cursor: pointer">
+                                Más detalles
+                            </a>
                             </td>
                             <td>
-                                <bean:write name="log" property="accion"></bean:write>
+                            <bean:write name="log" property="fecha"></bean:write>
                             </td>
-                            <td>
-                                <bean:write name="log" property="fecha"></bean:write>
-                            </td>
-                        </tr>
+                            </tr>
                     </logic:iterate>   
                 </tbody> 
             </table>

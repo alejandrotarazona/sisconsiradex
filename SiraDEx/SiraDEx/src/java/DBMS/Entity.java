@@ -114,7 +114,9 @@ public class Entity {
     }
 
     public static String escapeLog(Object o) {
-        return String.valueOf(o).replace("\\", "\\\\").replace("'", "");
+        String s = String.valueOf(o).replace("\\", "\\\\").replace("'", "");
+        
+        return s;
     }
 
     /* PARA USAR CON GOOGLE CHARTS 
