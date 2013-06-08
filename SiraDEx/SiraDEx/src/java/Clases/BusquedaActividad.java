@@ -260,9 +260,7 @@ public class BusquedaActividad extends Root {
 
         ArrayList<Actividad> listaRango = new ArrayList<>(0);
         if (hayRango) {
-            Iterator it = listaIds.iterator();
-            while (it.hasNext()) {
-                Integer id = (Integer) it.next();
+            for (Integer id : listaIds) {
                 Actividad act = new Actividad();
                 act.setIdActividad(id.intValue());
                 act.setActividad();
@@ -401,9 +399,7 @@ public class BusquedaActividad extends Root {
         System.out.println("#################################################################################################\n"
                 + "###################################################################################################");
         System.out.println("El tamaño de la lista de listas es: " + listas.size());
-        Iterator it = unaLista.iterator();
-        while (it.hasNext()) {
-            Actividad unaActividad = (Actividad) it.next();         //Tomo la 1ra actividad de la primera lista (pivote)
+        for (Actividad unaActividad : unaLista) {
             boolean agregar = true;
             Iterator itAux = listas.iterator();
             itAux.next();                                           //Salto la primera lista del iterator, ya fue tomada anteriormente

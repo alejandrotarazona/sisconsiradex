@@ -12,70 +12,73 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
-        
-                <script type="text/javascript" src="../Scripts/jquery.min.js"></script>
+
+        <script type="text/javascript" src="../Scripts/jquery.min.js"></script>
         <script type="text/javascript" language="javascript" src="../Scripts/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="../Scripts/ColReorderWithResize.js"></script>
         <style type="text/css" title="currentStyle">
             @import "../Stylesheets/demo_table_jui.css";
         </style>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
 
                 $('#datatab').dataTable({
-                    "aoColumns": [       
-                        /* Actividad */ null,
-                        /* Creación */ null,
-                        /* Modificación */ 
-                        { "bSortable": false },
-                       
+                    "aoColumns": [
+                        /* Id */ null,
+                        /* IP Remitente */ null,
+                        /* Usuario */ {"bSortable": false},
+                        /*Tipo de Accion*/{"bSortable": true},
+                        /*Fecha*/ null,
                     ]});
             });
         </script>
 
-        
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Log del sistema </title>
     </head>
     <body>
-        
+
         <h1 class="title">Consulta del Log de actividades del sistema</h1>
         <br>
-        
-    <logic:present name="acts">
-        
+
+        <logic:present name="logs">
+
             <table cellpadding="0" cellspacing="0" border="0" class="display" id="datatab">
                 <thead>
                     <tr>
-                    <th>Actividad</th>
-                    <th>Creación</th>
-                    <th>Modificación</th>
+                    <th>Id</th>
+                    <th>IP Remitente</th>
+                    <th>Usuario</th>
+                    <th>Tipo de Accion</th>
+                    <th>Fecha</th>
                     </tr>
                 </thead>
                 <tbody>
-                    
-                    <logic:iterate name="acts" id="act">
-                        <tr><td>
-                            <bean:write name="act" property="nombreTipoActividad"/>
-                            <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                out.print(". Participantes: "+a.participantesToString());%>
-                            <% out.print(" Campos: "+a.camposValoresToString());%>
-                        </td>
-                        <td>
-                            <bean:write name="act" property="creador"></bean:write>, 
-                            <bean:write name="act" property="fechaCreacion"></bean:write>
-                        </td>
-                        <td>
-                            <logic:present  name="act" property="modificador">
-                                <bean:write name="act" property="modificador"></bean:write>, 
-                                <bean:write name="act" property="fechaModif"></bean:write>
-                            </logic:present>
 
-                        </td></tr>
-                </logic:iterate>   
+                    <logic:iterate name="logs" id="log">
+                        <tr>
+                            <td>
+                                <bean:write name="log" property="idLog"/>
+
+                            </td>
+                            <td>
+                                <bean:write name="log" property="ip"></bean:write>
+                            </td>
+                            <td>
+                                <bean:write name="log" property="usbid"></bean:write>
+                            </td>
+                            <td>
+                                <bean:write name="log" property="accion"></bean:write>
+                            </td>
+                            <td>
+                                <bean:write name="log" property="fecha"></bean:write>
+                            </td>
+                        </tr>
+                    </logic:iterate>   
                 </tbody> 
             </table>
         </logic:present>
-      
+
     </body>
 </html>
