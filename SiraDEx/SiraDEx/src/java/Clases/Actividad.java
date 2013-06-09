@@ -276,39 +276,27 @@ public class Actividad extends Root {
             CampoValor cv = (CampoValor) it.next();
             String tipo = cv.getCampo().getTipo();
             String valor = cv.getValor();
-            if (Clases.Verificaciones.esVacio(valor)) {
-                continue;
+            if (!valor.isEmpty() && cv.getCampo().getLongitud() != -1) {
+
+                switch (tipo) {
+                    case "textol":
+                    case "producto":
+                        continue;
+                    case "checkbox":
+                        if (!valor.equals("false")) {
+                            s += cv.getCampo().getNombre() + ", ";
+                        }
+                        break;
+                    default:
+                        s += cv.getCampo().getNombre() + ": "
+                                + cv.getValor() + ", ";
+                        break;
+                }
             }
-            switch (tipo) {
-                case "textol":
-                case "producto":
-                    continue;
-                case "participante":
-                    String nombre = cv.getCampo().getNombre();
-                    if (!nombre.isEmpty()) {
-                        s += cv.getCampo().getNombre() + ": ";
-                    }
-                    if (!cv.getValorAux().isEmpty()
-                            && !cv.getValorAux().equals("Apellido(s), Nombre(s)")) {
-                        s += cv.getValor().substring(1) + ", ";
-                    } else {
-                        s += cv.getValor() + ", ";
-                    }
-                    break;
-                case "checkbox":
-                    if (!valor.equals("false")) {
-                        s += cv.getCampo().getNombre() + ", ";
-                    }
-                    break;
-                default:
-                    s += cv.getCampo().getNombre() + ": "
-                            + cv.getValor() + ", ";
-                    break;
+            int tam = s.length();
+            if (tam > 1) {
+                s = s.substring(0, s.length() - 2) + ". ";
             }
-        }
-        int tam = s.length();
-        if (tam > 1) {
-            s = s.substring(0, s.length() - 2) + ".";
         }
         return s;
     }
@@ -384,28 +372,35 @@ public class Actividad extends Root {
 
     //concatena los valores de los campos participante de un mismo tipo de participante
     private void concatenarValoresParticipantes(int i) {
-        if (camposValores.get(i).getCampo().getLongitud() == -1
-                && camposValores.get(i - 1).getCampo().getLongitud() > 0) {
-            String valorParticipante = camposValores.get(i - 1).getValor();
-            String valorAux = camposValores.get(i - 1).getValorAux();
-            if (valorParticipante.isEmpty()) {
+        if (i < camposValores.size() - 1
+                && camposValores.get(i + 1).getCampo().getLongitud() == -1
+                && camposValores.get(i).getCampo().getLongitud() > 0) {
+            String valorParticipante = camposValores.get(i).getValor();
+            String valorAux = camposValores.get(i).getValorAux();
+            if (valorAux.equals("Apellido(s), Nombre(s)")) {
+                valorAux = "";
+            }
+            if (!Verificaciones.esVacio(valorAux)) {
                 valorParticipante = valorAux;
             }
-            int j = i;
+
+            int j = i + 1;
             for (; camposValores.get(j).getCampo().getLongitud() == -1; j++) {
                 String val = camposValores.get(j).getValor();
                 String valAux = camposValores.get(j).getValorAux();
-                if (val.isEmpty()) {
+                if (valAux.equals("Apellido(s), Nombre(s)")) {
+                    valAux = "";
+                }
+                if (!Verificaciones.esVacio(valAux)) {
                     val = valAux;
                 }
                 if (!val.isEmpty()) {
-                    valorParticipante += ";" + val;
+                    valorParticipante += "; " + val;
                 }
             }
-            if (!valorParticipante.isEmpty()) {
-                valorParticipante = valorParticipante.substring(1);
-            }
+
             camposValores.get(i).setValor(valorParticipante);
+            System.out.println("VALOR CONCATENADO " + valorParticipante);
         }
     }
 
@@ -434,9 +429,8 @@ public class Actividad extends Root {
 
             for (int i = 0; i < camposValores.size() && resp; i++) {
                 CampoValor cv = camposValores.get(i);
-
+                System.out.println("VALOR A AGREGAR i=" + i + " " + cv.getValor());
                 concatenarValoresParticipantes(i);
-
                 resp &= cv.agregar(idActividad);
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad

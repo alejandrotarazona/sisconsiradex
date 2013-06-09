@@ -177,9 +177,11 @@ public class CampoValor implements Serializable {
         }
 
         if (campo.getTipo().equals("participante")) { //agrega en PARTICIPA
-
-            if (!valor.isEmpty() || (!valorAux.equals("Apellido(s), Nombre(s)")
-                    && !valorAux.isEmpty())) {
+            String valAux = valorAux;
+            if (valorAux.equals("Apellido(s), Nombre(s)")) {
+                valAux = "";
+            }
+            if (!valor.isEmpty() || !Verificaciones.esVacio(valAux)) {
                 Entity e = new Entity(5);//PARTICIPA
                 String usbid;
                 if (!valor.isEmpty()) {//obtiene solo el usbid del elemento
@@ -188,6 +190,8 @@ public class CampoValor implements Serializable {
                     usbid = "$" + valorAux;
                 }
                 Object[] tupla = {idAct, usbid, idCampo};
+                System.out.println("INSERTARNDO EN PARTICIPA " + idAct + " "
+                        + usbid + " " + idCampo + " pppppppppppppppppppppppp");
                 resp &= e.insertar(tupla);
             }
         }
@@ -472,6 +476,13 @@ public class CampoValor implements Serializable {
         Iterator it = participantes.iterator();
         while (it.hasNext()) {
             CampoValor cv = new CampoValor();
+            Campo c = new Campo();
+            c.setIdCampo(idCampo);
+            c.setTipo("participante");
+            c.setLongitud(-1);
+            c.setObligatorio(false);
+            c.setCatalogo(catalogo);
+            cv.setCampo(c);
 
             String participante = (String) it.next();
             if (participante.startsWith("$")) { //participante que no es usuario
@@ -481,6 +492,7 @@ public class CampoValor implements Serializable {
                 cv.valorAux = "Apellido(s), Nombre(s)";
                 cv.valor = obtenerValor(participante, catalogo);
             }
+            listaValor.add(cv);
         }
     }
 
@@ -491,7 +503,7 @@ public class CampoValor implements Serializable {
             "usbid"
         };
         String[] tabla = {
-            "PARTICIPA"
+            "ACTIVIDAD"
         };
         String[] columnas = {"id_actividad", "id_campo"};
         Integer[] valores = {idActividad, idCampo};

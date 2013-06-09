@@ -6,6 +6,7 @@ package Clases;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -266,7 +267,7 @@ public class Verificaciones {
 
         boolean creador = false;
         Iterator it = act.getCamposValores().iterator();
-
+        ArrayList<String> participantes = new ArrayList<>(0);
         while (it.hasNext()) {
 
             CampoValor cv = (CampoValor) it.next();
@@ -278,10 +279,12 @@ public class Verificaciones {
             boolean obligatorio = cv.getCampo().isObligatorio();
             String respVerif;
 
+            if (valorAux.equals("Apellido(s), Nombre(s)")) {
+                valorAux = "";
+            }
+
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
-            if (tipo.equals("participante")
-                    && !(valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux))
-                    && !valor.isEmpty()) {
+            if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "
                         + "datos en uno de sus dos campos, no puede contener en ambos.");
                 return false;
@@ -293,13 +296,28 @@ public class Verificaciones {
                 creador = true;
             }
 
-            /*verifica si el campo es obligatorio que no sea vacío*/
+            /*asignación para verificación de si es obligatorio el campo tipo participante*/
             String val = valor;
             if (tipo.equals("participante")) {
                 if (valor.isEmpty()) {
                     val = valorAux;
                 }
+
+                /*verifica si ya se agrega a un mismo participante*/
+                Iterator iter = participantes.iterator();
+                while (iter.hasNext()) {
+                    if (iter.next().equals(val + cv.getCampo().getIdCampo())) {
+                        act.setMensajeError("Error: El valor " + val + " se repite para "
+                                + "dos campos del mismo tipo de participante. Por favor, "
+                                + "cambie uno de los valores.");
+                        return false;
+                    }
+                }
+                if (!val.isEmpty()) {
+                    participantes.add(val + cv.getCampo().getIdCampo());
+                }
             }
+            /*verifica si el campo es obligatorio que no sea vacío*/
             respVerif = verificarVacio(nombre, val);
             if (obligatorio && respVerif != null) {
                 act.setMensajeError(respVerif);
@@ -347,7 +365,7 @@ public class Verificaciones {
             accion = "registra";
         }
         if (!creador) {
-            act.setMensajeError("Error: El usuario que " + accion + " la actividad debe "
+            act.setMensajeError("Error: El usuario que " + accion + " la Actividad debe "
                     + "estar presente en alguno de los campos desplegables de participante.");
             return false;
         }
