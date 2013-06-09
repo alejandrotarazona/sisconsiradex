@@ -57,7 +57,7 @@
                     <th>Id</th>
                     <th>IP Remitente</th>
                     <th>Usuario</th>
-                    <th>Tipo de Accion</th>
+                    <th width="433px">Tipo de Accion</th>
                     <th>Fecha</th>
                     </tr>
                 </thead>
