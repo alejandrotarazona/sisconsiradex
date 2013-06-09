@@ -393,7 +393,7 @@ public class Usuario extends Root {
 
     public String[] cantidadActividadesPorTipo() {
 
-        String[] estadistica = new String[2];
+        String[] grafica = new String[2];
         String nombre = "";
         String cantidad = "";
         Entity eSelec = new Entity(22);//ACT_PARTICIPA
@@ -411,13 +411,13 @@ public class Usuario extends Root {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
         }
         if (nombre.length() != 0 && cantidad.length() != 0) {
-            nombre = nombre.substring(0, nombre.length() - 1) + "&";
+            nombre = nombre.substring(0, nombre.length() - 1);
             cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
         }
 
-        estadistica[0] = nombre;
-        estadistica[1] = cantidad;
-        return estadistica;
+        grafica[0] = nombre;
+        grafica[1] = cantidad;
+        return grafica;
     }
 
     public static void main(String[] args) {

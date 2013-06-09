@@ -73,13 +73,12 @@
         </logic:present>
 
         <logic:present name="acts"> 
-            <% String chd = (String) request.getAttribute("estadisticaCantidad");
-                String chl = (String) request.getAttribute("estadisticaNombres");
+            <% String chd = (String) request.getAttribute("graficaCantidad");
+                String chdl = (String) request.getAttribute("graficaNombres");
                 String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
                 String chtt = "Actividades%20de%20extensión&";
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-                String chdl = chl;
-                s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
+                s += chd + chtt + chco + "chdl=" + chdl;
             %>
             <a class="ver" style=" cursor: pointer">
                 Mostrar Gráfica</a>
