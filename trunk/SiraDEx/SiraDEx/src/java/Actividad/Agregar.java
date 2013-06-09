@@ -78,21 +78,21 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Actividad a = (Actividad) form;
-        int id = a.getIdTipoActividad();
+        Actividad act = (Actividad) form;
+        int id = act.getIdTipoActividad();
         TipoActividad ta = new TipoActividad();
         ta.setId(id);
         ta.setTipoActividad();
-        a.setNombreTipoActividad(ta.getNombreTipo());
+        act.setNombreTipoActividad(ta.getNombreTipo());
         ArrayList<CampoValor> campos = Clases.CampoValor.listarCampos(id);
-        a.setCamposValores(campos);
+        act.setCamposValores(campos);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         String username = u.getUsername();
-        a.setCreador(username);
+        act.setCreador(username);
 
-        for (int i = 0; i < a.getCamposValores().size(); i++) {
+        for (int i = 0; i < act.getCamposValores().size(); i++) {
 
-            String nombreCat = a.getCamposValores().get(i).getCampo().getCatalogo();
+            String nombreCat = act.getCamposValores().get(i).getCampo().getCatalogo();
 
             if (!nombreCat.equals("")) {
                 ArrayList<ElementoCatalogo> catalogo;
@@ -113,13 +113,13 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Actividad a = (Actividad) form;
+        Actividad act = (Actividad) form;
 
         ArrayList<CampoValor> camposAntes;
         camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
 
-        if (a.modificarCampoParticipante(camposAntes)) {
-            ArrayList<CampoValor> camposActuales = a.getCamposValores();
+        if (act.modificarCampoParticipante(camposAntes)) {
+            ArrayList<CampoValor> camposActuales = act.getCamposValores();
             request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
             for (int i = 0; i < camposActuales.size(); i++) {
 
@@ -139,29 +139,29 @@ public class Agregar extends DispatchAction {
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        if (a.agregar(ip, usuario)) {
+        if (act.agregar(ip, usuario)) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
-            ArrayList<Actividad> act;
+            ArrayList<Actividad> acts;
             String[] estadistica = u.cantidadActividadesPorTipo();
 
             if (rol.equalsIgnoreCase("WM")) {
-                act = Clases.Actividad.listarActividades();
+                acts = Clases.Actividad.listarActividades();
             } else {
-                act = Actividad.listarActividadesDeUsuario(u.getUsername());
+                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
 
-            request.setAttribute("acts", act);
+            request.setAttribute("acts", acts);
             request.setAttribute("estadisticaNombres", estadistica[0]);
             request.setAttribute("estadisticaCantidad", estadistica[1]);
 
-            String nombre = a.getNombreTipoActividad();
+            String nombre = act.getNombreTipoActividad();
             Clases.Root.deleteSessions(request, "actividadForm");
 
-            a.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
-            a.setMensajeError(null);
-            //a.enviarCorreo(0);
+            act.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
+            act.setMensajeError(null);
+            //act.enviarCorreo(0);
             return mapping.findForward(SUCCESSFULL);
         }
 

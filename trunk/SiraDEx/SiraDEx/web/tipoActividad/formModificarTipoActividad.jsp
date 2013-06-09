@@ -39,7 +39,7 @@
                         $('.'+mostrador2).css("visibility", "hidden");
                     }
                 }
-                $(".selector").on('focus change',function(evento){
+                $(".selector").change(function(evento){
                     var tg = evento.target.id;
                     var mos = "mostrador"+tg.slice("selector".length);
                     var mos2 = "mostrador2"+tg.slice("selector".length);
@@ -168,7 +168,7 @@
                             <div id="<%=l%>" style="visibility: visible">
                                 <logic:notEqual name="campos" property="tipo" value="producto">
                                     <html:text name="campos" property="longitud" indexed="true" 
-                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima de campos de estos que se podrán agregar." 
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
                                                size="3">
                                         <bean:write name="campos" property="longitud"/>
                                     </html:text>    
@@ -189,25 +189,48 @@
                         </td>
                         <td align="center">     
 
+                            <logic:equal name="campos" property="tipo" value="catalogo">
+                                <div class="<%=m%>" style="visibility: visible">
+                                    <html:select name="campos" property="catalogo" indexed="true">                          
+                                        <html:option value="">-- Seleccione --</html:option>
 
-                            <div class="<%=m%>" style="visibility: hidden">
-                                <html:select name="campos" property="catalogo" indexed="true">                          
-                                    <html:option value="">-- Seleccione --</html:option>
+                                        <html:optionsCollection name="catalogos" label="nombre" 
+                                                                value="nombre"/>
+                                    </html:select>
+                                </div>
+                            </logic:equal>
 
-                                    <html:optionsCollection name="catalogos" label="nombre" 
-                                                            value="nombre"/>
-                                </html:select>
-                            </div>
+                            <logic:notEqual name="campos" property="tipo" value="catalogo">
+                                <div class="<%=m%>" style="visibility: hidden">
+                                    <html:select name="campos" property="catalogo" indexed="true">                          
+                                        <html:option value="">-- Seleccione --</html:option>
 
+                                        <html:optionsCollection name="catalogos" label="nombre" 
+                                                                value="nombre"/>
+                                    </html:select>
+                                </div>
+                            </logic:notEqual>
 
-                            <div class="<%=m2%>" style="visibility: hidden">
-                                <html:select name="campos" property="catalogoPart" indexed="true">                          
-                                    <html:option value="">-- Seleccione --</html:option>
+                            <logic:equal name="campos" property="tipo" value="participante">
+                                <div class="<%=m2%>" style="visibility: visible">
+                                    <html:select name="campos" property="catalogoPart" indexed="true">                          
+                                        <html:option value="">-- Seleccione --</html:option>
 
-                                    <html:optionsCollection name="catalogosPart" label="nombre" 
-                                                            value="nombre"/>
-                                </html:select>
-                            </div>
+                                        <html:optionsCollection name="catalogosPart" label="nombre" 
+                                                                value="nombre"/>
+                                    </html:select>
+                                </div>
+                            </logic:equal>
+                            <logic:notEqual name="campos" property="tipo" value="participante">
+                                <div class="<%=m2%>" style="visibility: hidden">
+                                    <html:select name="campos" property="catalogoPart" indexed="true">                          
+                                        <html:option value="">-- Seleccione --</html:option>
+
+                                        <html:optionsCollection name="catalogosPart" label="nombre" 
+                                                                value="nombre"/>
+                                    </html:select>
+                                </div>
+                            </logic:notEqual>
                         </td>
                         </tr>
                     </logic:iterate>

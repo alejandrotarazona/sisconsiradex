@@ -283,6 +283,14 @@ public class Verificaciones {
                 valorAux = "";
             }
 
+            /*verifica si el campo es tipo participante y es adicional tenga datos en alguno de sus campos*/
+            if (tipo.equals("participante") && valorAux.isEmpty() && valor.isEmpty()
+                    && longitud == -1) {
+                act.setMensajeError("Error: No deben haber campos adicionales de participantes" 
+                        + " sin ningún valor. Por favor, ingrese un valor o elimínelo.");
+                return false;
+            }
+            
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "

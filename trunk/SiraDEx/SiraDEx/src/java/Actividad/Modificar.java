@@ -46,7 +46,7 @@ public class Modificar extends DispatchAction {
         act.setActividad();
 
         /*ArrayList con los valores no modificados*/
-        ArrayList camposNM = Clases.CampoValor.listarCamposValores(act.getIdActividad());
+        ArrayList camposNM = CampoValor.listarCamposValores(act.getIdActividad());
         request.getSession().setAttribute("camposNM", camposNM);
 
         /*Se pasan los catalogos de los campos tipo catalogo al jsp de ser necesario*/
@@ -57,6 +57,9 @@ public class Modificar extends DispatchAction {
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
+        
+        ArrayList<CampoValor> camposActuales = CampoValor.listarCamposValores(act.getIdActividad());
+        request.getSession().setAttribute("camposAntes", camposActuales);
 
         return mapping.findForward(PAGE);
     }
@@ -66,11 +69,31 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
 
+        ArrayList<CampoValor> camposAntes;
+        camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
+        
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
         CampoValor.auxModificarArchivo(campos, act.getCamposValores());
 
+        if (act.modificarCampoParticipante(camposAntes)) {
+            ArrayList<CampoValor> camposActuales = act.getCamposValores();
+            request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
+            for (int i = 0; i < camposActuales.size(); i++) {
+
+                String nombreCat = camposActuales.get(i).getCampo().getCatalogo();
+
+                if (!nombreCat.equals("")) {
+                    ArrayList<ElementoCatalogo> catalogo;
+                    catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+
+                    request.getSession().setAttribute("cat" + i, catalogo);
+                }
+            }
+            return mapping.findForward(SUCCESS);
+        }
+        
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
