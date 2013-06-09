@@ -23,8 +23,7 @@ public class CampoCatalogoValor implements Serializable {
     private String valor;
     private static String[] TABLAS = {
         "VALOR_CATALOGO", //0
-        "CAMPO_CATALOGO", //1
-        "ELEMENTO_CATALOGO" //2
+        "CAMPO_CATALOGO" //1
     };
     private static String[] ATRIBUTOS = {
         "id_campo", //0
@@ -92,7 +91,7 @@ public class CampoCatalogoValor implements Serializable {
         e.setIp(ip);
         e.setUser(user);
         e.log();
-        
+
         return b;
     }
 
@@ -158,8 +157,7 @@ public class CampoCatalogoValor implements Serializable {
         };
         String[] tabABuscar = {
             TABLAS[0],
-            TABLAS[1],
-            TABLAS[2]
+            TABLAS[1]
         };
         String[] colCondicion = {"id_elemento"};
         Object[] colValor = {idElem};

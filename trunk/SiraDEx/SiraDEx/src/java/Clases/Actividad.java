@@ -313,72 +313,49 @@ public class Actividad extends Root {
         return s;
     }
 
-    public String getApellidoNombreCreador() {
+    //teniendo el idActividad hace un set del resto de atributos de la Actividad
+    public void setActividad() {
 
-        Entity e = new Entity(0);//USUARIO
+        Entity eActividad = new Entity(2);//ACTIVIDAD
 
-        String[] col = {"usbid"};
-        Object[] condicion = {creador};
+        String[] tabABuscar = {
+            "TIPO_ACTIVIDAD"
+        };
+        String[] atrib = {"id_actividad"};
+        Integer[] valor = {idActividad};
 
-        ResultSet rs = e.seleccionar(col, condicion);
+        ResultSet rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor);
         if (rs != null) {
             try {
                 rs.next();
-                String resp = rs.getString("apellidos");
-                resp += ", " + rs.getString("nombres");
-                rs.close();
-                return resp;
+                idTipoActividad = rs.getInt(ATRIBUTOS[1]);
+                nombreTipoActividad = rs.getString(ATRIBUTOS[2]);
+                validacion = rs.getString(ATRIBUTOS[3]);
+                creador = rs.getString(ATRIBUTOS[4]);
+                fechaCreacion = rs.getString(ATRIBUTOS[5]);
+                modificador = rs.getString(ATRIBUTOS[6]);
+                fechaModif = rs.getString(ATRIBUTOS[7]);
+                descripcion = rs.getString(ATRIBUTOS[8]);
+                camposValores = CampoValor.listarCamposValores(idActividad);
+
+                Iterator iter = camposValores.iterator();
+
+                while (iter.hasNext()) {
+                    CampoValor cv = (CampoValor) iter.next();
+                    String tipoCampo = cv.getCampo().getTipo();
+                    String nombre = cv.getValor();
+                    if (!nombre.equals("")
+                            && ((tipoCampo.equals("archivo")
+                            || tipoCampo.equals("producto")))) {
+                        Archivo arch = new Archivo(cv.getFile(), nombre,
+                                cv.getCampo().getNombre());
+                        archivos.add(arch);
+                    }
+                }
+
             } catch (SQLException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
             }
-        }
-        return null;
-    }
-
-    //teniendo el idActividad hace un set del resto de atributos de la Actividad
-    public void setActividad() {
-        try {
-            Entity eActividad = new Entity(2);//ACTIVIDAD
-
-            String[] tabABuscar = {
-                "ACTIVIDAD",
-                "TIPO_ACTIVIDAD"
-            };
-            String[] atrib = {"id_actividad"};
-            Integer[] valor = {idActividad};
-
-            try (ResultSet rs = eActividad.naturalJoin(ATRIBUTOS, tabABuscar, atrib, valor)) {
-                if (rs != null) {
-                    rs.next();
-                    idTipoActividad = rs.getInt(ATRIBUTOS[1]);
-                    nombreTipoActividad = rs.getString(ATRIBUTOS[2]);
-                    validacion = rs.getString(ATRIBUTOS[3]);
-                    creador = rs.getString(ATRIBUTOS[4]);
-                    fechaCreacion = rs.getString(ATRIBUTOS[5]);
-                    modificador = rs.getString(ATRIBUTOS[6]);
-                    fechaModif = rs.getString(ATRIBUTOS[7]);
-                    descripcion = rs.getString(ATRIBUTOS[8]);
-                    camposValores = CampoValor.listarCamposValores(idActividad);
-
-                    Iterator iter = camposValores.iterator();
-
-                    while (iter.hasNext()) {
-                        CampoValor cv = (CampoValor) iter.next();
-                        String tipoCampo = cv.getCampo().getTipo();
-                        String nombre = cv.getValor();
-                        if (!nombre.equals("")
-                                && ((tipoCampo.equals("archivo")
-                                || tipoCampo.equals("producto")))) {
-                            Archivo arch = new Archivo(cv.getFile(), nombre,
-                                    cv.getCampo().getNombre());
-                            archivos.add(arch);
-                        }
-                    }
-
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -405,6 +382,33 @@ public class Actividad extends Root {
         return false;
     }
 
+    //concatena los valores de los campos participante de un mismo tipo de participante
+    private void concatenarValoresParticipantes(int i) {
+        if (camposValores.get(i).getCampo().getLongitud() == -1
+                && camposValores.get(i - 1).getCampo().getLongitud() > 0) {
+            String valorParticipante = camposValores.get(i - 1).getValor();
+            String valorAux = camposValores.get(i - 1).getValorAux();
+            if (valorParticipante.isEmpty()) {
+                valorParticipante = valorAux;
+            }
+            int j = i;
+            for (; camposValores.get(j).getCampo().getLongitud() == -1; j++) {
+                String val = camposValores.get(j).getValor();
+                String valAux = camposValores.get(j).getValorAux();
+                if (val.isEmpty()) {
+                    val = valAux;
+                }
+                if (!val.isEmpty()) {
+                    valorParticipante += ";" + val;
+                }
+            }
+            if (!valorParticipante.isEmpty()) {
+                valorParticipante = valorParticipante.substring(1);
+            }
+            camposValores.get(i).setValor(valorParticipante);
+        }
+    }
+
     public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificar(this)) {
@@ -428,10 +432,11 @@ public class Actividad extends Root {
             e.log();
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
-            Iterator itValores = camposValores.iterator();
+            for (int i = 0; i < camposValores.size() && resp; i++) {
+                CampoValor cv = camposValores.get(i);
 
-            while ((itValores.hasNext()) && resp) {
-                CampoValor cv = (CampoValor) itValores.next();
+                concatenarValoresParticipantes(i);
+
                 resp &= cv.agregar(idActividad);
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
@@ -460,19 +465,21 @@ public class Actividad extends Root {
         return false;
     }
 
-    public boolean modificar(ArrayList camposNM, String ip, String usuario) {
+    public boolean modificar(ArrayList<CampoValor> camposNM, String ip, String usuario) {
 
         if (!Verificaciones.verificar(this)) {
             return false;
         }
         boolean resp = true;
-        Iterator it = camposNM.iterator();
 
-        for (int i = 0; it.hasNext() && resp; i++) {
-            CampoValor campoNM = (CampoValor) it.next();
-            System.out.println("antes modif " + campoNM.getCampo().getNombre() + " " + resp);
+        for (int i = 0; i < camposValores.size() && resp; i++) {
+            CampoValor campoNM = camposNM.get(i);
+            System.out.println("antes modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
+
+            concatenarValoresParticipantes(i);
+
             resp &= camposValores.get(i).modificar(campoNM, idActividad, ip, usuario);
-            System.out.println("luego modif " + campoNM.getCampo().getNombre() + " " + resp);
+            System.out.println("luego modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
         }
 
         Entity eActividad = new Entity(2);//ACTIVIDAD
@@ -651,6 +658,7 @@ public class Actividad extends Root {
                 System.out.println("Entra a agregar ++++++");
                 CampoValor cv = new CampoValor();
                 Campo c = new Campo();
+                c.setIdCampo(campo.getIdCampo());
                 c.setTipo("participante");
                 c.setLongitud(-1);
                 c.setObligatorio(false);
@@ -678,9 +686,9 @@ public class Actividad extends Root {
                     int longitud = c.getLongitud();
                     if (c.getTipo().equals("participante") && longitud != -1) {
                         c.setLongitud(longitud + 1);
+                        return true;
                     }
                 }
-                return true;
             }
         }
         return false;

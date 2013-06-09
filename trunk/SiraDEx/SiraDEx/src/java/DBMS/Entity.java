@@ -48,7 +48,7 @@ public class Entity {
         "TIPO_ACT__ACT", //21
         "ACT_PARTICIPA", //22
         "ELEMENTO_VALOR", //23    
-        "ACT_COMPLETA"//24      --------------------------------------
+        "ACT_COMPLETA"//24      -------------------------------------- 
     };
 
     /*
@@ -318,36 +318,15 @@ public class Entity {
         for (i = 1; i < seleccionar.length; i++) {
             sql += " , " + seleccionar[i];
         }
-        sql += " FROM " + tablas[0];
+        sql += " FROM " + TABLA;
 
-        for (i = 1; i < tablas.length; i++) {
+        for (i = 0; i < tablas.length; i++) {
             sql += " NATURAL JOIN " + tablas[i];
         }
         sql += " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
 
         for (i = 1; i < columnas.length; i++) {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
-        }
-
-        System.out.println(sql);
-        DataBase db = DataBase.getInstance();
-        ResultSet rs = db.consult(sql);
-
-        return rs;
-    }
-
-    public ResultSet naturalJoin(String[] seleccionar, String[] tablas) {
-
-        sql = "SELECT " + seleccionar[0];
-        int i;
-
-        for (i = 1; i < seleccionar.length; i++) {
-            sql += " , " + seleccionar[i];
-        }
-        sql += " FROM " + tablas[0];
-
-        for (i = 1; i < tablas.length; i++) {
-            sql += " NATURAL JOIN " + tablas[i];
         }
 
         System.out.println(sql);

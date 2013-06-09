@@ -278,15 +278,10 @@ public class Verificaciones {
             boolean obligatorio = cv.getCampo().isObligatorio();
             String respVerif;
 
-
-            if (tipo.equals("participante")
-                    && (valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux))) {
-                valorAux = "";
-                cv.setValorAux(valorAux);
-            }
-
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
-            if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
+            if (tipo.equals("participante")
+                    && !(valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux))
+                    && !valor.isEmpty()) {
                 act.setMensajeError("Error: El campo " + nombre + " debe contener "
                         + "datos en uno de sus dos campos, no puede contener en ambos.");
                 return false;
@@ -315,8 +310,7 @@ public class Verificaciones {
              * texto, texto largo y numero)*/
             if ((tipo.equals("texto")
                     || tipo.equals("textol")
-                    || tipo.equals("numero")
-                    || (tipo.equals("participante") && !esVacio(valorAux)))
+                    || tipo.equals("numero"))
                     && valor.length() > longitud) {
                 act.setMensajeError("Error: El campo " + nombre + " tiene "
                         + valor.length() + " caracteres y solo puede contener "

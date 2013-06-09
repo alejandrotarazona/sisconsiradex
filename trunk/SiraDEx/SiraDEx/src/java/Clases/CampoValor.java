@@ -40,8 +40,7 @@ public class CampoValor implements Serializable {
     };
     private static String[] TABLAS = {
         "VALOR",
-        "CAMPO",
-        "ACTIVIDAD"
+        "CAMPO"
     };
 
     public CampoValor() {
@@ -166,24 +165,26 @@ public class CampoValor implements Serializable {
         Integer idCampo = campo.getIdCampo();
 
 
-        if (file != null) {
+        if (file != null) { // agrega el archivo
+
             resp &= eAgregar.insertarArchivo(idCampo, idAct, valor, file);
-        } else {
-            if (!valorAux.isEmpty()) {
-                valor = "$" + valorAux;
-            }
+        } // evita los campos adicionales de un tipo de participante
+        else if (campo.getLongitud() != -1) {
             Object[] tupla = {idCampo, idAct, valor};
+            // inserta el valor, puede se el valor obvio, el nombre de un archivo o 
+            //los participantes concatenados de un tipo de p articipante.
             resp &= eAgregar.insertar(tupla);
         }
 
-        if (campo.getTipo().equals("participante")) {
+        if (campo.getTipo().equals("participante")) { //agrega en PARTICIPA
 
-            if (!valor.isEmpty() || !valorAux.isEmpty()) {
+            if (!valor.isEmpty() || (!valorAux.equals("Apellido(s), Nombre(s)")
+                    && !valorAux.isEmpty())) {
                 Entity e = new Entity(5);//PARTICIPA
                 String usbid;
-                if (valorAux.isEmpty()) {
+                if (!valor.isEmpty()) {//obtiene solo el usbid del elemento
                     usbid = valor.split(",")[0];
-                } else {
+                } else {//agrega un $ al inicio para identificar que no es un usbid 
                     usbid = "$" + valorAux;
                 }
                 Object[] tupla = {idAct, usbid, idCampo};
@@ -202,7 +203,8 @@ public class CampoValor implements Serializable {
 
         String tipo = campoNM.getCampo().getTipo();
 
-        if (!tipo.equals("archivo") && !tipo.equals("producto")) {
+        if (!tipo.equals("archivo") && !tipo.equals("producto")
+                && campo.getLongitud() != -1) {
             String[] condColumnas = {
                 ATRIBUTOS[0], //id_campo
                 ATRIBUTOS[1], //id_actividad
@@ -211,15 +213,6 @@ public class CampoValor implements Serializable {
 
             String valorNM = campoNM.getValor();
             String val = valor;
-            if (tipo.equals("participante")) {
-                if (!campoNM.getValorAux().isEmpty()
-                        && !campoNM.getValorAux().equals("Apellido(s), Nombre(s)")) {
-                    valorNM = "$" + campoNM.getValorAux();
-                }
-                if (!valorAux.isEmpty()) {
-                    val = "$" + valorAux;
-                }
-            }
 
             Object[] valores = {
                 campo.getIdCampo(),
@@ -402,71 +395,130 @@ public class CampoValor implements Serializable {
     /* Crea una lista de CampoValor con los campos y valores de la actividad cuyo
      * id es pasado por parametro*/
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
-        try {
-            ArrayList<CampoValor> listaValor = new ArrayList<>(0);
-            Entity eCampo = new Entity(2);//CAMPO
-            String[] ATRIBUTO = {
-                "id_campo",
-                "id_tipo_actividad",
-                "nombre_campo",
-                "tipo_campo",
-                "longitud",
-                "obligatorio",
-                "valor",
-                "catalogo",
-                "archivo"
-            };
-            String[] tabABuscar = {
-                TABLAS[0],
-                TABLAS[1],
-                TABLAS[2]
-            };
-            String[] colCondicion = {"id_actividad"};
-            Object[] colValor = {idActividad};
-            try (ResultSet rs = eCampo.naturalJoin(ATRIBUTO, tabABuscar, colCondicion, colValor)) {
-                if (rs != null) {
-                    while (rs.next()) {
-                        CampoValor cv = new CampoValor();
-                        String valor = rs.getString(ATRIBUTO[6]);
-                        String tipoCampo = rs.getString(ATRIBUTO[3]);
 
-                        cv.valorAux = "Apellido(s), Nombre(s)";
-                        if (tipoCampo.equals("participante")
-                                && valor.startsWith("$")) { //participante que no es usuario
-                            cv.valorAux = valor.substring(1);
-                            valor = "";
-                        }
-                        cv.setValor(valor);
-                        if (!cv.getValor().equals("")
-                                && ((tipoCampo.equals(ATRIBUTO[8])
-                                || tipoCampo.equals("producto")))) {
-                            byte[] data = rs.getBytes(ATRIBUTO[8]);
-                            cv.setFile(data);
-                        }
-                        Campo c = new Campo();
-                        c.setIdCampo(rs.getInt(ATRIBUTO[0]));
-                        c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
-                        c.setNombre(rs.getString(ATRIBUTO[2]));
-                        c.setTipo(tipoCampo);
-                        c.setLongitud(rs.getInt(ATRIBUTO[4]));
-                        c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
-                        c.setCatalogo(rs.getString(ATRIBUTO[7]));
-                        cv.setCampo(c);
+        ArrayList<CampoValor> listaValor = new ArrayList<>(0);
+        Entity eCampo = new Entity(2);//ACTIVIDAD
+        String[] ATRIBUTO = {
+            "id_campo",
+            "id_tipo_actividad",
+            "nombre_campo",
+            "tipo_campo",
+            "longitud",
+            "obligatorio",
+            "valor",
+            "catalogo",
+            "archivo"
+        };
+        String[] tabABuscar = {
+            TABLAS[0],
+            TABLAS[1]
+        };
+        String[] colCondicion = {"id_actividad"};
+        Object[] colValor = {idActividad};
+        ResultSet rs = eCampo.naturalJoin(ATRIBUTO, tabABuscar, colCondicion, colValor);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CampoValor cv = new CampoValor();
+                    String valor = rs.getString(ATRIBUTO[6]);
+                    String tipoCampo = rs.getString(ATRIBUTO[3]);
 
-                        listaValor.add(cv);
+                    cv.setValor(valor);
+                    if (!cv.getValor().isEmpty()
+                            && ((tipoCampo.equals(ATRIBUTO[8])
+                            || tipoCampo.equals("producto")))) {
+                        byte[] data = rs.getBytes(ATRIBUTO[8]);
+                        cv.setFile(data);
                     }
+                    Campo c = new Campo();
+                    int idCampo = rs.getInt(ATRIBUTO[0]);
+                    c.setIdCampo(idCampo);
+                    c.setIdTipoActividad(rs.getInt(ATRIBUTO[1]));
+                    c.setNombre(rs.getString(ATRIBUTO[2]));
+                    c.setTipo(tipoCampo);
+                    c.setLongitud(rs.getInt(ATRIBUTO[4]));
+                    c.setObligatorio(rs.getBoolean(ATRIBUTO[5]));
+                    String catalogo = rs.getString(ATRIBUTO[7]);
+                    c.setCatalogo(catalogo);
+                    cv.setCampo(c);
+                    boolean hayParticipantes = true;
+                    if (tipoCampo.equals("participante") && valor.isEmpty()) {
+                        cv.valorAux = "Apellido(s), Nombre(s)";
+                        hayParticipantes = false;
+                    }
+                    listaValor.add(cv);
 
+                    if (hayParticipantes && tipoCampo.equals("participante")) {
+                        agregarCamposParticipante(idCampo, idActividad, listaValor, catalogo);
+                    }
                 }
+
                 rs.close();
+
+                return listaValor;
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CampoValor.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
-
-            return listaValor;
-
-
-        } catch (SQLException ex) {
-            Logger.getLogger(CampoValor.class
-                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    private static void agregarCamposParticipante(int idCampo, int idActividad,
+            ArrayList<CampoValor> listaValor, String catalogo) {
+
+        ArrayList<String> participantes = obtenerParticipantesCampo(idCampo, idActividad);
+        Iterator it = participantes.iterator();
+        while (it.hasNext()) {
+            CampoValor cv = new CampoValor();
+
+            String participante = (String) it.next();
+            if (participante.startsWith("$")) { //participante que no es usuario
+                cv.valorAux = participante.substring(1);
+                cv.valor = "";
+            } else {
+                cv.valorAux = "Apellido(s), Nombre(s)";
+                cv.valor = obtenerValor(participante, catalogo);
+            }
+        }
+    }
+
+    private static ArrayList<String> obtenerParticipantesCampo(int idCampo, int idActividad) {
+        ArrayList<String> participantes = new ArrayList<>(0);
+        Entity e = new Entity(5); //PARTICIPA
+        String[] seleccion = {
+            "usbid"
+        };
+        String[] tabla = {
+            "PARTICIPA"
+        };
+        String[] columnas = {"id_actividad", "id_campo"};
+        Integer[] valores = {idActividad, idCampo};
+
+        ResultSet rs = e.naturalJoin(seleccion, tabla, columnas, valores);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    participantes.add(rs.getString("usbid"));
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return participantes;
+    }
+
+    public static String obtenerValor(String usbid, String catalogo) {
+
+        ArrayList<ElementoCatalogo> valores = ElementoCatalogo.listarElementos(catalogo, 0);
+        Iterator it = valores.iterator();
+        while (it.hasNext()) {
+            ElementoCatalogo ec = (ElementoCatalogo) it.next();
+            if (ec.getMensaje().equals(usbid)) {
+                return ec.getContenido();
+            }
+        }
+        return "no se encontró al usuario en el catálogo";
     }
 }

@@ -230,6 +230,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                 ElementoCatalogo e = new ElementoCatalogo(valor);
                 valor = valor.substring(0, valor.length() - 2);
                 e.setContenido(valor);
+                e.setMensaje(valusbid);
                 contenidos.add(e);
                 j++;
             }
