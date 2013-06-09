@@ -51,25 +51,25 @@
                     property="mensajeError" /></div>
         </logic:present>
 
-    <logic:present name="actividades">
-        <logic:notEmpty name="actividades">
-            <% String chd = (String) request.getSession().getAttribute("estadisticaCantidad");
-                String chl = (String) request.getSession().getAttribute("estadisticaNombres");
-                String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-                String chtt = "Actividades%20de%20extensión&";
-                String chco = "chco=ff0000&";
-                String chdl = chl;
-                s += chd + "chl=" + chl + chtt + chco + "chdl=" + chl;
-            %>
-            <a class="ver" style=" cursor: pointer; text-decoration:underline">
-                Mostrar Gráfica</a>
-        <span class="grafica">
-            <center>
-                <html:img src="<%=s%>"/>
-            </center>
-        </span>
-    </logic:notEmpty>
+    <logic:present name="actividades"> 
+         <logic:notEmpty name="actividades">
+        <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
+            String chdl = (String) request.getSession().getAttribute("graficaNombres");
+            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+            String chtt = "Actividades%20de%20extensión&";
+            String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
+            s += chd + chtt + chco + "chdl=" + chdl;
+        %>
+        <a class="ver" style=" cursor: pointer;">
+            Mostrar Gráfica</a>
+    <span class="grafica">
+        <center>
+            <html:img src="<%=s%>"/>
+        </center>
+    </span>
+</logic:notEmpty>
 </logic:present>
+
 <fieldset>
     <logic:notPresent name="actividades">
         <div align="center">

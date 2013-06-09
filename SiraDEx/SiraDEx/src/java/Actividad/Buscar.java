@@ -66,7 +66,7 @@ public class Buscar extends DispatchAction {
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = user.getUsername(); 
         String ip = request.getHeader("X-Forwarded-For");
 
         ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
@@ -75,9 +75,11 @@ public class Buscar extends DispatchAction {
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        
 
         ba.buscar(false, ip, usuario);
+        String[] grafica = ba.getGrafica();
+        
         ArrayList<String> pags = new ArrayList<>(0);
 
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
@@ -104,8 +106,8 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("programas", programas);
         request.getSession().setAttribute("tiposdeactividad", ta);
         request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
-        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
-        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
+        request.getSession().setAttribute("graficaNombres", grafica[0]);
+        request.getSession().setAttribute("graficaCantidad", grafica[1]);
         return mapping.findForward(PAGINA);
     }
 
@@ -124,13 +126,14 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
-        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();        
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         ba.buscar(true, ip, usuario);
+        String[] grafica = ba.getGrafica();
+        
         ArrayList<String> pags = new ArrayList<>(0);
 
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
@@ -151,8 +154,8 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("programas", programas);
         request.getSession().setAttribute("tiposdeactividad", ta);
         request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
-        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
-        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
+        request.getSession().setAttribute("graficaNombres", grafica[0]);
+        request.getSession().setAttribute("graficaCantidad", grafica[1]);
         return mapping.findForward(PAGINA);
     }
 
@@ -162,7 +165,7 @@ public class Buscar extends DispatchAction {
 
         BusquedaActividad ba = (BusquedaActividad) form;
         BusquedaActividad busquedaRealizada = (BusquedaActividad) request.getSession().getAttribute("busqueda");
-        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        String[] grafica = ba.getGrafica();
 
 
         ArrayList<Actividad> acts = ba.getPagina(ba.getPagina());
@@ -172,8 +175,9 @@ public class Buscar extends DispatchAction {
          }*/
 
         request.getSession().setAttribute("actividades", acts);
-        request.getSession().setAttribute("estadisticaNombres", estadistica[0]);
-        request.getSession().setAttribute("estadisticaCantidad", estadistica[1]);
+        request.getSession().setAttribute("graficaNombres", grafica[0]);
+        request.getSession().setAttribute("graficaCantidad", grafica[1]);
+        
 
         return mapping.findForward(PAGINA);
     }

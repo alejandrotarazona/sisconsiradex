@@ -44,11 +44,11 @@ public class Listar extends DispatchAction {
         act.setCreador(username);
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-        String[] estadistica = u.cantidadActividadesPorTipo();
+        String[] grafica = u.cantidadActividadesPorTipo();
 
         request.setAttribute("acts", acts);
-        request.setAttribute("estadisticaNombres", estadistica[0]);
-        request.setAttribute("estadisticaCantidad", estadistica[1]);
+        request.setAttribute("graficaNombres", grafica[0]);
+        request.setAttribute("graficaCantidad", grafica[1]);
 
         if (acts.isEmpty()) {
             request.setAttribute("acts", null);
@@ -63,11 +63,11 @@ public class Listar extends DispatchAction {
 
         Clases.Root.deleteSessions(request, "");
         ArrayList<Actividad> acts = Actividad.listarActividades();
-        String[] estadistica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
+        String[] grafica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
 
         request.setAttribute("acts", acts);
-        request.setAttribute("estadisticaNombres", estadistica[0]);
-        request.setAttribute("estadisticaCantidad", estadistica[1]);
+        request.setAttribute("graficaNombres", grafica[0]);
+        request.setAttribute("graficaCantidad", grafica[1]);
 
         if (acts.isEmpty()) {
             request.setAttribute("acts", null);
