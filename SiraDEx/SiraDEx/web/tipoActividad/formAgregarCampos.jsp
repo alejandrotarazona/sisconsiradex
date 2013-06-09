@@ -40,7 +40,7 @@
                         $('.'+mostrador2).css("visibility", "hidden");
                     }
                 }
-                $(".selector").on('focus change',function(evento){
+                $(".selector").change(function(evento){
                     var tg = evento.target.id;
                     var mos = "mostrador"+tg.slice("selector".length);
                     var mos2 = "mostrador2"+tg.slice("selector".length);
@@ -133,7 +133,7 @@
                             <div id ="<%=l%>" style="visibility: visible">
                                 <logic:notEqual name="campo" property="tipo" value="producto">
                                     <html:text name="campo" property="longitud" indexed="true"
-                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima de campos de estos que se podrán agregar." 
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
                                                size="3"/>
                                 </logic:notEqual>
 

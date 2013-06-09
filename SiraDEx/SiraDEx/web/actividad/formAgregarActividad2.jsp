@@ -38,7 +38,8 @@
 
         <font size=2>
             Los campos con el asterisco  <span style="color:red">*</span> 
-            son obligatorios.<br><br></font>
+            son obligatorios.
+        </font><br><br>
         Los campos con el nombre en <b>negrita</b> sirven para ingresar a los participantes de la 
         Actividad, el usuario que está registrando la Actividad debe ser ingresado en al menos una 
         de las listas desplegables de dichos campos.

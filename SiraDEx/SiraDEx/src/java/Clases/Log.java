@@ -144,7 +144,7 @@ public class Log extends Root {
                 Log actual = new Log();
                 actual.setAccion(rs.getString("accion"));
                 actual.setQuery(rs.getString("query"));
-                actual.setFecha(rs.getString("fecha") + " " + rs.getString("hora").substring(0, 8));
+                actual.setFecha(rs.getString("fecha"));
                 actual.setIdLog(rs.getBigDecimal("id_log"));
                 actual.setIp(rs.getString("ip"));
                 actual.setUsbid(rs.getString("usbid"));

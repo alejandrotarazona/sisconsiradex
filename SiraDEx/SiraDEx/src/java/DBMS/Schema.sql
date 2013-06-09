@@ -145,8 +145,7 @@ CREATE TABLE LOG(
     id_log  BIGSERIAL,
     accion  TEXT NOT NULL,
     query   TEXT NOT NULL,
-    fecha   DATE DEFAULT CURRENT_DATE,
-    hora    TIME DEFAULT CURRENT_TIME,
+    fecha   TIMESTAMP (2) WITHOUT TIME ZONE DEFAULT now(),
     ip      VARCHAR(15) NOT NULL,
     usbid VARCHAR(20),
 

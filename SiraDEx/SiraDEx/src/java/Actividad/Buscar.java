@@ -66,7 +66,10 @@ public class Buscar extends DispatchAction {
             throws Exception {
         BusquedaActividad ba = (BusquedaActividad) form;
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername(); 
+        String usuario = null;
+        if (user != null){
+        usuario = user.getUsername();
+        } 
         String ip = request.getHeader("X-Forwarded-For");
 
         ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
