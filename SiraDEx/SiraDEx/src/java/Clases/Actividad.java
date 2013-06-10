@@ -287,9 +287,11 @@ public class Actividad extends Root {
                             s += cv.getCampo().getNombre() + ", ";
                         }
                         break;
+                    case "participante":
+                        valor = valor.replace("$", "");
                     default:
                         s += cv.getCampo().getNombre() + ": "
-                                + cv.getValor() + ", ";
+                                + valor + ", ";
                         break;
                 }
             }
@@ -381,7 +383,7 @@ public class Actividad extends Root {
                 valorAux = "";
             }
             if (!Verificaciones.esVacio(valorAux)) {
-                valorParticipante = valorAux;
+                valorParticipante = "$" + valorAux;
             }
 
             int j = i + 1;
@@ -392,7 +394,7 @@ public class Actividad extends Root {
                     valAux = "";
                 }
                 if (!Verificaciones.esVacio(valAux)) {
-                    val = valAux;
+                    val = "$" + valAux;
                 }
                 if (!val.isEmpty()) {
                     valorParticipante += "; " + val;
@@ -494,10 +496,12 @@ public class Actividad extends Root {
             modificador,
             fechaModif
         };
+
+        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
+
         eActividad.setIp(ip);
         eActividad.setUser(usuario);
         eActividad.log();
-        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
 
         if (!resp) {
             mensajeError = "Error: No se pudo modificar la Actividad.";
@@ -509,7 +513,7 @@ public class Actividad extends Root {
 
         String correos = "";
 
-        Entity eBuscar = new Entity(5); //PARTICIPA
+        Entity eBuscar = new Entity(5); //PARTICIPA     
         String[] tablas = {
             "ACTIVIDAD",
             "USUARIO"

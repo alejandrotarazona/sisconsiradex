@@ -8,7 +8,7 @@
 <header>
     <div id="block-system-main-menu" class="block block-system block-menu first">          
         <ul class="menu">
-            <table bgcolor= "#E0F2F7">
+            <table bgcolor= "#E2E4FF">
                 <tr>         
                 <td>
                     <logic:present name="user">

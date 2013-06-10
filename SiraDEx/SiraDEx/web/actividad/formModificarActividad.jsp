@@ -144,18 +144,19 @@
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
                                                         value="contenido"/>
                             </html:select>
-                        </logic:equal>
-                        <logic:greaterThan name="camposValores" property="campo.longitud" value="1">
-                            <html:hidden name="camposValores" styleId="${index}" 
-                                         property="campo.longitud" indexed="true"/>
-                            <html:submit styleId="botonSumar" value=" " title="Agregar"
-                                         onclick="document.getElementById('${index}').value=document.getElementById('${index}').value-1"/>
-                        </logic:greaterThan>
-                        <logic:equal name="camposValores" property="campo.longitud" value="-1">
-                            <html:hidden name="camposValores" styleId="${index}" 
-                                         property="campo.longitud" indexed="true"/>
-                            <html:submit styleId="botonRestar" value=" " title="Eliminar"
-                                         onclick="document.getElementById('${index}').value=0"/>
+
+                            <logic:greaterThan name="camposValores" property="campo.longitud" value="1">
+                                <html:hidden name="camposValores" styleId="${index}" 
+                                             property="campo.longitud" indexed="true"/>
+                                <html:submit styleId="botonSumar" value=" " title="Agregar"
+                                             onclick="document.getElementById('${index}').value=document.getElementById('${index}').value-1"/>
+                            </logic:greaterThan>
+                            <logic:equal name="camposValores" property="campo.longitud" value="-1">
+                                <html:hidden name="camposValores" styleId="${index}" 
+                                             property="campo.longitud" indexed="true"/>
+                                <html:submit styleId="botonRestar" value=" " title="Eliminar"
+                                             onclick="document.getElementById('${index}').value=0"/>
+                            </logic:equal> 
                         </logic:equal>
                         </td>  
                         </tr>
