@@ -15,6 +15,7 @@
     <head>
         <style>
             .selector {width: 80px;}
+            tr:nth-of-type(odd) {background-color:#E2E4FF;}
         </style>
         <script>
             $(document).ready(function(){
@@ -88,11 +89,11 @@
                     <td>Tipo</td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>Programa</td>
-                    <td>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>Programa</td>
+                        <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select>
@@ -113,24 +114,24 @@
                         <html:multibox property="permisos" bundle="estudiante">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos" bundle="profesor">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos" bundle="obrero">Obrero</html:multibox> Obreros 
-                    </td>       
-                    </tr>
-                    <tr>
+                        </td>       
+                        </tr>
+                        <tr>
 
-                    </tr>
-                </tbody>
-            </table>
+                        </tr>
+                    </tbody>
+                </table>
 
-            <table>
-                <tbody>
-                    <tr><td><b>Campos</b></td></tr>
-                    <tr><td></td>
-                    <td align="center"><b>Nombre</b></td>
-                    <td align="center"><b>Tipo</b></td>
-                    <td align="center"><b>Longitud/Límite</b></td>
-                    <td align="center"><b>Obligatorio</b></td>
-                    <td align="center"><b>Catálogo</b></td>
-                    </tr>
+                <table>
+                    <tbody>
+                        <tr><td><b>Campos</b></td></tr>
+                        <tr><td></td>
+                        <td align="center"><b>Nombre</b></td>
+                        <td align="center"><b>Tipo</b></td>
+                        <td align="center"><b>Longitud/Límite</b></td>
+                        <td align="center"><b>Obligatorio</b></td>
+                        <td align="center"><b>Catálogo</b></td>
+                        </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
                         <%

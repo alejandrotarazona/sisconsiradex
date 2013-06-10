@@ -11,16 +11,19 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-<script type="text/javascript">
-    $(function() {
-        $(".fecha_input input").datepicker();
-        $(".fecha_click click").datepicker();
-    })		
-</script>
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">
 <html>
     <head>
+
+        <script type="text/javascript">
+            $(function() {
+                $(".fecha_input input").datepicker();
+                $(".fecha_click click").datepicker();
+            })		
+        </script>
+        <style>
+            .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
+        </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición de <bean:write name="actividadForm"
                     property="nombreTipoActividad"/></title>
@@ -46,7 +49,7 @@
 
         <html:form method="POST" enctype="multipart/form-data" 
                    action ="/ModificarActividad?method=update">
-            <table>
+            <table class="cebra">
                 <tbody>
                     <tr>
                     <th><b>Nombre</b></th>

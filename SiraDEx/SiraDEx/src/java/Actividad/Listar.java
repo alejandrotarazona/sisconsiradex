@@ -62,8 +62,9 @@ public class Listar extends DispatchAction {
             throws Exception {
 
         Clases.Root.deleteSessions(request, "");
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        String[] grafica = u.cantidadActividadesPorTipo();
         ArrayList<Actividad> acts = Actividad.listarActividades();
-        String[] grafica = Clases.BusquedaActividad.cantidadActividadesPorTipo();
 
         request.setAttribute("acts", acts);
         request.setAttribute("graficaNombres", grafica[0]);

@@ -156,22 +156,21 @@
                                    && document.catalogoForm.submitButton.value!='Eliminar'){
                                    document.catalogoForm.submitButton.value='Modificar'
                                    }"/>
-                        <br><br>
                     </td>
-                    </tr>
-                    <tr>
-                    <td colspan="3" align="center">
-                        <input type="submit" name="submitButton" value="Modificar"
-                               onclick="if (this.value=='Modificar') 
-                                   return confirm('¿Está seguro que desea modificar el catálogo?');
-                                   if (this.value=='Eliminar') 
-                                       return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
-                                   confirm('¿Está seguro que desea eliminar los campos seleccionados?')">
-                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td> 
                     </tr>
                 </tbody>
             </table>
-
+            <div align="center">
+                <input type="submit" name="submitButton" value="Modificar"
+                       onclick="if (this.value=='Modificar') 
+                           return confirm('¿Está seguro que desea modificar el catálogo?');
+                           if (this.value=='Eliminar') 
+                               return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
+                           confirm('¿Está seguro que desea eliminar los campos seleccionados?')">
+            </div>
         </html:form>
     </body>
 </html>

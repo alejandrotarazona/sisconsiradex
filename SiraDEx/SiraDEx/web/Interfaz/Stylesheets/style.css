@@ -218,9 +218,7 @@ thead th:last-child,
 tr td:last-child {
   /* border-right: solid 1px #e4e2e0; */
 }
-tr:nth-of-type(even) {
-  background-color:#E2E4FF;
-}
+
 table .form-item,
 table p {
   margin: 0;

@@ -16,6 +16,8 @@
     <head>
         <style>
             .selector {width: 80px;}
+            .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
+
         </style>
         <script>
             $(document).ready(function(){
@@ -69,7 +71,7 @@
         <font size=2>Los campos 'Nombre' y 'Longitud' son obligatorios.</font><br>
 
         <html:form action="/RegistrarTipoActividad?method=save2">
-            <table>
+            <table class="cebra">
                 <tbody>
                     <tr>
                     <td align="center"><b>Nombre</b></td>

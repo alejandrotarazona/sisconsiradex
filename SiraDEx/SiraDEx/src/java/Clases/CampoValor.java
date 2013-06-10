@@ -243,7 +243,8 @@ public class CampoValor implements Serializable {
                         + campoNM.getValor() + " " + resp);
             }
 
-        } else {
+        } else if ((tipo.equals("archivo") || tipo.equals("producto"))
+                && campo.getLongitud() != -1) {
             resp &= modificarArchivo(campoNM, idAct, ip, user);
         }
 
@@ -264,7 +265,6 @@ public class CampoValor implements Serializable {
         };
 
         boolean resp = eValor.borrar(campos, condicion);
-
         resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
         eValor.log();
 
@@ -302,7 +302,7 @@ public class CampoValor implements Serializable {
             usbid
         };
         resp &= eValor.borrar(campos, condicion);
-        System.out.println("---------DELETE PARTICIPA " + campo.getNombre() + " " + resp);
+        System.out.println("---------DELETE PARTICIPA " + usbid + " " + resp);
 
 
         //Se inserta al particpante
@@ -316,7 +316,7 @@ public class CampoValor implements Serializable {
 
         Object[] tupla = {idAct, usbid, campo.getIdCampo()};
         resp &= eValor.insertar(tupla);
-        System.out.println("---------INSERT PARTICIPA " + campo.getNombre() + " " + resp);
+        System.out.println("---------INSERT PARTICIPA " + usbid + " " + resp);
 
 
         return resp;
