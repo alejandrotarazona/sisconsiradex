@@ -80,6 +80,7 @@ public class Modificar extends DispatchAction {
         if (act.modificarCampoParticipante(camposAntes)) {
             ArrayList<CampoValor> camposActuales = act.getCamposValores();
             request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
+
             for (int i = 0; i < camposActuales.size(); i++) {
 
                 String nombreCat = camposActuales.get(i).getCampo().getCatalogo();
@@ -91,7 +92,7 @@ public class Modificar extends DispatchAction {
                     request.getSession().setAttribute("cat" + i, catalogo);
                 }
             }
-            return mapping.findForward(SUCCESS);
+            return mapping.findForward(PAGE);
         }
         
         Usuario user = (Usuario) request.getSession().getAttribute("user");

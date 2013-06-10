@@ -89,8 +89,6 @@
         </span>
     </logic:present>       
 
-    <h1>Actividades registradas en el sistema</h1>
-
     <logic:present name="mensaje"><br>
         <div class ="status"><bean:write name="mensaje"/></div><br>
     </logic:present> 
@@ -105,7 +103,7 @@
         <div align="center">No hay Actividad que mostrar</div>
     </logic:notPresent>
     <logic:present name="acts">
-
+        <h1>Actividades registradas en el sistema</h1>
         <table class="display" id="datatab">
             <thead>
                 <tr>

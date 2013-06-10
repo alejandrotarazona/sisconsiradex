@@ -74,8 +74,8 @@
                     <th>Tipo de Actividad</th>
                     <th>Detalles</th>
                     <th>Creación</th>
-                    <th>Modificación</th>
-                    <th>Producto</th>
+                    <th title="Modificación">Mod.</th>
+                    <th title="Producto y Archivos">PyA</th>
                     <th></th>
                     </tr>
                 </thead>

@@ -184,9 +184,15 @@ public class CampoValor implements Serializable {
             if (!valor.isEmpty() || !Verificaciones.esVacio(valAux)) {
                 Entity e = new Entity(5);//PARTICIPA
                 String usbid;
-                if (!valor.isEmpty()) {//obtiene solo el usbid del elemento
-                    usbid = valor.split(",")[0];
-                } else {//agrega un $ al inicio para identificar que no es un usbid 
+                //obtiene solo el usbid del elemento
+                if (!valor.isEmpty()) {
+                    if (valor.startsWith("$")) {
+                        usbid = valor.split(";")[0];
+                    } else {
+                        usbid = valor.split(",")[0];
+                    }
+                    //agrega un $ al inicio para identificar que no es un usbid 
+                } else {
                     usbid = "$" + valorAux;
                 }
                 Object[] tupla = {idAct, usbid, idCampo};
@@ -445,15 +451,16 @@ public class CampoValor implements Serializable {
                     String catalogo = rs.getString(ATRIBUTO[7]);
                     c.setCatalogo(catalogo);
                     cv.setCampo(c);
-                    boolean hayParticipantes = true;
-                    if (tipoCampo.equals("participante") && valor.isEmpty()) {
-                        cv.valorAux = "Apellido(s), Nombre(s)";
-                        hayParticipantes = false;
-                    }
-                    listaValor.add(cv);
+                    boolean sinParticipantes = true;
 
-                    if (hayParticipantes && tipoCampo.equals("participante")) {
-                        agregarCamposParticipante(idCampo, idActividad, listaValor, catalogo);
+                    if (tipoCampo.equals("participante") && !valor.isEmpty()) {
+                        sinParticipantes = false;
+                    }
+                    if (sinParticipantes) {
+                        listaValor.add(cv);
+                    }
+                    if (!sinParticipantes && tipoCampo.equals("participante")) {
+                        agregarCamposParticipante(cv, listaValor, catalogo);
                     }
                 }
 
@@ -469,12 +476,25 @@ public class CampoValor implements Serializable {
         return null;
     }
 
-    private static void agregarCamposParticipante(int idCampo, int idActividad,
+    private static void agregarCamposParticipante(CampoValor primerCampo,
             ArrayList<CampoValor> listaValor, String catalogo) {
+        String concatenacion = primerCampo.valor.replace("; ", ";");
+        String[] participantes = concatenacion.split(";");
+        int longitud = primerCampo.getCampo().getLongitud() - participantes.length + 1;
+        primerCampo.getCampo().setLongitud(longitud);
+        if (participantes[0].startsWith("$")) {
+            primerCampo.valorAux = participantes[0].substring(1);
+            System.out.println(primerCampo.valorAux + " " + " 1111111111111");
+        } else {
+            primerCampo.valor = participantes[0];
+            primerCampo.valorAux = "Apellido(s), Nombre(s)";
+            System.out.println(primerCampo.valor + " 1111111111111");
+        }
 
-        ArrayList<String> participantes = obtenerParticipantesCampo(idCampo, idActividad);
-        Iterator it = participantes.iterator();
-        while (it.hasNext()) {
+        listaValor.add(primerCampo);
+
+        int idCampo = primerCampo.getCampo().getIdCampo();
+        for (int i = 1; i < participantes.length; i++) {
             CampoValor cv = new CampoValor();
             Campo c = new Campo();
             c.setIdCampo(idCampo);
@@ -484,41 +504,19 @@ public class CampoValor implements Serializable {
             c.setCatalogo(catalogo);
             cv.setCampo(c);
 
-            String participante = (String) it.next();
+            String participante = participantes[i];
             if (participante.startsWith("$")) { //participante que no es usuario
                 cv.valorAux = participante.substring(1);
                 cv.valor = "";
+                System.out.println(cv.valorAux + " -1-1-1-1-1-1-1-1-1-1");
             } else {
                 cv.valorAux = "Apellido(s), Nombre(s)";
-                cv.valor = obtenerValor(participante, catalogo);
+                cv.valor = obtenerValor(participante.split(",")[0], catalogo);
+                System.out.println(cv.valor + " -1-1-1-1-1-1-1-1-1-1");
             }
+
             listaValor.add(cv);
         }
-    }
-
-    private static ArrayList<String> obtenerParticipantesCampo(int idCampo, int idActividad) {
-        ArrayList<String> participantes = new ArrayList<>(0);
-        Entity e = new Entity(5); //PARTICIPA
-        String[] seleccion = {
-            "usbid"
-        };
-        String[] tabla = {
-            "ACTIVIDAD"
-        };
-        String[] columnas = {"id_actividad", "id_campo"};
-        Integer[] valores = {idActividad, idCampo};
-
-        ResultSet rs = e.naturalJoin(seleccion, tabla, columnas, valores);
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    participantes.add(rs.getString("usbid"));
-                }
-            } catch (SQLException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return participantes;
     }
 
     public static String obtenerValor(String usbid, String catalogo) {
@@ -531,6 +529,6 @@ public class CampoValor implements Serializable {
                 return ec.getContenido();
             }
         }
-        return "no se encontró al usuario en el catálogo";
+        return usbid + ", NO HA SIDO REGISTRADO AL CATÁLOGO";
     }
 }
