@@ -34,6 +34,15 @@
     
     </script>
 
+    <script type="text/javascript">
+        $(function() {
+            $(".fecha_input input").datepicker();
+            $(".fecha_click click").datepicker();
+        })		
+    </script>
+    <style>
+        .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
+    </style>
 
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>SiraDEx | Búsquedas Avanzadas</title>
@@ -52,111 +61,115 @@
         </logic:present>
 
     <logic:present name="actividades"> 
-         <logic:notEmpty name="actividades">
-        <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
-            String chdl = (String) request.getSession().getAttribute("graficaNombres");
-            String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-            String chtt = "Actividades%20de%20extensión&";
-            String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-            s += chd + chtt + chco + "chdl=" + chdl;
-        %>
-        <a class="ver" style=" cursor: pointer;">
-            Mostrar Gráfica</a>
-    <span class="grafica">
-        <center>
-            <html:img src="<%=s%>"/>
-        </center>
-    </span>
-</logic:notEmpty>
+        <logic:notEmpty name="actividades">
+            <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
+                String chdl = (String) request.getSession().getAttribute("graficaNombres");
+                String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
+                String chtt = "Actividades%20de%20extensión&";
+                String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
+                s += chd + chtt + chco + "chdl=" + chdl;
+            %>
+            <a class="ver" style=" cursor: pointer;">
+                Mostrar Gráfica</a>
+        <span class="grafica">
+            <center>
+                <html:img src="<%=s%>"/>
+            </center>
+        </span>
+    </logic:notEmpty>
 </logic:present>
 
-<fieldset>
-    <logic:notPresent name="actividades">
-        <div align="center">
-            Para realizar una consulta, seleccione o rellene los campos mostrados a 
-            la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
-        </div>
-    </logic:notPresent>
 
-    <logic:present name="actividades">
+<logic:notPresent name="actividades">
+    <div align="center"><br>
+        Para realizar una consulta, seleccione o rellene los campos mostrados a 
+        la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
+    </div>
+</logic:notPresent>
 
-        <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
-            <html:form action="/BusquedaAvanzada?method=aPagina">
-                Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
-                <html:text name="busquedaActividadForm" property="pagina"
-                           value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
-            </html:form>
-        </logic:notEqual>
+<logic:present name="actividades">
+    <br>
+    <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
+        <html:form action="/BusquedaAvanzada?method=aPagina">
+            Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
+            <html:text name="busquedaActividadForm" property="pagina"
+                       value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
+        </html:form>
+    </logic:notEqual>
 
-        <logic:empty name="actividades">
-            <br>
-            <div align="center">No hay actividad que mostrar que coincida con los
-                parámetros de la búsqueda</div>
-            </logic:empty>
+    <logic:empty name="actividades">
+        <br><br>
+        <div align="center">No hay actividad que mostrar que coincida con los
+            parámetros de la búsqueda</div>
+        </logic:empty>
+    <table class="cebra">
+        <tbody>
+            <logic:iterate name="actividades" id="act" indexId="index">
+                <tr>
+                <td>
+                    <b>${(busqueda.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
+                        <% Actividad a = (Actividad) pageContext.findAttribute("act");
+                            out.print(a.participantesToString());%>
+                    </b>
+                    "<bean:write name="act" property="nombreTipoActividad"/>",
 
-        <logic:iterate name="actividades" id="act">
-            <br><br>
-            <b>
-                <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                    out.print(a.participantesToString());%>
-            </b>
-            "<bean:write name="act" property="nombreTipoActividad"/>",
 
+                    <% out.print(a.camposValoresToString());%>
 
-            <% out.print(a.camposValoresToString());%>
+                    <logic:equal name="act" property="validacion" value="En espera">
+                        <b>Actividad por validar.</b>
+                    </logic:equal>
+                    <br>
+                    <div>
+                        <span class="textolargo">
 
-            <logic:equal name="act" property="validacion" value="En espera">
-                <b>Actividad por validar.</b>
-            </logic:equal>
-            <br>
-            <div>
-                <span class="textolargo">
+                            <b>Descripción:</b> 
+                            <bean:write name="act" property="descripcion"/>
 
-                    <b>Descripción:</b> 
-                    <bean:write name="act" property="descripcion"/>
+                            <logic:iterate name="act" property="camposValores" 
+                                           id="campoValor" indexId="index">
 
-                    <logic:iterate name="act" property="camposValores" 
-                                   id="campoValor" indexId="index">
+                                <logic:equal name="campoValor" property="campo.tipo" 
+                                             value="textol">
+                                    <br>
+                                    <bean:write name="campoValor" property="campo.nombre"/>: 
+                                    <bean:write name="campoValor" property="valor"/>
+                                </logic:equal>
 
-                        <logic:equal name="campoValor" property="campo.tipo" 
-                                     value="textol">
-                            <br>
-                            <bean:write name="campoValor" property="campo.nombre"/>: 
-                            <bean:write name="campoValor" property="valor"/>
-                        </logic:equal>
+                            </logic:iterate>
+                            <logic:iterate name="act" property="archivos" 
+                                           id="archivo" indexId="index">
 
-                    </logic:iterate>
-                    <logic:iterate name="act" property="archivos" 
-                                   id="archivo" indexId="index">
+                                <html:form method="POST">
+                                    <html:hidden name="act" property="idActividad"/>
+                                    <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                    <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
+                                               paramId="idActividad" title="Descargar">
+                                        ${archivo.tipo}
+                                    </html:link> 
+                                </html:form>
 
-                        <html:form method="POST">
-                            <html:hidden name="act" property="idActividad"/>
-                            <html:hidden name="act" property="idArchivo" value="${index}"/>
-                            <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
-                                       paramId="idActividad" title="Descargar">
-                                ${archivo.tipo}
-                            </html:link> 
-                        </html:form>
+                            </logic:iterate>
+                        </span> 
 
-                    </logic:iterate>
-                </span> 
+                        <a class="mostrar" style=" cursor: pointer; text-decoration:underline">
+                            Más detalles</a>
+                    </div>
+                </td>
+                </tr>
+            </logic:iterate>
+        </tbody>
+    </table>
 
-                <a class="mostrar" style=" cursor: pointer; text-decoration:underline">
-                    Más detalles</a>
-            </div>
+    <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
+        <html:form action="/BusquedaAvanzada?method=aPagina">
+            Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
+            <html:text name="busquedaActividadForm" property="pagina"
+                       value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
+        </html:form>
+    </logic:notEqual>
+</logic:present>
 
-        </logic:iterate>
-        <br>
-
-        <logic:notEqual name="busquedaActividadForm" property="totalPaginas" value="0">
-            <html:form action="/BusquedaAvanzada?method=aPagina">
-                Página ${busqueda.pagina} de ${busqueda.totalPaginas}&nbsp;&nbsp;&nbsp;  
-                <html:text name="busquedaActividadForm" property="pagina"
-                           value="${busqueda.pagina}" size="1"/>&nbsp;&nbsp;<html:submit>Ir a página</html:submit>
-            </html:form>
-        </logic:notEqual>
-    </logic:present>
-</fieldset>
 </body>
 
 

@@ -89,17 +89,17 @@
         </span>
     </logic:present>       
 
-    <logic:present name="mensaje"><br>
-        <div class ="status"><bean:write name="mensaje"/></div><br>
+    <logic:present name="mensaje"><br><br>
+        <div class ="status"><bean:write name="mensaje"/></div>
     </logic:present> 
-    <logic:present name="actividadForm" property="mensaje"><br>
-        <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
+    <logic:present name="actividadForm" property="mensaje"><br><br>
+        <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
     </logic:present>
-    <logic:present name="actividadForm" property="mensajeError"><br>
-        <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
+    <logic:present name="actividadForm" property="mensajeError"><br><br>
+        <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
     </logic:present>
 
-    <logic:notPresent name="acts">
+    <logic:notPresent name="acts"><br>
         <div align="center">No hay Actividad que mostrar</div>
     </logic:notPresent>
     <logic:present name="acts">

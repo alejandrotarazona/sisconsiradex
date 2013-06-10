@@ -118,7 +118,7 @@ public class Agregar extends DispatchAction {
         ArrayList<CampoValor> camposAntes;
         camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
 
-        if (act.modificarCampoParticipante(camposAntes)) {
+        if (act.modificarCampoParticipante(camposAntes, null)) {
             ArrayList<CampoValor> camposActuales = act.getCamposValores();
             request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
             for (int i = 0; i < camposActuales.size(); i++) {

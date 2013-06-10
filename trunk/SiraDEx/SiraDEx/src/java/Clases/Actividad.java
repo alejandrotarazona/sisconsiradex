@@ -373,12 +373,12 @@ public class Actividad extends Root {
     }
 
     //concatena los valores de los campos participante de un mismo tipo de participante
-    private void concatenarValoresParticipantes(int i) {
-        if (i < camposValores.size() - 1
-                && camposValores.get(i + 1).getCampo().getLongitud() == -1
-                && camposValores.get(i).getCampo().getLongitud() > 0) {
-            String valorParticipante = camposValores.get(i).getValor();
-            String valorAux = camposValores.get(i).getValorAux();
+    private void concatenarValoresParticipantes(int i, ArrayList<CampoValor> campos) {
+        if (i < campos.size() - 1
+                && campos.get(i + 1).getCampo().getLongitud() == -1
+                && campos.get(i).getCampo().getLongitud() > 0) {
+            String valorParticipante = campos.get(i).getValor();
+            String valorAux = campos.get(i).getValorAux();
             if (valorAux.equals("Apellido(s), Nombre(s)")) {
                 valorAux = "";
             }
@@ -387,9 +387,9 @@ public class Actividad extends Root {
             }
 
             int j = i + 1;
-            for (; camposValores.get(j).getCampo().getLongitud() == -1; j++) {
-                String val = camposValores.get(j).getValor();
-                String valAux = camposValores.get(j).getValorAux();
+            for (; campos.get(j).getCampo().getLongitud() == -1; j++) {
+                String val = campos.get(j).getValor();
+                String valAux = campos.get(j).getValorAux();
                 if (valAux.equals("Apellido(s), Nombre(s)")) {
                     valAux = "";
                 }
@@ -401,7 +401,7 @@ public class Actividad extends Root {
                 }
             }
 
-            camposValores.get(i).setValor(valorParticipante);
+            campos.get(i).setValor(valorParticipante);
             System.out.println("VALOR CONCATENADO " + valorParticipante);
         }
     }
@@ -430,10 +430,10 @@ public class Actividad extends Root {
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
 
             for (int i = 0; i < camposValores.size() && resp; i++) {
-                CampoValor cv = camposValores.get(i);
-                System.out.println("VALOR A AGREGAR i=" + i + " " + cv.getValor());
-                concatenarValoresParticipantes(i);
-                resp &= cv.agregar(idActividad);
+
+                System.out.println("VALOR A AGREGAR i=" + i + " " + camposValores.get(i).getValor());
+                concatenarValoresParticipantes(i, camposValores);
+                resp &= camposValores.get(i).agregar(idActividad);
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
@@ -471,9 +471,10 @@ public class Actividad extends Root {
         for (int i = 0; i < camposValores.size() && resp; i++) {
             CampoValor campoNM = camposNM.get(i);
             System.out.println("antes modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
-
-            concatenarValoresParticipantes(i);
-
+            System.out.println("VALOR A MODIFICAR i=" + i + " " + campoNM.getValor() + " por "
+                    + camposValores.get(i).getValor() + " longitud " + campoNM.getCampo().getLongitud());
+            concatenarValoresParticipantes(i, camposValores);
+            concatenarValoresParticipantes(i, camposNM);
             resp &= camposValores.get(i).modificar(campoNM, idActividad, ip, usuario);
             System.out.println("luego modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
         }
@@ -635,15 +636,17 @@ public class Actividad extends Root {
         return b;
     }
 
-    public boolean modificarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+    public boolean modificarCampoParticipante(ArrayList<CampoValor> camposAntes,
+            ArrayList<CampoValor> camposNM) {
 
-        if (agregarCampoParticipante(camposAntes)) {
+        if (agregarCampoParticipante(camposAntes, camposNM)) {
             return true;
         }
-        return eliminarCampoParticipante(camposAntes);
+        return eliminarCampoParticipante(camposAntes, camposNM);
     }
 
-    private boolean agregarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+    private boolean agregarCampoParticipante(ArrayList<CampoValor> camposAntes,
+            ArrayList<CampoValor> camposNM) {
 
         for (int i = 0; i < camposValores.size(); i++) {
             Campo campo = camposValores.get(i).getCampo();
@@ -664,6 +667,16 @@ public class Actividad extends Root {
                 cv.setCampo(c);
                 cv.setValorAux("Apellido(s), Nombre(s)");
                 camposValores.add(i + 1, cv);
+                if (camposNM != null) {
+                    cv = new CampoValor();
+                    cv.setValor("");
+                    c = new Campo();
+                    c.setTipo("participante");
+                    c.setLongitud(-1);
+                    cv.setCampo(c);
+                    cv.setValorAux("Apellido(s), Nombre(s)");
+                    camposNM.add(i + 1, cv);
+                }
                 return true;
             }
         }
@@ -671,7 +684,8 @@ public class Actividad extends Root {
         return false;
     }
 
-    private boolean eliminarCampoParticipante(ArrayList<CampoValor> camposAntes) {
+    private boolean eliminarCampoParticipante(ArrayList<CampoValor> camposAntes,
+            ArrayList<CampoValor> camposNM) {
         for (int i = 0; i < camposValores.size(); i++) {
             Campo campo = camposValores.get(i).getCampo();
             Campo campoA = camposAntes.get(i).getCampo();
@@ -679,6 +693,9 @@ public class Actividad extends Root {
             if (campo.getLongitud() == 0 && campoA.getLongitud() == -1) {//elimina el nuevo campo
                 System.out.println("Entra a eliminar -----------");
                 camposValores.remove(i);
+                if (camposNM != null) {
+                    camposNM.remove(i);
+                }
                 for (; i > 0; i--) {
                     Campo c = camposValores.get(i - 1).getCampo();
                     int longitud = c.getLongitud();

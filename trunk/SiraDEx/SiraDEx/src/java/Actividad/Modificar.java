@@ -49,11 +49,11 @@ public class Modificar extends DispatchAction {
         ArrayList camposNM = CampoValor.listarCamposValores(act.getIdActividad());
         request.getSession().setAttribute("camposNM", camposNM);
 
-        /*Se pasan los catalogos de los campos tipo catalogo al jsp de ser necesario*/
+        /*Se pasan los catalogos de los camposNM tipo catalogo al jsp de ser necesario*/
         for (int i = 0; i < act.getCamposValores().size(); i++) {
             String nombreCat = act.getCamposValores().get(i).getCampo().getCatalogo();
             if (!nombreCat.equals("")) {
-                ArrayList<ElementoCatalogo> catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+                ArrayList<ElementoCatalogo> catalogo = ElementoCatalogo.listarElementos(nombreCat, 0);
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
@@ -72,14 +72,15 @@ public class Modificar extends DispatchAction {
         ArrayList<CampoValor> camposAntes;
         camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
         
-        ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
+        ArrayList camposNM = (ArrayList) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
-        CampoValor.auxModificarArchivo(campos, act.getCamposValores());
+        CampoValor.auxModificarArchivo(camposNM, act.getCamposValores());
 
-        if (act.modificarCampoParticipante(camposAntes)) {
+        if (act.modificarCampoParticipante(camposAntes, camposNM)) {
             ArrayList<CampoValor> camposActuales = act.getCamposValores();
             request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
+            request.getSession().setAttribute("camposNM", camposNM);
 
             for (int i = 0; i < camposActuales.size(); i++) {
 
@@ -87,7 +88,7 @@ public class Modificar extends DispatchAction {
 
                 if (!nombreCat.equals("")) {
                     ArrayList<ElementoCatalogo> catalogo;
-                    catalogo = Clases.ElementoCatalogo.listarElementos(nombreCat, 0);
+                    catalogo = ElementoCatalogo.listarElementos(nombreCat, 0);
 
                     request.getSession().setAttribute("cat" + i, catalogo);
                 }
@@ -99,7 +100,7 @@ public class Modificar extends DispatchAction {
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        if (act.modificar(campos, ip, usuario)) {
+        if (act.modificar(camposNM, ip, usuario)) {
 
             Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
@@ -107,7 +108,7 @@ public class Modificar extends DispatchAction {
             String[] estadistica = u.cantidadActividadesPorTipo();
 
             if (rol.equalsIgnoreCase("WM")) {
-                acts = Clases.Actividad.listarActividades();
+                acts = Actividad.listarActividades();
             } else {
                 acts = Actividad.listarActividadesDeUsuario(u.getUsername());
             }
@@ -125,7 +126,7 @@ public class Modificar extends DispatchAction {
 
         }
 
-        ArrayList ac = Clases.Actividad.listarActividades();
+        ArrayList ac = Actividad.listarActividades();
         request.setAttribute("actividades", ac);
 
         return mapping.findForward(FAILURE);
