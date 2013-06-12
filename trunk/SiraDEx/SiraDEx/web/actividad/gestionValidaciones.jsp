@@ -92,7 +92,7 @@
                             <% out.print(a.camposValoresToString());%>
 
                         <span class="textolargo"><br>
-                            Descripción:
+                            <b>Descripción:</b> 
                             <bean:write name="act" property="descripcion"/>
 
                             <logic:iterate name="act" property="camposValores" 

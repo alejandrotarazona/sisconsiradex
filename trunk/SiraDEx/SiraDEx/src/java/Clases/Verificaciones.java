@@ -261,9 +261,10 @@ public class Verificaciones {
      * un valor válido.
      *
      * @param act Actividad a verificar
+     * @param accion false si es agregar, true si es modificar
      * @return true si los valores son validos, de lo contrario retorna false.
      */
-    public static boolean verificar(Actividad act) {
+    public static boolean verificar(Actividad act, boolean accion) {
 
         boolean creador = false;
         Iterator it = act.getCamposValores().iterator();
@@ -368,12 +369,12 @@ public class Verificaciones {
             }
 
         }
-        String accion = "registró";
-        if (act.getCreador() == null) {
-            accion = "registra";
+        String acc = "registra";
+        if (accion) {
+            acc = "registró";
         }
         if (!creador) {
-            act.setMensajeError("Error: El usuario que " + accion + " la Actividad debe "
+            act.setMensajeError("Error: El usuario que " + acc + " la Actividad debe "
                     + "estar presente en alguno de los campos desplegables de participante.");
             return false;
         }

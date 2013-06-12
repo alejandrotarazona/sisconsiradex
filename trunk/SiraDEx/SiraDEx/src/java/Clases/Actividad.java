@@ -274,9 +274,10 @@ public class Actividad extends Root {
         Iterator it = camposValores.iterator();
         while (it.hasNext()) {
             CampoValor cv = (CampoValor) it.next();
+            String nombre = cv.getCampo().getNombre();
             String tipo = cv.getCampo().getTipo();
             String valor = cv.getValor();
-            if (!valor.isEmpty() && cv.getCampo().getLongitud() != -1) {
+            if (!valor.isEmpty()) {
 
                 switch (tipo) {
                     case "textol":
@@ -284,21 +285,27 @@ public class Actividad extends Root {
                         continue;
                     case "checkbox":
                         if (!valor.equals("false")) {
-                            s += cv.getCampo().getNombre() + ", ";
+                            s += nombre + ", ";
                         }
                         break;
                     case "participante":
                         valor = valor.replace("$", "");
+                        if (nombre != null) {
+                            s += "<b>" + nombre + ":</b> ";
+                        }
+                        s += valor + "; ";
+                        break;
+
                     default:
-                        s += cv.getCampo().getNombre() + ": "
+                        s += "<b>" + nombre + ":</b> "
                                 + valor + ", ";
                         break;
                 }
             }
-            int tam = s.length();
-            if (tam > 1) {
-                s = s.substring(0, s.length() - 2) + ". ";
-            }
+        }
+        int tam = s.length();
+        if (tam > 1) {
+            s = s.substring(0, s.length() - 2) + ". ";
         }
         return s;
     }
@@ -370,144 +377,6 @@ public class Actividad extends Root {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-    }
-
-    //concatena los valores de los campos participante de un mismo tipo de participante
-    private void concatenarValoresParticipantes(int i, ArrayList<CampoValor> campos) {
-        if (i < campos.size() - 1
-                && campos.get(i + 1).getCampo().getLongitud() == -1
-                && campos.get(i).getCampo().getLongitud() > 0) {
-            String valorParticipante = campos.get(i).getValor();
-            String valorAux = campos.get(i).getValorAux();
-            if (valorAux.equals("Apellido(s), Nombre(s)")) {
-                valorAux = "";
-            }
-            if (!Verificaciones.esVacio(valorAux)) {
-                valorParticipante = "$" + valorAux;
-            }
-
-            int j = i + 1;
-            for (; campos.get(j).getCampo().getLongitud() == -1; j++) {
-                String val = campos.get(j).getValor();
-                String valAux = campos.get(j).getValorAux();
-                if (valAux.equals("Apellido(s), Nombre(s)")) {
-                    valAux = "";
-                }
-                if (!Verificaciones.esVacio(valAux)) {
-                    val = "$" + valAux;
-                }
-                if (!val.isEmpty()) {
-                    valorParticipante += "; " + val;
-                }
-            }
-
-            campos.get(i).setValor(valorParticipante);
-            System.out.println("VALOR CONCATENADO " + valorParticipante);
-        }
-    }
-
-    public boolean agregar(String ip, String user) {
-
-        if (!Verificaciones.verificar(this)) {
-            return false;
-        }
-
-        Entity e = new Entity(2);//ACTIVIDAD
-        e.setIp(ip);
-        e.setUser(user);
-        String[] columnas = {
-            "id_tipo_actividad",
-            "creador"
-        };
-
-        Object[] actividad = {
-            idTipoActividad,
-            creador
-        };
-        boolean resp;
-        if (resp = e.insertar2(columnas, actividad)) {
-            e.log();
-            idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
-
-            for (int i = 0; i < camposValores.size() && resp; i++) {
-
-                System.out.println("VALOR A AGREGAR i=" + i + " " + camposValores.get(i).getValor());
-                concatenarValoresParticipantes(i, camposValores);
-                resp &= camposValores.get(i).agregar(idActividad);
-                if (!resp) {
-                    mensajeError = "Error: La Actividad '" + nombreTipoActividad
-                            + "' no pudo ser resgistrada.";
-                    if (!eliminarActividad("Error al agregar", "SISTEMA")) {
-                        mensajeError = " Error: La Actividad '" + nombreTipoActividad
-                                + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
-                                + " mediante el sistema.";
-                    }
-                }
-            }
-        }
-        return resp;
-    }
-
-    public boolean eliminarActividad(String ip, String user) {
-        Entity e = new Entity(2);//ACTIVIDAD
-        e.setIp(ip);
-        e.setUser(user);
-        if (e.borrar(ATRIBUTOS[0], idActividad) && e.log()) {
-
-            mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
-            return true;
-        }
-        mensajeError = "La Actividad '" + nombreTipoActividad + "' no pudo ser eliminada.";
-        return false;
-    }
-
-    public boolean modificar(ArrayList<CampoValor> camposNM, String ip, String usuario) {
-
-        if (!Verificaciones.verificar(this)) {
-            return false;
-        }
-        boolean resp = true;
-
-        for (int i = 0; i < camposValores.size() && resp; i++) {
-            CampoValor campoNM = camposNM.get(i);
-            System.out.println("antes modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
-            System.out.println("VALOR A MODIFICAR i=" + i + " " + campoNM.getValor() + " por "
-                    + camposValores.get(i).getValor() + " longitud " + campoNM.getCampo().getLongitud());
-            concatenarValoresParticipantes(i, camposValores);
-            concatenarValoresParticipantes(i, camposNM);
-            resp &= camposValores.get(i).modificar(campoNM, idActividad, ip, usuario);
-            System.out.println("luego modificar campo " + campoNM.getCampo().getNombre() + " " + resp);
-        }
-
-        Entity eActividad = new Entity(2);//ACTIVIDAD
-        fechaModif = Clases.Log.getFechaHora();
-        String[] condColumn = {
-            ATRIBUTOS[0]
-        };
-        Object[] condValores = {
-            idActividad
-        };
-        String[] colModif = {
-            ATRIBUTOS[3],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
-        };
-        Object[] modValor = {
-            "En espera",
-            modificador,
-            fechaModif
-        };
-
-        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
-
-        eActividad.setIp(ip);
-        eActividad.setUser(usuario);
-        eActividad.log();
-
-        if (!resp) {
-            mensajeError = "Error: No se pudo modificar la Actividad.";
-        }
-        return resp;
     }
 
     private String obtenerCorreos() {
@@ -607,33 +476,177 @@ public class Actividad extends Root {
 
     }
 
-    public boolean validar(boolean valida, String ip, String user) {
+    //concatena los valores de los campos participante de un mismo tipo de participante
+    private void concatenarValoresParticipantes(int i, ArrayList<CampoValor> campos) {
+        if (i < campos.size() - 1
+                && campos.get(i + 1).getCampo().getLongitud() == -1
+                && campos.get(i).getCampo().getLongitud() > 0) {
+            String valorParticipante = campos.get(i).getValor();
+            String valorAux = campos.get(i).getValorAux();
+            if (valorAux.equals("Apellido(s), Nombre(s)")) {
+                valorAux = "";
+            }
+            if (!Verificaciones.esVacio(valorAux)) {
+                valorParticipante = "$" + valorAux;
+            }
 
-        Entity eValidar = new Entity(2); //ACTIVIDAD
+            int j = i + 1;
+            for (; campos.get(j).getCampo().getLongitud() == -1; j++) {
+                String val = campos.get(j).getValor();
+                String valAux = campos.get(j).getValorAux();
+                if (valAux.equals("Apellido(s), Nombre(s)")) {
+                    valAux = "";
+                }
+                if (!Verificaciones.esVacio(valAux)) {
+                    val = "$" + valAux;
+                }
+                if (!val.isEmpty()) {
+                    valorParticipante += "; " + val;
+                }
+            }
+
+            campos.get(i).setValor(valorParticipante);
+            System.out.println("VALOR CONCATENADO " + valorParticipante);
+        }
+    }
+
+    public boolean agregar(String ip, String user) {
+
+        if (!Verificaciones.verificar(this, false)) {
+            return false;
+        }
+
+        Entity e = new Entity(2);//ACTIVIDAD
+        e.setIp(ip);
+        e.setUser(user);
+        String[] columnas = {
+            "id_tipo_actividad",
+            "creador"
+        };
+
+        Object[] actividad = {
+            idTipoActividad,
+            creador
+        };
+        boolean resp;
+        if (resp = e.insertar2(columnas, actividad)) {
+            e.log();
+            idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
+
+            for (int i = 0; i < camposValores.size() && resp; i++) {
+
+                System.out.println("VALOR A AGREGAR i=" + i + " " + camposValores.get(i).getValor());
+                concatenarValoresParticipantes(i, camposValores);
+                resp &= camposValores.get(i).agregar(idActividad);
+                if (!resp) {
+                    mensajeError = "Error: La Actividad '" + nombreTipoActividad
+                            + "' no pudo ser resgistrada.";
+                    if (!eliminarActividad("Error al agregar", "SISTEMA")) {
+                        mensajeError = " Error: La Actividad '" + nombreTipoActividad
+                                + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
+                                + " mediante el sistema.";
+                    }
+                }
+            }
+        }
+        return resp;
+    }
+
+    public boolean eliminarActividad(String ip, String user) {
+        Entity e = new Entity(2);//ACTIVIDAD
+        e.setIp(ip);
+        e.setUser(user);
+        if (e.borrar(ATRIBUTOS[0], idActividad) && e.log()) {
+
+            mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
+            return true;
+        }
+        mensajeError = "La Actividad '" + nombreTipoActividad + "' no pudo ser eliminada.";
+        return false;
+    }
+
+    public boolean modificar(ArrayList<CampoValor> camposNM, String ip, String usuario) {
+
+        if (!Verificaciones.verificar(this, true)) {
+            return false;
+        }
+        boolean resp = true;
+        int nroEliminados = 0;
+        for (int i = 0; i < camposValores.size() && resp; i++) {
+            CampoValor campoNM = camposNM.get(i+nroEliminados);
+            System.out.println("antes modificar campo " + campoNM.getCampo().getNombre()
+                    + " valor " + campoNM.getValor() + " " + resp);
+            System.out.println("VALOR A MODIFICAR i=" + i + " " + campoNM.getValor() + " por "
+                    + camposValores.get(i).getValor() + " longitud " + campoNM.getCampo().getLongitud());
+            concatenarValoresParticipantes(i, camposValores);
+            resp &= camposValores.get(i).modificar(campoNM, idActividad, ip, usuario);
+            if (campoNM.getCampo().getLongitud() == -3) {
+                nroEliminados += 1;
+                i--;
+            }
+            System.out.println("luego modificar campo " + campoNM.getCampo().getNombre()
+                    + " valor " + campoNM.getValor() + " " + resp);
+        }
+
+        Entity eActividad = new Entity(2);//ACTIVIDAD
+        fechaModif = Clases.Log.getFechaHora();
         String[] condColumn = {
             ATRIBUTOS[0]
         };
         Object[] condValores = {
             idActividad
         };
-        String[] colModificar = {
-            ATRIBUTOS[3]
+        String[] colModif = {
+            ATRIBUTOS[3],
+            ATRIBUTOS[6],
+            ATRIBUTOS[7]
         };
-        String val;
-        if (valida) {
-            val = "Validada";
-        } else {
-            val = "Rechazada. Motivo: " + descripcion.replace("\"", "'");
-        }
-        Object[] modificaciones = {
-            val
+        Object[] modValor = {
+            "En espera",
+            modificador,
+            fechaModif
         };
 
-        boolean b = eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
-        eValidar.setIp(ip);
-        eValidar.setUser(user);
-        eValidar.log();
-        return b;
+        resp &= eActividad.modificar(condColumn, condValores, colModif, modValor);
+
+        eActividad.setIp(ip);
+        eActividad.setUser(usuario);
+        eActividad.log();
+
+        if (!resp) {
+            mensajeError = "Error: No se pudo modificar la Actividad.";
+        }
+        return resp;
+    }
+
+    //funcion auxiliar para solucionar el problema de que el tag html file no reconoce
+    //si el property file tiene un archivo y esto dificultaba la implementacion 
+    //de las verificaciones para los campos tipo archivo o producto 
+    public void auxModificarArchivo(ArrayList<CampoValor> camposNM) {
+        int nroEliminados = 0;
+        for (int i = 0; i < camposValores.size(); i++) {
+            CampoValor c = camposValores.get(i);
+            CampoValor campoNM = camposNM.get(i + nroEliminados);
+            if (campoNM.getCampo().getLongitud() == -3) {
+                nroEliminados += 1;
+                i--;
+                continue;
+            }
+            String tipo = c.getCampo().getTipo();
+            if (tipo.equals("archivo") || tipo.equals("producto")) {
+                if (c.getValor().isEmpty() && !campoNM.getValor().isEmpty()) {
+                    c.setCampo(campoNM.getCampo());
+                    c.setFile(campoNM.getFile());
+                    c.setValor(campoNM.getValor());
+                }
+            }
+        }
+    }
+
+    public void auxModificarParticipante(ArrayList<CampoValor> camposNM) {
+        for (int i = 0; i < camposValores.size(); i++) {
+            concatenarValoresParticipantes(i, camposNM);
+        }
     }
 
     public boolean modificarCampoParticipante(ArrayList<CampoValor> camposAntes,
@@ -668,14 +681,15 @@ public class Actividad extends Root {
                 cv.setValorAux("Apellido(s), Nombre(s)");
                 camposValores.add(i + 1, cv);
                 if (camposNM != null) {
-                    cv = new CampoValor();
-                    cv.setValor("");
+                    CampoValor cvNuevo = new CampoValor();
+                    cvNuevo.setValorAux("Apellido(s), Nombre(s)");
+                    cvNuevo.setValor("");
                     c = new Campo();
                     c.setTipo("participante");
-                    c.setLongitud(-1);
-                    cv.setCampo(c);
-                    cv.setValorAux("Apellido(s), Nombre(s)");
-                    camposNM.add(i + 1, cv);
+                    c.setLongitud(-2);//participante a insertar en PARTICIPA
+                    cvNuevo.setCampo(c);
+
+                    camposNM.add(i + 1, cvNuevo);
                 }
                 return true;
             }
@@ -694,19 +708,57 @@ public class Actividad extends Root {
                 System.out.println("Entra a eliminar -----------");
                 camposValores.remove(i);
                 if (camposNM != null) {
-                    camposNM.remove(i);
+                    int longitud = camposNM.get(i).getCampo().getLongitud();
+                    if (longitud == -1) {
+                        camposNM.get(i).getCampo().setLongitud(-3);//participante a eliminar de PARTICIPA
+                    } else if (longitud == -2){
+                        camposNM.remove(i);//participante que no existe en PARTICIPA solo se elimina de camposNM
+                    }
                 }
                 for (; i > 0; i--) {
                     Campo c = camposValores.get(i - 1).getCampo();
                     int longitud = c.getLongitud();
                     if (c.getTipo().equals("participante") && longitud != -1) {
                         c.setLongitud(longitud + 1);
+                        if (camposNM != null) {
+                            Campo cNM = camposNM.get(i - 1).getCampo();
+                            cNM.setLongitud(longitud + 1);
+                        }
                         return true;
                     }
                 }
             }
         }
         return false;
+    }
+
+    public boolean validar(boolean valida, String ip, String user) {
+
+        Entity eValidar = new Entity(2); //ACTIVIDAD
+        String[] condColumn = {
+            ATRIBUTOS[0]
+        };
+        Object[] condValores = {
+            idActividad
+        };
+        String[] colModificar = {
+            ATRIBUTOS[3]
+        };
+        String val;
+        if (valida) {
+            val = "Validada";
+        } else {
+            val = "Rechazada. Motivo: " + descripcion.replace("\"", "'");
+        }
+        Object[] modificaciones = {
+            val
+        };
+
+        boolean b = eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
+        eValidar.setIp(ip);
+        eValidar.setUser(user);
+        eValidar.log();
+        return b;
     }
 
     /**
