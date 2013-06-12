@@ -41,13 +41,21 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Clases.Root.deleteSessions(request, "actividadForm");
         Actividad act = (Actividad) form;
         act.setMensaje(null);
         act.setActividad();
 
         /*ArrayList con los valores no modificados*/
-        ArrayList camposNM = CampoValor.listarCamposValores(act.getIdActividad());
+        ArrayList<CampoValor> camposNM = CampoValor.listarCamposValores(act.getIdActividad());
+        act.auxModificarParticipante(camposNM);
         request.getSession().setAttribute("camposNM", camposNM);
+
+        for (int i = 0; i < camposNM.size(); i++) {
+            if (camposNM.get(i).getCampo().getTipo().equals("participante")) {
+                System.out.println("CAMPOSNM PARTICIPANTE page()" + camposNM.get(i).getValor() + " ######################");
+            }
+        }
 
         /*Se pasan los catalogos de los camposNM tipo catalogo al jsp de ser necesario*/
         for (int i = 0; i < act.getCamposValores().size(); i++) {
@@ -57,9 +65,9 @@ public class Modificar extends DispatchAction {
                 request.getSession().setAttribute("cat" + i, catalogo);
             }
         }
-        
-        ArrayList<CampoValor> camposActuales = CampoValor.listarCamposValores(act.getIdActividad());
-        request.getSession().setAttribute("camposAntes", camposActuales);
+
+        ArrayList<CampoValor> campos = CampoValor.listarCamposValores(act.getIdActividad());
+        request.getSession().setAttribute("campos", campos);
 
         return mapping.findForward(PAGE);
     }
@@ -69,18 +77,33 @@ public class Modificar extends DispatchAction {
             throws Exception {
         Actividad act = (Actividad) form;
 
-        ArrayList<CampoValor> camposAntes;
-        camposAntes = (ArrayList<CampoValor>) request.getSession().getAttribute("camposAntes");
-        
-        ArrayList camposNM = (ArrayList) request.getSession().getAttribute("camposNM");
+        ArrayList<CampoValor> campos;
+        campos = (ArrayList<CampoValor>) request.getSession().getAttribute("campos");
+
+        ArrayList<CampoValor> camposNM = (ArrayList<CampoValor>) request.getSession().getAttribute("camposNM");
         Usuario modificador = (Usuario) request.getSession().getAttribute("user");
         act.setModificador(modificador.getUsername());
-        CampoValor.auxModificarArchivo(camposNM, act.getCamposValores());
+        act.auxModificarArchivo(camposNM);
 
-        if (act.modificarCampoParticipante(camposAntes, camposNM)) {
+        for (int i = 0; i < camposNM.size(); i++) {
+            if (camposNM.get(i).getCampo().getTipo().equals("participante")) {
+                System.out.println("CAMPOSNM PARTICIPANTE EN update()" + camposNM.get(i).getValor() + " ######################");
+            }
+        }
+
+        if (act.modificarCampoParticipante(campos, camposNM)) {
             ArrayList<CampoValor> camposActuales = act.getCamposValores();
-            request.getSession().setAttribute("camposAntes", CampoValor.clonar(camposActuales));
+            for (int i = 0; i < camposNM.size(); i++) {
+                System.out.println("CAMPOSNM " + camposNM.get(i).getValor() + " auxModificarParticipante  AAAAAAAAAAAAAAAAAAAAA");
+
+            }
+            act.auxModificarArchivo(camposNM);
+            request.getSession().setAttribute("campos", CampoValor.clonar(camposActuales));
             request.getSession().setAttribute("camposNM", camposNM);
+            for (int i = 0; i < camposNM.size(); i++) {
+                System.out.println("CAMPOSNM " + camposNM.get(i).getValor() + " auxModificarParticipante DDDDDDDDDDDDDDDDDDDDDDD");
+
+            }
 
             for (int i = 0; i < camposActuales.size(); i++) {
 
@@ -95,7 +118,7 @@ public class Modificar extends DispatchAction {
             }
             return mapping.findForward(PAGE);
         }
-        
+
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
