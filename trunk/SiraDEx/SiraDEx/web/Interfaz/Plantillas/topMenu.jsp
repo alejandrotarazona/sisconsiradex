@@ -49,20 +49,25 @@
                         </logic:equal>
 
                         <logic:equal name="user" property="rol" value="<%= r%>">
-                            <html:link action="/BusquedaAvanzada?method=page">Busquedas avanzadas</html:link> |
+                            <html:link action="/BusquedaAvanzada?method=page" title="Busquedas avanzadas">
+                                Busquedas
+                            </html:link> |
                         </logic:equal>
                         <logic:equal name="user" property="rol" value="WM">
-                            <html:link action="/BusquedaAvanzada?method=page">Busquedas avanzadas</html:link> |
+                            <html:link action="/BusquedaAvanzada?method=page" title="Busquedas avanzadas">
+                                Busquedas
+                            </html:link> |
                         </logic:equal>
 
                     </logic:present>
 
                     <logic:notPresent name="user">
                         <html:link action="/Welcome">Inicio</html:link> |
+
+                        <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
+                            Busquedas
+                        </html:link> |
                     </logic:notPresent>
-
-                    <html:link action="/BusquedaPublica?method=page">Busquedas públicas</html:link> |
-
 
                     <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Contactenos</a> |
 

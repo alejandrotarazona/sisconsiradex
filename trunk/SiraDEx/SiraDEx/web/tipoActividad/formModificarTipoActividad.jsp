@@ -15,7 +15,9 @@
     <head>
         <style>
             .selector {width: 80px;}
-            tr:nth-of-type(odd) {background-color:#E2E4FF;}
+            .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
+            .cebra th {
+                background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);
         </style>
         <script>
             $(document).ready(function(){
@@ -60,10 +62,10 @@
         <h1 class='title' id='page-title'>Edición del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <br><logic:present name="tipoActividadForm" property="mensaje">
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
             <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
         </logic:present> 
-        <br><logic:present name="tipoActividadForm" property="mensajeError">
+        <logic:present name="tipoActividadForm" property="mensajeError"><br>
             <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
         </logic:present><br>
 
@@ -72,13 +74,13 @@
             <table>
                 <tbody>
                     <tr>
-                    <td>Nombre del Tipo de Actividad</td>
+                    <td width="15%"><b>Nombre del Tipo de Actividad</b></td>
                     <td><html:text name="tipoActividadForm" property="nombreTipo" size="78">
                             <bean:write name="tipoActividadForm" property="nombreTipo"/>
                         </html:text> </td>
                     </tr>
                     <tr>
-                    <td>Descripción</td>
+                    <td><b>Descripción</b></td>
                     <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                                    property="descripcion">
                             <bean:write name="tipoActividadForm" property="descripcion"/>
@@ -86,21 +88,21 @@
                     </td>
                     </tr>
                     <tr>
-                    <td>Tipo</td>
+                    <td><b>Tipo de Producto</b></td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td>Programa</td>
-                        <td>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Programa</b></td>
+                    <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select>
                     </td>
                     </tr>
                     <tr>
-                    <td>Dependencia a validar</td>
+                    <td><b>Dependencia a validar</b></td>
                     <td>       
                         <html:select property="validador">
                             <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
@@ -108,30 +110,27 @@
                     </td>
                     </tr>
                     <tr>
-                    <td>Realizado por</td>
+                    <td><b>Realizado por</b></td>
                     <td>
                         <html:multibox property="permisos" bundle="empleado">Empleado</html:multibox> Empleados<br>
                         <html:multibox property="permisos" bundle="estudiante">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos" bundle="profesor">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos" bundle="obrero">Obrero</html:multibox> Obreros 
-                        </td>       
-                        </tr>
-                        <tr>
+                    </td>       
+                    </tr>
+                </tbody>
+            </table>
 
-                        </tr>
-                    </tbody>
-                </table>
-
-                <table>
-                    <tbody>
-                        <tr><td><b>Campos</b></td></tr>
-                        <tr><td></td>
-                        <td align="center"><b>Nombre</b></td>
-                        <td align="center"><b>Tipo</b></td>
-                        <td align="center"><b>Longitud/Límite</b></td>
-                        <td align="center"><b>Obligatorio</b></td>
-                        <td align="center"><b>Catálogo</b></td>
-                        </tr>
+            <b>Campos</b><br>
+            <table class="cebra">
+                <tbody>
+                    <tr>
+                    <th><b>Nombre</b></th>
+                    <th><b>Tipo</b></th>
+                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Obligatorio</b></th>
+                    <th><b>Catálogo</b></th>
+                    </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
                         <%
@@ -142,11 +141,11 @@
                             String l = "longitud" + i;
                         %>
 
-                        <tr><td></td>
-                        <td align="center">
-                            <html:text name="campos" property="nombre" indexed="true">
-                                <bean:write name="campos" property="nombre"/>
-                            </html:text> </td>
+                        <tr>      
+                        <td align="center"><span style="color: gray;font-size:10px">${index+1}</span>
+                        <html:text name="campos" property="nombre" indexed="true">
+                            <bean:write name="campos" property="nombre"/>
+                        </html:text> </td>
                         <td align="center">
                             <logic:notEqual name="campos" property="tipo" value="producto">
                                 <html:select name="campos"  property="tipo" indexed="true" 

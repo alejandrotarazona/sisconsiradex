@@ -34,7 +34,7 @@
                     "aoColumns": [       
                         /* Participantes */ null,
                         /* Actividad */ null,
-                        /* Detalles */ null,
+                        /* Detalles */ { "bSortable": false },
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Producto */ null,
@@ -114,14 +114,14 @@
                             Más detalles
                         </a>
                         </td>
-                        <td>
-                            <bean:write name="act" property="creador"></bean:write>, 
-                            <bean:write name="act" property="fechaCreacion"></bean:write>
+                        <td>    
+                            <bean:write name="act" property="fechaCreacion"></bean:write> 
+                            por el usuario <bean:write name="act" property="creador"></bean:write> 
                             </td>
                             <td>
                             <logic:present  name="act" property="modificador">
-                                <bean:write name="act" property="modificador"></bean:write>, 
                                 <bean:write name="act" property="fechaModif"></bean:write>
+                                por el usuario <bean:write name="act" property="modificador"></bean:write>
                             </logic:present>
 
                         </td>

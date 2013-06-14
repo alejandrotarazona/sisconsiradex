@@ -1,16 +1,21 @@
 <%-- 
-    Document   : findAdvancedMenu
+    Document   : formParametrosBusqueda
     Created on : 20-may-2013, 19:06:32
     Author     : SisCon
 --%>
 
+<%@page import="Clases.Usuario"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-
+<head>
+    <style>
+        .selector {width: 50px;}
+    </style>
+</head>
 <div id="sidebar-first" class="sidebar grid-5 pull-11">
     <div class="region region-sidebar-first">
         <div id="block-system-main-menu" class="block block-system block-menu first">
@@ -28,8 +33,6 @@
                         })	
                     </script>
 
-                    <h1>Indique los parámetros de la búsqueda</h1>
-
 
                     <logic:present name="busquedaActividadForm" property="mensaje"><br>
                         <div class ="status"><bean:write name="tipoActividadForm" 
@@ -39,10 +42,28 @@
                         <div class ="error"><bean:write name="tipoActividadForm" 
                                     property="mensajeError" /></div>
                         </logic:present>
-
-                    <html:form action="/BusquedaAvanzada?method=search">
+                        <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
+                            String accion;
+                            if (usuario == null) {
+                                accion = "/BusquedaPublica?method=search";
+                            } else {
+                                accion = "/BusquedaAvanzada?method=search";
+                            }
+                        %>
+                        <html:form action="<%=accion%>">
 
                         <div align="right"><html:submit>Buscar</html:submit></div>
+                        <br>
+
+                        Mostrar <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
+                                     styleClass="selector" value="${busquedaActividadForm.mostrarPorPagina}">
+                            <html:option value="10">10</html:option>
+                            <html:option value="25">25</html:option>
+                            <html:option value="50">50</html:option>
+                            <html:option value="100">100</html:option>
+                        </html:select>
+                        actividades por pagina.
+                        <br><br>
 
                         Tipo de Actividad:<br> 
                         <html:select name="busquedaActividadForm" property="nombreTipo">
@@ -56,11 +77,13 @@
                             <html:optionsCollection name="usuarios" label="contenido" value="mensaje"/>
                         </html:select><br><br>
 
-                        Producto Tipo:<br> 
-                        <html:radio property="tipoPR" value="">Cualquiera</html:radio>
-                        <html:radio property="tipoPR" value="P">P</html:radio>
-                        <html:radio property="tipoPR" value="R">R</html:radio>
-                        <br><br>
+                        <logic:present name="user">
+                            Producto Tipo:<br> 
+                            <html:radio property="tipoPR" value="">Cualquiera</html:radio>
+                            <html:radio property="tipoPR" value="P">P</html:radio>
+                            <html:radio property="tipoPR" value="R">R</html:radio>
+                            <br><br>   
+                        </logic:present>
 
                         Dependencia a la que pertenece:<br> 
                         <html:select name="busquedaActividadForm" property="validador">
@@ -89,16 +112,9 @@
                         <span class="fecha_click">
                             <html:hidden name="busquedaActividadForm" property="fechaFin"/>
                         </span>
-
-                        <br><br>
-
-                        Mostrar <html:text name="busquedaActividadForm" property="mostrarPorPagina" 
-                                   size="1" maxlength="3" value="${busquedaActividadForm.mostrarPorPagina}"/>
-                        actividades por pagina.
-                        <br><br>
                         <div align="right"><html:submit>Buscar</html:submit></div>
                     </html:form>
-                    
+
                 </div>
             </div>
         </div>

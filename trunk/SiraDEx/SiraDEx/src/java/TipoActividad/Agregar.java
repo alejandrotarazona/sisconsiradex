@@ -5,6 +5,7 @@
 package TipoActividad;
 
 import Clases.ElementoCatalogo;
+import Clases.Root;
 import Clases.TipoActividad;
 import Clases.Usuario;
 import Clases.Verificaciones;
@@ -44,6 +45,7 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Root.deleteSessions(request, "");
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
         ta.setMensaje(null);

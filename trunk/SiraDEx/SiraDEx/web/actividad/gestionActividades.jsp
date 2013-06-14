@@ -35,7 +35,7 @@
                     "aoColumns": [       
                         /* Participantes */ null,
                         /* Actividad */ null,
-                        /* Detalles */ null,
+                        /* Detalles */ { "bSortable": false },
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
@@ -45,11 +45,11 @@
                        
                     ]});
                 
-                $(".grafica").hide();
+                $(".grafica").show();
                 $(".ver").click(function(){
                     $('.grafica').toggle();
                     var $this = $(this);
-                    $this.text($this.text() == "Ocultar Gráfica" ? "Mostrar Gráfica" : "Ocultar Gráfica");
+                    $this.text($this.text() == "Mostrar Gráfica" ? "Ocultar Gráfica" : "Mostrar Gráfica");
                 });
             
             });
@@ -81,7 +81,7 @@
                 s += chd + chtt + chco + "chdl=" + chdl;
             %>
             <a class="ver" style=" cursor: pointer">
-                Mostrar Gráfica</a>
+                Ocultar Gráfica</a>
         <span class="grafica">
             <center>
                 <html:img src="<%=s%>"/>
@@ -155,8 +155,8 @@
                     <td>
                         <bean:write name="act" property="creador"></bean:write>, 
                         <bean:write name="act" property="fechaCreacion"></bean:write>
-                    </td>
-                    <td>
+                        </td>
+                        <td>
                         <logic:present  name="act" property="modificador">
                             <bean:write name="act" property="modificador"></bean:write>, 
                             <bean:write name="act" property="fechaModif"></bean:write>
