@@ -165,17 +165,14 @@
          <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaAvanzada"/>
-            <forward name="pagina" path="busquedaAvanzada"/>
-            <forward name="failure" path="busquedaAvanzada"/>   
+            <forward name="success" path="busquedaAvanzada"/>
          </action>
          
          <action path="/BusquedaPublica" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaPublica"/>
-            <forward name="pagina" path="busquedaPublica"/>
-            <forward name="failure" path="busquedaPublica"/>   
+            <forward name="success" path="busquedaPublica"/> 
          </action>
-         
          
         <!-- ======================CATALOGO=================================-->
         

@@ -116,13 +116,13 @@
     </definition>
     
     <definition name="busquedaAvanzada" extends="plantillaBusquedaAvanzada">
-        <put name="body" value="/actividad/formBusquedaAvanzada.jsp"/>
-        <put name="leftMenu" value="/actividad/formMenuBusqA.jsp"/>
+        <put name="body" value="/actividad/formBusqueda.jsp"/>
+        <put name="leftMenu" value="/actividad/formParametrosBusqueda.jsp"/>
     </definition>
     
     <definition name="busquedaPublica" extends="plantillaBusquedaPublica">
-        <put name="body" value="/actividad/formBusquedaPublica.jsp"/>
-        <put name="leftMenu" value="/actividad/formMenuBusqP.jsp"/>
+        <put name="body" value="/actividad/formBusqueda.jsp"/>
+        <put name="leftMenu" value="/actividad/formParametrosBusqueda.jsp"/>
     </definition>
 
     

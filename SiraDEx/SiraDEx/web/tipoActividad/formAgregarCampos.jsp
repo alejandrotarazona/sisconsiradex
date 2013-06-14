@@ -17,6 +17,9 @@
         <style>
             .selector {width: 80px;}
             .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
+            .cebra th {
+                background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);
+            }
 
         </style>
         <script>
@@ -74,11 +77,11 @@
             <table class="cebra">
                 <tbody>
                     <tr>
-                    <td align="center"><b>Nombre</b></td>
-                    <td align="center"><b>Tipo</b></td>
-                    <td align="center"><b>Longitud/Límite</b></td>
-                    <td align="center"><b>Obligatorio</b></td>
-                    <td align="center"><b>Catálogo</b></td>
+                    <th><b>Nombre</b></th>
+                    <th><b>Tipo</b></th>
+                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Obligatorio</b></th>
+                    <th><b>Catálogo</b></th>
                     </tr>      
 
                     <logic:iterate name="tipoActividadForm" property="campos" id="campo"
@@ -115,6 +118,20 @@
                             </logic:equal>
                         </td>
 
+
+                        <td align="center">
+
+                            <div id ="<%=l%>" style="visibility: visible">
+                                <logic:notEqual name="campo" property="tipo" value="producto">
+                                    <html:text name="campo" property="longitud" indexed="true"
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
+                                               size="3"/>
+                                </logic:notEqual>
+
+                            </div>
+                        </td>
+
+
                         <td align="center">
 
                             <logic:notEqual name="campo" property="tipo" value="producto">
@@ -128,18 +145,6 @@
                                                indexed="true"/>
                             </logic:equal>
 
-                        </td>
-
-                        <td align="center">
-
-                            <div id ="<%=l%>" style="visibility: visible">
-                                <logic:notEqual name="campo" property="tipo" value="producto">
-                                    <html:text name="campo" property="longitud" indexed="true"
-                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
-                                               size="3"/>
-                                </logic:notEqual>
-
-                            </div>
                         </td>
 
                         <td align="center">

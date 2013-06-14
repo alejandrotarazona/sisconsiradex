@@ -22,8 +22,8 @@
         <logic:present name="tipoActividadForm" property="mensaje"><br>
             <div class ="status"><bean:write name="tipoActividadForm" 
                         property="mensaje" /></div>
-                </logic:present> 
-                <logic:present name="tipoActividadForm" property="mensajeError"><br>
+            </logic:present> 
+            <logic:present name="tipoActividadForm" property="mensajeError"><br>
             <div class ="error"><bean:write name="tipoActividadForm" 
                         property="mensajeError" /></div>
         </logic:present><br>
@@ -31,61 +31,66 @@
         <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
             <table>
-                <tr>
-                <td>Nombre del Tipo de Actividad</td>
-                <td><html:text name="tipoActividadForm" property="nombreTipo" 
-                           size="78"/></td>
-            </tr>
-            <tr>
-            <td>Descripción</td>
-            <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
-                           property="descripcion"/>
-            </td>
-        </tr>
-        <tr>
-        <td>Tipo de Producto</td>
-        <td><html:radio property="tipoPR" value="P" >P</html:radio>
-            <html:radio property="tipoPR" value="R" >R</html:radio>
-            </td>
-        </tr>
-        <tr>
-        <td>Programa</td>
-        <td>
-        <html:select property="programa">
-            <html:option value="">-- Seleccione --</html:option>
-            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
+                <tbody>
+                    <tr>
+                    <td width="15%"><b>Nombre del Tipo de Actividad</b></td>
+                    <td><html:text name="tipoActividadForm" property="nombreTipo" 
+                               size="78"/></td>
+                    </tr>
+                    <tr>
+                    <td><b>Descripción</b></td>
+                    <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
+                                   property="descripcion"/>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Tipo de Producto</b></td>
+                    <td>
+                        <html:radio property="tipoPR" value="P" >P</html:radio>
+                        <html:radio property="tipoPR" value="R" >R</html:radio>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Programa</b></td>
+                    <td>
+                        <html:select property="programa">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="programas" label="contenido" value="contenido"/>
 
-        </html:select>
-    </td>
-</tr>
-<tr>
-<td>Dependencia a validar</td>
-<td>       
-    <html:select property="validador">
-        <html:option value="">-- Seleccione --</html:option>
-        <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
-    </html:select>
-</td>
-</tr>
-<tr>
-<td>Realizado por</td>
-<td>
-    <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
-    <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
-    <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
-    <html:multibox property="permisos">Obrero</html:multibox> Obreros 
-</td>       
-</tr>
-<tr><td>Número de archivos del producto</td>
-<td><html:text name="tipoActividadForm" property="nroProductos" size="1" maxlength="1"/></td>
-</tr>
-<tr><td>Número de campos</td>
-<td><html:text name="tipoActividadForm" property="nroCampos" size="1" maxlength="2"/></td>
-</tr>
-</table>
-<br>
-<div align="center"><html:submit>Siguiente</html:submit></div>
-</html:form>
+                        </html:select>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Dependencia a validar</b></td>
+                    <td>       
+                        <html:select property="validador">
+                            <html:option value="">-- Seleccione --</html:option>
+                            <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
+                        </html:select>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Realizado por</b></td>
+                    <td>
+                        <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
+                        <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
+                        <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
+                        <html:multibox property="permisos">Obrero</html:multibox> Obreros 
+                    </td>       
+                    </tr>
+                    <tr>
+                    <td><b>Número de archivos del Producto</b></td>
+                    <td><html:text name="tipoActividadForm" property="nroProductos" size="1" maxlength="1"/></td>
+                    </tr>
+                    <tr>
+                    <td><b>Número de campos</b></td>
+                    <td><html:text name="tipoActividadForm" property="nroCampos" size="1" maxlength="2"/></td>
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <div align="center"><html:submit>Siguiente</html:submit></div>
+        </html:form>
 
-</body>
+    </body>
 </html>

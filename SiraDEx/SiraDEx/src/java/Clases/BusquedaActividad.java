@@ -190,7 +190,7 @@ public class BusquedaActividad extends Root {
 
 
         ArrayList<Actividad> cjtoAux = new ArrayList<>(0);
-        ResultSet rs = null;
+        ResultSet rs;
         if (columnas.length > 0) {
             rs = eBuscar.seleccionar(columnas, condiciones);
             eBuscar.setIp(ip);
@@ -345,7 +345,6 @@ public class BusquedaActividad extends Root {
         String[] grafica = new String[2];
         String nombres = "";
         String cantidad = "";
-        i = 0;
       
         for(i = 0; i <= aux.size()-1; i++){
             contador = 1;
@@ -498,16 +497,14 @@ public class BusquedaActividad extends Root {
      * @throws ParseException
      */
     private static boolean antesDe(String fechaIni, String fechaFin) throws ParseException {
-        boolean resp = false;
+
         Calendar cIni = Calendar.getInstance();
         Calendar cFin = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         cIni.setTime(sdf.parse(fechaIni));
         cFin.setTime(sdf.parse(fechaFin));
 
-        resp = cIni.before(cFin);
-
-        return resp;
+        return cIni.before(cFin);
 
     }
 
@@ -520,16 +517,14 @@ public class BusquedaActividad extends Root {
      * @throws ParseException
      */
     private static boolean despuesDe(String fechaIni, String fechaFin) throws ParseException {
-        boolean resp = false;
+
         Calendar cIni = Calendar.getInstance();
         Calendar cFin = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         cIni.setTime(sdf.parse(fechaIni));
         cFin.setTime(sdf.parse(fechaFin));
 
-        resp = cIni.after(cFin);
-
-        return resp;
+        return cIni.after(cFin);
 
     }
 
