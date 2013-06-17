@@ -30,7 +30,17 @@
         <title>SiraDEx | Gestion de Tipos de Actividad</title>
     </head>
     <body>
-        <h1 class="title"">Gestion de Tipos de Actividad</h1>
+        <h1 class="title">Gestion de Tipos de Actividad</h1>
+
+        <logic:present name="mensajeTipo"><br>
+            <logic:notMatch name="mensajeTipo" value="Error:">
+                <div class ="status"><bean:write name="mensajeTipo"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeTipo" value="Error:">
+                <div class ="error"><bean:write name="mensajeTipo"/></div>
+            </logic:match>
+            <br>
+        </logic:present>
 
         <html:link action="/RegistrarTipoActividad?method=page"> 
             Agregar Tipo de Actividad
@@ -40,15 +50,6 @@
             Papelera
         </html:link><br>
 
-        <logic:present name="mensaje"><br>
-            <div class ="status"><bean:write name="mensaje"/></div><br>
-        </logic:present>
-        <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div><br>
-        </logic:present> 
-        <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div><br>
-        </logic:present>
         <logic:notPresent name="tipos">
             <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>

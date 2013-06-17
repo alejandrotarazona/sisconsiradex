@@ -89,11 +89,11 @@
                                onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
                                if(this.value != '' && !x.test(this.value)){
                                document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
-                               document.getElementById('boton').style.visibility= 'hidden';
+                               document.getElementById('modificar').disabled=true;
                                }
                                if(this.value != '' && x.test(this.value)){
                                document.getElementById('error').innerHTML='';
-                               document.getElementById('boton').style.visibility= 'visible';
+                               document.getElementById('modificar').disabled=false;
                                }">
                             <bean:write name="user" property="email"/>
                         </html:text>
@@ -103,7 +103,7 @@
                 </tbody> 
             </table> 
             <div id="boton" style="visibility: hidden" align="center">
-                <html:submit value="Modificar"
+                <html:submit value="Modificar" styleId="modificar"
                              onclick="return confirm('¿Está seguro que desea modificar el perfil?')"/>
             </div>
         </html:form>     

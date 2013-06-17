@@ -62,11 +62,18 @@
                     </tr>
                     <tr>
                     <td><b>Dependencia a validar</b></td>
-                    <td>       
-                        <html:select property="validador">
-                            <html:option value="">-- Seleccione --</html:option>
-                            <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
-                        </html:select>
+                    <td> 
+                        <logic:equal name="user" property="rol" value="WM">
+                            <html:select property="validador">
+                                <html:option value="">-- Seleccione --</html:option>
+                                <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
+                            </html:select>
+                        </logic:equal>
+                        <logic:notEqual name="user" property="rol" value="WM">
+                            <html:select property="validador" disabled="true" title="${user.rol}">
+                                <html:option value="${user.rol}">${user.rol}</html:option>
+                            </html:select>
+                        </logic:notEqual>    
                     </td>
                     </tr>
                     <tr>
@@ -76,11 +83,11 @@
                         <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos">Obrero</html:multibox> Obreros 
-                    </td>       
-                    </tr>
-                    <tr>
-                    <td><b>Número de archivos del Producto</b></td>
-                    <td><html:text name="tipoActividadForm" property="nroProductos" size="1" maxlength="1"/></td>
+                        </td>       
+                        </tr>
+                        <tr>
+                        <td><b>Número de archivos del Producto</b></td>
+                        <td><html:text name="tipoActividadForm" property="nroProductos" size="1" maxlength="1"/></td>
                     </tr>
                     <tr>
                     <td><b>Número de campos</b></td>

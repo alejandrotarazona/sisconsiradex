@@ -19,6 +19,7 @@
                 $('#datatab').dataTable({
                     "aoColumns": [       
                         /* Nombre */ null,
+                        /* Consultar */ { "bSortable": false },
                         /* Restaurar */ { "bSortable": false }
                     ]});
             });
@@ -30,11 +31,14 @@
     <body>
         <h1 class="title">Papelera de Reciclaje de Tipos de Actividad</h1>
 
-        <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div><br>
-        </logic:present> 
-        <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div><br>
+        <logic:present name="mensajeRest"><br>
+            <logic:notMatch name="mensajeRest" value="Error:">
+                <div class ="status"><bean:write name="mensajeRest"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeRest" value="Error:">
+                <div class ="error"><bean:write name="mensajeRest"/></div>
+            </logic:match>
+            <br>
         </logic:present>
 
         <logic:notPresent name="tipos">
@@ -47,6 +51,7 @@
                     <tr>
                     <th>Nombre</th>
                     <th></th>
+                    <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,8 +60,16 @@
                         <td>
                             <bean:write name="ta" property="nombreTipo"/>
                         </td>
-
-                        <td align="center"><html:form method="POST" action="/RestaurarTipoActividad">
+                        <td align="center">
+                            <html:form method="POST" action="/ConsultarTipoActividad">
+                                <html:hidden name="ta" property="id" />  
+                                <html:submit styleId="botonExaminar"
+                                             value=" "
+                                             title="Consultar"/>
+                            </html:form>
+                        </td>
+                        <td align="center">
+                            <html:form method="POST" action="/RestaurarTipoActividad">
                                 <html:hidden name="ta" property="id" />
                                 <html:submit styleId="botonRestaurar"
                                              value=" "

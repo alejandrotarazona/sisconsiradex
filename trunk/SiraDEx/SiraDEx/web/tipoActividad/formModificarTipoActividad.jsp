@@ -16,8 +16,7 @@
         <style>
             .selector {width: 80px;}
             .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
-            .cebra th {
-                background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);
+            .cebra th {background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);}
         </style>
         <script>
             $(document).ready(function(){
@@ -91,11 +90,11 @@
                     <td><b>Tipo de Producto</b></td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td><b>Programa</b></td>
-                    <td>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><b>Programa</b></td>
+                        <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select>
@@ -103,10 +102,17 @@
                     </tr>
                     <tr>
                     <td><b>Dependencia a validar</b></td>
-                    <td>       
-                        <html:select property="validador">
-                            <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
-                        </html:select>
+                    <td> 
+                        <logic:equal name="user" property="rol" value="WM">
+                            <html:select property="validador">
+                                <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
+                            </html:select>
+                        </logic:equal>
+                        <logic:notEqual name="user" property="rol" value="WM">
+                            <html:select property="validador" disabled="true" title="${user.rol}">
+                                <html:option value="${user.rol}">${user.rol}</html:option>
+                            </html:select>
+                        </logic:notEqual>
                     </td>
                     </tr>
                     <tr>
@@ -116,21 +122,21 @@
                         <html:multibox property="permisos" bundle="estudiante">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos" bundle="profesor">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos" bundle="obrero">Obrero</html:multibox> Obreros 
-                    </td>       
-                    </tr>
-                </tbody>
-            </table>
+                        </td>       
+                        </tr>
+                    </tbody>
+                </table>
 
-            <b>Campos</b><br>
-            <table class="cebra">
-                <tbody>
-                    <tr>
-                    <th><b>Nombre</b></th>
-                    <th><b>Tipo</b></th>
-                    <th><b>Longitud/Límite</b></th>
-                    <th><b>Obligatorio</b></th>
-                    <th><b>Catálogo</b></th>
-                    </tr>
+                <b>Campos</b><br>
+                <table class="cebra">
+                    <tbody>
+                        <tr>
+                        <th><b>Nombre</b></th>
+                        <th><b>Tipo</b></th>
+                        <th><b>Longitud/Límite</b></th>
+                        <th><b>Obligatorio</b></th>
+                        <th><b>Catálogo</b></th>
+                        </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
                         <%
@@ -169,7 +175,7 @@
                                 <logic:notEqual name="campos" property="tipo" value="producto">
                                     <html:text name="campos" property="longitud" indexed="true" 
                                                title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
-                                               size="3">
+                                               size="2" maxlength="4">
                                         <bean:write name="campos" property="longitud"/>
                                     </html:text>    
                                 </logic:notEqual>

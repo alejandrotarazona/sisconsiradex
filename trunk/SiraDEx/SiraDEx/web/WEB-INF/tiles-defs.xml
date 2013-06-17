@@ -88,6 +88,10 @@
     <definition name="gestionPapelera" extends="plantilla">
         <put name="body" value="/tipoActividad/gestionPapelera.jsp" />
     </definition>
+    
+    <definition name="consultarTipoActividad" extends="plantilla">
+        <put name="body" value="/tipoActividad/formConsultarTipoActividad.jsp" />
+    </definition>
  
     <!-- ==========================ACTIVIDAD===============================-->
  

@@ -291,13 +291,13 @@ public class Actividad extends Root {
                     case "participante":
                         valor = valor.replace("$", "");
                         if (nombre != null) {
-                            s += "<b>" + nombre + ":</b> ";
+                            s += "<u>" + nombre + "</u>: ";
                         }
                         s += valor + "; ";
                         break;
 
                     default:
-                        s += "<b>" + nombre + ":</b> "
+                        s += "<u>" + nombre + "</u>: "
                                 + valor + ", ";
                         break;
                 }
@@ -541,10 +541,10 @@ public class Actividad extends Root {
                 if (!resp) {
                     mensajeError = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
-                    if (!eliminarActividad("Error al agregar", "SISTEMA")) {
+                    if (!eliminarActividad(ip, user)) {
                         mensajeError = " Error: La Actividad '" + nombreTipoActividad
-                                + "' no pudo ser resgistrada satisfactoriamente, debe eliminarla"
-                                + " mediante el sistema.";
+                                + "' no pudo ser resgistrada satisfactoriamente, en caso "
+                                + "de que aparezca por favor elimínela e inténtelo de nuevo.";
                     }
                 }
             }

@@ -26,11 +26,11 @@ public class Agregar extends DispatchAction {
     /*
      * forward name="success" path=""
      */
+    private static final String PAGE = "page";
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL = "successfull";
     private static final String FAILURE = "failure";
     private static final String FAILURE2 = "failureCampos";
-    private static final String PAGE = "page";
 
     /**
      * This is the action called from the Struts framework.
@@ -45,10 +45,15 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+
         Root.deleteSessions(request, "");
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
-        ta.setMensaje(null);
 
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
@@ -64,9 +69,14 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+
         TipoActividad ta = (TipoActividad) form;
         ta.setMensajeError(null);
-        ta.setMensaje(null);
+
         ArrayList catalogos = Clases.Catalogo.listarCondicion("participa", false);
         request.getSession().setAttribute("catalogos", catalogos);
 
@@ -97,22 +107,21 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        TipoActividad ta = (TipoActividad) form;
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
-        String ip = request.getHeader("X-Forwarded-For");
-        ta.setMensajeError(null);
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
 
+        TipoActividad ta = (TipoActividad) form;
+
+        String usuario = u.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
 
         ta.setPermisos((String[]) request.getSession().getAttribute("permisos"));
         if (ta.agregarTipoActividad(ip, usuario)) {
 
-            ArrayList tipos = Clases.TipoActividad.listarCondicion("activo", true);
-            request.setAttribute("tipos", tipos);
-            String nombre = ta.getNombreTipo();
-            Clases.Root.deleteSessions(request, "");
-            request.setAttribute("mensaje", "El Tipo de Actividad '" + nombre
-                    + "' ha sido registrado con éxito.");
+            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
+                    + ta.getNombreTipo() + "' ha sido registrado con éxito.");
             return mapping.findForward(SUCCESSFULL);
         }
 

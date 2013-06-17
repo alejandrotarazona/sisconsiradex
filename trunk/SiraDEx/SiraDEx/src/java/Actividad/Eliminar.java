@@ -6,7 +6,6 @@ package Actividad;
 
 import Clases.Actividad;
 import Clases.Usuario;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -22,8 +21,8 @@ public class Eliminar extends org.apache.struts.action.Action {
     /*
      * forward name="success" path=""
      */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
+    private static final String SUCCESS1 = "success1";
+    private static final String SUCCESS2 = "success2";
 
     /**
      * This is the action called from the Struts framework.
@@ -39,44 +38,30 @@ public class Eliminar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Actividad act = (Actividad) form;
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS1);
+        }
+
+        Actividad act = (Actividad) form;
+
         String rol = u.getRol();
-        ArrayList<Actividad> acts;
-        String [] estadistica = u.cantidadActividadesPorTipo();
-        
-         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         if (act.eliminarActividad(ip, usuario)) {
-            act.setMensaje("La actividad ha sido eliminada");
-
-            if (rol.equalsIgnoreCase("WM")) {
-                acts = Clases.Actividad.listarActividades();
-            } else {
-                act.setCreador(u.getUsername());
-                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-            }
-            request.setAttribute("acts", acts);
-            request.setAttribute("estadisticaNombres", estadistica[0]);
-            request.setAttribute("estadisticaCantidad", estadistica[1]);
-            
-            if (acts.isEmpty()) {
-                request.setAttribute("acts", null);
-            }
-            return mapping.findForward(SUCCESS);
-
+            request.getSession().setAttribute("mensajeAct",
+                    "La Actividad ha sido eliminada con éxito.");
         } else {
 
-            if (rol.equalsIgnoreCase("WM")) {
-                acts = Clases.Actividad.listarActividades();
-            } else {
-                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-            }
-            request.setAttribute("acts", acts);
-            act.setMensajeError("Error: La actividad no pudo ser eliminada");
-            return mapping.findForward(FAILURE);
+            request.getSession().setAttribute("mensajeAct",
+                    "Error: La Actividad no pudo ser eliminada");
         }
+        if (rol.equalsIgnoreCase("WM")) {
+            return mapping.findForward(SUCCESS2);
+        }
+        return mapping.findForward(SUCCESS1);
     }
 }

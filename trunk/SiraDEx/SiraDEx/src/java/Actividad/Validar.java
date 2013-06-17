@@ -6,7 +6,6 @@ package Actividad;
 
 import Clases.Actividad;
 import Clases.Usuario;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -36,28 +35,24 @@ public class Validar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS);
+        }
         Actividad act = (Actividad) form;
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
-        String validador = user.getRol();
 
         boolean validacion = act.validar(true, ip, usuario);
 
-        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
-
-        if (acts.isEmpty()) {
-            acts = null;
-        }
-        request.setAttribute("acts", acts);
-
         if (validacion) {
-            act.setMensaje("La Actividad ha sido validada.");
-            act.setMensajeError(null);
+            request.getSession().setAttribute("mensajeVal",
+                    "La Actividad ha sido validada con éxito.");
             //act.enviarCorreo(3);
             return mapping.findForward(SUCCESS);
         } else {
-            act.setMensajeError("Error: La Actividad no se pudo validar, intente de nuevo.");
+            request.getSession().setAttribute("mensajeVal",
+                    "Error: La Actividad no se pudo validar. Por favor, intente de nuevo.");
             return mapping.findForward(FAILURE);
         }
     }

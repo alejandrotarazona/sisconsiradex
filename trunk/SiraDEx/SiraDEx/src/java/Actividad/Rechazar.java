@@ -6,7 +6,6 @@ package Actividad;
 
 import Clases.Actividad;
 import Clases.Usuario;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -45,36 +44,30 @@ public class Rechazar extends DispatchAction {
     public ActionForward reject(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Actividad act = (Actividad) form;
-
 
         if (act.getDescripcion().replace("\n", "").length() > 2001) {
             act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
             return mapping.findForward(FAILURE);
         }
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String validador = user.getRol();
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
-        
+
         boolean validacion = act.validar(false, ip, usuario);
 
-        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(validador);
-
-        if (acts.isEmpty()) {
-            acts = null;
-        }
-        request.setAttribute("acts", acts);
-
         if (validacion) {
-            act.setMensaje("La Actividad ha sido rechazada.");
+            request.getSession().setAttribute("mensajeVal",
+                    "La Actividad ha sido rechazada con éxito.");
             act.setMensajeError(null);
-            act.enviarCorreo(2);
+            //act.enviarCorreo(2);
             return mapping.findForward(SUCCESS);
         }
 
-        act.setMensajeError("Error: La Actividad no se pudo rechazar, intente de nuevo.");
         return mapping.findForward(FAILURE);
     }
 }

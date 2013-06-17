@@ -27,7 +27,8 @@ public class Agregar extends DispatchAction {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
-    private static final String SUCCESSFULL = "successfull";
+    private static final String SUCCESSFULL1 = "successfull1";
+    private static final String SUCCESSFULL2 = "successfull2";
     private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
@@ -44,14 +45,19 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        Clases.Root.deleteSessions(request, "");
+        
         Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+        Clases.Root.deleteSessions(request, "");
         ArrayList<TipoActividad> ta;
         String rol = u.getRol();
         switch (rol) {
             case "WM":
-                ta = Clases.TipoActividad.listarCondicion("activo", true);
+                String[] atrib = {"activo"};
+                Object[] val = {true};
+                ta = Clases.TipoActividad.listarCondicion(atrib, val);
                 break;
             case "empleado":
             case "obrero":
@@ -60,7 +66,9 @@ public class Agregar extends DispatchAction {
                 ta = Clases.TipoActividad.listarTiposActividad(u);
                 break;
             default:
-                ta = Clases.TipoActividad.listarCondicion("validador", rol);
+                String[] atributo = {"validador"};
+                Object[] valor = {rol};
+                ta = Clases.TipoActividad.listarCondicion(atributo, valor);
                 break;
         }
 
@@ -77,7 +85,11 @@ public class Agregar extends DispatchAction {
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Actividad act = (Actividad) form;
         int id = act.getIdTipoActividad();
         TipoActividad ta = new TipoActividad();
@@ -86,7 +98,7 @@ public class Agregar extends DispatchAction {
         act.setNombreTipoActividad(ta.getNombreTipo());
         ArrayList<CampoValor> campos = Clases.CampoValor.listarCampos(id);
         act.setCamposValores(campos);
-        Usuario u = (Usuario) request.getSession().getAttribute("user");
+
         String username = u.getUsername();
         act.setCreador(username);
 
@@ -112,7 +124,11 @@ public class Agregar extends DispatchAction {
     public ActionForward save2(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Actividad act = (Actividad) form;
 
         ArrayList<CampoValor> camposAntes;
@@ -135,38 +151,22 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         if (act.agregar(ip, usuario)) {
 
-            Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
-            ArrayList<Actividad> acts;
-            String[] estadistica = u.cantidadActividadesPorTipo();
 
-            if (rol.equalsIgnoreCase("WM")) {
-                acts = Clases.Actividad.listarActividades();
-            } else {
-                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-            }
+            request.getSession().setAttribute("mensajeAct", "La Actividad '"
+                    + act.getNombreTipoActividad() + "' ha sido registrada con éxito.");
 
-            request.setAttribute("acts", acts);
-            request.setAttribute("estadisticaNombres", estadistica[0]);
-            request.setAttribute("estadisticaCantidad", estadistica[1]);
-
-            String nombre = act.getNombreTipoActividad();
-            Clases.Root.deleteSessions(request, "actividadForm");
-
-            act.setMensaje("La Actividad '" + nombre + "' ha sido registrada con éxito.");
-            act.setMensajeError(null);
             //act.enviarCorreo(0);
-            return mapping.findForward(SUCCESSFULL);
+            if (rol.equalsIgnoreCase("WM")) {
+                return mapping.findForward(SUCCESSFULL2);
+            }
+            return mapping.findForward(SUCCESSFULL1);
         }
-
         return mapping.findForward(FAILURE);
-
-
     }
 }

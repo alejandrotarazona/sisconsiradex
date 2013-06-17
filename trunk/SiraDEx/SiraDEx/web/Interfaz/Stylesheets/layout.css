@@ -17,7 +17,7 @@
 .container-16 {
   margin-left: auto;
   margin-right: auto;
-  width: 1018px; /*ancho de contenido*/
+  width: 1060px; /*ancho de contenido*/
 }
 
 /* `Grid >> Global
@@ -124,11 +124,11 @@
 }
 
 .container-16 .grid-3 {
-  width: 134px; /*posicion menu derecho*/
+  width: 130px;
 }
 
 .container-16 .grid-5 {
-  width: 280px;
+  width: 260px;
 }
 
 .container-16 .grid-6 {
@@ -144,7 +144,7 @@
 }
 
 .container-16 .grid-10 {
-  width: 840px; /*posicion menu izquierdo*/
+  width: 610px;
 }
 
 .container-16 .grid-11 {
@@ -160,7 +160,7 @@
 }
 
 .container-16 .grid-15 {
-  width: 880px;
+  width: 890px;
 }
 
 /* `Prefix Extra Space >> Global
@@ -436,11 +436,12 @@
 }
 
 .container-16 .push-3 {
-  left: 180px;
+  left: 160px;
 }
 
 .container-16 .push-5 {
-  left: 300px;
+  /*left: 300px;*/
+  left: 290px;
 }
 
 .container-16 .push-6 {
@@ -560,7 +561,7 @@
 }
 
 .container-16 .pull-10 {
-  left: -880px;
+  left: -620px;
 }
 
 .container-16 .pull-11 {
@@ -568,7 +569,7 @@
 }
 
 .container-16 .pull-13 {
-  left: -780px;
+  left: -790px;
 }
 
 .container-16 .pull-14 {
@@ -576,7 +577,7 @@
 }
 
 .container-16 .pull-15 {
-  left: -900px;
+  left: -910px;
 }
 
 /* `Clear Floated Elements

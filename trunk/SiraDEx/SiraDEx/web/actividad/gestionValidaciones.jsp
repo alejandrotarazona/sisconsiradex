@@ -50,15 +50,19 @@
     </head>
     <body>
         <h1 class="title">Gestión de Validaciones</h1>
+        
+        
+        <logic:present name="mensajeVal"><br>
+            <logic:notMatch name="mensajeVal" value="Error:">
+                <div class ="status"><bean:write name="mensajeVal"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeVal" value="Error:">
+                <div class ="error"><bean:write name="mensajeVal"/></div>
+            </logic:match>
+        </logic:present>
 
         <h1><bean:write name="user" property="rol"/></h1>
 
-        <logic:present name="actividadForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="actividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
-        </logic:present>
 
         <logic:notPresent name="acts"><br>
             <div align="center">No hay actividad pendiente por validar</div>
@@ -110,18 +114,18 @@
 
 
                         <br>
-                        <a class="mostrar" style=" cursor: pointer">
+                        <a class="mostrar">
                             Más detalles
                         </a>
                         </td>
                         <td>    
-                            <bean:write name="act" property="fechaCreacion"></bean:write> 
-                            por el usuario <bean:write name="act" property="creador"></bean:write> 
-                            </td>
-                            <td>
+                            <bean:write name="act" property="fechaCreacion"/> 
+                            por el usuario <bean:write name="act" property="creador"/> 
+                        </td>
+                        <td>
                             <logic:present  name="act" property="modificador">
-                                <bean:write name="act" property="fechaModif"></bean:write>
-                                por el usuario <bean:write name="act" property="modificador"></bean:write>
+                                <bean:write name="act" property="fechaModif"/>
+                                por el usuario <bean:write name="act" property="modificador"/>
                             </logic:present>
 
                         </td>

@@ -381,79 +381,16 @@ public class TipoActividad extends Root {
         Object[] modificaciones = {false};
 
         if (eMod.modificar(condColumnas, valores, colModificar, modificaciones)) {
-            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado";
             eMod.setIp(ip);
             eMod.setUser(user);
             eMod.log();
             return true;
         }
-
-        mensajeError = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
+        
         return false;
     }
-
-    private static ArrayList<TipoActividad> listar(ResultSet rs) {
-        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
-
-        if (rs != null) {
-            try {
-                while (rs.next()) {
-                    TipoActividad t = new TipoActividad();
-                    t.setId(rs.getInt(ATRIBUTOS[0]));
-                    t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
-                    t.setTipoPR(rs.getString(ATRIBUTOS[2]));
-                    t.setDescripcion(rs.getString(ATRIBUTOS[3]));
-                    t.setPrograma(rs.getString(ATRIBUTOS[4]));
-                    t.setValidador(rs.getString(ATRIBUTOS[5]));
-                    t.setActivo(rs.getBoolean(ATRIBUTOS[6]));
-                    t.setPermisos();
-                    tipos.add(t);
-                }
-                rs.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-        return tipos;
-    }
-
-    /**
-     *
-     * @return lista con los Tipos de Actividad que cumplen la condicion dada
-     */
-    public static ArrayList<TipoActividad> listarCondicion(String atributo, Object valor) {
-        Entity eListar = new Entity(1);//TIPO_ACTIVIDAD
-        String[] atrib = {atributo};
-        Object[] val = {valor};
-        ResultSet rs = eListar.seleccionar(atrib, val);
-        return listar(rs);
-    }
-
-    /**
-     * Lista los tipos de actividades que puede realizar el usuario.
-     *
-     * @param usuario El usuario del cual se quieren listarActivos las
-     * posibilidades de tipos de actividad.
-     * @return Lista de los tipos de actividad que puede realizar el usuario
-     * dado.
-     */
-    public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
-        ArrayList<TipoActividad> tiposAux = listarCondicion(ATRIBUTOS[6], true);
-        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
-        Iterator it = tiposAux.iterator();
-
-        System.out.println("El rol del usuario es: " + u.getRol());
-        while (it.hasNext()) {
-            TipoActividad t = (TipoActividad) it.next();
-            System.out.println("estoy checkeando los permisos...");
-            if (t.checkPermiso(u.getRol())) {
-                tipos.add(t);
-            }
-        }
-        return tipos;
-    }
-
-    /**
+    
+     /**
      * Modifica los permisos asociados a un tipo de actividad, eliminando
      * primero los permisos previos dados a dicha actividad e insertando luego
      * los nuevos permisos.
@@ -606,6 +543,69 @@ public class TipoActividad extends Root {
         mensajeError = "Error: No se pudo restaurar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
+
+    private static ArrayList<TipoActividad> listar(ResultSet rs) {
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
+
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    TipoActividad t = new TipoActividad();
+                    t.setId(rs.getInt(ATRIBUTOS[0]));
+                    t.setNombreTipo(rs.getString(ATRIBUTOS[1]));
+                    t.setTipoPR(rs.getString(ATRIBUTOS[2]));
+                    t.setDescripcion(rs.getString(ATRIBUTOS[3]));
+                    t.setPrograma(rs.getString(ATRIBUTOS[4]));
+                    t.setValidador(rs.getString(ATRIBUTOS[5]));
+                    t.setActivo(rs.getBoolean(ATRIBUTOS[6]));
+                    t.setPermisos();
+                    tipos.add(t);
+                }
+                rs.close();
+            } catch (SQLException ex) {
+                Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return tipos;
+    }
+
+    /**
+     *
+     * @return lista con los Tipos de Actividad que cumplen la condicion dada
+     */
+    public static ArrayList<TipoActividad> listarCondicion(String[] atrib, Object[] val) {
+        Entity eListar = new Entity(1);//TIPO_ACTIVIDAD
+        ResultSet rs = eListar.seleccionar(atrib, val);
+        return listar(rs);
+    }
+
+    /**
+     * Lista los tipos de actividades que puede realizar el usuario.
+     *
+     * @param usuario El usuario del cual se quieren listarActivos las
+     * posibilidades de tipos de actividad.
+     * @return Lista de los tipos de actividad que puede realizar el usuario
+     * dado.
+     */
+    public static ArrayList<TipoActividad> listarTiposActividad(Usuario u) {
+        String[] atrib = {ATRIBUTOS[6]};
+        Object[] val = {true};
+        ArrayList<TipoActividad> tiposAux = listarCondicion(atrib, val);
+        ArrayList<TipoActividad> tipos = new ArrayList<>(0);
+        Iterator it = tiposAux.iterator();
+
+        System.out.println("El rol del usuario es: " + u.getRol());
+        while (it.hasNext()) {
+            TipoActividad t = (TipoActividad) it.next();
+            System.out.println("estoy checkeando los permisos...");
+            if (t.checkPermiso(u.getRol())) {
+                tipos.add(t);
+            }
+        }
+        return tipos;
+    }
+
+   
 
     public static void main(String[] args) throws CloneNotSupportedException {
         //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");

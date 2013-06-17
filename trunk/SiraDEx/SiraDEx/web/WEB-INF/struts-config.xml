@@ -69,7 +69,8 @@
         
         <action path="/VerPerfilUsuario" type="Usuario.EditarPerfil" 
                 scope="session" parameter="method" name="usuarioForm">
-            <forward name="success" path="VerPerfilUsuario.do?method=page" redirect="true"/>
+            <forward name="success" path="VerPerfilUsuario.do?method=page" 
+                     redirect="true"/>
             <forward name="page" path="perfilUsuario"/>
         </action>
         
@@ -90,7 +91,8 @@
         <action path="/RegistrarTipoActividad" type="TipoActividad.Agregar" 
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="success" path="agregarCampos"/>
-            <forward name="successfull" path="gestionTiposActividad"/>
+            <forward name="successfull" path="GestionTiposActividad.do?method=listActive" 
+                     redirect="true"/>
             <forward name="failure" path="agregarTipoActividad"/>            
             <forward name="page" path="agregarTipoActividad"/>
             <forward name="failureCampos" path="agregarCampos"/>
@@ -98,21 +100,27 @@
         
         <action path="/EliminarTipoActividad" type="TipoActividad.Eliminar"
                 scope="request" name="tipoActividadForm">
-            <forward name="success" path="gestionTiposActividad"/>
-            <forward name="failure" path="gestionTiposActividad"/>
+            <forward name="success" path="GestionTiposActividad.do?method=listActive" 
+                     redirect="true"/>
         </action>
         
         <action path="/ModificarTipoActividad" type="TipoActividad.Modificar" 
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="page" path="modificarTipoActividad"/>
-            <forward name="success" path="gestionTiposActividad"/>
+            <forward name="success" path="GestionTiposActividad.do?method=listActive" 
+                     redirect="true"/>
             <forward name="failure" path="modificarTipoActividad"/>    
         </action>
          
          <action path="/RestaurarTipoActividad" type="TipoActividad.Restaurar"
                 scope="request" name="tipoActividadForm">
-            <forward name="success" path="gestionPapelera"/>
-            <forward name="failure" path="gestionPapelera"/>
+            <forward name="success" path="GestionTiposActividad.do?method=listDisable" 
+                     redirect="true"/>
+         </action>
+         
+         <action path="/ConsultarTipoActividad" type="TipoActividad.Consultar"
+                scope="request" name="tipoActividadForm">
+            <forward name="success" path="consultarTipoActividad"/>
          </action>
             
         <!-- ========================ACTIVIDAD==============================-->
@@ -125,28 +133,38 @@
         
         <action path="/RegistrarActividad" type="Actividad.Agregar" 
                 scope="session" parameter="method" name="actividadForm">
-            <forward name="success" path="agregarActividad2"/>
-            <forward name="successfull" path="gestionActividades"/>
-            <forward name="failure" path="agregarActividad2"/>
             <forward name="page" path="agregarActividad1"/>
+            <forward name="success" path="agregarActividad2"/>
+            <forward name="successfull1" path="GestionActividades.do?method=listUser" 
+                     redirect="true"/>
+            <forward name="successfull2" path="GestionActividades.do?method=listAll" 
+                     redirect="true"/>
+            <forward name="failure" path="agregarActividad2"/>
+
         </action>
                
         <action path="/EliminarActividad" type="Actividad.Eliminar" 
                 scope="request" name="actividadForm">
-            <forward name="success" path="gestionActividades"/>
-            <forward name="failure" path="gestionActividades"/>
+            <forward name="success1" path="GestionActividades.do?method=listUser" 
+                     redirect="true"/>
+            <forward name="success2" path="GestionActividades.do?method=listAll" 
+                     redirect="true"/>
         </action>
         
          <action path="/ModificarActividad" type="Actividad.Modificar" 
                 scope="session" parameter="method" name="actividadForm">
             <forward name="page" path="modificarActividad"/>
-            <forward name="success" path="gestionActividades"/>
+            <forward name="success1" path="GestionActividades.do?method=listUser" 
+                     redirect="true"/>
+            <forward name="success2" path="GestionActividades.do?method=listAll" 
+                     redirect="true"/>
             <forward name="failure" path="modificarActividad"/>    
         </action>
         
         <action path="/ValidarActividad" type="Actividad.Validar"
                  scope="request" name="actividadForm">
-            <forward name="success" path="gestionValidaciones"/>
+            <forward name="success" path="GestionActividades.do?method=listDex" 
+                     redirect="true"/> 
             <forward name="failure" path="gestionValidaciones"/>
             
          </action>
@@ -155,7 +173,8 @@
                  scope="session" parameter="method" name="actividadForm">
             <forward name="page" path="rechazarActividad"/>
             <forward name="failure" path="rechazarActividad"/>
-            <forward name="success" path="gestionValidaciones"/>       
+            <forward name="success" path="GestionActividades.do?method=listDex" 
+                     redirect="true"/>    
          </action>
          
          <action path="/MostrarPDF" type="Actividad.MostrarPDF"

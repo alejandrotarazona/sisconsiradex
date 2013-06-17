@@ -13,10 +13,10 @@
 
 <head>
     <style>
-        .selector {width: 50px;}
+        .selector {width: 43px;}
     </style>
 </head>
-<div id="sidebar-first" class="sidebar grid-5 pull-11">
+<div id="sidebar-first" class="sidebar grid-5 pull-13">
     <div class="region region-sidebar-first">
         <div id="block-system-main-menu" class="block block-system block-menu first">
             <div class="inner">
@@ -52,9 +52,6 @@
                         %>
                         <html:form action="<%=accion%>">
 
-                        <div align="right"><html:submit>Buscar</html:submit></div>
-                        <br>
-
                         Mostrar <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
                                      styleClass="selector" value="${busquedaActividadForm.mostrarPorPagina}">
                             <html:option value="10">10</html:option>
@@ -62,7 +59,7 @@
                             <html:option value="50">50</html:option>
                             <html:option value="100">100</html:option>
                         </html:select>
-                        actividades por pagina.
+                        actividades por página.
                         <br><br>
 
                         Tipo de Actividad:<br> 

@@ -60,6 +60,17 @@
     </head>
     <body>
         <h1 class="title">Gestión de Actividades</h1>
+
+        <logic:present name="mensajeAct"><br>
+            <logic:notMatch name="mensajeAct" value="Error:">
+                <div class ="status"><bean:write name="mensajeAct"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeAct" value="Error:">
+                <div class ="error"><bean:write name="mensajeAct"/></div>
+            </logic:match>
+            <br>
+        </logic:present>
+
         <logic:notPresent name="TipoAct">
             <html:link action="/RegistrarActividad?method=page"> 
                 Agregar Actividad
@@ -80,7 +91,7 @@
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                 s += chd + chtt + chco + "chdl=" + chdl;
             %>
-            <a class="ver" style=" cursor: pointer">
+            <a class="ver">
                 Ocultar Gráfica</a>
         <span class="grafica">
             <center>
@@ -89,15 +100,6 @@
         </span>
     </logic:present>       
 
-    <logic:present name="mensaje"><br><br>
-        <div class ="status"><bean:write name="mensaje"/></div>
-    </logic:present> 
-    <logic:present name="actividadForm" property="mensaje"><br><br>
-        <div class ="status"><bean:write name="actividadForm" property="mensaje"/></div>
-    </logic:present>
-    <logic:present name="actividadForm" property="mensajeError"><br><br>
-        <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
-    </logic:present>
 
     <logic:notPresent name="acts"><br>
         <div align="center">No hay Actividad que mostrar</div>
@@ -148,18 +150,18 @@
                     </span>  
 
                     <br>
-                    <a class="mostrar" style=" cursor: pointer">
+                    <a class="mostrar">
                         Más detalles
                     </a>
                     </td>
+                    <td>    
+                        <bean:write name="act" property="fechaCreacion"/> 
+                        por el usuario <bean:write name="act" property="creador"/> 
+                    </td>
                     <td>
-                        <bean:write name="act" property="creador"></bean:write>, 
-                        <bean:write name="act" property="fechaCreacion"></bean:write>
-                        </td>
-                        <td>
                         <logic:present  name="act" property="modificador">
-                            <bean:write name="act" property="modificador"></bean:write>, 
-                            <bean:write name="act" property="fechaModif"></bean:write>
+                            <bean:write name="act" property="fechaModif"/>
+                            por el usuario <bean:write name="act" property="modificador"/>
                         </logic:present>
 
                     </td>
