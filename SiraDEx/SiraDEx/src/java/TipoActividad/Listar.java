@@ -5,6 +5,7 @@
 package TipoActividad;
 
 import Clases.TipoActividad;
+import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -37,8 +38,23 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Clases.Root.deleteSessions(request, "tipoActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS1);
+        }
+
+        Clases.Root.deleteSessions(request, "mensajeTipo");
+        ArrayList<TipoActividad> ta;
+        String rol = u.getRol();
+        if (rol.equals("WM")) {
+            String[] atributos = {"activo"};
+            Object[] valores = {true};
+            ta = Clases.TipoActividad.listarCondicion(atributos, valores);
+        } else {
+            String[] atributos = {"activo", "validador"};
+            Object[] valores = {true, rol};
+            ta = Clases.TipoActividad.listarCondicion(atributos, valores);
+        }
 
         if (ta.isEmpty()) {
             ta = null;
@@ -52,8 +68,23 @@ public class Listar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Clases.Root.deleteSessions(request, "tipoActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", false);
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS2);
+        }
+
+        Clases.Root.deleteSessions(request, "mensajeRest");
+        ArrayList<TipoActividad> ta;
+        String rol = u.getRol();
+        if (rol.equals("WM")) {
+            String[] atributos = {"activo"};
+            Object[] valores = {false};
+            ta = Clases.TipoActividad.listarCondicion(atributos, valores);
+        } else {
+            String[] atributos = {"activo", "validador"};
+            Object[] valores = {false, rol};
+            ta = Clases.TipoActividad.listarCondicion(atributos, valores);
+        }
 
         if (ta.isEmpty()) {
             ta = null;

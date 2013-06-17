@@ -17,10 +17,7 @@
         <style>
             .selector {width: 80px;}
             .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
-            .cebra th {
-                background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);
-            }
-
+            .cebra th {background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);}
         </style>
         <script>
             $(document).ready(function(){

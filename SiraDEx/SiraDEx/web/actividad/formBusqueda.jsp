@@ -66,7 +66,21 @@
                     property="mensajeError" /></div>
         </logic:present>
 
-    <logic:present name="actividades"> 
+    <logic:notPresent name="actividades">
+        <div align="center"><br>
+            Para realizar una consulta, seleccione o rellene los campos mostrados a 
+            la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
+        </div>
+    </logic:notPresent>
+
+    <logic:present name="actividades">
+        <logic:empty name="actividades">
+            <br><br>
+            <div align="center">
+                No hay actividad que mostrar que coincida con los
+                parámetros de la búsqueda
+            </div>
+        </logic:empty>
         <logic:notEmpty name="actividades">
             <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
                 String chdl = (String) request.getSession().getAttribute("graficaNombres");
@@ -75,13 +89,77 @@
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                 s += chd + chtt + chco + "chdl=" + chdl;
             %>
-            <a class="ver" style=" cursor: pointer;">
-                Ocultar Gráfica</a>
+            <a class="ver">
+                Ocultar Gráfica
+            </a>
         <span class="grafica">
             <center>
                 <html:img src="<%=s%>"/>
             </center>
         </span>
+
+
+        <br><br><br>
+
+        <table class="cebra">
+            <tbody>
+                <logic:iterate name="actividades" id="act" indexId="index">
+                    <tr>
+                    <td>
+                        <b>${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.</b>
+                    </td>
+                    <td>
+                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                                out.print(a.participantesToString());%></b>
+                        "<bean:write name="act" property="nombreTipoActividad"/>",
+
+
+                        <% out.print(a.camposValoresToString());%>
+
+                        <logic:equal name="act" property="validacion" value="En espera">
+                            <b>Actividad por validar.</b>
+                        </logic:equal>
+                        <br>
+                        <div>
+                            <span class="textolargo">
+
+                                <b>Descripción:</b> 
+                                <bean:write name="act" property="descripcion"/>
+
+                                <logic:iterate name="act" property="camposValores" 
+                                               id="campoValor" indexId="index">
+
+                                    <logic:equal name="campoValor" property="campo.tipo" 
+                                                 value="textol">
+                                        <br>
+                                        <bean:write name="campoValor" property="campo.nombre"/>: 
+                                        <bean:write name="campoValor" property="valor"/>
+                                    </logic:equal>
+
+                                </logic:iterate>
+                                <logic:iterate name="act" property="archivos" 
+                                               id="archivo" indexId="index">
+
+                                    <html:form method="POST">
+                                        <html:hidden name="act" property="idActividad"/>
+                                        <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                        <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
+                                                   paramId="idActividad" title="Descargar">
+                                            ${archivo.tipo}
+                                        </html:link> 
+                                    </html:form>
+
+                                </logic:iterate>
+                            </span> 
+
+                            <a class="mostrar" style="text-decoration:underline">
+                                Más detalles</a>
+                        </div>
+                    </td>
+                    </tr>
+                </logic:iterate>
+            </tbody>
+        </table>
         <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
             String accion;
             if (usuario == null) {
@@ -90,125 +168,46 @@
                 accion = "/BusquedaAvanzada?method=aPagina";
             }
         %>
-        <br><br>    
-        <html:form action="<%=accion%>">
-            Página ${busquedaActividadForm.pagina} de ${busquedaActividadForm.totalPaginas}
-            &nbsp;&nbsp;&nbsp; 
-            <html:hidden name="busquedaActividadForm" property="pagina" styleId="actual"/>
-
-            <html:submit value="Anterior" title="Ir a la página anterior"
-                         styleId="anterior"
-                         onclick="if (${busquedaActividadForm.pagina} > 1){
-                         document.getElementById('actual').value=${busquedaActividadForm.pagina}-1;
-                         } else {
-                         this.disabled=true;
-                         this.style.background='grey';
-                         } document.getElementById('siguiente').disabled=false;"/>
-            <html:submit value="Siguiente" title="Ir a la página siguiente"
-                         styleId="siguiente"
-                         onclick="if (${busquedaActividadForm.pagina} < ${busquedaActividadForm.totalPaginas}){
-                         document.getElementById('actual').value=${busquedaActividadForm.pagina}+1;
-                         } else {
-                         this.disabled=true; 
-                         this.style.background='grey';
-                         } document.getElementById('anterior').disabled=false;
-                         "/>
-
-            <logic:empty name="actividades">
-                <br><br>
-                <div align="center">No hay actividad que mostrar que coincida con los
-                    parámetros de la búsqueda</div>
-                </logic:empty>
-            <table class="cebra">
-                <tbody>
-                    <logic:iterate name="actividades" id="act" indexId="index">
-                        <tr>
-                        <td>
-                            <b>${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.</b>
-                        </td>
-                        <td>
-                                <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                out.print(a.participantesToString());%></b>
-                            "<bean:write name="act" property="nombreTipoActividad"/>",
+        <table>
+            <tr>
+            <td align="left">
+                <html:form action="<%=accion%>">
+                    <html:hidden name="busquedaActividadForm" property="pagina" styleId="actual"/>
+                    Página ${busquedaActividadForm.pagina} de ${busquedaActividadForm.totalPaginas}
+                </td>
+                <td align="right">
+                    <logic:equal name="busquedaActividadForm" property="pagina" value="1">
+                        <html:submit value="Anterior" title="Ir a la página anterior"
+                                     style="padding: 2px 6px;" disabled="true"/>   
+                    </logic:equal>
+                    <logic:notEqual name="busquedaActividadForm" property="pagina" value="1">
+                        <html:submit value="Anterior" title="Ir a la página anterior"
+                                     style="padding: 2px 6px;"
+                                     onclick="if (${busquedaActividadForm.pagina} > 1){
+                                     document.getElementById('actual').value=${busquedaActividadForm.pagina}-1;
+                                     }"/>   
+                    </logic:notEqual>
+                    <logic:equal name="busquedaActividadForm" property="pagina" 
+                                 value="${busquedaActividadForm.totalPaginas}">
+                        <html:submit value="Siguiente" title="Ir a la página siguiente"
+                                     style="padding: 2px 6px;" disabled="true"/>   
+                    </logic:equal>
+                    <logic:notEqual name="busquedaActividadForm" property="pagina" 
+                                    value="${busquedaActividadForm.totalPaginas}">
+                        <html:submit value="Siguiente" title="Ir a la página siguiente"
+                                     style="padding: 2px 6px;"
+                                     onclick="if (${busquedaActividadForm.pagina} < ${busquedaActividadForm.totalPaginas}){
+                                     document.getElementById('actual').value=${busquedaActividadForm.pagina}+1;
+                                     }"/>
+                    </logic:notEqual>
+                </html:form>
+            </td>
+        </tr>
+    </table>
 
 
-                            <% out.print(a.camposValoresToString());%>
-
-                            <logic:equal name="act" property="validacion" value="En espera">
-                                <b>Actividad por validar.</b>
-                            </logic:equal>
-                            <br>
-                            <div>
-                                <span class="textolargo">
-
-                                    <b>Descripción:</b> 
-                                    <bean:write name="act" property="descripcion"/>
-
-                                    <logic:iterate name="act" property="camposValores" 
-                                                   id="campoValor" indexId="index">
-
-                                        <logic:equal name="campoValor" property="campo.tipo" 
-                                                     value="textol">
-                                            <br>
-                                            <bean:write name="campoValor" property="campo.nombre"/>: 
-                                            <bean:write name="campoValor" property="valor"/>
-                                        </logic:equal>
-
-                                    </logic:iterate>
-                                    <logic:iterate name="act" property="archivos" 
-                                                   id="archivo" indexId="index">
-
-                                        <html:form method="POST">
-                                            <html:hidden name="act" property="idActividad"/>
-                                            <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                            <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
-                                                       paramId="idActividad" title="Descargar">
-                                                ${archivo.tipo}
-                                            </html:link> 
-                                        </html:form>
-
-                                    </logic:iterate>
-                                </span> 
-
-                                <a class="mostrar" style=" cursor: pointer; text-decoration:underline">
-                                    Más detalles</a>
-                            </div>
-                        </td>
-                        </tr>
-                    </logic:iterate>
-                </tbody>
-            </table>
-
-
-            Página ${busquedaActividadForm.pagina} de ${busquedaActividadForm.totalPaginas}
-            &nbsp;&nbsp;&nbsp;  
-            <html:submit value="Anterior" title="Ir a la página anterior"
-                         styleId="anterior"
-                         onclick="if (${busquedaActividadForm.pagina} > 1){
-                         document.getElementById('actual').value=${busquedaActividadForm.pagina}-1;
-                         } else {
-                         this.disabled=true;
-                         this.style.background='grey';
-                         } document.getElementById('siguiente').disabled=false;"/>
-            <html:submit value="Siguiente" title="Ir a la página siguiente"
-                         styleId="siguiente"
-                         onclick="if (${busquedaActividadForm.pagina} < ${busquedaActividadForm.totalPaginas}){
-                         document.getElementById('actual').value=${busquedaActividadForm.pagina}+1;
-                         } else {
-                         this.disabled=true; 
-                         this.style.background='grey';
-                         } document.getElementById('anterior').disabled=false;
-                         "/>
-        </html:form>
-    </logic:notEmpty>
+</logic:notEmpty>
 </logic:present>
-
-<logic:notPresent name="actividades">
-    <div align="center"><br>
-        Para realizar una consulta, seleccione o rellene los campos mostrados a 
-        la izquierda de la página. Luego, presione el botón <b>Buscar</b>.
-    </div>
-</logic:notPresent>
 
 </body>
 

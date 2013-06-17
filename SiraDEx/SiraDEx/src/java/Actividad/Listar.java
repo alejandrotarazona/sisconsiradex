@@ -37,11 +37,13 @@ public class Listar extends DispatchAction {
     public ActionForward listUser(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Actividad act = new Actividad();
-        Clases.Root.deleteSessions(request, "");
+        
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        String username = u.getUsername();
-        act.setCreador(username);
+        if (u == null) {
+            return mapping.findForward(SUCCESS1);
+        }
+        
+        Clases.Root.deleteSessions(request, "mensajeAct");
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
         String[] grafica = u.cantidadActividadesPorTipo();
@@ -60,9 +62,14 @@ public class Listar extends DispatchAction {
     public ActionForward listAll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
-        Clases.Root.deleteSessions(request, "");
+        
         Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS1);
+        }
+        
+        Clases.Root.deleteSessions(request, "mensajeAct");
+
         String[] grafica = u.cantidadActividadesPorTipo();
         ArrayList<Actividad> acts = Actividad.listarActividades();
 
@@ -81,11 +88,15 @@ public class Listar extends DispatchAction {
     public ActionForward listDex(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS1);
+        }
 
-        Clases.Root.deleteSessions(request, "");
+        Clases.Root.deleteSessions(request, "mensajeVal");
 
-        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(user.getRol());
+        ArrayList<Actividad> acts = Actividad.listarActividadesDeValidador(u.getRol());
 
         request.setAttribute("acts", acts);
 

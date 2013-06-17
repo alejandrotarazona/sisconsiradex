@@ -40,6 +40,11 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS);
+        }
+        
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
@@ -55,8 +60,6 @@ public class Modificar extends DispatchAction {
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensaje(null);
-
 
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();
@@ -80,21 +83,22 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS);
+        }
+
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensajeError(null);
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         if (ta.modificar(taNM, ip, usuario)) {
-            ArrayList<TipoActividad> tas = Clases.TipoActividad.listarCondicion("activo", true);
-            request.setAttribute("tipos", tas);
-            String nombre = ta.getNombreTipo();
-            Clases.Root.deleteSessions(request, "");
-            request.setAttribute("mensaje", "El Tipo de Actividad '" + nombre
-                    + "' ha sido modificado con éxito.");
+
+            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
+                    + ta.getNombreTipo() + "' ha sido modificado con éxito.");
             return mapping.findForward(SUCCESS);
         }
 

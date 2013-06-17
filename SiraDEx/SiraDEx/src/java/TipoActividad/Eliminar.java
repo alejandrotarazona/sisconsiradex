@@ -6,7 +6,6 @@ package TipoActividad;
 
 import Clases.TipoActividad;
 import Clases.Usuario;
-import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -23,7 +22,6 @@ public class Eliminar extends org.apache.struts.action.Action {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
 
     /**
      * This is the action called from the Struts framework.
@@ -39,24 +37,25 @@ public class Eliminar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        TipoActividad t = (TipoActividad) form;
-        t.setTipoActividad();
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
-        String ip = request.getHeader("X-Forwarded-For");
 
-        if (t.eliminarTipoActividad(ip, usuario)) {
-            ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
-            if (ta.isEmpty()) {
-                ta = null;
-            }
-            request.setAttribute("tipos", ta);
-
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
             return mapping.findForward(SUCCESS);
         }
 
-        ArrayList ta = Clases.TipoActividad.listarCondicion("activo", true);
-        request.setAttribute("tipos", ta);
-        return mapping.findForward(FAILURE);
+        TipoActividad t = (TipoActividad) form;
+        t.setTipoActividad();
+
+        String usuario = u.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+
+        if (t.eliminarTipoActividad(ip, usuario)) {
+            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
+                    + t.getNombreTipo() + "' ha sido eliminado con éxito.");
+        } else {
+            request.getSession().setAttribute("mensajeTipo", "Error: No se pudo eliminar el "
+                    + "Tipo de Actividad '" + t.getNombreTipo() + "'.");
+        }
+        return mapping.findForward(SUCCESS);
     }
 }

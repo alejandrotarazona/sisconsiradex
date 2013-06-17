@@ -36,8 +36,10 @@ public class Buscar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Root.deleteSessions(request, "busquedaActividadForm");
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
+        Root.deleteSessions(request, "");
+        String[] atributo = {"activo"};
+        Object[] valor = {true};
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion(atributo, valor);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
@@ -74,8 +76,9 @@ public class Buscar extends DispatchAction {
         } else {
             ba.buscar(true, ip, usuario);
         }
-
-        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion("activo", true);
+        String[] atributo = {"activo"};
+        Object[] valor = {true};
+        ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion(atributo, valor);
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;

@@ -24,7 +24,8 @@ import org.apache.struts.actions.DispatchAction;
 public class Modificar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
+    private static final String SUCCESS1 = "success1";
+    private static final String SUCCESS2 = "success2";
     private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
@@ -41,6 +42,10 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Clases.Root.deleteSessions(request, "actividadForm");
         Actividad act = (Actividad) form;
         act.setMensaje(null);
@@ -75,6 +80,10 @@ public class Modificar extends DispatchAction {
     public ActionForward update(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Actividad act = (Actividad) form;
 
         ArrayList<CampoValor> campos;
@@ -119,41 +128,24 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         if (act.modificar(camposNM, ip, usuario)) {
 
-            Usuario u = (Usuario) request.getSession().getAttribute("user");
             String rol = u.getRol();
-            ArrayList<Actividad> acts;
-            String[] estadistica = u.cantidadActividadesPorTipo();
-
-            if (rol.equalsIgnoreCase("WM")) {
-                acts = Actividad.listarActividades();
-            } else {
-                acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-            }
-            request.setAttribute("acts", acts);
-            request.setAttribute("estadisticaNombres", estadistica[0]);
-            request.setAttribute("estadisticaCantidad", estadistica[1]);
 
             String nombre = act.getNombreTipoActividad();
             //act.enviarCorreo(1);
-            Clases.Root.deleteSessions(request, "");
-            request.setAttribute("mensaje", "La Actividad '" + nombre + "' ha sido modificada con éxito.");
+            request.getSession().setAttribute("mensajeAct", "La Actividad '" 
+                    + nombre + "' ha sido modificada con éxito.");
             act.setMensajeError(null);
-
-            return mapping.findForward(SUCCESS);
-
+            if (rol.equalsIgnoreCase("WM")) {
+                return mapping.findForward(SUCCESS2);
+            }
+            return mapping.findForward(SUCCESS1);
         }
 
-        ArrayList ac = Actividad.listarActividades();
-        request.setAttribute("actividades", ac);
-
         return mapping.findForward(FAILURE);
-
-
     }
 }

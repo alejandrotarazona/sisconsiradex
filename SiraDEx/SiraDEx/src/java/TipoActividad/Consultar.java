@@ -6,6 +6,7 @@ package TipoActividad;
 
 import Clases.TipoActividad;
 import Clases.Usuario;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -16,7 +17,7 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author SisCon
  */
-public class Restaurar extends org.apache.struts.action.Action {
+public class Consultar extends org.apache.struts.action.Action {
 
     private static final String SUCCESS = "success";
 
@@ -30,16 +31,13 @@ public class Restaurar extends org.apache.struts.action.Action {
             return mapping.findForward(SUCCESS);
         }
 
-        TipoActividad t = (TipoActividad) form;
-        t.setTipoActividad();
+        TipoActividad ta = (TipoActividad) form;
 
-        if (t.restaurarTipoActividad()) {
-            request.getSession().setAttribute("mensajeRest", "El Tipo de Actividad '"
-                    + t.getNombreTipo() + "' ha sido restaurado con éxito.");
-        } else {
-            request.getSession().setAttribute("mensajeRest", "Error: No se pudo restaurar el "
-                    + "Tipo de Actividad '" + t.getNombreTipo() + "'.");
-        }
+        int idTA = ta.getIdTipoActividad();
+        ta.setTipoActividad();
+        ArrayList campos = Clases.Campo.listar(idTA);
+        ta.setCampos(campos);
+
         return mapping.findForward(SUCCESS);
     }
 }
