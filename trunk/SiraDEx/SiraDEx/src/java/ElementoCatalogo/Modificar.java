@@ -38,8 +38,13 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
-        elemCat.setMensaje(null);
+
 
         ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
         elemCat.setCamposValores(campos);
@@ -60,26 +65,22 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         ElementoCatalogo elemCat = (ElementoCatalogo) form;
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
 
         if (elemCat.modificar(campos, ip, usuario)) {
-
-            ArrayList<ElementoCatalogo> ec;
-            ec = Clases.ElementoCatalogo.listarElementosId(elemCat.getIdCatalogo());
-            request.setAttribute("elementos", ec);
-            request.setAttribute("campos", elemCat.getCamposValores());
-
-            Clases.Root.deleteSessions(request, "elementoCatalogoForm");
-            elemCat.setMensaje("El elemento ha sido modificado con éxito");
+            request.getSession().setAttribute("mensajeElem", elemCat.getMensaje());
             return mapping.findForward(SUCCESS);
         }
-
+        request.getSession().setAttribute("mensajeElem", elemCat.getMensaje());
         return mapping.findForward(FAILURE);
     }
 }

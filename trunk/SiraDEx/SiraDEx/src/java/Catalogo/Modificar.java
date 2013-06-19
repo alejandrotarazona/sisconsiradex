@@ -4,7 +4,6 @@
  */
 package Catalogo;
 
-import Clases.CampoCatalogo;
 import Clases.Catalogo;
 import Clases.Usuario;
 import java.util.ArrayList;
@@ -22,9 +21,8 @@ import org.apache.struts.actions.DispatchAction;
 public class Modificar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
+    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
@@ -39,8 +37,12 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS);
+        }
         Catalogo cat = (Catalogo) form;
-        cat.setMensaje(null);
 
         int idCat = cat.getIdCatalogo();
         cat.setCatalogo();
@@ -63,43 +65,39 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(SUCCESS);
+        }
         Catalogo cat = (Catalogo) form;
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
-
+        request.getSession().setAttribute("mensajeCat", null);
         int elimino = cat.eliminarCamposMarcados(catNM);
         if (elimino > 0) {
-            cat.setMensajeError("");
             return mapping.findForward(PAGE);
         } else if (elimino < 0) {
-            return mapping.findForward(FAILURE);
+            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+            return mapping.findForward(PAGE);
         }
 
         int numeroCampos = cat.getNroCampos();
         if (numeroCampos > 0) {
             cat.agregarCamposNuevos();
-            cat.setMensajeError("");
             return mapping.findForward(PAGE);
         }
 
         if (cat.modificar(catNM, ip, usuario)) {
 
-            ArrayList cats = Clases.Catalogo.listarCatalogos();
-            request.setAttribute("catalogos", cats);
-            Clases.Root.deleteSessions(request, "");
-            request.setAttribute("mensaje", "El Catálogo '" + cat.getNombre()
-                    + "' ha sido modificado con éxito.");
+            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
             return mapping.findForward(SUCCESS);
         }
 
         cat.setNombre(catNM.getNombre());
-
-        return mapping.findForward(FAILURE);
-
-
+        request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+        return mapping.findForward(PAGE);
     }
 }

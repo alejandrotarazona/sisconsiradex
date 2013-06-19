@@ -27,28 +27,28 @@
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 
-        <title>SiraDEx | Consulta del Catálogo <bean:write name="elementoCatalogoForm"
-                    property="nombreCatalogo"/></title>
+        <title>SiraDEx | Consulta del Catálogo</title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Consulta del Catálogo <bean:write 
-                name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
+        <h1 class='title'>Consulta del Catálogo 
+            <bean:write name="elementoCatalogoForm" property="nombreCatalogo"/>
+        </h1>
 
-        <logic:equal name="user" property="rol" value="WM">
-
-            <html:link action="/RegistrarElemento?method=page"> 
-                Agregar Elemento al Catálogo
-            </html:link><br>
-
-        </logic:equal>
-
-        <logic:present name="elementoCatalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="elementoCatalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div><br>
+        <logic:present name="mensajeElem">
+            <br>
+            <logic:notMatch name="mensajeElem" value="Error:">
+                <div class ="status"><bean:write name="mensajeElem"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeElem" value="Error:">
+                <div class ="error"><bean:write name="mensajeElem"/></div>
+            </logic:match>
+            <br>
         </logic:present>
+
+        <html:link action="/RegistrarElemento?method=page"> 
+            Agregar un elemento al Catálogo
+        </html:link><br>
 
         <logic:notPresent name="elementos">
             <div align="center">No hay elementos que mostrar</div>
@@ -76,7 +76,7 @@
                                 <bean:write name="campoValor" property="valor"/>
                             </td>
                         </logic:iterate>
-                            <td align="center" width="10%">
+                        <td align="center" width="10%">
                             <html:form method="POST" action="/ModificarElementoCatalogo?method=page">
                                 <html:hidden name="elem" property="idElemento" />
                                 <html:submit styleId="botonModificar"

@@ -457,18 +457,18 @@ public class Actividad extends Root {
             p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
-                    mensajeError = " Error: No se pudo enviar la notificación por correo. ";
+                    mensaje = " Error: No se pudo enviar la notificación por correo. ";
                     return false;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-                mensajeError = " Error: No se pudo enviar la notificación por correo. " + ex;
+                mensaje = " Error: No se pudo enviar la notificación por correo. " + ex;
                 return false;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            mensajeError = " Error: No se pudo enviar la notificación por correo. " + ex;
+            mensaje = " Error: No se pudo enviar la notificación por correo. " + ex;
             return false;
         }
         mensaje += " Se le ha enviado una notificación por correo a los usuarios participantes de la Actividad.";
@@ -532,36 +532,40 @@ public class Actividad extends Root {
         if (resp = e.insertar2(columnas, actividad)) {
             e.log();
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
-
+            mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido registrada con éxito.";
             for (int i = 0; i < camposValores.size() && resp; i++) {
 
                 System.out.println("VALOR A AGREGAR i=" + i + " " + camposValores.get(i).getValor());
                 concatenarValoresParticipantes(i, camposValores);
                 resp &= camposValores.get(i).agregar(idActividad);
                 if (!resp) {
-                    mensajeError = "Error: La Actividad '" + nombreTipoActividad
+                    mensaje = "Error: La Actividad '" + nombreTipoActividad
                             + "' no pudo ser resgistrada.";
-                    if (!eliminarActividad(ip, user)) {
-                        mensajeError = " Error: La Actividad '" + nombreTipoActividad
+                    if (!eliminar(ip, user)) {
+                        mensaje = " Error: La Actividad '" + nombreTipoActividad
                                 + "' no pudo ser resgistrada satisfactoriamente, en caso "
-                                + "de que aparezca por favor elimínela e inténtelo de nuevo.";
+                                + "de que aparezca, por favor, elimínela.";
                     }
                 }
             }
+        } else {
+            mensaje = "Error: La Actividad '" + nombreTipoActividad
+                    + "' no pudo ser resgistrada.";
         }
+
         return resp;
     }
 
-    public boolean eliminarActividad(String ip, String user) {
+    public boolean eliminar(String ip, String user) {
         Entity e = new Entity(2);//ACTIVIDAD
         e.setIp(ip);
         e.setUser(user);
         if (e.borrar(ATRIBUTOS[0], idActividad) && e.log()) {
 
-            mensaje = "La Actividad '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
+            mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
         }
-        mensajeError = "La Actividad '" + nombreTipoActividad + "' no pudo ser eliminada.";
+        mensaje = "La Actividad de '" + nombreTipoActividad + "' no pudo ser eliminada.";
         return false;
     }
 
@@ -573,7 +577,7 @@ public class Actividad extends Root {
         boolean resp = true;
         int nroEliminados = 0;
         for (int i = 0; i < camposValores.size() && resp; i++) {
-            CampoValor campoNM = camposNM.get(i+nroEliminados);
+            CampoValor campoNM = camposNM.get(i + nroEliminados);
             System.out.println("antes modificar campo " + campoNM.getCampo().getNombre()
                     + " valor " + campoNM.getValor() + " " + resp);
             System.out.println("VALOR A MODIFICAR i=" + i + " " + campoNM.getValor() + " por "
@@ -612,9 +616,9 @@ public class Actividad extends Root {
         eActividad.setIp(ip);
         eActividad.setUser(usuario);
         eActividad.log();
-
+        mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido modificada con éxito.";
         if (!resp) {
-            mensajeError = "Error: No se pudo modificar la Actividad.";
+            mensaje = "Error: No se pudo modificar la Actividad.";
         }
         return resp;
     }
@@ -711,7 +715,7 @@ public class Actividad extends Root {
                     int longitud = camposNM.get(i).getCampo().getLongitud();
                     if (longitud == -1) {
                         camposNM.get(i).getCampo().setLongitud(-3);//participante a eliminar de PARTICIPA
-                    } else if (longitud == -2){
+                    } else if (longitud == -2) {
                         camposNM.remove(i);//participante que no existe en PARTICIPA solo se elimina de camposNM
                     }
                 }
@@ -758,6 +762,17 @@ public class Actividad extends Root {
         eValidar.setIp(ip);
         eValidar.setUser(user);
         eValidar.log();
+        if (b) {
+            mensaje = "La Actividad ha sido rechazada con éxito.";
+            if (valida) {
+                mensaje = "La Actividad ha sido validada con éxito.";
+            }
+        } else {
+            mensaje = "Error: La Actividad no pudo ser rechazada.";
+            if (valida) {
+                mensaje = "Error: La Actividad no pudo ser validada.";
+            }
+        }
         return b;
     }
 

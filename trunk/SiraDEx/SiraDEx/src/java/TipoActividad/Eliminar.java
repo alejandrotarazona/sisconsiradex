@@ -49,13 +49,9 @@ public class Eliminar extends org.apache.struts.action.Action {
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        if (t.eliminarTipoActividad(ip, usuario)) {
-            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
-                    + t.getNombreTipo() + "' ha sido eliminado con éxito.");
-        } else {
-            request.getSession().setAttribute("mensajeTipo", "Error: No se pudo eliminar el "
-                    + "Tipo de Actividad '" + t.getNombreTipo() + "'.");
-        }
+        t.eliminar(ip, usuario);
+        request.getSession().setAttribute("mensajeTipo", t.getMensaje());
+
         return mapping.findForward(SUCCESS);
     }
 }

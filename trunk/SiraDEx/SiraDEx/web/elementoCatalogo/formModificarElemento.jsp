@@ -22,75 +22,74 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición del elemento del Catálogo  <bean:write name="elementoCatalogoForm"
-                    property="nombreCatalogo"/></title>
+        <title>SiraDEx | Edición del Catálogo</title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición del elemento del Catálogo <bean:write 
-                name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
+        <h1 class='title'>Edición del Catálogo 
+            <bean:write name="elementoCatalogoForm" property="nombreCatalogo"/> 
+        </h1>
 
-        <br><logic:present name="elementoCatalogoForm" property="mensaje">
-            <b><div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div></b>
-        </logic:present> 
-        <br><logic:present name="elementoCatalogoForm" property="mensajeError">
-            <b><div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div></b>
+        <logic:present name="mensajeElem">
+            <br>
+            <div class ="error"><bean:write name="mensajeElem"/></div>
+            <br>
         </logic:present>
 
         <html:form method="POST" action ="/ModificarElementoCatalogo?method=update">
             <table>
+                <tbody>
+                    <tr>
+                    <td><b>Nombre del campo</b></td>
+                    <td><b>Valor</b></td>
+                    </tr>
 
-                <tr>
-                <td><b>Nombre del campo</b></td>
-                <td><b>Valor</b></td>
-            </tr>
+                    <logic:iterate name="elementoCatalogoForm" property="camposValores" 
+                                   id="camposValores" indexId="index">
+                        <tr>
+                        <td>
+                            <bean:write name="camposValores" property="campo.nombre"/>
+                        </td>    
+                        <td>
+                            <logic:equal name="camposValores" property="campo.tipo" value="usbid">
+                                <html:text name="camposValores" property="valor" indexed="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text>
+                            </logic:equal>
 
-            <logic:iterate name="elementoCatalogoForm" property="camposValores" 
-                           id="camposValores" indexId="index">
-                <tr>
-                <td>
-                    <bean:write name="camposValores" property="campo.nombre"/>
-                </td>    
-                <td>
-                    <logic:equal name="camposValores" property="campo.tipo" value="usbid">
-                        <html:text name="camposValores" property="valor" indexed="true">
-                            <bean:write name="camposValores" property="valor"/>
-                        </html:text>
-                    </logic:equal>
+                            <logic:equal name="camposValores" property="campo.tipo" value="texto">
+                                <html:text name="camposValores" property="valor" indexed="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text>
+                            </logic:equal>
 
-                    <logic:equal name="camposValores" property="campo.tipo" value="texto">
-                        <html:text name="camposValores" property="valor" indexed="true">
-                            <bean:write name="camposValores" property="valor"/>
-                        </html:text>
-                    </logic:equal>
+                            <logic:equal name="camposValores" property="campo.tipo" value="numero">
+                                <html:text name="camposValores" property="valor" indexed="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text> 
+                            </logic:equal>
 
-                    <logic:equal name="camposValores" property="campo.tipo" value="numero">
-                        <html:text name="camposValores" property="valor" indexed="true">
-                            <bean:write name="camposValores" property="valor"/>
-                        </html:text> 
-                    </logic:equal>
+                            <logic:equal name="camposValores" property="campo.tipo" value="fecha"> 
+                            <span class="fecha_input">
+                                <html:text name="camposValores" property="valor" indexed="true"
+                                           readonly="true">
+                                    <bean:write name="camposValores" property="valor"/>
+                                </html:text>
+                            </span>
+                            <span class="fecha_click">
+                                <html:hidden name="camposValores" property="valor" indexed="true" />
+                            </span>
+                        </logic:equal>
+                        </td>
+                        </tr>
+                    </logic:iterate>
+                </tbody>
+            </table>
+            <br>
 
-                    <logic:equal name="camposValores" property="campo.tipo" value="fecha"> 
-                    <span class="fecha_input">
-                        <html:text name="camposValores" property="valor" indexed="true"
-                                   readonly="true">
-                            <bean:write name="camposValores" property="valor"/>
-                        </html:text>
-                    </span>
-                    <span class="fecha_click">
-                        <html:hidden name="camposValores" property="valor" indexed="true" />
-                    </span>
-                </logic:equal>
-            </td>
-        </tr>
-    </logic:iterate>
+            <div align="center"><html:submit value="Modificar"
+                         onclick="return confirm('¿Está seguro que desea modificar el elemento?')"/></div>
 
-</table>
-<br>
-
-<div align="center"><html:submit value="Modificar"
-             onclick="return confirm('¿Está seguro que desea modificar el elemento?')"/></div>
-
-</html:form>
-</body>
+        </html:form>
+    </body>
 </html>

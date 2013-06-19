@@ -54,19 +54,18 @@
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Campos del Tipo de Actividad</title>
+        <title>SiraDEx | Registrar Campos de Tipo de Actividad</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registro de Campos de <bean:write 
-                name="tipoActividadForm" property="nombreTipo"/> </h1>
+        <h1 class="title" id="page-title">Registro de Campos del Tipo de Actividad 
+            <bean:write name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
-        </logic:present> 
-
-        <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
+        <logic:present name="mensajeTipo">
+            <br>
+            <div class ="error"><bean:write name="mensajeTipo"/></div>
+            <br>
         </logic:present>
+        <br>
 
         <font size=2>Los campos 'Nombre' y 'Longitud' son obligatorios.</font><br>
 

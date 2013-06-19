@@ -66,7 +66,7 @@
                                 <br>
 
                                 <li><h1 class="title">
-                                    <html:link action="/GestionLog?method=page">
+                                    <html:link action="/ConsultarLog">
                                         Consultar Log
                                     </html:link></h1></li>
 

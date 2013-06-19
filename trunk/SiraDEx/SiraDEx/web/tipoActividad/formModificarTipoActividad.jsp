@@ -53,21 +53,18 @@
             });        
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición del Tipo de Actividad  <bean:write name="tipoActividadForm"
-                    property="nombreTipo"/></title>
+        <title>SiraDEx | Edición de Tipo de Actividad</title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición del Tipo de Actividad <bean:write 
+        <h1 class='title'>Edición del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <b><div class ="status"><bean:write name="tipoActividadForm" property="mensaje" /></div></b>
-        </logic:present> 
-        <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <b><div class ="error"><bean:write name="tipoActividadForm" property="mensajeError" /></div></b>
-        </logic:present><br>
-
+        <logic:present name="mensajeTipo"><br>
+            <div class ="error"><bean:write name="mensajeTipo"/></div>
+            <br>
+        </logic:present>
+        <br>
         <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/ModificarTipoActividad?method=update">
             <table>
@@ -90,11 +87,11 @@
                     <td><b>Tipo de Producto</b></td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td><b>Programa</b></td>
-                        <td>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Programa</b></td>
+                    <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select>
@@ -122,21 +119,21 @@
                         <html:multibox property="permisos" bundle="estudiante">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos" bundle="profesor">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos" bundle="obrero">Obrero</html:multibox> Obreros 
-                        </td>       
-                        </tr>
-                    </tbody>
-                </table>
+                    </td>       
+                    </tr>
+                </tbody>
+            </table>
 
-                <b>Campos</b><br>
-                <table class="cebra">
-                    <tbody>
-                        <tr>
-                        <th><b>Nombre</b></th>
-                        <th><b>Tipo</b></th>
-                        <th><b>Longitud/Límite</b></th>
-                        <th><b>Obligatorio</b></th>
-                        <th><b>Catálogo</b></th>
-                        </tr>
+            <b>Campos</b><br>
+            <table class="cebra">
+                <tbody>
+                    <tr>
+                    <th><b>Nombre</b></th>
+                    <th><b>Tipo</b></th>
+                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Obligatorio</b></th>
+                    <th><b>Catálogo</b></th>
+                    </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
                         <%

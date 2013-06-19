@@ -301,7 +301,7 @@ public class Usuario extends Root {
         Entity e = new Entity(0);//USUARIO
         Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
-            mensajeError = "Ya existe un usuario registrado con el US-BID " + username;
+            mensaje = "Ya existe un usuario registrado con el US-BID " + username;
             return false;
         } else {
             if (e.insertar(usuarios)) {
@@ -311,7 +311,7 @@ public class Usuario extends Root {
                 mensaje = "El usuario " + username + " ha sido registrado con éxito.";
                 return true;
             }
-            mensajeError = "Error: No se pudo regristrar el usuario.";
+            mensaje = "Error: No se pudo regristrar el usuario.";
             return false;
         }
     }

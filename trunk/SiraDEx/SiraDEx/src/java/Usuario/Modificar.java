@@ -68,7 +68,7 @@ public class Modificar extends DispatchAction {
             u.setRol(rol);
         }
         if (rol.equals("")) {
-            u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
+            u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
             return mapping.findForward(PAGE);
         }
 
@@ -86,11 +86,11 @@ public class Modificar extends DispatchAction {
             request.setAttribute("usuarios", usrs);
             Clases.Root.deleteSessions(request, "");
             u.setMensaje("El rol de " + u.getUsername() + " se modificó a " + u.getRol());
-            u.setMensajeError("");
+            u.setMensaje("");
             request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("Error: No se pudo modificar el usuario");
+        u.setMensaje("Error: No se pudo modificar el usuario");
         return mapping.findForward(PAGE);
     }
 }

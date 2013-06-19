@@ -34,23 +34,15 @@
                     </script>
 
 
-                    <logic:present name="busquedaActividadForm" property="mensaje"><br>
-                        <div class ="status"><bean:write name="tipoActividadForm" 
-                                    property="mensaje" /></div>
-                        </logic:present> 
-                        <logic:present name="busquedaActividadForm" property="mensajeError"><br>
-                        <div class ="error"><bean:write name="tipoActividadForm" 
-                                    property="mensajeError" /></div>
-                        </logic:present>
-                        <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
-                            String accion;
-                            if (usuario == null) {
-                                accion = "/BusquedaPublica?method=search";
-                            } else {
-                                accion = "/BusquedaAvanzada?method=search";
-                            }
-                        %>
-                        <html:form action="<%=accion%>">
+                    <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
+                        String accion;
+                        if (usuario == null) {
+                            accion = "/BusquedaPublica?method=search";
+                        } else {
+                            accion = "/BusquedaAvanzada?method=search";
+                        }
+                    %>
+                    <html:form action="<%=accion%>">
 
                         Mostrar <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
                                      styleClass="selector" value="${busquedaActividadForm.mostrarPorPagina}">
@@ -79,7 +71,7 @@
                             <html:radio property="tipoPR" value="">Cualquiera</html:radio>
                             <html:radio property="tipoPR" value="P">P</html:radio>
                             <html:radio property="tipoPR" value="R">R</html:radio>
-                            <br><br>   
+                                <br><br>   
                         </logic:present>
 
                         Dependencia a la que pertenece:<br> 

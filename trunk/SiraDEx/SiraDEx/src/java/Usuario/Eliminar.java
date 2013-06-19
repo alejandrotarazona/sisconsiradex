@@ -40,7 +40,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             throws Exception {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
-        u.setMensajeError(null);
+        u.setMensaje(null);
         ArrayList<Usuario> usuarios;
 
         Usuario user = (Usuario) request.getSession().getAttribute("user");
@@ -54,7 +54,7 @@ public class Eliminar extends org.apache.struts.action.Action {
             request.getSession().setAttribute("usuarios", usuarios);
             return mapping.findForward(SUCCESS);
         } else {
-            u.setMensajeError("Error: El usuario no pudo ser eliminado");
+            u.setMensaje("Error: El usuario no pudo ser eliminado");
             return mapping.findForward(FAILURE);
         }
     }

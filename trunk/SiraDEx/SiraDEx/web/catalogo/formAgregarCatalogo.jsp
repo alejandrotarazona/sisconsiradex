@@ -13,27 +13,20 @@
 
     <body>
 
-        <h1 class="title" id="page-title">Registro de Catálogo</h1>
-        <font size=2>Los campos con el asterisco  <span style="color:red">*</span> 
-            son obligatorios.</font><br><br>
-
-        <logic:present name="catalogoForm" property="mensaje">
-            <br><div class ="status">
-                <bean:write name="catalogoForm" property="mensaje"/>
-            </div>
-        </logic:present> 
-        <logic:present name="catalogoForm" property="mensajeError">
-            <br><div class ="error">
-                <bean:write name="catalogoForm" property="mensajeError"/>
-            </div>
-        </logic:present><br>
-
+        <h1 class="title">Registro de Catálogo</h1>
+        <logic:present name="mensajeCat">
+            <br>
+            <div class ="error"><bean:write name="mensajeCat"/></div>
+            <br>
+        </logic:present>
+        <br>
+        <font size=2>Todos los campos son obligatorios.</font><br>
 
         <html:form method="POST" action ="/RegistrarCatalogo?method=save">
             <table>
                 <tbody>
                     <tr>
-                    <td width="20%">Catálogo de Usuarios</td>
+                    <td width="18%"><b>Catálogo de Usuarios</b></td>
                     <td>
                         <html:checkbox name="catalogoForm" property="participantes" value="off"
                                        onclick="if (this.checked) { this.value = 'on'
@@ -44,18 +37,18 @@
                     </td>
                     </tr>
                     <tr>
-                    <td>Nombre del cátalogo<span style="color:red">*</span></td>
+                    <td><b>Nombre del cátalogo</b></td>
                     <td><html:text name="catalogoForm" property="nombre"/></td>
                     </tr>
                     <tr>
-                    <td>Número de campos<span style="color:red">*</span></td>
+                    <td><b>Número de campos</b></td>
                     <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/>
                     </td>
                     </tr>
                 </tbody>
             </table>
             <br>
-            <html:submit>Siguiente</html:submit>
+            <div align="center"><html:submit>Siguiente</html:submit></div>
         </html:form>
     </body>
 </html>

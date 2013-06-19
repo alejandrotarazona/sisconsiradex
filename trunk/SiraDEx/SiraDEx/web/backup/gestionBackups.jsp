@@ -16,13 +16,16 @@
         <title>SiraDEx | Gestión de Backups /></title>
     </head>
     <body>
-        <h1 class='title' id='page-title'>Gestión de Backups</h1>
+        <h1 class='title'>Gestión de Backups</h1>
 
-        <logic:present name="backupForm" property="mensaje">
-            <br><div class ="status"><bean:write name="backupForm" property="mensaje"/></div>
-        </logic:present> 
-        <logic:present name="backupForm" property="mensajeError">
-            <br><div class ="error"><bean:write name="backupForm" property="mensajeError"/></div>
+        <logic:present name="mensajeBackup"><br>
+            <logic:notMatch name="mensajeBackup" value="Error:">
+                <div class ="status"><bean:write name="mensajeBackup"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeBackup" value="Error:">
+                <div class ="error"><bean:write name="mensajeBackup"/></div>
+            </logic:match>
+            <br>
         </logic:present>
 
         <table>

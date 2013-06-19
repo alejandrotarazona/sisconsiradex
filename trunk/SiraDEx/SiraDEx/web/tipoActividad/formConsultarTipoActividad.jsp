@@ -30,7 +30,7 @@
         <html:link title="Ir a la Papelera" action="/GestionTiposActividad?method=listDisable"> 
             <html:image src="../Stylesheets/iconos/regresar.png"/>
         </html:link><br>
-        <h1 class='title' id='page-title'>Consulta del Tipo de Actividad <bean:write 
+        <h1 class='title'>Consulta del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>
 
         <table>
@@ -69,7 +69,7 @@
                 <td><b>Realizado por</b></td>
                 <td>
                     <logic:iterate name="tipoActividadForm" property="permisos" id="permiso">
-                        <bean:write name="permiso"/>
+                        <bean:write name="permiso"/><br>
                     </logic:iterate> 
                 </td>       
                 </tr>
@@ -90,10 +90,8 @@
                                indexId="index">
 
                     <tr>      
-                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <span style="color: gray;font-size:10px">${index+1}</span>
+                    <td>
+                    <span style="padding-left:6em;color: gray;font-size:10px">${index+1}</span>
                     <bean:write name="campos" property="nombre"/>
                     </td>
                     <td align="center">

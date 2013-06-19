@@ -33,13 +33,9 @@ public class Restaurar extends org.apache.struts.action.Action {
         TipoActividad t = (TipoActividad) form;
         t.setTipoActividad();
 
-        if (t.restaurarTipoActividad()) {
-            request.getSession().setAttribute("mensajeRest", "El Tipo de Actividad '"
-                    + t.getNombreTipo() + "' ha sido restaurado con éxito.");
-        } else {
-            request.getSession().setAttribute("mensajeRest", "Error: No se pudo restaurar el "
-                    + "Tipo de Actividad '" + t.getNombreTipo() + "'.");
-        }
+        t.restaurarTipoActividad();
+        request.getSession().setAttribute("mensajeRest", t.getMensaje());
+
         return mapping.findForward(SUCCESS);
     }
 }

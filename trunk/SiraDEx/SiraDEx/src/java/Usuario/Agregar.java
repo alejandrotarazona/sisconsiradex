@@ -54,7 +54,7 @@ public class Agregar extends DispatchAction {
             throws Exception {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
-        u.setMensajeError(null);
+        u.setMensaje(null);
 
         String rol = u.getRol();
         String rolDex = u.getRolDex();
@@ -64,7 +64,7 @@ public class Agregar extends DispatchAction {
             u.setRol(rol);
         }
         if (rol.equals("")) {
-            u.setMensajeError("Error: Debe elegir una Dependencia o Unidad");
+            u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
             return mapping.findForward(PAGE);
         }
 

@@ -57,14 +57,6 @@
         <h1 class="title">Búsquedas Públicas</h1>
     </logic:notPresent>
 
-    <logic:present name="busquedaActividadForm" property="mensaje"><br>
-        <div class ="status"><bean:write name="tipoActividadForm" 
-                    property="mensaje" /></div>
-        </logic:present> 
-        <logic:present name="busquedaActividadForm" property="mensajeError"><br>
-        <div class ="error"><bean:write name="tipoActividadForm" 
-                    property="mensajeError" /></div>
-        </logic:present>
 
     <logic:notPresent name="actividades">
         <div align="center"><br>

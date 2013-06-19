@@ -50,7 +50,7 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("No existe un usuario con el rol "+rol);
+        u.setMensaje("No existe un usuario con el rol "+rol);
         return mapping.findForward(PAGE);
     }
     
@@ -63,7 +63,7 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("No existe un usuario con el rol "+rol);
+        u.setMensaje("No existe un usuario con el rol "+rol);
         return mapping.findForward(PAGE);
     }
     
@@ -76,7 +76,7 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("No existe un usuario con el rol "+rol);
+        u.setMensaje("No existe un usuario con el rol "+rol);
         return mapping.findForward(PAGE);
     }
     
@@ -89,7 +89,7 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("No existe un usuario del DEX");
+        u.setMensaje("No existe un usuario del DEX");
         return mapping.findForward(PAGE);
     }
 
@@ -103,7 +103,7 @@ public class Entrar extends DispatchAction {
         request.getSession().setAttribute("user", u);
         return mapping.findForward(SUCCESS);
         }
-        u.setMensajeError("No existe un usuario con el rol "+rol);
+        u.setMensaje("No existe un usuario con el rol "+rol);
         return mapping.findForward(PAGE);
     }
 

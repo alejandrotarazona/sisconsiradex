@@ -1,9 +1,9 @@
 <%-- 
-    Document   : gestionarLog
+    Document   : gestionLog
     Created on : May 30, 2013, 11:27:56 PM
     Author     : SisCon
 --%>
-<%@page import="Clases.Actividad"%>
+
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -35,18 +35,18 @@
                         /* IP Remitente */ null,
                         /* Usuario */ {"bSortable": false},
                         /*Tipo de Accion*/{"bSortable": true},
-                        /*Fecha*/ null,
+                        /*Fecha y Hora*/ null,
                     ]});
             });
         </script>
 
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Log del sistema </title>
+        <title>SiraDEx | Log de SiraDEx</title>
     </head>
     <body>
 
-        <h1 class="title">Consulta del Log de actividades del sistema</h1>
+        <h1 class="title">Log de SiraDEx</h1>
         <br>
 
         <logic:present name="logs">
@@ -58,7 +58,7 @@
                     <th>IP Remitente</th>
                     <th>Usuario</th>
                     <th width="433px">Tipo de Accion</th>
-                    <th>Fecha</th>
+                    <th>Fecha y Hora</th>
                     </tr>
                 </thead>
                 <tbody>

@@ -28,8 +28,6 @@ public class Agregar extends DispatchAction {
      */
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL = "successfull";
-    private static final String FAILURE = "failure";
-    private static final String FAILURE2 = "failureCampos";
     private static final String PAGE = "page";
 
     /**
@@ -45,8 +43,12 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
         Root.deleteSessions(request, "");
-        Catalogo cat = (Catalogo) form;
         return mapping.findForward(PAGE);
     }
 
@@ -54,19 +56,26 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+
         Catalogo cat = (Catalogo) form;
 
         if (String.valueOf(cat.getNroCampos()).equals("0")) {
-            cat.setMensajeError("Error: El campo 'Número de campos' debe contener al "
+            request.getSession().setAttribute("mensajeCat",
+                    "Error: El campo 'Número de campos' debe contener al "
                     + "menos 1 como valor.");
-            return mapping.findForward(FAILURE);
+            return mapping.findForward(PAGE);
         }
 
-        /*verifica si hay un tipo de actividad con ese nombre*/
+        /*verifica si hay un catálogo con ese nombre*/
         if (cat.esCatalogo()) {
-            cat.setMensajeError("Error: Ya existe un Catálogo con el Nombre '"
+            request.getSession().setAttribute("mensajeCat",
+                    "Error: Ya existe un Catálogo con el Nombre '"
                     + cat.getNombre() + "'. Por favor intente con otro nombre.");
-            return mapping.findForward(FAILURE);
+            return mapping.findForward(PAGE);
         }
 
         int numeroCampos = cat.getNroCampos();
@@ -85,7 +94,6 @@ public class Agregar extends DispatchAction {
 
         cat.setCampos(campos);
 
-        cat.setMensajeError(null);
         return mapping.findForward(SUCCESS);
 
     }
@@ -94,33 +102,27 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+
         Catalogo cat = (Catalogo) form;
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
 
         if (!Verificaciones.verificarCamposVariables(cat)) {
-            return mapping.findForward(FAILURE2);
+            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+            return mapping.findForward(SUCCESS);
         }
 
         if (cat.agregar(ip, usuario)) {
-
-            ArrayList cats = Clases.Catalogo.listarCatalogos();
-            request.setAttribute("catalogos", cats);
-
-            Clases.Root.deleteSessions(request, "catalogoForm");
-            cat.setMensaje("El Catálogo '" + cat.getNombre() + "' ha sido "
-                    + "registrado con éxito.");
-            cat.setMensajeError(null);
+            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
             return mapping.findForward(SUCCESSFULL);
         }
-
-        ArrayList cats = Clases.Catalogo.listarCatalogos();
-        request.setAttribute("catalogos", cats);
-        return mapping.findForward(FAILURE2);
-
-
+        request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+        return mapping.findForward(SUCCESS);
     }
 }

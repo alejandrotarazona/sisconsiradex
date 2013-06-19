@@ -29,8 +29,6 @@ public class Agregar extends DispatchAction {
     private static final String PAGE = "page";
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL = "successfull";
-    private static final String FAILURE = "failure";
-    private static final String FAILURE2 = "failureCampos";
 
     /**
      * This is the action called from the Struts framework.
@@ -52,8 +50,6 @@ public class Agregar extends DispatchAction {
         }
 
         Root.deleteSessions(request, "");
-        TipoActividad ta = (TipoActividad) form;
-        ta.setMensajeError(null);
 
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
@@ -75,7 +71,6 @@ public class Agregar extends DispatchAction {
         }
 
         TipoActividad ta = (TipoActividad) form;
-        ta.setMensajeError(null);
 
         ArrayList catalogos = Clases.Catalogo.listarCondicion("participa", false);
         request.getSession().setAttribute("catalogos", catalogos);
@@ -84,14 +79,16 @@ public class Agregar extends DispatchAction {
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         if (!Verificaciones.verificarCamposFijos(ta)) {
-            return mapping.findForward(FAILURE);
+            request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
+            return mapping.findForward(PAGE);
         }
         /*verifica si hay un tipo de actividad con ese nombre*/
         if (ta.esTipoActividad()) {
-            ta.setMensajeError("Error: Ya existe un Tipo de Actividad con el Nombre "
+            request.getSession().setAttribute("mensajeTipo",
+                    "Error: Ya existe un Tipo de Actividad con el Nombre "
                     + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
                     + "intente con otro nombre.");
-            return mapping.findForward(FAILURE);
+            return mapping.findForward(PAGE);
         }
 
         ta.setCampos();//llena el arrayList campos con el numero de campos necesario.
@@ -118,13 +115,12 @@ public class Agregar extends DispatchAction {
         String ip = request.getHeader("X-Forwarded-For");
 
         ta.setPermisos((String[]) request.getSession().getAttribute("permisos"));
-        if (ta.agregarTipoActividad(ip, usuario)) {
+        if (ta.agregar(ip, usuario)) {
 
-            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
-                    + ta.getNombreTipo() + "' ha sido registrado con éxito.");
+            request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
             return mapping.findForward(SUCCESSFULL);
         }
-
-        return mapping.findForward(FAILURE2);
+        request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
+        return mapping.findForward(SUCCESS);
     }
 }
