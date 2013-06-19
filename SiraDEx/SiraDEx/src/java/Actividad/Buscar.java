@@ -26,7 +26,6 @@ public class Buscar extends DispatchAction {
 
     /* forward name="success" path="" */
     private final static String PAGE = "page";
-    private final static String SUCCESS = "success";
 
     /**
      * This is the Struts action method called on
@@ -108,7 +107,7 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
         request.getSession().setAttribute("graficaNombres", grafica[0]);
         request.getSession().setAttribute("graficaCantidad", grafica[1]);
-        return mapping.findForward(SUCCESS);
+        return mapping.findForward(PAGE);
     }
 
     public ActionForward aPagina(ActionMapping mapping, ActionForm form,
@@ -130,6 +129,6 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("graficaCantidad", grafica[1]);
 
 
-        return mapping.findForward(SUCCESS);
+        return mapping.findForward(PAGE);
     }
 }

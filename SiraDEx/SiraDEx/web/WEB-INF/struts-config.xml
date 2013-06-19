@@ -92,10 +92,8 @@
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="success" path="agregarCampos"/>
             <forward name="successfull" path="GestionTiposActividad.do?method=listActive" 
-                     redirect="true"/>
-            <forward name="failure" path="agregarTipoActividad"/>            
+                     redirect="true"/>           
             <forward name="page" path="agregarTipoActividad"/>
-            <forward name="failureCampos" path="agregarCampos"/>
         </action>
         
         <action path="/EliminarTipoActividad" type="TipoActividad.Eliminar"
@@ -108,8 +106,7 @@
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="page" path="modificarTipoActividad"/>
             <forward name="success" path="GestionTiposActividad.do?method=listActive" 
-                     redirect="true"/>
-            <forward name="failure" path="modificarTipoActividad"/>    
+                     redirect="true"/>  
         </action>
          
          <action path="/RestaurarTipoActividad" type="TipoActividad.Restaurar"
@@ -139,8 +136,6 @@
                      redirect="true"/>
             <forward name="successfull2" path="GestionActividades.do?method=listAll" 
                      redirect="true"/>
-            <forward name="failure" path="agregarActividad2"/>
-
         </action>
                
         <action path="/EliminarActividad" type="Actividad.Eliminar" 
@@ -157,22 +152,18 @@
             <forward name="success1" path="GestionActividades.do?method=listUser" 
                      redirect="true"/>
             <forward name="success2" path="GestionActividades.do?method=listAll" 
-                     redirect="true"/>
-            <forward name="failure" path="modificarActividad"/>    
+                     redirect="true"/>  
         </action>
         
         <action path="/ValidarActividad" type="Actividad.Validar"
                  scope="request" name="actividadForm">
             <forward name="success" path="GestionActividades.do?method=listDex" 
-                     redirect="true"/> 
-            <forward name="failure" path="gestionValidaciones"/>
-            
+                     redirect="true"/>    
          </action>
          
          <action path="/RechazarActividad" type="Actividad.Rechazar"
                  scope="session" parameter="method" name="actividadForm">
             <forward name="page" path="rechazarActividad"/>
-            <forward name="failure" path="rechazarActividad"/>
             <forward name="success" path="GestionActividades.do?method=listDex" 
                      redirect="true"/>    
          </action>
@@ -184,13 +175,11 @@
          <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaAvanzada"/>
-            <forward name="success" path="busquedaAvanzada"/>
          </action>
          
          <action path="/BusquedaPublica" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaPublica"/>
-            <forward name="success" path="busquedaPublica"/> 
          </action>
          
         <!-- ======================CATALOGO=================================-->
@@ -202,24 +191,20 @@
         
         <action path="/RegistrarCatalogo" type="Catalogo.Agregar" 
                 scope="session" parameter="method" name="catalogoForm">
+            <forward name="page" path="agregarCatalogo"/> 
             <forward name="success" path="agregarCamposCatalogo"/>
-            <forward name="successfull" path="gestionCatalogos"/>
-            <forward name="failure" path="agregarCatalogo"/>
-            <forward name="page" path="agregarCatalogo"/>
-            <forward name="failureCampos" path="agregarCamposCatalogo"/>     
+            <forward name="successfull" path="GestionCatalogos.do" redirect="true"/>  
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
                 scope="request" name="catalogoForm">
-            <forward name="success" path="gestionCatalogos"/>
-            <forward name="failure" path="gestionCatalogos"/>           
+            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
         </action>
         
          <action path="/ModificarCatalogo" type="Catalogo.Modificar" 
                 scope="session" parameter="method" name="catalogoForm">
             <forward name="page" path="modificarCatalogo"/>
-            <forward name="success" path="gestionCatalogos"/>
-            <forward name="failure" path="modificarCatalogo"/>    
+            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
         </action>
        
         <!-- =====================ELEMENTO CATALOGO=========================-->
@@ -232,39 +217,32 @@
         <action path="/RegistrarElemento" type="ElementoCatalogo.Agregar" 
                 scope="session" parameter="method" name="elementoCatalogoForm">
             <forward name="page" path="agregarElemento"/>
-            <forward name="success" path="gestionElementos"/>
-            <forward name="failure" path="agregarElemento"/>
+            <forward name="success" path="GestionElementos.do" redirect="true"/>
         </action>
         
         <action path="/EliminarElemento" type="ElementoCatalogo.Eliminar"
                 scope="session" name="elementoCatalogoForm" >
-            <forward name="success" path="gestionElementos"/>
-            <forward name="failure" path="gestionElementos"/>                        
+            <forward name="success" path="GestionElementos.do" redirect="true"/>
         </action>
           
          <action path="/ModificarElementoCatalogo" type="ElementoCatalogo.Modificar" 
                 scope="session" parameter="method" name="elementoCatalogoForm">
             <forward name="page" path="modificarElemento"/>
-            <forward name="success" path="gestionElementos"/>
-            <forward name="failure" path="modificarElemento"/>    
+            <forward name="success" path="GestionElementos.do" redirect="true"/>
         </action>       
         
         <!-- ===========================BACKUP==============================-->
                     
         <action path="/GestionBackups" type="Backup.Gestionar" 
                 scope="session" parameter="method" name="backupForm">
-            <forward name="page" path="gestionBackups"/>
-            <forward name="success" path="gestionBackups"/>
-            <forward name="failure" path="gestionBackups"/>    
+            <forward name="page" path="gestionBackups"/>    
         </action>     
         
         <!-- ==============================LOG==============================-->
         
-        <action path="/GestionLog" type="Log.Gestionar"
-                scope="session" parameter="method" name="logForm">
-            <forward name="page" path="gestionLog"/>
-            <forward name="success" path="gestionLog"/>
-            <forward name="failure" path="gestionLog"/>
+        <action path="/ConsultarLog" type="Log.Consultar"
+                scope="request" name="logForm">
+            <forward name="success" path="consultarLog"/>
           </action>
             
             

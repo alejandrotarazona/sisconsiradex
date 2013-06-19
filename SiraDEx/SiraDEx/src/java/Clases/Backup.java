@@ -37,7 +37,6 @@ public class Backup extends Root {
     public void setFrecuencia(String frecuencia) {
         this.frecuencia = frecuencia;
     }
-    
 
     public String inicializarFrecuencia() {
         String cmd = "cat /home/backups_siradex/frecuencia.txt | head -1";
@@ -48,37 +47,36 @@ public class Backup extends Root {
         };
         System.out.println(cmd);
         byte b[] = new byte[4];
-        
+
         try {
             Process p;
             p = Runtime.getRuntime().exec(comando);
             p.getInputStream().read(b);
-      
+
             try {
                 if (p.waitFor() != 0) {
-                    mensajeError = "Error: No se pudo leer el archivo frecuencia.txt";
+                    mensaje = "Error: No se pudo leer el archivo frecuencia.txt";
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-                mensajeError = "Error: No se pudo leer el archivo frecuencia.txt. " + ex;
+                mensaje = "Error: No se pudo leer el archivo frecuencia.txt. " + ex;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-            mensajeError = "Error: No se pudo leer el archivo frecuencia.txt. " + ex;
+            mensaje = "Error: No se pudo leer el archivo frecuencia.txt. " + ex;
         }
-    
+
         return new String(b).replaceAll("[^\\d]", "");
     }
-    
-    
+
     public boolean hacerBackup() {
 
         String user = "siradex";
         String host = DataBase.getHost();
         String db = DataBase.getDatabase();
         String fecha = Log.getDate();
-        fecha = "_" + fecha.replace("/", "-");
+        fecha = "_" + fecha.replace("/", "_");
         String comando = "pg_dump -i -h " + host + " -U " + user + " --format=c -f "
                 + "/home/backups_siradex/" + db + fecha + ".backup " + db;
         System.out.println(comando);
@@ -87,18 +85,18 @@ public class Backup extends Root {
             p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
-                    mensajeError = "Error: No se pudo crear el backup.";
+                    mensaje = "Error: No se pudo crear el backup.";
                     return false;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-                mensajeError = "Error: No se pudo crear el backup. " + ex;
+                mensaje = "Error: No se pudo crear el backup. " + ex;
                 return false;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-            mensajeError = "Error: No se pudo crear el backup. " + ex;
+            mensaje = "Error: No se pudo crear el backup. " + ex;
             return false;
         }
         mensaje = "El Backup " + db + fecha + ".backup se ha realizado con éxito.";
@@ -120,18 +118,18 @@ public class Backup extends Root {
             p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
-                    mensajeError = "Error: La restauración no se pudo realizar.";
+                    mensaje = "Error: La restauración no se pudo realizar.";
                     return false;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-                mensajeError = "Error: La restauración no se pudo realizar. " + ex;
+                mensaje = "Error: La restauración no se pudo realizar. " + ex;
                 return false;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-            mensajeError = "Error: La restauración no se pudo realizar. " + ex;
+            mensaje = "Error: La restauración no se pudo realizar. " + ex;
             return false;
         }
 
@@ -142,7 +140,7 @@ public class Backup extends Root {
 
     public boolean cambiarFrecuencia() {
 
-        String cmd = "sed -i '1s/.*/"+frecuencia+"/' /home/backups_siradex/frecuencia.txt";
+        String cmd = "sed -i '1s/.*/" + frecuencia + "/' /home/backups_siradex/frecuencia.txt";
         String[] comando = {
             "/bin/sh",
             "-c",
@@ -154,22 +152,22 @@ public class Backup extends Root {
             p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
-                    mensajeError = "Error: No se pudo cambiar la frecuencia.";
+                    mensaje = "Error: No se pudo cambiar la frecuencia.";
                     return false;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-                mensajeError = "Error: No se pudo cambiar la frecuencia. " + ex;
+                mensaje = "Error: No se pudo cambiar la frecuencia. " + ex;
                 return false;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
-            mensajeError = "Error: No se pudo cambiar la frecuencia. " + ex;
+            mensaje = "Error: No se pudo cambiar la frecuencia. " + ex;
             return false;
         }
 
-        mensaje = "La frecuencia ha sido cambiada.";
+        mensaje = "La frecuencia ha sido cambiada con éxito.";
         return true;
     }
 

@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionMapping;
 public class Validar extends org.apache.struts.action.Action {
 
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
 
     /**
      * This is the action called from the Struts framework.
@@ -43,17 +42,10 @@ public class Validar extends org.apache.struts.action.Action {
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        boolean validacion = act.validar(true, ip, usuario);
+        act.validar(true, ip, usuario);
 
-        if (validacion) {
-            request.getSession().setAttribute("mensajeVal",
-                    "La Actividad ha sido validada con éxito.");
-            //act.enviarCorreo(3);
-            return mapping.findForward(SUCCESS);
-        } else {
-            request.getSession().setAttribute("mensajeVal",
-                    "Error: La Actividad no se pudo validar. Por favor, intente de nuevo.");
-            return mapping.findForward(FAILURE);
-        }
+        request.getSession().setAttribute("mensajeVal", act.getMensaje());
+        //act.enviarCorreo(3);
+        return mapping.findForward(SUCCESS);
     }
 }

@@ -39,7 +39,7 @@ public class EditarPerfil extends DispatchAction {
         Clases.Root.deleteSessions(request,"mensaje");
         Usuario u = (Usuario) form;
         u.setMensaje(null);
-        u.setMensajeError(null);
+        u.setMensaje(null);
         
         Usuario userNM = new Usuario();
         userNM.setUsername(u.getUsername());

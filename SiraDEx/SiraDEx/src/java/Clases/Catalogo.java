@@ -5,9 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -31,31 +29,6 @@ public class Catalogo extends Root {
         "nombre",
         "participa"
     };
-    private static final String[] tiposCampos = {//no lo usamos para nada
-        "texto", //STRING
-        "numero", //INT
-        "fecha", //DATE
-    };
-    public static String[] TABLAS = {//no lo usamos para nada
-        "CATALOGO", //0
-        "CAMPO_CATALOGO", //1 
-        "ELEMENTO" //3
-    };
-    /* Alejandro por favor agrega código que usemos y sino lo usamos aún 
-     * al menos específica donde crees que lo vamos a usar, porque cada ves 
-     * veo que agregas más código inútil. Gracias La Gerencia*/
-
-    public static String[] getTiposCampos() {
-        return tiposCampos;
-    }
-
-    public Catalogo() {
-    }
-
-    public Catalogo(String nombre, int nroCampos) {
-        this.nombre = nombre;
-        this.nroCampos = nroCampos;
-    }
 
     public int getIdCatalogo() {
         return idCatalogo;
@@ -207,26 +180,32 @@ public class Catalogo extends Root {
             participantes
         };
 
-        boolean resp = eCatalogo.insertar2(columnas, valores);
-        eCatalogo.setIp(ip);
-        eCatalogo.setUser(user);
-        eCatalogo.log();
-
-        resp &= agregarCampos(ip, user);
-
-        return resp;
-    }
-
-    private boolean agregarCampos(String ip, String user) {
-        boolean resp = true;
-        setIdCatalogo();
-        Iterator itCampos = campos.iterator();
-        while (itCampos.hasNext() && resp) {
-            CampoCatalogo campo = (CampoCatalogo) itCampos.next();
-            if (!campo.isEliminado()) {
-                resp &= campo.agregar(idCatalogo, ip, user);
+        boolean resp;
+        if (resp = eCatalogo.insertar2(columnas, valores)) {
+            eCatalogo.setIp(ip);
+            eCatalogo.setUser(user);
+            eCatalogo.log();
+            mensaje = "El Catálogo '" + nombre + "' ha sido registrado con éxito.";
+            setIdCatalogo();
+            Iterator itCampos = campos.iterator();
+            while (itCampos.hasNext() && resp) {
+                CampoCatalogo campo = (CampoCatalogo) itCampos.next();
+                if (!campo.isEliminado()) {
+                    resp &= campo.agregar(idCatalogo, ip, user);
+                }
             }
+            if (!resp) {
+                mensaje = "Error: El Catálogo '" + nombre + "'no pudo ser registrado.";
+                if (!eliminar(ip, user)) {
+                    mensaje = " Error: El Catálogo '" + nombre + "' no pudo ser "
+                            + "resgistrado satisfactoriamente, en caso "
+                            + "de que aparezca, por favor, elimínelo.";
+                }
+            }
+        } else {
+            mensaje = "Error: El Catálogo '" + nombre + "'no pudo ser registrado.";
         }
+
         return resp;
     }
 
@@ -262,11 +241,11 @@ public class Catalogo extends Root {
             eEliminar.setIp(ip);
             eEliminar.setUser(user);
             eEliminar.log();
-            mensaje = "El Catálogo '" + nombre + "' ha sido eliminado";
+            mensaje = "El Catálogo '" + nombre + "' ha sido eliminado con éxito.";
             return true;
         }
 
-        mensajeError = "Error: No se pudo eliminar el Catálogo '" + nombre + "'.";
+        mensaje = "Error: No se pudo eliminar el Catálogo '" + nombre + "'.";
         return false;
 
     }
@@ -280,8 +259,8 @@ public class Catalogo extends Root {
         }
 
         if (this.esCatalogo() && !nombre.equals(catNM.getNombre())) {
-            mensajeError = "Error: Ya existe un Catálogo con el Nombre '"
-                    + "" + nombre + "'.Por favor, intente con otro nombre.";
+            mensaje = "Error: Ya existe un Catálogo llamado '"
+                    + "" + nombre + "'. Por favor, intente con otro nombre.";
             return false;
         }
 
@@ -311,25 +290,30 @@ public class Catalogo extends Root {
         String[] colModificar = {ATRIBUTOS[1], ATRIBUTOS[2]};
         Object[] nombreCat = {nombre, participantes};
 
-        boolean resp = eCatalogo.modificar(condColumnas, valores, colModificar, nombreCat);
+        boolean resp;
+        if (resp = eCatalogo.modificar(condColumnas, valores, colModificar, nombreCat)) {
+            mensaje = "El Catálogo '" + nombre + "' ha sido modificado con éxito.";
+            it = campos.iterator();
+            Iterator itNM = catNM.getCampos().iterator();
+            while (itNM.hasNext()) {
+                CampoCatalogo campoNM = (CampoCatalogo) itNM.next();
+                CampoCatalogo campo = (CampoCatalogo) it.next();
+                resp &= campo.modificar(campoNM, idCatalogo);
+            }
 
-        it = campos.iterator();
-        Iterator itNM = catNM.getCampos().iterator();
-        while (itNM.hasNext()) {
-            CampoCatalogo campoNM = (CampoCatalogo) itNM.next();
-            CampoCatalogo campo = (CampoCatalogo) it.next();
-            resp &= campo.modificar(campoNM, idCatalogo);
-        }
+            resp &= agregarCamposNuevos(catNM.campos.size(), ip, user);
 
-        resp &= agregarCamposNuevos(catNM.campos.size(), ip, user);
+            if (!resp) {
+                mensaje = "Error: El Catálogo no pudo ser modificado satisfactoriamente.";
+            }
 
-        if (!resp) {
-            mensaje = "Error: No se pudo modificar el Catálogo satisfactoriamente.";
+        } else {
+            mensaje = "Error: El Catálogo no pudo ser modificado.";
         }
         return resp;
     }
 
-    private boolean eliminarTodosLosCampos() {
+    private boolean verificarEliminacionCampos() {
         boolean resp = true;
 
         Iterator it = campos.iterator();
@@ -340,7 +324,7 @@ public class Catalogo extends Root {
             }
         }
         if (resp) {
-            mensajeError = "Error: El Catálogo debe conservar al menos un campo";
+            mensaje = "Error: El Catálogo debe conservar al menos un campo";
         }
         return resp;
     }
@@ -349,7 +333,7 @@ public class Catalogo extends Root {
     //de lo contrario retorna 1, y -1 si ocurre un error.
     public int eliminarCamposMarcados(Catalogo catNM) {
 
-        if (eliminarTodosLosCampos()) {
+        if (verificarEliminacionCampos()) {
             return -1;
         }
 

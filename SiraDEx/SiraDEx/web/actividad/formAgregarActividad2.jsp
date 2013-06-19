@@ -25,18 +25,18 @@
             .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar <bean:write name="actividadForm"
-                    property="nombreTipoActividad"/></title>
+        <title>SiraDEx | Registrar Actividad</title>
     </head>
     <body>
         <html:link title="Elegir otro Tipo de Actividad" action="/RegistrarActividad?method=page"> 
             <html:image src="../Stylesheets/iconos/regresar.png"/>
         </html:link><br>
-        <h1 class='title'>Registro de <bean:write 
+        <h1 class='title'>Registro de Actividad de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="actividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div><br>
+        <logic:present name="mensajeAct"><br>
+            <div class ="error"><bean:write name="mensajeAct"/></div>
+            <br>
         </logic:present>
 
         <font size=2>
@@ -118,15 +118,30 @@
                             </html:select>
                         </logic:equal>
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
-                            <html:text  name="camposValores" property="valorAux" indexed="true"
-                                        maxlength="80" style="color:gray;" 
-                                        onfocus="if (this.value=='Apellido(s), Nombre(s)'){
-                                        this.value = ''}
-                                        if (this.style.color='gray'){
-                                        this.style.color='black'}" 
-                                        onblur="if (this.value=='') 
-                                        this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
-                                        />
+                            <logic:equal name="camposValores" property="valorAux" 
+                                         value="Apellido(s), Nombre(s)">
+                                <html:text  name="camposValores" property="valorAux" indexed="true"
+                                            maxlength="80" style="color:gray;" 
+                                            onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                            this.value = ''}
+                                            if (this.style.color='gray'){
+                                            this.style.color='black'}" 
+                                            onblur="if (this.value=='') 
+                                            this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
+                                            /> 
+                            </logic:equal>
+                            <logic:notEqual name="camposValores" property="valorAux" 
+                                            value="Apellido(s), Nombre(s)">
+                                <html:text  name="camposValores" property="valorAux" indexed="true"
+                                            maxlength="80" 
+                                            onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                            this.value = ''}
+                                            if (this.style.color='gray'){
+                                            this.style.color='black'}" 
+                                            onblur="if (this.value=='') 
+                                            this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
+                                            />
+                            </logic:notEqual>
                             <html:select name="camposValores" property="valor" indexed="true">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 

@@ -313,7 +313,7 @@ public class TipoActividad extends Root {
         return resp;
     }
 
-    public boolean agregarTipoActividad(String ip, String user) {
+    public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificarCamposVariables(this)) {
             return false;
@@ -343,6 +343,7 @@ public class TipoActividad extends Root {
             e.setIp(ip);
             e.setUser(user);
             e.log();
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido registrado con éxito.";
             id = e.seleccionarMaxId(ATRIBUTOS[0]);
 
             System.out.println("Ya inserte el tipo de Actividad con ID " + id);
@@ -359,21 +360,24 @@ public class TipoActividad extends Root {
             resp &= agregarPermisos();
 
             if (!resp) {
-                mensajeError = "Error: El Tipo de Actividad '" + nombreTipo
+                mensaje = "Error: El Tipo de Actividad '" + nombreTipo
                         + "'no pudo ser registrado.";
-                if (eliminarTipoActividad("ERORO DE SISTEMA", "SISTEMA")) {
-                    mensajeError = " Error: El Tipo de Actividad '" + nombreTipo
-                            + "' no pudo ser resgistrado satisfactoriamente, debe"
-                            + " eliminarlo mediante el sistema.";
+                if (!eliminar(ip, user)) {
+                    mensaje = " Error: El Tipo de Actividad '" + nombreTipo
+                            + "' no pudo ser resgistrado satisfactoriamente, en caso "
+                            + "de que aparezca, por favor, elimínelo.";
                 }
             }
+        } else {
+            mensaje = "Error: El Tipo de Actividad '" + nombreTipo
+                    + "'no pudo ser registrado.";
         }
 
         return resp;
 
     }
 
-    public boolean eliminarTipoActividad(String ip, String user) {
+    public boolean eliminar(String ip, String user) {
         Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
         String[] condColumnas = {ATRIBUTOS[0]};
         Object[] valores = {id};
@@ -384,13 +388,14 @@ public class TipoActividad extends Root {
             eMod.setIp(ip);
             eMod.setUser(user);
             eMod.log();
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito.";
             return true;
         }
-        
+        mensaje = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
-    
-     /**
+
+    /**
      * Modifica los permisos asociados a un tipo de actividad, eliminando
      * primero los permisos previos dados a dicha actividad e insertando luego
      * los nuevos permisos.
@@ -448,11 +453,12 @@ public class TipoActividad extends Root {
     //en el parámetro taNM recibe un TipoActividad No Modificado
     public boolean modificar(TipoActividad taNM, String ip, String user) {
 
-        if (!Verificaciones.verificarCamposFijos(this) || !Verificaciones.verificarCamposVariables(this)) {
+        if (!Verificaciones.verificarCamposFijos(this)
+                || !Verificaciones.verificarCamposVariables(this)) {
             return false;
         }
 
-        boolean resp = true;
+        boolean resp;
 
         Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
@@ -491,28 +497,32 @@ public class TipoActividad extends Root {
 
         if (esTipoActividad() && !nombreTipo.equals(taNM.getNombreTipo())) {
             mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
-                    + nombreTipo + "'. Por favor intente con otro nombre.";
+                    + nombreTipo + "'. Por favor, intente con otro nombre.";
             return false;
         }
 
-        resp &= e.modificar(condColumnas, valores, colModificar, modificaciones);
-        e.setIp(ip);
-        e.setUser(user);
-        e.log();
-        System.out.println("modificacion de campos fijos sin permisos " + resp);
-        Iterator it = taNM.getCampos().iterator();
+        if (resp = e.modificar(condColumnas, valores, colModificar, modificaciones)) {
+            e.setIp(ip);
+            e.setUser(user);
+            e.log();
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido modificado con éxito.";
+            System.out.println("modificacion de campos fijos sin permisos " + resp);
+            Iterator it = taNM.getCampos().iterator();
 
-        resp &= this.modificarPermisos(ip, user);
-        System.out.println("modificacion de permisos " + resp);
+            resp &= this.modificarPermisos(ip, user);
+            System.out.println("modificacion de permisos " + resp);
 
-        for (int i = 0; it.hasNext() && resp; i++) {
-            Campo campoNM = (Campo) it.next();
-            resp &= campos.get(i).modificar(campoNM, id, ip, user);
-            System.out.println("Update " + resp + " " + campoNM.getNombre());
-        }
+            for (int i = 0; it.hasNext() && resp; i++) {
+                Campo campoNM = (Campo) it.next();
+                resp &= campos.get(i).modificar(campoNM, id, ip, user);
+                System.out.println("Update " + resp + " " + campoNM.getNombre());
+            }
 
-        if (!resp) {
-            mensajeError = "Error: El Tipo de Actividad no pudo ser modificado.";
+            if (!resp) {
+                mensaje = "Error: El Tipo de Actividad no pudo ser modificado satisfactoriamente.";
+            }
+        } else {
+           mensaje = "Error: El Tipo de Actividad no pudo ser modificado."; 
         }
 
         return resp;
@@ -536,11 +546,11 @@ public class TipoActividad extends Root {
         };
         boolean b = eMod.modificar(condColumnas, valores, colModificar, modificaciones);
         if (b) {
-            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido restaurado";
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido restaurado con éxito.";
             return true;
         }
 
-        mensajeError = "Error: No se pudo restaurar el Tipo de Actividad '" + nombreTipo + "'.";
+        mensaje = "Error: No se pudo restaurar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
 
@@ -605,11 +615,9 @@ public class TipoActividad extends Root {
         return tipos;
     }
 
-   
-
     public static void main(String[] args) throws CloneNotSupportedException {
         //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");
-        //t.agregarTipoActividad();
+        //t.agregar();
 
         TipoActividad t = new TipoActividad("prueba1", 2, "pasantia");
         t.setId(1);
@@ -634,7 +642,7 @@ public class TipoActividad extends Root {
         TipoActividad t0 = (TipoActividad) t.clone();
         System.out.println(t.getNombreTipo());
         System.out.println(t0.getNombreTipo());
-//        t.eliminarTipoActividad();
+//        t.eliminar();
 
 
     }

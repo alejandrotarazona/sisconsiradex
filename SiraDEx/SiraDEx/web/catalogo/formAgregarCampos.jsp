@@ -10,24 +10,26 @@
             .selector {width: 70px;}
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Registrar Campos del Catalogo</title>
+        <title>SiraDEx | Registo de Campos de Catálogo</title>
     </head>
     <body>
-        <h1 class="title" id="page-title">Registrar Campos del Catalogo</h1>
+        <h1 class="title">Registro de Campos del Catálogo 
+            <bean:write name="catalogoForm" property="nombre"/> </h1>
 
-        <logic:present name="catalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div>
+        <logic:present name="mensajeCat">
             <br>
-        </logic:present> 
-        <logic:present name="catalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div>
+            <div class ="error"><bean:write name="mensajeCat"/></div>
             <br>
         </logic:present>
 
         <table>
             <tr>
-            <td width="25%"><b>&nbsp;&nbsp;&nbsp;&nbsp;Nombre</b></td>
-            <td><b>Tipo</b></td>
+            <td width="25%">
+                <b>Nombre</b>
+            </td>
+            <td>
+                <b>Tipo</b>
+            </td>
         </tr>            
 
         <html:form action="/RegistrarCatalogo?method=save2">

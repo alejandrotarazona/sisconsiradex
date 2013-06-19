@@ -51,14 +51,10 @@ public class Eliminar extends org.apache.struts.action.Action {
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        if (act.eliminarActividad(ip, usuario)) {
-            request.getSession().setAttribute("mensajeAct",
-                    "La Actividad ha sido eliminada con éxito.");
-        } else {
+        act.eliminar(ip, usuario);
 
-            request.getSession().setAttribute("mensajeAct",
-                    "Error: La Actividad no pudo ser eliminada");
-        }
+        request.getSession().setAttribute("mensajeAct", act.getMensaje());
+
         if (rol.equalsIgnoreCase("WM")) {
             return mapping.findForward(SUCCESS2);
         }

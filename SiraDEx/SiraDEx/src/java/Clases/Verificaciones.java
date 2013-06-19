@@ -113,38 +113,38 @@ public class Verificaciones {
         String respVerif = verificarLongitudVacio("'Nombre del Tipo de Actividad'", ta.getNombreTipo(),
                 140, true);
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
         respVerif = verificarLongitudVacio("'Descripción'", ta.getDescripcion(), 200, true);
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
 
         respVerif = verificarVacio("'Tipo'", ta.getTipoPR());
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
         respVerif = verificarVacio("'Programa'", ta.getPrograma());
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
         respVerif = verificarVacio("'Dependencia a validar'", ta.getValidador());
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
         String[] permisos = ta.getPermisos();
         if (permisos == null) {
-            ta.setMensajeError("Error: El campo 'Realizado por' es obligatorio.");
+            ta.setMensaje("Error: El campo 'Realizado por' es obligatorio.");
             return false;
         }
 
@@ -155,19 +155,19 @@ public class Verificaciones {
         respVerif = verificarPatron("'Número de productos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
         if (nro.equals("0")) {
-            ta.setMensajeError("Error: El campo 'Número de archivos del producto' debe contener al "
+            ta.setMensaje("Error: El campo 'Número de archivos del producto' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
 
         respVerif = verificarLongitudVacio("'Número de productos'", nro, 1, true);
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
@@ -175,17 +175,17 @@ public class Verificaciones {
         respVerif = verificarPatron("'Número de campos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
         if (nro.equals("0")) {
-            ta.setMensajeError("Error: El campo 'Número de Campos' debe contener al "
+            ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
                     + "menos 1 como valor.");
             return false;
         }
         respVerif = verificarLongitudVacio("'Número de campos'", nro, 2, true);
         if (respVerif != null) {
-            ta.setMensajeError(respVerif);
+            ta.setMensaje(respVerif);
             return false;
         }
 
@@ -215,7 +215,7 @@ public class Verificaciones {
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
             if (respVerif != null) {
-                ta.setMensajeError(respVerif);
+                ta.setMensaje(respVerif);
                 return false;
             }
 
@@ -229,18 +229,18 @@ public class Verificaciones {
                 respVerif = verificarPatron(nroCampo, longitud, patronNum,
                         "debe contener sólo números.");
                 if (respVerif != null) {
-                    ta.setMensajeError(respVerif);
+                    ta.setMensaje(respVerif);
                     return false;
                 }
 
                 respVerif = verificarLongitudVacio(nroCampo, longitud, 3, true);
                 if (respVerif != null) {
-                    ta.setMensajeError(respVerif);
+                    ta.setMensaje(respVerif);
                     return false;
                 }
 
                 if (longitud.equals("0")) {
-                    ta.setMensajeError("Error: El campo número " + i + " debe contener "
+                    ta.setMensaje("Error: El campo número " + i + " debe contener "
                             + "al menos 1 como valor para su Longitud.");
                     return false;
                 }
@@ -248,7 +248,7 @@ public class Verificaciones {
 
             /*verifica que si el tipo es catálogo, el valor de catalogo no sea vacío*/
             if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
-                ta.setMensajeError("Error: Debe seleccionar un catálogo para el "
+                ta.setMensaje("Error: Debe seleccionar un catálogo para el "
                         + "campo número " + i + ".");
                 return false;
             }
@@ -287,14 +287,14 @@ public class Verificaciones {
             /*verifica si el campo es tipo participante y es adicional tenga datos en alguno de sus campos*/
             if (tipo.equals("participante") && valorAux.isEmpty() && valor.isEmpty()
                     && longitud == -1) {
-                act.setMensajeError("Error: No deben haber campos adicionales de participantes" 
+                act.setMensaje("Error: No deben haber campos adicionales de participantes" 
                         + " sin ningún valor. Por favor, ingrese un valor o elimínelo.");
                 return false;
             }
             
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
-                act.setMensajeError("Error: El campo " + nombre + " debe contener "
+                act.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "datos en uno de sus dos campos, no puede contener en ambos.");
                 return false;
             }
@@ -316,7 +316,7 @@ public class Verificaciones {
                 Iterator iter = participantes.iterator();
                 while (iter.hasNext()) {
                     if (iter.next().equals(val + cv.getCampo().getIdCampo())) {
-                        act.setMensajeError("Error: El valor " + val + " se repite para "
+                        act.setMensaje("Error: El valor " + val + " se repite para "
                                 + "dos campos del mismo tipo de participante. Por favor, "
                                 + "cambie uno de los valores.");
                         return false;
@@ -329,7 +329,7 @@ public class Verificaciones {
             /*verifica si el campo es obligatorio que no sea vacío*/
             respVerif = verificarVacio(nombre, val);
             if (obligatorio && respVerif != null) {
-                act.setMensajeError(respVerif);
+                act.setMensaje(respVerif);
                 return false;
             }
 
@@ -339,7 +339,7 @@ public class Verificaciones {
                     || tipo.equals("textol")
                     || tipo.equals("numero"))
                     && valor.length() > longitud) {
-                act.setMensajeError("Error: El campo " + nombre + " tiene "
+                act.setMensaje("Error: El campo " + nombre + " tiene "
                         + valor.length() + " caracteres y solo puede contener "
                         + "a lo sumo " + longitud + " carateres.");
                 return false;
@@ -347,7 +347,7 @@ public class Verificaciones {
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/
             if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
-                act.setMensajeError("Error: El campo " + nombre + " debe contener "
+                act.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
             }
@@ -356,13 +356,13 @@ public class Verificaciones {
             /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
             if (tipo.equals("producto") || tipo.equals("archivo")) {
                 if (cv.getFile().getFileSize() > 2097152) {
-                    act.setMensajeError("Error: El tamaño del archivo del campo "
+                    act.setMensaje("Error: El tamaño del archivo del campo "
                             + nombre + " debe ser menor de 2 MB.");
                     return false;
                 }
 
                 if (!esPDF(cv)) {
-                    act.setMensajeError("Error: El archivo subido al campo " + nombre
+                    act.setMensaje("Error: El archivo subido al campo " + nombre
                             + " debe ser de tipo PDF");
                     return false;
                 }
@@ -374,7 +374,7 @@ public class Verificaciones {
             acc = "registró";
         }
         if (!creador) {
-            act.setMensajeError("Error: El usuario que " + acc + " la Actividad debe "
+            act.setMensaje("Error: El usuario que " + acc + " la Actividad debe "
                     + "estar presente en alguno de los campos desplegables de participante.");
             return false;
         }
@@ -412,7 +412,7 @@ public class Verificaciones {
         String respVerif = verificarLongitudVacio("'Nombre'", c.getNombre(),
                 140, true);
         if (respVerif != null) {
-            c.setMensajeError(respVerif);
+            c.setMensaje(respVerif);
             return false;
         }
 
@@ -420,13 +420,13 @@ public class Verificaciones {
         respVerif = verificarPatron("'Número de campos'", nro, "^[ ]*[0-9]+[ ]*$",
                 "debe contener sólo números.");
         if (respVerif != null) {
-            c.setMensajeError(respVerif);
+            c.setMensaje(respVerif);
             return false;
         }
 
         respVerif = verificarLongitudVacio("'Número de campos'", nro, 1, true);
         if (respVerif != null) {
-            c.setMensajeError(respVerif);
+            c.setMensaje(respVerif);
             return false;
         }
 
@@ -450,7 +450,7 @@ public class Verificaciones {
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
             if (respVerif != null) {
-                c.setMensajeError(respVerif);
+                c.setMensaje(respVerif);
                 return false;
             }
         }
@@ -477,14 +477,14 @@ public class Verificaciones {
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/
             if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
-                ec.setMensajeError("Error: El campo " + nombre + " debe contener "
+                ec.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
             }
             todosVacios &= Verificaciones.esVacio(valor);
         }
         if (todosVacios) {
-            ec.setMensajeError("Error: Debe llenar al menos un campo");
+            ec.setMensaje("Error: Debe llenar al menos un campo");
             return false;
         }
         return true;

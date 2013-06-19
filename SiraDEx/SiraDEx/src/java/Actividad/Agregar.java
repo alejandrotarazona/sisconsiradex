@@ -29,7 +29,6 @@ public class Agregar extends DispatchAction {
     private static final String SUCCESS = "success";
     private static final String SUCCESSFULL1 = "successfull1";
     private static final String SUCCESSFULL2 = "successfull2";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -148,6 +147,7 @@ public class Agregar extends DispatchAction {
                     request.getSession().setAttribute("cat" + i, catalogo);
                 }
             }
+            request.getSession().setAttribute("mensajeAct", null);
             return mapping.findForward(SUCCESS);
         }
 
@@ -158,8 +158,7 @@ public class Agregar extends DispatchAction {
 
             String rol = u.getRol();
 
-            request.getSession().setAttribute("mensajeAct", "La Actividad '"
-                    + act.getNombreTipoActividad() + "' ha sido registrada con éxito.");
+            request.getSession().setAttribute("mensajeAct", act.getMensaje());
 
             //act.enviarCorreo(0);
             if (rol.equalsIgnoreCase("WM")) {
@@ -167,6 +166,7 @@ public class Agregar extends DispatchAction {
             }
             return mapping.findForward(SUCCESSFULL1);
         }
-        return mapping.findForward(FAILURE);
+        request.getSession().setAttribute("mensajeAct", act.getMensaje());
+        return mapping.findForward(SUCCESS);
     }
 }

@@ -30,7 +30,7 @@
             <tiles:insert attribute="header"/>
             <tiles:insert attribute="topMenu"/>
             <div id="main" class="section section-main clearfix" role="main">
-                <div id="content" class="column grid-15 push-3" style="overflow-y: auto;max-height: 400px;">
+                <div id="content" class="column grid-15 push-3" style="overflow-y: auto;max-height: 420px;">
                     <div class="inner">
                         <div id="main-content" class="clearfix">
                             <div class="region region-content">

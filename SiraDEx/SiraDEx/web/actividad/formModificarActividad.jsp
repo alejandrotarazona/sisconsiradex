@@ -25,16 +25,15 @@
             .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
         </style>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Edición de <bean:write name="actividadForm"
-                    property="nombreTipoActividad"/></title>
+        <title>SiraDEx | Edición de la Actividad</title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición de <bean:write 
+        <h1 class='title'>Edición de la Actividad de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="actividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="actividadForm" property="mensajeError"/></div>
+        <logic:present name="mensajeAct"><br>
+            <div class ="error"><bean:write name="mensajeAct"/></div>
             <br>
         </logic:present>
 
@@ -51,11 +50,7 @@
                    action ="/ModificarActividad?method=update">
             <table class="cebra">
                 <tbody>
-                    <tr>
-                    <th><b>Nombre</b></th>
-                    <th><b>Valor</b></th>
 
-                    </tr>
                     <logic:iterate name="actividadForm" property="camposValores" 
                                    id="camposValores" indexId="index">
                         <tr>
@@ -132,16 +127,32 @@
                             </html:select>
                         </logic:equal>
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
-                            <html:text name="camposValores" property="valorAux" indexed="true"
-                                       maxlength="80" style="color:gray;"
-                                       onfocus="if (this.value=='Apellido(s), Nombre(s)'){
-                                       this.value = ''}
-                                       if (this.style.color='gray'){
-                                       this.style.color='black'}" 
-                                       onblur="if (this.value=='') 
-                                       this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" >
-                                <bean:write name="camposValores" property="valorAux"/>
-                            </html:text>
+                            <logic:equal name="camposValores" property="valorAux" 
+                                         value="Apellido(s), Nombre(s)">
+                                <html:text name="camposValores" property="valorAux" indexed="true"
+                                           maxlength="80" style="color:gray;"
+                                           onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                           this.value = ''}
+                                           if (this.style.color='gray'){
+                                           this.style.color='black'}" 
+                                           onblur="if (this.value=='') 
+                                           this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" >
+                                    <bean:write name="camposValores" property="valorAux"/>
+                                </html:text>
+                            </logic:equal>
+                            <logic:notEqual name="camposValores" property="valorAux" 
+                                            value="Apellido(s), Nombre(s)">
+                                <html:text name="camposValores" property="valorAux" indexed="true"
+                                           maxlength="80"
+                                           onfocus="if (this.value=='Apellido(s), Nombre(s)'){
+                                           this.value = ''}
+                                           if (this.style.color='gray'){
+                                           this.style.color='black'}" 
+                                           onblur="if (this.value=='') 
+                                           this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" >
+                                    <bean:write name="camposValores" property="valorAux"/>
+                                </html:text>
+                            </logic:notEqual>
                             <html:select name="camposValores" property="valor" indexed="true">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 

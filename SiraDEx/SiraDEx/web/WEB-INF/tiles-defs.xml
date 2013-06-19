@@ -170,7 +170,7 @@
     
     <!-- ===============================LOG================================-->
     
-    <definition name="gestionLog" extends="plantilla">
+    <definition name="consultarLog" extends="plantilla">
         <put name="body" value="/log/gestionLog.jsp" />
     </definition>
 

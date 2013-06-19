@@ -5,6 +5,7 @@
 package Backup;
 
 import Clases.Backup;
+import Clases.Usuario;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -17,10 +18,8 @@ import org.apache.struts.actions.DispatchAction;
  * @author SisCon
  */
 public class Gestionar extends DispatchAction {
-  
+
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -33,16 +32,18 @@ public class Gestionar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Clases.Root.deleteSessions(request, "backupForm");
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+        Clases.Root.deleteSessions(request, "");
         Backup b = (Backup) form;
         b.inicializarFrecuencia();
-        b.setMensajeError(null);
-        b.setMensaje(null);
-               
+
         return mapping.findForward(PAGE);
     }
 
@@ -50,15 +51,16 @@ public class Gestionar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Backup b = (Backup) form;
-        b.setMensajeError(null);
-        b.setMensaje(null);
-   
-        if (b.hacerBackup()) {
-            return mapping.findForward(SUCCESS);
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
         }
-        
-        return mapping.findForward(FAILURE);
+        Backup b = (Backup) form;
+
+        b.hacerBackup();
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+
+        return mapping.findForward(PAGE);
 
     }
 
@@ -66,28 +68,31 @@ public class Gestionar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Backup b = (Backup) form;
-        b.setMensajeError(null);
-        b.setMensaje(null);
-   
-        if (b.restaurarDesdeBackup()) {
-            return mapping.findForward(SUCCESS);
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
         }
-        
-        return mapping.findForward(FAILURE);
+        Backup b = (Backup) form;
+
+        b.restaurarDesdeBackup();
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+
+        return mapping.findForward(PAGE);
     }
+
     public ActionForward set(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        Backup b = (Backup) form;
-        b.setMensajeError(null);
-        b.setMensaje(null);
-   
-        if (b.cambiarFrecuencia()) {
-            return mapping.findForward(SUCCESS);
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
         }
-        
-        return mapping.findForward(FAILURE);
+        Backup b = (Backup) form;
+
+        b.cambiarFrecuencia();
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+
+        return mapping.findForward(PAGE);
     }
 }

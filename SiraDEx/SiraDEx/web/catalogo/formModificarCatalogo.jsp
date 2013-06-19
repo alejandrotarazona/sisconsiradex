@@ -22,24 +22,23 @@
                     property="nombre"/></title>
     </head>
     <body>
-        <h1 class='title' id='page-title'>Edición del Catálogo <bean:write 
-                name="catalogoForm" property="nombre"/> </h1>
-        <font size=2>Los campos con el asterisco  <span style="color:red">*</span> 
-            son obligatorios.</font><br><br>
+        <h1 class='title'>Edición del Catálogo 
+            <bean:write name="catalogoForm" property="nombre"/>
+        </h1>
 
-        <logic:present name="catalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div>
-        </logic:present> 
-        <logic:present name="catalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div>
+        <logic:present name="mensajeCat">
+            <br>
+            <div class ="error"><bean:write name="mensajeCat"/></div>
+            <br>
         </logic:present>
-
+        <br>
+        <font size=2>Todos los campos son obligatorios.</font><br>
 
         <html:form method="POST" action ="/ModificarCatalogo?method=update">
             <table>
                 <tbody>
                     <tr>
-                    <td width="18%">Catálogo de Usuarios</td>
+                    <td width="18%"><b>Catálogo de Usuarios</b></td>
 
                     <td>
                         <logic:equal name="catalogoForm" property="participantes" value="false">
@@ -64,7 +63,7 @@
                     </tr>
 
                     <tr>
-                    <td>Nombre del cátalogo<span style="color:red">*</span></td>
+                    <td><b>Nombre del cátalogo</b></td>
 
                     <td>
                         <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
@@ -147,7 +146,7 @@
                     <tr>
                     <td>
                         <br>
-                        Nuevos campos <html:text name="catalogoForm" 
+                        <b>Nuevos campos</b> <html:text name="catalogoForm" 
                                    property="nroCampos" value="0" size="1" maxlength="2"
                                    onkeyup="if(this.value > 0 
                                    && document.catalogoForm.submitButton.value!='Eliminar') {

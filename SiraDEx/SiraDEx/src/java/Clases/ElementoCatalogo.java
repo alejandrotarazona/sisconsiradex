@@ -41,11 +41,6 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return idElemento;
     }
 
-    public void setIdElemento() {
-        Entity eElemento = new Entity(8);//ELEMENTO_CATALOGO
-        this.idElemento = eElemento.seleccionarMaxId("id_elemento");
-    }
-
     public void setIdElemento(int idElemento) {
         this.idElemento = idElemento;
     }
@@ -89,31 +84,34 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         }
 
         Entity eElemento = new Entity(8);//ELEMENTO_CATALOGO
-        boolean resp = true;
+        boolean resp;
 
-        String[] columnas = {
-            "id_catalogo"
-        };
-        Integer idCat = new Integer(this.idCatalogo);
-        Object[] valores = {
-            idCat
-        };
-        resp &= eElemento.insertar2(columnas, valores);
-        if (resp) {
-            setIdElemento();
+        String[] columnas = {"id_catalogo"};
+        Object[] valores = {idCatalogo};
+
+        if (resp = eElemento.insertar2(columnas, valores)) {
+
+            mensaje = "El elemento ha sido registrado con éxito";
+
+            idElemento = eElemento.seleccionarMaxId("id_elemento");
+
+            Iterator itValores = this.camposValores.iterator();
+
+            while (itValores.hasNext() && resp) {
+                CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
+                ccv.agregar(idElemento, ip, user);
+            }
+
+            if (!resp) {
+                mensaje = "Error: El elemento no pudo ser registrado.";
+                if (!eliminar(ip, user)) {
+                    mensaje = " Error: La elemento 'no pudo ser resgistrado"
+                            + " satisfactoriamente, en caso  de que aparezca,"
+                            + " por favor, elimínelo.";
+                }
+            }
         } else {
-            return resp;
-        }
-
-        Iterator itValores = this.camposValores.iterator();
-
-        while (itValores.hasNext() && resp) {
-            CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
-            ccv.agregar(idElemento, ip, user);
-        }
-
-        if (!resp) {
-            mensajeError = "Error: El elemento no pudo ser registrado.";
+            mensaje = "Error: El elemento no pudo ser registrado.";
         }
 
         return resp;
@@ -121,12 +119,17 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
     public boolean eliminar(String ip, String user) {
         Entity e = new Entity(8);//ELEMENTO_CATALOGO
-        
-        boolean b = e.borrar("id_elemento", idElemento);
-        e.setIp(ip);
-        e.setUser(user);
-        e.log();
-        return b;
+
+        if (e.borrar("id_elemento", idElemento)) {
+            e.setIp(ip);
+            e.setUser(user);
+            e.log();
+            mensaje = "El elemento ha sido eliminado con éxito";
+            return true;
+        } else {
+            mensaje = "Error: El elemento no pudo ser eliminado.";
+            return false;
+        }
     }
 
     public boolean modificar(ArrayList camposNM, String ip, String user) {
@@ -138,8 +141,13 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
         for (int i = 0; it.hasNext(); i++) {
             CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            camposValores.get(i).modificar(campoNM, idElemento, ip, user);
+            if (!camposValores.get(i).modificar(campoNM, idElemento, ip, user)) {
+                mensaje = "Error: El elemento no pudo ser modificado satisfactoriamente";
+                return false;
+            }
         }
+
+        mensaje = "El elemento ha sido modificado con éxito.";
 
         return true;
     }

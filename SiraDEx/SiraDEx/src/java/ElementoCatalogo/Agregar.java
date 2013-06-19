@@ -24,9 +24,8 @@ public class Agregar extends DispatchAction {
     /*
      * forward name="success" path=""
      */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
+    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
@@ -41,9 +40,14 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+        Clases.Root.deleteSessions(request, "elementoCatalogoForm");
         ElementoCatalogo e = (ElementoCatalogo) form;
-        e.setMensajeError(null);
-        e.setMensaje(null);
+
         int idCat = e.getIdCatalogo();
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
 
@@ -57,41 +61,22 @@ public class Agregar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String usuario = user.getUsername();
+        Usuario u = (Usuario) request.getSession().getAttribute("user");
+        if (u == null) {
+            return mapping.findForward(PAGE);
+        }
+
+        String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
         ElementoCatalogo e = (ElementoCatalogo) form;
-        int idCat = e.getIdCatalogo();
+
         if (e.agregar(ip, usuario)) {
-            e.setMensaje("El elemento ha sido registrado con éxito");
-            ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
-
-            if (elemsc.isEmpty()) {
-                elemsc = null;
-            }
-
-            request.setAttribute("elementos", elemsc);
-
-            request.setAttribute("campos", elemsc.get(0).getCamposValores());
-
-            e.setMensajeError(null);
+            request.getSession().setAttribute("mensajeElem", e.getMensaje());
 
             return mapping.findForward(SUCCESS);
         }
-
-
-        ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
-
-        if (elemsc.isEmpty()) {
-            elemsc = null;
-        } else {
-            request.setAttribute("campos", elemsc.get(0).getCamposValores());
-        }
-
-        request.setAttribute("elementos", elemsc);
-
-
-        return mapping.findForward(FAILURE);
+        request.getSession().setAttribute("mensajeElem", e.getMensaje());
+        return mapping.findForward(PAGE);
     }
 }

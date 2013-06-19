@@ -41,7 +41,7 @@ public class Listar extends org.apache.struts.action.Action {
              
         Usuario u = (Usuario) form;
         u.setMensaje(null);
-        u.setMensajeError(null);
+        u.setMensaje(null);
         int tam = usrs.size();
         if (tam != 0) {
             request.setAttribute("usuarios", usrs);

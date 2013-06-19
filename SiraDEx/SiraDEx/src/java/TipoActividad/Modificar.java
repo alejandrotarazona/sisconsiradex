@@ -22,9 +22,8 @@ import org.apache.struts.actions.DispatchAction;
 public class Modificar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
+    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
@@ -44,7 +43,8 @@ public class Modificar extends DispatchAction {
         if (u == null) {
             return mapping.findForward(SUCCESS);
         }
-        
+        Clases.Root.deleteSessions(request, "tipoActividadForm");
+
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
@@ -97,12 +97,12 @@ public class Modificar extends DispatchAction {
 
         if (ta.modificar(taNM, ip, usuario)) {
 
-            request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
-                    + ta.getNombreTipo() + "' ha sido modificado con éxito.");
+            request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
             return mapping.findForward(SUCCESS);
         }
 
         ta.setNombreTipo(taNM.getNombreTipo());
-        return mapping.findForward(FAILURE);
+        request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
+        return mapping.findForward(PAGE);
     }
 }

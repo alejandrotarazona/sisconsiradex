@@ -2,9 +2,8 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package ElementoCatalogo;
-
-import Clases.ElementoCatalogo;
+package Log;
+import Clases.Log;
 import Clases.Usuario;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
@@ -17,9 +16,11 @@ import org.apache.struts.action.ActionMapping;
  *
  * @author SisCon
  */
-public class Listar extends org.apache.struts.action.Action {
+public class Consultar extends org.apache.struts.action.Action {
 
-    /* forward name="success" path="" */
+    /*
+     * forward name="success" path=""
+     */
     private static final String SUCCESS = "success";
 
     /**
@@ -36,26 +37,26 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-
+        
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS);
         }
+        Clases.Root.deleteSessions(request, "");
+        ArrayList<Log> logs = Log.listar();
         
-        Clases.Root.deleteSessions(request, "elementoCatalogoForm","mensajeElem");
-        ElementoCatalogo e = (ElementoCatalogo) form;
-        int idCat = e.getIdCatalogo();
-        e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
-        ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);
-
-        if (elemsc.isEmpty()) {
-            elemsc = null;
-        } else {
-            request.setAttribute("campos", elemsc.get(0).getCamposValores());
+        request.setAttribute("logs", logs);
+        
+        if (logs.isEmpty()) {
+         
+            request.setAttribute("logs", null);
         }
-
-        request.setAttribute("elementos", elemsc);
-
+        
+        
         return mapping.findForward(SUCCESS);
     }
 }
+
+    
+
+

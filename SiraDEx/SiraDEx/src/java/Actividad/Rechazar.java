@@ -5,6 +5,7 @@
 package Actividad;
 
 import Clases.Actividad;
+import Clases.Root;
 import Clases.Usuario;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,9 +21,8 @@ import org.apache.struts.actions.DispatchAction;
 public class Rechazar extends DispatchAction {
 
     /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
+    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
@@ -37,6 +37,7 @@ public class Rechazar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Root.deleteSessions(request, "formActividad");
         return mapping.findForward(PAGE);
 
     }
@@ -51,8 +52,9 @@ public class Rechazar extends DispatchAction {
         Actividad act = (Actividad) form;
 
         if (act.getDescripcion().replace("\n", "").length() > 2001) {
-            act.setMensajeError("Error: El texto debe contener menos de 2000 caracteres.");
-            return mapping.findForward(FAILURE);
+            request.getSession().setAttribute("mensajeVal",
+                    "Error: El texto debe contener menos de 2000 caracteres.");
+            return mapping.findForward(PAGE);
         }
 
         String usuario = u.getUsername();
@@ -61,13 +63,12 @@ public class Rechazar extends DispatchAction {
         boolean validacion = act.validar(false, ip, usuario);
 
         if (validacion) {
-            request.getSession().setAttribute("mensajeVal",
-                    "La Actividad ha sido rechazada con éxito.");
-            act.setMensajeError(null);
+            request.getSession().setAttribute("mensajeVal", act.getMensaje());
+
             //act.enviarCorreo(2);
             return mapping.findForward(SUCCESS);
         }
-
-        return mapping.findForward(FAILURE);
+        request.getSession().setAttribute("mensajeVal", act.getMensaje());
+        return mapping.findForward(PAGE);
     }
 }

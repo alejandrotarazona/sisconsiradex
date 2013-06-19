@@ -32,23 +32,26 @@
     <body>
         <h1 class="title">Gestión de Catálogos</h1>
 
+        <logic:present name="mensajeCat">
+            <br>
+            <logic:notMatch name="mensajeCat" value="Error:">
+                <div class ="status"><bean:write name="mensajeCat"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeCat" value="Error:">
+                <div class ="error"><bean:write name="mensajeCat"/></div>
+            </logic:match>
+            <br>
+        </logic:present>
+
         <html:link action="/RegistrarCatalogo?method=page"> 
             Agregar Catálogo
-        </html:link><br/>
-
-        <logic:present name="mensaje"><br>
-            <div class ="status"><bean:write name="mensaje"/></div><br>
-        </logic:present>
-        <logic:present name="catalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="catalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="catalogoForm" property="mensajeError"/></div><br>
-        </logic:present>
+        </html:link>
+        <br>
 
         <logic:notPresent name="catalogos">
         <span align="center">No hay catálogos que mostrar</span>
     </logic:notPresent>
+
     <logic:present name="catalogos">
         <h1>Catálogos registrados en el sistema</h1>
 
@@ -91,7 +94,7 @@
                     </td>
                     <td align="center">
                         <html:form method="POST" action="/GestionElementos">
-                            <html:hidden name="cat" property="idCatalogo" />
+                            <html:hidden name="cat" property="idCatalogo"/>
                             <html:submit styleId="botonExaminar"
                                          value=" "
                                          title="Consultar"/>

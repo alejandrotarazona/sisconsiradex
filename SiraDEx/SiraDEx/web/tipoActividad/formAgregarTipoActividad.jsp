@@ -19,15 +19,12 @@
     <body>
         <h1 class="title">Registro de Tipo de Actividad</h1>
 
-        <logic:present name="tipoActividadForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="tipoActividadForm" 
-                        property="mensaje" /></div>
-            </logic:present> 
-            <logic:present name="tipoActividadForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="tipoActividadForm" 
-                        property="mensajeError" /></div>
-        </logic:present><br>
-
+        <logic:present name="mensajeTipo">
+            <br>
+            <div class ="error"><bean:write name="mensajeTipo"/></div>
+            <br>
+        </logic:present>
+        <br>
         <font size=2>Todos los campos son obligatorios.</font><br>
         <html:form method="POST" action ="/RegistrarTipoActividad?method=save">
             <table>
@@ -48,11 +45,11 @@
                     <td>
                         <html:radio property="tipoPR" value="P" >P</html:radio>
                         <html:radio property="tipoPR" value="R" >R</html:radio>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td><b>Programa</b></td>
-                    <td>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><b>Programa</b></td>
+                        <td>
                         <html:select property="programa">
                             <html:option value="">-- Seleccione --</html:option>
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>

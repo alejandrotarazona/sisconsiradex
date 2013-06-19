@@ -17,7 +17,7 @@
     </head>
 
     <body>
-        <h1 class="title" id="page-title">Registro de Actividad</h1>
+        <h1 class="title">Registro de Actividad</h1>
                 
         <font size=2>Seleccione el Tipo de Actividad que desea agregar.</font>
         <logic:present name="tipos">

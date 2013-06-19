@@ -4,6 +4,7 @@
  */
 package TipoActividad;
 
+import Clases.Root;
 import Clases.TipoActividad;
 import Clases.Usuario;
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ public class Consultar extends org.apache.struts.action.Action {
         if (u == null) {
             return mapping.findForward(SUCCESS);
         }
-
+        Root.deleteSessions(request, "tipoActividadForm");
         TipoActividad ta = (TipoActividad) form;
 
         int idTA = ta.getIdTipoActividad();

@@ -17,19 +17,17 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Agregar Elemento al Catálogo <bean:write name="elementoCatalogoForm"
-                    property="nombreCatalogo"/></title>
+        <title>SiraDEx | Agregar Elemento al Catálogo</title>
 
     </head>
     <body>
-        <h1 class='title' id='page-title'>Agregar Elemento al Catálogo <bean:write 
+        <h1 class='title'>Agregar Elemento al Catálogo <bean:write 
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
-        <logic:present name="elementoCatalogoForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="elementoCatalogoForm" property="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="elementoCatalogoForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensajeError"/></div><br>
+        <logic:present name="mensajeElem">
+            <br>
+            <div class ="error"><bean:write name="mensajeElem"/></div>
+            <br>
         </logic:present>
 
         <font size=2>Debe llenar al menos un campo.</font><br><br>
@@ -46,7 +44,7 @@
                             <logic:equal name="camposValores" property="campo.tipo" value="usbid">
                                 <html:text name="camposValores" property="valor" indexed="true"/>  
                             </logic:equal>
-                            
+
                             <logic:equal name="camposValores" property="campo.tipo" value="texto">
                                 <html:text name="camposValores" property="valor" indexed="true"/>  
                             </logic:equal>
