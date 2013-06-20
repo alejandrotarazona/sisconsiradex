@@ -43,7 +43,8 @@
                         }
                     %>
                     <html:form action="<%=accion%>">
-
+                        <div align="right"><html:submit>Buscar</html:submit></div>
+                        <br>
                         Mostrar <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
                                      styleClass="selector" value="${busquedaActividadForm.mostrarPorPagina}">
                             <html:option value="10">10</html:option>
@@ -51,7 +52,7 @@
                             <html:option value="50">50</html:option>
                             <html:option value="100">100</html:option>
                         </html:select>
-                        actividades por página.
+                        actividades por página
                         <br><br>
 
                         Tipo de Actividad:<br> 
@@ -63,7 +64,7 @@
                         Participante:<br>
                         <html:select name="busquedaActividadForm" property="participante">
                             <html:option value="">-- Cualquiera --</html:option>
-                            <html:optionsCollection name="usuarios" label="contenido" value="mensaje"/>
+                            <html:optionsCollection name="participantes" label="contenido" value="mensaje"/>
                         </html:select><br><br>
 
                         <logic:present name="user">

@@ -28,8 +28,10 @@
             $(".grafica").show();
             $(".ver").click(function(){
                 $('.grafica').toggle();
-                var $this = $(this);
-                $this.text($this.text() == "Mostrar Gráfica" ? "Ocultar Gráfica" : "Mostrar Gráfica");
+                var $ver1 = $(document.getElementsByClassName('ver')[0]);
+                $ver1.text($ver1.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                var $ver2 = $(document.getElementsByClassName('ver')[1]);
+                $ver2.text($ver2.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
             });
         });
     
@@ -72,44 +74,66 @@
                 s += chd + "&" + chtt + chco + "chdl=" + chdl;
             %>
             <a class="ver">
-                Ocultar Gráfica</a>
-        <span class="grafica">
+                [Ocultar Gráfica]</a>
+            <div class="grafica">
 
-            <table>
-                <tbody>
-                    <tr>
-                    <th> Actividades </th>
-                    <th> Total </th>
-                    </tr>
+                <html:img src="<%=s%>"/>
 
-                    <logic:iterate  name="busquedaActividadForm" property="datosGrafica" 
-                                    id="dato"> 
+                <table class="cebra">
+                    <tbody>
                         <tr>
-                        <td><bean:write name="dato" property="nombre"/></td>
-                        <td><bean:write name="dato" property="cantidad"/></td>
+                        <th><b>Tipo de Actividad</b></th>
+                        <th><b>Actividades</b></th>
                         </tr>
+
+                        <logic:iterate  name="busquedaActividadForm" property="datosGrafica" 
+                                        id="dato"> 
+                            <tr>
+                            <td>
+                                <bean:write name="dato" property="nombre"/>
+                            </td>
+                            <td align="center">
+                                <bean:write name="dato" property="cantidad"/>
+                            </td>
+                            </tr>
                         </logic:iterate>
+                        <tr>
+                        <td>
+                            <b>Total</b>
+                        </td>
+                        <td align="center">
+                            <b>${(busquedaActividadForm.totalActividades)}</b>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
 
-                </tbody>
-            </table>
+                <a class="ver">
+                    [Ocultar Gráfica]</a>
 
+            </div>
 
-            <html:img src="<%=s%>"/>
-
-        </span>
-
-
-        <br><br><br>
+            <br><br><br>
+            <table>
+                <tr>
+                <td style="font-weight: bold;font-size:1.154em">
+                    Actividades de Extensión
+                </td>
+                <td align="right">
+                    Encontradas: <b>${(busquedaActividadForm.totalActividades)} actividades</b>
+                </td>
+            </tr>
+        </table>
 
         <table class="cebra">
             <tbody>
                 <logic:iterate name="actividades" id="act" indexId="index">
                     <tr>
                     <td>
-                        <b>${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.</b>
+                        ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
                     </td>
                     <td>
-                            <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                 out.print(a.participantesToString());%></b>
                         "<bean:write name="act" property="nombreTipoActividad"/>",
 
