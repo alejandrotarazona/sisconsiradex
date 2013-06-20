@@ -67,17 +67,35 @@
             <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
                 String chdl = (String) request.getSession().getAttribute("graficaNombres");
                 String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-                String chtt = "Actividades%20de%20extensión&";
+                String chtt = "chtt=Actividades%20de%20extensión&";
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-                s += chd + chtt + chco + "chdl=" + chdl;
+                s += chd + "&" + chtt + chco + "chdl=" + chdl;
             %>
             <a class="ver">
-                Ocultar Gráfica
-            </a>
+                Ocultar Gráfica</a>
         <span class="grafica">
-            <center>
-                <html:img src="<%=s%>"/>
-            </center>
+
+            <table>
+                <tbody>
+                    <tr>
+                    <th> Actividades </th>
+                    <th> Total </th>
+                    </tr>
+
+                    <logic:iterate  name="busquedaActividadForm" property="datosGrafica" 
+                                    id="dato"> 
+                        <tr>
+                        <td><bean:write name="dato" property="nombre"/></td>
+                        <td><bean:write name="dato" property="cantidad"/></td>
+                        </tr>
+                        </logic:iterate>
+
+                </tbody>
+            </table>
+
+
+            <html:img src="<%=s%>"/>
+
         </span>
 
 
@@ -91,7 +109,7 @@
                         <b>${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.</b>
                     </td>
                     <td>
-                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                            <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                 out.print(a.participantesToString());%></b>
                         "<bean:write name="act" property="nombreTipoActividad"/>",
 
