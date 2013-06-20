@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -33,8 +34,40 @@ public class BusquedaActividad extends Root {
     private ArrayList<ArrayList<Actividad>> libro;
     private int pagina;
     private String[] grafica; 
+    private ArrayList<Par> datosGrafica = setDatosGrafica();
+    
+    public static class Par implements Serializable {
 
-    public BusquedaActividad() {
+        private String nombre;
+        private String cantidad;
+
+        public Par(String nombre, String cantidad) {
+            this.nombre = nombre;
+            this.cantidad = cantidad;
+        }
+
+        public String getNombre() {
+            return nombre;
+        }
+
+        public String getCantidad() {
+            return cantidad;
+        }
+    }
+    
+    private ArrayList<Par> setDatosGrafica(){
+        String[] auxNombre = grafica[0].split("\\|");
+        String[] auxCant = grafica[1].split(",");
+        ArrayList<Par> aux = new ArrayList<>(0);
+        int i;
+        for(i = 0; i < auxNombre.length; i++){
+            Par parNuevo = new Par(auxNombre[i], auxCant[i]);
+            aux.add(parNuevo);
+        }
+        /*Par parNuevo = new Par("hola", "1");
+            aux.add(parNuevo);*/
+        return aux;
+        
     }
 
     public String getNombreTipo() {
@@ -136,6 +169,15 @@ public class BusquedaActividad extends Root {
     public void setGrafica(String[] grafica){
         this.grafica = grafica; 
     }
+
+    public ArrayList<Par> getDatosGrafica() {
+        return datosGrafica;
+    }
+
+    public void setDatosGrafica(ArrayList<Par> datosGrafica) {
+        this.datosGrafica = datosGrafica;
+    }
+    
     
     /**
      * Metodo para buscar por cada uno de los criterios dados.
@@ -365,7 +407,7 @@ public class BusquedaActividad extends Root {
         
        if (nombres.length() != 0 && cantidad.length() != 0) {
             nombres = nombres.substring(0, nombres.length() - 1);
-            cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
+            cantidad = cantidad.substring(0, cantidad.length() - 1);
         }
         System.out.println(cantidad);
         System.out.println(nombres);
@@ -530,10 +572,10 @@ public class BusquedaActividad extends Root {
 
     public static String[] cantidadActividadesPorTipo() {
 
-        String[] estadistica = new String[2];
+        String[] grafica = new String[2];
         String nombres = "";
         String cantidad = "";
-        Entity eSelec = new Entity(22);//ACT_PARTICIPA
+        Entity eSelec = new Entity(21);//TIPO_ACT__ACT
         ResultSet rs = eSelec.seleccionarNumActividades();
 
         try {
@@ -552,8 +594,9 @@ public class BusquedaActividad extends Root {
             cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
         }
 
-        estadistica[0] = nombres;
-        estadistica[1] = cantidad;
-        return estadistica;
+        grafica[0] = nombres;
+        grafica[1] = cantidad;
+         System.out.println("Cantidad de actividades en busquedaAct"+"cantidad"+"*&*&*&*&*&*&");
+        return grafica;
     }
 }
