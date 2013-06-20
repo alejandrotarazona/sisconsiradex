@@ -56,15 +56,13 @@
         
         <action path="/RegistrarUsuario" type="Usuario.Agregar" scope="request"
                 parameter="method" name="usuarioForm">
-            <forward name="success" path="gestionUsuarios"/>
-            <forward name="failure" path="agregarUsuario"/>
             <forward name="page" path="agregarUsuario"/>
+            <forward name="success" path="GestionUsuarios.do" redirect="true"/> 
         </action>
         
         <action path="/EliminarUsuario" type="Usuario.Eliminar" 
                 scope="request" name="usuarioForm">
-            <forward name="success" path="gestionUsuarios"/>
-            <forward name="failure" path="gestionUsuarios"/>
+            <forward name="success" path="GestionUsuarios.do" redirect="true"/>
         </action>
         
         <action path="/VerPerfilUsuario" type="Usuario.EditarPerfil" 
@@ -76,7 +74,7 @@
         
         <action path="/ModificarUsuario" name="usuarioForm" scope="request" 
                 type="Usuario.Modificar" parameter="method">
-            <forward name="success" path="gestionUsuarios"/>
+            <forward name="success" path="GestionUsuarios.do" redirect="true"/>
             <forward name="page" path="modificarRolUsuario"/>
         </action>
         

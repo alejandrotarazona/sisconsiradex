@@ -43,25 +43,26 @@
     <body>
         <h1 class="title">Gestión de Usuarios</h1>
 
+        <logic:present name="mensajeUsuario"><br>
+            <logic:notMatch name="mensajeUsuario" value="Error:">
+                <div class ="status"><bean:write name="mensajeUsuario"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajeUsuario" value="Error:">
+                <div class ="error"><bean:write name="mensajeUsuario"/></div>
+            </logic:match>
+            <br>
+        </logic:present>
+
         <html:link action="/RegistrarUsuario?method=page"> 
-            Registrar usuario
+            Registrar Usuario
         </html:link><br/> 
-
-
-        <h1>Usuarios registrados en el sistema</h1>
-
-        <logic:present name="usuarioForm" property="mensaje">
-            <br><div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div>
-        </logic:present> 
-        <logic:present name="usuarioForm" property="mensajeError">
-            <br><div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
-        </logic:present><br>
 
         <logic:notPresent name="usuarios">
             No hay usuarios que mostrar
         </logic:notPresent>
         <logic:present name="usuarios">
 
+            <h1>Usuarios registrados en el sistema</h1>
 
             <table class="display" id="datatab">
                 <thead>

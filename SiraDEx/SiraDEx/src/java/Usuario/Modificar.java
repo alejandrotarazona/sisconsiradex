@@ -32,12 +32,23 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
         Usuario u = (Usuario) form;
-        u.setMensaje(null);
         u.setUsuario();
+        request.getSession().setAttribute("usuarioNM", u.clone());
+        String r = u.getRol();
+        if (!r.equals("WM") && !r.equals("profesor") && !r.equals("obrero")
+                && !r.equals("estudiante") && !r.equals("empleado")) {
+            u.setRolDex(r);
+            u.setRol("dex");
+        }
 
         System.out.println("El usuario elegido es: " + u.toString());
-        request.getSession().setAttribute("usuarioNM", u);
+
 
         ArrayList<ElementoCatalogo> catalogo;
         catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
@@ -54,20 +65,25 @@ public class Modificar extends DispatchAction {
     public ActionForward modificar(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Usuario u = (Usuario) form;
-        
+
         Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
+
+        Usuario u = (Usuario) form;
+
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
-        
+
         String rol = u.getRol();
         String rolDex = u.getRolDex();
         System.out.println("rol " + rol + " rolDex " + rolDex + "----------------");
-        if (!rol.equals(rolDex) && !rolDex.equals("")) {
+        if (rol.equals("dex") && !rolDex.equals("")) {
             rol = rolDex;
             u.setRol(rol);
         }
-        if (rol.equals("")) {
+        if (rol.equals("dex")) {
             u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
             return mapping.findForward(PAGE);
         }
@@ -82,15 +98,13 @@ public class Modificar extends DispatchAction {
 
         if (u.modificar(usuarioNM, ip, usuario)) {
 
-            ArrayList<Usuario> usrs = Clases.Usuario.listarUsuario();
-            request.setAttribute("usuarios", usrs);
-            Clases.Root.deleteSessions(request, "");
-            u.setMensaje("El rol de " + u.getUsername() + " se modificó a " + u.getRol());
-            u.setMensaje("");
+            request.getSession().setAttribute("mensajeUsuario",
+                    "El rol de " + u.getUsername() + " se modificó a " + u.getRol());
+
             request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);
         }
-        u.setMensaje("Error: No se pudo modificar el usuario");
+        u.setMensaje("Error: No se pudo modificar el rol del usuario.");
         return mapping.findForward(PAGE);
     }
 }

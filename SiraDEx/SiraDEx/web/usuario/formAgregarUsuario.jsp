@@ -31,11 +31,10 @@
     <body>
         <h1 class="title">Registrar Usuario</h1>
 
-        <logic:present name="usuarioForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div>
-        </logic:present> 
-        <logic:present name="usuarioForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div>
+        <logic:present name="mensajeUsuario">
+            <br>
+            <div class ="error"><bean:write name="mensajeUsuario"/></div>
+            <br>
         </logic:present>
 
         <html:form action="/RegistrarUsuario?method=save">
@@ -63,10 +62,22 @@
                     <td><html:text name="user" property="telefono" value=""/></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold">Correo Electrónico</td>
-                    <td><html:text name="user" property="email" value=""/></td>
+                    <td style="font-weight: bold">Correo (distinto al institucional)</td>
+                    <td><html:text name="user" property="email" disabled="true" 
+                               styleClass="modificar" maxlength="50"
+                               onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
+                               if(this.value != '' && !x.test(this.value)){
+                               document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
+                               document.getElementById('registrar').disabled=true;
+                               }
+                               if(this.value != '' && x.test(this.value)){
+                               document.getElementById('error').innerHTML='';
+                               document.getElementById('registrar').disabled=false;
+                               }"/>
+    
+                    <span style="color: red" id="error"></span>
+                    </td>
                     </tr>
-                    <tr>
                     <td><b>Rol</b></td>
                     <td>
                         <html:select styleClass="selector"
@@ -91,7 +102,8 @@
 
                         <html:select name="usuarioForm" property="rolDex">
                             <html:option value="">-- Seleccione --</html:option>
-                            <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
+                            <html:optionsCollection name="dependencias" label="contenido" 
+                                                    value="contenido"/>
 
                         </html:select>
                     </span></td>
@@ -99,7 +111,7 @@
                 </tbody> 
             </table>  
 
-            <html:submit>Registrar</html:submit>
+            <html:submit styleId="registrar">Registrar</html:submit>
         </html:form>
     </body>
 </html>

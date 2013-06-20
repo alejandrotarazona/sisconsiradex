@@ -605,6 +605,17 @@ ul.secondary {
     border-radius: 3px;
 }
 
+.cebra tr:nth-of-type(odd) {
+    background-color:#E2E4FF;
+}
+.cebra th {
+    background-image: -webkit-linear-gradient(top, #E2E4FF, #FFF);
+    background-image: linear-gradient(top, #E2E4FF, #FFF);
+    background-image: -o-linear-gradient(top, #E2E4FF, #FFF);
+    background-image: -moz-linear-gradient(top, #E2E4FF, #FFF);
+    background-image: -ms-linear-gradient(top, #E2E4FF, #FFF);
+}
+
 
 /* Breadcrumbs
 -------------------------------------------------------------------------*/

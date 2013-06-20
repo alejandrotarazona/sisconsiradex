@@ -89,14 +89,18 @@
                         Período:<br>
                         <span class="fecha_input">
                             Desde
-                            <html:text name="busquedaActividadForm" property="fechaInic" size="8"/>
+                            <html:text name="busquedaActividadForm" property="fechaInic" size="8"
+                                       readonly="true" ondblclick="this.value = ''"
+                                       title="Haga doble click para borrar la fecha."/>
                         </span>
                         <span class="fecha_click">
                             <html:hidden name="busquedaActividadForm" property="fechaInic"/>
                         </span><br>
                         <span class="fecha_input">
                             Hasta&nbsp;
-                            <html:text name="busquedaActividadForm" property="fechaFin" size="8"/>
+                            <html:text name="busquedaActividadForm" property="fechaFin" size="8"
+                                       readonly="true" ondblclick="this.value = ''"
+                                       title="Haga doble click para borrar la fecha."/>
                         </span>
                         <span class="fecha_click">
                             <html:hidden name="busquedaActividadForm" property="fechaFin"/>

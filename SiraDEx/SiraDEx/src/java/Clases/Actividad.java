@@ -282,6 +282,7 @@ public class Actividad extends Root {
                 switch (tipo) {
                     case "textol":
                     case "producto":
+                    case "archivo":
                         continue;
                     case "checkbox":
                         if (!valor.equals("false")) {

@@ -132,10 +132,10 @@ public class Usuario extends Root {
     }
 
     public Usuario clone() {
-        Usuario res = new Usuario();
-        res.setUsername(username);
-        res.setUsuario();
-        return res;
+        Usuario u = new Usuario();
+        u.setUsername(username);
+        u.setUsuario();
+        return u;
     }
 
     public void setUsuario() {
@@ -190,6 +190,7 @@ public class Usuario extends Root {
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mensaje = "Error: No existe un usuario con el rol de " + rol + ".";
         return false;
     }
 
@@ -218,6 +219,7 @@ public class Usuario extends Root {
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
+        mensaje = "Error: No existe un usuario con el rol de Jefe de Dependencia del DEx.";
         return false;
     }
 
@@ -269,7 +271,7 @@ public class Usuario extends Root {
 
     }
 
-    public static ArrayList<Usuario> listarUsuario() {
+    public static ArrayList<Usuario> listar() {
         Entity eUsuario = new Entity(0);//USUARIO
         ArrayList<Usuario> listaUsuarios = new ArrayList<>(0);
 
@@ -297,11 +299,11 @@ public class Usuario extends Root {
         return listaUsuarios;
     }
 
-    public boolean agregarUsuario(String ip, String user) {
+    public boolean agregar(String ip, String user) {
         Entity e = new Entity(0);//USUARIO
         Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
-            mensaje = "Ya existe un usuario registrado con el US-BID " + username;
+            mensaje = "Error: Ya existe un usuario registrado con el USB-ID " + username;
             return false;
         } else {
             if (e.insertar(usuarios)) {
@@ -311,12 +313,12 @@ public class Usuario extends Root {
                 mensaje = "El usuario " + username + " ha sido registrado con éxito.";
                 return true;
             }
-            mensaje = "Error: No se pudo regristrar el usuario.";
+            mensaje = "Error: No se pudo registrar el usuario.";
             return false;
         }
     }
 
-    public boolean eliminarUsuario(String ip, String user) {
+    public boolean eliminar(String ip, String user) {
         Entity e = new Entity(0);//USUARIO
 
 
@@ -324,18 +326,16 @@ public class Usuario extends Root {
             e.setIp(ip);
             e.setUser(user);
             e.log();
+            mensaje = "El usuario ha sido eliminado con éxito.";
             return true;
         }
-
+        mensaje = "Error: El usuario no pudo ser eliminado.";
         return false;
 
     }
 
     //en el parámetro userNM recibe un Usuario no modificado
     public boolean modificar(Usuario userNM, String ip, String user) {
-
-
-        boolean resp;
 
         Entity e = new Entity(0);//USUARIO
 
@@ -377,18 +377,15 @@ public class Usuario extends Root {
             rol
         };
 
-        resp = e.modificar(condColumnas, valores, colModificar, modificaciones);
-        e.setIp(ip);
-        e.setUser(user);
-        e.log();
-
-        if (!resp) {
-
-            mensaje = "Error del sistema al intentar actualizar la base de datos.";
-            return false;
+        if (e.modificar(condColumnas, valores, colModificar, modificaciones)) {
+            e.setIp(ip);
+            e.setUser(user);
+            e.log();
+            mensaje = "El perfil ha sido modificado con éxito";
+            return true;
         }
-
-        return resp;
+        mensaje = "Error: no se pudo modificar el perfil.";
+        return false;
     }
 
     public String[] cantidadActividadesPorTipo() {
@@ -425,7 +422,7 @@ public class Usuario extends Root {
          * probando probando 1 2 3 probando alo alo...
          */
         Usuario u = new Usuario("j", "p");
-        if (u.eliminarUsuario("prueba", "de .java")) {
+        if (u.eliminar("prueba", "de .java")) {
             System.out.println("usuario eliminado");
         } else {
             System.out.println("usuario no eliminado");

@@ -21,9 +21,7 @@
                 $(".fecha_click click").datepicker();
             })	
         </script>
-        <style>
-            .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
-        </style>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Actividad</title>
     </head>
@@ -80,7 +78,8 @@
                             <logic:equal name="camposValores" property="campo.tipo" value="fecha">    
                             <span class="fecha_input">
                                 <html:text name="camposValores" property="valor" indexed="true" 
-                                           readonly="true" />
+                                           readonly="true" ondblclick="this.value = ''"
+                                           title="Haga doble click para borrar la fecha."/>
                             </span>
                             <span class="fecha_click">
                                 <html:hidden name="camposValores" property="valor" indexed="true"/>

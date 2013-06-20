@@ -17,7 +17,7 @@ import org.apache.struts.actions.DispatchAction;
  * @author Siscon
  */
 public class EditarPerfil extends DispatchAction {
-  
+
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
     private static final String PAGE = "page";
@@ -32,41 +32,46 @@ public class EditarPerfil extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
-    
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Clases.Root.deleteSessions(request,"mensaje");
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
+        Clases.Root.deleteSessions(request, "mensajePerfil");
         Usuario u = (Usuario) form;
-        u.setMensaje(null);
-        u.setMensaje(null);
-        
+
         Usuario userNM = new Usuario();
         userNM.setUsername(u.getUsername());
         userNM.setUsuario();
         request.getSession().setAttribute("userNM", userNM);
-        
+
         return mapping.findForward(PAGE);
     }
-    
+
     public ActionForward update(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-      
-        Usuario u = (Usuario) form;
-        
-        Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
+
         Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
+        Usuario u = (Usuario) form;
+
+        Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
-            
+
         if (u.modificar(userNM, ip, usuario)) {
-            Clases.Root.deleteSessions(request,"");
-            request.getSession().setAttribute("mensaje", "El perfil ha sido modificado con éxito");
-            return mapping.findForward(SUCCESS);         
+            Clases.Root.deleteSessions(request, "");
+            request.getSession().setAttribute("mensajePerfil", u.getMensaje());
+            return mapping.findForward(SUCCESS);
         }
+        request.getSession().setAttribute("mensajePerfil", u.getMensaje());
         return mapping.findForward(PAGE);
 
     }
-    
 }

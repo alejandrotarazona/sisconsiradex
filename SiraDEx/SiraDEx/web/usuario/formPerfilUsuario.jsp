@@ -21,24 +21,21 @@
     <body>
         <h1 class="title">Mi Perfil</h1>
 
-        <logic:present name="mensaje"><br>
-            <div class ="status"><bean:write name="mensaje"/></div><br>
-        </logic:present> 
-        <logic:present name="usuarioForm" property="mensaje"><br>
-            <div class ="status"><bean:write name="usuarioForm" property="mensaje" /></div><br>
-        </logic:present> 
-        <logic:present name="usuarioForm" property="mensajeError"><br>
-            <div class ="error"><bean:write name="usuarioForm" property="mensajeError" /></div><br>
+        <logic:present name="mensajePerfil"><br>
+            <logic:notMatch name="mensajePerfil" value="Error:">
+                <div class ="status"><bean:write name="mensajePerfil"/></div>
+            </logic:notMatch>
+            <logic:match name="mensajePerfil" value="Error:">
+                <div class ="error"><bean:write name="mensajePerfil"/></div>
+            </logic:match>
+            <br>
         </logic:present>
 
-
-
-        <a style=" cursor: pointer"
-           onclick="document.getElementsByClassName('modificar')[0].disabled=false;
-               document.getElementsByClassName('modificar')[1].disabled=false;
-               document.getElementsByClassName('modificar')[2].disabled=false;
-               document.getElementsByClassName('modificar')[3].disabled=false;
-               document.getElementById('boton').style.visibility= 'visible';">
+        <a onclick="document.getElementsByClassName('modificar')[0].disabled=false;
+            document.getElementsByClassName('modificar')[1].disabled=false;
+            document.getElementsByClassName('modificar')[2].disabled=false;
+            document.getElementsByClassName('modificar')[3].disabled=false;
+            document.getElementById('boton').style.visibility= 'visible';">
             <html:image src="../Stylesheets/iconos/Edit_26x26.png"/>  
             <b>Editar perfil</b>
         </a>   
@@ -79,7 +76,7 @@
                     <tr>
                     <td style="font-weight: bold">Correo Institucional</td>
                     <td>
-                        <input type="text" name="email" value="${user.username}@usb.ve" disabled="disabled">
+                        <input type="text" value="${user.username}@usb.ve" disabled="disabled">
                     </td>
                     </tr>
                     <tr>
