@@ -49,7 +49,6 @@ public class Modificar extends DispatchAction {
 
         System.out.println("El usuario elegido es: " + u.toString());
 
-
         ArrayList<ElementoCatalogo> catalogo;
         catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", catalogo);
@@ -97,9 +96,9 @@ public class Modificar extends DispatchAction {
         System.out.println("El nuevo usuario es: " + u.toString());
 
         if (u.modificar(usuarioNM, ip, usuario)) {
-
             request.getSession().setAttribute("mensajeUsuario",
-                    "El rol de " + u.getUsername() + " se modificó a " + u.getRol());
+                    "El rol del Usuario " + u.getUsername() + " se ha modificado a "
+                    + u.getRol() + "con éxito.");
 
             request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);

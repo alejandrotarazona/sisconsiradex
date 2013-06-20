@@ -43,16 +43,13 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
+        ArrayList<ElementoCatalogo> participantes = Clases.ElementoCatalogo.listarParticipantes();
 
-
-        System.out.println("Ya en la accion. Nombres preparados para ser pasados\n"
-                + "a la pagina para mostrar.");
 
         request.setAttribute("validadores", dependencias);
         request.setAttribute("programas", programas);
         request.setAttribute("tiposdeactividad", ta);
-        request.setAttribute("usuarios", usuarios);//mientras tanto
+        request.setAttribute("participantes", participantes);
 
         return mapping.findForward(PAGE);
     }
@@ -82,7 +79,7 @@ public class Buscar extends DispatchAction {
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         ArrayList<ElementoCatalogo> dependencias;
         dependencias = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
-        ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarParticipantes();
+        ArrayList<ElementoCatalogo> participantes = Clases.ElementoCatalogo.listarParticipantes();
 
         String[] grafica = ba.getGrafica();
 
@@ -104,7 +101,7 @@ public class Buscar extends DispatchAction {
         request.getSession().setAttribute("validadores", dependencias);
         request.getSession().setAttribute("programas", programas);
         request.getSession().setAttribute("tiposdeactividad", ta);
-        request.getSession().setAttribute("usuarios", usuarios);//mientras tanto
+        request.getSession().setAttribute("participantes", participantes);
         request.getSession().setAttribute("graficaNombres", grafica[0]);
         request.getSession().setAttribute("graficaCantidad", grafica[1]);
         return mapping.findForward(PAGE);

@@ -33,9 +33,10 @@ public class BusquedaActividad extends Root {
     private int totalPaginas;
     private ArrayList<ArrayList<Actividad>> libro;
     private int pagina;
-    private String[] grafica; 
-    private ArrayList<Par> datosGrafica = setDatosGrafica();
-    
+    private String[] grafica;
+    private ArrayList<Par> datosGrafica;
+    private int totalActividades;
+
     public static class Par implements Serializable {
 
         private String nombre;
@@ -54,20 +55,19 @@ public class BusquedaActividad extends Root {
             return cantidad;
         }
     }
-    
-    private ArrayList<Par> setDatosGrafica(){
+
+    private void setDatosGrafica() {
         String[] auxNombre = grafica[0].split("\\|");
         String[] auxCant = grafica[1].split(",");
         ArrayList<Par> aux = new ArrayList<>(0);
         int i;
-        for(i = 0; i < auxNombre.length; i++){
+        for (i = 0; i < auxNombre.length; i++) {
             Par parNuevo = new Par(auxNombre[i], auxCant[i]);
             aux.add(parNuevo);
         }
-        /*Par parNuevo = new Par("hola", "1");
-            aux.add(parNuevo);*/
-        return aux;
         
+        datosGrafica = aux;
+
     }
 
     public String getNombreTipo() {
@@ -162,12 +162,12 @@ public class BusquedaActividad extends Root {
         this.pagina = pagina;
     }
 
-    public String[] getGrafica(){
+    public String[] getGrafica() {
         return grafica;
     }
-    
-    public void setGrafica(String[] grafica){
-        this.grafica = grafica; 
+
+    public void setGrafica(String[] grafica) {
+        this.grafica = grafica;
     }
 
     public ArrayList<Par> getDatosGrafica() {
@@ -177,8 +177,16 @@ public class BusquedaActividad extends Root {
     public void setDatosGrafica(ArrayList<Par> datosGrafica) {
         this.datosGrafica = datosGrafica;
     }
+
+    public int getTotalActividades() {
+        return totalActividades;
+    }
+
+    public void setTotalActividades(int totalActividades) {
+        this.totalActividades = totalActividades;
+    }
     
-    
+
     /**
      * Metodo para buscar por cada uno de los criterios dados.
      *
@@ -326,12 +334,12 @@ public class BusquedaActividad extends Root {
 
         if (this.participante != null && !this.participante.equals("")) {
             hayParticipantes = true;
-            listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));    //Resultado de la busqueda de participantes//
+            listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));  
         }
 
         ArrayList<ArrayList<Actividad>> listas = new ArrayList<>(0);
-        //De aqui pa'lante, el fume fue tan grande que ni yo mismo lo entiendo. Alejandro
-        //Lo que trato de hacer es revisar las distintas formas en que pueden quedar las
+     
+        //Revisa las distintas formas en que pueden quedar las
         //listas para poder discernir cual(es) lista(s) es(son) vacia(s).
         if (hayParticipantes) {
             listas.add(listaParticipantes);
@@ -354,7 +362,7 @@ public class BusquedaActividad extends Root {
                 cjtoAux = Actividad.listar(rs);
                 grafica = valoresGrafica(cjtoAux);
                 libro = paginar(cjtoAux, mostrarPorPagina);
-                
+
             }
         } else {
             listaInterceptada = intersectar(listas);
@@ -362,24 +370,26 @@ public class BusquedaActividad extends Root {
             grafica = valoresGrafica(listaInterceptada);
             System.out.println(listaInterceptada);
         }
+        setDatosGrafica();
         totalPaginas = libro.size();
         pagina = 1;
+        totalActividades = (totalPaginas - 1)*mostrarPorPagina + libro.get(totalPaginas-1).size();
     }
 
     /**
      *
      * @param listaActividades tiene las actividades que aparecieron en la
      * busqueda
-     * @return un arreglo de String con dos posiciones, en una tiene los 
-     * nombres de las actividades de la busqueda y en la otra tiene las 
-     * cantidades encontradas de cada actividad
+     * @return un arreglo de String con dos posiciones, en una tiene los nombres
+     * de las actividades de la busqueda y en la otra tiene las cantidades
+     * encontradas de cada actividad
      */
-    public static String[] valoresGrafica(ArrayList<Actividad> listaActividades){
-        
+    public static String[] valoresGrafica(ArrayList<Actividad> listaActividades) {
+
         ArrayList<String> aux = new ArrayList<>(0);
         ArrayList<String> aux2 = new ArrayList<>(0);
-        int i,j;
-        for (i = 0; i <= listaActividades.size() -1; i++) {
+        int i, j;
+        for (i = 0; i <= listaActividades.size() - 1; i++) {
             aux.add("'" + listaActividades.get(i).getIdTipoActividad() + "'");
             aux2.add(listaActividades.get(i).getNombreTipoActividad());
         }
@@ -387,10 +397,10 @@ public class BusquedaActividad extends Root {
         String[] grafica = new String[2];
         String nombres = "";
         String cantidad = "";
-      
-        for(i = 0; i <= aux.size()-1; i++){
+
+        for (i = 0; i <= aux.size() - 1; i++) {
             contador = 1;
-            for(j = i+1; j <= aux.size()-1; j++){
+            for (j = i + 1; j <= aux.size() - 1; j++) {
                 if (aux.get(j).equals(aux.get(i))) {
                     aux.remove(j);
                     aux2.remove(j);
@@ -400,24 +410,24 @@ public class BusquedaActividad extends Root {
             }
             cantidad += contador + ",";
         }
-        
-        for (i = 0; i <= aux2.size() -1; i++){
+
+        for (i = 0; i <= aux2.size() - 1; i++) {
             nombres += aux2.get(i) + "|";
-        }        
-        
-       if (nombres.length() != 0 && cantidad.length() != 0) {
+        }
+
+        if (nombres.length() != 0 && cantidad.length() != 0) {
             nombres = nombres.substring(0, nombres.length() - 1);
             cantidad = cantidad.substring(0, cantidad.length() - 1);
         }
         System.out.println(cantidad);
         System.out.println(nombres);
-        
+
         grafica[0] = nombres;
         grafica[1] = cantidad;
         return grafica;
-       
+
     }
-    
+
     /**
      * Busca una página específica de la busqueda.
      *
@@ -596,7 +606,7 @@ public class BusquedaActividad extends Root {
 
         grafica[0] = nombres;
         grafica[1] = cantidad;
-         System.out.println("Cantidad de actividades en busquedaAct"+"cantidad"+"*&*&*&*&*&*&");
+        System.out.println("Cantidad de actividades en busquedaAct" + "cantidad" + "*&*&*&*&*&*&");
         return grafica;
     }
 }

@@ -205,12 +205,17 @@ public class Verificaciones {
     public static boolean verificarCamposVariables(TipoActividad ta) {
 
         Iterator it = ta.getCampos().iterator();
+        boolean hayParticipante = false;
         for (int i = 1; it.hasNext(); i++) {
             Campo campo = (Campo) it.next();
             String tipo = campo.getTipo();
             String nombre = campo.getNombre();
             String nroCampo = "número " + i;
 
+            /*verifica si hay al menos un campo tipo participante*/
+            if (tipo.equals("participante")) {
+                hayParticipante = true;
+            }
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
             String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
@@ -253,6 +258,10 @@ public class Verificaciones {
                 return false;
             }
         }
+        if (!hayParticipante) {
+            ta.setMensaje("Error: Debe haber al menos un campo participante.");
+            return false;
+        }
         return true;
     }
 
@@ -287,11 +296,11 @@ public class Verificaciones {
             /*verifica si el campo es tipo participante y es adicional tenga datos en alguno de sus campos*/
             if (tipo.equals("participante") && valorAux.isEmpty() && valor.isEmpty()
                     && longitud == -1) {
-                act.setMensaje("Error: No deben haber campos adicionales de participantes" 
+                act.setMensaje("Error: No deben haber campos adicionales de participantes"
                         + " sin ningún valor. Por favor, ingrese un valor o elimínelo.");
                 return false;
             }
-            
+
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
                 act.setMensaje("Error: El campo " + nombre + " debe contener "

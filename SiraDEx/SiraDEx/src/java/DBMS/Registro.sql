@@ -1,6 +1,4 @@
 
-
-
 --Tipo de actividad
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
@@ -25,7 +23,7 @@ programa,validador) VALUES ('Participación en actividades de voluntariado en re
 --'Informe de participación'
 
 --Campo de un tipo de actividad
-
+/*
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
 VALUES (1,'Fecha de postulación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
