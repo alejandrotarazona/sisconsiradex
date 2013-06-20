@@ -72,7 +72,8 @@
                             <logic:equal name="camposValores" property="campo.tipo" value="fecha"> 
                             <span class="fecha_input">
                                 <html:text name="camposValores" property="valor" indexed="true"
-                                           readonly="true">
+                                           readonly="true" ondblclick="this.value = ''"
+                                           title="Haga doble click para borrar la fecha.">
                                     <bean:write name="camposValores" property="valor"/>
                                 </html:text>
                             </span>

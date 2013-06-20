@@ -58,7 +58,6 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.hacerBackup();
-        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
 
         return mapping.findForward(PAGE);
 
@@ -75,7 +74,6 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.restaurarDesdeBackup();
-        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
 
         return mapping.findForward(PAGE);
     }
@@ -91,7 +89,6 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.cambiarFrecuencia();
-        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
 
         return mapping.findForward(PAGE);
     }

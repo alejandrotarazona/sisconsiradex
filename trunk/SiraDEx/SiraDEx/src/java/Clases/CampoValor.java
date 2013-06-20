@@ -25,12 +25,12 @@ import org.apache.struts.upload.FormFile;
  * @author SisCon
  */
 public class CampoValor implements Serializable {
-
+    
     private Campo campo;
     private String valor;
     private String valorAux = ""; /*atributo auxiliar para setearlo al momento llenar
      un campo de texto de tipo participante*/
-
+    
     private FormFile file = null;
     private static String[] ATRIBUTOS = {
         "id_campo", //0
@@ -42,47 +42,47 @@ public class CampoValor implements Serializable {
         "VALOR",
         "CAMPO"
     };
-
+    
     public CampoValor() {
     }
-
+    
     public CampoValor(Campo campo) {
         this.campo = campo;
     }
-
+    
     public Campo getCampo() {
         return campo;
     }
-
+    
     public void setCampo(Campo campo) {
         this.campo = campo;
     }
-
+    
     public String getValor() {
         return valor;
     }
-
+    
     public void setValor(String valor) {
         this.valor = valor;
     }
-
+    
     public FormFile getFile() {
         return file;
     }
-
+    
     public String getValorAux() {
         return valorAux;
     }
-
+    
     public void setValorAux(String valorAux) {
         this.valorAux = valorAux;
     }
-
+    
     public void setFile(FormFile file) {
         this.file = file;
         this.valor = file.getFileName();
     }
-
+    
     public static File bytesToFile(byte[] data, String path) {
         try {
             File archivo = new File(path);
@@ -98,73 +98,73 @@ public class CampoValor implements Serializable {
         }
         return null;
     }
-
+    
     public void setFile(final byte[] data) {
-
+        
         FormFile ff = new FormFile() {
             @Override
             public String getContentType() {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
-
+            
             @Override
             public void setContentType(String contentType) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
-
+            
             @Override
             public int getFileSize() {
                 return data.length;
             }
-
+            
             @Override
             public void setFileSize(int fileSize) {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
-
+            
             @Override
             public String getFileName() {
                 return valor;
             }
-
+            
             @Override
             public void setFileName(String fileName) {
                 valor = fileName;
             }
-
+            
             @Override
             public byte[] getFileData() {
                 return data;
             }
-
+            
             @Override
             public InputStream getInputStream() throws FileNotFoundException, IOException {
                 File file = bytesToFile(data, valor);
                 return new FileInputStream(file);
             }
-
+            
             @Override
             public void destroy() {
                 throw new UnsupportedOperationException("Not supported yet.");
             }
         };
-
+        
         System.out.println("Nombre archivo:" + ff.getFileName());
         System.out.println("Tamaño archivo:" + ff.getFileSize() + "bytes");
         file = ff;
-
+        
     }
-
+    
     public boolean agregar(int idAct) {
-
-
-
+        
+        
+        
         Entity eAgregar = new Entity(4);//VALOR
         boolean resp = true;
-
+        
         Integer idCampo = campo.getIdCampo();
-
-
+        
+        
         if (file != null) { // agrega el archivo
 
             resp &= eAgregar.insertarArchivo(idCampo, idAct, valor, file);
@@ -175,7 +175,7 @@ public class CampoValor implements Serializable {
             //los participantes concatenados de un tipo de p articipante.
             resp &= eAgregar.insertar(tupla);
         }
-
+        
         if (campo.getTipo().equals("participante")) { //agrega en PARTICIPA
             String valAux = valorAux;
             if (valorAux.equals("Apellido(s), Nombre(s)")) {
@@ -201,18 +201,18 @@ public class CampoValor implements Serializable {
                 resp &= e.insertar(tupla);
             }
         }
-
+        
         return resp;
     }
-
+    
     public boolean modificar(CampoValor campoNM, int idAct, String ip, String user) {
         boolean resp = true;
         Entity eValor = new Entity(4);//VALOR
         eValor.setIp(ip);
         eValor.setUser(user);
-
+        
         String tipo = campoNM.getCampo().getTipo();
-
+        
         if (campoNM.campo.getLongitud() != -3) {
             if (!tipo.equals("archivo") && !tipo.equals("producto")
                     && campo.getLongitud() >= 0) {
@@ -221,10 +221,10 @@ public class CampoValor implements Serializable {
                     ATRIBUTOS[1], //id_actividad
                     ATRIBUTOS[2] //valor
                 };
-
+                
                 String valorNM = campoNM.getValor();
                 String val = valor;
-
+                
                 Object[] valores = {
                     campo.getIdCampo(),
                     idAct,
@@ -232,12 +232,12 @@ public class CampoValor implements Serializable {
                 };
                 String[] colModificar = {ATRIBUTOS[2]}; //valor
                 String[] modificaciones = {val};
-
+                
                 resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
                 eValor.log();
                 System.out.println("--------Luego de modificar valor "
                         + campoNM.getValor() + " " + resp);
-
+                
             } else if (tipo.equals("archivo") || tipo.equals("producto")) {
                 resp &= modificarArchivo(campoNM, idAct, ip, user);
             }
@@ -247,10 +247,10 @@ public class CampoValor implements Serializable {
             System.out.println("--------Luego de modificar participante "
                     + campoNM.getValor() + " " + resp);
         }
-
+        
         return resp;
     }
-
+    
     private boolean modificarArchivo(CampoValor campoNM, int idAct, String ip, String user) {
         Entity eValor = new Entity(4);//VALOR
         eValor.setIp(ip);
@@ -263,16 +263,16 @@ public class CampoValor implements Serializable {
             campoNM.getCampo().getIdCampo(),
             idAct
         };
-
+        
         boolean resp = eValor.borrar(campos, condicion);
         resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
         eValor.log();
-
+        
         return resp;
     }
-
+    
     private boolean modificarParticipante(CampoValor campoNM, int idAct) {
-
+        
         String valorNM = campoNM.valor;
         String valorAuxNM = campoNM.valorAux;
         System.out.println("MODIFICAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
@@ -283,17 +283,17 @@ public class CampoValor implements Serializable {
         if (valorAuxNM.equals("Apellido(s), Nombre(s)")) {
             valorAuxNM = "";
         }
-
+        
         if (valorAuxNM.isEmpty() && valorNM.isEmpty()
                 && valorAux.isEmpty() && valor.isEmpty()) { //no se modifica el participante
             return true;
         }
-
+        
         boolean resp = true;
         Entity eValor = new Entity(5);//PARTICIPA
         String usbid;
         int longitud = campoNM.campo.getLongitud();
-
+        
         if (longitud != -2) {
             //Se elimina al participante
             System.out.println("0ELIMINAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
@@ -309,7 +309,7 @@ public class CampoValor implements Serializable {
             } else {
                 usbid = "$" + valorAuxNM;
             }
-
+            
             String[] campos = {
                 ATRIBUTOS[0], //id_campo
                 "id_act",
@@ -325,7 +325,7 @@ public class CampoValor implements Serializable {
             resp &= eValor.borrar(campos, condicion);
             System.out.println("---------DELETE PARTICIPA " + usbid + " " + resp);
         }
-
+        
         if (longitud != -3) {
             //Se inserta al participante
             System.out.println("0INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
@@ -341,20 +341,20 @@ public class CampoValor implements Serializable {
             } else {
                 usbid = "$" + valorAux;
             }
-
+            
             System.out.println("1INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
                     + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
             Object[] tupla = {idAct, usbid, campo.getIdCampo()};
             resp &= eValor.insertar(tupla);
             System.out.println("---------INSERT PARTICIPA " + usbid + " " + resp);
         }
-
+        
         return resp;
-
+        
     }
-
+    
     public static ArrayList<CampoValor> clonar(ArrayList<CampoValor> campos) {
-
+        
         ArrayList<CampoValor> clonCampos = new ArrayList<>();
         for (int i = 0; i < campos.size(); i++) {
             CampoValor cv = campos.get(i);
@@ -385,9 +385,9 @@ public class CampoValor implements Serializable {
         Entity eCampo = new Entity(3);//CAMPO
         String[] columnas = {"id_tipo_actividad"};
         Integer[] condiciones = {idTipoActividad};
-
+        
         ResultSet rs = eCampo.seleccionar(columnas, condiciones);
-
+        
         if (rs != null) {
             try {
                 while (rs.next()) {
@@ -405,7 +405,7 @@ public class CampoValor implements Serializable {
                         cv.valorAux = "Apellido(s), Nombre(s)";
                     }
                     listaValor.add(cv);
-
+                    
                 }
                 rs.close();
             } catch (SQLException ex) {
@@ -413,26 +413,26 @@ public class CampoValor implements Serializable {
                         .getName()).log(Level.SEVERE, null, ex);
             }
         }
-
+        
         return listaValor;
     }
 
     /* Crea una lista de CampoValor con los campos y valores de la actividad cuyo
      * id es pasado por parametro*/
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
-
+        
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
         Entity eCampo = new Entity(2);//ACTIVIDAD
         String[] ATRIBUTO = {
-            "id_campo",
-            "id_tipo_actividad",
-            "nombre_campo",
-            "tipo_campo",
-            "longitud",
-            "obligatorio",
-            "valor",
-            "catalogo",
-            "archivo"
+            "id_campo",//0
+            "id_tipo_actividad",//1
+            "nombre_campo",//2
+            "tipo_campo",//3
+            "longitud",//4
+            "obligatorio",//5
+            "valor",//6
+            "catalogo",//7
+            "archivo"//8
         };
         String[] tabABuscar = {
             TABLAS[0],
@@ -447,13 +447,17 @@ public class CampoValor implements Serializable {
                     CampoValor cv = new CampoValor();
                     String valor = rs.getString(ATRIBUTO[6]);
                     String tipoCampo = rs.getString(ATRIBUTO[3]);
-
+                    
                     cv.setValor(valor);
                     if (!cv.getValor().isEmpty()
                             && ((tipoCampo.equals(ATRIBUTO[8])
                             || tipoCampo.equals("producto")))) {
                         byte[] data = rs.getBytes(ATRIBUTO[8]);
-                        cv.setFile(data);
+                        if (data != null) {
+                            cv.setFile(data);
+                        } else {
+                            cv.setValor("");
+                        }
                     }
                     Campo c = new Campo();
                     int idCampo = rs.getInt(ATRIBUTO[0]);
@@ -467,7 +471,7 @@ public class CampoValor implements Serializable {
                     c.setCatalogo(catalogo);
                     cv.setCampo(c);
                     boolean sinParticipantes = true;
-
+                    
                     if (tipoCampo.equals("participante") && !valor.isEmpty()) {
                         sinParticipantes = false;
                     }
@@ -478,11 +482,11 @@ public class CampoValor implements Serializable {
                         agregarCamposParticipante(cv, listaValor, catalogo);
                     }
                 }
-
+                
                 rs.close();
-
+                
                 return listaValor;
-
+                
             } catch (SQLException ex) {
                 Logger.getLogger(CampoValor.class
                         .getName()).log(Level.SEVERE, null, ex);
@@ -490,7 +494,7 @@ public class CampoValor implements Serializable {
         }
         return null;
     }
-
+    
     private static void agregarCamposParticipante(CampoValor primerCampo,
             ArrayList<CampoValor> listaValor, String catalogo) {
         String concatenacion = primerCampo.valor.replace("; ", ";");
@@ -505,9 +509,9 @@ public class CampoValor implements Serializable {
             primerCampo.valorAux = "Apellido(s), Nombre(s)";
             System.out.println(primerCampo.valor + " 1111111111111");
         }
-
+        
         listaValor.add(primerCampo);
-
+        
         int idCampo = primerCampo.getCampo().getIdCampo();
         for (int i = 1; i < participantes.length; i++) {
             CampoValor cv = new CampoValor();
@@ -518,7 +522,7 @@ public class CampoValor implements Serializable {
             c.setObligatorio(false);
             c.setCatalogo(catalogo);
             cv.setCampo(c);
-
+            
             String participante = participantes[i];
             if (participante.startsWith("$")) { //participante que no es usuario
                 cv.valorAux = participante.substring(1);
@@ -529,13 +533,13 @@ public class CampoValor implements Serializable {
                 cv.valor = obtenerValor(participante.split(",")[0], catalogo);
                 System.out.println(cv.valor + " -1-1-1-1-1-1-1-1-1-1");
             }
-
+            
             listaValor.add(cv);
         }
     }
-
+    
     public static String obtenerValor(String usbid, String catalogo) {
-
+        
         ArrayList<ElementoCatalogo> valores = ElementoCatalogo.listarElementos(catalogo, 0);
         Iterator it = valores.iterator();
         while (it.hasNext()) {

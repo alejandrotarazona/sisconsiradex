@@ -21,9 +21,7 @@
                 $(".fecha_click click").datepicker();
             })		
         </script>
-        <style>
-            .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
-        </style>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Edición de la Actividad</title>
 
@@ -81,7 +79,8 @@
                             <logic:equal name="camposValores" property="campo.tipo" value="fecha">
                             <span class="fecha_input">
                                 <html:text name="camposValores" property="valor" indexed="true"
-                                           readonly="true">
+                                           readonly="true" ondblclick="this.value = ''"
+                                       title="Haga doble click para borrar la fecha.">
                                     <bean:write name="camposValores" property="valor"/>
                                 </html:text>
                             </span>
@@ -106,8 +105,10 @@
                         <logic:equal name="camposValores" property="campo.tipo" value="archivo">
                             <html:file name="camposValores" property="file" accept="application/pdf"
                                        indexed="true"/>
-                            <b>Archivo previamente cargado:
-                                <bean:write name="camposValores" property="valor"/></b> 
+                            <logic:notEmpty name="camposValores" property="valor">
+                                <b>Archivo previamente cargado:
+                                    <bean:write name="camposValores" property="valor"/></b>
+                                </logic:notEmpty>
                             </logic:equal>
 
                         <logic:equal name="camposValores" property="campo.tipo" value="producto">

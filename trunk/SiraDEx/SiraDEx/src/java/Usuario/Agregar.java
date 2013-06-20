@@ -23,9 +23,8 @@ public class Agregar extends DispatchAction {
     /*
      * forward name="success" path=""
      */
-    private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
+    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
@@ -40,6 +39,12 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
+        Clases.Root.deleteSessions(request, "");
         Usuario u = new Usuario();
         u.setMensaje(null);
         ArrayList<ElementoCatalogo> catalogo;
@@ -52,9 +57,12 @@ public class Agregar extends DispatchAction {
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(PAGE);
+        }
         Usuario u = (Usuario) form;
-        u.setMensaje(null);
-        u.setMensaje(null);
 
         String rol = u.getRol();
         String rolDex = u.getRolDex();
@@ -64,22 +72,22 @@ public class Agregar extends DispatchAction {
             u.setRol(rol);
         }
         if (rol.equals("")) {
-            u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
+            request.getSession().setAttribute("mensajeUsuario",
+                    "Error: Debe elegir una Dependencia o Unidad");
             return mapping.findForward(PAGE);
         }
 
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
 
-        if (u.agregarUsuario(ip, usuario)) {
-            ArrayList<Usuario> usuarios;
-            usuarios = Clases.Usuario.listarUsuario();
-            request.setAttribute("usuarios", usuarios);
+        if (u.agregar(ip, usuario)) {
+
             request.getSession().removeAttribute("usuarioForm.rolDex");
+            request.getSession().setAttribute("mensajeUsuario", u.getMensaje());
             return mapping.findForward(SUCCESS);
-        } else {
-            return mapping.findForward(FAILURE);
         }
+        request.getSession().setAttribute("mensajeUsuario", u.getMensaje());
+        return mapping.findForward(PAGE);
+
     }
 }

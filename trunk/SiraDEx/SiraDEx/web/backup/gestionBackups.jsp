@@ -18,12 +18,12 @@
     <body>
         <h1 class='title'>Gestión de Backups</h1>
 
-        <logic:present name="mensajeBackup"><br>
-            <logic:notMatch name="mensajeBackup" value="Error:">
-                <div class ="status"><bean:write name="mensajeBackup"/></div>
+        <logic:present name="backupForm" property="mensaje"><br>
+            <logic:notMatch name="backupForm" property="mensaje" value="Error:">
+                <div class ="status"><bean:write name="backupForm" property="mensaje"/></div>
             </logic:notMatch>
-            <logic:match name="mensajeBackup" value="Error:">
-                <div class ="error"><bean:write name="mensajeBackup"/></div>
+            <logic:match name="backupForm" property="mensaje" value="Error:">
+                <div class ="error"><bean:write name="backupForm" property="mensaje"/></div>
             </logic:match>
             <br>
         </logic:present>
@@ -81,8 +81,8 @@
                         <html:radio property="frecuencia" value="1">diaria</html:radio>
                         <html:radio property="frecuencia" value="7">semanal</html:radio>
                         <html:radio property="frecuencia" value="30">mensual</html:radio>
-                    </td>
-                    <td>
+                        </td>
+                        <td>
                         <html:submit style="width: 100px;"
                                      onclick="return confirm('¿Está seguro que desea cambiar la frecuencia?')" >
                             Cambiar

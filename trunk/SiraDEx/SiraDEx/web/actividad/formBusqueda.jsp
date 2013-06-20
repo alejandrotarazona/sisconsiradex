@@ -35,16 +35,6 @@
     
     </script>
 
-    <script type="text/javascript">
-        $(function() {
-            $(".fecha_input input").datepicker();
-            $(".fecha_click click").datepicker();
-        })		
-    </script>
-    <style>
-        .cebra tr:nth-of-type(odd) {background-color:#E2E4FF;}
-    </style>
-
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>SiraDEx | Búsquedas</title>
 </head>

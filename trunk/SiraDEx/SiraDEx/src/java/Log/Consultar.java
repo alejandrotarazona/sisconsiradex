@@ -52,7 +52,6 @@ public class Consultar extends org.apache.struts.action.Action {
             request.setAttribute("logs", null);
         }
         
-        
         return mapping.findForward(SUCCESS);
     }
 }

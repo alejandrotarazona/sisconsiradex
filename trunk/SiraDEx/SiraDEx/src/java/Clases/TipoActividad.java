@@ -507,13 +507,13 @@ public class TipoActividad extends Root {
             e.log();
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido modificado con éxito.";
             System.out.println("modificacion de campos fijos sin permisos " + resp);
-            Iterator it = taNM.getCampos().iterator();
 
             resp &= this.modificarPermisos(ip, user);
             System.out.println("modificacion de permisos " + resp);
-
-            for (int i = 0; it.hasNext() && resp; i++) {
-                Campo campoNM = (Campo) it.next();
+            ArrayList<Campo> camposNM = taNM.getCampos();
+            int tam = camposNM.size();
+            for (int i = 0; i < tam && resp; i++) {
+                Campo campoNM = camposNM.get(i);
                 resp &= campos.get(i).modificar(campoNM, id, ip, user);
                 System.out.println("Update " + resp + " " + campoNM.getNombre());
             }
@@ -522,7 +522,7 @@ public class TipoActividad extends Root {
                 mensaje = "Error: El Tipo de Actividad no pudo ser modificado satisfactoriamente.";
             }
         } else {
-           mensaje = "Error: El Tipo de Actividad no pudo ser modificado."; 
+            mensaje = "Error: El Tipo de Actividad no pudo ser modificado.";
         }
 
         return resp;

@@ -35,19 +35,19 @@ public class Listar extends org.apache.struts.action.Action {
     public ActionForward execute(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
-        Clases.Root.deleteSessions(request,"");
-        ArrayList usrs = Clases.Usuario.listarUsuario();
-             
-        Usuario u = (Usuario) form;
-        u.setMensaje(null);
-        u.setMensaje(null);
-        int tam = usrs.size();
-        if (tam != 0) {
-            request.setAttribute("usuarios", usrs);
-        } else {
-            request.setAttribute("usuarios", null);
+
+        Usuario user = (Usuario) request.getSession().getAttribute("user");
+        if (user == null) {
+            return mapping.findForward(SUCCESS);
         }
+        Clases.Root.deleteSessions(request, "mensajeUsuario");
+        ArrayList usuarios = Clases.Usuario.listar();
+
+        if (usuarios.isEmpty()) {
+            usuarios = null;
+        }
+        request.setAttribute("usuarios", usuarios);
+
         return mapping.findForward(SUCCESS);
     }
 }
