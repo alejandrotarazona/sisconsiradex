@@ -48,8 +48,10 @@
                 $(".grafica").show();
                 $(".ver").click(function(){
                     $('.grafica').toggle();
-                    var $this = $(this);
-                    $this.text($this.text() == "Mostrar Gráfica" ? "Ocultar Gráfica" : "Mostrar Gráfica");
+                    var $ver1 = $(document.getElementsByClassName('ver')[0]);
+                    $ver1.text($ver1.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                    var $ver2 = $(document.getElementsByClassName('ver')[1]);
+                    $ver2.text($ver2.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                 });
             
             });
@@ -87,17 +89,49 @@
             <% String chd = (String) request.getAttribute("graficaCantidad");
                 String chdl = (String) request.getAttribute("graficaNombres");
                 String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-                String chtt = "Actividades%20de%20extensión&";
+                String chtt = "chtt=Actividades%20de%20extensión&";
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-                s += chd + chtt + chco + "chdl=" + chdl;
+                s += chd + "&" + chtt + chco + "chdl=" + chdl;
             %>
             <a class="ver">
-                Ocultar Gráfica</a>
-        <span class="grafica">
-            <center>
+                [Ocultar Gráfica]</a>
+            <div class="grafica">
+
                 <html:img src="<%=s%>"/>
-            </center>
-        </span>
+
+                <table class="cebra">
+                    <tbody>
+                        <tr>
+                        <th><b>Tipo de Actividad</b></th>
+                        <th><b>Actividades</b></th>
+                        </tr>
+
+                        <logic:iterate  name="user" property="datosGrafica" 
+                                        id="dato"> 
+                            <tr>
+                            <td style="padding-left:1em">
+                                <bean:write name="dato" property="nombre"/>
+                            </td>
+                            <td align="center">
+                                <bean:write name="dato" property="cantidad"/>
+                            </td>
+                            </tr>
+                        </logic:iterate>
+                        <tr>
+                        <td style="padding-left:1em;background-color:#D3D6FF">
+                            <b>Total</b>
+                        </td>
+                        <td align="center">
+                            <b>${(user.totalActividades)}</b>
+                        </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <a class="ver">
+                    [Ocultar Gráfica]</a>
+
+            </div>
     </logic:present>       
 
 

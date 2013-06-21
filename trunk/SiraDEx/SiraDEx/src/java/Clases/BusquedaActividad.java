@@ -60,14 +60,13 @@ public class BusquedaActividad extends Root {
         String[] auxNombre = grafica[0].split("\\|");
         String[] auxCant = grafica[1].split(",");
         ArrayList<Par> aux = new ArrayList<>(0);
-        int i;
-        for (i = 0; i < auxNombre.length; i++) {
+
+        for (int i = 0; i < auxNombre.length; i++) {
             Par parNuevo = new Par(auxNombre[i], auxCant[i]);
             aux.add(parNuevo);
         }
         
         datosGrafica = aux;
-
     }
 
     public String getNombreTipo() {
@@ -427,7 +426,7 @@ public class BusquedaActividad extends Root {
         return grafica;
 
     }
-
+    
     /**
      * Busca una página específica de la busqueda.
      *
@@ -578,35 +577,5 @@ public class BusquedaActividad extends Root {
 
         return cIni.after(cFin);
 
-    }
-
-    public static String[] cantidadActividadesPorTipo() {
-
-        String[] grafica = new String[2];
-        String nombres = "";
-        String cantidad = "";
-        Entity eSelec = new Entity(21);//TIPO_ACT__ACT
-        ResultSet rs = eSelec.seleccionarNumActividades();
-
-        try {
-            if (rs != null) {
-                while (rs.next()) {
-                    nombres += rs.getString("nombre_tipo_actividad") + "|";
-                    cantidad += rs.getString("cantidad") + ",";
-                }
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        if (nombres.length() != 0 && cantidad.length() != 0) {
-            nombres = nombres.substring(0, nombres.length() - 1);
-            cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
-        }
-
-        grafica[0] = nombres;
-        grafica[1] = cantidad;
-        System.out.println("Cantidad de actividades en busquedaAct" + "cantidad" + "*&*&*&*&*&*&");
-        return grafica;
     }
 }

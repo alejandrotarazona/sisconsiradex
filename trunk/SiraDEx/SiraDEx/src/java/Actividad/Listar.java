@@ -46,7 +46,7 @@ public class Listar extends DispatchAction {
         Clases.Root.deleteSessions(request, "mensajeAct");
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
-        String[] grafica = u.cantidadActividadesPorTipo();
+        String[] grafica = u.actividadesPorTipo();
 
         request.setAttribute("acts", acts);
         request.setAttribute("graficaNombres", grafica[0]);
@@ -70,7 +70,7 @@ public class Listar extends DispatchAction {
         
         Clases.Root.deleteSessions(request, "mensajeAct");
 
-        String[] grafica = u.cantidadActividadesPorTipo();
+        String[] grafica = u.totalActividadesPorTipo();
         ArrayList<Actividad> acts = Actividad.listarActividades();
 
         request.setAttribute("acts", acts);
