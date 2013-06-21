@@ -58,7 +58,26 @@
                                 Busquedas
                             </html:link> |
                         </logic:equal>
-
+                        <logic:equal name="user" property="rol" value="estudiante">
+                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
+                                Busquedas
+                            </html:link> |
+                        </logic:equal>
+                        <logic:equal name="user" property="rol" value="obrero">
+                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
+                                Busquedas
+                            </html:link> |
+                        </logic:equal>
+                        <logic:equal name="user" property="rol" value="profesor">
+                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
+                                Busquedas
+                            </html:link> |
+                        </logic:equal>
+                        <logic:equal name="user" property="rol" value="empleado">
+                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
+                                Busquedas
+                            </html:link> |
+                        </logic:equal>
                     </logic:present>
 
                     <logic:notPresent name="user">

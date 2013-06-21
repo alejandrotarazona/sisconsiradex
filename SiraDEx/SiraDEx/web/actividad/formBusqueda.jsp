@@ -89,7 +89,7 @@
                         <logic:iterate  name="busquedaActividadForm" property="datosGrafica" 
                                         id="dato"> 
                             <tr>
-                            <td>
+                            <td style="padding-left:1em">
                                 <bean:write name="dato" property="nombre"/>
                             </td>
                             <td align="center">
@@ -98,7 +98,7 @@
                             </tr>
                         </logic:iterate>
                         <tr>
-                        <td>
+                        <td style="padding-left:1em;background-color:#D3D6FF">
                             <b>Total</b>
                         </td>
                         <td align="center">

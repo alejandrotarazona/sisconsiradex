@@ -26,6 +26,8 @@ public class Usuario extends Root {
     private String email = "";
     private String rol;
     private String rolDex;
+    private ArrayList<BusquedaActividad.Par> datosGrafica;
+    private int totalActividades;
     private static final String[] ATRIBUTOS = {
         "nombres", //0
         "apellidos", //1
@@ -124,6 +126,22 @@ public class Usuario extends Root {
 
     public void setRolDex(String rolDex) {
         this.rolDex = rolDex;
+    }
+
+    public ArrayList<BusquedaActividad.Par> getDatosGrafica() {
+        return datosGrafica;
+    }
+
+    public void setDatosGrafica(ArrayList<BusquedaActividad.Par> datosGrafica) {
+        this.datosGrafica = datosGrafica;
+    }
+
+    public int getTotalActividades() {
+        return totalActividades;
+    }
+
+    public void setTotalActividades(int totalActividades) {
+        this.totalActividades = totalActividades;
     }
 
     @Override
@@ -388,19 +406,20 @@ public class Usuario extends Root {
         return false;
     }
 
-    public String[] cantidadActividadesPorTipo() {
+    public String[] actividadesPorTipo() {
 
         String[] grafica = new String[2];
         String nombre = "";
         String cantidad = "";
         Entity eSelec = new Entity(22);//ACT_PARTICIPA
         ResultSet rs = eSelec.seleccionarNumActividadesUsuario(username);
-
+        int total = 0;
         try {
             if (rs != null) {
                 while (rs.next()) {
                     nombre += rs.getString("nombre_tipo_actividad") + "|";
                     cantidad += rs.getString("cantidad") + ",";
+                    total += rs.getInt("cantidad");
                 }
             }
 
@@ -409,11 +428,66 @@ public class Usuario extends Root {
         }
         if (nombre.length() != 0 && cantidad.length() != 0) {
             nombre = nombre.substring(0, nombre.length() - 1);
-            cantidad = cantidad.substring(0, cantidad.length() - 1) + "&";
+            cantidad = cantidad.substring(0, cantidad.length() - 1);
         }
 
         grafica[0] = nombre;
         grafica[1] = cantidad;
+
+        String[] auxNombre = grafica[0].split("\\|");
+        String[] auxCant = grafica[1].split(",");
+
+        ArrayList<BusquedaActividad.Par> aux = new ArrayList<>(0);
+
+        for (int i = 0; i < auxNombre.length; i++) {
+            BusquedaActividad.Par parNuevo = new BusquedaActividad.Par(auxNombre[i], auxCant[i]);
+            aux.add(parNuevo);
+        }
+        totalActividades = total;
+        datosGrafica = aux;
+
+        return grafica;
+    }
+
+    public String[] totalActividadesPorTipo() {
+
+        String[] grafica = new String[2];
+        String nombre = "";
+        String cantidad = "";
+        Entity eSelec = new Entity(21);//TIPO_ACT__ACT
+        ResultSet rs = eSelec.seleccionarNumActividades();
+        int total = 0;
+        try {
+            if (rs != null) {
+                while (rs.next()) {
+                    nombre += rs.getString("nombre_tipo_actividad") + "|";
+                    cantidad += rs.getString("cantidad") + ",";
+                    total += rs.getInt("cantidad");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        if (nombre.length() != 0 && cantidad.length() != 0) {
+            nombre = nombre.substring(0, nombre.length() - 1);
+            cantidad = cantidad.substring(0, cantidad.length() - 1);
+        }
+
+        grafica[0] = nombre;
+        grafica[1] = cantidad;
+        String[] auxNombre = grafica[0].split("\\|");
+        String[] auxCant = grafica[1].split(",");
+
+        ArrayList<BusquedaActividad.Par> aux = new ArrayList<>(0);
+
+        for (int i = 0; i < auxNombre.length; i++) {
+            BusquedaActividad.Par parNuevo = new BusquedaActividad.Par(auxNombre[i], auxCant[i]);
+            aux.add(parNuevo);
+        }
+        totalActividades = total;
+        datosGrafica = aux;
+
         return grafica;
     }
 

@@ -43,8 +43,8 @@
                                                 </logic:present>
                                                 <logic:notPresent name="user">
                                                     <br></br>
-                                                    <span class ="warning">Su sesión ha expirado, para regresar a la página principal , por favor
-                                                        <html:link action="/Welcome">haga click aquí</html:link>
+                                                    <span class ="warning">Su sesión ha expirado, para iniciar sesión nuevamente, por favor, 
+                                                        <html:link action="/Login?method=page">haga click aquí</html:link>
                                                         </span>
                                                 </logic:notPresent>
                                                 <br>
