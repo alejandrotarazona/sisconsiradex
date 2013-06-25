@@ -122,171 +122,166 @@
 
                     </div>
 
-                    <br><br><br>
-                    <table>
-                        <tr>
-                        <td style="font-weight: bold;font-size:1.154em">
-                            Actividades de Extensión
-                        </td>
-                        <td align="right">
-                            Encontradas: <b>${(busquedaActividadForm.totalActividades)} actividades</b>
-                        </td>
-                    </tr>
-                </table>
+                    <br>
 
-                <table class="cebra">
-                    <tbody>
-                        <logic:iterate name="actividades" id="act" indexId="index">
-                            <tr>
-                            <td>
-                                ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
-                            </td>
-                            <td>
+                    <h1>Actividades de Extensión</h1>
+                    <div class="ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"
+                        style="font-weight: normal;padding: 5px;">
+                        Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
+                    </div>
+                    <table class="cebra" style="margin:0">
+                        <tbody>
+                            <logic:iterate name="actividades" id="act" indexId="index">
+                                <tr>
+                                <td>
+                                    ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
+                                </td>
+                                <td>
                                     <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                         out.print(a.participantesToString());%></b>
-                                "<bean:write name="act" property="nombreTipoActividad"/>",
+                                    "<bean:write name="act" property="nombreTipoActividad"/>",
 
 
-                                <% out.print(a.camposValoresToString());%>
+                                    <% out.print(a.camposValoresToString());%>
 
-                                <logic:equal name="act" property="validacion" value="En espera">
-                                    <b>Actividad por validar.</b>
-                                </logic:equal>
-                                <br>
-                                <div>
-                                    <span class="textolargo">
+                                    <logic:equal name="act" property="validacion" value="En espera">
+                                        <b>Actividad por validar.</b>
+                                    </logic:equal>
+                                    <br>
+                                    <div>
+                                        <span class="textolargo">
 
-                                        <b>Descripción:</b> 
-                                        <bean:write name="act" property="descripcion"/>
+                                            <b>Descripción:</b> 
+                                            <bean:write name="act" property="descripcion"/>
 
-                                        <logic:iterate name="act" property="camposValores" 
-                                                       id="campoValor" indexId="index">
+                                            <logic:iterate name="act" property="camposValores" 
+                                                           id="campoValor" indexId="index">
 
-                                            <logic:equal name="campoValor" property="campo.tipo" 
-                                                         value="textol">
-                                                <br>
-                                                <bean:write name="campoValor" property="campo.nombre"/>: 
-                                                <bean:write name="campoValor" property="valor"/>
-                                            </logic:equal>
+                                                <logic:equal name="campoValor" property="campo.tipo" 
+                                                             value="textol">
+                                                    <br>
+                                                    <bean:write name="campoValor" property="campo.nombre"/>: 
+                                                    <bean:write name="campoValor" property="valor"/>
+                                                </logic:equal>
 
-                                        </logic:iterate>
-                                        <logic:iterate name="act" property="archivos" 
-                                                       id="archivo" indexId="index">
+                                            </logic:iterate>
+                                            <logic:iterate name="act" property="archivos" 
+                                                           id="archivo" indexId="index">
 
-                                            <html:form method="POST">
-                                                <html:hidden name="act" property="idActividad"/>
-                                                <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                                <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
-                                                           paramId="idActividad" title="Descargar">
-                                                    ${archivo.tipo}
-                                                </html:link> 
-                                            </html:form>
+                                                <html:form method="POST">
+                                                    <html:hidden name="act" property="idActividad"/>
+                                                    <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                                    <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
+                                                               paramId="idActividad" title="Descargar">
+                                                        ${archivo.tipo}
+                                                    </html:link> 
+                                                </html:form>
 
-                                        </logic:iterate>
-                                    </span> 
+                                            </logic:iterate>
+                                        </span> 
 
-                                    <a class="mostrar" style="text-decoration:underline">
-                                        Más detalles</a>
-                                </div>
-                            </td>
-                            </tr>
-                        </logic:iterate>
-                    </tbody>
-                </table>
-                <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
-                    String accion;
-                    if (usuario == null) {
-                        accion = "/BusquedaPublica?method=aPagina";
-                    } else {
-                        accion = "/BusquedaAvanzada?method=aPagina";
-                    }
-                %>
-                <div  class="ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" style="padding: 5px;">
-                <div style="font-weight: normal;width: 50%;float: left">
-                        &nbsp;Página ${busquedaActividadForm.pagina} de ${busquedaActividadForm.totalPaginas}
-                    </div>
-                    <div style="float: right;text-align: right;width: 350px !important;">
+                                        <a class="mostrar" style="text-decoration:underline">
+                                            Más detalles</a>
+                                    </div>
+                                </td>
+                                </tr>
+                            </logic:iterate>
+                        </tbody>
+                    </table>
+                    <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
+                        String accion;
+                        if (usuario == null) {
+                            accion = "/BusquedaPublica?method=aPagina";
+                        } else {
+                            accion = "/BusquedaAvanzada?method=aPagina";
+                        }
+                    %>
+                    <div  class="ui-widget-header ui-corner-bl ui-corner-br ui-helper-clearfix" style="padding: 5px;">
+                    <div style="font-weight: normal;width: 50%;float: left">
+                            &nbsp;Página ${busquedaActividadForm.pagina} de ${busquedaActividadForm.totalPaginas}
+                        </div>
+                        <div style="float: right;text-align: right;width: 350px !important;">
 
 
-                    <logic:equal name="busquedaActividadForm" property="pagina" value="1">
-                        <a class="ui-corner-tl ui-corner-bl ui-button ui-state-default ui-state-disabled">
-                            Primera
-                        </a>
-                        <a class="ui-button ui-state-default ui-state-disabled">
-                            Anterior
-                        </a> 
-                    </logic:equal>
-
-                    <logic:notEqual name="busquedaActividadForm" property="pagina" value="1">
-                        <html:link action="<%=accion%>"
-                                   styleClass="ui-corner-tl ui-corner-bl ui-button ui-state-default"
-                                   title="Ir a la primera página"
-                                   onclick="var acc = this.href.split('&')[0];
-                                   this.href=acc.concat('&pagina=1');">
-                            Primera
-                        </html:link> 
-                        <html:link action="<%=accion%>" 
-                                   styleClass="ui-button ui-state-default"
-                                   title="Ir a la página anterior"
-                                   onclick="if (${busquedaActividadForm.pagina} > 1){
-                                   var acc = this.href.split('&')[0];
-                                   this.href=acc.concat('&pagina=${busquedaActividadForm.pagina - 1}');
-                                   }">
-                            Anterior
-                        </html:link>
-                    </logic:notEqual>
-                    <%String paginas = (String) pageContext.findAttribute("paginas");
-                        String[] pags = paginas.split(",");%>       
-                    <logic:iterate collection="<%=pags%>" id="pag">
-                        <logic:equal name="pag" value="${busquedaActividadForm.pagina}">
-                            <a class="ui-button ui-state-default ui-state-disabled">
-                                ${pag}
+                        <logic:equal name="busquedaActividadForm" property="pagina" value="1">
+                            <a class="ui-corner-tl ui-corner-bl ui-button ui-state-default ui-state-disabled">
+                                Primera
                             </a>
+                            <a class="ui-button ui-state-default ui-state-disabled">
+                                Anterior
+                            </a> 
                         </logic:equal>
-                        <logic:notEqual name="pag" value="${busquedaActividadForm.pagina}">
+
+                        <logic:notEqual name="busquedaActividadForm" property="pagina" value="1">
+                            <html:link action="<%=accion%>"
+                                       styleClass="ui-corner-tl ui-corner-bl ui-button ui-state-default"
+                                       title="Ir a la primera página"
+                                       onclick="var acc = this.href.split('&')[0];
+                                       this.href=acc.concat('&pagina=1');">
+                                Primera
+                            </html:link> 
                             <html:link action="<%=accion%>" 
                                        styleClass="ui-button ui-state-default"
-                                       title="Ir a la página ${pag}"
-                                       onclick="var acc = this.href.split('&')[0];
-                                       this.href=acc.concat('&pagina=${pag}');">
-                                ${pag}
+                                       title="Ir a la página anterior"
+                                       onclick="if (${busquedaActividadForm.pagina} > 1){
+                                       var acc = this.href.split('&')[0];
+                                       this.href=acc.concat('&pagina=${busquedaActividadForm.pagina - 1}');
+                                       }">
+                                Anterior
                             </html:link>
                         </logic:notEqual>
-                    </logic:iterate>
-                    <logic:equal name="busquedaActividadForm" property="pagina" 
-                                 value="${busquedaActividadForm.totalPaginas}">
-                        <a class="ui-button ui-state-default ui-state-disabled">
-                            Siguiente
-                        </a>
-                        <a class="ui-corner-tr ui-corner-br ui-button ui-state-default ui-state-disabled">
-                            Última
-                        </a>&nbsp; 
-                    </logic:equal>
-                    <logic:notEqual name="busquedaActividadForm" property="pagina" 
-                                    value="${busquedaActividadForm.totalPaginas}">
+                        <%String paginas = (String) pageContext.findAttribute("paginas");
+                        String[] pags = paginas.split(",");%>       
+                        <logic:iterate collection="<%=pags%>" id="pag">
+                            <logic:equal name="pag" value="${busquedaActividadForm.pagina}">
+                                <a class="ui-button ui-state-default ui-state-disabled">
+                                    ${pag}
+                                </a>
+                            </logic:equal>
+                            <logic:notEqual name="pag" value="${busquedaActividadForm.pagina}">
+                                <html:link action="<%=accion%>" 
+                                           styleClass="ui-button ui-state-default"
+                                           title="Ir a la página ${pag}"
+                                           onclick="var acc = this.href.split('&')[0];
+                                           this.href=acc.concat('&pagina=${pag}');">
+                                    ${pag}
+                                </html:link>
+                            </logic:notEqual>
+                        </logic:iterate>
+                        <logic:equal name="busquedaActividadForm" property="pagina" 
+                                     value="${busquedaActividadForm.totalPaginas}">
+                            <a class="ui-button ui-state-default ui-state-disabled">
+                                Siguiente
+                            </a>
+                            <a class="ui-corner-tr ui-corner-br ui-button ui-state-default ui-state-disabled">
+                                Última
+                            </a>&nbsp; 
+                        </logic:equal>
+                        <logic:notEqual name="busquedaActividadForm" property="pagina" 
+                                        value="${busquedaActividadForm.totalPaginas}">
 
-                        <html:link action="<%=accion%>" 
-                                   styleClass="ui-button ui-state-default"
-                                   title="Ir a la página siguiente"
-                                   onclick="if (${busquedaActividadForm.pagina} < ${busquedaActividadForm.totalPaginas}){
-                                   var acc = this.href.split('&')[0];
-                                   this.href=acc.concat('&pagina=${busquedaActividadForm.pagina + 1}');
-                                   }">
-                            Siguiente
-                        </html:link> 
-                        <html:link action="<%=accion%>" 
-                                   styleClass="ui-corner-tr ui-corner-br ui-button ui-state-default"
-                                   title="Ir a la última página"
-                                   onclick="var acc = this.href.split('&')[0];
-                                   this.href=acc.concat('&pagina=${busquedaActividadForm.totalPaginas}');">
-                            Última
-                        </html:link>&nbsp; 
-                    </logic:notEqual>
+                            <html:link action="<%=accion%>" 
+                                       styleClass="ui-button ui-state-default"
+                                       title="Ir a la página siguiente"
+                                       onclick="if (${busquedaActividadForm.pagina} < ${busquedaActividadForm.totalPaginas}){
+                                       var acc = this.href.split('&')[0];
+                                       this.href=acc.concat('&pagina=${busquedaActividadForm.pagina + 1}');
+                                       }">
+                                Siguiente
+                            </html:link> 
+                            <html:link action="<%=accion%>" 
+                                       styleClass="ui-corner-tr ui-corner-br ui-button ui-state-default"
+                                       title="Ir a la última página"
+                                       onclick="var acc = this.href.split('&')[0];
+                                       this.href=acc.concat('&pagina=${busquedaActividadForm.totalPaginas}');">
+                                Última
+                            </html:link>&nbsp; 
+                        </logic:notEqual>
+                    </div>
                 </div>
-            </div>
-        </logic:notEmpty>
-    </logic:present>
-</body>
+            </logic:notEmpty>
+        </logic:present>
+    </body>
 
 
 
