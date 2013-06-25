@@ -85,11 +85,11 @@
                     <td><b>Tipo de Producto</b></td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
-                        </td>
-                        </tr>
-                        <tr>
-                        <td><b>Programa</b></td>
-                        <td>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Programa</b></td>
+                    <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select>
@@ -117,21 +117,21 @@
                         <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos">Obrero</html:multibox> Obreros 
-                        </td>       
-                        </tr>
-                    </tbody>
-                </table>
+                    </td>       
+                    </tr>
+                </tbody>
+            </table>
 
-                <b>Campos</b><br>
-                <table class="cebra">
-                    <tbody>
-                        <tr>
-                        <th><b>Nombre</b></th>
-                        <th><b>Tipo</b></th>
-                        <th><b>Longitud/Límite</b></th>
-                        <th><b>Obligatorio</b></th>
-                        <th><b>Catálogo</b></th>
-                        </tr>
+            <b>Campos</b><br>
+            <table class="cebra">
+                <tbody>
+                    <tr>
+                    <th><b>Nombre</b></th>
+                    <th><b>Tipo</b></th>
+                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Obligatorio</b></th>
+                    <th><b>Catálogo</b></th>
+                    </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
                         <%
@@ -149,14 +149,23 @@
                         </html:text> </td>
                         <td align="center">
                             <logic:notEqual name="campos" property="tipo" value="producto">
-                                <html:select name="campos"  property="tipo" indexed="true" 
-                                styleId="<%=s%>" styleClass="selector">
-                                    <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                                            value="valor"/>
-                                </html:select>   
+                                <logic:notEqual name="campos" property="tipo" value="archivo">
+                                    <html:select name="campos"  property="tipo" indexed="true" 
+                                    styleId="<%=s%>" styleClass="selector">
+                                        <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                                                value="valor"/>
+                                    </html:select>   
+                                </logic:notEqual>
                             </logic:notEqual>
 
                             <logic:equal name="campos" property="tipo" value="producto">
+                                <html:select name="campos"  property="tipo" disabled="true" 
+                                             indexed="true" styleClass="selector">
+                                    <html:option value="producto">archivo</html:option>
+                                </html:select>
+                            </logic:equal>
+
+                            <logic:equal name="campos" property="tipo" value="archivo">
                                 <html:select name="campos"  property="tipo" disabled="true" 
                                              indexed="true" styleClass="selector">
                                     <html:option value="producto">archivo</html:option>

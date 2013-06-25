@@ -83,10 +83,12 @@ public class Buscar extends DispatchAction {
 
         String[] grafica = ba.getGrafica();
 
-        ArrayList<String> pags = new ArrayList<>(0);
+        String pags = "";
 
         for (int i = 1; i <= ba.getTotalPaginas(); i++) {
-            pags.add("" + i);
+            if (i + 2 >= ba.getPagina() || i - 2 >= ba.getPagina()) {
+                pags += i + ",";
+            }
         }
 
         ArrayList<Actividad> acts = BusquedaActividad.buscarPagina(ba, 0);
@@ -121,6 +123,15 @@ public class Buscar extends DispatchAction {
          System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
          }*/
 
+        String pags = "";
+
+        for (int i = 1; i <= ba.getTotalPaginas(); i++) {
+            if (i + 2 >= ba.getPagina() || i - 2 >= ba.getPagina()) {
+                pags += i + ",";
+            }
+        }
+
+        request.getSession().setAttribute("paginas", pags);
         request.getSession().setAttribute("actividades", acts);
         request.getSession().setAttribute("graficaNombres", grafica[0]);
         request.getSession().setAttribute("graficaCantidad", grafica[1]);
