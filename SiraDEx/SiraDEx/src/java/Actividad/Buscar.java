@@ -35,6 +35,11 @@ public class Buscar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        if (!request.isRequestedSessionIdValid()) {
+            return mapping.findForward(PAGE);
+        }
+
         Root.deleteSessions(request, "");
         String[] atributo = {"activo"};
         Object[] valor = {true};
@@ -62,7 +67,13 @@ public class Buscar extends DispatchAction {
     public ActionForward search(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
+        if (!request.isRequestedSessionIdValid()) {
+            return mapping.findForward(PAGE);
+        }
+
         BusquedaActividad ba = (BusquedaActividad) form;
+
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String ip = request.getHeader("X-Forwarded-For");
         String usuario = null;
@@ -83,22 +94,8 @@ public class Buscar extends DispatchAction {
 
         String[] grafica = ba.getGrafica();
 
-        String pags = "";
+        ArrayList<Actividad> acts = ba.buscarPagina(ba, 0);
 
-        for (int i = 1; i <= ba.getTotalPaginas(); i++) {
-            if (i + 2 >= ba.getPagina() || i - 2 >= ba.getPagina()) {
-                pags += i + ",";
-            }
-        }
-
-        ArrayList<Actividad> acts = BusquedaActividad.buscarPagina(ba, 0);
-
-        System.out.println("Actividades para mostrar (nros):");
-        for (int i = 0; i < acts.size(); i++) {
-            System.out.println("\t" + i + ".- " + acts.get(i).getNombreTipoActividad());
-        }
-
-        request.getSession().setAttribute("paginas", pags);
         request.getSession().setAttribute("actividades", acts);
         request.getSession().setAttribute("validadores", dependencias);
         request.getSession().setAttribute("programas", programas);
@@ -113,25 +110,21 @@ public class Buscar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        if (!request.isRequestedSessionIdValid()) {
+            return mapping.findForward(PAGE);
+        }
+
         BusquedaActividad ba = (BusquedaActividad) form;
+
         String[] grafica = ba.getGrafica();
 
-
-        ArrayList<Actividad> acts = ba.getPagina(ba.getPagina());
+        ArrayList<Actividad> acts = ba.obtenerPagina();
+        ba.setBotonesPaginas();
         System.out.println("Actividades para mostrar (nros):");
         /*for (int i = 1; i <= acts.size(); i++) {
          System.out.println(i + ".- " + acts.get(i).getNombreTipoActividad());
          }*/
 
-        String pags = "";
-
-        for (int i = 1; i <= ba.getTotalPaginas(); i++) {
-            if (i + 2 >= ba.getPagina() || i - 2 >= ba.getPagina()) {
-                pags += i + ",";
-            }
-        }
-
-        request.getSession().setAttribute("paginas", pags);
         request.getSession().setAttribute("actividades", acts);
         request.getSession().setAttribute("graficaNombres", grafica[0]);
         request.getSession().setAttribute("graficaCantidad", grafica[1]);

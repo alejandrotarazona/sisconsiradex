@@ -18,8 +18,10 @@
             </logic:notPresent> 
             <logic:present name="user">
             <br><br>
-            <font size=2>Para ingresar al SiraDEx con otro USBID, debe cerrar sesión
-            </logic:present></font>
+            <div align="center" style="font-size:1.3em">
+                Si desea ingresar al SiraDEx con otro USBID haga click en <b>(Cerrar Sesión)</b>
+            </div>
+            </logic:present>
 
     </body>
 </html>

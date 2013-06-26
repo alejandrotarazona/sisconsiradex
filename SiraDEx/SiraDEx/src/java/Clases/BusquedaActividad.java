@@ -29,10 +29,11 @@ public class BusquedaActividad extends Root {
     private String participante; //usbid
     private String fechaInic;
     private String fechaFin;
-    private int mostrarPorPagina = 10;
+    private int mostrarPorPagina = 5;
     private int totalPaginas;
     private ArrayList<ArrayList<Actividad>> libro;
     private int pagina;
+    private String[] botonesPaginas;
     private String[] grafica;
     private ArrayList<Par> datosGrafica;
     private int totalActividades;
@@ -65,7 +66,7 @@ public class BusquedaActividad extends Root {
             Par parNuevo = new Par(auxNombre[i], auxCant[i]);
             aux.add(parNuevo);
         }
-        
+
         datosGrafica = aux;
     }
 
@@ -153,12 +154,20 @@ public class BusquedaActividad extends Root {
         return pagina;
     }
 
-    public ArrayList<Actividad> getPagina(int i) {
-        return libro.get(i - 1);
+    public ArrayList<Actividad> obtenerPagina() {
+        return libro.get(pagina - 1);
     }
 
     public void setPagina(int pagina) {
         this.pagina = pagina;
+    }
+
+    public String[] getBotonesPaginas() {
+        return botonesPaginas;
+    }
+
+    public void setBotonesPaginas(String[] botonesPaginas) {
+        this.botonesPaginas = botonesPaginas;
     }
 
     public String[] getGrafica() {
@@ -184,7 +193,6 @@ public class BusquedaActividad extends Root {
     public void setTotalActividades(int totalActividades) {
         this.totalActividades = totalActividades;
     }
-    
 
     /**
      * Metodo para buscar por cada uno de los criterios dados.
@@ -333,11 +341,11 @@ public class BusquedaActividad extends Root {
 
         if (this.participante != null && !this.participante.equals("")) {
             hayParticipantes = true;
-            listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));  
+            listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));
         }
 
         ArrayList<ArrayList<Actividad>> listas = new ArrayList<>(0);
-     
+
         //Revisa las distintas formas en que pueden quedar las
         //listas para poder discernir cual(es) lista(s) es(son) vacia(s).
         if (hayParticipantes) {
@@ -372,7 +380,7 @@ public class BusquedaActividad extends Root {
         setDatosGrafica();
         totalPaginas = libro.size();
         pagina = 1;
-        totalActividades = (totalPaginas - 1)*mostrarPorPagina + libro.get(totalPaginas-1).size();
+        totalActividades = (totalPaginas - 1) * mostrarPorPagina + libro.get(totalPaginas - 1).size();
     }
 
     /**
@@ -426,36 +434,43 @@ public class BusquedaActividad extends Root {
         return grafica;
 
     }
-    
+
+    /**
+     * Método para cargar los botones de un rango de hasta 5 páginas para la navegabilidad 
+     */
+    public void setBotonesPaginas() {
+        String pags = "";
+
+        int i,ultima;
+        if (pagina - 2 < 1) {
+            i = 1;
+        } else {
+            i = pagina - 2;
+        }
+        if (pagina +2 > totalPaginas){
+            ultima = totalPaginas;
+        } else {
+            ultima = pagina + 2;
+        }
+        for (; i <= ultima; i++) {
+                pags += i + ",";
+        }
+        botonesPaginas = pags.split(",");
+    }
+
     /**
      * Busca una página específica de la busqueda.
      *
      * @param pagina La página que se desea revisar.
      * @return Lista de Actividades ubicadas en la Pagina solicitada.
      */
-    public static ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda,
+    public ArrayList<Actividad> buscarPagina(BusquedaActividad busqueda,
             int pagina) {
-        //ArrayList<Actividad> resp = new ArrayList<>(0);
+        setBotonesPaginas();
         if (busqueda.getLibro().size() > 0) {
             return busqueda.getLibro().get(pagina);
         }
         return new ArrayList<>(0);
-    }
-
-    /**
-     * Vacía la información de todas las actividades en una lista en limpio
-     *
-     * @return Lista con todas las actividades generadas por la busqueda.
-     */
-    private ArrayList<Actividad> coleccion() {
-        Iterator it = libro.iterator();
-        ArrayList<Actividad> resp = new ArrayList<>(0);
-        while (it.hasNext()) {
-            ArrayList<Actividad> aux0 = (ArrayList<Actividad>) it.next();
-            resp.addAll(aux0);
-        }
-
-        return resp;
     }
 
     /**
@@ -483,26 +498,6 @@ public class BusquedaActividad extends Root {
         }
 
         return resp;
-    }
-
-    /**
-     * Procedimineto para reconfigurar la paginacion de la busqueda.
-     *
-     * @param cantidadPorPagina Cantidad de actividades a mostrar por cada
-     * pagina
-     */
-    public void repaginar(int cantidadPorPagina) {
-        ArrayList<Actividad> compilacion = this.coleccion();
-        libro = new ArrayList<>(0);
-        Iterator it = compilacion.iterator();
-
-        while (it.hasNext()) {
-            ArrayList<Actividad> unaPagina = new ArrayList<>(0);
-            for (int i = 0; i < cantidadPorPagina && it.hasNext(); i++) {
-                unaPagina.add((Actividad) it.next());
-            }
-            libro.add(unaPagina);
-        }
     }
 
     /**
