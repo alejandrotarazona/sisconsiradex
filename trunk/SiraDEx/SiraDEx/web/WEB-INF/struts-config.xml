@@ -170,6 +170,8 @@
                  scope="request" name="actividadForm">        
          </action>
          
+         <!-- ======================BUSQUEDA ACTIVIDAD======================-->
+         
          <action path="/BusquedaAvanzada" type="Actividad.Buscar" scope="session"
                  parameter="method" name="busquedaActividadForm">
             <forward name="page" path="busquedaAvanzada"/>

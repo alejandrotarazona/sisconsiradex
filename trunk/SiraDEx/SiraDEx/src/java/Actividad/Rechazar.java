@@ -37,7 +37,9 @@ public class Rechazar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        Root.deleteSessions(request, "formActividad");
+        Root.deleteSessions(request, "actividadForm");
+        Actividad act = (Actividad) form;
+        act.setMensaje(null);
         return mapping.findForward(PAGE);
 
     }

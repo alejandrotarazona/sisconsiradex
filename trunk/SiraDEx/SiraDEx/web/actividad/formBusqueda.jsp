@@ -230,9 +230,8 @@
                                 Anterior
                             </html:link>
                         </logic:notEqual>
-                        <%String paginas = (String) pageContext.findAttribute("paginas");
-                        String[] pags = paginas.split(",");%>       
-                        <logic:iterate collection="<%=pags%>" id="pag">
+                                
+                        <logic:iterate name="busquedaActividadForm" property="botonesPaginas" id="pag">
                             <logic:equal name="pag" value="${busquedaActividadForm.pagina}">
                                 <a class="ui-button ui-state-default ui-state-disabled">
                                     ${pag}
