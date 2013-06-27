@@ -85,11 +85,11 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 VALUES (4,'Informe de participación','producto',0, true);
 --Actividad
 
-/*INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, 
-fecha_creacion, modificador, fecha_modif) VALUES (15,2,'','admin','10/01/13','','');*/
+INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, 
+fecha_creacion, modificador, fecha_modif) VALUES (15,2,'','admin','10/01/13','','');
 
 --Valor
-/*
+
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (12,15,'10/01/13');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (13,15,'20/01/13');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Dominguez');
