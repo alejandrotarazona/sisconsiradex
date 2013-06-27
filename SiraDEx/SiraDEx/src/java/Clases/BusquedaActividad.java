@@ -380,7 +380,10 @@ public class BusquedaActividad extends Root {
         setDatosGrafica();
         totalPaginas = libro.size();
         pagina = 1;
-        totalActividades = (totalPaginas - 1) * mostrarPorPagina + libro.get(totalPaginas - 1).size();
+        if (totalPaginas > 0) {
+            totalActividades = (totalPaginas - 1) * mostrarPorPagina + libro.get(totalPaginas - 1).size();
+        }
+        totalActividades = 0;
     }
 
     /**
@@ -436,24 +439,25 @@ public class BusquedaActividad extends Root {
     }
 
     /**
-     * Método para cargar los botones de un rango de hasta 5 páginas para la navegabilidad 
+     * Método para cargar los botones de un rango de hasta 5 páginas para la
+     * navegabilidad
      */
     public void setBotonesPaginas() {
         String pags = "";
 
-        int i,ultima;
+        int i, ultima;
         if (pagina - 2 < 1) {
             i = 1;
         } else {
             i = pagina - 2;
         }
-        if (pagina +2 > totalPaginas){
+        if (pagina + 2 > totalPaginas) {
             ultima = totalPaginas;
         } else {
             ultima = pagina + 2;
         }
         for (; i <= ultima; i++) {
-                pags += i + ",";
+            pags += i + ",";
         }
         botonesPaginas = pags.split(",");
     }

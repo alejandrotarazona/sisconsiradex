@@ -23,7 +23,7 @@ programa,validador) VALUES ('Participación en actividades de voluntariado en re
 --'Informe de participación'
 
 --Campo de un tipo de actividad
-/*
+
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
 VALUES (1,'Fecha de postulación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
@@ -95,7 +95,7 @@ INSERT INTO valor (id_campo, id_actividad, valor) VALUES (13,15,'20/01/13');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Dominguez');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (15,15,'Diana Vainberg');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
-*/
+
 --Permisos
 
 INSERT INTO permiso (nombre) VALUES ('Estudiante');
