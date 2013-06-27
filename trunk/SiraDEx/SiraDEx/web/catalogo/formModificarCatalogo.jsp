@@ -26,11 +26,10 @@
             <bean:write name="catalogoForm" property="nombre"/>
         </h1>
 
-        <logic:present name="mensajeCat">
+        <logic:present name="catalogoForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
             <br>
-            <div class ="error"><bean:write name="mensajeCat"/></div>
-            <br>
-        </logic:present>
+        </logic:present> 
         <br>
         <font size=2>Todos los campos son obligatorios.</font><br>
 
@@ -129,10 +128,10 @@
                             <logic:notEqual name="campos" property="tipo" value="usbid">
                                 <html:checkbox name="campos" property="eliminado" indexed="true"
                                                onclick="if (this.checked) {
-                                               anterior = document.catalogoForm.submitButton.value;
-                                               document.catalogoForm.submitButton.value='Eliminar'
+                                               anterior = document.getElementById('submit').value;
+                                               document.getElementById('submit').value='Eliminar'
                                                } else {
-                                               document.catalogoForm.submitButton.value=anterior
+                                               document.getElementById('submit').value=anterior
                                                }"/>
                                 <html:hidden name="campos" property="eliminado" value="false" 
                                              indexed="true"/>
@@ -142,33 +141,25 @@
                         </tr>
 
                     </logic:iterate>
-
-                    <tr>
-                    <td>
-                        <br>
-                        <b>Nuevos campos</b> <html:text name="catalogoForm" 
-                                   property="nroCampos" value="0" size="1" maxlength="2"
-                                   onkeyup="if(this.value > 0 
-                                   && document.catalogoForm.submitButton.value!='Eliminar') {
-                                   document.catalogoForm.submitButton.value='Agregar'
-                                   } else if (this.value <= 0 
-                                   && document.catalogoForm.submitButton.value!='Eliminar'){
-                                   document.catalogoForm.submitButton.value='Modificar'
-                                   }"/>
-                    </td>
-                    <td></td>
-                    <td></td>
-                    <td></td> 
-                    </tr>
                 </tbody>
             </table>
+            <br>
+            <b>Nuevos campos</b> <html:text name="catalogoForm" 
+                       property="nroCampos" value="0" size="1" maxlength="1"
+                       onkeyup="if(this.value > 0 
+                       && document.getElementById('submit').value!='Eliminar') {
+                       document.getElementById('submit').value='Agregar'
+                       } else if (this.value <= 0 
+                       && document.getElementById('submit').value!='Eliminar'){
+                       document.getElementById('submit').value='Modificar'
+                       }"/>
             <div align="center">
-                <input type="submit" name="submitButton" value="Modificar"
+                <html:submit value="Modificar" styleId="submit"
                        onclick="if (this.value=='Modificar') 
-                           return confirm('¿Está seguro que desea modificar el catálogo?');
+                           return confirm('¿Está seguro que desea modificar el Catálogo?');
                            if (this.value=='Eliminar') 
                                return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
-                           confirm('¿Está seguro que desea eliminar los campos seleccionados?')">
+                           confirm('¿Está seguro que desea eliminar los campos seleccionados?')"/>
             </div>
         </html:form>
     </body>

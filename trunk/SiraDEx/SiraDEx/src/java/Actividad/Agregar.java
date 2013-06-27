@@ -147,7 +147,7 @@ public class Agregar extends DispatchAction {
                     request.getSession().setAttribute("cat" + i, catalogo);
                 }
             }
-            request.getSession().setAttribute("mensajeAct", null);
+            act.setMensaje(null);
             return mapping.findForward(SUCCESS);
         }
 
@@ -160,13 +160,13 @@ public class Agregar extends DispatchAction {
 
             request.getSession().setAttribute("mensajeAct", act.getMensaje());
 
-            //act.enviarCorreo(0);
+            act.enviarCorreo(0);
             if (rol.equalsIgnoreCase("WM")) {
                 return mapping.findForward(SUCCESSFULL2);
             }
             return mapping.findForward(SUCCESSFULL1);
         }
-        request.getSession().setAttribute("mensajeAct", act.getMensaje());
+
         return mapping.findForward(SUCCESS);
     }
 }

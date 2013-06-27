@@ -27,7 +27,6 @@ public class Modificar extends DispatchAction {
     private static final String PAGE = "page";
     private static final String SUCCESS1 = "success1";
     private static final String SUCCESS2 = "success2";
-    
 
     /**
      * This is the action called from the Struts framework.
@@ -124,7 +123,7 @@ public class Modificar extends DispatchAction {
                     request.getSession().setAttribute("cat" + i, catalogo);
                 }
             }
-            request.getSession().setAttribute("mensajeAct", null);
+            act.setMensaje(null);
             return mapping.findForward(PAGE);
         }
 
@@ -134,7 +133,7 @@ public class Modificar extends DispatchAction {
         if (act.modificar(camposNM, ip, usuario)) {
 
             String rol = u.getRol();
-            //act.enviarCorreo(1);
+            act.enviarCorreo(1);
             request.getSession().setAttribute("mensajeAct", act.getMensaje());
 
             if (rol.equalsIgnoreCase("WM")) {
@@ -142,7 +141,7 @@ public class Modificar extends DispatchAction {
             }
             return mapping.findForward(SUCCESS1);
         }
-        request.getSession().setAttribute("mensajeAct", act.getMensaje());
+
         return mapping.findForward(PAGE);
     }
 }

@@ -16,11 +16,10 @@
         <h1 class="title">Registro de Campos del Catálogo 
             <bean:write name="catalogoForm" property="nombre"/> </h1>
 
-        <logic:present name="mensajeCat">
+        <logic:present name="catalogoForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
             <br>
-            <div class ="error"><bean:write name="mensajeCat"/></div>
-            <br>
-        </logic:present>
+        </logic:present> 
 
         <table>
             <tr>

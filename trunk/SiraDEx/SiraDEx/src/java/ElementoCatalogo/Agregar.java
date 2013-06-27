@@ -76,7 +76,7 @@ public class Agregar extends DispatchAction {
 
             return mapping.findForward(SUCCESS);
         }
-        request.getSession().setAttribute("mensajeElem", e.getMensaje());
+
         return mapping.findForward(PAGE);
     }
 }

@@ -45,7 +45,7 @@ public class Validar extends org.apache.struts.action.Action {
         act.validar(true, ip, usuario);
 
         request.getSession().setAttribute("mensajeVal", act.getMensaje());
-        //act.enviarCorreo(3);
+        act.enviarCorreo(3);
         return mapping.findForward(SUCCESS);
     }
 }

@@ -14,11 +14,10 @@
     <body>
 
         <h1 class="title">Registro de Catálogo</h1>
-        <logic:present name="mensajeCat">
+        <logic:present name="catalogoForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
             <br>
-            <div class ="error"><bean:write name="mensajeCat"/></div>
-            <br>
-        </logic:present>
+        </logic:present> 
         <br>
         <font size=2>Todos los campos son obligatorios.</font><br>
 
@@ -42,7 +41,7 @@
                     </tr>
                     <tr>
                     <td><b>Número de campos</b></td>
-                    <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="2"/>
+                    <td><html:text name="catalogoForm" property="nroCampos" size="1" maxlength="1"/>
                     </td>
                     </tr>
                 </tbody>

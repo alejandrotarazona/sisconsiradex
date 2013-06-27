@@ -30,6 +30,7 @@
             </logic:match>
             <br>
         </logic:present>
+        <br>
 
         <a onclick="document.getElementsByClassName('modificar')[0].disabled=false;
             document.getElementsByClassName('modificar')[1].disabled=false;

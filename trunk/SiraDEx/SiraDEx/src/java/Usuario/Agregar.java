@@ -72,8 +72,7 @@ public class Agregar extends DispatchAction {
             u.setRol(rol);
         }
         if (rol.equals("")) {
-            request.getSession().setAttribute("mensajeUsuario",
-                    "Error: Debe elegir una Dependencia o Unidad");
+            u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
             return mapping.findForward(PAGE);
         }
 
@@ -86,7 +85,7 @@ public class Agregar extends DispatchAction {
             request.getSession().setAttribute("mensajeUsuario", u.getMensaje());
             return mapping.findForward(SUCCESS);
         }
-        request.getSession().setAttribute("mensajeUsuario", u.getMensaje());
+
         return mapping.findForward(PAGE);
 
     }

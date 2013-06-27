@@ -1,13 +1,24 @@
+DROP VIEW elementos CASCADE;
+DROP VIEW estudiantes CASCADE;
+DROP VIEW obreros CASCADE;
+DROP VIEW empleados CASCADE;
+DROP VIEW profesores CASCADE;
+DROP VIEW permisos CASCADE;
+DROP VIEW tipo_p CASCADE;
+DROP VIEW tipo_r CASCADE;
+DROP VIEW tipo_act__act CASCADE;
+DROP VIEW act_participa CASCADE;
+
 CREATE OR REPLACE VIEW elementos
                 (id_catalogo, catalogo, id_campo, 
                     nombre_campo, tipo, id_elemento,valor) 
     AS
-    SELECT id_catalogo as idcat, 
-            nombre as catalogo, 
-            id_campo as idcamp, 
+    SELECT id_catalogo, 
+            nombre, 
+            id_campo, 
             nombre_campo, 
-            tipo_campo as tipo, 
-            id_elemento as idelem, 
+            tipo_campo, 
+            id_elemento, 
             valor 
     FROM valor_catalogo 
         natural join elemento_catalogo 
@@ -124,16 +135,3 @@ CREATE OR REPLACE VIEW act_participa
     FROM actividad a 
     join participa p on a.id_actividad = p.id_act 
     natural join tipo_actividad;
-
-
-CREATE OR REPLACE VIEW  elemento_valor
-    AS
-    SELECT *
-    FROM elemento_catalogo 
-        NATURAL JOIN    valor_catalogo;
-
-CREATE OR REPLACE VIEW participando 
-    AS 
-    SELECT * 
-    FROM participa p 
-    NATURAL LEFT OUTER JOIN usuario u

@@ -58,8 +58,8 @@
         <h1 class='title'>Edición del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <logic:present name="mensajeTipo"><br>
-            <div class ="error"><bean:write name="mensajeTipo"/></div>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="tipoActividadForm" property="mensaje"/></div>
             <br>
         </logic:present>
         <br>
@@ -131,6 +131,7 @@
                     <th><b>Longitud/Límite</b></th>
                     <th><b>Obligatorio</b></th>
                     <th><b>Catálogo</b></th>
+                    <th>Eliminar</th>
                     </tr>
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
@@ -178,7 +179,7 @@
                             <div id="<%=l%>" style="visibility: visible">
                                 <logic:notEqual name="campos" property="tipo" value="producto">
                                     <html:text name="campos" property="longitud" indexed="true" 
-                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
                                                size="2" maxlength="4">
                                         <bean:write name="campos" property="longitud"/>
                                     </html:text>    
@@ -242,14 +243,35 @@
                                 </div>
                             </logic:notEqual>
                         </td>
+                        <td td align="center">
+                            <html:checkbox name="campos" property="eliminado" indexed="true"
+                                           onclick="if (this.checked) {
+                                           anterior = document.getElementById('submit').value;
+                                           document.getElementById('submit').value='Eliminar'
+                                           } else {
+                                           document.getElementById('submit').value=anterior
+                                           }"/>
+                            <html:hidden name="campos" property="eliminado" value="false" 
+                                         indexed="true"/>
+                        </td>
                         </tr>
+
                     </logic:iterate>
                 </tbody>
             </table>
             <br>
-
-            <div align="center"><html:submit value="Modificar"
-                         onclick="return confirm('¿Está seguro que desea modificar el Tipo de Actividad?')"/></div>
+            <b>Nuevos campos</b> <html:text name="tipoActividadForm" 
+                       property="nroCampos" value="0" size="1" maxlength="2"
+                       onkeyup="if(this.value > 0 
+                       && document.getElementById('submit').value!='Eliminar') {
+                       document.getElementById('submit').value='Agregar'
+                       } else if (this.value <= 0 
+                       && document.document.getElementById('submit').value!='Eliminar'){
+                       document.getElementById('submit').value='Modificar'
+                       }"/>
+            <div align="center">
+                <html:submit value="Modificar" styleId="submit"/>
+            </div>
 
         </html:form>
     </body>

@@ -21,12 +21,14 @@
 
     </head>
     <body>
+        <html:link title="Volver" action="/GestionElementos"> 
+            <html:image src="../Stylesheets/iconos/regresar.png"/>
+        </html:link><br>
         <h1 class='title'>Agregar Elemento al Catálogo <bean:write 
                 name="elementoCatalogoForm" property="nombreCatalogo"/> </h1>
 
-        <logic:present name="mensajeElem">
-            <br>
-            <div class ="error"><bean:write name="mensajeElem"/></div>
+         <logic:present name="elementoCatalogoForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensaje"/></div>
             <br>
         </logic:present>
 
@@ -38,7 +40,8 @@
                     <logic:iterate name="elementoCatalogoForm" property="camposValores" 
                                    id="camposValores" indexId="index">
                         <tr>
-                        <td><bean:write name="camposValores" property="campo.nombre"/> 
+                        <td width="20%">
+                            <bean:write name="camposValores" property="campo.nombre"/> 
                         </td>
                         <td>
                             <logic:equal name="camposValores" property="campo.tipo" value="usbid">

@@ -42,6 +42,8 @@ public class Modificar extends DispatchAction {
         if (u == null) {
             return mapping.findForward(SUCCESS);
         }
+        Clases.Root.deleteSessions(request, "catalogoForm");
+        
         Catalogo cat = (Catalogo) form;
 
         int idCat = cat.getIdCatalogo();
@@ -75,12 +77,9 @@ public class Modificar extends DispatchAction {
         String ip = request.getHeader("X-Forwarded-For");
 
         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
-        request.getSession().setAttribute("mensajeCat", null);
+        cat.setMensaje(null);
         int elimino = cat.eliminarCamposMarcados(catNM);
-        if (elimino > 0) {
-            return mapping.findForward(PAGE);
-        } else if (elimino < 0) {
-            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+        if (elimino > 0 || elimino < 0) {
             return mapping.findForward(PAGE);
         }
 
@@ -91,13 +90,11 @@ public class Modificar extends DispatchAction {
         }
 
         if (cat.modificar(catNM, ip, usuario)) {
-
             request.getSession().setAttribute("mensajeCat", cat.getMensaje());
             return mapping.findForward(SUCCESS);
         }
 
         cat.setNombre(catNM.getNombre());
-        request.getSession().setAttribute("mensajeCat", cat.getMensaje());
         return mapping.findForward(PAGE);
     }
 }

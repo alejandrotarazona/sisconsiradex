@@ -80,7 +80,7 @@ public class Modificar extends DispatchAction {
             request.getSession().setAttribute("mensajeElem", elemCat.getMensaje());
             return mapping.findForward(SUCCESS);
         }
-        request.getSession().setAttribute("mensajeElem", elemCat.getMensaje());
+
         return mapping.findForward(FAILURE);
     }
 }

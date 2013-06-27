@@ -36,10 +36,9 @@
             <bean:write name="usuarioForm" property="apellidos"/>
         </h1><br>
 
-        <logic:present name="usuarioForm" property="mensaje">
-            <div class ="error">
-                <bean:write name="usuarioForm" property="mensaje" />
-            </div><br>
+        <logic:present name="usuarioForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="usuarioForm" property="mensaje"/></div>
+            <br>
         </logic:present>
 
         <html:form action="/ModificarUsuario?method=modificar">
