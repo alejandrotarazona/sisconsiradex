@@ -31,9 +31,8 @@
     <body>
         <h1 class="title">Registrar Usuario</h1>
 
-        <logic:present name="mensajeUsuario">
-            <br>
-            <div class ="error"><bean:write name="mensajeUsuario"/></div>
+        <logic:present name="usuarioForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="usuarioForm" property="mensaje"/></div>
             <br>
         </logic:present>
 
@@ -74,7 +73,7 @@
                                document.getElementById('error').innerHTML='';
                                document.getElementById('registrar').disabled=false;
                                }"/>
-    
+
                     <span style="color: red" id="error"></span>
                     </td>
                     </tr>

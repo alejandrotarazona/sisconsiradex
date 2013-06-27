@@ -412,7 +412,7 @@ public class Usuario extends Root {
         String nombre = "";
         String cantidad = "";
         Entity eSelec = new Entity(22);//ACT_PARTICIPA
-        ResultSet rs = eSelec.seleccionarNumActividadesUsuario(username);
+        ResultSet rs = eSelec.seleccionarNumActividades("usbid = '" + username + "'");
         int total = 0;
         try {
             if (rs != null) {

@@ -178,11 +178,7 @@ public class Verificaciones {
             ta.setMensaje(respVerif);
             return false;
         }
-        if (nro.equals("0")) {
-            ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
-                    + "menos 1 como valor.");
-            return false;
-        }
+
         respVerif = verificarLongitudVacio("'Número de campos'", nro, 2, true);
         if (respVerif != null) {
             ta.setMensaje(respVerif);
@@ -483,6 +479,12 @@ public class Verificaciones {
             String valor = ccv.getValor();
             String tipo = ccv.getCampo().getTipo();
             String nombre = "'" + ccv.getCampo().getNombre() + "'";
+            
+            if (tipo.equals("usbid") && ec.usuarioExistente(valor)){
+               ec.setMensaje("Error: Ya existe un elemento con ese USB-ID "
+                       + "en el Catálogo.");
+                return false; 
+            }
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/
             if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {

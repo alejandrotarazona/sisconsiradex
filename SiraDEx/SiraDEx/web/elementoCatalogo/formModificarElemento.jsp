@@ -26,13 +26,15 @@
 
     </head>
     <body>
+        <html:link title="Volver" action="/GestionElementos"> 
+            <html:image src="../Stylesheets/iconos/regresar.png"/>
+        </html:link><br>
         <h1 class='title'>Edición del Catálogo 
             <bean:write name="elementoCatalogoForm" property="nombreCatalogo"/> 
         </h1>
 
-        <logic:present name="mensajeElem">
-            <br>
-            <div class ="error"><bean:write name="mensajeElem"/></div>
+        <logic:present name="elementoCatalogoForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="elementoCatalogoForm" property="mensaje"/></div>
             <br>
         </logic:present>
 
@@ -40,7 +42,7 @@
             <table>
                 <tbody>
                     <tr>
-                    <td><b>Nombre del campo</b></td>
+                    <td width="20%"><b>Nombre del campo</b></td>
                     <td><b>Valor</b></td>
                     </tr>
 

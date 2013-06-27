@@ -30,8 +30,8 @@
         <h1 class='title'>Edición de la Actividad de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="mensajeAct"><br>
-            <div class ="error"><bean:write name="mensajeAct"/></div>
+        <logic:present name="actividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensaje"/></div>
             <br>
         </logic:present>
 
@@ -80,7 +80,7 @@
                             <span class="fecha_input">
                                 <html:text name="camposValores" property="valor" indexed="true"
                                            readonly="true" ondblclick="this.value = ''"
-                                       title="Haga doble click para borrar la fecha.">
+                                           title="Haga doble click para borrar la fecha.">
                                     <bean:write name="camposValores" property="valor"/>
                                 </html:text>
                             </span>

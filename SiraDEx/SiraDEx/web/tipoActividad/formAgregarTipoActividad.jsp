@@ -19,9 +19,8 @@
     <body>
         <h1 class="title">Registro de Tipo de Actividad</h1>
 
-        <logic:present name="mensajeTipo">
-            <br>
-            <div class ="error"><bean:write name="mensajeTipo"/></div>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="tipoActividadForm" property="mensaje"/></div>
             <br>
         </logic:present>
         <br>

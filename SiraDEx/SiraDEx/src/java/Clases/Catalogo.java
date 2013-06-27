@@ -34,31 +34,6 @@ public class Catalogo extends Root {
         return idCatalogo;
     }
 
-    public void setIdCatalogo() {
-
-        Entity eId = new Entity(6);//CATALOGO
-
-        String[] proyectar = {ATRIBUTOS[0]};
-        String[] columnas = {
-            "nombre"
-        };
-        Object[] valores = {
-            this.nombre
-        };
-        ResultSet rs = eId.proyectar(proyectar, columnas, valores);
-        try {
-            if (rs.next()) {
-
-                this.idCatalogo = rs.getInt(ATRIBUTOS[0]);
-                rs.close();
-            }
-
-        } catch (SQLException ex) {
-            Logger.getLogger(Catalogo.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-    }
-
     public void setIdCatalogo(int idCatalogo) {
         this.idCatalogo = idCatalogo;
     }
@@ -164,7 +139,7 @@ public class Catalogo extends Root {
 
     public boolean agregar(String ip, String user) {
 
-        if (!Verificaciones.verificarCamposFijos(this)) {
+        if (!Verificaciones.verificarCamposVariables(this)) {
             return false;
         }
 
@@ -186,7 +161,8 @@ public class Catalogo extends Root {
             eCatalogo.setUser(user);
             eCatalogo.log();
             mensaje = "El Catálogo '" + nombre + "' ha sido registrado con éxito.";
-            setIdCatalogo();
+            idCatalogo = eCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
+
             Iterator itCampos = campos.iterator();
             while (itCampos.hasNext() && resp) {
                 CampoCatalogo campo = (CampoCatalogo) itCampos.next();
@@ -209,7 +185,7 @@ public class Catalogo extends Root {
         return resp;
     }
 
-    // los agregar al form para ser enviados desde el action a la vista
+    // los agrega al form para ser enviados desde el action a la vista
     public void agregarCamposNuevos() {
         for (int i = 0; i < nroCampos; i++) {
             CampoCatalogo c = new CampoCatalogo();
@@ -220,7 +196,7 @@ public class Catalogo extends Root {
     // los agrega a la base de datos al modificar el catálogo
     private boolean agregarCamposNuevos(int nroCamposCatNM, String ip, String user) {
         boolean resp = true;
-        setIdCatalogo();
+
         Iterator itCampos = campos.iterator();
         for (int i = 0; i < nroCamposCatNM; i++) {
             itCampos.next();
@@ -250,11 +226,60 @@ public class Catalogo extends Root {
 
     }
 
+    private boolean verificarEliminacionCampos() {
+
+        Iterator it = campos.iterator();
+        while (it.hasNext()) {
+            CampoCatalogo campo = (CampoCatalogo) it.next();
+            if (!campo.isEliminado()) {
+                return true;
+            }
+        }
+        mensaje = "Error: El Catálogo debe conservar al menos un campo";
+        return false;
+    }
+
+    //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
+    //de lo contrario retorna 1, y -1 si ocurre un error.
+    public int eliminarCamposMarcados(Catalogo catNM) {
+
+        if (!verificarEliminacionCampos()) {
+            return -1;
+        }
+
+        ArrayList<CampoCatalogo> camposNM = catNM.getCampos();
+        boolean bien = true;
+        int resp = 0;
+        int i = 0;
+        for (; i < catNM.campos.size(); i++) {//campos registrados en la base de datos
+            if (campos.get(i).isEliminado() && bien) {
+                resp = 1;
+                bien &= campos.get(i).eliminar();//se elimina de la base de datos
+                if (!bien) {
+                    return -1;
+                }
+                camposNM.remove(i); //se elimina de campos del atributo catNM
+                campos.remove(i);   //se elimina de campos del form
+                i--;
+            }
+        }
+        for (; i < campos.size(); i++) {//campos no registrados en la base de datos
+            if (campos.get(i).isEliminado()) {
+                resp = 1;
+                campos.remove(i);   //se elimina de campos del form
+                i--;
+            }
+        }
+
+        return resp;
+    }
+
     //en el parámetro nombreNM recibe el nombre No Modificado del catálogo y en
     //el parámetro camposNM su lista de campos No Modificados
     public boolean modificar(Catalogo catNM, String ip, String user) {
 
-        if (!Verificaciones.verificarCamposFijos(this) || !Verificaciones.verificarCamposVariables(this)) {
+        if (!Verificaciones.verificarCamposFijos(this)
+                || !Verificaciones.verificarCamposVariables(this)) {
             return false;
         }
 
@@ -309,56 +334,6 @@ public class Catalogo extends Root {
 
         } else {
             mensaje = "Error: El Catálogo no pudo ser modificado.";
-        }
-        return resp;
-    }
-
-    private boolean verificarEliminacionCampos() {
-        boolean resp = true;
-
-        Iterator it = campos.iterator();
-        while (it.hasNext()) {
-            CampoCatalogo campo = (CampoCatalogo) it.next();
-            if (!campo.isEliminado()) {
-                resp = false;
-            }
-        }
-        if (resp) {
-            mensaje = "Error: El Catálogo debe conservar al menos un campo";
-        }
-        return resp;
-    }
-
-    //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
-    //de lo contrario retorna 1, y -1 si ocurre un error.
-    public int eliminarCamposMarcados(Catalogo catNM) {
-
-        if (verificarEliminacionCampos()) {
-            return -1;
-        }
-
-        ArrayList<CampoCatalogo> camposNM = catNM.getCampos();
-        boolean bien = true;
-        int resp = 0;
-        int i = 0;
-        for (; i < catNM.campos.size(); i++) {//campos registrados en la base de datos
-            if (campos.get(i).isEliminado() && bien) {
-                resp = 1;
-                bien &= campos.get(i).eliminar();//se elimina de la base de datos
-                camposNM.remove(i); //se elimina de campos del atributo catNM
-                campos.remove(i);   //se elimina de campos del form
-                i--;
-            }
-        }
-        for (; i < campos.size(); i++) {//campos no registrados en la base de datos
-            if (campos.get(i).isEliminado()) {
-                resp = 1;
-                campos.remove(i);   //se elimina de campos del form
-                i--;
-            }
-        }
-        if (!bien) {
-            resp = -1;
         }
         return resp;
     }

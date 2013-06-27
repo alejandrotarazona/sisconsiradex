@@ -58,9 +58,8 @@
         <h1 class="title" id="page-title">Registro de Campos del Tipo de Actividad 
             <bean:write name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <logic:present name="mensajeTipo">
-            <br>
-            <div class ="error"><bean:write name="mensajeTipo"/></div>
+        <logic:present name="tipoActividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="tipoActividadForm" property="mensaje"/></div>
             <br>
         </logic:present>
         <br>
@@ -118,7 +117,7 @@
                             <div id ="<%=l%>" style="visibility: visible">
                                 <logic:notEqual name="campo" property="tipo" value="producto">
                                     <html:text name="campo" property="longitud" indexed="true"
-                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima se podrán agregar de estos campos." 
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
                                                size="3"/>
                                 </logic:notEqual>
 

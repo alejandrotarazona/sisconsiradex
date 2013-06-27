@@ -79,14 +79,26 @@
                                              onclick="return confirm('¿Está seguro que desea restaurar el Tipo de Actividad?')" />
                             </html:form>
                         </td>
-                         <td align="center">
-                        <html:form method="POST" action="/EliminarDefinitivoTipoActividad">
-                                <html:hidden name="ta" property="id" />
-                                <html:submit styleId="botonEliminar"
-                                             value=" "
-                                             title="Eliminar"
-                                             onclick="return confirm('¿Está seguro que desea eliminar definitivamente el Tipo de Actividad?')" />
-                            </html:form>
+                        <td align="center">
+                            <logic:equal name="ta" property="actividades" value="0">
+                                <html:form method="POST" action="/EliminarDefinitivoTipoActividad">
+                                    <html:hidden name="ta" property="id" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return confirm('¿Está seguro que desea eliminar definitivamente el Tipo de Actividad?')" />
+                                </html:form>
+                            </logic:equal>
+                            <logic:greaterThan name="ta" property="actividades" value="0">
+                                <html:form method="POST" action="/EliminarDefinitivoTipoActividad">
+                                    <html:hidden name="ta" property="id" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return alert('Al eliminar el Tipo de Actividad también serán eliminadas todas las (${ta.actividades}) Actividades de dicho Tipo que están registradas en el sistema.'), 
+                                                 confirm('¿Está seguro que desea eliminar  definitivamente el Tipo de Actividad y las Actividades de dicho Tipo?')"/>
+                                </html:form>
+                            </logic:greaterThan>
                         </td>
                         </tr>
                     </logic:iterate>

@@ -32,8 +32,8 @@
         <h1 class='title'>Registro de Actividad de <bean:write 
                 name="actividadForm" property="nombreTipoActividad"/> </h1>
 
-        <logic:present name="mensajeAct"><br>
-            <div class ="error"><bean:write name="mensajeAct"/></div>
+        <logic:present name="actividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensaje"/></div>
             <br>
         </logic:present>
 

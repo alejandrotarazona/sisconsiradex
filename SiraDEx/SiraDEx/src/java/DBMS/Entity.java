@@ -47,7 +47,7 @@ public class Entity {
         "TIPO_R", //20        
         "TIPO_ACT__ACT", //21
         "ACT_PARTICIPA", //22
-        "ELEMENTO_VALOR", //23    
+        "ELEMENTOS", //23    
         "ACT_COMPLETA"//24      -------------------------------------- 
     };
 
@@ -133,9 +133,9 @@ public class Entity {
         return rs;
     }
 
-    public ResultSet seleccionarNumActividadesUsuario(String usbid) {
+    public ResultSet seleccionarNumActividades(String condicion) {
         sql = "SELECT nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
-                + "FROM " + TABLA + " WHERE usbid = " + "'" + usbid + "'"
+                + "FROM " + TABLA + " WHERE "+ condicion
                 + " GROUP BY nombre_tipo_actividad";
 
         System.out.println(sql);

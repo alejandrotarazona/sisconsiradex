@@ -54,8 +54,7 @@ public class Rechazar extends DispatchAction {
         Actividad act = (Actividad) form;
 
         if (act.getDescripcion().replace("\n", "").length() > 2001) {
-            request.getSession().setAttribute("mensajeVal",
-                    "Error: El texto debe contener menos de 2000 caracteres.");
+            act.setMensaje("Error: El texto debe contener menos de 2000 caracteres.");
             return mapping.findForward(PAGE);
         }
 
@@ -67,10 +66,10 @@ public class Rechazar extends DispatchAction {
         if (validacion) {
             request.getSession().setAttribute("mensajeVal", act.getMensaje());
 
-            //act.enviarCorreo(2);
+            act.enviarCorreo(2);
             return mapping.findForward(SUCCESS);
         }
-        request.getSession().setAttribute("mensajeVal", act.getMensaje());
+
         return mapping.findForward(PAGE);
     }
 }

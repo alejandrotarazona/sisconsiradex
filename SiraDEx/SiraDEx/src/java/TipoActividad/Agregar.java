@@ -79,13 +79,17 @@ public class Agregar extends DispatchAction {
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         if (!Verificaciones.verificarCamposFijos(ta)) {
-            request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
             return mapping.findForward(PAGE);
         }
-        /*verifica si hay un tipo de actividad con ese nombre*/
+
+        if (String.valueOf(ta.getNroCampos()).equals("0")) {
+            ta.setMensaje("Error: El campo 'Número de Campos' debe contener al "
+                    + "menos 1 como valor.");
+            return mapping.findForward(PAGE);
+        }
+
         if (ta.esTipoActividad()) {
-            request.getSession().setAttribute("mensajeTipo",
-                    "Error: Ya existe un Tipo de Actividad con el Nombre "
+            ta.setMensaje("Error: Ya existe un Tipo de Actividad con el Nombre "
                     + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
                     + "intente con otro nombre.");
             return mapping.findForward(PAGE);
@@ -120,7 +124,7 @@ public class Agregar extends DispatchAction {
             request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
             return mapping.findForward(SUCCESSFULL);
         }
-        request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
+
         return mapping.findForward(SUCCESS);
     }
 }

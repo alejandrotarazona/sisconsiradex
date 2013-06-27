@@ -45,6 +45,13 @@ public class Modificar extends DispatchAction {
         }
         Clases.Root.deleteSessions(request, "tipoActividadForm");
 
+        TipoActividad ta = (TipoActividad) form;
+
+        int idTA = ta.getIdTipoActividad();
+        ta.setTipoActividad();
+        ArrayList campos = Clases.Campo.listar(idTA);
+        ta.setCampos(campos);
+
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
@@ -58,13 +65,6 @@ public class Modificar extends DispatchAction {
 
         ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa", true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
-
-        TipoActividad ta = (TipoActividad) form;
-
-        int idTA = ta.getIdTipoActividad();
-        ta.setTipoActividad();
-        ArrayList campos = Clases.Campo.listar(idTA);
-        ta.setCampos(campos);
 
         /*es necesario otro ArrayList con los valores no modificados para 
          * guardarlo con setAttribute ya que el anterior se modifica en el form 
@@ -95,6 +95,28 @@ public class Modificar extends DispatchAction {
 
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
+        ta.setMensaje(null);
+
+        int elimino = ta.eliminarCamposMarcados();
+        if (elimino > 0 || elimino < 0) {
+            return mapping.findForward(PAGE);
+        }
+
+        int numeroCampos = ta.getNroCampos();
+        if (numeroCampos > 0) {
+            ta.agregarCamposNuevos();
+            return mapping.findForward(PAGE);
+        }
+
+        if (ta.isModificado()) {
+            if (!ta.eliminar(ip, usuario) || !ta.agregar(ip, usuario)) {
+                return mapping.findForward(PAGE);
+            }
+            ta.setMensaje("El Tipo de Actividad '" + ta.getNombreTipo()
+                    + "' ha sido modificado con éxito.");
+            return mapping.findForward(SUCCESS);
+        }
+
         if (ta.modificar(taNM, ip, usuario)) {
 
             request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
@@ -102,7 +124,7 @@ public class Modificar extends DispatchAction {
         }
 
         ta.setNombreTipo(taNM.getNombreTipo());
-        request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
+
         return mapping.findForward(PAGE);
     }
 }

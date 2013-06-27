@@ -13,8 +13,10 @@
 
         <logic:notPresent name="user">
             <br><br>
-            <font size=2>Para ingresar al SiraDEx utilizando su USBID, por favor
-                <html:link action="/Login?method=page">haga click aquí</html:link></font>   
+            <div align="center" style="font-size:1.3em">
+                Para ingresar al SiraDEx utilizando su USBID, por favor
+                <html:link action="/Login?method=page">haga click aquí</html:link>
+            </div>   
             </logic:notPresent> 
             <logic:present name="user">
             <br><br>

@@ -12,8 +12,8 @@
 <body>
     <h1 class="title">Entrar como otro Tipo de Usuario</h1>
 
-    <logic:present name="mensaje"><br>
-        <div class ="error"><bean:write name="mensaje"/></div>
+    <logic:present name="usuarioForm" property="mensaje"><br>
+        <div class ="error"><bean:write name="usuarioForm" property="mensaje"/></div>
         <br>
     </logic:present>
 

@@ -26,6 +26,7 @@ public class Campo implements Serializable {
     private boolean obligatorio;
     private String catalogo = "";
     private String catalogoPart = "";
+    private boolean eliminado = false;
     private final Par[] tipos = {
         new Par("texto", "texto"),
         new Par("catálogo", "catalogo"),
@@ -154,6 +155,14 @@ public class Campo implements Serializable {
         this.catalogoPart = catalogoPart;
     }
 
+    public boolean isEliminado() {
+        return eliminado;
+    }
+
+    public void setEliminado(boolean eliminado) {
+        this.eliminado = eliminado;
+    }
+
     public static String[] getTIPOS() {
         return TIPOS;
     }
@@ -172,11 +181,11 @@ public class Campo implements Serializable {
         return "Campos{" + "nombre=" + nombre + ", tipo=" + tipo + ", longitud=" + longitud + ", obligatorio=" + obligatorio + '}';
     }
 
-    public boolean agregarCampo(int idTipoActividad, String ip, String user) {
-        System.out.println("Agrego un Campo");
+    public boolean agregar(int idTipoActividad, String ip, String user) {
+
         Entity e = new Entity(3);//CAMPO
         Integer idTA = new Integer(idTipoActividad);
-        if (!catalogoPart.isEmpty()){
+        if (!catalogoPart.isEmpty()) {
             catalogo = catalogoPart;
         }
         Object[] valores = {
@@ -201,6 +210,44 @@ public class Campo implements Serializable {
         e.log();
         return resp;
 
+    }
+
+    //en el parámetro campo recibe un campo no modificado del tipo de actividad
+    public boolean modificar(Campo campo, int idTA, String ip, String user) {
+        Entity e = new Entity(3);//CAMPO
+
+        String[] condColumnas = ATRIBUTOS;
+        Object[] valores = {
+            idCampo,
+            idTA,
+            campo.getNombre(),
+            campo.getTipo(),
+            campo.getLongitud(),
+            campo.isObligatorio(),
+            campo.getCatalogo()
+        };
+        String[] colModificar = {
+            ATRIBUTOS[2],
+            ATRIBUTOS[3],
+            ATRIBUTOS[4],
+            ATRIBUTOS[5],
+            ATRIBUTOS[6]
+        };
+        if (tipo.equals("participante")) {
+            catalogo = catalogoPart;
+        }
+        Object[] modificaciones = {
+            nombre,
+            tipo,
+            longitud,
+            obligatorio,
+            catalogo
+        };
+
+        boolean b = e.modificar(condColumnas, valores, colModificar, modificaciones);
+        e.setIp(ip);
+        e.setUser(user);
+        return b;
     }
 
     public static ArrayList<Campo> listar(int idTA) {
@@ -231,9 +278,9 @@ public class Campo implements Serializable {
                     c.setObligatorio(rs.getBoolean(ATRIBUTOS[5]));
                     String cat = rs.getString(ATRIBUTOS[6]);
                     c.setCatalogo(cat);
-                    if (t.equals("participante")){
-                      c.setCatalogoPart(cat);  
-                    }     
+                    if (t.equals("participante")) {
+                        c.setCatalogoPart(cat);
+                    }
                     resp.add(c);
                 }
                 rs.close();
@@ -243,43 +290,5 @@ public class Campo implements Serializable {
         }
 
         return resp;
-    }
-
-    //en el parámetro campo recibe un campo no modificado del tipo de actividad
-    public boolean modificar(Campo campo, int idTA, String ip, String user) {
-        Entity e = new Entity(3);//CAMPO
-
-        String[] condColumnas = ATRIBUTOS;
-        Object[] valores = {
-            idCampo,
-            idTA,
-            campo.getNombre(),
-            campo.getTipo(),
-            campo.getLongitud(),
-            campo.isObligatorio(),
-            campo.getCatalogo()
-        };
-        String[] colModificar = {
-            ATRIBUTOS[2],
-            ATRIBUTOS[3],
-            ATRIBUTOS[4],
-            ATRIBUTOS[5],
-            ATRIBUTOS[6]
-        };
-        if (tipo.equals("participante")){
-          catalogo = catalogoPart;  
-        }
-        Object[] modificaciones = {
-            nombre,
-            tipo,
-            longitud,
-            obligatorio,
-            catalogo
-        };
-
-        boolean b = e.modificar(condColumnas, valores, colModificar, modificaciones);
-        e.setIp(ip);
-        e.setUser(user);
-        return b;
     }
 }

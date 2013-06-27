@@ -77,6 +77,28 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         this.contenido = contenido;
     }
 
+    public boolean usuarioExistente(String usbid) {
+
+        Entity e = new Entity(23);//ELEMENTOS
+
+        String[] atrib = {"id_catalogo", "tipo", "valor"};
+        Object[] valor = {idCatalogo, "usbid", usbid};
+        ResultSet rs = e.seleccionar(atrib, valor);
+        try {
+            if (rs != null) {
+                if (rs.next()) {
+                    rs.close();
+                    return true;
+                }
+                rs.close();
+            }
+            return false;
+        } catch (SQLException ex) {
+            Logger.getLogger(TipoActividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return false;
+    }
+
     public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificar(this)) {

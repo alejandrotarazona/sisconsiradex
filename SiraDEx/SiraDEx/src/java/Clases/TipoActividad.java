@@ -32,6 +32,8 @@ public class TipoActividad extends Root {
     private int nroProductos = 1;
     private ArrayList<Campo> campos;
     private boolean activo;
+    private boolean modificado = false;
+    private int actividades;
     private static final String[] ATRIBUTOS = {
         "id_tipo_actividad", //0
         "nombre_tipo_actividad", //1
@@ -159,7 +161,34 @@ public class TipoActividad extends Root {
         this.nroProductos = nroProductos;
     }
 
-    @Override
+    public boolean isModificado() {
+        return modificado;
+    }
+
+    public void setModificado(boolean modificado) {
+        this.modificado = modificado;
+    }
+
+    public int getActividades() {
+        return actividades;
+    }
+
+    public void setActividades(int actividades) {
+        this.actividades = actividades;
+    }
+
+    //Este m[etodo permite que cuando el multibox no tenga nada, el arreglo
+    //permisos tome el valor de nulo, pero como sobreescribe el reset de Root  
+    //tuve que agregar tambien lo que esta en el reset de Root 
+    public void reset(ActionMapping mapping, HttpServletRequest request) {
+        try {
+            request.setCharacterEncoding("UTF-8");
+        } catch (UnsupportedEncodingException ex) {
+            Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        permisos = null;
+    }
+
     public TipoActividad clone() {
         TipoActividad resp = new TipoActividad();
         resp.setId(this.getId());
@@ -351,7 +380,7 @@ public class TipoActividad extends Root {
             while (it.hasNext() && resp) {
                 System.out.println("Voy iterando");
                 Campo cAgregar = (Campo) it.next();
-                resp &= cAgregar.agregarCampo(id, ip, user);
+                resp &= cAgregar.agregar(id, ip, user);
                 if (!resp) {
                     System.out.print("No se pudo registrar el campo " + cAgregar.getNombre());
                 }
@@ -377,6 +406,15 @@ public class TipoActividad extends Root {
 
     }
 
+    // los agrega al form para ser enviados desde el action a la vista
+    public void agregarCamposNuevos() {
+        for (int i = 0; i < nroCampos; i++) {
+            Campo c = new Campo();
+            campos.add(c);
+            modificado = true;
+        }
+    }
+
     public boolean eliminar(String ip, String user) {
         Entity eMod = new Entity(1);//TIPO_ACTIVIDAD
         String[] condColumnas = {ATRIBUTOS[0]};
@@ -394,9 +432,9 @@ public class TipoActividad extends Root {
         mensaje = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
-    
-    public boolean eliminarDefinitivo(String ip, String user){
-    Entity e = new Entity(1);//ACTIVIDAD
+
+    public boolean eliminarDefinitivo(String ip, String user) {
+        Entity e = new Entity(1);//ACTIVIDAD
         e.setIp(ip);
         e.setUser(user);
         if (e.borrar(ATRIBUTOS[0], id) && e.log()) {
@@ -406,6 +444,53 @@ public class TipoActividad extends Root {
         }
         mensaje = "El tipo de Actividad '" + nombreTipo + "' no pudo ser eliminado.";
         return false;
+    }
+
+    private boolean verificarEliminacionCampos() {
+        boolean participante = false;
+        boolean producto = false;
+
+        Iterator it = campos.iterator();
+        while (it.hasNext()) {
+            Campo campo = (Campo) it.next();
+            String tipo = campo.getTipo();
+            if (!campo.isEliminado()) {
+                if (tipo.equals("participante")) {
+                    participante = true;
+                }
+                if (tipo.equals("producto")) {
+                    producto = true;
+                }
+            }
+        }
+        if (!participante || !producto) {
+            mensaje = "Error: El Tipo de Actividad debe conservar al menos un "
+                    + "campo tipo participante y un campo tipo producto";
+            return false;
+        }
+        return true;
+    }
+
+    //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
+    //de lo contrario retorna 1, y -1 si ocurre un error.
+    public int eliminarCamposMarcados() {
+
+        if (!verificarEliminacionCampos()) {
+            return -1;
+        }
+
+        int resp = 0;
+
+        for (int i = 0; i < campos.size(); i++) {
+            if (campos.get(i).isEliminado()) {
+                resp = 1;
+                campos.remove(i);   //se elimina de campos del form
+                i--;
+                modificado = true;
+            }
+        }
+
+        return resp;
     }
 
     /**
@@ -449,18 +534,6 @@ public class TipoActividad extends Root {
             e.log();
         }
         return resp;
-    }
-
-    //Con esto es que puedo definir que cuando el multibox no tenga nada, el arreglo
-    //permisos tome el valor de nulo, pero como sobreescribe el reset de Root tuve 
-    //que agregar lo que estaba en ese reset de Root tambien
-    public void reset(ActionMapping mapping, HttpServletRequest request) {
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(Root.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        permisos = null;
     }
 
     //en el parámetro taNM recibe un TipoActividad No Modificado
@@ -567,6 +640,23 @@ public class TipoActividad extends Root {
         return false;
     }
 
+    private int totalActividades() {
+
+        Entity eSelec = new Entity(21);//TIPO_ACT__ACT
+        ResultSet rs = eSelec.seleccionarNumActividades("id_tipo_actividad = '" + id + "'");
+        try {
+            if (rs != null) {
+                if (rs.next()) {
+                    return rs.getInt("cantidad");
+                }
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
+
     private static ArrayList<TipoActividad> listar(ResultSet rs) {
         ArrayList<TipoActividad> tipos = new ArrayList<>(0);
 
@@ -582,6 +672,7 @@ public class TipoActividad extends Root {
                     t.setValidador(rs.getString(ATRIBUTOS[5]));
                     t.setActivo(rs.getBoolean(ATRIBUTOS[6]));
                     t.setPermisos();
+                    t.setActividades(t.totalActividades());
                     tipos.add(t);
                 }
                 rs.close();

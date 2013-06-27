@@ -63,17 +63,18 @@ public class Agregar extends DispatchAction {
 
         Catalogo cat = (Catalogo) form;
 
+        if (!Verificaciones.verificarCamposFijos(cat)) {
+            return mapping.findForward(PAGE);
+        }
+
         if (String.valueOf(cat.getNroCampos()).equals("0")) {
-            request.getSession().setAttribute("mensajeCat",
-                    "Error: El campo 'Número de campos' debe contener al "
+            cat.setMensaje("Error: El campo 'Número de campos' debe contener al "
                     + "menos 1 como valor.");
             return mapping.findForward(PAGE);
         }
 
-        /*verifica si hay un catálogo con ese nombre*/
         if (cat.esCatalogo()) {
-            request.getSession().setAttribute("mensajeCat",
-                    "Error: Ya existe un Catálogo con el Nombre '"
+            cat.setMensaje("Error: Ya existe un Catálogo con el Nombre '"
                     + cat.getNombre() + "'. Por favor intente con otro nombre.");
             return mapping.findForward(PAGE);
         }
@@ -114,7 +115,6 @@ public class Agregar extends DispatchAction {
 
 
         if (!Verificaciones.verificarCamposVariables(cat)) {
-            request.getSession().setAttribute("mensajeCat", cat.getMensaje());
             return mapping.findForward(SUCCESS);
         }
 
@@ -122,7 +122,7 @@ public class Agregar extends DispatchAction {
             request.getSession().setAttribute("mensajeCat", cat.getMensaje());
             return mapping.findForward(SUCCESSFULL);
         }
-        request.getSession().setAttribute("mensajeCat", cat.getMensaje());
+
         return mapping.findForward(SUCCESS);
     }
 }

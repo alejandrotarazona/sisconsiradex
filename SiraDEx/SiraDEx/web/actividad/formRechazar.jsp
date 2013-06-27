@@ -27,10 +27,10 @@
 
         <h1 class="title">Rechazar Actividad</h1>
 
-        <logic:present name="mensajeVal"><br>
-            <div class ="error"><bean:write name="mensajeVal"/></div>
+        <logic:present name="actividadForm" property="mensaje"><br>
+            <div class ="error"><bean:write name="actividadForm" property="mensaje"/></div>
             <br>
-        </logic:present>     
+        </logic:present>    
 
         <b>Por favor, escriba el motivo de rechazo.</b> (Se enviará un correo 
         automáticamente para informar al usuario.)<br><br> 
