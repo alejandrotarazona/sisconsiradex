@@ -1,16 +1,16 @@
-
+/*
 --Tipo de actividad
 
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador) VALUES ('Formulacion de proyectos del BPDEx', 'R',
 'Proyecto del BPDEx','Acción social y desarrollo comunitario',
 'Unidad de Participación y Acción Social');
---'Proyecto del BDPEx');*/
+--'Proyecto del BDPEx');
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador) VALUES ('Tutoría de Proyecto de Servicio Comunitario',
 'P','Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario',
 'Coordinación de Formación Complementaria General');
---'Informe de Servicio Comunitario del estudiante y acta de evaluación');*/
+--'Informe de Servicio Comunitario del estudiante y acta de evaluación');
 INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
 programa,validador) VALUES ('Tutoría de pasantías cortas profesionales',
 'R','Tutoria de pasantías cortas','Cooperación técnica',
@@ -83,10 +83,6 @@ INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligator
 VALUES (4,'Nombre del voluntario', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (4,'Informe de participación','producto',0, true);
---Actividad
-
-INSERT INTO actividad (id_actividad, id_tipo_actividad, validacion, creador, 
-fecha_creacion, modificador, fecha_modif) VALUES (15,2,'','admin','10/01/13','','');
 
 --Valor
 
@@ -95,7 +91,7 @@ INSERT INTO valor (id_campo, id_actividad, valor) VALUES (13,15,'20/01/13');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Dominguez');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (15,15,'Diana Vainberg');
 INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
-
+*/
 --Permisos
 
 INSERT INTO permiso (nombre) VALUES ('Estudiante');
@@ -103,7 +99,7 @@ INSERT INTO permiso (nombre) VALUES ('Empleado');
 INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
 
-
+/*
 ---Tiene_permiso
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
@@ -112,7 +108,7 @@ INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,1);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,2);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,3);
 INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,4);
-
+*/
 --Usuarios
 INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
 VALUES ('00-00000', '123456', 'obrero', 3, 'Pablo', 'Perez', '04321234567', 
