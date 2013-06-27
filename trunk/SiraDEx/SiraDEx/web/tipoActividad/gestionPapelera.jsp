@@ -20,7 +20,8 @@
                     "aoColumns": [       
                         /* Nombre */ null,
                         /* Consultar */ { "bSortable": false },
-                        /* Restaurar */ { "bSortable": false }
+                        /* Restaurar */ { "bSortable": false },
+                        /* Eliminar */ { "bSortable": false }
                     ]});
             });
 
@@ -52,6 +53,7 @@
                     <th>Nombre</th>
                     <th></th>
                     <th></th>
+                    <th></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -75,6 +77,15 @@
                                              value=" "
                                              title="Restaurar"
                                              onclick="return confirm('¿Está seguro que desea restaurar el Tipo de Actividad?')" />
+                            </html:form>
+                        </td>
+                         <td align="center">
+                        <html:form method="POST" action="/EliminarDefinitivoTipoActividad">
+                                <html:hidden name="ta" property="id" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está seguro que desea eliminar definitivamente el Tipo de Actividad?')" />
                             </html:form>
                         </td>
                         </tr>

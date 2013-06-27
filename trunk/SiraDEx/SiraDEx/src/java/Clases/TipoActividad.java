@@ -394,6 +394,19 @@ public class TipoActividad extends Root {
         mensaje = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
         return false;
     }
+    
+    public boolean eliminarDefinitivo(String ip, String user){
+    Entity e = new Entity(1);//ACTIVIDAD
+        e.setIp(ip);
+        e.setUser(user);
+        if (e.borrar(ATRIBUTOS[0], id) && e.log()) {
+
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito.";
+            return true;
+        }
+        mensaje = "El tipo de Actividad '" + nombreTipo + "' no pudo ser eliminado.";
+        return false;
+    }
 
     /**
      * Modifica los permisos asociados a un tipo de actividad, eliminando

@@ -100,6 +100,12 @@
                      redirect="true"/>
         </action>
         
+        <action path="/EliminarDefinitivoTipoActividad" type="TipoActividad.EliminarDefinitivo"
+                scope="request" name="tipoActividadForm">
+            <forward name="success" path="GestionTiposActividad.do?method=listDisable" 
+                     redirect="true"/>
+        </action>
+        
         <action path="/ModificarTipoActividad" type="TipoActividad.Modificar" 
                 scope="session" parameter="method" name="tipoActividadForm">
             <forward name="page" path="modificarTipoActividad"/>
