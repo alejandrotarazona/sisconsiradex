@@ -421,7 +421,7 @@ public class Actividad extends Root {
         String correos = obtenerCorreos();
         if (accion == 0) { //actividad registrada o en espera
             contenido = "Ha sido registrada la Actividad '" + nombreTipoActividad + "' "
-                    + "en la cual usted fue agregado como partipante, esta pasará a ser validada "
+                    + "en la cual usted fue agregado como participante, esta pasará a ser validada "
                     + "por el Decanato de Extensión.\nSerá notificado del resultado de la "
                     + "validación por esta misma vía.";
         }

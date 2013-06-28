@@ -126,10 +126,10 @@
 
                     <h1>Actividades de Extensión</h1>
                     <div class="ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"
-                        style="font-weight: normal;padding: 5px;">
-                        Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
-                    </div>
-                    <table class="cebra" style="margin:0">
+                         style="font-weight: normal;padding: 5px;">
+                    Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
+                </div>
+                <table class="cebra" style="margin:0">
                         <tbody>
                             <logic:iterate name="actividades" id="act" indexId="index">
                                 <tr>
@@ -189,8 +189,10 @@
                         </tbody>
                     </table>
                     <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
+                        String rol = usuario.getRol();
                         String accion;
-                        if (usuario == null) {
+                        if (usuario == null || rol.equals("profesor") || rol.equals("empleado")
+                                || rol.equals("estudiante") || rol.equals("obrero")) {
                             accion = "/BusquedaPublica?method=aPagina";
                         } else {
                             accion = "/BusquedaAvanzada?method=aPagina";
@@ -230,7 +232,7 @@
                                 Anterior
                             </html:link>
                         </logic:notEqual>
-                                
+
                         <logic:iterate name="busquedaActividadForm" property="botonesPaginas" id="pag">
                             <logic:equal name="pag" value="${busquedaActividadForm.pagina}">
                                 <a class="ui-button ui-state-default ui-state-disabled">

@@ -80,14 +80,20 @@ public class Buscar extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
+        String rol = "";
+        if (user != null) {
+            rol = user.getRol();
+        }
 
         String usuario = null;
-        if (user != null) {
+        if (user == null || rol.equals("profesor") || rol.equals("empleado")
+                || rol.equals("estudiante") || rol.equals("obrero")) {
+            ba.buscar(true, ip, usuario);
+        } else {
             usuario = user.getUsername();
             ba.buscar(false, ip, usuario);
-        } else {
-            ba.buscar(true, ip, usuario);
         }
+
         String[] atributo = {"activo"};
         Object[] valor = {true};
         ArrayList<TipoActividad> ta = Clases.TipoActividad.listarCondicion(atributo, valor);
