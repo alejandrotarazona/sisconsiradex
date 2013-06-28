@@ -77,10 +77,6 @@
         <put name="body" value="/tipoActividad/formAgregarTipoActividad.jsp" />
     </definition>
     
-    <definition name="agregarCampos" extends="plantilla">
-        <put name="body" value="/tipoActividad/formAgregarCampos.jsp" />
-    </definition>
-    
     <definition name="modificarTipoActividad" extends="plantilla">
         <put name="body" value="/tipoActividad/formModificarTipoActividad.jsp" />
     </definition>

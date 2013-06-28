@@ -74,6 +74,9 @@ public class Modificar extends DispatchAction {
 
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         String rol = u.getRol();
         String rolDex = u.getRolDex();

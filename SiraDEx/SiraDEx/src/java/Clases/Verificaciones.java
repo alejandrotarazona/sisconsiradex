@@ -45,7 +45,7 @@ public class Verificaciones {
     public static String verificarVacio(String nombreCampo, String valorCampo) {
 
         if (esVacio(valorCampo)) {
-            return "Error: El campo '" + nombreCampo + "' es obligatorio.";
+            return "Error: El campo " + nombreCampo + " es obligatorio.";
         }
         return null;
     }
@@ -81,8 +81,8 @@ public class Verificaciones {
      * parámetro sea más largo al parámetro longitud, no cumpla con el patrón
      * dado o sea vacío, null en caso contrario.
      */
-    public static String verificarLongitudVacio(String nombreCampo, String valorCampo, int longitud,
-            boolean obliga) {
+    public static String verificarLongitudVacio(String nombreCampo, String valorCampo,
+            int longitud, boolean obliga) {
 
         if (obliga) {
             String respVerif = verificarVacio(nombreCampo, valorCampo);
@@ -109,7 +109,6 @@ public class Verificaciones {
      */
     public static boolean verificarCamposFijos(TipoActividad ta) {
 
-
         String respVerif = verificarLongitudVacio("'Nombre del Tipo de Actividad'", ta.getNombreTipo(),
                 140, true);
         if (respVerif != null) {
@@ -122,7 +121,6 @@ public class Verificaciones {
             ta.setMensaje(respVerif);
             return false;
         }
-
 
         respVerif = verificarVacio("'Tipo'", ta.getTipoPR());
         if (respVerif != null) {
@@ -148,30 +146,9 @@ public class Verificaciones {
             return false;
         }
 
-
         String patronNum = "^[ ]*[0-9]+[ ]*$";
 
-        String nro = String.valueOf(ta.getNroProductos());
-        respVerif = verificarPatron("'Número de productos'", nro, patronNum,
-                "debe contener sólo números.");
-        if (respVerif != null) {
-            ta.setMensaje(respVerif);
-            return false;
-        }
-
-        if (nro.equals("0")) {
-            ta.setMensaje("Error: El campo 'Número de archivos del producto' debe contener al "
-                    + "menos 1 como valor.");
-            return false;
-        }
-
-        respVerif = verificarLongitudVacio("'Número de productos'", nro, 1, true);
-        if (respVerif != null) {
-            ta.setMensaje(respVerif);
-            return false;
-        }
-
-        nro = String.valueOf(ta.getNroCampos());
+        String nro = String.valueOf(ta.getNroCampos());
         respVerif = verificarPatron("'Número de campos'", nro, patronNum,
                 "debe contener sólo números.");
         if (respVerif != null) {
@@ -214,7 +191,8 @@ public class Verificaciones {
             }
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
-            String respVerif = verificarLongitudVacio(nroCampo, nombre, 100, true);
+            String respVerif = verificarLongitudVacio("'Nombre' de la fila "+nroCampo, 
+                    nombre, 100, true);
             if (respVerif != null) {
                 ta.setMensaje(respVerif);
                 return false;
@@ -241,14 +219,21 @@ public class Verificaciones {
                 }
 
                 if (longitud.equals("0")) {
-                    ta.setMensaje("Error: El campo número " + i + " debe contener "
-                            + "al menos 1 como valor para su Longitud.");
+                    ta.setMensaje("Error: El campo Longitud/Límite de la fila " 
+                            + i + " debe contener al menos 1 como valor.");
                     return false;
                 }
             }
 
             /*verifica que si el tipo es catálogo, el valor de catalogo no sea vacío*/
             if (tipo.equals("catalogo") && campo.getCatalogo().equals("")) {
+                ta.setMensaje("Error: Debe seleccionar un catálogo para el "
+                        + "campo número " + i + ".");
+                return false;
+            }
+
+            /*verifica que si el tipo es participante, el valor de catalogo no sea vacío*/
+            if (tipo.equals("participante") && campo.getCatalogoPart().equals("")) {
                 ta.setMensaje("Error: Debe seleccionar un catálogo para el "
                         + "campo número " + i + ".");
                 return false;
@@ -359,7 +344,7 @@ public class Verificaciones {
 
 
             /*verifica que el archivo sea un PDF y que su tamaño sea menor de 2MB*/
-            if (tipo.equals("producto") || tipo.equals("archivo")) {
+            if (tipo.equals("archivo")) {
                 if (cv.getFile().getFileSize() > 2097152) {
                     act.setMensaje("Error: El tamaño del archivo del campo "
                             + nombre + " debe ser menor de 2 MB.");
@@ -479,11 +464,11 @@ public class Verificaciones {
             String valor = ccv.getValor();
             String tipo = ccv.getCampo().getTipo();
             String nombre = "'" + ccv.getCampo().getNombre() + "'";
-            
-            if (tipo.equals("usbid") && ec.usuarioExistente(valor)){
-               ec.setMensaje("Error: Ya existe un elemento con ese USB-ID "
-                       + "en el Catálogo.");
-                return false; 
+
+            if (tipo.equals("usbid") && ec.usuarioExistente(valor)) {
+                ec.setMensaje("Error: Ya existe un elemento con ese USB-ID "
+                        + "en el Catálogo.");
+                return false;
             }
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/

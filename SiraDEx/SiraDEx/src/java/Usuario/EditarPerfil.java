@@ -64,6 +64,9 @@ public class EditarPerfil extends DispatchAction {
         Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         if (u.modificar(userNM, ip, usuario)) {
             Clases.Root.deleteSessions(request, "");

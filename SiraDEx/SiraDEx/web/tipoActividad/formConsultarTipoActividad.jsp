@@ -96,13 +96,11 @@
                         <bean:write name="campos" property="tipo"/>
                     </td>
                     <td align="center">
-                        <logic:notEqual name="campos" property="tipo" value="producto">
-                            <logic:notEqual name="campos" property="tipo" value="archivo">
-                                <logic:notEqual name="campos" property="tipo" value="checkbox">
-                                    <bean:write name="campos"  property="longitud"/>
-                                </logic:notEqual>
+                        <logic:notEqual name="campos" property="tipo" value="archivo">
+                            <logic:notEqual name="campos" property="tipo" value="checkbox">
+                                <bean:write name="campos"  property="longitud"/>
                             </logic:notEqual>
-                        </logic:notEqual>
+                        </logic:notEqual>  
                     </td>
                     <td align="center">
                         <html:checkbox name="campos" property="obligatorio" 

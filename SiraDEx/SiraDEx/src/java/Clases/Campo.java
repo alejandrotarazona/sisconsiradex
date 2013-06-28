@@ -75,17 +75,8 @@ public class Campo implements Serializable {
         "catalogo"
     };
 
-    public Campo(String nombre, String tipo, boolean obligatorio) {
-        this.nombre = nombre;
+    public Campo(String tipo) {
         this.tipo = tipo;
-        this.obligatorio = obligatorio;
-    }
-
-    public Campo(String nombre, String tipo, int longitud, boolean obligatorio) {
-        this.nombre = nombre;
-        this.tipo = tipo;
-        this.longitud = longitud;
-        this.obligatorio = obligatorio;
     }
 
     public Campo() {

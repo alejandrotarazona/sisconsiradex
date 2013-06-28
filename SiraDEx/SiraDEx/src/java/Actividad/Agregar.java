@@ -44,7 +44,7 @@ public class Agregar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
@@ -84,7 +84,7 @@ public class Agregar extends DispatchAction {
     public ActionForward save(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
@@ -123,7 +123,7 @@ public class Agregar extends DispatchAction {
     public ActionForward save2(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
@@ -153,6 +153,9 @@ public class Agregar extends DispatchAction {
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         if (act.agregar(ip, usuario)) {
 

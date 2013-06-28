@@ -63,18 +63,27 @@
             <br>
         </logic:present>
         <br>
-        <font size=2>Todos los campos son obligatorios.</font><br>
+        <font size=2>
+            Los campos con el asterisco <span style="color:red">*</span> 
+            son obligatorios.
+        </font><br>
         <html:form method="POST" action ="/ModificarTipoActividad?method=update">
             <table>
                 <tbody>
                     <tr>
-                    <td width="15%"><b>Nombre del Tipo de Actividad</b></td>
-                    <td><html:text name="tipoActividadForm" property="nombreTipo" size="78">
+                    <td width="15%">
+                        <b>Nombre del Tipo de Actividad</b><span style="color:red">*</span>
+                    </td>
+                    <td>
+                        <html:text name="tipoActividadForm" property="nombreTipo" size="78">
                             <bean:write name="tipoActividadForm" property="nombreTipo"/>
-                        </html:text> </td>
+                        </html:text> 
+                    </td>
                     </tr>
                     <tr>
-                    <td><b>Descripción</b></td>
+                    <td>
+                        <b>Descripción</b><span style="color:red">*</span>
+                    </td>
                     <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                                    property="descripcion">
                             <bean:write name="tipoActividadForm" property="descripcion"/>
@@ -82,13 +91,17 @@
                     </td>
                     </tr>
                     <tr>
-                    <td><b>Tipo de Producto</b></td>
+                    <td>
+                        <b>Tipo de Producto</b><span style="color:red">*</span>
+                    </td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
                     </td>
                     </tr>
                     <tr>
-                    <td><b>Programa</b></td>
+                    <td>
+                        <b>Programa</b><span style="color:red">*</span>
+                    </td>
                     <td>
                         <html:select property="programa">   
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
@@ -96,7 +109,9 @@
                     </td>
                     </tr>
                     <tr>
-                    <td><b>Dependencia a validar</b></td>
+                    <td>
+                        <b>Dependencia a validar</b><span style="color:red">*</span>
+                    </td>
                     <td> 
                         <logic:equal name="user" property="rol" value="WM">
                             <html:select property="validador">
@@ -111,7 +126,9 @@
                     </td>
                     </tr>
                     <tr>
-                    <td><b>Realizado por</b></td>
+                    <td>
+                        <b>Realizado por</b><span style="color:red">*</span>
+                    </td>
                     <td>
                         <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
                         <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
@@ -126,9 +143,9 @@
             <table class="cebra">
                 <tbody>
                     <tr>
-                    <th><b>Nombre</b></th>
+                    <th><b>Nombre</b><span style="color:red">*</span></th>
                     <th><b>Tipo</b></th>
-                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Longitud/Límite</b><span style="color:red">*</span></th>
                     <th><b>Obligatorio</b></th>
                     <th><b>Catálogo</b></th>
                     <th>Eliminar</th>
@@ -144,62 +161,68 @@
                         %>
 
                         <tr>      
-                        <td align="center"><span style="color: gray;font-size:10px">${index+1}</span>
+                        <td align="center">
+                        <span style="color: gray;font-size:10px">${index+1}</span>
                         <html:text name="campos" property="nombre" indexed="true">
                             <bean:write name="campos" property="nombre"/>
-                        </html:text> </td>
-                        <td align="center">
-                            <logic:notEqual name="campos" property="tipo" value="producto">
-                                <logic:notEqual name="campos" property="tipo" value="archivo">
-                                    <html:select name="campos"  property="tipo" indexed="true" 
-                                    styleId="<%=s%>" styleClass="selector">
-                                        <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                                                value="valor"/>
-                                    </html:select>   
-                                </logic:notEqual>
-                            </logic:notEqual>
+                        </html:text> 
+                        </td>
 
-                            <logic:equal name="campos" property="tipo" value="producto">
-                                <html:select name="campos"  property="tipo" disabled="true" 
-                                             indexed="true" styleClass="selector">
-                                    <html:option value="producto">archivo</html:option>
-                                </html:select>
-                            </logic:equal>
+                        <td align="center">
+                            <logic:notEqual name="campos" property="tipo" value="archivo">
+                                <html:select name="campos"  property="tipo" indexed="true" 
+                                styleId="<%=s%>" styleClass="selector">
+                                    <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                                            value="valor"/>
+                                </html:select>   
+                            </logic:notEqual>
 
                             <logic:equal name="campos" property="tipo" value="archivo">
                                 <html:select name="campos"  property="tipo" disabled="true" 
                                              indexed="true" styleClass="selector">
-                                    <html:option value="producto">archivo</html:option>
+                                    <html:option value="archivo">archivo</html:option>
                                 </html:select>
                             </logic:equal>
-
                         </td>
-                        <td align="center">
 
-                            <div id="<%=l%>" style="visibility: visible">
-                                <logic:notEqual name="campos" property="tipo" value="producto">
+                        <td align="center">
+                            <logic:equal name="campos" property="tipo" value="fecha">
+                                <div id="<%=l%>" style="visibility: hidden">
                                     <html:text name="campos" property="longitud" indexed="true" 
                                                title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
                                                size="2" maxlength="4">
                                         <bean:write name="campos" property="longitud"/>
                                     </html:text>    
+                                </div>
+                            </logic:equal>
+                            <logic:equal name="campos" property="tipo" value="archivo">
+                                <div id="<%=l%>" style="visibility: hidden">
+                                    <html:text name="campos" property="longitud" indexed="true" 
+                                               title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
+                                               size="2" maxlength="4">
+                                        <bean:write name="campos" property="longitud"/>
+                                    </html:text>    
+                                </div>
+                            </logic:equal>
+                            <logic:notEqual name="campos" property="tipo" value="fecha">
+                                <logic:notEqual name="campos" property="tipo" value="archivo">
+                                    <div id="<%=l%>" style="visibility: visible">
+                                        <html:text name="campos" property="longitud" indexed="true" 
+                                                   title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
+                                                   size="2" maxlength="4">
+                                            <bean:write name="campos" property="longitud"/>
+                                        </html:text>    
+                                    </div>
                                 </logic:notEqual>
-                            </div>
-
+                            </logic:notEqual>
                         </td>
 
                         <td align="center">
-                            <logic:notEqual name="campos" property="tipo" value="producto">
-                                <html:checkbox name="campos" property="obligatorio" indexed="true" />
-                                <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>        
-                            </logic:notEqual>
-
-                            <logic:equal name="campos" property="tipo" value="producto">
-                                <html:checkbox name="campos" property="obligatorio" disabled="true" indexed="true"/>
-                            </logic:equal>
+                            <html:checkbox name="campos" property="obligatorio" indexed="true" />
+                            <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>        
                         </td>
-                        <td align="center">     
 
+                        <td align="center">     
                             <logic:equal name="campos" property="tipo" value="catalogo">
                                 <div class="<%=m%>" style="visibility: visible">
                                     <html:select name="campos" property="catalogo" indexed="true">                          
@@ -232,6 +255,7 @@
                                     </html:select>
                                 </div>
                             </logic:equal>
+
                             <logic:notEqual name="campos" property="tipo" value="participante">
                                 <div class="<%=m2%>" style="visibility: hidden">
                                     <html:select name="campos" property="catalogoPart" indexed="true">                          
@@ -243,6 +267,7 @@
                                 </div>
                             </logic:notEqual>
                         </td>
+
                         <td td align="center">
                             <html:checkbox name="campos" property="eliminado" indexed="true"
                                            onclick="if (this.checked) {
@@ -255,12 +280,12 @@
                                          indexed="true"/>
                         </td>
                         </tr>
-
                     </logic:iterate>
                 </tbody>
             </table>
             <br>
-            <b>Nuevos campos</b> <html:text name="tipoActividadForm" 
+            <b>Nuevos campos</b> 
+            <html:text name="tipoActividadForm" 
                        property="nroCampos" value="0" size="1" maxlength="2"
                        onkeyup="if(this.value > 0 
                        && document.getElementById('submit').value!='Eliminar') {

@@ -76,6 +76,11 @@ public class Buscar extends DispatchAction {
 
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+
+
         String usuario = null;
         if (user != null) {
             usuario = user.getUsername();

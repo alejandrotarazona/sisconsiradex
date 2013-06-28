@@ -73,6 +73,9 @@ public class Modificar extends DispatchAction {
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
 

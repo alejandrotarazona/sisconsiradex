@@ -41,6 +41,10 @@ public class Validar extends org.apache.struts.action.Action {
         Actividad act = (Actividad) form;
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+
 
         act.validar(true, ip, usuario);
 
