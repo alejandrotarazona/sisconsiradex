@@ -382,8 +382,9 @@ public class BusquedaActividad extends Root {
         pagina = 1;
         if (totalPaginas > 0) {
             totalActividades = (totalPaginas - 1) * mostrarPorPagina + libro.get(totalPaginas - 1).size();
+        } else {
+            totalActividades = 0;
         }
-        totalActividades = 0;
     }
 
     /**

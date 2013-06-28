@@ -49,6 +49,9 @@ public class EliminarDefinitivo extends org.apache.struts.action.Action {
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         t.eliminarDefinitivo(ip, usuario);
         request.getSession().setAttribute("mensajeRest", t.getMensaje());

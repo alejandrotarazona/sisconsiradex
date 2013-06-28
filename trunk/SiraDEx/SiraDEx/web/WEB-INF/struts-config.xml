@@ -88,10 +88,9 @@
         
         <action path="/RegistrarTipoActividad" type="TipoActividad.Agregar" 
                 scope="session" parameter="method" name="tipoActividadForm">
-            <forward name="success" path="agregarCampos"/>
-            <forward name="successfull" path="GestionTiposActividad.do?method=listActive" 
-                     redirect="true"/>           
             <forward name="page" path="agregarTipoActividad"/>
+            <forward name="success" path="GestionTiposActividad.do?method=listActive" 
+                     redirect="true"/>           
         </action>
         
         <action path="/EliminarTipoActividad" type="TipoActividad.Eliminar"

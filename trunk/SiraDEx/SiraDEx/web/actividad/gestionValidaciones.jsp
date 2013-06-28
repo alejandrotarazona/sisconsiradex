@@ -37,7 +37,7 @@
                         /* Detalles */ { "bSortable": false },
                         /* Creación */ null,
                         /* Modificación */ null,
-                        /* Producto */ null,
+                        /* Producto y Archivos */ null,
                         /* Acciones */ 
                         { "bSortable": false }
                        
@@ -137,7 +137,7 @@
                                 <html:form method="POST" action="/MostrarPDF" >
                                     <html:hidden name="act" property="idActividad"/>
                                     <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                    <html:submit styleId="botonProducto"
+                                    <html:submit styleId="botonPDF"
                                                  value=" "
                                                  title="${archivo.tipo}"/>
                                 </html:form>

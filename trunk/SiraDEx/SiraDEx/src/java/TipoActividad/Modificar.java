@@ -92,18 +92,22 @@ public class Modificar extends DispatchAction {
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
 
         ta.setMensaje(null);
 
         int elimino = ta.eliminarCamposMarcados();
-        if (elimino > 0 || elimino < 0) {
+        if (elimino > 0 || elimino
+                < 0) {
             return mapping.findForward(PAGE);
         }
-
         int numeroCampos = ta.getNroCampos();
-        if (numeroCampos > 0) {
+        if (numeroCampos
+                > 0) {
             ta.agregarCamposNuevos();
             return mapping.findForward(PAGE);
         }

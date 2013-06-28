@@ -426,7 +426,7 @@ public class Entity {
     }
 
     /**
-     * Inserta el valor de un campo tipo archivo o producto en la base de datos
+     * Inserta el valor de un campo tipo archivo en la base de datos
      *
      * @param idCampo id del campo
      * @param idActividad id de la actividad a la que pertenece el valor

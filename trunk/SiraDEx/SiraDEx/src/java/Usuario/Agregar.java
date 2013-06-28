@@ -78,6 +78,9 @@ public class Agregar extends DispatchAction {
 
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         if (u.agregar(ip, usuario)) {
 

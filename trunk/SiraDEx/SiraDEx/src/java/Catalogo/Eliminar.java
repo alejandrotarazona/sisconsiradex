@@ -48,6 +48,9 @@ public class Eliminar extends org.apache.struts.action.Action {
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         cat.eliminar(ip, usuario);
         request.getSession().setAttribute("mensajeCat", cat.getMensaje());

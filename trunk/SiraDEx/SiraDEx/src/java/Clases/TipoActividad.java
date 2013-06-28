@@ -29,8 +29,7 @@ public class TipoActividad extends Root {
     private String[] permisos;
     private String programa;
     private String validador;
-    private int nroProductos = 1;
-    private ArrayList<Campo> campos;
+    private ArrayList<Campo> campos = new ArrayList<>();
     private boolean activo;
     private boolean modificado = false;
     private int actividades;
@@ -82,11 +81,6 @@ public class TipoActividad extends Root {
 
     public void setCampos(ArrayList<Campo> campos) {
         this.campos = campos;
-    }
-
-    public Campo getCampo(int indice) {
-
-        return campos.get(indice);
     }
 
     public String getNombreTipo() {
@@ -151,14 +145,6 @@ public class TipoActividad extends Root {
 
     public void setValidador(String validador) {
         this.validador = validador;
-    }
-
-    public int getNroProductos() {
-        return nroProductos;
-    }
-
-    public void setNroProductos(int nroProductos) {
-        this.nroProductos = nroProductos;
     }
 
     public boolean isModificado() {
@@ -241,24 +227,15 @@ public class TipoActividad extends Root {
         }
     }
 
-    /* metodo para instancias los campos de un tipo de actividad un ves se tiene
-     el numero de campos y productos */
-    public void setCampos() {
-        ArrayList<Campo> cs = new ArrayList<>();
-        for (int i = 0; i < nroCampos; i++) {
-            Campo c = new Campo();
-            c.setIdTipoActividad(id);
-            cs.add(c);
-        }
+    /* metodo para instanciar los campos obligatorios al agregar un tipo de actividad */
+    public void setCamposObligatorios() {
 
-        for (int i = 0; i < nroProductos; i++) {
-            Campo c = new Campo();
-            c.setIdTipoActividad(id);
-            c.setObligatorio(true);
-            c.setTipo("producto");
-            cs.add(c);
-        }
-        campos = cs;
+        Campo c1 = new Campo("participante");
+        campos.add(c1);
+        Campo c2 = new Campo("fecha");
+        campos.add(c2);
+        Campo c3 = new Campo("archivo");
+        campos.add(c3);
     }
 
     @Override
@@ -448,7 +425,7 @@ public class TipoActividad extends Root {
 
     private boolean verificarEliminacionCampos() {
         boolean participante = false;
-        boolean producto = false;
+        boolean archivo = false;
 
         Iterator it = campos.iterator();
         while (it.hasNext()) {
@@ -458,14 +435,14 @@ public class TipoActividad extends Root {
                 if (tipo.equals("participante")) {
                     participante = true;
                 }
-                if (tipo.equals("producto")) {
-                    producto = true;
+                if (tipo.equals("archivo")) {
+                    archivo = true;
                 }
             }
         }
-        if (!participante || !producto) {
+        if (!participante || !archivo) {
             mensaje = "Error: El Tipo de Actividad debe conservar al menos un "
-                    + "campo tipo participante y un campo tipo producto";
+                    + "campo tipo participante y un campo tipo archivo";
             return false;
         }
         return true;

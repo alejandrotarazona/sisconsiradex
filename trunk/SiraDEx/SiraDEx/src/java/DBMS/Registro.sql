@@ -47,7 +47,7 @@ VALUES (1,'Tipo de beneficiaros', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (1,'Costo', 'numero', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Proyecto del BPDEX','producto',0,true);
+VALUES (1,'Proyecto del BPDEX','archivo',0,true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (2,'Fecha de inscripción', 'fecha', 20, true);
@@ -60,18 +60,18 @@ VALUES (2,'Nombre del alumno', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (2,'Código', 'texto', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Informe de Servicio Comunitario del estudiante','producto',0,true);
+VALUES (2,'Informe de Servicio Comunitario del estudiante','archivo',0,true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Acta de evaluación','producto',0,true);
+VALUES (2,'Acta de evaluación','archivo',0,true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (3,'Fecha de inscripción', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (3,'Fecha de culminación', 'fecha', 20, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Informe de pasantía corta','producto',0, true);
+VALUES (3,'Informe de pasantía corta','archivo',0, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Acta de evaluación','producto',0, true);
+VALUES (3,'Acta de evaluación','archivo',0, true);
 
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (4,'Fecha de inicio', 'fecha', 20, true);
@@ -82,7 +82,7 @@ VALUES (4,'Comunidad', 'texto', 40, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
 VALUES (4,'Nombre del voluntario', 'texto', 30, true);
 INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Informe de participación','producto',0, true);
+VALUES (4,'Informe de participación','archivo',0, true);
 
 --Valor
 

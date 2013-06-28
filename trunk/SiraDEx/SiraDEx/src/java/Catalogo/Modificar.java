@@ -75,6 +75,9 @@ public class Modificar extends DispatchAction {
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
 
         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
         cat.setMensaje(null);

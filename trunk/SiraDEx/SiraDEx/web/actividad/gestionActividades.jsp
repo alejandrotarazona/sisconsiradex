@@ -39,7 +39,7 @@
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        /* Producto */ null,
+                        /* Producto y Archivos */ null,
                         /* Acciones */
                         { "bSortable": false }
                        
@@ -73,17 +73,9 @@
             <br>
         </logic:present>
 
-        <logic:notPresent name="TipoAct">
-            <html:link action="/RegistrarActividad?method=page"> 
-                Agregar Actividad
-            </html:link><br/>
-        </logic:notPresent>
-        <logic:present name="TipoAct">
-            <html:form action ="/RegistrarActividad?method=save">
-                <html:hidden name="TipoAct" property="idTipoActividad" />
-                <html:submit>Agregar actividad</html:submit>
-            </html:form>
-        </logic:present>
+        <html:link action="/RegistrarActividad?method=page"> 
+            Agregar Actividad
+        </html:link><br/>
 
         <logic:present name="acts"> 
             <% String chd = (String) request.getAttribute("graficaCantidad");
@@ -157,7 +149,7 @@
                     <logic:iterate name="acts" id="act">
                         <tr><td>
                             <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                            out.print(a.participantesToString());%>
+                                out.print(a.participantesToString());%>
                         </td>
                         <td>
                             <bean:write name="act" property="nombreTipoActividad"/>
@@ -223,7 +215,7 @@
                                 <html:form method="POST" action="/MostrarPDF" >
                                     <html:hidden name="act" property="idActividad"/>
                                     <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                    <html:submit styleId="botonProducto"
+                                    <html:submit styleId="botonPDF"
                                                  value=" "
                                                  title="${archivo.tipo}"/>
                                 </html:form>

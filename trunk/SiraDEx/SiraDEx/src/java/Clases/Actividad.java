@@ -281,7 +281,6 @@ public class Actividad extends Root {
 
                 switch (tipo) {
                     case "textol":
-                    case "producto":
                     case "archivo":
                         continue;
                     case "checkbox":
@@ -343,8 +342,7 @@ public class Actividad extends Root {
                     String tipoCampo = cv.getCampo().getTipo();
                     String nombre = cv.getValor();
                     if (!nombre.equals("")
-                            && ((tipoCampo.equals("archivo")
-                            || tipoCampo.equals("producto")))) {
+                            && tipoCampo.equals("archivo")) {
                         Archivo arch = new Archivo(cv.getFile(), nombre,
                                 cv.getCampo().getNombre());
                         archivos.add(arch);
@@ -626,7 +624,7 @@ public class Actividad extends Root {
 
     //funcion auxiliar para solucionar el problema de que el tag html file no reconoce
     //si el property file tiene un archivo y esto dificultaba la implementacion 
-    //de las verificaciones para los campos tipo archivo o producto 
+    //de las verificaciones para los campos tipo archivo
     public void auxModificarArchivo(ArrayList<CampoValor> camposNM) {
         int nroEliminados = 0;
         for (int i = 0; i < camposValores.size(); i++) {
@@ -638,7 +636,7 @@ public class Actividad extends Root {
                 continue;
             }
             String tipo = c.getCampo().getTipo();
-            if (tipo.equals("archivo") || tipo.equals("producto")) {
+            if (tipo.equals("archivo")) {
                 if (c.getValor().isEmpty() && !campoNM.getValor().isEmpty()) {
                     c.setCampo(campoNM.getCampo());
                     c.setFile(campoNM.getFile());
@@ -813,8 +811,7 @@ public class Actividad extends Root {
                         String tipoCampo = cv.getCampo().getTipo();
                         String nombre = cv.getValor();
                         if (!nombre.equals("")
-                                && ((tipoCampo.equals("archivo")
-                                || tipoCampo.equals("producto")))) {
+                                && tipoCampo.equals("archivo")) {
                             Archivo arch = new Archivo(cv.getFile(), nombre,
                                     cv.getCampo().getNombre());
                             archs.add(arch);

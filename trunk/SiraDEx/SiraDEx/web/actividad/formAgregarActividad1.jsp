@@ -18,9 +18,9 @@
 
     <body>
         <h1 class="title">Registro de Actividad</h1>
-                
-        <font size=2>Seleccione el Tipo de Actividad que desea agregar.</font>
+
         <logic:present name="tipos">
+            <font size=2>Seleccione el Tipo de Actividad que desea agregar.</font>
             <table>
                 <logic:iterate name="tipos" id="ta">
                     <tr>
@@ -33,7 +33,12 @@
                 </tr>
             </logic:iterate>
         </table>
-
-    </logic:present>       
+    </logic:present> 
+    <logic:notPresent name="tipos">
+        <br><br>
+        <div align="center" style="font-size:1.2em">
+            Por ahora no hay ningún Tipo de Actividad para los usuarios de tipo ${user.rol}
+        </div>
+    </logic:notPresent>
 </body>
 </html>
