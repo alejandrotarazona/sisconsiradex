@@ -44,9 +44,10 @@ public class Agregar extends DispatchAction {
         if (user == null) {
             return mapping.findForward(PAGE);
         }
-        Clases.Root.deleteSessions(request, "");
-        Usuario u = new Usuario();
+
+        Usuario u = (Usuario) form;
         u.setMensaje(null);
+        request.getSession().setAttribute("userAux", u);
         ArrayList<ElementoCatalogo> catalogo;
         catalogo = Clases.ElementoCatalogo.listarElementos("Dependencias", 1);
         request.getSession().setAttribute("dependencias", catalogo);
@@ -62,6 +63,7 @@ public class Agregar extends DispatchAction {
         if (user == null) {
             return mapping.findForward(PAGE);
         }
+
         Usuario u = (Usuario) form;
 
         String rol = u.getRol();
@@ -70,10 +72,6 @@ public class Agregar extends DispatchAction {
         if (rol.equals("dex") && !rolDex.equals("")) {
             rol = rolDex;
             u.setRol(rol);
-        }
-        if (rol.equals("")) {
-            u.setMensaje("Error: Debe elegir una Dependencia o Unidad");
-            return mapping.findForward(PAGE);
         }
 
         String usuario = user.getUsername();
@@ -88,7 +86,7 @@ public class Agregar extends DispatchAction {
             request.getSession().setAttribute("mensajeUsuario", u.getMensaje());
             return mapping.findForward(SUCCESS);
         }
-
+        request.getSession().setAttribute("userAux", u);
         return mapping.findForward(PAGE);
 
     }

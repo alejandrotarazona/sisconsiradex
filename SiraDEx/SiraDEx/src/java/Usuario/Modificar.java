@@ -85,10 +85,6 @@ public class Modificar extends DispatchAction {
             rol = rolDex;
             u.setRol(rol);
         }
-        if (rol.equals("dex")) {
-            u.setMensaje("Error: Debe elegir una Dependencia o Unidad.");
-            return mapping.findForward(PAGE);
-        }
 
         Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
         System.out.println("El viejo usuario es: " + usuarioNM.toString());

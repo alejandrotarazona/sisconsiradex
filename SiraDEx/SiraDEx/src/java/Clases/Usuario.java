@@ -39,23 +39,6 @@ public class Usuario extends Root {
         "rol" //7
     };
 
-    public Usuario() {
-    }
-
-    public Usuario(String nombres, String apellidos, String username,
-            String password, String mensaje) {
-        this.nombres = nombres;
-        this.apellidos = apellidos;
-        this.username = username;
-        this.password = password;
-        this.mensaje = mensaje;
-    }
-
-    public Usuario(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
     public String getApellidos() {
         return apellidos;
     }
@@ -318,6 +301,9 @@ public class Usuario extends Root {
     }
 
     public boolean agregar(String ip, String user) {
+        if (!Verificaciones.verificar(this)) {
+            return false;
+        }
         Entity e = new Entity(0);//USUARIO
         Object[] usuarios = {username, password, rol, tipo, nombres, apellidos, telefono, email};
         if (esUsuario()) {
@@ -354,7 +340,9 @@ public class Usuario extends Root {
 
     //en el parámetro userNM recibe un Usuario no modificado
     public boolean modificar(Usuario userNM, String ip, String user) {
-
+        if (!Verificaciones.verificar(this)) {
+            return false;
+        }
         Entity e = new Entity(0);//USUARIO
 
         String[] condColumnas = {
@@ -492,14 +480,6 @@ public class Usuario extends Root {
     }
 
     public static void main(String[] args) {
-        /*
-         * probando probando 1 2 3 probando alo alo...
-         */
-        Usuario u = new Usuario("j", "p");
-        if (u.eliminar("prueba", "de .java")) {
-            System.out.println("usuario eliminado");
-        } else {
-            System.out.println("usuario no eliminado");
-        }
+
     }
 }

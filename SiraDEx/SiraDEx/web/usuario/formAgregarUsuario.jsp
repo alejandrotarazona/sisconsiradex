@@ -29,42 +29,46 @@
         <title>SiraDEx | Registrar Usuario</title>
     </head>
     <body>
-        <h1 class="title">Registrar Usuario</h1>
+        <h1 class="title">Registro de Usuario</h1>
 
         <logic:present name="usuarioForm" property="mensaje"><br>
             <div class ="error"><bean:write name="usuarioForm" property="mensaje"/></div>
             <br>
         </logic:present>
 
+        <font size=2>
+            Los campos con el asterisco <span style="color:red">*</span> 
+            son obligatorios.
+        </font><br>
         <html:form action="/RegistrarUsuario?method=save">
 
             <table>
                 <tbody>
                     <tr>
-                    <td width="15%" style="font-weight: bold">USB-ID</td>
-                    <td><html:text name="user" property="username" value=""/></td>
+                    <td width="16%" style="font-weight: bold">USB-ID  <span style="color:red">*</span></td>
+                    <td><html:text name="userAux" property="username" maxlength="20"/></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold">Contraseña</td>
-                    <td><html:text name="user" property="password" value=""/></td>
+                    <td style="font-weight: bold">Contraseña  <span style="color:red">*</span></td>
+                    <td><html:text name="userAux" property="password" maxlength="20"/></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold">Nombres</td>
-                    <td><html:text name="user" property="nombres" value=""/></td>
+                    <td style="font-weight: bold">Nombres  <span style="color:red">*</span></td>
+                    <td><html:text name="userAux" property="nombres" maxlength="50"/></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold">Apellidos</td>
-                    <td><html:text name="user" property="apellidos" value=""/></td>
+                    <td style="font-weight: bold">Apellidos  <span style="color:red">*</span></td>
+                    <td><html:text name="userAux" property="apellidos" maxlength="50"/></td>
                     </tr>
                     <tr>
                     <td style="font-weight: bold">Teléfono</td>
-                    <td><html:text name="user" property="telefono" value=""/></td>
+                    <td><html:text name="userAux" property="telefono" maxlength="15"/></td>
                     </tr>
                     <tr>
-                    <td style="font-weight: bold">Correo (distinto al institucional)</td>
-                    <td><html:text name="user" property="email" disabled="true" 
+                    <td><b>Correo</b><br>(distinto al @usb.ve)</td>
+                    <td><html:text name="userAux" property="email" 
                                styleClass="modificar" maxlength="50"
-                               onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
+                               onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
                                if(this.value != '' && !x.test(this.value)){
                                document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
                                document.getElementById('registrar').disabled=true;
@@ -77,7 +81,7 @@
                     <span style="color: red" id="error"></span>
                     </td>
                     </tr>
-                    <td><b>Rol</b></td>
+                    <td><b>Rol</b> <span style="color:red">*</span></td>
                     <td>
                         <html:select styleClass="selector"
                                      name="usuarioForm" property="rol" value="">
@@ -94,7 +98,7 @@
                     <tr>
                     <td>
                     <span align="left" class="ocultable" style="visibility: hidden">
-                        <b>Dependencia o Unidad</b>
+                        <b>Dependencia o Unidad</b> <span style="color:red">*</span>
                     </span></td>
                     <td>
                     <span align="left" class="ocultable" style="visibility: hidden">
@@ -109,8 +113,9 @@
                     </tr>
                 </tbody> 
             </table>  
-
-            <html:submit styleId="registrar">Registrar</html:submit>
+            <div align="center">
+                <html:submit styleId="registrar">Registrar</html:submit>
+            </div>
         </html:form>
     </body>
 </html>

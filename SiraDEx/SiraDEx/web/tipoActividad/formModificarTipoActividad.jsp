@@ -72,7 +72,7 @@
                 <tbody>
                     <tr>
                     <td width="15%">
-                        <b>Nombre del Tipo de Actividad</b><span style="color:red">*</span>
+                        <b>Nombre del Tipo de Actividad</b> <span style="color:red">*</span>
                     </td>
                     <td>
                         <html:text name="tipoActividadForm" property="nombreTipo" size="78">
@@ -82,7 +82,7 @@
                     </tr>
                     <tr>
                     <td>
-                        <b>Descripción</b><span style="color:red">*</span>
+                        <b>Descripción</b> <span style="color:red">*</span>
                     </td>
                     <td><html:textarea name="tipoActividadForm"  cols="80" rows="2"
                                    property="descripcion">
@@ -92,7 +92,7 @@
                     </tr>
                     <tr>
                     <td>
-                        <b>Tipo de Producto</b><span style="color:red">*</span>
+                        <b>Tipo de Producto</b> <span style="color:red">*</span>
                     </td>
                     <td><html:radio property="tipoPR" value="P">P</html:radio>
                         <html:radio property="tipoPR" value="R">R</html:radio>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                     <td>
-                        <b>Programa</b><span style="color:red">*</span>
+                        <b>Programa</b> <span style="color:red">*</span>
                     </td>
                     <td>
                         <html:select property="programa">   
@@ -110,7 +110,7 @@
                     </tr>
                     <tr>
                     <td>
-                        <b>Dependencia a validar</b><span style="color:red">*</span>
+                        <b>Dependencia a validar</b> <span style="color:red">*</span>
                     </td>
                     <td> 
                         <logic:equal name="user" property="rol" value="WM">
@@ -127,7 +127,7 @@
                     </tr>
                     <tr>
                     <td>
-                        <b>Realizado por</b><span style="color:red">*</span>
+                        <b>Realizado por</b> <span style="color:red">*</span>
                     </td>
                     <td>
                         <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
@@ -143,9 +143,9 @@
             <table class="cebra">
                 <tbody>
                     <tr>
-                    <th><b>Nombre</b><span style="color:red">*</span></th>
+                    <th><b>Nombre</b> <span style="color:red">*</span></th>
                     <th><b>Tipo</b></th>
-                    <th><b>Longitud/Límite</b><span style="color:red">*</span></th>
+                    <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
                     <th><b>Obligatorio</b></th>
                     <th><b>Catálogo</b></th>
                     <th>Eliminar</th>
