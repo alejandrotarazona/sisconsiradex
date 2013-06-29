@@ -39,7 +39,12 @@
             document.getElementById('boton').style.visibility= 'visible';">
             <html:image src="../Stylesheets/iconos/Edit_26x26.png"/>  
             <b>Editar perfil</b>
-        </a>   
+        </a> 
+        <br><br>
+        <font size=2>
+            Los campos con el asterisco <span style="color:red">*</span> 
+            son obligatorios.
+        </font><br>
         <html:form method="POST" 
                    action ="/VerPerfilUsuario?method=update">
 
@@ -52,7 +57,7 @@
                     </td>
                     </tr>
                     <tr>
-                    <td width="15%" style="font-weight: bold">Nombres</td>
+                    <td width="15%" style="font-weight: bold">Nombres <span style="color:red">*</span></td>
                     <td><html:text name="user" property="nombres" disabled="true"
                                styleClass="modificar" maxlength="50">
                             <bean:write name="user" property="nombres"/>
@@ -60,7 +65,7 @@
                     </tr>
 
                     <tr>
-                    <td style="font-weight: bold">Apellidos</td>
+                    <td style="font-weight: bold">Apellidos <span style="color:red">*</span></td>
                     <td><html:text name="user" property="apellidos" disabled="true"
                                styleClass="modificar" maxlength="50">
                             <bean:write name="user" property="apellidos"/>

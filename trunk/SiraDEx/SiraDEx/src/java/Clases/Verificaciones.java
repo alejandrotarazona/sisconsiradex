@@ -146,7 +146,7 @@ public class Verificaciones {
             return false;
         }
 
-        String patronNum = "^[ ]*[0-9]+[ ]*$";
+        String patronNum = "^[ ]*[0-9]*[ ]*$";
 
         String nro = String.valueOf(ta.getNroCampos());
         respVerif = verificarPatron("'Número de campos'", nro, patronNum,
@@ -191,7 +191,7 @@ public class Verificaciones {
             }
 
             /*verifica que el nombre sea válido (no vacío, a lo sumo 100 caracteres)*/
-            String respVerif = verificarLongitudVacio("'Nombre' de la fila "+nroCampo, 
+            String respVerif = verificarLongitudVacio("'Nombre' de la fila " + nroCampo,
                     nombre, 100, true);
             if (respVerif != null) {
                 ta.setMensaje(respVerif);
@@ -203,7 +203,7 @@ public class Verificaciones {
             if (tipo.equals("texto") || tipo.equals("textol")
                     || tipo.equals("numero") || tipo.equals("participante")) {
 
-                String patronNum = "^[ ]*[0-9]+[ ]*$";
+                String patronNum = "^[ ]*[0-9]*[ ]*$";
                 String longitud = String.valueOf(campo.getLongitud());
                 respVerif = verificarPatron(nroCampo, longitud, patronNum,
                         "debe contener sólo números.");
@@ -219,7 +219,7 @@ public class Verificaciones {
                 }
 
                 if (longitud.equals("0")) {
-                    ta.setMensaje("Error: El campo Longitud/Límite de la fila " 
+                    ta.setMensaje("Error: El campo Longitud/Límite de la fila "
                             + i + " debe contener al menos 1 como valor.");
                     return false;
                 }
@@ -336,7 +336,7 @@ public class Verificaciones {
             }
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/
-            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
+            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]*[ ]*$")) {
                 act.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
@@ -407,7 +407,7 @@ public class Verificaciones {
         }
 
         String nro = String.valueOf(c.getNroCampos());
-        respVerif = verificarPatron("'Número de campos'", nro, "^[ ]*[0-9]+[ ]*$",
+        respVerif = verificarPatron("'Número de campos'", nro, "^[ ]*[0-9]*[ ]*$",
                 "debe contener sólo números.");
         if (respVerif != null) {
             c.setMensaje(respVerif);
@@ -472,7 +472,7 @@ public class Verificaciones {
             }
 
             /*verifica si el campo es tipo numero que su valor sea numérico*/
-            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]+[ ]*$")) {
+            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]*[ ]*$")) {
                 ec.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;
@@ -484,6 +484,76 @@ public class Verificaciones {
             return false;
         }
         return true;
+    }
+
+    /**
+     *
+     * @param u
+     * @return
+     */
+    public static boolean verificar(Usuario u) {
+
+
+        String respVerif = verificarLongitudVacio("'USB-ID'", u.getUsername(),
+                20, true);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarLongitudVacio("'Contraseña'", u.getPassword(),
+                20, true);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarLongitudVacio("'Nombres'", u.getNombres(),
+                50, true);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarLongitudVacio("'Apellidos'", u.getApellidos(),
+                50, true);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarLongitudVacio("'Teléfono'", u.getTelefono(),
+                15, false);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarPatron("'Teléfono'", u.getTelefono(), "^[ ]*[0-9]*[ ]*$",
+                "debe contener sólo números.");
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        respVerif = verificarLongitudVacio("'Correo'", u.getEmail(),
+                50, false);
+        if (respVerif != null) {
+            u.setMensaje(respVerif);
+            return false;
+        }
+
+        if (u.getRol().equals("")) {
+            u.setMensaje("Error: Debe elegir un rol para el usuario.");
+            return false;
+        }
+
+        if (u.getRol().equals("dex")) {
+            u.setMensaje("Error: Debe elegir una Dependencia o Unidad.");
+            return false;
+        }
+        return true;
+
     }
 
     public static void main(String[] args) {
