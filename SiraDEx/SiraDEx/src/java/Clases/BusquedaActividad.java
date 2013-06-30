@@ -555,7 +555,7 @@ public class BusquedaActividad extends Root {
         cIni.setTime(sdf.parse(fechaIni));
         cFin.setTime(sdf.parse(fechaFin));
 
-        return cIni.before(cFin);
+        return cIni.before(cFin) || cIni.equals(cFin);
 
     }
 
@@ -575,7 +575,7 @@ public class BusquedaActividad extends Root {
         cIni.setTime(sdf.parse(fechaIni));
         cFin.setTime(sdf.parse(fechaFin));
 
-        return cIni.after(cFin);
+        return cIni.after(cFin) || cIni.equals(cFin);
 
     }
 }
