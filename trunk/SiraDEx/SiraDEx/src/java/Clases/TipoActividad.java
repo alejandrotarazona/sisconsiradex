@@ -643,7 +643,7 @@ public class TipoActividad extends Root {
      */
     public static ArrayList<TipoActividad> listarCondicion(String[] atrib, Object[] val) {
         Entity eListar = new Entity(1);//TIPO_ACTIVIDAD
-        ResultSet rs = eListar.seleccionar(atrib, val);
+        ResultSet rs = eListar.seleccionarEnOrden(atrib, val, "nombre_tipo_actividad");
         return listar(rs);
     }
 

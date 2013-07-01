@@ -164,7 +164,7 @@ public class Entity {
     }
 
     //Revisar
-    public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String valor) {
+    public ResultSet seleccionarEnOrden(String[] columnas, Object[] valores, String columna) {
         sql = "SELECT * "
                 + "FROM " + TABLA
                 + " WHERE " + columnas[0] + " = '" + escapeSQL(valores[0]) + "' ";
@@ -175,7 +175,7 @@ public class Entity {
             sql += " AND " + columnas[i] + " = '" + escapeSQL(valores[i]) + "' ";
         }
 
-        sql += "ORDER BY " + valor;
+        sql += "ORDER BY " + columna;
 
         System.out.println(sql);
         DataBase db = DataBase.getInstance();
