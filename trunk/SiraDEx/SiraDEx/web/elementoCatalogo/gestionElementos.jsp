@@ -47,10 +47,11 @@
         </logic:present>
 
         <html:link action="/RegistrarElemento?method=page"> 
-            Agregar un elemento al Catálogo
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+            <b>Agregar un elemento al Catálogo</b>
         </html:link><br>
 
-        <logic:notPresent name="elementos">
+        <logic:notPresent name="elementos"><br><br>
             <div align="center">No hay elementos que mostrar</div>
         </logic:notPresent>
         <logic:present name="elementos">

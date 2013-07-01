@@ -39,6 +39,7 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        request.getSession().setAttribute("mensajeTipo", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS);
@@ -47,6 +48,7 @@ public class Modificar extends DispatchAction {
 
         TipoActividad ta = (TipoActividad) form;
 
+        ta.setMensaje(null);
         int idTA = ta.getIdTipoActividad();
         ta.setTipoActividad();
         ArrayList campos = Clases.Campo.listar(idTA);
@@ -66,15 +68,8 @@ public class Modificar extends DispatchAction {
         ArrayList catalogosPart = Clases.Catalogo.listarCondicion("participa", true);
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
-        /*es necesario otro ArrayList con los valores no modificados para 
-         * guardarlo con setAttribute ya que el anterior se modifica en el form 
-         * del jsp debido a que ArrayList es un apuntador*/
-        ArrayList camposNM = Clases.Campo.listar(idTA);
-        TipoActividad taNM = new TipoActividad();
-        taNM.setId(idTA);
-        taNM.setTipoActividad();
-        taNM.setCampos(camposNM);
-        request.getSession().setAttribute("taNM", taNM);
+        String nombreNM = ta.getNombreTipo();
+        request.getSession().setAttribute("nombreNM", nombreNM);
 
         return mapping.findForward(PAGE);
     }
@@ -96,18 +91,16 @@ public class Modificar extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
-        TipoActividad taNM = (TipoActividad) request.getSession().getAttribute("taNM");
+        String nombreNM = (String) request.getSession().getAttribute("nombreNM");
 
         ta.setMensaje(null);
 
         int elimino = ta.eliminarCamposMarcados();
-        if (elimino > 0 || elimino
-                < 0) {
+        if (elimino > 0) {
             return mapping.findForward(PAGE);
         }
         int numeroCampos = ta.getNroCampos();
-        if (numeroCampos
-                > 0) {
+        if (numeroCampos > 0) {
             ta.agregarCamposNuevos();
             return mapping.findForward(PAGE);
         }
@@ -121,13 +114,11 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(SUCCESS);
         }
 
-        if (ta.modificar(taNM, ip, usuario)) {
+        if (ta.modificar(nombreNM, ip, usuario)) {
 
             request.getSession().setAttribute("mensajeTipo", ta.getMensaje());
             return mapping.findForward(SUCCESS);
         }
-
-        ta.setNombreTipo(taNM.getNombreTipo());
 
         return mapping.findForward(PAGE);
     }

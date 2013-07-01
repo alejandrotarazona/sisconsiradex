@@ -37,6 +37,7 @@ public class Listar extends org.apache.struts.action.Action {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        request.getSession().setAttribute("mensajeCat", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS);
@@ -44,6 +45,7 @@ public class Listar extends org.apache.struts.action.Action {
         
         Clases.Root.deleteSessions(request, "elementoCatalogoForm","mensajeElem");
         ElementoCatalogo e = (ElementoCatalogo) form;
+        e.setMensaje(null);
         int idCat = e.getIdCatalogo();
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
         ArrayList<ElementoCatalogo> elemsc = Clases.ElementoCatalogo.listarElementosId(idCat);

@@ -30,11 +30,11 @@
             <tr>
             <td align="left">
                 <html:link title="Elegir otro Tipo de Actividad" action="/RegistrarActividad?method=page"> 
-                    <html:image src="../Stylesheets/iconos/regresar.png"/>
+                    <html:img src="../Stylesheets/iconos/regresar.png"/>
                 </html:link>
             </td>
             <td align="right">
-                <html:image src="../Stylesheets/iconos/ayuda.png" 
+                <html:img src="../Stylesheets/iconos/ayuda.png" 
                             title="Los campos con el nombre en negrita sirven para ingresar a los participantes de la Actividad. El usuario que está registrando la Actividad debe ser ingresado en al menos una de las listas desplegables de dichos campos."/>   
             </td>
         </tr>

@@ -40,13 +40,11 @@ public class EditarPerfil extends DispatchAction {
         if (user == null) {
             return mapping.findForward(PAGE);
         }
-        Clases.Root.deleteSessions(request, "mensajePerfil");
+        
         Usuario u = (Usuario) form;
-
-        Usuario userNM = new Usuario();
-        userNM.setUsername(u.getUsername());
-        userNM.setUsuario();
-        request.getSession().setAttribute("userNM", userNM);
+        u.setMensaje(null);
+        
+        Clases.Root.deleteSessions(request, "mensajePerfil");
 
         return mapping.findForward(PAGE);
     }
@@ -61,14 +59,13 @@ public class EditarPerfil extends DispatchAction {
         }
         Usuario u = (Usuario) form;
 
-        Usuario userNM = (Usuario) request.getSession().getAttribute("userNM");
         String usuario = user.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
         if (ip == null) {
             ip = request.getRemoteAddr();
         }
 
-        if (u.modificar(userNM, ip, usuario)) {
+        if (u.modificar(ip, usuario)) {
             Clases.Root.deleteSessions(request, "");
             request.getSession().setAttribute("mensajePerfil", u.getMensaje());
             return mapping.findForward(SUCCESS);

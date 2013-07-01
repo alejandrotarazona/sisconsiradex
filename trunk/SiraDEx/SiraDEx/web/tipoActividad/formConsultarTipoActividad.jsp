@@ -26,7 +26,7 @@
     </head>
     <body>
         <html:link title="Ir a la Papelera" action="/GestionTiposActividad?method=listDisable"> 
-            <html:image src="../Stylesheets/iconos/regresar.png"/>
+            <html:img src="../Stylesheets/iconos/regresar.png"/>
         </html:link><br>
         <h1 class='title'>Consulta del Tipo de Actividad <bean:write 
                 name="tipoActividadForm" property="nombreTipo"/> </h1>

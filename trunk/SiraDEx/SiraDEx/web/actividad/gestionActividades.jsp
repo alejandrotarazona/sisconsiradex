@@ -74,7 +74,8 @@
         </logic:present>
 
         <html:link action="/RegistrarActividad?method=page"> 
-            Agregar Actividad
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+            <b>Agregar Actividad</b>
         </html:link><br/>
 
         <logic:present name="acts"> 
@@ -85,8 +86,11 @@
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                 s += chd + "&" + chtt + chco + "chdl=" + chdl;
             %>
-            <a class="ver">
-                [Ocultar Gráfica]</a>
+            <div align="right">
+                <a class="ver">
+                    [Ocultar Gráfica]
+                </a>
+            </div>
             <div class="grafica">
 
                 <html:img src="<%=s%>"/>
@@ -120,9 +124,11 @@
                     </tbody>
                 </table>
 
-                <a class="ver">
-                    [Ocultar Gráfica]</a>
-
+                <div align="right">
+                    <a class="ver">
+                        [Ocultar Gráfica]
+                    </a>
+                </div>
             </div>
         </logic:present>       
 
@@ -193,17 +199,17 @@
                         </td>
                         <td align="center">
                             <logic:equal name="act" property="validacion" value="En espera">
-                                <html:image src="../Stylesheets/iconos/espera.png" title="En espera" value="
-                                            "/> 
+                                <html:img src="../Stylesheets/iconos/espera.png" title="En espera" />
+                                <html:hidden name="act" property="validacion" value="e"/>
                             </logic:equal>
                             <logic:equal name="act" property="validacion" value="Validada">
-                                <html:image src="../Stylesheets/iconos/check_26x26.png" title="Validada" value="
-                                            "/> 
+                                <html:img src="../Stylesheets/iconos/check_26x26.png" title="Validada" /> 
+                                <html:hidden name="act" property="validacion" value="v"/>
                             </logic:equal>
                             <logic:notEqual name="act" property="validacion" value="En espera">
                                 <logic:notEqual name="act" property="validacion" value="Validada">
-                                    <html:image src="../Stylesheets/iconos/Delete_26x26.png" title="${act.validacion}" value="
-                                                "/> 
+                                    <html:img src="../Stylesheets/iconos/Delete_26x26.png" title="${act.validacion}"/>
+                                    <html:hidden name="act" property="validacion" value="r"/>
                                 </logic:notEqual>
                             </logic:notEqual>
                         </td>

@@ -38,13 +38,15 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        request.getSession().setAttribute("mensajeCat", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS);
         }
         Clases.Root.deleteSessions(request, "catalogoForm");
-        
+
         Catalogo cat = (Catalogo) form;
+        cat.setMensaje(null);
 
         int idCat = cat.getIdCatalogo();
         cat.setCatalogo();
@@ -82,7 +84,7 @@ public class Modificar extends DispatchAction {
         Catalogo catNM = (Catalogo) request.getSession().getAttribute("catNM");
         cat.setMensaje(null);
         int elimino = cat.eliminarCamposMarcados(catNM);
-        if (elimino > 0 || elimino < 0) {
+        if (elimino > 0) {
             return mapping.findForward(PAGE);
         }
 

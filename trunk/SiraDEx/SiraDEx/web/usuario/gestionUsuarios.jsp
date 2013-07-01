@@ -54,61 +54,62 @@
         </logic:present>
 
         <html:link action="/RegistrarUsuario?method=page"> 
-            Registrar Usuario
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+            <b>Registrar Usuario</b>
         </html:link><br/> 
 
-        <logic:notPresent name="usuarios">
-            No hay usuarios que mostrar
-        </logic:notPresent>
-        <logic:present name="usuarios">
+        <logic:notPresent name="usuarios"><br><br>
+        <span align="center">No hay usuarios que mostrar</span>
+    </logic:notPresent>
+    <logic:present name="usuarios">
 
-            <h1>Usuarios registrados en el sistema</h1>
+        <h1>Usuarios registrados en el sistema</h1>
 
-            <table class="display" id="datatab">
-                <thead>
+        <table class="display" id="datatab">
+            <thead>
+                <tr>
+                <th>USBID</th>
+                <th>Nombre(s)</th>
+                <th>Apellidos</th>
+                <th>Teléfono</th>
+                <th>Correo electrónico</th>
+                <th>Rol</th>
+                <th></th>
+                <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <logic:iterate name="usuarios" id="usr">
                     <tr>
-                    <th>USBID</th>
-                    <th>Nombre(s)</th>
-                    <th>Apellidos</th>
-                    <th>Teléfono</th>
-                    <th>Correo electrónico</th>
-                    <th>Rol</th>
-                    <th></th>
-                    <th></th>
+                    <td> <bean:write name="usr" property="username"/></td>
+                    <td> <bean:write name="usr" property="nombres"/></td>
+                    <td> <bean:write name="usr" property="apellidos"/></td>
+                    <td> <bean:write name="usr" property="telefono"/></td>
+                    <td> <bean:write name="usr" property="email"/></td>
+                    <td> <bean:write name="usr" property="rol"/></td>
+
+                    <td>
+                        <html:form method="POST" action="/ModificarUsuario?method=page">
+                            <html:hidden name="usr" property="username" />
+                            <html:submit styleId="botonModificar"
+                                         value=" "
+                                         title="Modificar"/>
+                        </html:form>
+                    </td>
+                    <td>
+                        <html:form method="POST" action="/EliminarUsuario">
+                            <html:hidden name="usr" property="username" />
+                            <html:submit styleId="botonEliminar"
+                                         value=" "
+                                         title="Eliminar"
+                                         onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
+                        </html:form>
+                    </td>
                     </tr>
-                </thead>
-                <tbody>
-                    <logic:iterate name="usuarios" id="usr">
-                        <tr>
-                        <td> <bean:write name="usr" property="username"/></td>
-                        <td> <bean:write name="usr" property="nombres"/></td>
-                        <td> <bean:write name="usr" property="apellidos"/></td>
-                        <td> <bean:write name="usr" property="telefono"/></td>
-                        <td> <bean:write name="usr" property="email"/></td>
-                        <td> <bean:write name="usr" property="rol"/></td>
+                </logic:iterate>   
+            </tbody> 
+        </table>
 
-                        <td>
-                            <html:form method="POST" action="/ModificarUsuario?method=page">
-                                <html:hidden name="usr" property="username" />
-                                <html:submit styleId="botonModificar"
-                                             value=" "
-                                             title="Modificar"/>
-                            </html:form>
-                        </td>
-                        <td>
-                            <html:form method="POST" action="/EliminarUsuario">
-                                <html:hidden name="usr" property="username" />
-                                <html:submit styleId="botonEliminar"
-                                             value=" "
-                                             title="Eliminar"
-                                             onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
-                            </html:form>
-                        </td>
-                        </tr>
-                    </logic:iterate>   
-                </tbody> 
-            </table>
-
-        </logic:present>
-    </body>
+    </logic:present>
+</body>
 </html>

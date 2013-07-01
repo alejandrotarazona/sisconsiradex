@@ -41,12 +41,17 @@ public class Modificar extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
         }
         Clases.Root.deleteSessions(request, "actividadForm");
+
+        request.getSession().setAttribute("mensajeAct", null);
         Actividad act = (Actividad) form;
+
+        act.setMensaje(null);      
         act.setActividad();
 
         /*ArrayList con los valores no modificados*/

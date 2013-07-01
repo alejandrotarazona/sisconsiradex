@@ -99,18 +99,35 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return false;
     }
 
+    public String getCampoUsuario() {
+        Iterator itValores = this.camposValores.iterator();
+
+        while (itValores.hasNext()) {
+            CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
+            if (ccv.getCampo().getTipo().equals("usbid")) {
+                return ccv.getValor();
+            }
+        }
+        return null;
+    }
+
     public boolean agregar(String ip, String user) {
 
         if (!Verificaciones.verificar(this)) {
             return false;
         }
 
+        String usbid = getCampoUsuario();
+
+        if (usbid != null && usuarioExistente(usbid)) {
+            mensaje = "Error: Ya existe un elemento con el USB-ID '"+usbid+"' en el Catálogo.";
+            return false;
+        }
+
         Entity eElemento = new Entity(8);//ELEMENTO_CATALOGO
         boolean resp;
-
         String[] columnas = {"id_catalogo"};
         Object[] valores = {idCatalogo};
-
         if (resp = eElemento.insertar2(columnas, valores)) {
 
             mensaje = "El elemento ha sido registrado con éxito";
@@ -135,7 +152,6 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         } else {
             mensaje = "Error: El elemento no pudo ser registrado.";
         }
-
         return resp;
     }
 
@@ -145,7 +161,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         if (e.borrar("id_elemento", idElemento)) {
             e.setIp(ip);
             e.setUser(user);
-            e.log();
+            e.insertarLog();
             mensaje = "El elemento ha sido eliminado con éxito";
             return true;
         } else {
@@ -154,16 +170,21 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         }
     }
 
-    public boolean modificar(ArrayList camposNM, String ip, String user) {
+    public boolean modificar(String usbidNM, String ip, String user) {
         if (!Verificaciones.verificar(this)) {
             return false;
         }
 
-        Iterator it = camposNM.iterator();
+        String usbid = getCampoUsuario();
 
-        for (int i = 0; it.hasNext(); i++) {
-            CampoCatalogoValor campoNM = (CampoCatalogoValor) it.next();
-            if (!camposValores.get(i).modificar(campoNM, idElemento, ip, user)) {
+        if (usbid != null && !usbidNM.equals(usbid) && usuarioExistente(usbid)) {
+            mensaje = "Error: Ya existe un elemento con el USB-ID '"+usbid+"' en el Catálogo.";
+            return false;
+        }
+
+        for (int i = 0; i < camposValores.size(); i++) {
+
+            if (!camposValores.get(i).modificar(idElemento, ip, user)) {
                 mensaje = "Error: El elemento no pudo ser modificado satisfactoriamente";
                 return false;
             }
@@ -197,8 +218,11 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                 rs.close();
             }
             return resp;
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ElementoCatalogo.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -266,8 +290,11 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             }
             Collections.sort(contenidos);
             return contenidos;
+
+
         } catch (SQLException ex) {
-            Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ElementoCatalogo.class
+                    .getName()).log(Level.SEVERE, null, ex);
         }
         return null;
     }
@@ -313,8 +340,11 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                 rs.close();
 
                 return listaElementoCatalogo;
+
+
             } catch (SQLException ex) {
-                Logger.getLogger(ElementoCatalogo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ElementoCatalogo.class
+                        .getName()).log(Level.SEVERE, null, ex);
             }
         }
         return null;

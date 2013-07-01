@@ -462,17 +462,10 @@ public class Verificaciones {
 
             CampoCatalogoValor ccv = (CampoCatalogoValor) it.next();
             String valor = ccv.getValor();
-            String tipo = ccv.getCampo().getTipo();
             String nombre = "'" + ccv.getCampo().getNombre() + "'";
 
-            if (tipo.equals("usbid") && ec.usuarioExistente(valor)) {
-                ec.setMensaje("Error: Ya existe un elemento con ese USB-ID "
-                        + "en el Catálogo.");
-                return false;
-            }
-
             /*verifica si el campo es tipo numero que su valor sea numérico*/
-            if (tipo.equals("numero") && !valor.matches("^[ ]*[0-9]*[ ]*$")) {
+            if (ccv.getCampo().getTipo().equals("numero") && !valor.matches("^[ ]*[0-9]*[ ]*$")) {
                 ec.setMensaje("Error: El campo " + nombre + " debe contener "
                         + "solo números.");
                 return false;

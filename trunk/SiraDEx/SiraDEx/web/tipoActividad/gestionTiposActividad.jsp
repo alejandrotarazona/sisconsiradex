@@ -42,15 +42,17 @@
             <br>
         </logic:present>
 
-        <html:link action="/RegistrarTipoActividad?method=page"> 
-            Agregar Tipo de Actividad
+        <html:link action="/RegistrarTipoActividad?method=page">
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+            <b>Agregar Tipo de Actividad</b>
         </html:link>
         <br>
         <html:link action="/GestionTiposActividad?method=listDisable"> 
-            Papelera
+            <html:img src="../Stylesheets/iconos/Eliminar_26x26.png"/>  
+            <b>Papelera</b>
         </html:link><br>
 
-        <logic:notPresent name="tipos">
+        <logic:notPresent name="tipos"><br><br>
             <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="tipos">

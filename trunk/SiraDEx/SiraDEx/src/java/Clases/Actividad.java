@@ -529,7 +529,7 @@ public class Actividad extends Root {
         };
         boolean resp;
         if (resp = e.insertar2(columnas, actividad)) {
-            e.log();
+            e.insertarLog();
             idActividad = e.seleccionarMaxId(ATRIBUTOS[0]);
             mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido registrada con éxito.";
             for (int i = 0; i < camposValores.size() && resp; i++) {
@@ -559,7 +559,7 @@ public class Actividad extends Root {
         Entity e = new Entity(2);//ACTIVIDAD
         e.setIp(ip);
         e.setUser(user);
-        if (e.borrar(ATRIBUTOS[0], idActividad) && e.log()) {
+        if (e.borrar(ATRIBUTOS[0], idActividad) && e.insertarLog()) {
 
             mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido eliminada con éxito.";
             return true;
@@ -614,7 +614,7 @@ public class Actividad extends Root {
 
         eActividad.setIp(ip);
         eActividad.setUser(usuario);
-        eActividad.log();
+        eActividad.insertarLog();
         mensaje = "La Actividad de '" + nombreTipoActividad + "' ha sido modificada con éxito.";
         if (!resp) {
             mensaje = "Error: No se pudo modificar la Actividad.";
@@ -760,7 +760,7 @@ public class Actividad extends Root {
         boolean b = eValidar.modificar(condColumn, condValores, colModificar, modificaciones);
         eValidar.setIp(ip);
         eValidar.setUser(user);
-        eValidar.log();
+        eValidar.insertarLog();
         if (b) {
             mensaje = "La Actividad ha sido rechazada con éxito.";
             if (valida) {

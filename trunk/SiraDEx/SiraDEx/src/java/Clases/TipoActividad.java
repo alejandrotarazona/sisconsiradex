@@ -42,26 +42,6 @@ public class TipoActividad extends Root {
         "validador", //5
         "activo" //6
     };
-    private static final String[] tiposCampos = {
-        "texto", //STRING
-        "numero", //INT
-        "fecha", //DATE
-        "checkbox"//CHECKBOX
-    };
-
-    public static String[] getTiposCampos() {
-        return tiposCampos;
-    }
-
-    public TipoActividad() {
-    }
-
-    public TipoActividad(String nombreTipo, int nroCampos, String descripcion) {
-        this.nombreTipo = nombreTipo;
-        this.nroCampos = nroCampos;
-        this.descripcion = descripcion;
-
-    }
 
     public int getId() {
         return id;
@@ -321,7 +301,15 @@ public class TipoActividad extends Root {
 
     public boolean agregar(String ip, String user) {
 
-        if (!Verificaciones.verificarCamposVariables(this)) {
+        if (!Verificaciones.verificarCamposVariables(this)
+                || !Verificaciones.verificarCamposFijos(this)) {
+            return false;
+        }
+
+        if (esTipoActividad()) {
+            mensaje = "Error: Ya existe un Tipo de Actividad con el Nombre "
+                    + "de la Actividad '" + nombreTipo + "'. Por favor "
+                    + "intente con otro nombre.";
             return false;
         }
 
@@ -348,7 +336,7 @@ public class TipoActividad extends Root {
         if (resp = e.insertar2(aInsertar, valores)) {
             e.setIp(ip);
             e.setUser(user);
-            e.log();
+            e.insertarLog();
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido registrado con éxito.";
             id = e.seleccionarMaxId(ATRIBUTOS[0]);
 
@@ -402,7 +390,7 @@ public class TipoActividad extends Root {
         if (eMod.modificar(condColumnas, valores, colModificar, modificaciones)) {
             eMod.setIp(ip);
             eMod.setUser(user);
-            eMod.log();
+            eMod.insertarLog();
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito.";
             return true;
         }
@@ -414,7 +402,7 @@ public class TipoActividad extends Root {
         Entity e = new Entity(1);//ACTIVIDAD
         e.setIp(ip);
         e.setUser(user);
-        if (e.borrar(ATRIBUTOS[0], id) && e.log()) {
+        if (e.borrar(ATRIBUTOS[0], id) && e.insertarLog()) {
 
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito.";
             return true;
@@ -449,11 +437,11 @@ public class TipoActividad extends Root {
     }
 
     //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
-    //de lo contrario retorna 1, y -1 si ocurre un error.
+    //de lo contrario retorna 1, y 2 si ocurre un error.
     public int eliminarCamposMarcados() {
 
         if (!verificarEliminacionCampos()) {
-            return -1;
+            return 2;
         }
 
         int resp = 0;
@@ -508,16 +496,22 @@ public class TipoActividad extends Root {
                     resp &= e.insertar2(columnas, valores);
                     break;
             }
-            e.log();
+            e.insertarLog();
         }
         return resp;
     }
 
-    //en el parámetro taNM recibe un TipoActividad No Modificado
-    public boolean modificar(TipoActividad taNM, String ip, String user) {
+    //en el parámetro nombreNM recibe el nombre No Modificado
+    public boolean modificar(String nombreNM, String ip, String user) {
 
         if (!Verificaciones.verificarCamposFijos(this)
                 || !Verificaciones.verificarCamposVariables(this)) {
+            return false;
+        }
+
+        if (esTipoActividad() && !nombreTipo.equals(nombreNM)) {
+            mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
+                    + nombreTipo + "'. Por favor, intente con otro nombre.";
             return false;
         }
 
@@ -526,20 +520,10 @@ public class TipoActividad extends Root {
         Entity e = new Entity(1);//TIPO_ACTIVIDAD
 
         String[] condColumnas = {
-            ATRIBUTOS[1],
-            ATRIBUTOS[2],
-            ATRIBUTOS[3],
-            ATRIBUTOS[4],
-            ATRIBUTOS[5],
-            ATRIBUTOS[6]
+            ATRIBUTOS[0]
         };
         Object[] valores = {
-            taNM.getNombreTipo(),
-            taNM.getTipoPR(),
-            taNM.getDescripcion(),
-            taNM.getPrograma(),
-            taNM.getValidador(),
-            taNM.isActivo()
+            id
         };
         String[] colModificar = {
             ATRIBUTOS[1],
@@ -558,27 +542,20 @@ public class TipoActividad extends Root {
             activo
         };
 
-        if (esTipoActividad() && !nombreTipo.equals(taNM.getNombreTipo())) {
-            mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
-                    + nombreTipo + "'. Por favor, intente con otro nombre.";
-            return false;
-        }
 
         if (resp = e.modificar(condColumnas, valores, colModificar, modificaciones)) {
             e.setIp(ip);
             e.setUser(user);
-            e.log();
+            e.insertarLog();
             mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido modificado con éxito.";
             System.out.println("modificacion de campos fijos sin permisos " + resp);
 
             resp &= this.modificarPermisos(ip, user);
             System.out.println("modificacion de permisos " + resp);
-            ArrayList<Campo> camposNM = taNM.getCampos();
-            int tam = camposNM.size();
+
+            int tam = campos.size();
             for (int i = 0; i < tam && resp; i++) {
-                Campo campoNM = camposNM.get(i);
-                resp &= campos.get(i).modificar(campoNM, id, ip, user);
-                System.out.println("Update " + resp + " " + campoNM.getNombre());
+                resp &= campos.get(i).modificar(id, ip, user);
             }
 
             if (!resp) {
@@ -697,34 +674,5 @@ public class TipoActividad extends Root {
     }
 
     public static void main(String[] args) throws CloneNotSupportedException {
-        //TipoActividad t = new TipoActividad("pasantia", 3, "pasantia");
-        //t.agregar();
-
-        TipoActividad t = new TipoActividad("prueba1", 2, "pasantia");
-        t.setId(1);
-
-        //t.setTipoPR("p");
-        //ArrayList<Campo> cs = new ArrayList<>();
-
-        //Campo c0 = new Campo("Nombre", "texto", 16, true);
-        //Campo c1 = new Campo("Apellido", "texto", 16, false);
-        //cs.add(c0);
-        //cs.add(c1);
-        //t.setCampos(cs);
-
-        t.setTipoActividad();
-
-        if (false) {
-            System.out.println("\n\n\nExito");
-        } else {
-            System.out.println("\n\n\nFracaso");
-        }
-
-        TipoActividad t0 = (TipoActividad) t.clone();
-        System.out.println(t.getNombreTipo());
-        System.out.println(t0.getNombreTipo());
-//        t.eliminar();
-
-
     }
 }

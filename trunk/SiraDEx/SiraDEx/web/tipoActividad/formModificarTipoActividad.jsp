@@ -138,8 +138,9 @@
                     </tr>
                 </tbody>
             </table>
-
-            <b>Campos</b><br>
+            <font size=2>
+                Los campos siguientes son variables.
+            </font><br>
             <table class="cebra">
                 <tbody>
                     <tr>
@@ -170,17 +171,25 @@
 
                         <td align="center">
                             <logic:notEqual name="campos" property="tipo" value="archivo">
-                                <html:select name="campos"  property="tipo" indexed="true" 
-                                styleId="<%=s%>" styleClass="selector">
-                                    <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                                            value="valor"/>
-                                </html:select>   
+                                <logic:notEqual name="campos" property="tipo" value="participante">
+                                    <html:select name="campos"  property="tipo" indexed="true" 
+                                    styleId="<%=s%>" styleClass="selector">
+                                        <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                                                value="valor"/>
+                                    </html:select>
+                                </logic:notEqual>
                             </logic:notEqual>
 
                             <logic:equal name="campos" property="tipo" value="archivo">
                                 <html:select name="campos"  property="tipo" disabled="true" 
                                              indexed="true" styleClass="selector">
                                     <html:option value="archivo">archivo</html:option>
+                                </html:select>
+                            </logic:equal>
+                            <logic:equal name="campos" property="tipo" value="participante">
+                                <html:select name="campos"  property="tipo" disabled="true" 
+                                             indexed="true" styleClass="selector">
+                                    <html:option value="participante">participante</html:option>
                                 </html:select>
                             </logic:equal>
                         </td>
@@ -283,9 +292,8 @@
                     </logic:iterate>
                 </tbody>
             </table>
-            <br>
-            <b>Nuevos campos</b> 
-            <html:text name="tipoActividadForm" 
+            Más campos
+            <html:text name="tipoActividadForm" styleId="mas"
                        property="nroCampos" value="0" size="1" maxlength="2"
                        onkeyup="if(this.value > 0 
                        && document.getElementById('submit').value!='Eliminar') {
@@ -294,6 +302,8 @@
                        && document.document.getElementById('submit').value!='Eliminar'){
                        document.getElementById('submit').value='Modificar'
                        }"/>
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"
+                      onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1"/>
             <div align="center">
                 <html:submit value="Modificar" styleId="submit"/>
             </div>

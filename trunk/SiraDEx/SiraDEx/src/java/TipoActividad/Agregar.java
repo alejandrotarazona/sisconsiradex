@@ -7,7 +7,6 @@ package TipoActividad;
 import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import Clases.Usuario;
-import Clases.Verificaciones;
 import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -47,6 +46,8 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
+        request.getSession().setAttribute("mensajeTipo", null);
+
         ArrayList<ElementoCatalogo> programas;
         programas = Clases.ElementoCatalogo.listarElementos("Programas", 1);
         request.getSession().setAttribute("programas", programas);
@@ -62,6 +63,7 @@ public class Agregar extends DispatchAction {
         request.getSession().setAttribute("catalogosPart", catalogosPart);
 
         TipoActividad ta = (TipoActividad) form;
+        ta.setMensaje(null);
 
         ta.setCamposObligatorios();
 
@@ -93,21 +95,9 @@ public class Agregar extends DispatchAction {
                 < 0) {
             return mapping.findForward(PAGE);
         }
-        int numeroCampos = ta.getNroCampos();
-        if (numeroCampos
-                > 0) {
+
+        if (ta.getNroCampos() > 0) {
             ta.agregarCamposNuevos();
-            return mapping.findForward(PAGE);
-        }
-
-        if (!Verificaciones.verificarCamposFijos(ta)) {
-            return mapping.findForward(PAGE);
-        }
-
-        if (ta.esTipoActividad()) {
-            ta.setMensaje("Error: Ya existe un Tipo de Actividad con el Nombre "
-                    + "de la Actividad '" + ta.getNombreTipo() + "'. Por favor "
-                    + "intente con otro nombre.");
             return mapping.findForward(PAGE);
         }
 

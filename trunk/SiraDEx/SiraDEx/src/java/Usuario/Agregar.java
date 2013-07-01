@@ -45,6 +45,8 @@ public class Agregar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
+        request.getSession().setAttribute("mensajeUsuario", null);
+        
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         request.getSession().setAttribute("userAux", u);

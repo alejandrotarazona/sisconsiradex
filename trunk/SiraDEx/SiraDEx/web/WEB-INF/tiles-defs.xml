@@ -136,10 +136,6 @@
         <put name="body" value="/catalogo/formAgregarCatalogo.jsp" />
     </definition>
     
-    <definition name="agregarCamposCatalogo" extends="plantilla">
-        <put name="body" value="/catalogo/formAgregarCampos.jsp" />
-    </definition>
-    
     <definition name="modificarCatalogo" extends="plantilla">
         <put name="body" value="/catalogo/formModificarCatalogo.jsp" />
     </definition>
