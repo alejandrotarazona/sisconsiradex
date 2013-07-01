@@ -139,7 +139,7 @@ public class CampoCatalogo implements Serializable {
         resp &= eCampoCatalogo.insertar2(columnas, valores);
         eCampoCatalogo.setIp(ip);
         eCampoCatalogo.setUser(user);
-        eCampoCatalogo.log();
+        eCampoCatalogo.insertarLog();
 
         int id_Campo = eCampoCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
         resp &= CampoCatalogoValor.actualizarElementos(id_Campo, idCatalogo, ip, user);
@@ -156,12 +156,11 @@ public class CampoCatalogo implements Serializable {
 
     }
 
-    //en el parámetro campo recibe un campo no modificado del catalogo
-    public boolean modificar(CampoCatalogo campo, int idCat) {
+    public boolean modificar(int idCat) {
         Entity e = new Entity(7);//CAMPO_CATALOGO
 
-        String[] condColumnas = ATRIBUTOS;
-        Object[] valores = {idCampo, idCat, campo.getNombre(), campo.getTipo()};
+        String[] condColumnas = {ATRIBUTOS[0]};
+        Object[] valores = {idCampo};
         String[] colModificar = {ATRIBUTOS[2], ATRIBUTOS[3]};
         String[] nombreCampo = {nombre, tipo};
 

@@ -22,7 +22,7 @@ public class Catalogo extends Root {
     private int idCatalogo;
     private String nombre;
     private int nroCampos;
-    private ArrayList<CampoCatalogo> campos;
+    private ArrayList<CampoCatalogo> campos = new ArrayList<>();
     private boolean participantes; //especifica si es un catalogo de participantes
     private static final String[] ATRIBUTOS = {
         "id_cat",
@@ -139,8 +139,22 @@ public class Catalogo extends Root {
 
     public boolean agregar(String ip, String user) {
 
-        if (!Verificaciones.verificarCamposVariables(this)) {
+        if (!Verificaciones.verificarCamposFijos(this)
+                || !Verificaciones.verificarCamposVariables(this)) {
             return false;
+        }
+
+        if (esCatalogo()) {
+            mensaje = "Error: Ya existe un Catálogo con el Nombre '"
+                    + nombre + "'. Por favor intente con otro nombre.";
+            return false;
+        }
+
+        if (isParticipantes()) {
+            CampoCatalogo c = new CampoCatalogo();
+            c.setNombre("USB-ID");
+            c.setTipo("usbid");
+            campos.add(c);
         }
 
         Entity eCatalogo = new Entity(6);//CATALOGO
@@ -159,7 +173,7 @@ public class Catalogo extends Root {
         if (resp = eCatalogo.insertar2(columnas, valores)) {
             eCatalogo.setIp(ip);
             eCatalogo.setUser(user);
-            eCatalogo.log();
+            eCatalogo.insertarLog();
             mensaje = "El Catálogo '" + nombre + "' ha sido registrado con éxito.";
             idCatalogo = eCatalogo.seleccionarMaxId(ATRIBUTOS[0]);
 
@@ -179,7 +193,7 @@ public class Catalogo extends Root {
                 }
             }
         } else {
-            mensaje = "Error: El Catálogo '" + nombre + "'no pudo ser registrado.";
+            mensaje = "Error: El Catálogo '" + nombre + "' no pudo ser registrado.";
         }
 
         return resp;
@@ -216,7 +230,7 @@ public class Catalogo extends Root {
         if (eEliminar.borrar(ATRIBUTOS[0], idCatalogo)) {
             eEliminar.setIp(ip);
             eEliminar.setUser(user);
-            eEliminar.log();
+            eEliminar.insertarLog();
             mensaje = "El Catálogo '" + nombre + "' ha sido eliminado con éxito.";
             return true;
         }
@@ -235,32 +249,44 @@ public class Catalogo extends Root {
                 return true;
             }
         }
-        mensaje = "Error: El Catálogo debe conservar al menos un campo";
+        mensaje = "Error: El Catálogo debe tener al menos un campo";
         return false;
     }
 
     //elimina los campos marcados para ser eliminados, retorna 0 si no habían campos que eliminar,
-    //de lo contrario retorna 1, y -1 si ocurre un error.
+    //de lo contrario retorna 1, y 2 si ocurre un error.
     public int eliminarCamposMarcados(Catalogo catNM) {
 
-        if (!verificarEliminacionCampos()) {
-            return -1;
+
+        if ((catNM == null && !isParticipantes() && nroCampos <= 0)
+                || (catNM != null && !catNM.isParticipantes() 
+                && !isParticipantes() && nroCampos <= 0)) {
+            if (!verificarEliminacionCampos()) {
+                return 2;
+            }
         }
 
-        ArrayList<CampoCatalogo> camposNM = catNM.getCampos();
-        boolean bien = true;
         int resp = 0;
         int i = 0;
-        for (; i < catNM.campos.size(); i++) {//campos registrados en la base de datos
-            if (campos.get(i).isEliminado() && bien) {
-                resp = 1;
-                bien &= campos.get(i).eliminar();//se elimina de la base de datos
-                if (!bien) {
-                    return -1;
+        if (catNM != null && catNM.campos.size() > 0) {
+            ArrayList<CampoCatalogo> camposNM = catNM.getCampos();
+            String elimBD = "";
+            for (; i < catNM.campos.size(); i++) {//campos registrados en la base de datos
+                CampoCatalogo cc = campos.get(i);
+                if (cc.isEliminado()) {
+                    resp = 1;
+                    if (!cc.eliminar()) {//se elimina de la base de datos
+                        return 2;
+                    }
+                    camposNM.remove(i); //se elimina de campos del atributo catNM
+                    campos.remove(i);   //se elimina de campos del form
+                    i--;
+                    elimBD += " '" + cc.getNombre() + "',";
                 }
-                camposNM.remove(i); //se elimina de campos del atributo catNM
-                campos.remove(i);   //se elimina de campos del form
-                i--;
+            }
+            if (!elimBD.isEmpty()) {
+                mensaje = "Los campos" + elimBD.substring(0, elimBD.length() - 1)
+                        + " han sido eliminados con éxito del Catálogo.";
             }
         }
         for (; i < campos.size(); i++) {//campos no registrados en la base de datos
@@ -289,7 +315,7 @@ public class Catalogo extends Root {
             return false;
         }
 
-        if (!catNM.isParticipantes() && participantes) {//se cambia el catalogo a uno de usuarios
+        if (!catNM.isParticipantes() && participantes) {//el catálogo ahora es de usuarios
             CampoCatalogo c = new CampoCatalogo();
             c.setNombre("USB-ID");
             c.setTipo("usbid");
@@ -297,7 +323,7 @@ public class Catalogo extends Root {
         }
 
         Iterator it;
-        if (catNM.isParticipantes() && !participantes) {//se cambia el catalogo de usuarios a uno normal
+        if (catNM.isParticipantes() && !participantes) {//el catálogo ahora no es de usuarios
             it = campos.iterator();
             while (it.hasNext()) {
                 CampoCatalogo campo = (CampoCatalogo) it.next();
@@ -310,20 +336,19 @@ public class Catalogo extends Root {
 
         Entity eCatalogo = new Entity(6);//CATALOGO
 
-        String[] condColumnas = {ATRIBUTOS[1], ATRIBUTOS[2]};
-        Object[] valores = {catNM.getNombre(), catNM.isParticipantes()};
+        String[] condColumnas = {ATRIBUTOS[0]};
+        Object[] valores = {idCatalogo};
         String[] colModificar = {ATRIBUTOS[1], ATRIBUTOS[2]};
         Object[] nombreCat = {nombre, participantes};
 
         boolean resp;
         if (resp = eCatalogo.modificar(condColumnas, valores, colModificar, nombreCat)) {
             mensaje = "El Catálogo '" + nombre + "' ha sido modificado con éxito.";
-            it = campos.iterator();
-            Iterator itNM = catNM.getCampos().iterator();
-            while (itNM.hasNext()) {
-                CampoCatalogo campoNM = (CampoCatalogo) itNM.next();
-                CampoCatalogo campo = (CampoCatalogo) it.next();
-                resp &= campo.modificar(campoNM, idCatalogo);
+
+            int tam = catNM.getCampos().size();
+            for (int i = 0; i < tam && resp; i++) {
+                CampoCatalogo campo = (CampoCatalogo) campos.get(i);
+                resp &= campo.modificar(idCatalogo);
             }
 
             resp &= agregarCamposNuevos(catNM.campos.size(), ip, user);

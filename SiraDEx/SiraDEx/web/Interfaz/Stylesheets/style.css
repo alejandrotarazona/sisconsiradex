@@ -68,6 +68,7 @@ p.first-child {
 }
 img {
     border: none;
+    vertical-align: middle;
 }
 abbr, acronym {
     border-bottom: 1px dotted;

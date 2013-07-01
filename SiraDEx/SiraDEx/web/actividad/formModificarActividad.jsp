@@ -30,7 +30,7 @@
         <table>
             <tr>
             <td align="right">
-                <html:image src="../Stylesheets/iconos/ayuda.png" 
+                <html:img src="../Stylesheets/iconos/ayuda.png" 
                             title="Los campos con el nombre en negrita sirven para ingresar a los participantes de la Actividad. El usuario que está registrando la Actividad debe ser ingresado en al menos una de las listas desplegables de dichos campos."/>   
             </td>
         </tr>

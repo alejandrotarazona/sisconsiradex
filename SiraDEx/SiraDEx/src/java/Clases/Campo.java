@@ -198,24 +198,18 @@ public class Campo implements Serializable {
         boolean resp = e.insertar2(columnas, valores);
         e.setIp(ip);
         e.setUser(user);
-        e.log();
+        e.insertarLog();
         return resp;
 
     }
 
-    //en el parámetro campo recibe un campo no modificado del tipo de actividad
-    public boolean modificar(Campo campo, int idTA, String ip, String user) {
+
+    public boolean modificar(int idTA, String ip, String user) {
         Entity e = new Entity(3);//CAMPO
 
-        String[] condColumnas = ATRIBUTOS;
+        String[] condColumnas = {ATRIBUTOS[0]};
         Object[] valores = {
-            idCampo,
-            idTA,
-            campo.getNombre(),
-            campo.getTipo(),
-            campo.getLongitud(),
-            campo.isObligatorio(),
-            campo.getCatalogo()
+            idCampo
         };
         String[] colModificar = {
             ATRIBUTOS[2],

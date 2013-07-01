@@ -42,7 +42,7 @@
             <br>
         </logic:present>
 
-        <logic:notPresent name="tipos">
+        <logic:notPresent name="tipos"><br><br>
             <div align="center">No hay Tipo de Actividad que mostrar</div>
         </logic:notPresent>
         <logic:present name="tipos">  

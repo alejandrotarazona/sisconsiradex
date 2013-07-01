@@ -27,7 +27,7 @@
     </head>
     <body>
         <html:link title="Volver" action="/GestionElementos"> 
-            <html:image src="../Stylesheets/iconos/regresar.png"/>
+            <html:img src="../Stylesheets/iconos/regresar.png"/>
         </html:link><br>
         <h1 class='title'>Edición del Catálogo 
             <bean:write name="elementoCatalogoForm" property="nombreCatalogo"/> 

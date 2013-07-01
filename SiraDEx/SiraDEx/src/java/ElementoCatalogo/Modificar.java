@@ -22,7 +22,6 @@ public class Modificar extends DispatchAction {
 
     /* forward name="success" path="" */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -39,24 +38,22 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        request.getSession().setAttribute("mensajeElem", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
         }
-        ElementoCatalogo elemCat = (ElementoCatalogo) form;
+        ElementoCatalogo e = (ElementoCatalogo) form;
+        e.setMensaje(null);
 
 
-        ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
-        elemCat.setCamposValores(campos);
-        int idCat = elemCat.getIdCatalogo();
-        elemCat.setIdCatalogo(idCat);
-        elemCat.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
+        ArrayList campos = Clases.CampoCatalogoValor.listarCamposValores(e.getIdElemento());
+        e.setCamposValores(campos);
+        int idCat = e.getIdCatalogo();
+        e.setIdCatalogo(idCat);
+        e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
 
-        /*es necesario otro ArrayList con los valores no modificados para 
-         * guardarlo con setAttribute ya que el anterior se modifica en el form 
-         * del jsp debido a que ArrayList es un apuntador*/
-        ArrayList camposNM = Clases.CampoCatalogoValor.listarCamposValores(elemCat.getIdElemento());
-        request.getSession().setAttribute("camposNM", camposNM);
+        request.getSession().setAttribute("usbidNM", e.getCampoUsuario());
 
         return mapping.findForward(PAGE);
     }
@@ -69,7 +66,7 @@ public class Modificar extends DispatchAction {
         if (u == null) {
             return mapping.findForward(PAGE);
         }
-        ElementoCatalogo elemCat = (ElementoCatalogo) form;
+        ElementoCatalogo e = (ElementoCatalogo) form;
 
         String usuario = u.getUsername();
         String ip = request.getHeader("X-Forwarded-For");
@@ -77,13 +74,13 @@ public class Modificar extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
-        ArrayList campos = (ArrayList) request.getSession().getAttribute("camposNM");
+        String usbidNM = (String) request.getSession().getAttribute("usbidNM");
 
-        if (elemCat.modificar(campos, ip, usuario)) {
-            request.getSession().setAttribute("mensajeElem", elemCat.getMensaje());
+        if (e.modificar(usbidNM, ip, usuario)) {
+            request.getSession().setAttribute("mensajeElem", e.getMensaje());
             return mapping.findForward(SUCCESS);
         }
 
-        return mapping.findForward(FAILURE);
+        return mapping.findForward(PAGE);
     }
 }

@@ -115,7 +115,7 @@ public class Entity {
 
     public static String escapeLog(Object o) {
         String s = String.valueOf(o).replace("\\", "\\\\").replace("'", "");
-        
+
         return s;
     }
 
@@ -135,7 +135,7 @@ public class Entity {
 
     public ResultSet seleccionarNumActividades(String condicion) {
         sql = "SELECT nombre_tipo_actividad, COUNT(id_actividad) AS cantidad "
-                + "FROM " + TABLA + " WHERE "+ condicion
+                + "FROM " + TABLA + " WHERE " + condicion
                 + " GROUP BY nombre_tipo_actividad";
 
         System.out.println(sql);
@@ -443,28 +443,24 @@ public class Entity {
 
     }
 
-    public boolean log() {
+    public boolean insertarLog() {
 
         System.out.println("Entrando en el Log.");
-        boolean b;
+        if (user != null) {
+            String[] tok = sql.split(" ");
 
-        String[] tok = sql.split(" ");
+            String query = "INSERT INTO LOG (accion, query, ip, usbid) VALUES ('"
+                    + tok[0] + "', '" + escapeLog(sql) + "', '" + ip + "', '" + user + "')";
+            System.out.println("Query a insertar: " + query);
+            System.out.println("\tIp: " + ip);
+            System.out.println("\tUsuairo: " + user);
 
-        String query = "INSERT INTO LOG (accion, query, ip, usbid) VALUES ('" + tok[0] + "', '" + escapeLog(sql) + "', '"
-                + ip + "'";
-        if (user != null && !user.equals("")) {
-            query += ",'" + user + "'";
+            System.out.println("Saliendo del Log.");
+            DataBase db = DataBase.getInstance();
+            return db.update(query);
         }
-        query += ")";
-        System.out.println("Query a insertar: " + query);
-        System.out.println("\tIp: " + ip);
-        System.out.println("\tUsuairo: " + user);
+        return false;
 
-        System.out.println("Saliendo del Log.");
-        DataBase db = DataBase.getInstance();
-        b = db.update(query);
-
-        return b;
     }
 
     public static void main(String[] args) {

@@ -37,7 +37,7 @@
             document.getElementsByClassName('modificar')[2].disabled=false;
             document.getElementsByClassName('modificar')[3].disabled=false;
             document.getElementById('boton').style.visibility= 'visible';">
-            <html:image src="../Stylesheets/iconos/Edit_26x26.png"/>  
+            <html:img src="../Stylesheets/iconos/Edit_26x26.png"/>  
             <b>Editar perfil</b>
         </a> 
         <br><br>

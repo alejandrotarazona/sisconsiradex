@@ -313,7 +313,7 @@ public class Usuario extends Root {
             if (e.insertar(usuarios)) {
                 e.setIp(ip);
                 e.setUser(user);
-                e.log();
+                e.insertarLog();
                 mensaje = "El usuario " + username + " ha sido registrado con éxito.";
                 return true;
             }
@@ -329,7 +329,7 @@ public class Usuario extends Root {
         if (e.borrar(ATRIBUTOS[2], this.username)) {
             e.setIp(ip);
             e.setUser(user);
-            e.log();
+            e.insertarLog();
             mensaje = "El usuario ha sido eliminado con éxito.";
             return true;
         }
@@ -338,30 +338,17 @@ public class Usuario extends Root {
 
     }
 
-    //en el parámetro userNM recibe un Usuario no modificado
-    public boolean modificar(Usuario userNM, String ip, String user) {
+    public boolean modificar(String ip, String user) {
         if (!Verificaciones.verificar(this)) {
             return false;
         }
         Entity e = new Entity(0);//USUARIO
 
         String[] condColumnas = {
-            ATRIBUTOS[0],
-            ATRIBUTOS[1],
-            ATRIBUTOS[3],
-            ATRIBUTOS[4],
-            ATRIBUTOS[5],
-            ATRIBUTOS[6],
-            ATRIBUTOS[7]
+            ATRIBUTOS[2]
         };
         Object[] valores = {
-            userNM.getNombres(),
-            userNM.getApellidos(),
-            userNM.getPassword(),
-            userNM.getTipo(),
-            userNM.getTelefono(),
-            userNM.getEmail(),
-            userNM.getRol()
+            username
         };
 
         String[] colModificar = {
@@ -386,7 +373,7 @@ public class Usuario extends Root {
         if (e.modificar(condColumnas, valores, colModificar, modificaciones)) {
             e.setIp(ip);
             e.setUser(user);
-            e.log();
+            e.insertarLog();
             mensaje = "El perfil ha sido modificado con éxito";
             return true;
         }
@@ -480,6 +467,5 @@ public class Usuario extends Root {
     }
 
     public static void main(String[] args) {
-
     }
 }

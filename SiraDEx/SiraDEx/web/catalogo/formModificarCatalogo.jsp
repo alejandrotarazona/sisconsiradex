@@ -27,7 +27,12 @@
         </h1>
 
         <logic:present name="catalogoForm" property="mensaje"><br>
-            <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
+            <logic:notMatch name="catalogoForm" property="mensaje" value="Error:">
+                <div class ="status"><bean:write name="catalogoForm" property="mensaje"/></div>
+            </logic:notMatch>
+            <logic:match name="catalogoForm" property="mensaje" value="Error:">
+                <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
+            </logic:match>   
             <br>
         </logic:present> 
         <br>
@@ -54,8 +59,16 @@
                     </logic:equal>
 
                     <logic:equal name="catalogoForm" property="participantes" value="true">
-                        <html:checkbox name="catalogoForm" property="participantes"/>
+                        <html:checkbox name="catalogoForm" property="participantes"
+                                           onclick="if (!this.checked) { 
+                                           this.value = 'off'
+                                           document.getElementById('aviso').innerHTML='<b>El campo USB-ID dejará de ser de usuario al modificar el catálogo.<b>'
+                                           } else {
+                                           document.getElementById('aviso').innerHTML='', 
+                                           this.value = 'on'
+                                           }"/>
                         <html:hidden name="catalogoForm" property="participantes" value="false"/>
+                        <span id="aviso"></span>
                     </logic:equal>
 
                     </td>
@@ -80,8 +93,9 @@
                     </tr>
                 </tbody>
             </table>   
-
-            <b>Campos</b>
+            <font size=2>
+                Los campos siguientes son variables.
+            </font><br>
             <table>
                 <tbody>
                     <tr>
@@ -95,7 +109,8 @@
                                    indexId="index">
 
                         <tr>
-                        <td align="center"><span style="color: gray;font-size:10px">${index+1}</span>
+                        <td align="center">
+                        <span style="color: gray;font-size:10px">${index+1}</span>
                         <logic:notEqual name="campos" property="tipo" value="usbid">
                             <html:text name="campos" property="nombre" indexed="true" maxlength="100">
                                 <bean:write name="campos" property="nombre"/>
@@ -143,8 +158,8 @@
                     </logic:iterate>
                 </tbody>
             </table>
-            <br>
-            <b>Nuevos campos</b> <html:text name="catalogoForm" 
+            Más campos
+            <html:text name="catalogoForm" styleId="mas"
                        property="nroCampos" value="0" size="1" maxlength="1"
                        onkeyup="if(this.value > 0 
                        && document.getElementById('submit').value!='Eliminar') {
@@ -153,13 +168,15 @@
                        && document.getElementById('submit').value!='Eliminar'){
                        document.getElementById('submit').value='Modificar'
                        }"/>
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"
+                      onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1"/>
             <div align="center">
                 <html:submit value="Modificar" styleId="submit"
-                       onclick="if (this.value=='Modificar') 
-                           return confirm('¿Está seguro que desea modificar el Catálogo?');
-                           if (this.value=='Eliminar') 
-                               return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
-                           confirm('¿Está seguro que desea eliminar los campos seleccionados?')"/>
+                             onclick="if (this.value=='Modificar') 
+                             return confirm('¿Está seguro que desea modificar el Catálogo?');
+                             if (this.value=='Eliminar') 
+                             return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
+                             confirm('¿Está seguro que desea eliminar los campos seleccionados?')"/>
             </div>
         </html:form>
     </body>

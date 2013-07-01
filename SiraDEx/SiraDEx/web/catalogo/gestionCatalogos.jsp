@@ -44,11 +44,12 @@
         </logic:present>
 
         <html:link action="/RegistrarCatalogo?method=page"> 
-            Agregar Catálogo
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+            <b>Agregar Catálogo</b>    
         </html:link>
         <br>
 
-        <logic:notPresent name="catalogos">
+        <logic:notPresent name="catalogos"><br><br>
         <span align="center">No hay catálogos que mostrar</span>
     </logic:notPresent>
 

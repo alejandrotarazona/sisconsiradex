@@ -33,13 +33,16 @@ public class Modificar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
+        request.getSession().setAttribute("mensajeUsuario", null);
         Usuario user = (Usuario) request.getSession().getAttribute("user");
         if (user == null) {
             return mapping.findForward(PAGE);
         }
         Usuario u = (Usuario) form;
+        u.setMensaje(null);
         u.setUsuario();
-        request.getSession().setAttribute("usuarioNM", u.clone());
+        request.getSession().setAttribute("usernameNM", u.getUsername());
+
         String r = u.getRol();
         if (!r.equals("WM") && !r.equals("profesor") && !r.equals("obrero")
                 && !r.equals("estudiante") && !r.equals("empleado")) {
@@ -86,17 +89,15 @@ public class Modificar extends DispatchAction {
             u.setRol(rol);
         }
 
-        Usuario usuarioNM = (Usuario) request.getSession().getAttribute("usuarioNM");
-        System.out.println("El viejo usuario es: " + usuarioNM.toString());
-        u.setUsername(usuarioNM.getUsername());
+        String usernameNM = (String) request.getSession().getAttribute("usernameNM");
+
+        u.setUsername(usernameNM);
         u.setUsuario();
-
         u.setRol(rol);
-        System.out.println("El nuevo usuario es: " + u.toString());
 
-        if (u.modificar(usuarioNM, ip, usuario)) {
-            u.setMensaje("El rol del Usuario " + u.getUsername() + 
-                    " se ha modificado a " + u.getRol() + "con éxito.");
+        if (u.modificar(ip, usuario)) {
+            request.getSession().setAttribute("mensajeUsuario", "El rol del Usuario '"
+                    + u.getUsername() + "' se ha modificado a '" + u.getRol() + "' con éxito.");
 
             request.getSession().removeAttribute("usuarioForm.rolDex");
             return mapping.findForward(SUCCESS);

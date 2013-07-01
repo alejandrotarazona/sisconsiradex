@@ -197,8 +197,7 @@
         <action path="/RegistrarCatalogo" type="Catalogo.Agregar" 
                 scope="session" parameter="method" name="catalogoForm">
             <forward name="page" path="agregarCatalogo"/> 
-            <forward name="success" path="agregarCamposCatalogo"/>
-            <forward name="successfull" path="GestionCatalogos.do" redirect="true"/>  
+            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"

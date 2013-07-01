@@ -73,24 +73,23 @@ public class CampoCatalogoValor implements Serializable {
         resp &= eValor.insertar2(campos, valores);
         eValor.setIp(ip);
         eValor.setUser(user);
-        eValor.log();
+        eValor.insertarLog();
 
         return resp;
     }
 
-    public boolean modificar(CampoCatalogoValor campo, int idElem, String ip, String user) {
+    public boolean modificar(int idElem, String ip, String user) {
         Entity e = new Entity(9);//VALOR_CATALOGO
 
-        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1], ATRIBUTOS[2]}; //id_campo, id_elemento, valor
-        String val = campo.getValor();
-        Object[] valores = {campo.getCampo().getIdCampo(), idElem, val};
+        String[] condColumnas = {ATRIBUTOS[0], ATRIBUTOS[1]}; //id_campo, id_elemento
+        Object[] valores = {campo.getIdCampo(), idElem};
         String[] colModificar = {ATRIBUTOS[2]}; //valor
         String[] valorCampo = {valor};
 
         boolean b = e.modificar(condColumnas, valores, colModificar, valorCampo);
         e.setIp(ip);
         e.setUser(user);
-        e.log();
+        e.insertarLog();
 
         return b;
     }
@@ -117,7 +116,6 @@ public class CampoCatalogoValor implements Serializable {
                     };
 
                     resp &= e.insertar(valores);
-                    e.log();
                 }
                 rs.close();
             } catch (SQLException ex) {

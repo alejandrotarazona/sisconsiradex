@@ -217,23 +217,20 @@ public class CampoValor implements Serializable {
             if (!tipo.equals("archivo") && campo.getLongitud() >= 0) {
                 String[] condColumnas = {
                     ATRIBUTOS[0], //id_campo
-                    ATRIBUTOS[1], //id_actividad
-                    ATRIBUTOS[2] //valor
+                    ATRIBUTOS[1] //id_actividad
                 };
 
-                String valorNM = campoNM.getValor();
                 String val = valor;
 
                 Object[] valores = {
                     campo.getIdCampo(),
-                    idAct,
-                    valorNM
+                    idAct
                 };
                 String[] colModificar = {ATRIBUTOS[2]}; //valor
                 String[] modificaciones = {val};
 
                 resp = eValor.modificar(condColumnas, valores, colModificar, modificaciones);
-                eValor.log();
+                eValor.insertarLog();
                 System.out.println("--------Luego de modificar valor "
                         + campoNM.getValor() + " " + resp);
 
@@ -265,7 +262,7 @@ public class CampoValor implements Serializable {
 
         boolean resp = eValor.borrar(campos, condicion);
         resp &= eValor.insertarArchivo(campo.getIdCampo(), idAct, valor, file);
-        eValor.log();
+        eValor.insertarLog();
 
         return resp;
     }

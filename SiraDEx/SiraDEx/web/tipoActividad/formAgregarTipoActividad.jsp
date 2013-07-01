@@ -92,13 +92,13 @@
                     <td>
                         <html:radio property="tipoPR" value="P" >P</html:radio>
                         <html:radio property="tipoPR" value="R" >R</html:radio>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td>
-                        <b>Programa</b> <span style="color:red">*</span>
-                    </td>
-                    <td>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <b>Programa</b> <span style="color:red">*</span>
+                        </td>
+                        <td>
                         <html:select property="programa">
                             <html:option value="">-- Seleccione --</html:option>
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
@@ -133,22 +133,23 @@
                         <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
                         <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
                         <html:multibox property="permisos">Obrero</html:multibox> Obreros 
-                    </td>       
-                    </tr>
-                </tbody>
-            </table>
-            <br>
-
-            <table class="cebra">
-                <tbody>
-                    <tr>
-                    <th><b>Nombre</b> <span style="color:red">*</span></th>
-                    <th><b>Tipo</b></th>
-                    <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
-                    <th><b>Obligatorio</b></th>
-                    <th><b>Catálogo</b></th>
-                    <th>Eliminar</th>
-                    </tr>      
+                        </td>       
+                        </tr>
+                    </tbody>
+                </table>
+                <font size=2>
+                    Los campos siguientes son variables.
+                </font><br>
+                <table class="cebra">
+                    <tbody>
+                        <tr>
+                        <th><b>Nombre</b> <span style="color:red">*</span></th>
+                        <th><b>Tipo</b></th>
+                        <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
+                        <th><b>Obligatorio</b></th>
+                        <th><b>Catálogo</b></th>
+                        <th>Eliminar</th>
+                        </tr>      
 
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
@@ -271,9 +272,8 @@
                     </logic:iterate>
                 </tbody>
             </table>
-            <br>
-            <b>Nuevos campos</b>
-            <html:text name="tipoActividadForm" 
+            Más campos
+            <html:text name="tipoActividadForm" styleId="mas"
                        property="nroCampos" value="0" size="1" maxlength="2"
                        onkeyup="if(this.value > 0 
                        && document.getElementById('submit').value!='Eliminar Campos') {
@@ -282,8 +282,8 @@
                        && document.document.getElementById('submit').value!='Eliminar Campos'){
                        document.getElementById('submit').value='Registrar'
                        }"/>
-            <br>
-
+            <html:img src="../Stylesheets/iconos/Add_26x26.png"
+                      onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1"/>
             <div align="center">
                 <html:submit value="Registrar" styleId="submit"/>
             </div>

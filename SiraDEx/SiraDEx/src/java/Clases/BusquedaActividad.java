@@ -254,7 +254,7 @@ public class BusquedaActividad extends Root {
             if (user != null) {
                 eBuscar.setUser(user);
             }
-            eBuscar.log();
+            eBuscar.insertarLog();
             cjtoAux = Actividad.listar(rs);
             hayColumnas = true;
         }
