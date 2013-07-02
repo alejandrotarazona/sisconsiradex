@@ -189,7 +189,10 @@
                         </tbody>
                     </table>
                     <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
-                        String rol = usuario.getRol();
+                        String rol = "";
+                        if (usuario != null) {
+                            rol = usuario.getRol();
+                        }
                         String accion;
                         if (usuario == null || rol.equals("profesor") || rol.equals("empleado")
                                 || rol.equals("estudiante") || rol.equals("obrero")) {

@@ -54,7 +54,6 @@ public class Eliminar extends org.apache.struts.action.Action {
             ip = request.getRemoteAddr();
         }
 
-
         act.eliminar(ip, usuario);
 
         request.getSession().setAttribute("mensajeAct", act.getMensaje());

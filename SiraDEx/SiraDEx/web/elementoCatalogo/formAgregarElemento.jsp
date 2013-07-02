@@ -60,7 +60,7 @@
                             <span class="fecha_input">
                                 <html:text name="camposValores" property="valor" indexed="true" 
                                            readonly="true" ondblclick="this.value = ''"
-                                           title="Haga doble click para borrar la fecha."/>
+                                           title="Haga doble click para borrar la fecha"/>
                             </span>
                             <span class="fecha_click">
                                 <html:hidden name="camposValores" property="valor" indexed="true"/>

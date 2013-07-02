@@ -259,6 +259,7 @@ public class Verificaciones {
         boolean creador = false;
         Iterator it = act.getCamposValores().iterator();
         ArrayList<String> participantes = new ArrayList<>(0);
+        String nombreP = "";
         while (it.hasNext()) {
 
             CampoValor cv = (CampoValor) it.next();
@@ -282,10 +283,15 @@ public class Verificaciones {
                 return false;
             }
 
+            if (tipo.equals("participante") && longitud >= 0) {
+                nombreP = nombre;
+            }
+
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
-                act.setMensaje("Error: El campo " + nombre + " debe contener "
-                        + "datos en uno de sus dos campos, no puede contener en ambos.");
+                act.setMensaje("Error: Se ingresó un participante de " + nombreP 
+                        + " por el campo de texto y por selección de la lista a la vez."
+                        + " Debe ser ingresado por solo una de estas opciones.");
                 return false;
             }
 
@@ -306,7 +312,7 @@ public class Verificaciones {
                 Iterator iter = participantes.iterator();
                 while (iter.hasNext()) {
                     if (iter.next().equals(val + cv.getCampo().getIdCampo())) {
-                        act.setMensaje("Error: El valor " + val + " se repite para "
+                        act.setMensaje("Error: El valor '" + val + "' se repite para "
                                 + "dos campos del mismo tipo de participante. Por favor, "
                                 + "cambie uno de los valores.");
                         return false;
