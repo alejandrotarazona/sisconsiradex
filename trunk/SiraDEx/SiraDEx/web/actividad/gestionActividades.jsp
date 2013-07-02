@@ -240,6 +240,7 @@
                                 <logic:notEqual name="act" property="validacion" value="Validada">
                                     <html:form method="POST" action="/EliminarActividad">
                                         <html:hidden name="act" property="idActividad" />
+                                        <html:hidden name="act" property="nombreTipoActividad" />
                                         <html:submit styleId="botonEliminar"
                                                      value=" "
                                                      title="Eliminar"
@@ -250,6 +251,7 @@
                             <logic:equal name="user" property="rol" value="WM">                   
                                 <html:form method="POST" action="/EliminarActividad">
                                     <html:hidden name="act" property="idActividad" />
+                                    <html:hidden name="act" property="nombreTipoActividad" />
                                     <html:submit styleId="botonEliminar"
                                                  value=" "
                                                  title="Eliminar"
