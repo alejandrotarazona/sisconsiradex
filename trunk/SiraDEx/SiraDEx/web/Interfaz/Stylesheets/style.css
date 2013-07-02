@@ -48,9 +48,13 @@ header img {
 
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup,
+article, aside, details, figcaption, figure, header, hgroup,
 menu, nav, section {
     display: block;
+}
+footer{
+    display: block;
+    bottom:0;
 }
 a {
     text-decoration: none;
@@ -249,7 +253,6 @@ header {
 }
 .region-footer {
     padding: 1em 0;
-    margin-left: 70px;
 }
 #block-system-help .inner {
     padding: 1em 0;

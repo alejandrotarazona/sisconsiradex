@@ -30,8 +30,8 @@
             <tiles:insert attribute="header"/>
             <tiles:insert attribute="topMenu"/>
             <div id="main" class="section section-main clearfix" role="main">
-                <div id="content" class="column grid-15 push-3" style="overflow-y: auto;max-height: 420px;">
-                    <div class="inner">
+                <div id="content" class="column grid-15 push-3" style="overflow-y: auto;max-height: 420px;height:400px;">
+                    <div class="inner" style="padding-bottom:170px;">
                         <div id="main-content" class="clearfix">
                             <div class="region region-content">
                                 <div class="content clearfix">
@@ -57,10 +57,10 @@
                             </div>
                         </div>
                     </div>
+                    <tiles:insert attribute="footer" />
                 </div>
                 <tiles:insert attribute="leftMenu" />
             </div>
-            <tiles:insert attribute="footer" />
         </div>
     </body>
 </html>

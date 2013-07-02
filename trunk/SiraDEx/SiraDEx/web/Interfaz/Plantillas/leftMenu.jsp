@@ -10,7 +10,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
-<div id="sidebar-first" class="sidebar grid-3 pull-15">
+<div id="sidebar-first" class="sidebar grid-3 pull-15" style="overflow-y: auto;max-height: 420px;">
     <div class="region region-sidebar-first">
         <div id="block-system-main-menu" class="block block-system block-menu first">
             <div class="inner">
