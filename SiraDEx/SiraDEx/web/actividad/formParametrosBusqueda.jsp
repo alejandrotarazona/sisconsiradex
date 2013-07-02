@@ -16,7 +16,7 @@
         .selector {width: 43px;}
     </style>
 </head>
-<div id="sidebar-first" class="sidebar grid-5 pull-13">
+<div id="sidebar-first" class="sidebar grid-5 pull-13" style="overflow-y: auto;max-height: 420px;">
     <div class="region region-sidebar-first">
         <div id="block-system-main-menu" class="block block-system block-menu first">
             <div class="inner">
