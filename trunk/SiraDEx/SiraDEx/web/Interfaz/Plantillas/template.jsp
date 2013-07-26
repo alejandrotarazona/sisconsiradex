@@ -10,8 +10,11 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
-
+<%              
+  response.setHeader("pragma", "no-cache");              
+  response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");             
+  response.setHeader("Expires", "0");  
+%>
 <!DOCTYPE html>
 <html version="HTML+RDFa 1.0" lang="es" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:content="http://purl.org/rss/1.0/modules/content/"
