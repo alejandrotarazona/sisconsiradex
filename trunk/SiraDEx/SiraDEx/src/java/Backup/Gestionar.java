@@ -6,6 +6,7 @@ package Backup;
 
 import Clases.Backup;
 import Clases.Usuario;
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -21,7 +22,8 @@ public class Gestionar extends DispatchAction {
 
     /* forward name="success" path="" */
     private static final String PAGE = "page";
-
+    private static final String SUCCESS = "success";
+    
     /**
      * This is the action called from the Struts framework.
      *
@@ -43,7 +45,13 @@ public class Gestionar extends DispatchAction {
         Clases.Root.deleteSessions(request, "");
         Backup b = (Backup) form;
         b.inicializarFrecuencia();
+        ArrayList backups = b.listar();
 
+        if (backups.isEmpty()) {
+            backups = null;
+        }
+        request.setAttribute("backups", backups);
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
         return mapping.findForward(PAGE);
     }
 
@@ -58,8 +66,8 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.hacerBackup();
-
-        return mapping.findForward(PAGE);
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+        return mapping.findForward(SUCCESS);
 
     }
 
@@ -74,8 +82,8 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.restaurarDesdeBackup();
-
-        return mapping.findForward(PAGE);
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+        return mapping.findForward(SUCCESS);
     }
 
     public ActionForward set(ActionMapping mapping, ActionForm form,
@@ -89,7 +97,8 @@ public class Gestionar extends DispatchAction {
         Backup b = (Backup) form;
 
         b.cambiarFrecuencia();
-
-        return mapping.findForward(PAGE);
+        request.getSession().setAttribute("mensajeBackup", b.getMensaje());
+        return mapping.findForward(SUCCESS);
     }
+    
 }

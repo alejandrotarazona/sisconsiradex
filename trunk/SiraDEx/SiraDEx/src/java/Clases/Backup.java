@@ -5,10 +5,12 @@
 package Clases;
 
 import DBMS.DataBase;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import org.apache.struts.upload.FormFile;
 
 /**
  *
@@ -16,17 +18,17 @@ import org.apache.struts.upload.FormFile;
  */
 public class Backup extends Root {
 
-    private FormFile backup;
+    private String backup;
     private String frecuencia = inicializarFrecuencia(); //1 diario, 7 semanal, 30 mensual
 
     public Backup() {
     }
 
-    public FormFile getBackup() {
+    public String getBackup() {
         return backup;
     }
 
-    public void setBackup(FormFile backup) {
+    public void setBackup(String backup) {
         this.backup = backup;
     }
 
@@ -111,7 +113,7 @@ public class Backup extends Root {
         String db = DataBase.getDatabase();
         int port = DataBase.getPort();
         String comando = "pg_restore -i -h " + host + " -p " + port + " -U " + user
-                + " -c -d  " + db + " /home/backups_siradex/" + backup.getFileName();
+                + " -c -d  " + db + " /home/backups_siradex/" + backup;
         System.out.println(comando);
         try {
             Process p;
@@ -134,7 +136,7 @@ public class Backup extends Root {
         }
 
         mensaje = "La restauración del sistema a partir de "
-                + backup.getFileName() + " se ha realizado con éxito";
+                + backup + " se ha realizado con éxito";
         return true;
     }
 
@@ -171,9 +173,50 @@ public class Backup extends Root {
         return true;
     }
 
+    public ArrayList listar() {
+        ArrayList backups = new ArrayList<>(0);
+        String cmd = "cd /home/backups_siradex && ls *.backup";
+        String[] comando = {
+            "/bin/sh",
+            "-c",
+            cmd
+        };
+        System.out.println(cmd);
+        try {
+            Process p;
+            p = Runtime.getRuntime().exec(comando);
+
+            try {
+                if (p.waitFor() != 0) {
+                    mensaje = "Error: No se pudo leer los archivos .backups";
+                }
+                BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
+                String line = reader.readLine();
+                while (line != null) {
+                    backups.add(line);
+                    line = reader.readLine();
+                }
+
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
+                mensaje = "Error: No se pudo leer los archivos .backups " + ex;
+            }
+
+        } catch (IOException ex) {
+            Logger.getLogger(Backup.class.getName()).log(Level.SEVERE, null, ex);
+            mensaje = "Error: No se pudo leer los archivos .backups " + ex;
+        }
+
+
+        return backups;
+    }
+
     public static void main(String[] args) {
-        String s = "jnwejn6567njktn3";
-        s = s.replaceAll("[^\\d]", "");
-        System.out.print(s);
+        Backup b = new Backup();
+        ArrayList bs = b.listar();
+        System.out.println("tamaño " + bs.size());
+        for (int i = 0; i < bs.size(); i++) {
+            System.out.println(bs.get(i));
+        }
     }
 }
