@@ -27,7 +27,7 @@ import org.apache.struts.upload.FormFile;
 public class CampoValor implements Serializable {
 
     private Campo campo;
-    private String valor;
+    private String valor = "";
     private String valorAux = ""; /*atributo auxiliar para setearlo al momento llenar
      un campo de texto de tipo participante*/
 
