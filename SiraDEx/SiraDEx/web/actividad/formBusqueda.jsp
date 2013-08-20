@@ -142,7 +142,7 @@
                                     "<bean:write name="act" property="nombreTipoActividad"/>",
 
 
-                                    <% out.print(a.camposValoresToString());%>
+                                    <% out.print(a.camposValoresToString(a.getIdActividad()));%>
 
                                     <logic:equal name="act" property="validacion" value="En espera">
                                         <b>Actividad por validar.</b>

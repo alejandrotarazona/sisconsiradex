@@ -269,20 +269,16 @@ public class Actividad extends Root {
         return p;
     }
 
-    public String camposValoresToString() {
+    public String camposValoresToString(int idAct) {
         String s = "";
-        Iterator it = camposValores.iterator();
-        while (it.hasNext()) {
-            CampoValor cv = (CampoValor) it.next();
+        ArrayList<CampoValor> campos = CampoValor.listarCampoValor(idAct);
+        for (CampoValor cv : campos) {
             String nombre = cv.getCampo().getNombre();
             String tipo = cv.getCampo().getTipo();
             String valor = cv.getValor();
             if (!valor.isEmpty()) {
-
+                System.out.println("############ "+valor);
                 switch (tipo) {
-                    case "textol":
-                    case "archivo":
-                        continue;
                     case "checkbox":
                         if (!valor.equals("false")) {
                             s += nombre + ", ";
@@ -334,11 +330,7 @@ public class Actividad extends Root {
                 fechaModif = rs.getString(ATRIBUTOS[7]);
                 descripcion = rs.getString(ATRIBUTOS[8]);
                 camposValores = CampoValor.listarCamposValores(idActividad);
-
-                Iterator iter = camposValores.iterator();
-
-                while (iter.hasNext()) {
-                    CampoValor cv = (CampoValor) iter.next();
+                for (CampoValor cv : camposValores) {
                     String tipoCampo = cv.getCampo().getTipo();
                     String nombre = cv.getValor();
                     if (!nombre.equals("")
@@ -399,7 +391,7 @@ public class Actividad extends Root {
                     if (!usbid.startsWith("$")) {
                         correos += usbid + "@usb.ve ";
                         String email = rs.getString("email");
-                        if (email != null || !email.equals("")) {
+                        if (!email.equals("")) {
                             correos += email + " ";
                         }
                     }
@@ -490,7 +482,8 @@ public class Actividad extends Root {
             }
 
             int j = i + 1;
-            for (; campos.get(j).getCampo().getLongitud() == -1; j++) {
+            for (; j < campos.size() 
+                    && campos.get(j).getCampo().getLongitud() == -1; j++) {
                 String val = campos.get(j).getValor();
                 String valAux = campos.get(j).getValorAux();
                 if (valAux.equals("Apellido(s), Nombre(s)")) {

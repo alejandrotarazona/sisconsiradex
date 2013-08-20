@@ -141,12 +141,6 @@
                                             this.style.color='black'}" 
                                             onblur="if (this.value=='')
                                             this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'" 
-                                            onkeydown="if (this.value!=''){
-                                            document.getElementById('select${index}').disabled=true;
-                                            document.getElementById('select${index}').value='';
-                                            } else {
-                                            document.getElementById('select${index}').disabled=false;
-                                            }"
                                             onkeyup="if (this.value!=''){
                                             document.getElementById('select${index}').disabled=true;
                                             document.getElementById('select${index}').value='';
@@ -165,12 +159,6 @@
                                             this.style.color='black'}" 
                                             onblur="if (this.value=='') 
                                             this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'"
-                                            onkeydown="if (this.value!=''){
-                                            document.getElementById('select${index}').disabled=true;
-                                            document.getElementById('select${index}').value='';
-                                            } else {
-                                            document.getElementById('select${index}').disabled=false;
-                                            }"
                                             onkeyup="if (this.value!=''){
                                             document.getElementById('select${index}').disabled=true;
                                             document.getElementById('select${index}').value='';
