@@ -93,7 +93,7 @@
                             <bean:write name="act" property="nombreTipoActividad"/>
                         </td>
                         <td>
-                            <% out.print(a.camposValoresToString());%>
+                            <% out.print(a.camposValoresToString(a.getIdActividad()));%>
 
                         <span class="textolargo"><br>
                             <b>Descripción:</b> 

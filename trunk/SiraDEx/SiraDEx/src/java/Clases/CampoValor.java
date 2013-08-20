@@ -413,8 +413,58 @@ public class CampoValor implements Serializable {
         return listaValor;
     }
 
+    /* Crea una lista de CampoValor de la actividad cuyo id es pasado por 
+     * parametro*/
+    public static ArrayList<CampoValor> listarCampoValor(int idActividad) {
+
+        ArrayList<CampoValor> listaValor = new ArrayList<>(0);
+        Entity eCampo = new Entity(2);//ACTIVIDAD
+        String[] ATRIBUTO = {
+            "nombre_campo",//0
+            "tipo_campo",//1
+            "valor",//2
+        };
+        String[] tabABuscar = {
+            TABLAS[0],
+            TABLAS[1]
+        };
+        String[] colCondicion = {"id_actividad"};
+        Object[] colValor = {idActividad};
+        ResultSet rs = eCampo.naturalJoin(ATRIBUTO, tabABuscar, colCondicion, colValor);
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    CampoValor cv = new CampoValor();
+                    String valor = rs.getString(ATRIBUTO[2]);
+                    String tipoCampo = rs.getString(ATRIBUTO[1]);
+                    if (tipoCampo.equals("archivo") || tipoCampo.equals("textol")) {
+                        continue;
+                    }
+                    cv.setValor(valor);
+                    Campo c = new Campo();
+                    c.setNombre(rs.getString(ATRIBUTO[0]));
+                    c.setTipo(tipoCampo);
+                    cv.setCampo(c);
+
+                    listaValor.add(cv);
+
+                }
+
+                rs.close();
+
+                return listaValor;
+
+            } catch (SQLException ex) {
+                Logger.getLogger(CampoValor.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
     /* Crea una lista de CampoValor con los campos y valores de la actividad cuyo
-     * id es pasado por parametro*/
+     * id es pasado por parametro y crea nuevos campos para colocar los participantes 
+     * del valor de un campo participante en varios campos*/
     public static ArrayList<CampoValor> listarCamposValores(int idActividad) {
 
         ArrayList<CampoValor> listaValor = new ArrayList<>(0);
@@ -474,6 +524,7 @@ public class CampoValor implements Serializable {
                         listaValor.add(cv);
                     }
                     if (!sinParticipantes && tipoCampo.equals("participante")) {
+                        System.out.println("participantes a pasar a campos: " + valor);
                         agregarCamposParticipante(cv, listaValor, catalogo);
                     }
                 }
@@ -497,12 +548,13 @@ public class CampoValor implements Serializable {
         int longitud = primerCampo.getCampo().getLongitud() - participantes.length + 1;
         primerCampo.getCampo().setLongitud(longitud);
         if (participantes[0].startsWith("$")) {
+            primerCampo.valor = "";
             primerCampo.valorAux = participantes[0].substring(1);
-            System.out.println(primerCampo.valorAux + " " + " 1111111111111");
+            System.out.println(primerCampo.valorAux + " " + " 1valauxxxxxxxxxxxxx");
         } else {
             primerCampo.valor = participantes[0];
             primerCampo.valorAux = "Apellido(s), Nombre(s)";
-            System.out.println(primerCampo.valor + " 1111111111111");
+            System.out.println(primerCampo.valor + " 1vallllllllllllll");
         }
 
         listaValor.add(primerCampo);
@@ -522,11 +574,11 @@ public class CampoValor implements Serializable {
             if (participante.startsWith("$")) { //participante que no es usuario
                 cv.valorAux = participante.substring(1);
                 cv.valor = "";
-                System.out.println(cv.valorAux + " -1-1-1-1-1-1-1-1-1-1");
+                System.out.println(cv.valorAux + " nvalauxxxxxxxxxxxxx");
             } else {
                 cv.valorAux = "Apellido(s), Nombre(s)";
                 cv.valor = obtenerValor(participante.split(",")[0], catalogo);
-                System.out.println(cv.valor + " -1-1-1-1-1-1-1-1-1-1");
+                System.out.println(cv.valor + " nvallllllllllllll");
             }
 
             listaValor.add(cv);
@@ -536,9 +588,7 @@ public class CampoValor implements Serializable {
     public static String obtenerValor(String usbid, String catalogo) {
 
         ArrayList<ElementoCatalogo> valores = ElementoCatalogo.listarElementos(catalogo, 0);
-        Iterator it = valores.iterator();
-        while (it.hasNext()) {
-            ElementoCatalogo ec = (ElementoCatalogo) it.next();
+        for (ElementoCatalogo ec : valores) {
             if (ec.getMensaje().equals(usbid)) {
                 return ec.getContenido();
             }

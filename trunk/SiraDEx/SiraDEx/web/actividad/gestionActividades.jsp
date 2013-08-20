@@ -27,7 +27,7 @@
                 $(".mostrar").click(function(){
                     $(this).siblings('.textolargo').toggle();
                     var $this = $(this);
-                    $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
+                    $this.text($this.text() === "Menos detalles" ? "Más detalles" : "Menos detalles");
                 });
                 
                 
@@ -49,9 +49,9 @@
                 $(".ver").click(function(){
                     $('.grafica').toggle();
                     var $ver1 = $(document.getElementsByClassName('ver')[0]);
-                    $ver1.text($ver1.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                    $ver1.text($ver1.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                     var $ver2 = $(document.getElementsByClassName('ver')[1]);
-                    $ver2.text($ver2.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                    $ver2.text($ver2.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                 });
             
             });
@@ -162,7 +162,7 @@
                         </td>
                         <td>
 
-                            <% out.print(a.camposValoresToString());%>
+                            <% out.print(a.camposValoresToString(a.getIdActividad()));%>
 
                         <span class="textolargo"><br>
                             <b>Descripción:</b> 
