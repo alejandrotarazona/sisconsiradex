@@ -210,10 +210,12 @@ public class CampoValor implements Serializable {
         eValor.setIp(ip);
         eValor.setUser(user);
 
-        String tipo = campoNM.getCampo().getTipo();
+        String tipo = campo.getTipo();
 
-        if (campoNM.campo.getLongitud() != -3) {
-            if (!tipo.equals("archivo") && campo.getLongitud() >= 0) {
+        if (campoNM.campo.getLongitud() != -3) { //no es un campo eliminado
+            
+            // no es archivo, ni creado dinamicamente
+            if (!tipo.equals("archivo") && campo.getLongitud() >= 0) { 
                 String[] condColumnas = {
                     ATRIBUTOS[0], //id_campo
                     ATRIBUTOS[1] //id_actividad
