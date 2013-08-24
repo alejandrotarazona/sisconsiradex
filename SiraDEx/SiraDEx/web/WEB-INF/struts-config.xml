@@ -239,7 +239,8 @@
                     
         <action path="/GestionBackups" type="Backup.Gestionar" 
                 scope="session" parameter="method" name="backupForm">
-            <forward name="page" path="gestionBackups"/>    
+            <forward name="page" path="gestionBackups"/>
+            <forward name="success" path="GestionBackups.do?method=page" redirect="true"/>    
         </action>     
         
         <!-- ==============================LOG==============================-->

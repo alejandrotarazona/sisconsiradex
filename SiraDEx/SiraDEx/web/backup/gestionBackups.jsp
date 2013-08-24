@@ -103,7 +103,7 @@
                         <html:submit styleId="botonRestaurar"
                                      value=" "
                                      title="Restaurar el sistema"
-                                     onclick="return confirm('¿Está seguro que desea restaurar la base de datos a partir del archivo '${b}'?')" />
+                                     onclick="return confirm('¿Está seguro que desea restaurar la base de datos a partir del archivo ${b}?')" />
                     </html:form>
                 </td>
                 </tr>
