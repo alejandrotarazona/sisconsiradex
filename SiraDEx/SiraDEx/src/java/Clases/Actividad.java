@@ -277,7 +277,7 @@ public class Actividad extends Root {
             String tipo = cv.getCampo().getTipo();
             String valor = cv.getValor();
             if (!valor.isEmpty()) {
-                System.out.println("############ "+valor);
+                System.out.println("############ " + valor);
                 switch (tipo) {
                     case "checkbox":
                         if (!valor.equals("false")) {
@@ -391,7 +391,7 @@ public class Actividad extends Root {
                     if (!usbid.startsWith("$")) {
                         correos += usbid + "@usb.ve ";
                         String email = rs.getString("email");
-                        if (!email.equals("")) {
+                        if (email != null && !Verificaciones.esVacio(email)) {
                             correos += email + " ";
                         }
                     }
@@ -482,7 +482,7 @@ public class Actividad extends Root {
             }
 
             int j = i + 1;
-            for (; j < campos.size() 
+            for (; j < campos.size()
                     && campos.get(j).getCampo().getLongitud() == -1; j++) {
                 String val = campos.get(j).getValor();
                 String valAux = campos.get(j).getValorAux();
@@ -561,12 +561,25 @@ public class Actividad extends Root {
         return false;
     }
 
+    private boolean eliminarParticipantes() {
+
+        Entity e = new Entity(5);//PARTICIPA
+
+        String[] campos = {
+            "id_act"
+        };
+        Object[] condicion = {
+            idActividad,};
+        System.out.println("ELIMINANDO PARTICIPANTES ");
+        return e.borrar(campos, condicion);
+    }
+
     public boolean modificar(ArrayList<CampoValor> camposNM, String ip, String usuario) {
 
         if (!Verificaciones.verificar(this, true)) {
             return false;
         }
-        boolean resp = true;
+        boolean resp = eliminarParticipantes();
         int nroEliminados = 0;
         for (int i = 0; i < camposValores.size() && resp; i++) {
             CampoValor campoNM = camposNM.get(i + nroEliminados);

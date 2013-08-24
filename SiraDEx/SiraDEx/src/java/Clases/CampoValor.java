@@ -15,7 +15,6 @@ import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.apache.struts.upload.FormFile;
@@ -280,71 +279,30 @@ public class CampoValor implements Serializable {
             valorAuxNM = "";
         }
 
-        if (valorAuxNM.isEmpty() && valorNM.isEmpty()
-                && valorAux.isEmpty() && valor.isEmpty()) { //no se modifica el participante
-            return true;
-        }
-
         boolean resp = true;
         Entity eValor = new Entity(5);//PARTICIPA
         String usbid;
-        int longitud = campoNM.campo.getLongitud();
 
-        if (longitud != -2) {
-            //Se elimina al participante
-            System.out.println("0ELIMINAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
-                    + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
-            //obtiene solo el usbid del elemento
-            if (!valorNM.isEmpty()) {
-                if (valorNM.startsWith("$")) {
-                    usbid = valorNM.split(";")[0];
-                } else {
-                    usbid = valorNM.split(",")[0];
-                }
-                //agrega un $ al inicio para identificar que no es un usbid 
+        //Se inserta al participante
+        System.out.println("0INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
+                + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
+        //obtiene solo el usbid del elemento
+        if (!valor.isEmpty()) {
+            if (valor.startsWith("$")) {
+                usbid = valor.split(";")[0];
             } else {
-                usbid = "$" + valorAuxNM;
+                usbid = valor.split(",")[0];
             }
-
-            String[] campos = {
-                ATRIBUTOS[0], //id_campo
-                "id_act",
-                "usbid"
-            };
-            Object[] condicion = {
-                campoNM.campo.getIdCampo(),
-                idAct,
-                usbid
-            };
-            System.out.println("1ELIMINAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
-                    + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
-            resp &= eValor.borrar(campos, condicion);
-            System.out.println("---------DELETE PARTICIPA " + usbid + " " + resp);
+            //agrega un $ al inicio para identificar que no es un usbid 
+        } else {
+            usbid = "$" + valorAux;
         }
 
-        if (longitud != -3) {
-            //Se inserta al participante
-            System.out.println("0INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
-                    + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
-            //obtiene solo el usbid del elemento
-            if (!valor.isEmpty()) {
-                if (valor.startsWith("$")) {
-                    usbid = valor.split(";")[0];
-                } else {
-                    usbid = valor.split(",")[0];
-                }
-                //agrega un $ al inicio para identificar que no es un usbid 
-            } else {
-                usbid = "$" + valorAux;
-            }
-
-            System.out.println("1INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
-                    + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
-            Object[] tupla = {idAct, usbid, campo.getIdCampo()};
-            resp &= eValor.insertar(tupla);
-            System.out.println("---------INSERT PARTICIPA " + usbid + " " + resp);
-        }
-
+        System.out.println("1INSERTAR PARTICIPANTE VAL " + valor + " VALAUX " + valorAux
+                + " VALNM " + valorNM + " VALAUXNM " + valorAuxNM);
+        Object[] tupla = {idAct, usbid, campo.getIdCampo()};
+        resp &= eValor.insertar(tupla);
+        System.out.println("---------INSERT PARTICIPA " + usbid + " " + resp);
         return resp;
 
     }

@@ -289,6 +289,7 @@ public class Verificaciones {
 
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
+                System.out.println("v " + valor + " vAux "+ valorAux +" xxxxxxxxxxxxxxxxxxx");
                 act.setMensaje("Error: Se ingresó un participante de " + nombreP 
                         + " por el campo de texto y por selección de la lista a la vez."
                         + " Debe ser ingresado por solo una de estas opciones.");
@@ -382,10 +383,11 @@ public class Verificaciones {
         try {
             byte pdf[] = {0x25, 0x50, 0x44, 0x46};
             byte data[] = cv.getFile().getFileData();
-            for (int i = 0; i < pdf.length; i++) {
-
-                if (pdf[i] != data[i]) {
-                    return false;
+            if (data.length > 0) {
+                for (int i = 0; i < pdf.length; i++) {
+                    if (pdf[i] != data[i]) {
+                        return false;
+                    }
                 }
             }
             return true;

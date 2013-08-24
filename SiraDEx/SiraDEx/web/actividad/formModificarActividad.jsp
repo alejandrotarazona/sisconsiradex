@@ -16,10 +16,11 @@
     <head>
 
         <script type="text/javascript">
+
             $(function() {
                 $(".fecha_input input").datepicker();
                 $(".fecha_click click").datepicker();
-            })		
+            });		
         </script>
 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -123,15 +124,14 @@
                                                         value="contenido"/>
                             </html:select>
                         </logic:equal>
+                        
                         <logic:equal name="camposValores" property="campo.tipo" value="participante">
+                            <input type="hidden" class="participantes" value="${index}">
                             <html:select name="camposValores" property="valor" indexed="true"
                                          styleId="select${index}" title="Seleccione al participante"
                                          onclick="if (this.value!=''){
-                                         document.getElementById('text${index}').disabled=true;
                                          document.getElementById('text${index}').value='Apellido(s), Nombre(s)';
                                          document.getElementById('text${index}').style.color='gray';
-                                         } else {
-                                         document.getElementById('text${index}').disabled=false;
                                          }">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name='<%=catalogoi%>' label="contenido" 
@@ -149,10 +149,7 @@
                                            onblur="if (this.value=='') 
                                            this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'"
                                            onkeyup="if (this.value!=''){
-                                           document.getElementById('select${index}').disabled=true;
                                            document.getElementById('select${index}').value='';
-                                           } else {
-                                           document.getElementById('select${index}').disabled=false;
                                            }">
                                     <bean:write name="camposValores" property="valorAux"/>
                                 </html:text>
@@ -169,10 +166,7 @@
                                            onblur="if (this.value=='') 
                                            this.value = 'Apellido(s), Nombre(s)', this.style.color='gray'"
                                            onkeyup="if (this.value!=''){
-                                           document.getElementById('select${index}').disabled=true;
                                            document.getElementById('select${index}').value='';
-                                           } else {
-                                           document.getElementById('select${index}').disabled=false;
                                            }">
                                     <bean:write name="camposValores" property="valorAux"/>
                                 </html:text>
