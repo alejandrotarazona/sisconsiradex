@@ -7,6 +7,7 @@ package Actividad;
 import Clases.Actividad;
 import Clases.Root;
 import Clases.Usuario;
+import Clases.Verificaciones;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -56,7 +57,12 @@ public class Rechazar extends DispatchAction {
         }
         Actividad act = (Actividad) form;
 
-        if (act.getDescripcion().replace("\n", "").length() > 2001) {
+        String descripcion = act.getDescripcion().replace("\n", "");
+        if (Verificaciones.esVacio(descripcion)) {
+            act.setMensaje("Error: Debe escribir algún motivo.");
+            return mapping.findForward(PAGE);
+        }
+        if (descripcion.length() > 2001) {
             act.setMensaje("Error: El texto debe contener menos de 2000 caracteres.");
             return mapping.findForward(PAGE);
         }
