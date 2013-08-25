@@ -240,8 +240,23 @@ public class Usuario extends Root {
                         rs.close();
                         return true;
                     }
+                    else {
+                        if (username.equals("") || password.equals("")) {
+                            mensaje = "No puede dejar campos vacíos";
+                            return false;
+                        }else{
+                            mensaje = "La combinación de USBID y Contraseña no es válida. ";
+                            mensaje += " Intente de nuevo.";
+                            return false;
+                        }
+                    }
                 }
-            }
+                if (username.equals("") || password.equals("")) {
+                    mensaje = "No puede dejar campos vacíos";
+                    return false;
+                }
+            } 
+            
         } catch (SQLException ex) {
             Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }

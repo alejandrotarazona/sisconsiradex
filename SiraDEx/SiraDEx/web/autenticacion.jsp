@@ -26,6 +26,11 @@
                 </td>
             </tr>
         </table>
+        
+        <logic:present name="usuarioForm" property="mensaje"><br>
+                <b><div align="center" class ="error"><bean:write name="usuarioForm" property="mensaje"/></div></p></b>
+            <br>
+        </logic:present>
         <p style="text-align: center;">Por razones de seguridad, por favor cierre la sesión y su navegador web cuando haya terminado de acceder a los servicios que requieren autenticación.</p>
 
         <p align="center"><strong>Introduzca su USBID y Contraseña.</strong></p>
