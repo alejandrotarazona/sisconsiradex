@@ -4,7 +4,6 @@
     Author     : SisCon
 --%>
 
-<%@page import="Clases.Usuario"%>
 <%@page import="Clases.Actividad"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
@@ -23,15 +22,15 @@
             $(".mostrar").click(function(){
                 $(this).siblings('.textolargo').toggle();
                 var $this = $(this);
-                $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
+                $this.text($this.text() === "Menos detalles" ? "Más detalles" : "Menos detalles");
             });
             $(".grafica").show();
             $(".ver").click(function(){
                 $('.grafica').toggle();
                 var $ver1 = $(document.getElementsByClassName('ver')[0]);
-                $ver1.text($ver1.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                $ver1.text($ver1.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                 var $ver2 = $(document.getElementsByClassName('ver')[1]);
-                $ver2.text($ver2.text() == "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
+                $ver2.text($ver2.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
             });
         });
     
@@ -51,10 +50,10 @@
     </head>
 
     <body>
-        <logic:present name="user">
+        <logic:present name="permiso">
             <h1 class="title">Búsquedas Avanzadas</h1>
         </logic:present>
-        <logic:notPresent name="user">
+        <logic:notPresent name="permiso">
             <h1 class="title">Búsquedas Públicas</h1>
         </logic:notPresent>
 
@@ -188,14 +187,9 @@
                             </logic:iterate>
                         </tbody>
                     </table>
-                    <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
-                        String rol = "";
-                        if (usuario != null) {
-                            rol = usuario.getRol();
-                        }
+                    <% String permiso = (String) request.getSession().getAttribute("user");
                         String accion;
-                        if (usuario == null || rol.equals("profesor") || rol.equals("empleado")
-                                || rol.equals("estudiante") || rol.equals("obrero")) {
+                        if (permiso == null) {
                             accion = "/BusquedaPublica?method=aPagina";
                         } else {
                             accion = "/BusquedaAvanzada?method=aPagina";

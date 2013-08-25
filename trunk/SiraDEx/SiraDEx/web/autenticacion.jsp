@@ -14,7 +14,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
     <head>
         <title>Servicio Centralizado de Autenticación (CAS)</title>
-
     </head>
     <body >
         <table border="0" width="100%">
@@ -26,35 +25,36 @@
                 </td>
             </tr>
         </table>
-        
+
         <logic:present name="usuarioForm" property="mensaje"><br>
-                <b><div align="center" class ="error"><bean:write name="usuarioForm" property="mensaje"/></div></p></b>
-            <br>
-        </logic:present>
-        <p style="text-align: center;">Por razones de seguridad, por favor cierre la sesión y su navegador web cuando haya terminado de acceder a los servicios que requieren autenticación.</p>
+                <div style ="font-size: 1.154em;text-align: center;font-weight: bold;background-color: #FFA07A;color: brown;">
+                    <bean:write name="usuarioForm" property="mensaje"/>
+                </div>
+            </logic:present>
+            <p style="text-align: center;">Por razones de seguridad, por favor cierre la sesión y su navegador web cuando haya terminado de acceder a los servicios que requieren autenticación.</p>
 
-        <p align="center"><strong>Introduzca su USBID y Contraseña.</strong></p>
-        <p>
-            <html:form method="POST" action="/Login?method=save">
-                <table align="center">
-                    <tr>
-                        <td>USBID:</td> 
-                        <td><html:text name="usuarioForm" property="username"></html:text>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Contraseña:</td>
-                        <td><html:password name="usuarioForm" property="password"></html:password>
-                        </td>
-                    </tr>
-                </table>
-                <p style="text-align: center;">
-                    <html:submit>Login</html:submit>
-                </p>
-            </html:form>
+            <p align="center"><strong>Introduzca su USBID y Contraseña.</strong></p>
+            <p>
+                <html:form method="POST" action="/Login?method=save">
+                    <table align="center">
+                        <tr>
+                            <td>USBID:</td> 
+                            <td><html:text name="usuarioForm" property="username"></html:text>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Contraseña:</td>
+                                <td><html:password name="usuarioForm" property="password"></html:password>
+                                </td>
+                            </tr>
+                        </table>
+                        <p style="text-align: center;">
+                        <html:submit>Login</html:submit>
+                        </p>
+                </html:form>
 
-    </body>
-</html>
+                </body>
+                </html>
 
 
 

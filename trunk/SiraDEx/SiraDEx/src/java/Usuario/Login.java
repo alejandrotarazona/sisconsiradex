@@ -49,10 +49,19 @@ public class Login extends DispatchAction {
         if (u.esUsuario()) {
             u.setUsuario();
             request.getSession().setAttribute("user", u);
+            String rol = u.getRol();
+            if (!rol.equals("profesor") && !rol.equals("empleado")
+                    && !rol.equals("estudiante") && !rol.equals("obrero")) {
+                if (rol.equals("WM")) {
+                    request.getSession().setAttribute("permiso", "wm");
+                } else {
+                    request.getSession().setAttribute("permiso", "dex");
+                }
+            }
             return mapping.findForward(SUCCESS);
         }
-            return mapping.findForward(FAILURE);
-        
+        return mapping.findForward(FAILURE);
+
 
     }
 }

@@ -15,100 +15,106 @@
     </head>
 
     <body>
-
-        <h1 class="title">Registro de Catálogo</h1>
-        <logic:present name="catalogoForm" property="mensaje"><br>
-            <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
+        <logic:notEqual name="permiso" value="wm">
+            <div align="center" class ="warning">
+                Usted no tiene permiso para acceder a esta página del SiraDEx.
+            </div>
+        </logic:notEqual>
+        <logic:equal name="permiso" value="wm">
+            <h1 class="title">Registro de Catálogo</h1>
+            <logic:present name="catalogoForm" property="mensaje"><br>
+                <div class ="error"><bean:write name="catalogoForm" property="mensaje"/></div>
+                <br>
+            </logic:present> 
             <br>
-        </logic:present> 
-        <br>
-        <font size=2>Todos los campos son obligatorios.</font><br>
+            <font size=2>Todos los campos son obligatorios.</font><br>
 
-        <html:form method="POST" action ="/RegistrarCatalogo?method=save">
-            <table>
-                <tbody>
-                    <tr>
-                    <td width="18%"><b>Catálogo de Usuarios</b></td>
-                    <td>
-                        <html:checkbox name="catalogoForm" property="participantes" value="off"
-                                       onclick="if (this.checked) { this.value = 'on'
-                                       document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
-                                       } else {document.getElementById('aviso').innerHTML='', this.value = 'off'}"/>
-                        <html:hidden name="catalogoForm" property="participantes" value="false"/>
-                    <span id="aviso"></span>
-                    </td>
-                    </tr>
-                    <tr>
-                    <td><b>Nombre del cátalogo</b></td>
-                    <td><html:text name="catalogoForm" property="nombre"/></td>
-                    </tr>
-                </tbody>
-            </table>
-            <logic:notEmpty name="catalogoForm" property="campos">
-                <font size=2>
-                    Los campos siguientes son variables.
-                </font><br>
+            <html:form method="POST" action ="/RegistrarCatalogo?method=save">
                 <table>
                     <tbody>
                         <tr>
-                        <td width="25%" align="center"><b>Nombre</b></td>
-                        <td width="10%" align="center"><b>Tipo</b></td>
-                        <td width="10%" align="center">Eliminar</td>
-                        <td></td>
-                        </tr>            
-
-                        <logic:iterate name="catalogoForm" property="campos" id="campos" 
-                                       indexId="index">
+                        <td width="18%"><b>Catálogo de Usuarios</b></td>
+                        <td>
+                            <html:checkbox name="catalogoForm" property="participantes" value="off"
+                                           onclick="if (this.checked) { this.value = 'on'
+                                           document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
+                                           } else {document.getElementById('aviso').innerHTML='', this.value = 'off'}"/>
+                            <html:hidden name="catalogoForm" property="participantes" value="false"/>
+                        <span id="aviso"></span>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td><b>Nombre del cátalogo</b></td>
+                        <td><html:text name="catalogoForm" property="nombre"/></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <logic:notEmpty name="catalogoForm" property="campos">
+                    <font size=2>
+                        Los campos siguientes son variables.
+                    </font><br>
+                    <table>
+                        <tbody>
                             <tr>
-                            <td align="center">
-                            <span style="color: gray;font-size:10px">${index+1}</span>
-                            <html:text name="campos" property="nombre" indexed="true"/>
-                            </td>
+                            <td width="25%" align="center"><b>Nombre</b></td>
+                            <td width="10%" align="center"><b>Tipo</b></td>
+                            <td width="10%" align="center">Eliminar</td>
+                            <td></td>
+                            </tr>            
 
-                            <td>
-                                <html:select name="campos" property="tipo" indexed="true"
-                                             styleClass="selector">
-                                    <html:option value="texto">texto</html:option>
-                                    <html:option value="numero">numero</html:option>
-                                    <html:option value="fecha">fecha</html:option>
-                                </html:select>
-                            </td>
-                            <td td align="center">
-                                <logic:notEqual name="campos" property="tipo" value="usbid">
-                                    <html:checkbox name="campos" property="eliminado" indexed="true"
-                                                   onclick="if (this.checked) {
-                                                   anterior = document.getElementById('submit').value;
-                                                   document.getElementById('submit').value='Eliminar Campos'
-                                                   } else {
-                                                   document.getElementById('submit').value=anterior
-                                                   }"/>
-                                    <html:hidden name="campos" property="eliminado" value="false" 
-                                                 indexed="true"/>
-                                </logic:notEqual>
-                            </td>
-                            <td></td> 
-                            </tr>
-                        </logic:iterate>
-                    </logic:notEmpty>
-                </tbody>
-            </table>                    
-            Más campos
-            <html:text name="catalogoForm" styleId="mas"
-                       property="nroCampos" value="0" size="1" maxlength="1"
-                       onkeyup="if(this.value > 0 
-                       && document.getElementById('submit').value!='Eliminar Campos') {
-                       document.getElementById('submit').value='Agregar Campos'
-                       } else if (this.value <= 0 
-                       && document.getElementById('submit').value!='Eliminar Campos'){
-                       document.getElementById('submit').value='Registrar'
-                       }"/>
-            <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
-                      onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
-                      document.getElementById('submit').value='Agregar Campos'"/>
-            <div align="center">
-                <html:submit value="Registrar" styleId="submit"/>
-            </div>
+                            <logic:iterate name="catalogoForm" property="campos" id="campos" 
+                                           indexId="index">
+                                <tr>
+                                <td align="center">
+                                <span style="color: gray;font-size:10px">${index+1}</span>
+                                <html:text name="campos" property="nombre" indexed="true"/>
+                                </td>
 
-        </html:form>
+                                <td>
+                                    <html:select name="campos" property="tipo" indexed="true"
+                                                 styleClass="selector">
+                                        <html:option value="texto">texto</html:option>
+                                        <html:option value="numero">numero</html:option>
+                                        <html:option value="fecha">fecha</html:option>
+                                    </html:select>
+                                </td>
+                                <td td align="center">
+                                    <logic:notEqual name="campos" property="tipo" value="usbid">
+                                        <html:checkbox name="campos" property="eliminado" indexed="true"
+                                                       onclick="if (this.checked) {
+                                                       anterior = document.getElementById('submit').value;
+                                                       document.getElementById('submit').value='Eliminar Campos'
+                                                       } else {
+                                                       document.getElementById('submit').value=anterior
+                                                       }"/>
+                                        <html:hidden name="campos" property="eliminado" value="false" 
+                                                     indexed="true"/>
+                                    </logic:notEqual>
+                                </td>
+                                <td></td> 
+                                </tr>
+                            </logic:iterate>
+                        </logic:notEmpty>
+                    </tbody>
+                </table>                    
+                Más campos
+                <html:text name="catalogoForm" styleId="mas"
+                           property="nroCampos" value="0" size="1" maxlength="1"
+                           onkeyup="if(this.value > 0 
+                           && document.getElementById('submit').value!='Eliminar Campos') {
+                           document.getElementById('submit').value='Agregar Campos'
+                           } else if (this.value <= 0 
+                           && document.getElementById('submit').value!='Eliminar Campos'){
+                           document.getElementById('submit').value='Registrar'
+                           }"/>
+                <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
+                          onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
+                          document.getElementById('submit').value='Agregar Campos'"/>
+                <div align="center">
+                    <html:submit value="Registrar" styleId="submit"/>
+                </div>
+
+            </html:form>
+        </logic:equal>
     </body>
 </html>

@@ -4,7 +4,6 @@
     Author     : SisCon
 --%>
 
-<%@page import="Clases.Usuario"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -30,13 +29,13 @@
                         $(function() {
                             $(".fecha_input input").datepicker();
                             $(".fecha_click click").datepicker();
-                        })	
+                        });	
                     </script>
 
 
-                    <% Usuario usuario = (Usuario) request.getSession().getAttribute("user");
+                    <% String permiso = (String) request.getSession().getAttribute("user");
                         String accion;
-                        if (usuario == null) {
+                        if (permiso == null) {
                             accion = "/BusquedaPublica?method=search";
                         } else {
                             accion = "/BusquedaAvanzada?method=search";
@@ -67,7 +66,7 @@
                             <html:optionsCollection name="participantes" label="contenido" value="mensaje"/>
                         </html:select><br><br>
 
-                        <logic:present name="user">
+                        <logic:present name="permiso">
                             Producto Tipo:<br> 
                             <html:radio property="tipoPR" value="">Cualquiera</html:radio>
                             <html:radio property="tipoPR" value="P">P</html:radio>

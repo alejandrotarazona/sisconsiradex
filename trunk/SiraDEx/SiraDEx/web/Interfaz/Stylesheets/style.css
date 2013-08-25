@@ -735,6 +735,7 @@ ul.secondary {
     background-color: #fffce5;
     border-color: #ed5;
     color: #840;
+    font: bold 1.3em Verdana,Arial,Helvetica,sans-serif; 
 }
 .error {
     font-size: 1.154em;
@@ -748,7 +749,7 @@ span.warning {
     background: none;
     border: none;
     color: #fda61f;
-    font: bold 1.3em Tahoma, Verdana, Geneva;
+    font: bold 1.3em Verdana,Arial,Helvetica,sans-serif;
     margin-left: 0.25em;
 }
 .ok {

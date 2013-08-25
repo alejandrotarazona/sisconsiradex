@@ -112,6 +112,7 @@ public class Entrar extends DispatchAction {
         Usuario user = (Usuario) form;
         if (user.setUsuarioDEx()) {
             request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("permiso", "dex");
             return mapping.findForward(SUCCESS);
         }
 
