@@ -56,7 +56,7 @@ public class Root extends ActionForm {
             atributo = (String) e.nextElement();
 
             if (!atributo.equals("usuarioForm") && !atributo.equals("user")
-                    && !atributo.equals(atrib)) {
+                    && !atributo.equals(atrib) && !atributo.equals("permiso")) {
                 System.out.println("Eliminado el atributo con scope session " + atributo);
                 session.removeAttribute(atributo);
             }
@@ -75,7 +75,8 @@ public class Root extends ActionForm {
             atributo = (String) e.nextElement();
 
             if (!atributo.equals("usuarioForm") && !atributo.equals("user")
-                    && !atributo.equals(atrib1) && !atributo.equals(atrib2)) {
+                    && !atributo.equals(atrib1) && !atributo.equals(atrib2)
+                    && !atributo.equals("permiso")) {
                 System.out.println("Eliminado el atributo con scope session " + atributo);
                 session.removeAttribute(atributo);
             }

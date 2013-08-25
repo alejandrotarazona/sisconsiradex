@@ -3,7 +3,7 @@
     Created on : 14-nov-2012, 15:05:46
     Author     : SisCon
 --%>
-<%@page import="Clases.Usuario"%>
+
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -17,14 +17,8 @@
                 <div class="content">
                     <ul class="menu">
                         <logic:present name="user">
-                            <% Usuario u = (Usuario) request.getSession().getAttribute("user");
-                                String r = u.getRol();
-                                if (r.equals("WM") || r.equals("profesor") || r.equals("obrero")
-                                        || r.equals("estudiante") || r.equals("empleado")) {
-                                    r = "";
-                                }
-                            %>
-                            <logic:equal name="user" property="rol" value="<%= r%>"> <%--DEx--%>
+
+                            <logic:equal name="permiso" value="dex">
                                 <li><h1 class="title">Gestionar:</h1></li>
 
                                 <li><html:link action="/GestionActividades?method=listDex">

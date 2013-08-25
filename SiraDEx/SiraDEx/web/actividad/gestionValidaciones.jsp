@@ -21,26 +21,26 @@
             @import "../Stylesheets/demo_table_jui.css";
         </style>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
 
                 $(".textolargo").hide();
-                $(".mostrar").click(function(){
+                $(".mostrar").click(function() {
                     $(this).siblings('.textolargo').toggle();
                     var $this = $(this);
-                    $this.text($this.text() == "Menos detalles" ? "Más detalles" : "Menos detalles");
+                    $this.text($this.text() === "Menos detalles" ? "Más detalles" : "Menos detalles");
                 });
-                
+
                 $('#datatab').dataTable({
-                    "aoColumns": [       
+                    "aoColumns": [
                         /* Participantes */ null,
                         /* Actividad */ null,
-                        /* Detalles */ { "bSortable": false },
+                        /* Detalles */ {"bSortable": false},
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Producto y Archivos */ null,
-                        /* Acciones */ 
-                        { "bSortable": false }
-                       
+                        /* Acciones */
+                        {"bSortable": false}
+
                     ]});
             });
         </script>
@@ -49,121 +49,128 @@
         <title>SiraDEx | Gestión de Validaciones</title>
     </head>
     <body>
-        <h1 class="title">Gestión de Validaciones</h1>
-        
-        
-        <logic:present name="mensajeVal"><br>
-            <logic:notMatch name="mensajeVal" value="Error:">
-                <div class ="status"><bean:write name="mensajeVal"/></div>
-            </logic:notMatch>
-            <logic:match name="mensajeVal" value="Error:">
-                <div class ="error"><bean:write name="mensajeVal"/></div>
-            </logic:match>
-        </logic:present>
-
-        <h1><bean:write name="user" property="rol"/></h1>
-
-
-        <logic:notPresent name="acts"><br>
-            <div align="center">No hay actividad pendiente por validar</div>
+        <logic:notPresent name="permiso">
+            <div align="center" class ="warning">
+                Usted no tiene permiso para acceder a esta página del SiraDEx.
+            </div>
         </logic:notPresent>
-        <logic:present name="acts">
-
-            <h1>Actividades por validar</h1> 
-
-            <table class="display" id="datatab">
-                <thead>
-                    <tr>
-                    <th>Participantes</th>
-                    <th>Tipo de Actividad</th>
-                    <th>Detalles</th>
-                    <th>Creación</th>
-                    <th title="Modificación">Mod.</th>
-                    <th title="Producto y Archivos">PyA</th>
-                    <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <logic:iterate name="acts" id="act">
-                        <tr><td>
-                            <% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                out.print(a.participantesToString());%>
-                        </td>
-                        <td>
-                            <bean:write name="act" property="nombreTipoActividad"/>
-                        </td>
-                        <td>
-                            <% out.print(a.camposValoresToString(a.getIdActividad()));%>
-
-                        <span class="textolargo"><br>
-                            <b>Descripción:</b> 
-                            <bean:write name="act" property="descripcion"/>
-
-                            <logic:iterate name="act" property="camposValores" 
-                                           id="campoValor" indexId="index">
-                                <logic:equal name="campoValor" property="campo.tipo" 
-                                             value="textol">
-                                    <br>
-                                    <bean:write name="campoValor" 
-                                                property="campo.nombre"/>:
-                                    <bean:write name="campoValor" property="valor"/>
-                                </logic:equal>
-
-                            </logic:iterate>
-                        </span>  
+        <logic:present name="permiso">
+            <h1 class="title">Gestión de Validaciones</h1>
 
 
-                        <br>
-                        <a class="mostrar">
-                            Más detalles
-                        </a>
-                        </td>
-                        <td>    
-                            <bean:write name="act" property="fechaCreacion"/> 
-                            por el usuario <bean:write name="act" property="creador"/> 
-                        </td>
-                        <td>
-                            <logic:present  name="act" property="modificador">
-                                <bean:write name="act" property="fechaModif"/>
-                                por el usuario <bean:write name="act" property="modificador"/>
-                            </logic:present>
+            <logic:present name="mensajeVal"><br>
+                <logic:notMatch name="mensajeVal" value="Error:">
+                    <div class ="status"><bean:write name="mensajeVal"/></div>
+                </logic:notMatch>
+                <logic:match name="mensajeVal" value="Error:">
+                    <div class ="error"><bean:write name="mensajeVal"/></div>
+                </logic:match>
+            </logic:present>
 
-                        </td>
+            <h1><bean:write name="user" property="rol"/></h1>
 
-                        <td align="center">
-                            <logic:iterate name="act" property="archivos" 
-                                           id="archivo" indexId="index">
 
-                                <html:form method="POST" action="/MostrarPDF" >
-                                    <html:hidden name="act" property="idActividad"/>
-                                    <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                    <html:submit styleId="botonPDF"
+            <logic:notPresent name="acts"><br>
+                <div align="center">No hay actividad pendiente por validar</div>
+            </logic:notPresent>
+            <logic:present name="acts">
+
+                <h1>Actividades por validar</h1> 
+
+                <table class="display" id="datatab">
+                    <thead>
+                        <tr>
+                        <th>Participantes</th>
+                        <th>Tipo de Actividad</th>
+                        <th>Detalles</th>
+                        <th>Creación</th>
+                        <th title="Modificación">Mod.</th>
+                        <th title="Producto y Archivos">PyA</th>
+                        <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <logic:iterate name="acts" id="act">
+                            <tr><td>
+                                <% Actividad a = (Actividad) pageContext.findAttribute("act");
+                                    out.print(a.participantesToString());%>
+                            </td>
+                            <td>
+                                <bean:write name="act" property="nombreTipoActividad"/>
+                            </td>
+                            <td>
+                                <% out.print(a.camposValoresToString(a.getIdActividad()));%>
+
+                            <span class="textolargo"><br>
+                                <b>Descripción:</b> 
+                                <bean:write name="act" property="descripcion"/>
+
+                                <logic:iterate name="act" property="camposValores" 
+                                               id="campoValor" indexId="index">
+                                    <logic:equal name="campoValor" property="campo.tipo" 
+                                                 value="textol">
+                                        <br>
+                                        <bean:write name="campoValor" 
+                                                    property="campo.nombre"/>:
+                                        <bean:write name="campoValor" property="valor"/>
+                                    </logic:equal>
+
+                                </logic:iterate>
+                            </span>  
+
+
+                            <br>
+                            <a class="mostrar">
+                                Más detalles
+                            </a>
+                            </td>
+                            <td>    
+                                <bean:write name="act" property="fechaCreacion"/> 
+                                por el usuario <bean:write name="act" property="creador"/> 
+                            </td>
+                            <td>
+                                <logic:present  name="act" property="modificador">
+                                    <bean:write name="act" property="fechaModif"/>
+                                    por el usuario <bean:write name="act" property="modificador"/>
+                                </logic:present>
+
+                            </td>
+
+                            <td align="center">
+                                <logic:iterate name="act" property="archivos" 
+                                               id="archivo" indexId="index">
+
+                                    <html:form method="POST" action="/MostrarPDF" >
+                                        <html:hidden name="act" property="idActividad"/>
+                                        <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                        <html:submit styleId="botonPDF"
+                                                     value=" "
+                                                     title="${archivo.tipo}"/>
+                                    </html:form>
+
+                                </logic:iterate>     
+                            </td>
+                            <td align="center">
+                                <html:form method="POST" action="/ValidarActividad">
+                                    <html:hidden name="act" property="idActividad" />
+                                    <html:hidden name="act" property="nombreTipoActividad" />
+                                    <html:submit styleId="botonValidar"
                                                  value=" "
-                                                 title="${archivo.tipo}"/>
+                                                 title="Validar"
+                                                 onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
                                 </html:form>
 
-                            </logic:iterate>     
-                        </td>
-                        <td align="center">
-                            <html:form method="POST" action="/ValidarActividad">
-                                <html:hidden name="act" property="idActividad" />
-                                <html:hidden name="act" property="nombreTipoActividad" />
-                                <html:submit styleId="botonValidar"
-                                             value=" "
-                                             title="Validar"
-                                             onclick="return confirm('¿Está seguro que desea validar la actividad?')" />
-                            </html:form>
-
-                            <html:form method="POST" action="/RechazarActividad?method=page">
-                                <html:hidden name="act" property="idActividad" />
-                                <html:hidden name="act" property="nombreTipoActividad" />
-                                <html:submit styleId="botonRechazar"
-                                             value=" "
-                                             title="Rechazar"/>
-                            </html:form></td></tr>
-                        </logic:iterate>   
-                </tbody> 
-            </table>
-        </logic:present>    
+                                <html:form method="POST" action="/RechazarActividad?method=page">
+                                    <html:hidden name="act" property="idActividad" />
+                                    <html:hidden name="act" property="nombreTipoActividad" />
+                                    <html:submit styleId="botonRechazar"
+                                                 value=" "
+                                                 title="Rechazar"/>
+                                </html:form></td></tr>
+                            </logic:iterate>   
+                    </tbody> 
+                </table>
+            </logic:present>
+        </logic:present>
     </body>
 </html>

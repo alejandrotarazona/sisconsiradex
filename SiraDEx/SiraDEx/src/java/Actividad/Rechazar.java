@@ -50,13 +50,17 @@ public class Rechazar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         
+        String permiso = (String) request.getSession().getAttribute("permiso");
+        if (permiso == null) {
+            return mapping.findForward(PAGE);
+        }
         request.getSession().setAttribute("mensajeVal", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(PAGE);
         }
         Actividad act = (Actividad) form;
-
+     
         String descripcion = act.getDescripcion().replace("\n", "");
         if (Verificaciones.esVacio(descripcion)) {
             act.setMensaje("Error: Debe escribir algún motivo.");
