@@ -18,12 +18,12 @@
     </head>
 
     <body>
-        <logic:present name="permiso">
+        <logic:equal name="permiso" value="dex">
             <div align="center" class ="warning">
                 Usted no tiene permiso para acceder a esta página del SiraDEx.
             </div>
-        </logic:present>
-        <logic:notPresent name="permiso">
+        </logic:equal>
+        <logic:notEqual name="permiso" value="dex">
             <h1 class="title">Registro de Actividad</h1>
 
             <logic:present name="tipos">
@@ -47,6 +47,6 @@
                 Por ahora no hay ningún Tipo de Actividad para los usuarios de tipo ${user.rol}
             </div>
         </logic:notPresent>
-    </logic:notPresent>
+    </logic:notEqual>
 </body>
 </html>

@@ -28,12 +28,12 @@
 
     </head>
     <body>
-        <logic:present name="permiso">
+        <logic:equal name="permiso" value="dex">
             <div align="center" class ="warning">
                 Usted no tiene permiso para acceder a esta página del SiraDEx.
             </div>
-        </logic:present>
-        <logic:notPresent name="permiso">
+        </logic:equal>
+        <logic:notEqual name="permiso" value="dex">
             <h1 class='title'>Edición de la Actividad de <bean:write 
                     name="actividadForm" property="nombreTipoActividad"/> </h1>
 
@@ -123,7 +123,7 @@
                             </logic:equal>
 
                             <%   int i = (Integer) pageContext.findAttribute("index");
-                            String catalogoi = ("cat" + i);%>    
+                                String catalogoi = ("cat" + i);%>    
 
                             <logic:equal name="camposValores" property="campo.tipo" value="catalogo">
                                 <html:select name="camposValores" property="valor" indexed="true">
@@ -207,6 +207,6 @@
                              onclick="return confirm('¿Está seguro que desea modificar la actividad?')"/></div>
 
             </html:form>
-        </logic:notPresent>
+        </logic:notEqual>
     </body>
 </html>
