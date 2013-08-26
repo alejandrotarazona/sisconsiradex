@@ -26,12 +26,12 @@
         <title>SiraDEx | Registrar Actividad</title>
     </head>
     <body>
-        <logic:present name="permiso">
+        <logic:equal name="permiso" value="dex">
             <div align="center" class ="warning">
                 Usted no tiene permiso para acceder a esta página del SiraDEx.
             </div>
-        </logic:present>
-        <logic:notPresent name="permiso">
+        </logic:equal>
+        <logic:notEqual name="permiso" value="dex">
             <html:link title="Elegir otro Tipo de Actividad" action="/RegistrarActividad?method=page"> 
                 <html:img src="../Stylesheets/iconos/regresar.png"/>
             </html:link>
@@ -190,6 +190,6 @@
                 <div align="center"><html:submit>Registrar</html:submit></div>
 
             </html:form>
-        </logic:notPresent>
+        </logic:notEqual>
     </body>
 </html>
