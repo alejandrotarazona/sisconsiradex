@@ -73,13 +73,15 @@
                             </td>
                             <td>
                                 <logic:equal name="camposValores" property="campo.tipo" value="texto">
-                                    <html:text name="camposValores" property="valor" indexed="true">
+                                    <html:text name="camposValores" property="valor" indexed="true"
+                                               maxlength="${camposValores.campo.longitud}">
                                         <bean:write name="camposValores" property="valor"/>
                                     </html:text>
                                 </logic:equal>
 
                                 <logic:equal name="camposValores" property="campo.tipo" value="numero">
-                                    <html:text name="camposValores" property="valor" indexed="true">
+                                    <html:text name="camposValores" property="valor" indexed="true"
+                                               maxlength="${camposValores.campo.longitud}">
                                         <bean:write name="camposValores" property="valor"/>
                                     </html:text> 
                                 </logic:equal>
