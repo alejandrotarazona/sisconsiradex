@@ -115,23 +115,22 @@
                             </html:select>
                         </td>
                         </tr>
-                        <tr>
-                        <td>
-                            <b>Dependencia a validar</b> <span style="color:red">*</span>
-                        </td>
-                        <td> 
-                            <logic:equal name="user" property="rol" value="WM">
+                        <logic:equal name="user" property="rol" value="WM">
+                            <tr>
+                            <td>
+                                <b>Dependencia a validar</b> <span style="color:red">*</span>
+                            </td>
+                            <td>
                                 <html:select property="validador">
+                                    <html:option value="">-- Seleccione --</html:option>
                                     <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
                                 </html:select>
-                            </logic:equal>
-                            <logic:notEqual name="user" property="rol" value="WM">
-                                <html:select property="validador" disabled="true" title="${user.rol}">
-                                    <html:option value="${user.rol}">${user.rol}</html:option>
-                                </html:select>
-                            </logic:notEqual>
-                        </td>
-                        </tr>
+                            </td>
+                            </tr>
+                        </logic:equal>
+                        <logic:notEqual name="user" property="rol" value="WM">
+                            <html:hidden property="validador" value="${user.rol}"/>
+                        </logic:notEqual>
                         <tr>
                         <td>
                             <b>Realizado por</b> <span style="color:red">*</span>
