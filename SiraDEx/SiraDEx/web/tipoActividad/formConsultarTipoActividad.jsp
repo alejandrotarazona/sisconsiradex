@@ -25,93 +25,100 @@
 
     </head>
     <body>
-        <html:link title="Ir a la Papelera" action="/GestionTiposActividad?method=listDisable"> 
-            <html:img src="../Stylesheets/iconos/regresar.png"/>
-        </html:link><br>
-        <h1 class='title'>Consulta del Tipo de Actividad <bean:write 
-                name="tipoActividadForm" property="nombreTipo"/> </h1>
+        <logic:notPresent name="permiso">
+            <div align="center" class ="warning">
+                Usted no tiene permiso para acceder a esta página del SiraDEx.
+            </div>
+        </logic:notPresent>
+        <logic:present name="permiso">
+            <html:link title="Ir a la Papelera" action="/GestionTiposActividad?method=listDisable"> 
+                <html:img src="../Stylesheets/iconos/regresar.png"/>
+            </html:link><br>
+            <h1 class='title'>Consulta del Tipo de Actividad <bean:write 
+                    name="tipoActividadForm" property="nombreTipo"/> </h1>
 
-        <table>
-            <tbody>
-                <tr>
-                <td width="15%"><b>Nombre del Tipo de Actividad</b></td>
-                <td>
-                    <bean:write name="tipoActividadForm" property="nombreTipo"/>
-                </td>
-                </tr>
-                <tr>
-                <td><b>Descripción</b></td>
-                <td>
-                    <bean:write name="tipoActividadForm" property="descripcion"/>
-                </td>
-                </tr>
-                <tr>
-                <td><b>Tipo de Producto</b></td>
-                <td>
-                    <bean:write name="tipoActividadForm" property="tipoPR"/>
-                </td>
-                </tr>
-                <tr>
-                <td><b>Programa</b></td>
-                <td>
-                    <bean:write name="tipoActividadForm"  property="programa"/>
-                </td>
-                </tr>
-                <tr>
-                <td><b>Dependencia a validar</b></td>
-                <td> 
-                    <bean:write name="tipoActividadForm"  property="validador"/>
-                </td>
-                </tr>
-                <tr>
-                <td><b>Realizado por</b></td>
-                <td>
-                    <logic:iterate name="tipoActividadForm" property="permisos" id="permiso">
-                        <bean:write name="permiso"/><br>
-                    </logic:iterate> 
-                </td>       
-                </tr>
-            </tbody>
-        </table>
-
-        <b>Campos</b><br>
-        <table class="cebra">
-            <tbody>
-                <tr>
-                <th><b>Nombre</b></th>
-                <th><b>Tipo</b></th>
-                <th><b>Longitud/Límite</b></th>
-                <th><b>Obligatorio</b></th>
-                <th><b>Catálogo</b></th>
-                </tr>
-                <logic:iterate name="tipoActividadForm" property="campos" id="campos"
-                               indexId="index">
-
-                    <tr>      
+            <table>
+                <tbody>
+                    <tr>
+                    <td width="15%"><b>Nombre del Tipo de Actividad</b></td>
                     <td>
-                    <span style="padding-left:6em;color: gray;font-size:10px">${index+1}</span>
-                    <bean:write name="campos" property="nombre"/>
-                    </td>
-                    <td align="center">
-                        <bean:write name="campos" property="tipo"/>
-                    </td>
-                    <td align="center">
-                        <logic:notEqual name="campos" property="tipo" value="archivo">
-                            <logic:notEqual name="campos" property="tipo" value="checkbox">
-                                <bean:write name="campos"  property="longitud"/>
-                            </logic:notEqual>
-                        </logic:notEqual>  
-                    </td>
-                    <td align="center">
-                        <html:checkbox name="campos" property="obligatorio" 
-                                       disabled="true" indexed="true"/>
-                    </td>
-                    <td align="center">     
-                        <bean:write name="campos" property="catalogo"/>
+                        <bean:write name="tipoActividadForm" property="nombreTipo"/>
                     </td>
                     </tr>
-                </logic:iterate>
-            </tbody>
-        </table>
+                    <tr>
+                    <td><b>Descripción</b></td>
+                    <td>
+                        <bean:write name="tipoActividadForm" property="descripcion"/>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Tipo de Producto</b></td>
+                    <td>
+                        <bean:write name="tipoActividadForm" property="tipoPR"/>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Programa</b></td>
+                    <td>
+                        <bean:write name="tipoActividadForm"  property="programa"/>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Dependencia a validar</b></td>
+                    <td> 
+                        <bean:write name="tipoActividadForm"  property="validador"/>
+                    </td>
+                    </tr>
+                    <tr>
+                    <td><b>Realizado por</b></td>
+                    <td>
+                        <logic:iterate name="tipoActividadForm" property="permisos" id="permiso">
+                            <bean:write name="permiso"/><br>
+                        </logic:iterate> 
+                    </td>       
+                    </tr>
+                </tbody>
+            </table>
+
+            <b>Campos</b><br>
+            <table class="cebra">
+                <tbody>
+                    <tr>
+                    <th><b>Nombre</b></th>
+                    <th><b>Tipo</b></th>
+                    <th><b>Longitud/Límite</b></th>
+                    <th><b>Obligatorio</b></th>
+                    <th><b>Catálogo</b></th>
+                    </tr>
+                    <logic:iterate name="tipoActividadForm" property="campos" id="campos"
+                                   indexId="index">
+
+                        <tr>      
+                        <td>
+                        <span style="padding-left:6em;color: gray;font-size:10px">${index+1}</span>
+                        <bean:write name="campos" property="nombre"/>
+                        </td>
+                        <td align="center">
+                            <bean:write name="campos" property="tipo"/>
+                        </td>
+                        <td align="center">
+                            <logic:notEqual name="campos" property="tipo" value="archivo">
+                                <logic:notEqual name="campos" property="tipo" value="checkbox">
+                                    <bean:write name="campos"  property="longitud"/>
+                                </logic:notEqual>
+                            </logic:notEqual>  
+                        </td>
+                        <td align="center">
+                            <html:checkbox name="campos" property="obligatorio" 
+                                           disabled="true" indexed="true"/>
+                        </td>
+                        <td align="center">     
+                            <bean:write name="campos" property="catalogo"/>
+                        </td>
+                        </tr>
+                    </logic:iterate>
+                </tbody>
+            </table>
+        </logic:present>
     </body>
 </html>

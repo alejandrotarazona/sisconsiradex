@@ -1,7 +1,5 @@
 
-<%@page import="Clases.Usuario"%>
-
-<%@taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
+<%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 <%@ taglib uri="http://struts.apache.org/tags-tiles" prefix="tiles" %>
@@ -18,10 +16,10 @@
             @import "../Stylesheets/demo_table_jui.css";
         </style>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
 
                 $('#datatab').dataTable({
-                    "aoColumns": [       
+                    "aoColumns": [
                         /* USB-ID */ null,
                         /* Nombre(s) */ null,
                         /* Apellidos */ null,
@@ -29,9 +27,9 @@
                         /* Correo */ null,
                         /* Rol */ null,
                         /* Acciones */
-                        { "bSortable": false },
-                        { "bSortable": false }
-                       
+                        {"bSortable": false},
+                        {"bSortable": false}
+
                     ]});
             });
         </script>
@@ -41,75 +39,82 @@
         <title>SiraDEx | Gestión de Usuarios</title>
     </head>
     <body>
-        <h1 class="title">Gestión de Usuarios</h1>
+        <logic:notEqual name="permiso" value="wm">
+            <div align="center" class ="warning">
+                Usted no tiene permiso para acceder a esta página del SiraDEx.
+            </div>
+        </logic:notEqual>
+        <logic:equal name="permiso" value="wm">
+            <h1 class="title">Gestión de Usuarios</h1>
 
-        <logic:present name="mensajeUsuario"><br>
-            <logic:notMatch name="mensajeUsuario" value="Error:">
-                <div class ="status"><bean:write name="mensajeUsuario"/></div>
-            </logic:notMatch>
-            <logic:match name="mensajeUsuario" value="Error:">
-                <div class ="error"><bean:write name="mensajeUsuario"/></div>
-            </logic:match>
-            <br>
-        </logic:present>
+            <logic:present name="mensajeUsuario"><br>
+                <logic:notMatch name="mensajeUsuario" value="Error:">
+                    <div class ="status"><bean:write name="mensajeUsuario"/></div>
+                </logic:notMatch>
+                <logic:match name="mensajeUsuario" value="Error:">
+                    <div class ="error"><bean:write name="mensajeUsuario"/></div>
+                </logic:match>
+                <br>
+            </logic:present>
 
-        <html:link action="/RegistrarUsuario?method=page"> 
-            <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
-            <b>Registrar Usuario</b>
-        </html:link><br/> 
+            <html:link action="/RegistrarUsuario?method=page"> 
+                <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+                <b>Registrar Usuario</b>
+            </html:link><br/> 
 
-        <logic:notPresent name="usuarios"><br><br>
-        <span align="center">No hay usuarios que mostrar</span>
-    </logic:notPresent>
-    <logic:present name="usuarios">
+            <logic:notPresent name="usuarios"><br><br>
+            <span align="center">No hay usuarios que mostrar</span>
+        </logic:notPresent>
+        <logic:present name="usuarios">
 
-        <h1>Usuarios registrados en el sistema</h1>
+            <h1>Usuarios registrados en el sistema</h1>
 
-        <table class="display" id="datatab">
-            <thead>
-                <tr>
-                <th>USBID</th>
-                <th>Nombre(s)</th>
-                <th>Apellidos</th>
-                <th>Teléfono</th>
-                <th>Correo electrónico</th>
-                <th>Rol</th>
-                <th></th>
-                <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <logic:iterate name="usuarios" id="usr">
+            <table class="display" id="datatab">
+                <thead>
                     <tr>
-                    <td> <bean:write name="usr" property="username"/></td>
-                    <td> <bean:write name="usr" property="nombres"/></td>
-                    <td> <bean:write name="usr" property="apellidos"/></td>
-                    <td> <bean:write name="usr" property="telefono"/></td>
-                    <td> <bean:write name="usr" property="email"/></td>
-                    <td> <bean:write name="usr" property="rol"/></td>
-
-                    <td>
-                        <html:form method="POST" action="/ModificarUsuario?method=page">
-                            <html:hidden name="usr" property="username" />
-                            <html:submit styleId="botonModificar"
-                                         value=" "
-                                         title="Modificar"/>
-                        </html:form>
-                    </td>
-                    <td>
-                        <html:form method="POST" action="/EliminarUsuario">
-                            <html:hidden name="usr" property="username" />
-                            <html:submit styleId="botonEliminar"
-                                         value=" "
-                                         title="Eliminar"
-                                         onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
-                        </html:form>
-                    </td>
+                    <th>USBID</th>
+                    <th>Nombre(s)</th>
+                    <th>Apellidos</th>
+                    <th>Teléfono</th>
+                    <th>Correo electrónico</th>
+                    <th>Rol</th>
+                    <th></th>
+                    <th></th>
                     </tr>
-                </logic:iterate>   
-            </tbody> 
-        </table>
+                </thead>
+                <tbody>
+                    <logic:iterate name="usuarios" id="usr">
+                        <tr>
+                        <td> <bean:write name="usr" property="username"/></td>
+                        <td> <bean:write name="usr" property="nombres"/></td>
+                        <td> <bean:write name="usr" property="apellidos"/></td>
+                        <td> <bean:write name="usr" property="telefono"/></td>
+                        <td> <bean:write name="usr" property="email"/></td>
+                        <td> <bean:write name="usr" property="rol"/></td>
 
-    </logic:present>
+                        <td>
+                            <html:form method="POST" action="/ModificarUsuario?method=page">
+                                <html:hidden name="usr" property="username" />
+                                <html:submit styleId="botonModificar"
+                                             value=" "
+                                             title="Modificar"/>
+                            </html:form>
+                        </td>
+                        <td>
+                            <html:form method="POST" action="/EliminarUsuario">
+                                <html:hidden name="usr" property="username" />
+                                <html:submit styleId="botonEliminar"
+                                             value=" "
+                                             title="Eliminar"
+                                             onclick="return confirm('¿Está seguro que desea eliminar el usuario?')" />
+                            </html:form>
+                        </td>
+                        </tr>
+                    </logic:iterate>   
+                </tbody> 
+            </table>
+
+        </logic:present>
+    </logic:equal>
 </body>
 </html>
