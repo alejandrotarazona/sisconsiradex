@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import Json.JSONObject;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -275,5 +276,26 @@ public class Campo implements Serializable {
         }
 
         return resp;
+    }
+    
+    /**
+     * Funcion que devuelve el JSONObject con la informacion referente al Campo
+     * en cuestio. Requiere que el campo este inicializado previamente.
+     * @return JSONObject con los valores del campo
+     */
+    public JSONObject toJSONObject(){
+        JSONObject jCampo = new JSONObject();
+        /*
+         *     private String nombre;
+         *     private String tipo;
+         *     private int longitud;
+         *     private boolean obligatorio;
+         */
+        jCampo.put("nombre", getNombre());
+        jCampo.put("tipo", getTipo());
+        jCampo.put("longitud", getLongitud());
+        jCampo.put("obligatorio", isObligatorio());
+        
+        return jCampo;
     }
 }

@@ -5,6 +5,7 @@
 package Clases;
 
 import DBMS.Entity;
+import Json.JSONObject;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -554,5 +555,19 @@ public class CampoValor implements Serializable {
             }
         }
         return usbid + ", NO HA SIDO REGISTRADO AL CATÁLOGO";
+    }
+    
+    public JSONObject toJSONObject(){
+        JSONObject jCampoValor = new JSONObject();
+        
+        /*
+         *     private Campo campo;
+         *     private String valor = ""
+         */
+        
+        jCampoValor.put("campo", campo.toJSONObject());
+        jCampoValor.put("valor", valor);
+        
+        return jCampoValor;        
     }
 }
