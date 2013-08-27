@@ -5,6 +5,8 @@
 package Clases;
 
 import DBMS.Entity;
+import Json.JSONArray;
+import Json.JSONObject;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -977,6 +979,54 @@ public class Actividad extends Root {
         return listar(rs);
     }
 
+    /**
+     *
+     * @return JSONObject con los valores de la actividad.
+     */
+    public JSONObject toJSONObject() {
+        JSONObject jActividad = new JSONObject();
+
+//    private String nombreTipoActividad;
+//    private String validacion;
+//    private String creador; //usbid
+//    private String fechaCreacion;
+//    private String modificador;
+//    private String fechaModif;
+//    private String descripcion;
+//    private String validador;
+//    private ArrayList<String> participantes = new ArrayList<>(0);
+//    private ArrayList<CampoValor> camposValores;
+//    private ArrayList<Archivo> archivos = new ArrayList<>(0);
+        jActividad.put("nombreTipoActividad", getNombreTipoActividad());
+        jActividad.put("validacion", getValidacion());
+        jActividad.put("creador", getCreador());
+        jActividad.put("fechaCreacion", getFechaCreacion());
+        jActividad.put("modificador", getModificador());
+        jActividad.put("fechaModif", getFechaModif());
+        jActividad.put("descripcion", getDescripcion());
+        jActividad.put("validador", getValidador());
+
+        Iterator it = participantes.iterator();
+        String participando = "";
+        while (it.hasNext()) {
+            participando += (String) it.next();
+        }
+        jActividad.put("participantes", participando);
+        
+        it = camposValores.iterator();
+        JSONArray jObjCamposValores = new JSONArray();
+        while(it.hasNext()){
+            CampoValor cv = (CampoValor) it.next();
+            JSONObject aux = cv.toJSONObject();
+            jObjCamposValores.put(aux);
+        }
+        jActividad.put("camposValores", jObjCamposValores);
+//        jActividad.put();             -- Aun no se como parsear archivos, cuando lo tenga lo agrego
+
+
+        return jActividad;
+    }
+
     public static void main(String args[]) {
         /*
          public static void imprimirLista(ArrayList<String> lista) {
@@ -1014,6 +1064,10 @@ public class Actividad extends Root {
          imprimirLista(lista);*/
 
         Actividad a = new Actividad();
-        System.out.println("fecha hora " + Clases.Log.getFechaHora());
+        a.setIdActividad(1);
+        a.setActividad();
+        JSONObject jActividad = a.toJSONObject();
+        System.out.println("la actividad es:");
+        System.out.println(jActividad.toString());
     }
 }
