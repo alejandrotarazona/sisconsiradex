@@ -187,7 +187,7 @@
                             </logic:iterate>
                         </tbody>
                     </table>
-                    <% String permiso = (String) request.getSession().getAttribute("user");
+                    <% String permiso = (String) request.getSession().getAttribute("permiso");
                         String accion;
                         if (permiso == null) {
                             accion = "/BusquedaPublica?method=aPagina";
