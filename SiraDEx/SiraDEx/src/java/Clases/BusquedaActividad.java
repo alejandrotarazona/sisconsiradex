@@ -15,6 +15,8 @@ import java.util.Calendar;
 import java.util.Iterator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  *
@@ -29,6 +31,7 @@ public class BusquedaActividad extends Root {
     private String participante; //usbid
     private String fechaInic;
     private String fechaFin;
+    private String palabras = "";
     private int mostrarPorPagina = 5;
     private int totalPaginas;
     private ArrayList<ArrayList<Actividad>> libro;
@@ -130,6 +133,14 @@ public class BusquedaActividad extends Root {
         return mostrarPorPagina;
     }
 
+    public String getPalabras() {
+        return palabras;
+    }
+
+    public void setPalabras(String palabras) {
+        this.palabras = palabras;
+    }
+
     public void setMostrarPorPagina(int mostrarPorPagina) {
         this.mostrarPorPagina = mostrarPorPagina;
     }
@@ -194,17 +205,8 @@ public class BusquedaActividad extends Root {
         this.totalActividades = totalActividades;
     }
 
-    /**
-     * Metodo para buscar por cada uno de los criterios dados.
-     *
-     * @return Las páginas con las listas de Actividades por página segun la
-     * busqueda establecida.
-     */
-    public void buscar(boolean validada, String ip, String user) {
-        libro = new ArrayList<>(0);
-        totalPaginas = 0;
-
-        boolean hayColumnas = false, hayParticipantes = false, hayRango = false;
+    private boolean actividadesOtrosParametros(boolean validada,
+            ArrayList<Actividad> cjtoAux) {
 
         Entity eBuscar = new Entity(21);//TIPO_ACT__ACT
         ArrayList<String> auxColumnas = new ArrayList<>(0);
@@ -244,21 +246,19 @@ public class BusquedaActividad extends Root {
             condiciones[i] = auxCondiciones.get(i);
         }
 
-
-
-        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);
         ResultSet rs;
         if (columnas.length > 0) {
             rs = eBuscar.seleccionar(columnas, condiciones);
-            eBuscar.setIp(ip);
-            if (user != null) {
-                eBuscar.setUser(user);
-            }
-            eBuscar.insertarLog();
-            cjtoAux = Actividad.listar(rs);
-            hayColumnas = true;
+            cjtoAux.addAll(Actividad.listar(rs));
+            return true;
         }
 
+        return false;
+
+    }
+
+    private boolean actividadesRangoFecha(ArrayList<Actividad> listaRango) {
+        boolean hayRango = false;
         String[] columna = {
             "tipo_campo"
         };
@@ -268,20 +268,24 @@ public class BusquedaActividad extends Root {
 
         Entity eRango = new Entity(24);//ACT_COMPLETA
         ResultSet rsRango = eRango.seleccionar(columna, condicion);
-        ArrayList<Integer> listaIds = new ArrayList<>(0);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
+            hayRango = true;
             if (this.fechaFin != null && !this.fechaFin.equals("")) {
                 try {
                     while (rsRango.next()) {
                         String fecha = rsRango.getString("valor");
                         try {
                             if (antesDe(fechaInic, fecha) && despuesDe(fechaFin, fecha)) {
-                                listaIds.add(rsRango.getInt("id_actividad"));
+                                int id = rsRango.getInt("id_actividad");
+                                Actividad act = new Actividad();
+                                act.setIdActividad(id);
+                                act.setActividad();
+                                act.setParticipantes(id);
+                                listaRango.add(act);
                             }
                         } catch (ParseException ex) {
                             Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        hayRango = true;
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -292,12 +296,17 @@ public class BusquedaActividad extends Root {
                         String fecha = rsRango.getString("valor");
                         try {
                             if (antesDe(fechaInic, fecha)) {
-                                listaIds.add(rsRango.getInt("id_actividad"));
+                                int id = rsRango.getInt("id_actividad");
+                                Actividad act = new Actividad();
+                                act.setIdActividad(id);
+                                act.setActividad();
+                                act.setParticipantes(id);
+                                listaRango.add(act);
                             }
                         } catch (ParseException ex) {
                             Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
                         }
-                        hayRango = true;
+
                     }
                 } catch (SQLException ex) {
                     Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -305,12 +314,18 @@ public class BusquedaActividad extends Root {
             }
 
         } else if (this.fechaFin != null && !this.fechaFin.equals("")) {
+            hayRango = true;
             try {
                 while (rsRango.next()) {
                     String fecha = rsRango.getString("valor");
                     try {
                         if (despuesDe(fechaFin, fecha)) {
-                            listaIds.add(rsRango.getInt("id_actividad"));
+                            int id = rsRango.getInt("id_actividad");
+                            Actividad act = new Actividad();
+                            act.setIdActividad(id);
+                            act.setActividad();
+                            act.setParticipantes(id);
+                            listaRango.add(act);
                         }
                     } catch (ParseException ex) {
                         Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
@@ -319,30 +334,82 @@ public class BusquedaActividad extends Root {
             } catch (SQLException ex) {
                 Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
             }
-            hayRango = true;
-        } else {
-            hayRango = false;
         }
 
-        ArrayList<Actividad> listaRango = new ArrayList<>(0);
-        if (hayRango) {
-            for (Integer id : listaIds) {
-                Actividad act = new Actividad();
-                act.setIdActividad(id.intValue());
-                act.setActividad();
-                act.setParticipantes(id.intValue());
-                listaRango.add(act);
-            }
-        } else {
-            listaRango.addAll(Actividad.listar(rsRango));
-        }
+        return hayRango;
+    }
 
-        ArrayList<Actividad> listaParticipantes = new ArrayList<>(0);
-
+    private boolean actividadesParticipantes(ArrayList<Actividad> listaParticipantes) {
+        boolean hayParticipantes = false;
         if (this.participante != null && !this.participante.equals("")) {
             hayParticipantes = true;
             listaParticipantes.addAll(Actividad.listarActividadesDeUsuario(participante));
         }
+        return hayParticipantes;
+    }
+
+    private boolean actividadesContienenPalabras(ArrayList<Actividad> listaContienen) {
+        boolean hayPalabras = false;
+
+        Entity eBuscar = new Entity(24);//ACT_COMPLETA
+        ResultSet rs = eBuscar.listar();
+
+        if (!palabras.isEmpty()) {
+            hayPalabras = true;
+            try {
+                boolean next = rs.next();
+                while (next) {
+                    String valor = rs.getString("valor");
+                    String tipo = rs.getString("nombre_tipo_actividad");
+                    String campo = rs.getString("nombre_campo");
+                    String desc = rs.getString("descripcion");
+                    if (contienePalabras(desc) || contienePalabras(valor) ||
+                            contienePalabras(campo) || contienePalabras(tipo)) {
+                        Actividad act = new Actividad();
+                        int id = rs.getInt("id_actividad");
+                        act.setIdActividad(id);
+                        act.setActividad();
+                        act.setParticipantes(id);
+                        listaContienen.add(act);
+                        next = rs.next();
+                        while (id == rs.getInt("id_actividad")) {
+                            next = rs.next();
+                        }
+                    } else {
+                        next = rs.next();
+                    }
+                }
+            } catch (SQLException ex) {
+                Logger.getLogger(BusquedaActividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        return hayPalabras;
+    }
+
+    /**
+     * Metodo para buscar por cada uno de los criterios dados.
+     *
+     * @return Las páginas con las listas de Actividades por página segun la
+     * busqueda establecida.
+     */
+    public void buscar(boolean validada) {
+        libro = new ArrayList<>(0);
+        totalPaginas = 0;
+
+        boolean hayColumnas, hayParticipantes, hayRango, hayPalabras;
+
+        ArrayList<Actividad> cjtoAux = new ArrayList<>(0);
+        hayColumnas = actividadesOtrosParametros(validada, cjtoAux);
+
+        ArrayList<Actividad> listaRango = new ArrayList<>(0);
+        hayRango = actividadesRangoFecha(listaRango);
+
+        ArrayList<Actividad> listaParticipantes = new ArrayList<>(0);
+        hayParticipantes = actividadesParticipantes(listaParticipantes);
+
+        ArrayList<Actividad> listaContienen = new ArrayList<>(0);
+        hayPalabras = actividadesContienenPalabras(listaContienen);
 
         ArrayList<ArrayList<Actividad>> listas = new ArrayList<>(0);
 
@@ -357,22 +424,24 @@ public class BusquedaActividad extends Root {
         if (hayRango) {
             listas.add(listaRango);
         }
-        ArrayList<Actividad> listaInterceptada = new ArrayList<>(0);
+        if (hayPalabras) {
+            listas.add(listaContienen);
+        }
 
         if (listas.isEmpty()) {
-            if (hayParticipantes || hayColumnas || hayRango) {
-                libro = paginar(listaInterceptada, mostrarPorPagina);
-                grafica = valoresGrafica(listaInterceptada);
-                System.out.println(listaInterceptada);
-            } else {
-                rs = eBuscar.listar();
+            if (!hayParticipantes && !hayColumnas && !hayRango && !hayPalabras) {
+                Entity eBuscar = new Entity(21);//TIPO_ACT__ACT
+                ResultSet rs = eBuscar.listar();
                 cjtoAux = Actividad.listar(rs);
                 grafica = valoresGrafica(cjtoAux);
                 libro = paginar(cjtoAux, mostrarPorPagina);
-
+            } else {
+                libro = new ArrayList<>(0);
+                String[] g = {"",""};
+                grafica = g;
             }
         } else {
-            listaInterceptada = intersectar(listas);
+            ArrayList<Actividad> listaInterceptada = intersectar(listas);
             libro = paginar(listaInterceptada, mostrarPorPagina);
             grafica = valoresGrafica(listaInterceptada);
             System.out.println(listaInterceptada);
@@ -381,7 +450,8 @@ public class BusquedaActividad extends Root {
         totalPaginas = libro.size();
         pagina = 1;
         if (totalPaginas > 0) {
-            totalActividades = (totalPaginas - 1) * mostrarPorPagina + libro.get(totalPaginas - 1).size();
+            totalActividades = (totalPaginas - 1) * mostrarPorPagina
+                    + libro.get(totalPaginas - 1).size();
         } else {
             totalActividades = 0;
         }
@@ -577,5 +647,38 @@ public class BusquedaActividad extends Root {
 
         return cIni.after(cFin) || cIni.equals(cFin);
 
+    }
+
+    private boolean contienePalabras(String valor) {
+
+        Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+        Matcher regexMatcher = regex.matcher(palabras);
+        while (regexMatcher.find()) {
+            String palabra = regexMatcher.group().toLowerCase();
+            valor = valor.toLowerCase();
+            if (valor.contains((palabra.replace("\"", "")))) {
+                return true;
+            }
+        }
+        return false;
+
+    }
+
+    public static void main(String args[]) {
+
+        String palabras = "\"hola; nada, \" que \"viste .\"";
+        ArrayList<String> matchList = new ArrayList<>(0);
+        Pattern regex = Pattern.compile("[^\\s\"']+|\"[^\"]*\"|'[^']*'");
+        Matcher regexMatcher = regex.matcher(palabras);
+        while (regexMatcher.find()) {
+            matchList.add(regexMatcher.group().replace("\"", ""));
+        }
+        String valor = "yo denada que ver";
+        if (valor.contains("Nada")){
+            System.out.println("ssssssssssssssssssssiiiiiiiiiiiiiii");
+        }
+        for (String s : matchList) {
+            System.out.println("++++++++++++++++++++++++++++++++" + s);
+        }
     }
 }

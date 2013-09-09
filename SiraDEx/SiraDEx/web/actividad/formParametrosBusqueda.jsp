@@ -22,9 +22,7 @@
                 <div class="content">
                     <script type="text/javascript" src="../Scripts/jquery-1.8.3.js"></script>
                     <script type="text/javascript" src="../Scripts/jquery-ui-1.9.2.custom.js"></script>
-                    <link rel="stylesheet" type="text/css" 
-                          href="<html:rewrite page="/Interfaz/Stylesheets/jquery-ui-1.9.2.custom.css"/>"/>
-
+                   
                     <script type="text/javascript">
                         $(function() {
                             $(".fecha_input input").datepicker();
@@ -85,7 +83,12 @@
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select><br><br>
-
+                        
+                        Que contenga:<br>
+                        <html:text name="busquedaActividadForm" size="27" property="palabras"
+                                   title="Para buscar secuencias de palabras encierrelas entre comillas. La búsqueda encontrará toda actividad que contenga dentro de su nombre, campos, valores o descripción alguna de las palabras o secuencias ingresadas y que cumpla con el resto de los parámetros de  búsqueda dados."/>
+                        <br><br>
+                        
                         Período:<br>
                         <span class="fecha_input">
                             Desde

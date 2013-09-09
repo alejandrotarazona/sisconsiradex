@@ -75,10 +75,6 @@ public class Buscar extends DispatchAction {
         BusquedaActividad ba = (BusquedaActividad) form;
 
         Usuario user = (Usuario) request.getSession().getAttribute("user");
-        String ip = request.getHeader("X-Forwarded-For");
-        if (ip == null) {
-            ip = request.getRemoteAddr();
-        }
 
         String rol = "";
         if (user != null) {
@@ -88,10 +84,10 @@ public class Buscar extends DispatchAction {
         String usuario = null;
         if (user == null || rol.equals("profesor") || rol.equals("empleado")
                 || rol.equals("estudiante") || rol.equals("obrero")) {
-            ba.buscar(true, ip, usuario);
+            ba.buscar(true);
         } else {
             usuario = user.getUsername();
-            ba.buscar(false, ip, usuario);
+            ba.buscar(false);
         }
 
         String[] atributo = {"activo"};
