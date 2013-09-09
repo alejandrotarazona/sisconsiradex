@@ -12,20 +12,26 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 
-
-
 <head>
+    <script type="text/javascript" src="../Scripts/hilitor.js"></script>
     <script type="text/javascript">
-        $(document).ready(function(){
+        $(document).ready(resaltar);
+        var myHilitor;
+        function resaltar(){
+            myHilitor = new Hilitor("contenido");
+            myHilitor.apply(document.getElementsByName("palabras")[0].value);
+        }
+
+        $(document).ready(function() {
 
             $(".textolargo").hide();
-            $(".mostrar").click(function(){
+            $(".mostrar").click(function() {
                 $(this).siblings('.textolargo').toggle();
                 var $this = $(this);
                 $this.text($this.text() === "Menos detalles" ? "Más detalles" : "Menos detalles");
             });
             $(".grafica").show();
-            $(".ver").click(function(){
+            $(".ver").click(function() {
                 $('.grafica').toggle();
                 var $ver1 = $(document.getElementsByClassName('ver')[0]);
                 $ver1.text($ver1.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
@@ -33,7 +39,7 @@
                 $ver2.text($ver2.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
             });
         });
-    
+
     </script>
 
     <style>
@@ -119,8 +125,8 @@
                         <a class="ver">
                             [Ocultar Gráfica]</a>
 
-                    </div>
-
+                    </div>                  
+                    
                     <br>
 
                     <h1>Actividades de Extensión</h1>
@@ -128,6 +134,7 @@
                          style="font-weight: normal;padding: 5px;">
                     Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
                 </div>
+                <div id="contenido">
                 <table class="cebra" style="margin:0">
                         <tbody>
                             <logic:iterate name="actividades" id="act" indexId="index">
@@ -136,7 +143,7 @@
                                     ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
                                 </td>
                                 <td>
-                                    <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                         out.print(a.participantesToString());%></b>
                                     "<bean:write name="act" property="nombreTipoActividad"/>",
 
@@ -187,6 +194,7 @@
                             </logic:iterate>
                         </tbody>
                     </table>
+                    </div>
                     <% String permiso = (String) request.getSession().getAttribute("permiso");
                         String accion;
                         if (permiso == null) {
