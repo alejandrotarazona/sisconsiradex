@@ -36,7 +36,7 @@ function Hilitor(id, tag)
 
   this.setRegex = function(input)
   {
-    input = input.replace(/^[^\w]+|[^\w]+$/g, "").replace(/[^\w'-]+/g, "|");
+    input = input.replace(/^[^\S]+|[^\S]+$/g, "").replace(/[^\S-]+/g, "|").replace(/"/g, "");
     var re = "(" + input + ")";
     //if(!this.openLeft) re = "\\b" + re;
     //if(!this.openRight) re = re + "\\b";
