@@ -352,7 +352,7 @@ public class BusquedaActividad extends Root {
         boolean hayPalabras = false;
 
         Entity eBuscar = new Entity(24);//ACT_COMPLETA
-        ResultSet rs = eBuscar.listar();
+        ResultSet rs = eBuscar.listarOrdenado("id_actividad");
 
         if (!palabras.isEmpty()) {
             hayPalabras = true;

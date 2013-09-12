@@ -25,6 +25,7 @@
         $(document).ready(function() {
 
             $(".textolargo").hide();
+            $(".mostrar").text("Más detalles");
             $(".mostrar").click(function() {
                 $(this).siblings('.textolargo').toggle();
                 var $this = $(this);
@@ -186,7 +187,7 @@
                                             </logic:iterate>
                                         </span> 
 
-                                        <a class="mostrar" style="text-decoration:underline">
+                                        <a class="mostrar" id="detalles" style="text-decoration:underline">
                                             Más detalles</a>
                                     </div>
                                 </td>

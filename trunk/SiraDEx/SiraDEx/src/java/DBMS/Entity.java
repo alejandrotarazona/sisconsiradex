@@ -257,6 +257,16 @@ public class Entity {
 
         return rs;
     }
+    
+        public ResultSet listarOrdenado(String columna) {
+        sql = "SELECT * FROM " + TABLA + " ORDER BY " + columna;
+
+        System.out.println(sql);
+        DataBase db = DataBase.getInstance();
+        ResultSet rs = db.consult(sql);
+
+        return rs;
+    }
 
     public ResultSet proyectar(String[] seleccionar, String[] columnas,
             Object[] valores) {
