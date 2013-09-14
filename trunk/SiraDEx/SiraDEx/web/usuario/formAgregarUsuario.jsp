@@ -24,6 +24,17 @@
                     }
                 });
             });
+            function verifCorreo(campo) {
+                var x = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
+                if (campo.value !== '' && !x.test(campo.value)) {
+                    document.getElementById('error').innerHTML = 'El correo debe ser de la forma nombre@dominio.xxx';
+                    document.getElementById('registrar').disabled = true;
+                }
+                if ((campo.value !== '' && x.test(campo.value)) || campo.value === '') {
+                    document.getElementById('error').innerHTML = '';
+                    document.getElementById('registrar').disabled = false;
+                }
+            }
         </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Registrar Usuario</title>
@@ -72,17 +83,8 @@
                         </tr>
                         <tr>
                         <td><b>Correo</b><br>(distinto al @usb.ve)</td>
-                        <td><html:text name="userAux" property="email" 
-                                   styleClass="modificar" maxlength="50"
-                                   onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
-                                   if(this.value != '' && !x.test(this.value)){
-                                   document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
-                                   document.getElementById('registrar').disabled=true;
-                                   }
-                                   if(this.value != '' && x.test(this.value)){
-                                   document.getElementById('error').innerHTML='';
-                                   document.getElementById('registrar').disabled=false;
-                                   }"/>
+                        <td><html:text name="userAux" property="email" maxlength="50"
+                                   onkeyup="verifCorreo(this)" onchange="verifCorreo(this)"/>
 
                         <span style="color: red" id="error"></span>
                         </td>

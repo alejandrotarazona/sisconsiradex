@@ -15,6 +15,20 @@
 
 <html>
     <head>
+        <script>
+            function verifCorreo(campo) {
+                var x = /^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/;
+                if (campo.value !== '' && !x.test(campo.value)) {
+                    document.getElementById('error').innerHTML = 'El correo debe ser de la forma nombre@dominio.xxx';
+                    document.getElementById('modificar').disabled = true;
+                }
+                if ((campo.value !== '' && x.test(campo.value)) || campo.value === '') {
+                    document.getElementById('error').innerHTML = '';
+                    document.getElementById('modificar').disabled = false;
+                }
+            }
+        </script>
+
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Mi Perfil</title>
     </head>
@@ -33,10 +47,10 @@
         <br>
 
         <a onclick="document.getElementsByClassName('modificar')[0].disabled = false;
-                    document.getElementsByClassName('modificar')[1].disabled = false;
-                    document.getElementsByClassName('modificar')[2].disabled = false;
-                    document.getElementsByClassName('modificar')[3].disabled = false;
-                    document.getElementById('boton').style.visibility = 'visible';">
+                document.getElementsByClassName('modificar')[1].disabled = false;
+                document.getElementsByClassName('modificar')[2].disabled = false;
+                document.getElementsByClassName('modificar')[3].disabled = false;
+                document.getElementById('boton').style.visibility = 'visible';">
             <html:img src="../Stylesheets/iconos/Edit_26x26.png"/>  
             <b>Editar perfil</b>
         </a> 
@@ -89,15 +103,7 @@
                     <td style="font-weight: bold">Otro Correo</td>
                     <td><html:text name="user" property="email" disabled="true" 
                                styleClass="modificar" maxlength="50"
-                               onblur="var x=/^[^@\s]+@[^@\.\s]+(\.[^@\.\s]+)+$/
-                               if(this.value != '' && !x.test(this.value)){
-                               document.getElementById('error').innerHTML='Error: El correo debe ser de la forma nombre@dominio.xxx'; 
-                               document.getElementById('modificar').disabled=true;
-                               }
-                               if(this.value != '' && x.test(this.value)){
-                               document.getElementById('error').innerHTML='';
-                               document.getElementById('modificar').disabled=false;
-                               }">
+                               onkeyup="verifCorreo(this)" onchange="verifCorreo(this)">
                             <bean:write name="user" property="email"/>
                         </html:text>
                     <span style="color: red" id="error"></span>
