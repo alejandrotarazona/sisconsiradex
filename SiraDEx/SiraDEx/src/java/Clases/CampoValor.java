@@ -214,9 +214,9 @@ public class CampoValor implements Serializable {
         String tipo = campo.getTipo();
 
         if (campoNM.campo.getLongitud() != -3) { //no es un campo eliminado
-            
+
             // no es archivo, ni creado dinamicamente
-            if (!tipo.equals("archivo") && campo.getLongitud() >= 0) { 
+            if (!tipo.equals("archivo") && campo.getLongitud() >= 0) {
                 String[] condColumnas = {
                     ATRIBUTOS[0], //id_campo
                     ATRIBUTOS[1] //id_actividad
@@ -240,7 +240,8 @@ public class CampoValor implements Serializable {
                 resp &= modificarArchivo(campoNM, idAct, ip, user);
             }
         }
-        if (tipo.equals("participante")) {
+        if (tipo.equals("participante") && !Verificaciones.esVacio(valor)
+                && !Verificaciones.esVacio(valorAux)) {
             resp &= modificarParticipante(campoNM, idAct);
             System.out.println("--------Luego de modificar participante "
                     + campoNM.getValor() + " " + resp);
@@ -556,18 +557,18 @@ public class CampoValor implements Serializable {
         }
         return usbid + ", NO HA SIDO REGISTRADO AL CATÁLOGO";
     }
-    
-    public JSONObject toJSONObject(){
+
+    public JSONObject toJSONObject() {
         JSONObject jCampoValor = new JSONObject();
-        
+
         /*
          *     private Campo campo;
          *     private String valor = ""
          */
-        
+
         jCampoValor.put("campo", campo.toJSONObject());
         jCampoValor.put("valor", valor);
-        
-        return jCampoValor;        
+
+        return jCampoValor;
     }
 }

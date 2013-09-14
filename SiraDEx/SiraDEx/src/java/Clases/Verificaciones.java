@@ -257,12 +257,12 @@ public class Verificaciones {
     public static boolean verificar(Actividad act, boolean accion) {
 
         boolean creador = false;
-        Iterator it = act.getCamposValores().iterator();
+        ArrayList<CampoValor> campos = act.getCamposValores();
         ArrayList<String> participantes = new ArrayList<>(0);
         String nombreP = "";
-        while (it.hasNext()) {
 
-            CampoValor cv = (CampoValor) it.next();
+        for (int i = 0; i < campos.size(); i++) {
+            CampoValor cv = (CampoValor) campos.get(i);
             String valor = cv.getValor();
             String valorAux = cv.getValorAux();
             String tipo = cv.getCampo().getTipo();
@@ -271,7 +271,7 @@ public class Verificaciones {
             boolean obligatorio = cv.getCampo().isObligatorio();
             String respVerif;
 
-            if (valorAux.equals("Apellido(s), Nombre(s)")) {
+            if (valorAux.equals("Apellido(s), Nombre(s)") || esVacio(valorAux)) {
                 valorAux = "";
             }
 
@@ -283,14 +283,23 @@ public class Verificaciones {
                 return false;
             }
 
+            /*verifica si el campo es tipo participante, no adicional y vacío, no tenga campos adicionales*/
+            if (i + 1 < campos.size() && tipo.equals("participante") && valorAux.isEmpty() 
+                    && valor.isEmpty() && longitud != -1 
+                    && campos.get(i + 1).getCampo().getLongitud() == -1) {
+                act.setMensaje("Error: El campo " + nombre + " no puede ser vacío y "
+                        + "si ha requerido de campos adicionales para este.");
+                return false;
+            }
+
             if (tipo.equals("participante") && longitud >= 0) {
                 nombreP = nombre;
             }
 
             /*verifica si el campo es tipo participante tenga datos en un solo campo*/
             if (tipo.equals("participante") && !valorAux.isEmpty() && !valor.isEmpty()) {
-                System.out.println("v " + valor + " vAux "+ valorAux +" xxxxxxxxxxxxxxxxxxx");
-                act.setMensaje("Error: Se ingresó un participante de " + nombreP 
+                System.out.println("v " + valor + " vAux " + valorAux + " xxxxxxxxxxxxxxxxxxx");
+                act.setMensaje("Error: Se ingresó un participante de " + nombreP
                         + " por el campo de texto y por selección de la lista a la vez."
                         + " Debe ser ingresado por solo una de estas opciones.");
                 return false;
