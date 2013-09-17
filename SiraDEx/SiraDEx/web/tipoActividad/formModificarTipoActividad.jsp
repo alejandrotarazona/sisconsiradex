@@ -77,7 +77,7 @@
                 <table>
                     <tbody>
                         <tr>
-                        <td width="15%">
+                        <td width="16%">
                             <b>Nombre del Tipo de Actividad</b> <span style="color:red">*</span>
                         </td>
                         <td>
@@ -149,6 +149,7 @@
                     <table class="cebra">
                         <tbody>
                             <tr>
+                            <th></th>
                             <th><b>Nombre</b> <span style="color:red">*</span></th>
                             <th><b>Tipo</b></th>
                             <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
@@ -166,12 +167,12 @@
                                 String l = "longitud" + i;
                             %>
 
-                            <tr>      
+                            <tr>
+                            <td><span style="color: gray;font-size:10px">${index+1}</span></td>
                             <td align="center">
-                            <span style="color: gray;font-size:10px">${index+1}</span>
-                            <html:text name="campos" property="nombre" indexed="true">
-                                <bean:write name="campos" property="nombre"/>
-                            </html:text> 
+                                <html:text name="campos" property="nombre" indexed="true">
+                                    <bean:write name="campos" property="nombre"/>
+                                </html:text> 
                             </td>
 
                             <td align="center">
