@@ -184,8 +184,8 @@ public class TipoActividad extends Root {
         if (rs != null) {
             try {
                 while (rs.next()) {
-                    String esteTipo = rs.getString("nombre_tipo_actividad");
-                    if (nombreTipo.equals(esteTipo)) {
+                    int esteTipo = rs.getInt("id_tipo_actividad");
+                    if (id == esteTipo) {
                         String permiso = rs.getString("nombre");
                         p.add(permiso);
                         System.out.print("Agregado el permiso " + permiso);

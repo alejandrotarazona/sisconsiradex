@@ -148,6 +148,7 @@
                     <table class="cebra">
                         <tbody>
                             <tr>
+                            <th></th>
                             <th><b>Nombre</b> <span style="color:red">*</span></th>
                             <th><b>Tipo</b></th>
                             <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
@@ -167,9 +168,9 @@
                             %>
 
                             <tr>
+                            <td><span style="color: gray;font-size:10px">${index+1}</span></td>
                             <td align="center">
-                            <span style="color: gray;font-size:10px">${index+1}</span>
-                            <html:text name="campos" property="nombre" indexed="true" size="30"/>
+                                <html:text name="campos" property="nombre" indexed="true" size="30"/>
 
                             </td>
 

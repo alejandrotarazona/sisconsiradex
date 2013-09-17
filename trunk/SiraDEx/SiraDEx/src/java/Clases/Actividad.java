@@ -471,23 +471,27 @@ public class Actividad extends Root {
 
     //concatena los valores de los campos participante de un mismo tipo de participante
     private void concatenarValoresParticipantes(int i, ArrayList<CampoValor> campos) {
+        String valorParticipante = campos.get(i).getValor().replace(";", " ");
+        String valorAux = campos.get(i).getValorAux().replace(";", " ");
+        if (valorAux.equals("Apellido(s), Nombre(s)")) {
+            valorAux = "";
+        }
+        if (!Verificaciones.esVacio(valorAux)) {
+            valorParticipante = "$" + valorAux;
+        }
+        if (!valorParticipante.isEmpty()) {
+            campos.get(i).setValor(valorParticipante);
+        }
+        
         if (i < campos.size() - 1
                 && campos.get(i + 1).getCampo().getLongitud() == -1
                 && campos.get(i).getCampo().getLongitud() > 0) {
-            String valorParticipante = campos.get(i).getValor();
-            String valorAux = campos.get(i).getValorAux();
-            if (valorAux.equals("Apellido(s), Nombre(s)")) {
-                valorAux = "";
-            }
-            if (!Verificaciones.esVacio(valorAux)) {
-                valorParticipante = "$" + valorAux;
-            }
 
             int j = i + 1;
             for (; j < campos.size()
                     && campos.get(j).getCampo().getLongitud() == -1; j++) {
-                String val = campos.get(j).getValor();
-                String valAux = campos.get(j).getValorAux();
+                String val = campos.get(j).getValor().replace(";", " ");
+                String valAux = campos.get(j).getValorAux().replace(";", " ");
                 if (valAux.equals("Apellido(s), Nombre(s)")) {
                     valAux = "";
                 }
@@ -495,7 +499,7 @@ public class Actividad extends Root {
                     val = "$" + valAux;
                 }
                 if (!val.isEmpty()) {
-                    valorParticipante += "; " + val;
+                    valorParticipante += ";" + val;
                 }
             }
 
@@ -1012,10 +1016,10 @@ public class Actividad extends Root {
             participando += (String) it.next();
         }
         jActividad.put("participantes", participando);
-        
+
         it = camposValores.iterator();
         JSONArray jObjCamposValores = new JSONArray();
-        while(it.hasNext()){
+        while (it.hasNext()) {
             CampoValor cv = (CampoValor) it.next();
             JSONObject aux = cv.toJSONObject();
             jObjCamposValores.put(aux);

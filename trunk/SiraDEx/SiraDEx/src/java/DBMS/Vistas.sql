@@ -91,7 +91,7 @@ CREATE OR REPLACE VIEW programas
 
 CREATE OR REPLACE VIEW permisos
     AS
-    SELECT ta.nombre_tipo_actividad, p.nombre
+    SELECT ta.id_tipo_actividad, p.nombre
     FROM permiso p
         NATURAL JOIN    tiene_permiso tp
         NATURAL JOIN    tipo_actividad ta;

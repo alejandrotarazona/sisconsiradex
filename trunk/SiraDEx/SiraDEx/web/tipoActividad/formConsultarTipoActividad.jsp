@@ -84,6 +84,7 @@
             <table class="cebra">
                 <tbody>
                     <tr>
+                    <th></th>    
                     <th><b>Nombre</b></th>
                     <th><b>Tipo</b></th>
                     <th><b>Longitud/Límite</b></th>
@@ -93,10 +94,12 @@
                     <logic:iterate name="tipoActividadForm" property="campos" id="campos"
                                    indexId="index">
 
-                        <tr>      
+                        <tr>
+                        <td><span style="color: gray;font-size:10px">${index+1}</span></td>
                         <td>
-                        <span style="padding-left:6em;color: gray;font-size:10px">${index+1}</span>
-                        <bean:write name="campos" property="nombre"/>
+                        <span style="padding-left:6em;">
+                            <bean:write name="campos" property="nombre"/>
+                        </span>
                         </td>
                         <td align="center">
                             <bean:write name="campos" property="tipo"/>

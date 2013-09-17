@@ -171,8 +171,8 @@ public class CampoValor implements Serializable {
         } // evita los campos adicionales de un tipo de participante
         else if (campo.getLongitud() != -1) {
             Object[] tupla = {idCampo, idAct, valor};
-            // inserta el valor, puede se el valor obvio, el nombre de un archivo o 
-            //los participantes concatenados de un tipo de p articipante.
+            // inserta el valor, puede ser el valor obvio, el nombre de un archivo o 
+            //los participantes concatenados de un tipo de participante.
             resp &= eAgregar.insertar(tupla);
         }
 
@@ -240,8 +240,12 @@ public class CampoValor implements Serializable {
                 resp &= modificarArchivo(campoNM, idAct, ip, user);
             }
         }
-        if (tipo.equals("participante") && !Verificaciones.esVacio(valor)
-                && !Verificaciones.esVacio(valorAux)) {
+        String valAux = valorAux;
+        if (valAux.equals("Apellido(s), Nombre(s)")) {
+            valAux = "";
+        }
+        if (tipo.equals("participante") && (!valor.isEmpty()
+                || !Verificaciones.esVacio(valAux)))  {
             resp &= modificarParticipante(campoNM, idAct);
             System.out.println("--------Luego de modificar participante "
                     + campoNM.getValor() + " " + resp);
@@ -483,11 +487,12 @@ public class CampoValor implements Serializable {
                         sinParticipantes = false;
                     }
                     if (sinParticipantes) {
+                        cv.setValorAux("Apellido(s), Nombre(s)");
                         listaValor.add(cv);
                     }
                     if (!sinParticipantes && tipoCampo.equals("participante")) {
                         System.out.println("participantes a pasar a campos: " + valor);
-                        agregarCamposParticipante(cv, listaValor, catalogo);
+                        setCamposParticipante(cv, listaValor, catalogo);
                     }
                 }
 
@@ -503,10 +508,10 @@ public class CampoValor implements Serializable {
         return null;
     }
 
-    private static void agregarCamposParticipante(CampoValor primerCampo,
+    private static void setCamposParticipante(CampoValor primerCampo,
             ArrayList<CampoValor> listaValor, String catalogo) {
-        String concatenacion = primerCampo.valor.replace("; ", ";");
-        String[] participantes = concatenacion.split(";");
+        
+        String[] participantes = primerCampo.valor.split(";");
         int longitud = primerCampo.getCampo().getLongitud() - participantes.length + 1;
         primerCampo.getCampo().setLongitud(longitud);
         if (participantes[0].startsWith("$")) {
