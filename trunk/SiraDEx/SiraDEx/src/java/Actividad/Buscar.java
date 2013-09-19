@@ -73,20 +73,10 @@ public class Buscar extends DispatchAction {
         }
 
         BusquedaActividad ba = (BusquedaActividad) form;
-
-        Usuario user = (Usuario) request.getSession().getAttribute("user");
-
-        String rol = "";
-        if (user != null) {
-            rol = user.getRol();
-        }
-
-        String usuario = null;
-        if (user == null || rol.equals("profesor") || rol.equals("empleado")
-                || rol.equals("estudiante") || rol.equals("obrero")) {
+        String permiso = (String) request.getSession().getAttribute("permiso");
+        if (permiso == null) {
             ba.buscar(true);
         } else {
-            usuario = user.getUsername();
             ba.buscar(false);
         }
 

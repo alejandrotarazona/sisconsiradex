@@ -88,12 +88,14 @@
                     String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                     s += chd + "&" + chtt + chco + "chdl=" + chdl;
                 %>     
-                
+
 
                 <html:form method="POST">
                     <a class="ver">
-                    [Ocultar Gráfica]</a>
-                    <html:link action="/ExportarActividades" title="Exportar">
+                        [Ocultar Gráfica]
+                    </a>
+                    <html:link style="margin-left:20px;" action="/ExportarActividades" 
+                               title="Exportar a JSON">
                         [Exportar Actividades]
                     </html:link> 
                 </html:form>
@@ -130,8 +132,17 @@
                             </tbody>
                         </table>
 
-                        <a class="ver">
-                            [Ocultar Gráfica]</a>
+
+                        <html:form method="POST">
+                            <a class="ver">
+                                [Ocultar Gráfica]
+                            </a>
+                            <html:link style="margin-left:20px;" action="/ExportarActividades" 
+                                       title="Exportar a JSON">
+                                [Exportar Actividades]
+                            </html:link> 
+                        </html:form>
+
 
                     </div>                  
 
@@ -151,7 +162,7 @@
                                         ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
                                     </td>
                                     <td>
-                                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                                            <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                                 out.print(a.participantesToString());%></b>
                                         "<bean:write name="act" property="nombreTipoActividad"/>",
 
@@ -187,7 +198,7 @@
                                                         <html:hidden name="act" property="idArchivo" value="${index}"/>
                                                         <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
                                                                    paramId="idActividad" title="Descargar">
-                                                            ${archivo.tipo}
+                                                            ${archivo.nombre}
                                                         </html:link> 
                                                     </html:form>
 
