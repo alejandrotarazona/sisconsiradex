@@ -6,10 +6,6 @@ package Clases;
 
 import DBMS.Entity;
 import Json.JSONArray;
-import Json.JSONObject;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
