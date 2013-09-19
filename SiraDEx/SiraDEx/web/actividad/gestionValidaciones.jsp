@@ -37,7 +37,7 @@
                         /* Detalles */ {"bSortable": false},
                         /* Creación */ null,
                         /* Modificación */ null,
-                        /* Producto y Archivos */ null,
+                        /* Archivos */ null,
                         /* Acciones */
                         {"bSortable": false}
 
@@ -84,8 +84,8 @@
                         <th>Tipo de Actividad</th>
                         <th>Detalles</th>
                         <th>Creación</th>
-                        <th title="Modificación">Mod.</th>
-                        <th title="Producto y Archivos">PyA</th>
+                        <th>Modificación</th>
+                        <th>Archivos</th>
                         <th></th>
                         </tr>
                     </thead>
@@ -145,7 +145,7 @@
                                         <html:hidden name="act" property="idArchivo" value="${index}"/>
                                         <html:submit styleId="botonPDF"
                                                      value=" "
-                                                     title="${archivo.tipo}"/>
+                                                     title="${archivo.nombre}"/>
                                     </html:form>
 
                                 </logic:iterate>     

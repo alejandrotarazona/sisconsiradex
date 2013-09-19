@@ -22,12 +22,12 @@
                 <div class="content">
                     <script type="text/javascript" src="../Scripts/jquery-1.8.3.js"></script>
                     <script type="text/javascript" src="../Scripts/jquery-ui-1.9.2.custom.js"></script>
-                   
+
                     <script type="text/javascript">
                         $(function() {
                             $(".fecha_input input").datepicker();
                             $(".fecha_click click").datepicker();
-                        });	
+                        });
                     </script>
 
 
@@ -41,8 +41,8 @@
                     %>
                     <html:form action="<%=accion%>">
                         <div align="right"><html:submit>Buscar</html:submit></div>
-                        <br>
-                        Mostrar <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
+                            <br>
+                            <b>Mostrar</b> <html:select name="busquedaActividadForm" property="mostrarPorPagina" 
                                      styleClass="selector" value="${busquedaActividadForm.mostrarPorPagina}">
                             <html:option value="10">10</html:option>
                             <html:option value="25">25</html:option>
@@ -52,45 +52,46 @@
                         actividades por página
                         <br><br>
 
-                        Tipo de Actividad:<br> 
+                        <b>Tipo de Actividad:</b><br> 
                         <html:select name="busquedaActividadForm" property="nombreTipo">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="tiposdeactividad" label="nombreTipo" value="nombreTipo"/>
                         </html:select><br><br> 
 
-                        Participante:<br>
+                        <b>Participante:</b><br>
                         <html:select name="busquedaActividadForm" property="participante">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="participantes" label="contenido" value="mensaje"/>
                         </html:select><br><br>
 
                         <logic:present name="permiso">
-                            Producto Tipo:<br> 
+                            <b>Producto Tipo:</b><br> 
                             <html:radio property="tipoPR" value="">Cualquiera</html:radio>
                             <html:radio property="tipoPR" value="P">P</html:radio>
                             <html:radio property="tipoPR" value="R">R</html:radio>
                                 <br><br>   
                         </logic:present>
 
-                        Dependencia a la que pertenece:<br> 
+                        <b>Dependencia a la que pertenece:</b><br> 
                         <html:select name="busquedaActividadForm" property="validador">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="validadores" label="contenido" value="contenido"/>
                         </html:select><br><br>
 
-                        Programa:<br> 
+                        <b>Programa:</b><br> 
                         <html:select name="busquedaActividadForm" property="programa">
                             <html:option value="">-- Cualquiera --</html:option>
                             <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                         </html:select><br><br>
-                        
-                        Que contenga:<br>
+
+                        <b>Que contenga:</b><br>
                         <html:text name="busquedaActividadForm" size="27" property="palabras"
-                                   title="Para buscar secuencias de palabras encierrelas entre comillas. La búsqueda encontrará toda actividad que contenga dentro de su nombre, campos, valores o descripción alguna de las palabras o secuencias ingresadas y que cumpla con el resto de los parámetros de  búsqueda dados."/>
+                                   title="Para buscar una secuencia de palabras encierrela entre comillas. La búsqueda encontrará toda actividad que contenga dentro de su nombre, campos, valores o descripción alguna de las palabras o secuencias ingresadas y que cumpla con el resto de los parámetros de búsqueda dados."/>
                         <br><br>
-                        
-                        Período:<br>
-                        <span class="fecha_input">
+
+                        <b>Período:</b><br>
+
+                        <span class="fecha_input" style="margin-left:20px;" >
                             Desde
                             <html:text name="busquedaActividadForm" property="fechaInic" size="8"
                                        readonly="true" ondblclick="this.value = ''"
@@ -99,7 +100,7 @@
                         <span class="fecha_click">
                             <html:hidden name="busquedaActividadForm" property="fechaInic"/>
                         </span><br>
-                        <span class="fecha_input">
+                        <span class="fecha_input" style="margin-left:20px;" >
                             Hasta&nbsp;
                             <html:text name="busquedaActividadForm" property="fechaFin" size="8"
                                        readonly="true" ondblclick="this.value = ''"
@@ -108,6 +109,7 @@
                         <span class="fecha_click">
                             <html:hidden name="busquedaActividadForm" property="fechaFin"/>
                         </span>
+                        <br><br>
                         <div align="right"><html:submit>Buscar</html:submit></div>
                     </html:form>
 

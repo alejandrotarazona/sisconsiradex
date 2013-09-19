@@ -7,9 +7,6 @@ package Clases;
 import DBMS.Entity;
 import Json.JSONArray;
 import Json.JSONObject;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -178,12 +175,10 @@ public class Actividad extends Root {
 
         private FormFile file;
         private String nombre;
-        private String tipo;
 
-        public Archivo(FormFile file, String nombre, String tipo) {
+        public Archivo(FormFile file, String nombre) {
             this.file = file;
             this.nombre = nombre;
-            this.tipo = tipo;
         }
 
         public FormFile getFile() {
@@ -200,14 +195,6 @@ public class Actividad extends Root {
 
         public void setNombre(String nombre) {
             this.nombre = nombre;
-        }
-
-        public String getTipo() {
-            return tipo;
-        }
-
-        public void setTipo(String tipo) {
-            this.tipo = tipo;
         }
     }
 
@@ -340,7 +327,7 @@ public class Actividad extends Root {
                     String nombre = cv.getValor();
                     if (!nombre.equals("")
                             && tipoCampo.equals("archivo")) {
-                        Archivo arch = new Archivo(cv.getFile(), nombre,
+                        Archivo arch = new Archivo(cv.getFile(),
                                 cv.getCampo().getNombre());
                         archivos.add(arch);
                     }
@@ -827,7 +814,7 @@ public class Actividad extends Root {
                         String nombre = cv.getValor();
                         if (!nombre.equals("")
                                 && tipoCampo.equals("archivo")) {
-                            Archivo arch = new Archivo(cv.getFile(), nombre,
+                            Archivo arch = new Archivo(cv.getFile(), 
                                     cv.getCampo().getNombre());
                             archs.add(arch);
                         }
@@ -1023,39 +1010,6 @@ public class Actividad extends Root {
 
 
         return jActividad;
-    }
-
-    public static File exportar(ArrayList<Actividad> lista) {
-        FileWriter fw = null;
-
-        Iterator it = lista.iterator();
-        Actividad act;
-        JSONObject jActividad = null;
-        JSONArray jActividades = new JSONArray();
-
-        while (it.hasNext()) {
-            act = (Actividad) it.next();
-            jActividad = act.toJSONObject();
-            jActividades.put(act);
-        }
-        try {
-            File f = new File("actividades.json");
-            fw = new FileWriter(f, true);
-            jActividad.put("actividades", jActividades);
-            fw.write(jActividad.toString());
-            fw.close();
-            return f;
-        } catch (IOException ex) {
-            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            try {
-                fw.close();
-            } catch (IOException ex) {
-                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            return null;
-        }
-
     }
 
     public static void main(String args[]) {

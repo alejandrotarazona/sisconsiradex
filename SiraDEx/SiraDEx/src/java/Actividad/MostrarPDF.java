@@ -38,7 +38,7 @@ public class MostrarPDF extends org.apache.struts.action.Action {
         Actividad act = (Actividad) form;
         act.setActividad();
         Archivo arch = act.getArchivos().get(act.getIdArchivo());
-        String nombre = arch.getTipo() + "_" + act.getCreador() + ".pdf";
+        String nombre = act.getIdActividad()+"_"+arch.getFile().getFileName();
         
         response.reset();
         response.setContentType("application/pdf");

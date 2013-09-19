@@ -21,39 +21,39 @@
             @import "../Stylesheets/demo_table_jui.css";
         </style>
         <script>
-            $(document).ready(function(){
+            $(document).ready(function() {
 
                 $(".textolargo").hide();
-                $(".mostrar").click(function(){
+                $(".mostrar").click(function() {
                     $(this).siblings('.textolargo').toggle();
                     var $this = $(this);
                     $this.text($this.text() === "Menos detalles" ? "Más detalles" : "Menos detalles");
                 });
-                
-                
+
+
                 $('#datatab').dataTable({
-                    "aoColumns": [       
+                    "aoColumns": [
                         /* Participantes */ null,
                         /* Actividad */ null,
-                        /* Detalles */ { "bSortable": false },
+                        /* Detalles */ {"bSortable": false},
                         /* Creación */ null,
                         /* Modificación */ null,
                         /* Validación */ null,
-                        /* Producto y Archivos */ null,
+                        /* Archivos */ null,
                         /* Acciones */
-                        { "bSortable": false }
-                       
+                        {"bSortable": false}
+
                     ]});
-                
+
                 $(".grafica").show();
-                $(".ver").click(function(){
+                $(".ver").click(function() {
                     $('.grafica').toggle();
                     var $ver1 = $(document.getElementsByClassName('ver')[0]);
                     $ver1.text($ver1.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                     var $ver2 = $(document.getElementsByClassName('ver')[1]);
                     $ver2.text($ver2.text() === "[Mostrar Gráfica]" ? "[Ocultar Gráfica]" : "[Mostrar Gráfica]");
                 });
-            
+
             });
         </script>
 
@@ -76,7 +76,7 @@
         <html:link action="/RegistrarActividad?method=page"> 
             <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
             <b>Agregar Actividad</b>
-        </html:link><br/>
+        </html:link><br/><br/>
 
         <logic:present name="acts"> 
             <% String chd = (String) request.getAttribute("graficaCantidad");
@@ -86,11 +86,11 @@
                 String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                 s += chd + "&" + chtt + chco + "chdl=" + chdl;
             %>
-            <div align="right">
-                <a class="ver">
-                    [Ocultar Gráfica]
-                </a>
-            </div>
+
+            <a class="ver">
+                [Ocultar Gráfica]
+            </a>
+
             <div class="grafica">
 
                 <html:img src="<%=s%>"/>
@@ -124,11 +124,11 @@
                     </tbody>
                 </table>
 
-                <div align="right">
-                    <a class="ver">
-                        [Ocultar Gráfica]
-                    </a>
-                </div>
+
+                <a class="ver">
+                    [Ocultar Gráfica]
+                </a>
+
             </div>
         </logic:present>       
 
@@ -145,9 +145,9 @@
                     <th>Tipo de Actividad</th>
                     <th>Detalles</th>
                     <th>Creación</th>
-                    <th title="Modificación">Mod.</th>
-                    <th title="Validación">Val.</th>
-                    <th title="Producto y Archivos">PyA</th>
+                    <th title="Modificación">Modificación</th>
+                    <th title="Validación">Valid.</th>
+                    <th title="Archivos">Arch.</th>
                     <th></th>
                     </tr>
                 </thead>
@@ -223,7 +223,7 @@
                                     <html:hidden name="act" property="idArchivo" value="${index}"/>
                                     <html:submit styleId="botonPDF"
                                                  value=" "
-                                                 title="${archivo.tipo}"/>
+                                                 title="${archivo.nombre}"/>
                                 </html:form>
 
                             </logic:iterate>   
