@@ -576,11 +576,15 @@ public class CampoValor implements Serializable {
 
         switch (tipo) {
             case "archivo":
-                String aux = "nombreArchivo="+file.getFileName();
+                String aux = file.getFileName();
                 jCampoValor.put("valor", aux);
                 break;
             default:
-                jCampoValor.put("valor", valor);
+                String val = valor;
+                if (!valorAux.equals("Apellido(s), Nombre(s)")){
+                    val = valorAux;
+                }
+                jCampoValor.put("valor", val);
         }
         return jCampoValor;
     }

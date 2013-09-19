@@ -980,14 +980,14 @@ public class Actividad extends Root {
     public JSONObject toJSONObject() {
         JSONObject jActividad = new JSONObject();
 
-        jActividad.put("nombreTipoActividad", getNombreTipoActividad());
-        jActividad.put("validacion", getValidacion());
-        jActividad.put("creador", getCreador());
-        jActividad.put("fechaCreacion", getFechaCreacion());
-        jActividad.put("modificador", getModificador());
-        jActividad.put("fechaModif", getFechaModif());
-        jActividad.put("descripcion", getDescripcion());
-        jActividad.put("validador", getValidador());
+        jActividad.put("nombreTipoActividad", nombreTipoActividad);
+        jActividad.put("validacion", validacion);
+        jActividad.put("creador", creador);
+        jActividad.put("fechaCreacion", fechaCreacion);
+        jActividad.put("modificador", modificador);
+        jActividad.put("fechaModif", fechaModif);
+        jActividad.put("descripcion", descripcion);
+        jActividad.put("validador", validador);
 
         Iterator it = participantes.iterator();
         String participando = "";

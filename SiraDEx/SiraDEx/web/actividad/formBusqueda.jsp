@@ -81,12 +81,12 @@
                 </div>
             </logic:empty>
             <logic:notEmpty name="actividades">
+                <h1>Actividades de Extensión</h1>
                 <% String chd = (String) request.getSession().getAttribute("graficaCantidad");
                     String chdl = (String) request.getSession().getAttribute("graficaNombres");
                     String s = "http://chart.apis.google.com/chart?&cht=p3&chs=800x200&chd=t:";
-                    String chtt = "chtt=Actividades%20de%20extensión&";
                     String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
-                    s += chd + "&" + chtt + chco + "chdl=" + chdl;
+                    s += chd + "&" + chco + "chdl=" + chdl;
                 %>     
 
 
@@ -145,10 +145,8 @@
 
 
                     </div>                  
-
                     <br>
 
-                    <h1>Actividades de Extensión</h1>
                     <div class="ui-toolbar ui-widget-header ui-corner-tl ui-corner-tr ui-helper-clearfix"
                          style="font-weight: normal;padding: 5px;">
                     Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
@@ -162,7 +160,7 @@
                                         ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
                                     </td>
                                     <td>
-                                            <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
+                                        <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
                                                 out.print(a.participantesToString());%></b>
                                         "<bean:write name="act" property="nombreTipoActividad"/>",
 

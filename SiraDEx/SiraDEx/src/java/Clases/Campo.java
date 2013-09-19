@@ -204,7 +204,6 @@ public class Campo implements Serializable {
 
     }
 
-
     public boolean modificar(int idTA, String ip, String user) {
         Entity e = new Entity(3);//CAMPO
 
@@ -277,13 +276,14 @@ public class Campo implements Serializable {
 
         return resp;
     }
-    
+
     /**
      * Funcion que devuelve el JSONObject con la informacion referente al Campo
      * en cuestio. Requiere que el campo este inicializado previamente.
+     *
      * @return JSONObject con los valores del campo
      */
-    public JSONObject toJSONObject(){
+    public JSONObject toJSONObject() {
         JSONObject jCampo = new JSONObject();
         /*
          *     private String nombre;
@@ -291,11 +291,13 @@ public class Campo implements Serializable {
          *     private int longitud;
          *     private boolean obligatorio;
          */
-        jCampo.put("nombre", getNombre());
-        jCampo.put("tipo", getTipo());
-        jCampo.put("longitud", getLongitud());
-        jCampo.put("obligatorio", isObligatorio());
-        
+        jCampo.put("nombre", nombre);
+        jCampo.put("tipo", tipo);
+        if (longitud > 0) {
+            jCampo.put("longitud", longitud);
+        }
+        jCampo.put("obligatorio", obligatorio);
+
         return jCampo;
     }
 }
