@@ -187,6 +187,10 @@
             <forward name="page" path="busquedaPublica"/>
          </action>
          
+         <action path="/ExportarActividades" type="Actividad.Exportar"
+                 scope="request" name="busquedaActividadForm">
+         </action>
+         
         <!-- ======================CATALOGO=================================-->
         
         <action path="/GestionCatalogos" type="Catalogo.Listar"

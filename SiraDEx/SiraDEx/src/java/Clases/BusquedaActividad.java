@@ -5,6 +5,11 @@
 package Clases;
 
 import DBMS.Entity;
+import Json.JSONArray;
+import Json.JSONObject;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -363,8 +368,8 @@ public class BusquedaActividad extends Root {
                     String tipo = rs.getString("nombre_tipo_actividad");
                     String campo = rs.getString("nombre_campo");
                     String desc = rs.getString("descripcion");
-                    if (contienePalabras(desc) || contienePalabras(valor) ||
-                            contienePalabras(campo) || contienePalabras(tipo)) {
+                    if (contienePalabras(desc) || contienePalabras(valor)
+                            || contienePalabras(campo) || contienePalabras(tipo)) {
                         Actividad act = new Actividad();
                         int id = rs.getInt("id_actividad");
                         act.setIdActividad(id);
@@ -437,7 +442,7 @@ public class BusquedaActividad extends Root {
                 libro = paginar(cjtoAux, mostrarPorPagina);
             } else {
                 libro = new ArrayList<>(0);
-                String[] g = {"",""};
+                String[] g = {"", ""};
                 grafica = g;
             }
         } else {
@@ -664,6 +669,25 @@ public class BusquedaActividad extends Root {
 
     }
 
+    public String exportar() {
+        ArrayList<Actividad> lista = new ArrayList<>();
+
+        for (int i = 0; i < totalPaginas; i++) {
+            lista.addAll(libro.get(i));
+        }
+        
+        Iterator it = lista.iterator();
+        JSONArray jLista = new JSONArray();
+        
+        while(it.hasNext()){
+            Actividad act = (Actividad) it.next();
+            jLista.put(act.toJSONObject());
+        }
+        
+        return jLista.toString();
+    
+    }
+
     public static void main(String args[]) {
 
         String palabras = "\"hola; nada, \" que \"viste .\"";
@@ -674,7 +698,7 @@ public class BusquedaActividad extends Root {
             matchList.add(regexMatcher.group().replace("\"", ""));
         }
         String valor = "yo denada que ver";
-        if (valor.contains("Nada")){
+        if (valor.contains("Nada")) {
             System.out.println("ssssssssssssssssssssiiiiiiiiiiiiiii");
         }
         for (String s : matchList) {

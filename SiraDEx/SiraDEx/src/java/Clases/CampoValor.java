@@ -245,7 +245,7 @@ public class CampoValor implements Serializable {
             valAux = "";
         }
         if (tipo.equals("participante") && (!valor.isEmpty()
-                || !Verificaciones.esVacio(valAux)))  {
+                || !Verificaciones.esVacio(valAux))) {
             resp &= modificarParticipante(campoNM, idAct);
             System.out.println("--------Luego de modificar participante "
                     + campoNM.getValor() + " " + resp);
@@ -510,7 +510,7 @@ public class CampoValor implements Serializable {
 
     private static void setCamposParticipante(CampoValor primerCampo,
             ArrayList<CampoValor> listaValor, String catalogo) {
-        
+
         String[] participantes = primerCampo.valor.split(";");
         int longitud = primerCampo.getCampo().getLongitud() - participantes.length + 1;
         primerCampo.getCampo().setLongitud(longitud);
@@ -572,8 +572,16 @@ public class CampoValor implements Serializable {
          */
 
         jCampoValor.put("campo", campo.toJSONObject());
-        jCampoValor.put("valor", valor);
+        String tipo = campo.getTipo();
 
+        switch (tipo) {
+            case "archivo":
+                String aux = "nombreArchivo="+file.getFileName();
+                jCampoValor.put("valor", aux);
+                break;
+            default:
+                jCampoValor.put("valor", valor);
+        }
         return jCampoValor;
     }
 }
