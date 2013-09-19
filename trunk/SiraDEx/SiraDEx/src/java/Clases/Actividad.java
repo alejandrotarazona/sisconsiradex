@@ -7,6 +7,9 @@ package Clases;
 import DBMS.Entity;
 import Json.JSONArray;
 import Json.JSONObject;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.ResultSet;
@@ -482,7 +485,7 @@ public class Actividad extends Root {
         if (!valorParticipante.isEmpty()) {
             campos.get(i).setValor(valorParticipante);
         }
-        
+
         if (i < campos.size() - 1
                 && campos.get(i + 1).getCampo().getLongitud() == -1
                 && campos.get(i).getCampo().getLongitud() > 0) {
@@ -990,17 +993,6 @@ public class Actividad extends Root {
     public JSONObject toJSONObject() {
         JSONObject jActividad = new JSONObject();
 
-//    private String nombreTipoActividad;
-//    private String validacion;
-//    private String creador; //usbid
-//    private String fechaCreacion;
-//    private String modificador;
-//    private String fechaModif;
-//    private String descripcion;
-//    private String validador;
-//    private ArrayList<String> participantes = new ArrayList<>(0);
-//    private ArrayList<CampoValor> camposValores;
-//    private ArrayList<Archivo> archivos = new ArrayList<>(0);
         jActividad.put("nombreTipoActividad", getNombreTipoActividad());
         jActividad.put("validacion", getValidacion());
         jActividad.put("creador", getCreador());
@@ -1014,6 +1006,9 @@ public class Actividad extends Root {
         String participando = "";
         while (it.hasNext()) {
             participando += (String) it.next();
+            if (it.hasNext()) {
+                participando += ", ";
+            }
         }
         jActividad.put("participantes", participando);
 
@@ -1025,10 +1020,42 @@ public class Actividad extends Root {
             jObjCamposValores.put(aux);
         }
         jActividad.put("camposValores", jObjCamposValores);
-//        jActividad.put();             -- Aun no se como parsear archivos, cuando lo tenga lo agrego
 
 
         return jActividad;
+    }
+
+    public static File exportar(ArrayList<Actividad> lista) {
+        FileWriter fw = null;
+
+        Iterator it = lista.iterator();
+        Actividad act;
+        JSONObject jActividad = null;
+        JSONArray jActividades = new JSONArray();
+
+        while (it.hasNext()) {
+            act = (Actividad) it.next();
+            jActividad = act.toJSONObject();
+            jActividades.put(act);
+        }
+        try {
+            File f = new File("actividades.json");
+            fw = new FileWriter(f, true);
+            jActividad.put("actividades", jActividades);
+            fw.write(jActividad.toString());
+            fw.close();
+            return f;
+        } catch (IOException ex) {
+            Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            try {
+                fw.close();
+            } catch (IOException ex) {
+                Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return null;
+        }
+
     }
 
     public static void main(String args[]) {

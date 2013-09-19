@@ -17,7 +17,7 @@
     <script type="text/javascript">
         $(document).ready(resaltar);
         var myHilitor;
-        function resaltar(){
+        function resaltar() {
             myHilitor = new Hilitor("contenido");
             myHilitor.apply(document.getElementsByName("palabras")[0].value);
         }
@@ -87,9 +87,16 @@
                     String chtt = "chtt=Actividades%20de%20extensión&";
                     String chco = "chco=3399CC,00CC00,00FF00,FF00FF,FF0066,FFCC00&";
                     s += chd + "&" + chtt + chco + "chdl=" + chdl;
-                %>
-                <a class="ver">
+                %>     
+                
+
+                <html:form method="POST">
+                    <a class="ver">
                     [Ocultar Gráfica]</a>
+                    <html:link action="/ExportarActividades" title="Exportar">
+                        [Exportar Actividades]
+                    </html:link> 
+                </html:form>
                 <div class="grafica">
 
                     <html:img src="<%=s%>"/>
@@ -127,7 +134,7 @@
                             [Ocultar Gráfica]</a>
 
                     </div>                  
-                    
+
                     <br>
 
                     <h1>Actividades de Extensión</h1>
@@ -136,65 +143,65 @@
                     Encontradas <b>${(busquedaActividadForm.totalActividades)} actividades</b>
                 </div>
                 <div id="contenido">
-                <table class="cebra" style="margin:0">
-                        <tbody>
-                            <logic:iterate name="actividades" id="act" indexId="index">
-                                <tr>
-                                <td>
-                                    ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
-                                </td>
-                                <td>
+                    <table class="cebra" style="margin:0">
+                            <tbody>
+                                <logic:iterate name="actividades" id="act" indexId="index">
+                                    <tr>
+                                    <td>
+                                        ${(busquedaActividadForm.pagina - 1) * busquedaActividadForm.mostrarPorPagina + index + 1}.
+                                    </td>
+                                    <td>
                                         <b><% Actividad a = (Actividad) pageContext.findAttribute("act");
-                                        out.print(a.participantesToString());%></b>
-                                    "<bean:write name="act" property="nombreTipoActividad"/>",
+                                                out.print(a.participantesToString());%></b>
+                                        "<bean:write name="act" property="nombreTipoActividad"/>",
 
 
-                                    <% out.print(a.camposValoresToString(a.getIdActividad()));%>
+                                        <% out.print(a.camposValoresToString(a.getIdActividad()));%>
 
-                                    <logic:equal name="act" property="validacion" value="En espera">
-                                        <b>Actividad por validar.</b>
-                                    </logic:equal>
-                                    <br>
-                                    <div>
-                                        <span class="textolargo">
+                                        <logic:equal name="act" property="validacion" value="En espera">
+                                            <b>Actividad por validar.</b>
+                                        </logic:equal>
+                                        <br>
+                                        <div>
+                                            <span class="textolargo">
 
-                                            <b>Descripción:</b> 
-                                            <bean:write name="act" property="descripcion"/>
+                                                <b>Descripción:</b> 
+                                                <bean:write name="act" property="descripcion"/>
 
-                                            <logic:iterate name="act" property="camposValores" 
-                                                           id="campoValor" indexId="index">
+                                                <logic:iterate name="act" property="camposValores" 
+                                                               id="campoValor" indexId="index">
 
-                                                <logic:equal name="campoValor" property="campo.tipo" 
-                                                             value="textol">
-                                                    <br>
-                                                    <bean:write name="campoValor" property="campo.nombre"/>: 
-                                                    <bean:write name="campoValor" property="valor"/>
-                                                </logic:equal>
+                                                    <logic:equal name="campoValor" property="campo.tipo" 
+                                                                 value="textol">
+                                                        <br>
+                                                        <bean:write name="campoValor" property="campo.nombre"/>: 
+                                                        <bean:write name="campoValor" property="valor"/>
+                                                    </logic:equal>
 
-                                            </logic:iterate>
-                                            <logic:iterate name="act" property="archivos" 
-                                                           id="archivo" indexId="index">
+                                                </logic:iterate>
+                                                <logic:iterate name="act" property="archivos" 
+                                                               id="archivo" indexId="index">
 
-                                                <html:form method="POST">
-                                                    <html:hidden name="act" property="idActividad"/>
-                                                    <html:hidden name="act" property="idArchivo" value="${index}"/>
-                                                    <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
-                                                               paramId="idActividad" title="Descargar">
-                                                        ${archivo.tipo}
-                                                    </html:link> 
-                                                </html:form>
+                                                    <html:form method="POST">
+                                                        <html:hidden name="act" property="idActividad"/>
+                                                        <html:hidden name="act" property="idArchivo" value="${index}"/>
+                                                        <html:link action="/MostrarPDF" paramName="act" paramProperty="idActividad" 
+                                                                   paramId="idActividad" title="Descargar">
+                                                            ${archivo.tipo}
+                                                        </html:link> 
+                                                    </html:form>
 
-                                            </logic:iterate>
-                                        </span> 
+                                                </logic:iterate>
+                                            </span> 
 
-                                        <a class="mostrar" id="detalles" style="text-decoration:underline">
-                                            Más detalles</a>
-                                    </div>
-                                </td>
-                                </tr>
-                            </logic:iterate>
-                        </tbody>
-                    </table>
+                                            <a class="mostrar" id="detalles" style="text-decoration:underline">
+                                                Más detalles</a>
+                                        </div>
+                                    </td>
+                                    </tr>
+                                </logic:iterate>
+                            </tbody>
+                        </table>
                     </div>
                     <% String permiso = (String) request.getSession().getAttribute("permiso");
                         String accion;
@@ -285,6 +292,9 @@
                             </html:link>&nbsp; 
                         </logic:notEqual>
                     </div>
+                </div>
+                <div align="center">
+
                 </div>
             </logic:notEmpty>
         </logic:present>
