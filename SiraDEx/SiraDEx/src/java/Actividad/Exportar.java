@@ -4,11 +4,8 @@
  */
 package Actividad;
 
-import Clases.Actividad;
 import Clases.BusquedaActividad;
-import java.io.File;
 import java.io.OutputStream;
-import java.nio.file.Files;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
@@ -20,9 +17,6 @@ import org.apache.struts.action.ActionMapping;
  * @author alejandro
  */
 public class Exportar extends org.apache.struts.action.Action {
-
-    /* forward name="success" path="" */
-    private static final String SUCCESS = "success";
 
     /**
      * This is the action called from the Struts framework.
