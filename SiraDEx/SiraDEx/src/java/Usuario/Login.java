@@ -22,7 +22,6 @@ public class Login extends DispatchAction {
      * forward name="success" path=""
      */
     private static final String SUCCESS = "success";
-    private static final String FAILURE = "failure";
     private static final String PAGE = "page";
 
     /**
@@ -38,6 +37,8 @@ public class Login extends DispatchAction {
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
+        Usuario u = (Usuario) form;
+        u.setMensaje(null);
         return mapping.findForward(PAGE);
     }
 
@@ -60,7 +61,7 @@ public class Login extends DispatchAction {
             }
             return mapping.findForward(SUCCESS);
         }
-        return mapping.findForward(FAILURE);
+        return mapping.findForward(PAGE);
 
 
     }

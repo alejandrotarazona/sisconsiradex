@@ -35,7 +35,6 @@
                 parameter="method" name="usuarioForm">
             <forward name="success" path="/sesion.jsp"/>
             <forward name="page" path="/autenticacion.jsp"/>
-            <forward name="failure" path="/autenticacion.jsp"/>
         </action>
         
         <action path="/Entrar" type="Usuario.Entrar" scope="session" 

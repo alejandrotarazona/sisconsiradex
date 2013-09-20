@@ -226,7 +226,10 @@ public class Usuario extends Root {
 
     public boolean esUsuario() {
 
-        if (Verificaciones.esVacio(username) 
+        mensaje = "La combinación de USBID y Contraseña no es válida. "
+                + "Intente de nuevo.";
+
+        if (Verificaciones.esVacio(username)
                 || Verificaciones.esVacio(password)) {
             mensaje = "No puede dejar campos vacíos";
             return false;
@@ -238,50 +241,26 @@ public class Usuario extends Root {
         String[] cond = {username};
 
         ResultSet rs = e.seleccionar(col, cond);
-        try {
-            if (rs != null) {
+
+
+        if (rs != null) {
+            try {
                 while (rs.next()) {
                     if (rs.getString(ATRIBUTOS[2]).equals(username)
                             && rs.getString(ATRIBUTOS[3]).equals(password)) {
                         rs.close();
+                        mensaje = null;
                         return true;
                     } else {
-                        mensaje = "La combinación de USBID y Contraseña no es válida. "
-                                + "Intente de nuevo.";
                         return false;
                     }
                 }
-            } 
-           
 
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return false;
-    }
-
-    public boolean usuarioLogin() {
-        try {
-            Entity e = new Entity(0);//USUARIO
-            String[] col = {ATRIBUTOS[2], ATRIBUTOS[3]};
-            String[] cond = {username, password};
-            ResultSet rs = e.seleccionar(col, cond);
-            if (rs != null) {
-
-                while (rs.next()) {
-                    if (rs.getString(ATRIBUTOS[2]).equals(username)
-                            && rs.getString(ATRIBUTOS[3]).equals(password)) {
-                        rs.close();
-                        return true;
-                    }
-                }
+            } catch (SQLException ex) {
+                Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
             }
-            return false;
-        } catch (SQLException ex) {
-            Logger.getLogger(Usuario.class.getName()).log(Level.SEVERE, null, ex);
         }
         return false;
-
     }
 
     public static ArrayList<Usuario> listar() {
