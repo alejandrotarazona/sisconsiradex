@@ -148,7 +148,7 @@ public class Log extends Root {
                 actual.setIdLog(rs.getBigDecimal("id_log"));
                 actual.setIp(rs.getString("ip"));
                 actual.setUsbid(rs.getString("usbid"));
-                
+
                 resp.add(actual);
             }
             return resp;
@@ -166,10 +166,10 @@ public class Log extends Root {
         String dia = Integer.toString(calendar.get(Calendar.DATE));
         String mes = Integer.toString(calendar.get(Calendar.MONTH) + 1);//Enero empieza en 0
         String año = Integer.toString(calendar.get(Calendar.YEAR));
-        return dia + "/" + mes + "/" + año;
+        return año + "_" + mes + "_" + dia;
     }
 
-    public static String getHora() {
+    public static String getFechaHora() {
         TimeZone tz = TimeZone.getTimeZone("America/Caracas");
         Calendar calendar = new GregorianCalendar(tz);
         Date trialTime = new Date();
@@ -179,13 +179,12 @@ public class Log extends Root {
         if (amopm == 0) {
             am_pm = " a.m.";
         }
+        String dia = Integer.toString(calendar.get(Calendar.DATE));
+        String mes = Integer.toString(calendar.get(Calendar.MONTH) + 1);//Enero empieza en 0
+        String año = Integer.toString(calendar.get(Calendar.YEAR));
         String hora = Integer.toString(calendar.get(Calendar.HOUR));
         String min = Integer.toString(calendar.get(Calendar.MINUTE));
         String seg = Integer.toString(calendar.get(Calendar.SECOND));
-        return hora + ":" + min + ":" + seg + am_pm;
-    }
-
-    public static String getFechaHora() {
-        return getDate() + " " + getHora();
+        return dia + "/" + mes + "/" + año + " " + hora + ":" + min + ":" + seg + am_pm;
     }
 }

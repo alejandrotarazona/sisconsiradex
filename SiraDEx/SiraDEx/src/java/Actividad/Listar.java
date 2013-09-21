@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
 /**
@@ -34,15 +35,24 @@ public class Listar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    public ActionForward preListUser(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "");
+
+        return new ActionRedirect("/GestionActividades.do?method=listUser");
+    }
+
     public ActionForward listUser(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS1);
         }
-        
+
         Clases.Root.deleteSessions(request, "mensajeAct");
 
         ArrayList<Actividad> acts = Actividad.listarActividadesDeUsuario(u.getUsername());
@@ -59,15 +69,24 @@ public class Listar extends DispatchAction {
         return mapping.findForward(SUCCESS1);
     }
 
+    public ActionForward preListAll(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "");
+
+        return new ActionRedirect("/GestionActividades.do?method=listAll");
+    }
+
     public ActionForward listAll(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS1);
         }
-        
+
         Clases.Root.deleteSessions(request, "mensajeAct");
 
         String[] grafica = u.totalActividadesPorTipo();
@@ -85,10 +104,19 @@ public class Listar extends DispatchAction {
         return mapping.findForward(SUCCESS1);
     }
 
+    public ActionForward preListDex(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "");
+
+        return new ActionRedirect("/GestionActividades.do?method=listDex");
+    }
+
     public ActionForward listDex(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
-        
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS1);

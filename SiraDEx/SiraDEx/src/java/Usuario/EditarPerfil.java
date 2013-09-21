@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
 /**
@@ -32,6 +33,15 @@ public class EditarPerfil extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    public ActionForward prePage(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "");
+
+        return new ActionRedirect("/VerPerfilUsuario.do?method=page");
+    }
+
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -40,12 +50,12 @@ public class EditarPerfil extends DispatchAction {
         if (user == null) {
             return mapping.findForward(PAGE);
         }
-        
+
         Usuario u = (Usuario) form;
         u.setMensaje(null);
         u.setUsername(user.getUsername());
         u.setUsuario();
-        
+
         Clases.Root.deleteSessions(request, "mensajePerfil");
 
         return mapping.findForward(PAGE);

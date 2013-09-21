@@ -49,19 +49,19 @@
         </action>
 
         <action path="/GestionUsuarios" type="Usuario.Listar"
-                scope="request" name="usuarioForm">
+                scope="request" parameter="method" name="usuarioForm">
             <forward name="success" path="gestionUsuarios"/>
         </action>
         
         <action path="/RegistrarUsuario" type="Usuario.Agregar" scope="request"
                 parameter="method" name="usuarioForm">
             <forward name="page" path="agregarUsuario"/>
-            <forward name="success" path="GestionUsuarios.do" redirect="true"/> 
+            <forward name="success" path="GestionUsuarios.do?method=list" redirect="true"/> 
         </action>
         
         <action path="/EliminarUsuario" type="Usuario.Eliminar" 
                 scope="request" name="usuarioForm">
-            <forward name="success" path="GestionUsuarios.do" redirect="true"/>
+            <forward name="success" path="GestionUsuarios.do?method=list" redirect="true"/>
         </action>
         
         <action path="/VerPerfilUsuario" type="Usuario.EditarPerfil" 
@@ -73,7 +73,7 @@
         
         <action path="/ModificarUsuario" name="usuarioForm" scope="request" 
                 type="Usuario.Modificar" parameter="method">
-            <forward name="success" path="GestionUsuarios.do" redirect="true"/>
+            <forward name="success" path="GestionUsuarios.do?method=list" redirect="true"/>
             <forward name="page" path="modificarRolUsuario"/>
         </action>
         
@@ -193,25 +193,25 @@
         <!-- ======================CATALOGO=================================-->
         
         <action path="/GestionCatalogos" type="Catalogo.Listar"
-                scope="session" name="catalogoForm">
+                scope="session" parameter="method" name="catalogoForm">
             <forward name="success" path="gestionCatalogos"/>
         </action>
         
         <action path="/RegistrarCatalogo" type="Catalogo.Agregar" 
                 scope="session" parameter="method" name="catalogoForm">
             <forward name="page" path="agregarCatalogo"/> 
-            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
+            <forward name="success" path="GestionCatalogos.do?method=list" redirect="true"/>  
         </action>
         
         <action path="/EliminarCatalogo" type="Catalogo.Eliminar"
                 scope="request" name="catalogoForm">
-            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
+            <forward name="success" path="GestionCatalogos.do?method=list" redirect="true"/>  
         </action>
         
          <action path="/ModificarCatalogo" type="Catalogo.Modificar" 
                 scope="session" parameter="method" name="catalogoForm">
             <forward name="page" path="modificarCatalogo"/>
-            <forward name="success" path="GestionCatalogos.do" redirect="true"/>  
+            <forward name="success" path="GestionCatalogos.do?method=list" redirect="true"/>  
         </action>
        
         <!-- =====================ELEMENTO CATALOGO=========================-->

@@ -21,11 +21,11 @@
                             <logic:equal name="permiso" value="dex">
                                 <li><h1 class="title">Gestionar:</h1></li>
 
-                                <li><html:link action="/GestionActividades?method=listDex">
+                                <li><html:link action="/GestionActividades?method=preListDex">
                                         Validaciones
                                     </html:link></li>
 
-                                <li><html:link action="/GestionTiposActividad?method=listActive">
+                                <li><html:link action="/GestionTiposActividad?method=preListActive">
                                         Tipos de Actividad
                                     </html:link></li>
 
@@ -34,23 +34,23 @@
 
                             <logic:equal name="user" property="rol" value="WM">
                                 <li><h1 class="title">Gestionar:</h1></li>
-                                <li><html:link action="/GestionTiposActividad?method=listActive"> 
+                                <li><html:link action="/GestionTiposActividad?method=preListActive"> 
                                         Tipos de Actividad 
                                     </html:link></li>
 
-                                <li><html:link action="/GestionActividades?method=listAll"> 
+                                <li><html:link action="/GestionActividades?method=preListAll"> 
                                         Actividades
                                     </html:link></li>
 
-                                <li><html:link action="/GestionActividades?method=listDex">
+                                <li><html:link action="/GestionActividades?method=preListDex">
                                         Validaciones
                                     </html:link></li>
 
-                                <li><html:link action="/GestionCatalogos"> 
+                                <li><html:link action="/GestionCatalogos?method=preList"> 
                                         Catálogos 
                                     </html:link></li>
 
-                                <li><html:link action="/GestionUsuarios"> 
+                                <li><html:link action="/GestionUsuarios?method=preList"> 
                                         Usuarios
                                     </html:link></li>
 

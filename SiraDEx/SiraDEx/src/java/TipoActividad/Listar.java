@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+import org.apache.struts.action.ActionRedirect;
 import org.apache.struts.actions.DispatchAction;
 
 /**
@@ -34,6 +35,15 @@ public class Listar extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+    public ActionForward preListActive(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+
+        Clases.Root.deleteSessions(request, "");
+
+        return new ActionRedirect("/GestionTiposActividad.do?method=listActive");
+    }
+    
     public ActionForward listActive(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
@@ -63,7 +73,7 @@ public class Listar extends DispatchAction {
 
         return mapping.findForward(SUCCESS1);
     }
-
+    
     public ActionForward listDisable(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
