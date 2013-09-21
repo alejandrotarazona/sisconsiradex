@@ -78,7 +78,6 @@ public class Backup extends Root {
         String host = DataBase.getHost();
         String db = DataBase.getDatabase();
         String fecha = Log.getDate();
-        fecha = "_" + fecha.replace("/", "_");
         String comando = "pg_dump -i -h " + host + " -U " + user + " --format=c -f "
                 + "/home/backups_siradex/" + db + fecha + ".backup " + db;
         System.out.println(comando);

@@ -6,7 +6,7 @@
 USER="siradex"
 HOST="localhost"
 DB="bdsiradex"
-FH=`date '+_%d_%m_%Y'`
+FH=`date '+_%Y_%m_%d'`
 budate=`date '+%Y%m%d'`
 path='/home/backups_siradex/'
 i=0

@@ -17,27 +17,27 @@
                         <html:link action="/Logout">
                             (Cerrar Sesión)
                         </html:link> |
-                        <html:link action="/VerPerfilUsuario?method=page">Ver Perfil</html:link> |
+                        <html:link action="/VerPerfilUsuario?method=prePage">Ver Perfil</html:link> |
 
 
                         <logic:equal name="permiso" value="dex">
-                            <html:link action="/GestionActividades?method=listDex">Inicio</html:link> |
+                            <html:link action="/GestionActividades?method=preListDex">Inicio</html:link> |
                         </logic:equal>
 
                         <logic:equal name="user" property="rol" value="profesor">
-                            <html:link action="/GestionActividades?method=listUser">Inicio</html:link> |
+                            <html:link action="/GestionActividades?method=preListUser">Inicio</html:link> |
                         </logic:equal>
 
                         <logic:equal name="user" property="rol" value="estudiante">
-                            <html:link action="/GestionActividades?method=listUser">Inicio</html:link> |
+                            <html:link action="/GestionActividades?method=preListUser">Inicio</html:link> |
                         </logic:equal>
 
                         <logic:equal name="user" property="rol" value="obrero">
-                            <html:link action="/GestionActividades?method=listUser">Inicio</html:link> |
+                            <html:link action="/GestionActividades?method=preListUser">Inicio</html:link> |
                         </logic:equal>
 
                         <logic:equal name="user" property="rol" value="WM">
-                            <html:link action="/GestionActividades?method=listAll">Inicio</html:link> |
+                            <html:link action="/GestionActividades?method=preListAll">Inicio</html:link> |
                         </logic:equal>
 
                         <logic:present name="permiso">
