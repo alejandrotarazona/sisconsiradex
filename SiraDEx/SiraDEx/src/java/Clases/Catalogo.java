@@ -138,6 +138,11 @@ public class Catalogo extends Root {
     }
 
     public boolean agregar(String ip, String user) {
+        
+        if (campos.isEmpty()){
+            mensaje = "Error: El Catálogo debe tener al menos un campo.";
+            return false;
+        }
 
         if (!Verificaciones.verificarCamposFijos(this)
                 || !Verificaciones.verificarCamposVariables(this)) {
@@ -241,15 +246,12 @@ public class Catalogo extends Root {
     }
 
     private boolean verificarEliminacionCampos() {
-
-        Iterator it = campos.iterator();
-        while (it.hasNext()) {
-            CampoCatalogo campo = (CampoCatalogo) it.next();
+        for (CampoCatalogo campo : campos) {
             if (!campo.isEliminado()) {
                 return true;
             }
         }
-        mensaje = "Error: El Catálogo debe tener al menos un campo";
+        mensaje = "Error: El Catálogo debe tener al menos un campo.";
         return false;
     }
 
@@ -258,9 +260,9 @@ public class Catalogo extends Root {
     public int eliminarCamposMarcados(Catalogo catNM) {
 
 
-        if ((catNM == null && !isParticipantes() && nroCampos <= 0)
+        if ((catNM == null && !isParticipantes() && campos.size() > 0)
                 || (catNM != null && !catNM.isParticipantes() 
-                && !isParticipantes() && nroCampos <= 0)) {
+                && !isParticipantes() && campos.size() > 0)) {
             if (!verificarEliminacionCampos()) {
                 return 2;
             }

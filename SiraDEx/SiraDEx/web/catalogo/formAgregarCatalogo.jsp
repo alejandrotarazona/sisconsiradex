@@ -109,7 +109,9 @@
                            }"/>
                 <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
                           onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
-                          document.getElementById('submit').value='Agregar Campos'"/>
+                          if(document.getElementById('submit').value!='Eliminar Campos') {
+                          document.getElementById('submit').value='Agregar Campos'
+                          }"/>
                 <div align="center">
                     <html:submit value="Registrar" styleId="submit"/>
                 </div>
