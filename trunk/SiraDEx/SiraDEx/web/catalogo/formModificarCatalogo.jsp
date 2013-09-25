@@ -176,13 +176,15 @@
                            }"/>
                 <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
                           onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
-                          document.getElementById('submit').value='Agregar'"/>
+                          if(document.getElementById('submit').value!='Eliminar') {
+                          document.getElementById('submit').value='Agregar'
+                          }"/>
                 <div align="center">
                     <html:submit value="Modificar" styleId="submit"
                                  onclick="if (this.value=='Modificar') 
                                  return confirm('¿Está seguro que desea modificar el Catálogo?');
                                  if (this.value=='Eliminar') 
-                                 return alert('Los campos seleccionados no podrán ser recuperados una vez los elimine'), 
+                                 return alert('Los campos seleccionados no podrán ser recuperados  una vez confirme esta acción. Esto afectara a todos los elementos del catálogo.'), 
                                  confirm('¿Está seguro que desea eliminar los campos seleccionados?')"/>
                 </div>
             </html:form>

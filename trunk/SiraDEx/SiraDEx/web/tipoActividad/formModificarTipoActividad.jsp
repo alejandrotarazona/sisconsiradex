@@ -310,7 +310,9 @@
                            }"/>
                 <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
                           onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
-                          document.getElementById('submit').value='Agregar'"/>
+                          if(document.getElementById('submit').value!='Eliminar') {
+                          document.getElementById('submit').value='Agregar'
+                          }"/>
                 <div align="center">
                     <html:submit value="Modificar" styleId="submit"/>
                 </div>
