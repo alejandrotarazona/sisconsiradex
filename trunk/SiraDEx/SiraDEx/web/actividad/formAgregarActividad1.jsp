@@ -13,6 +13,17 @@
 
 <html>
     <head>
+        <script type="text/javascript">
+            function submitform()
+            {
+                if (document.actividadForm.onsubmit &&
+                        !document.actividadForm.onsubmit())
+                {
+                    return;
+                }
+                document.actividadForm.submit();
+            }
+        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Agregar Actividad</title>
     </head>
@@ -27,26 +38,27 @@
             <h1 class="title">Registro de Actividad</h1>
 
             <logic:present name="tipos">
-                <font size=2>Seleccione el Tipo de Actividad que desea agregar.</font>
-                <table>
-                    <logic:iterate name="tipos" id="ta">
-                        <tr>
-                        <td><html:link action="/RegistrarActividad?method=save" 
-                                   paramName="ta" paramProperty="idTipoActividad" 
-                                   paramId="idTipoActividad">
-                                <ul><bean:write name="ta" property="nombreTipo"/></ul>
-                            </html:link> 
-                        </td>
-                    </tr>
-                </logic:iterate>
-            </table>
-        </logic:present> 
-        <logic:notPresent name="tipos">
-            <br><br>
-            <div align="center" style="font-size:1.2em">
-                Por ahora no hay ningún Tipo de Actividad para los usuarios de tipo ${user.rol}
-            </div>
-        </logic:notPresent>
-    </logic:notEqual>
-</body>
+                <font size=2>Seleccione el Tipo de Actividad que desea agregar.</font><br><br>
+                    <html:form method="POST" action="/RegistrarActividad?method=save">
+                    <ul>
+                        <logic:iterate name="tipos" id="ta">
+                            <html:hidden name="actividadForm" 
+                                         property="idTipoActividad" value="${ta.id}"/>
+                            <li>
+                                <a href="javascript: submitform()">
+                                    <bean:write name="ta" property="nombreTipo"/>
+                                </a>
+                            </li>
+                        </logic:iterate>
+                    </ul>
+                </html:form>
+            </logic:present> 
+            <logic:notPresent name="tipos">
+                <br><br>
+                <div align="center" style="font-size:1.2em">
+                    Por ahora no hay ningún Tipo de Actividad para los usuarios de tipo ${user.rol}
+                </div>
+            </logic:notPresent>
+        </logic:notEqual>
+    </body>
 </html>
