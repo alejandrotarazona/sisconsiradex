@@ -155,10 +155,11 @@ dl dl {
     margin-left: 1em;
 }
 ul, ol {
-    padding-left:0px;
+    padding-left:30px;
     margin: 0;
 }
 ul.menu {
+    padding-left:0px;
     list-style: none;
     border: none;
     text-align:right; /* LTR */
