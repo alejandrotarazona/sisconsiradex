@@ -510,8 +510,8 @@ public class CampoValor implements Serializable {
 
     private static void setCamposParticipante(CampoValor primerCampo,
             ArrayList<CampoValor> listaValor, String catalogo) {
-
-        String[] participantes = primerCampo.valor.split(";");
+        String valPrimerCampo = primerCampo.valor.replace("; ", ";");
+        String[] participantes = valPrimerCampo.split(";");
         int longitud = primerCampo.getCampo().getLongitud() - participantes.length + 1;
         primerCampo.getCampo().setLongitud(longitud);
         if (participantes[0].startsWith("$")) {

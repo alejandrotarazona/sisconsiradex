@@ -138,8 +138,8 @@ public class Catalogo extends Root {
     }
 
     public boolean agregar(String ip, String user) {
-        
-        if (campos.isEmpty()){
+
+        if (!participantes && campos.isEmpty()) {
             mensaje = "Error: El Catálogo debe tener al menos un campo.";
             return false;
         }
@@ -159,6 +159,10 @@ public class Catalogo extends Root {
             CampoCatalogo c = new CampoCatalogo();
             c.setNombre("USB-ID");
             c.setTipo("usbid");
+            campos.add(c);
+            c = new CampoCatalogo();
+            c.setNombre("Nombre");
+            c.setTipo("usuario");
             campos.add(c);
         }
 
@@ -261,7 +265,7 @@ public class Catalogo extends Root {
 
 
         if ((catNM == null && !isParticipantes() && campos.size() > 0)
-                || (catNM != null && !catNM.isParticipantes() 
+                || (catNM != null && !catNM.isParticipantes()
                 && !isParticipantes() && campos.size() > 0)) {
             if (!verificarEliminacionCampos()) {
                 return 2;
@@ -322,6 +326,10 @@ public class Catalogo extends Root {
             c.setNombre("USB-ID");
             c.setTipo("usbid");
             campos.add(c);
+            c = new CampoCatalogo();
+            c.setNombre("Nombre");
+            c.setTipo("usuario");
+            campos.add(c);
         }
 
         Iterator it;
@@ -329,9 +337,9 @@ public class Catalogo extends Root {
             it = campos.iterator();
             while (it.hasNext()) {
                 CampoCatalogo campo = (CampoCatalogo) it.next();
-                if (campo.getTipo().equals("usbid")) {
+                String tipo = campo.getTipo();
+                if (tipo.equals("usbid") || tipo.equals("usuario")) {
                     campo.setTipo("texto");
-                    break;
                 }
             }
         }

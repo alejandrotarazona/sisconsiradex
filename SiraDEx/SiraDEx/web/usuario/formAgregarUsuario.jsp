@@ -66,15 +66,11 @@
                         <td><html:text name="userAux" property="username" maxlength="20"/></td>
                         </tr>
                         <tr>
-                        <td style="font-weight: bold">Contraseña  <span style="color:red">*</span></td>
-                        <td><html:text name="userAux" property="password" maxlength="20"/></td>
-                        </tr>
-                        <tr>
-                        <td style="font-weight: bold">Nombres  <span style="color:red">*</span></td>
+                        <td style="font-weight: bold">Nombre(s)  <span style="color:red">*</span></td>
                         <td><html:text name="userAux" property="nombres" maxlength="50"/></td>
                         </tr>
                         <tr>
-                        <td style="font-weight: bold">Apellidos  <span style="color:red">*</span></td>
+                        <td style="font-weight: bold">Apellido(s)  <span style="color:red">*</span></td>
                         <td><html:text name="userAux" property="apellidos" maxlength="50"/></td>
                         </tr>
                         <tr>
@@ -89,6 +85,7 @@
                         <span style="color: red" id="error"></span>
                         </td>
                         </tr>
+                        <tr>
                         <td><b>Rol</b> <span style="color:red">*</span></td>
                         <td>
                             <html:select styleClass="selector"

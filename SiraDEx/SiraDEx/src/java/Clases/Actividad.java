@@ -397,7 +397,7 @@ public class Actividad extends Root {
 
     }
 
-    public boolean enviarCorreo(int accion) {
+    public void enviarCorreo(int accion) {
 
         String titulo = "Notificación del SiraDEx (Sistema de Registro de Actividades de"
                 + " Extensión de la Universidad Simón Bolívar)";
@@ -440,22 +440,21 @@ public class Actividad extends Root {
             p = Runtime.getRuntime().exec(comando);
             try {
                 if (p.waitFor() != 0) {
-                    mensaje = " Error: No se pudo enviar la notificación por correo. ";
-                    return false;
+                    mensaje += " No se pudo enviar la notificación por correo. ";
+                    return;
                 }
             } catch (InterruptedException ex) {
                 Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-                mensaje = " Error: No se pudo enviar la notificación por correo. " + ex;
-                return false;
+                mensaje += " No se pudo enviar la notificación por correo. Error: " + ex;
+                return;
             }
 
         } catch (IOException ex) {
             Logger.getLogger(Actividad.class.getName()).log(Level.SEVERE, null, ex);
-            mensaje = " Error: No se pudo enviar la notificación por correo. " + ex;
-            return false;
+            mensaje += " No se pudo enviar la notificación por correo. Error: " + ex;
+            return;
         }
-        mensaje += " Se le ha enviado una notificación por correo a los usuarios participantes de la Actividad.";
-        return true;
+        mensaje += " Se le ha enviado una notificación por correo a los usuarios participantes.";
 
     }
 
@@ -489,7 +488,7 @@ public class Actividad extends Root {
                     val = "$" + valAux;
                 }
                 if (!val.isEmpty()) {
-                    valorParticipante += ";" + val;
+                    valorParticipante += "; " + val;
                 }
             }
 
@@ -840,7 +839,7 @@ public class Actividad extends Root {
 
     public static ArrayList<Actividad> listarActividades() {
 
-        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
+        Entity eActividad = new Entity(15);//TIPO_ACT__ACT
         ResultSet rs = eActividad.listar();
         return listar(rs);
     }
@@ -853,7 +852,7 @@ public class Actividad extends Root {
      */
     public ArrayList<Actividad> listarActividadesDeTipo() {
 
-        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
+        Entity eActividad = new Entity(15);//TIPO_ACT__ACT
         String[] columna = {ATRIBUTOS[1]};
         Integer[] condicion = {idTipoActividad};
 
@@ -889,7 +888,7 @@ public class Actividad extends Root {
      * @return Lista con las actividades realacionadas con el validador,
      */
     public static ArrayList<Actividad> listarActividadesDeValidador(String validador) {
-        Entity eActividad = new Entity(21);//TIPO_ACT__ACT
+        Entity eActividad = new Entity(15);//TIPO_ACT__ACT
         ResultSet rs;
         if (validador.equals("WM")) {
             String[] columna = {ATRIBUTOS[3]}; //validacion, validador
@@ -916,11 +915,11 @@ public class Actividad extends Root {
         switch (tipo) {
             case "P":
             case "p":
-                eBuscar = new Entity(19);//TIPO_P
+                eBuscar = new Entity(13);//TIPO_P
                 break;
             case "R":
             case "r":
-                eBuscar = new Entity(20);//TIPO_R
+                eBuscar = new Entity(14);//TIPO_R
                 break;
             default:
                 return null;
@@ -938,7 +937,7 @@ public class Actividad extends Root {
      */
     public static ArrayList<Actividad> listarActividadesPrograma(String programa) {
 
-        Entity eListar = new Entity(21);//TIPO_ACT__ACT
+        Entity eListar = new Entity(15);//TIPO_ACT__ACT
         String[] columnas = {
             "programa"
         };

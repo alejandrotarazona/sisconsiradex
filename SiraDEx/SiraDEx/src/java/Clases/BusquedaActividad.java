@@ -209,7 +209,7 @@ public class BusquedaActividad extends Root {
     private boolean actividadesOtrosParametros(boolean validada,
             ArrayList<Actividad> cjtoAux) {
 
-        Entity eBuscar = new Entity(21);//TIPO_ACT__ACT
+        Entity eBuscar = new Entity(15);//TIPO_ACT__ACT
         ArrayList<String> auxColumnas = new ArrayList<>(0);
         ArrayList<Object> auxCondiciones = new ArrayList<>(0);
 
@@ -267,7 +267,7 @@ public class BusquedaActividad extends Root {
             "fecha"
         };
 
-        Entity eRango = new Entity(24);//ACT_COMPLETA
+        Entity eRango = new Entity(18);//ACT_COMPLETA
         ResultSet rsRango = eRango.seleccionar(columna, condicion);
         if (this.fechaInic != null && !this.fechaInic.equals("")) {
             hayRango = true;
@@ -352,7 +352,7 @@ public class BusquedaActividad extends Root {
     private boolean actividadesContienenPalabras(ArrayList<Actividad> listaContienen) {
         boolean hayPalabras = false;
 
-        Entity eBuscar = new Entity(24);//ACT_COMPLETA
+        Entity eBuscar = new Entity(18);//ACT_COMPLETA
         ResultSet rs = eBuscar.listarOrdenado("id_actividad");
 
         if (!palabras.isEmpty()) {
@@ -431,7 +431,7 @@ public class BusquedaActividad extends Root {
 
         if (listas.isEmpty()) {
             if (!hayParticipantes && !hayColumnas && !hayRango && !hayPalabras) {
-                Entity eBuscar = new Entity(21);//TIPO_ACT__ACT
+                Entity eBuscar = new Entity(15);//TIPO_ACT__ACT
                 ResultSet rs = eBuscar.listar();
                 cjtoAux = Actividad.listar(rs);
                 grafica = valoresGrafica(cjtoAux);

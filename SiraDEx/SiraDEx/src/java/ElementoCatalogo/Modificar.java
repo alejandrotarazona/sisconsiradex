@@ -53,7 +53,12 @@ public class Modificar extends DispatchAction {
         e.setIdCatalogo(idCat);
         e.setNombreCatalogo(Clases.Catalogo.getNombre(idCat));
 
-        request.getSession().setAttribute("usbidNM", e.getCampoUsuario());
+        String usbidNM = e.getCampoUsuario();
+        if (usbidNM != null) {
+            ArrayList<ElementoCatalogo> usuarios = Clases.ElementoCatalogo.listarUsuarios();
+            request.getSession().setAttribute("usuarios", usuarios);
+        }
+        request.getSession().setAttribute("usbidNM", usbidNM);
 
         return mapping.findForward(PAGE);
     }

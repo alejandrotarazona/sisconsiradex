@@ -77,7 +77,7 @@ public class EditarPerfil extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
-        if (u.modificar(ip, usuario)) {
+        if (u.modificar(ip, usuario, null)) {
             Clases.Root.deleteSessions(request, "");
             request.getSession().setAttribute("mensajePerfil", u.getMensaje());
             return mapping.findForward(SUCCESS);

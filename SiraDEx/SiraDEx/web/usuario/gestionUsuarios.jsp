@@ -103,6 +103,9 @@
                         <td>
                             <html:form method="POST" action="/EliminarUsuario">
                                 <html:hidden name="usr" property="username" />
+                                <html:hidden name="usr" property="apellidos" />
+                                <html:hidden name="usr" property="nombres" />
+                                <html:hidden name="usr" property="rol" />
                                 <html:submit styleId="botonEliminar"
                                              value=" "
                                              title="Eliminar"

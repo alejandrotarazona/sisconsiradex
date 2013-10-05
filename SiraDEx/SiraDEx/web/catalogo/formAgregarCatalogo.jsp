@@ -37,7 +37,7 @@
                         <td>
                             <html:checkbox name="catalogoForm" property="participantes" value="off"
                                            onclick="if (this.checked) { this.value = 'on'
-                                           document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
+                                           document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id y otro para el nombre del usuario.<b>'
                                            } else {document.getElementById('aviso').innerHTML='', this.value = 'off'}"/>
                             <html:hidden name="catalogoForm" property="participantes" value="false"/>
                         <span id="aviso"></span>
@@ -45,7 +45,7 @@
                         </tr>
                         <tr>
                         <td><b>Nombre del cátalogo</b></td>
-                        <td><html:text name="catalogoForm" property="nombre"/></td>
+                        <td><html:text name="catalogoForm" property="nombre" maxlength="140"/></td>
                         </tr>
                     </tbody>
                 </table>
@@ -80,15 +80,17 @@
                                 </td>
                                 <td td align="center">
                                     <logic:notEqual name="campos" property="tipo" value="usbid">
-                                        <html:checkbox name="campos" property="eliminado" indexed="true"
-                                                       onclick="if (this.checked) {
-                                                       anterior = document.getElementById('submit').value;
-                                                       document.getElementById('submit').value='Eliminar Campos'
-                                                       } else {
-                                                       document.getElementById('submit').value=anterior
-                                                       }"/>
-                                        <html:hidden name="campos" property="eliminado" value="false" 
-                                                     indexed="true"/>
+                                        <logic:notEqual name="campos" property="tipo" value="usuario">
+                                            <html:checkbox name="campos" property="eliminado" indexed="true"
+                                                           onclick="if (this.checked) {
+                                                           anterior = document.getElementById('submit').value;
+                                                           document.getElementById('submit').value='Eliminar Campos'
+                                                           } else {
+                                                           document.getElementById('submit').value=anterior
+                                                           }"/>
+                                            <html:hidden name="campos" property="eliminado" value="false" 
+                                                         indexed="true"/>
+                                        </logic:notEqual>
                                     </logic:notEqual>
                                 </td>
                                 <td></td> 

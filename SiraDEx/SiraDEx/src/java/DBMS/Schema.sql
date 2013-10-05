@@ -22,9 +22,7 @@ WITH (
 
 CREATE TABLE USUARIO(
     usbid       VARCHAR(20) NOT NULL,
-    password    VARCHAR(20) NOT NULL,
     rol         VARCHAR,
-    tipo        INT,
     nombres     VARCHAR(50),
     apellidos   VARCHAR(50),
     telefono    VARCHAR(15),
@@ -161,7 +159,7 @@ WITH (
 
 CREATE TABLE CATALOGO(
     id_cat      SERIAL PRIMARY KEY,
-    nombre      VARCHAR(20) NOT NULL,
+    nombre      VARCHAR(140) NOT NULL,
     participa   BOOLEAN DEFAULT FALSE
 )
 WITH (
