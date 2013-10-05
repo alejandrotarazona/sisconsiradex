@@ -47,11 +47,24 @@
                                        id="camposValores" indexId="index">
                             <tr>
                             <td width="20%">
-                                <bean:write name="camposValores" property="campo.nombre"/> 
+                                <bean:write name="camposValores" property="campo.nombre"/>
                             </td>
                             <td>
                                 <logic:equal name="camposValores" property="campo.tipo" value="usbid">
-                                    <html:text name="camposValores" property="valor" indexed="true"/>  
+                                    <html:select name="camposValores" property="valor" indexed="true"
+                                                 onclick=" if (this.value !== ''){
+                                                 document.getElementById('usuario').value= this.options[this.selectedIndex].innerHTML.split(',')[1];
+                                                 } else {
+                                                 document.getElementById('usuario').value= '';
+                                                 }">
+                                        <html:option value="">-- Seleccione --</html:option>
+                                        <html:optionsCollection name="usuarios" label="contenido" value="mensaje"/>
+                                    </html:select>  
+                                </logic:equal>
+
+                                <logic:equal name="camposValores" property="campo.tipo" value="usuario">
+                                    <html:text name="camposValores" property="valor" indexed="true" styleId="usuario"  
+                                               readonly="true"/>  
                                 </logic:equal>
 
                                 <logic:equal name="camposValores" property="campo.tipo" value="texto">

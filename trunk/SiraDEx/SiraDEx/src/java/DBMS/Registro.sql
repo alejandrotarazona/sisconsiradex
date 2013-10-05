@@ -1,97 +1,4 @@
-/*
---Tipo de actividad
 
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador) VALUES ('Formulacion de proyectos del BPDEx', 'R',
-'Proyecto del BPDEx','Acción social y desarrollo comunitario',
-'Unidad de Participación y Acción Social');
---'Proyecto del BDPEx');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador) VALUES ('Tutoría de Proyecto de Servicio Comunitario',
-'P','Tutoría de proyectos de servicio comunitario','Acción Social y Desarrollo Comunitario',
-'Coordinación de Formación Complementaria General');
---'Informe de Servicio Comunitario del estudiante y acta de evaluación');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador) VALUES ('Tutoría de pasantías cortas profesionales',
-'R','Tutoria de pasantías cortas','Cooperación técnica',
-'Coordinación de Cooperación Técnica');
---'Informe de pasantia corta del estudiante y acta de evaluación');
-INSERT INTO tipo_actividad (nombre_tipo_actividad,tipo_p_r,descripcion,
-programa,validador) VALUES ('Participación en actividades de voluntariado en representación de la USB',
-'R','Actividades de voluntariado representando la USB', 'Acción Social y Desarrollo Comunitario',
-'Unidad de Participación y Acción Social');
---'Informe de participación'
-
---Campo de un tipo de actividad
-
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
-VALUES (1,'Fecha de postulación', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio)
-VALUES (1,'Fecha de inicio', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Fecha fin', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Nombre del autor', 'texto', 30, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Título', 'texto', 40, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Área de atención', 'texto', 40, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Comunidad', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Zonas', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Número de beneficiaros', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Tipo de beneficiaros', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Costo', 'numero', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (1,'Proyecto del BPDEX','archivo',0,true);
-
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Fecha de inscripción', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Fecha de culminación', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Nombre del tutor', 'texto', 30, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Nombre del alumno', 'texto', 30, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Código', 'texto', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Informe de Servicio Comunitario del estudiante','archivo',0,true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (2,'Acta de evaluación','archivo',0,true);
-
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Fecha de inscripción', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Fecha de culminación', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Informe de pasantía corta','archivo',0, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (3,'Acta de evaluación','archivo',0, true);
-
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Fecha de inicio', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Fecha fin', 'fecha', 20, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Comunidad', 'texto', 40, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Nombre del voluntario', 'texto', 30, true);
-INSERT INTO campo (id_tipo_actividad, nombre_campo,tipo_campo,longitud,obligatorio) 
-VALUES (4,'Informe de participación','archivo',0, true);
-
---Valor
-
-INSERT INTO valor (id_campo, id_actividad, valor) VALUES (12,15,'10/01/13');
-INSERT INTO valor (id_campo, id_actividad, valor) VALUES (13,15,'20/01/13');
-INSERT INTO valor (id_campo, id_actividad, valor) VALUES (14,15,'Kenyer Dominguez');
-INSERT INTO valor (id_campo, id_actividad, valor) VALUES (15,15,'Diana Vainberg');
-INSERT INTO valor (id_campo, id_actividad, valor) VALUES (16,15,'10A');
-*/
 --Permisos
 
 INSERT INTO permiso (nombre) VALUES ('Estudiante');
@@ -99,39 +6,30 @@ INSERT INTO permiso (nombre) VALUES ('Empleado');
 INSERT INTO permiso (nombre) VALUES ('Obrero');
 INSERT INTO permiso (nombre) VALUES ('Profesor');
 
-/*
----Tiene_permiso
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (1,4);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (2,4);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (3,4);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,1);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,2);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,3);
-INSERT INTO tiene_permiso (id_tipo_actividad, id_permiso) VALUES (4,4);
-*/
 --Usuarios
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('00-00000', '123456', 'obrero', 3, 'Pablo', 'Perez', '04321234567', 
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('09-00000', 'obrero', 'Pablo', 'Perez', '04321234567', 
 '00-00000@usb.ve');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('05-38978', 'alejandro', 'empleado', 1, 'Alejandro', 'Tarazona', '04121341842',
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('05-38978', 'WM', 'Alejandro', 'Tarazona', '04121341842',
  'alejandrotarazona@gmail.com');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
 VALUES 
-('webmaster', 'webmaster', 'WM', 2, 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('07-41618', 'diana', 'estudiante', 1, 'Diana', 'Vainberg', '04126053552', 
+('gsalazar', 'empleado', 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('07-41618', 'WM', 'Diana', 'Vainberg', '04126053552', 
 'dianak90@gmail.com');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('jf', 'jf', 'estudiante', 1, 'Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('05-38199', '123456', 'estudiante', 2, 'Jorge', 'García', '04141360451', 
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('09-00001', 'estudiante','Jose', 'Fernandez', '04125555555', 'jf@usb.ve');
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('05-38199', 'WM','Jorge', 'García', '04141360451', 
 'jorgedgb@gmail.com');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('kdoming', 'kdoming', 'profesor',4, 'Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
-INSERT INTO usuario (usbid,password,rol,tipo,nombres,apellidos,telefono,email) 
-VALUES ('99-10000', 'pedrog', 'Unidad de Participación y Acción Social',2, 'Pedro', 
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('kdoming', 'profesor','Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
+INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
+VALUES ('99-10000', 'Unidad de Participación y Acción Social','Pedro', 
 'Gomez',  '', '07-10000@usb.ve');
+
 
 
 
@@ -140,10 +38,8 @@ INSERT INTO catalogo (nombre) VALUES ('Dependencias');
 INSERT INTO catalogo (nombre) VALUES ('Programas');
 INSERT INTO catalogo (nombre, participa) VALUES ('Estudiantes', true);
 INSERT INTO catalogo (nombre, participa) VALUES ('Profesores', true);
-INSERT INTO catalogo (nombre, participa) VALUES ('Empleados', true);
+INSERT INTO catalogo (nombre, participa) VALUES ('Empleados Administrativos', true);
 INSERT INTO catalogo (nombre, participa) VALUES ('Obreros', true);
---INSERT INTO catalogo (nombre) VALUES ('Carreras');
---INSERT INTO catalogo (nombre) VALUES ('Departamentos');
 
 --      Campos de dependencias
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
@@ -159,25 +55,25 @@ VALUES (2, 'Nombre', 'texto');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (3, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (3, 'Nombre y Apellido', 'texto');
+VALUES (3, 'Nombre', 'usuario');
 
 --      Campos de profesores
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (4, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (4, 'Nombre y Apellido', 'texto');
+VALUES (4, 'Nombre', 'usuario');
 
 --      Campos de empleados
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (5, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (5, 'Nombre y Apellido', 'texto');
+VALUES (5, 'Nombre', 'usuario');
 
 --      Campos de obreros
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
 VALUES (6, 'USB-ID', 'usbid');
 INSERT INTO campo_catalogo (id_cat, nombre_campo, tipo_campo) 
-VALUES (6, 'Nombre y Apellido', 'texto');
+VALUES (6, 'Nombre', 'usuario');
 
 
 --Elementos de los catalogos
@@ -297,13 +193,13 @@ INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (7,20,'Kenyer D
 
 --      Valor del campo Id de un empleado
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,21,'99-10000');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,22,'webmaster');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,22,'gsalazar');
 --      Valor del campo Nombre de un empleado
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,21,'Pedro Gomez');
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,22,'Gerson Salazar');
 
 --      Valor del campo Id de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'00-00000');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'09-00000');
 --      Valor del campo Nombre de un obrero
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,23,'Pablo Perez');
 

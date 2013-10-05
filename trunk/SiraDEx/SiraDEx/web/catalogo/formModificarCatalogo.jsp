@@ -4,7 +4,6 @@
     Author     : SisCon
 --%>
 
-<%@page import="Clases.Catalogo"%>
 <%@ taglib uri="http://struts.apache.org/tags-bean" prefix="bean" %>
 <%@ taglib uri="http://struts.apache.org/tags-html" prefix="html" %>
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
@@ -51,32 +50,36 @@
                         <td width="18%"><b>Catálogo de Usuarios</b></td>
 
                         <td>
-                            <logic:equal name="catalogoForm" property="participantes" value="false">
-                                <html:checkbox name="catalogoForm" property="participantes" value="off"
-                                               onclick="if (this.checked) { 
-                                               this.value = 'on'
-                                               document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id del usuario.<b>'
+                            <logic:greaterThan name="catalogoForm" property="idCatalogo" value="6">
+                                <logic:equal name="catalogoForm" property="participantes" value="false">
+                                    <html:checkbox name="catalogoForm" property="participantes" value="off"
+                                                   onclick="if (this.checked) { 
+                                                   this.value = 'on'
+                                                   document.getElementById('aviso').innerHTML='<b>Esta opción agrega por defecto un campo para el usb-id y otro para el nombre del usuario.<b>'
+                                                   } else {
+                                                   document.getElementById('aviso').innerHTML='', 
+                                                   this.value = 'off'
+                                                   }"/>
+                                    <html:hidden name="catalogoForm" property="participantes" value="false"/>
+                                <span id="aviso"></span>
+                            </logic:equal>
+
+                            <logic:equal name="catalogoForm" property="participantes" value="true">
+                                <html:checkbox name="catalogoForm" property="participantes"
+                                               onclick="if (!this.checked) { 
+                                               this.value = 'off'
+                                               document.getElementById('aviso').innerHTML='<b>El campo USB-ID y Nombre serán editables al presionar Modificar con esta opción desmarcada.<b>'
                                                } else {
                                                document.getElementById('aviso').innerHTML='', 
-                                               this.value = 'off'
+                                               this.value = 'on'
                                                }"/>
                                 <html:hidden name="catalogoForm" property="participantes" value="false"/>
-                            <span id="aviso"></span>
-                        </logic:equal>
-
-                        <logic:equal name="catalogoForm" property="participantes" value="true">
-                            <html:checkbox name="catalogoForm" property="participantes"
-                                           onclick="if (!this.checked) { 
-                                           this.value = 'off'
-                                           document.getElementById('aviso').innerHTML='<b>El campo USB-ID dejará de ser de usuario al modificar el catálogo.<b>'
-                                           } else {
-                                           document.getElementById('aviso').innerHTML='', 
-                                           this.value = 'on'
-                                           }"/>
-                            <html:hidden name="catalogoForm" property="participantes" value="false"/>
-                            <span id="aviso"></span>
-                        </logic:equal>
-
+                                <span id="aviso"></span>
+                            </logic:equal>
+                        </logic:greaterThan>
+                        <logic:lessEqual name="catalogoForm" property="idCatalogo" value="6">
+                            <html:checkbox name="catalogoForm" property="participantes" disabled="true"/>
+                        </logic:lessEqual>
                         </td>
                         </tr>
 
@@ -84,23 +87,26 @@
                         <td><b>Nombre del cátalogo</b></td>
 
                         <td>
-                            <% Catalogo c = (Catalogo) pageContext.findAttribute("catalogoForm");
-                                String nombreCat = (String) c.getNombre();
-                                boolean b = false;
-                                if (nombreCat.equals("Dependencias")
-                                        || nombreCat.equals("Programas")) {
-                                    b = true;
-                                }%>
-                            <html:text name="catalogoForm" property="nombre" disabled='<%=b%>'
-                                       maxlength="100">
-                                <bean:write name="catalogoForm" property="nombre"/>
-                            </html:text>
+                            <logic:greaterThan name="catalogoForm" property="idCatalogo" value="6"> 
+                                <html:text name="catalogoForm" property="nombre" maxlength="140">
+                                    <bean:write name="catalogoForm" property="nombre"/>
+                                </html:text>
+                            </logic:greaterThan>
+                            <logic:lessEqual name="catalogoForm" property="idCatalogo" value="6">
+                                <html:text name="catalogoForm" property="nombre" maxlength="140" 
+                                           disabled="true">
+                                    <bean:write name="catalogoForm" property="nombre"/>
+                                </html:text>
+                            </logic:lessEqual>
                         </td>
                         </tr>
                     </tbody>
                 </table>   
                 <font size=2>
-                    Los campos siguientes son variables.
+                    Los campos siguientes son variables, 
+                    <logic:equal name="catalogoForm" property="participantes" value="true">
+                        con excepcion del USB-ID y Nombre.
+                    </logic:equal>
                 </font><br>
                 <table>
                     <tbody>
@@ -118,11 +124,19 @@
                             <td align="center">
                             <span style="color: gray;font-size:10px">${index+1}</span>
                             <logic:notEqual name="campos" property="tipo" value="usbid">
-                                <html:text name="campos" property="nombre" indexed="true" maxlength="100">
-                                    <bean:write name="campos" property="nombre"/>
-                                </html:text> 
+                                <logic:notEqual name="campos" property="tipo" value="usuario">
+                                    <html:text name="campos" property="nombre" indexed="true" maxlength="100">
+                                        <bean:write name="campos" property="nombre"/>
+                                    </html:text> 
+                                </logic:notEqual>
                             </logic:notEqual>
                             <logic:equal name="campos" property="tipo" value="usbid">
+                                <html:text name="campos" property="nombre" indexed="true" 
+                                           disabled="true">
+                                    <bean:write name="campos" property="nombre"/> 
+                                </html:text>                  
+                            </logic:equal>
+                            <logic:equal name="campos" property="tipo" value="usuario">
                                 <html:text name="campos" property="nombre" indexed="true" 
                                            disabled="true">
                                     <bean:write name="campos" property="nombre"/> 
@@ -131,14 +145,22 @@
                             </td> 
                             <td align="center">
                                 <logic:notEqual name="campos" property="tipo" value="usbid">
-                                    <html:select name="campos" property="tipo" styleClass="selector" 
-                                                 indexed="true">
-                                        <html:option value="texto">texto</html:option>
-                                        <html:option value="numero">numero</html:option>
-                                        <html:option value="fecha">fecha</html:option>
-                                    </html:select>
+                                    <logic:notEqual name="campos" property="tipo" value="usuario">
+                                        <html:select name="campos" property="tipo" styleClass="selector" 
+                                                     indexed="true">
+                                            <html:option value="texto">texto</html:option>
+                                            <html:option value="numero">numero</html:option>
+                                            <html:option value="fecha">fecha</html:option>
+                                        </html:select>
+                                    </logic:notEqual>
                                 </logic:notEqual>
                                 <logic:equal name="campos" property="tipo" value="usbid">
+                                    <html:select name="campos" property="tipo" indexed="true" 
+                                                 styleClass="selector" disabled="true">
+                                        <html:option value="texto">texto</html:option>
+                                    </html:select>
+                                </logic:equal>
+                                <logic:equal name="campos" property="tipo" value="usuario">
                                     <html:select name="campos" property="tipo" indexed="true" 
                                                  styleClass="selector" disabled="true">
                                         <html:option value="texto">texto</html:option>
@@ -147,15 +169,17 @@
                             </td>
                             <td td align="center">
                                 <logic:notEqual name="campos" property="tipo" value="usbid">
-                                    <html:checkbox name="campos" property="eliminado" indexed="true"
-                                                   onclick="if (this.checked) {
-                                                   anterior = document.getElementById('submit').value;
-                                                   document.getElementById('submit').value='Eliminar'
-                                                   } else {
-                                                   document.getElementById('submit').value=anterior
-                                                   }"/>
-                                    <html:hidden name="campos" property="eliminado" value="false" 
-                                                 indexed="true"/>
+                                    <logic:notEqual name="campos" property="tipo" value="usuario">
+                                        <html:checkbox name="campos" property="eliminado" indexed="true"
+                                                       onclick="if (this.checked) {
+                                                       anterior = document.getElementById('submit').value;
+                                                       document.getElementById('submit').value='Eliminar'
+                                                       } else {
+                                                       document.getElementById('submit').value=anterior
+                                                       }"/>
+                                        <html:hidden name="campos" property="eliminado" value="false" 
+                                                     indexed="true"/>
+                                    </logic:notEqual>
                                 </logic:notEqual>
                             </td>
                             <td></td> 

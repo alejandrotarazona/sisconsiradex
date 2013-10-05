@@ -75,21 +75,16 @@
                     <logic:iterate name="catalogos" id="cat">
                         <tr>
                         <td>
-                            <logic:notEqual name="cat" property="nombre" value="Dependencias">
-                                <logic:notEqual name="cat" property="nombre" value="Programas">
-                                    <bean:write name="cat" property="nombre" />
-                                </logic:notEqual>
-                            </logic:notEqual>
-                            <logic:equal name="cat" property="nombre" value="Dependencias">
-                            <span title="No puede ser eliminado ni cambiado de nombre">
-                                <span style="color:red">*</span><bean:write name="cat" property="nombre"/> 
+                            <logic:greaterThan name="cat" property="idCatalogo" value="6">     
+                                <bean:write name="cat" property="nombre" />
+                            </logic:greaterThan>
+
+                            <logic:lessEqual name="cat" property="idCatalogo" value="6">
+                            <span title="Catálogo obligatorio para el sistema">
+                                <span style="color:red">*</span> <bean:write name="cat" property="nombre"/> 
                             </span>
-                        </logic:equal>
-                        <logic:equal name="cat" property="nombre" value="Programas">
-                            <span title="No puede ser eliminado ni cambiado de nombre">
-                                <span style="color:red">*</span><bean:write name="cat" property="nombre"/> 
-                            </span>
-                        </logic:equal>
+                        </logic:lessEqual>
+
                         </td>
                         <td align="center">
                             <html:form method="POST" action="/ModificarCatalogo?method=page">
@@ -109,19 +104,18 @@
                         </td>
                         <td align="center">
 
-                            <logic:notEqual name="cat" property="nombre" value="Dependencias">
-                                <logic:notEqual name="cat" property="nombre" value="Programas">
+                            <logic:greaterThan name="cat" property="idCatalogo" value="6"> 
 
-                                    <html:form method="POST" action="/EliminarCatalogo">
-                                        <html:hidden name="cat" property="idCatalogo" />
-                                        <html:hidden name="cat" property="nombre" />
-                                        <html:submit styleId="botonEliminar"
-                                                     value=" "
-                                                     title="Eliminar"
-                                                     onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
-                                    </html:form>
-                                </logic:notEqual>
-                            </logic:notEqual>
+                                <html:form method="POST" action="/EliminarCatalogo">
+                                    <html:hidden name="cat" property="idCatalogo" />
+                                    <html:hidden name="cat" property="nombre" />
+                                    <html:submit styleId="botonEliminar"
+                                                 value=" "
+                                                 title="Eliminar"
+                                                 onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
+                                </html:form>
+
+                            </logic:greaterThan>
                         </td>
                         </tr>
                     </logic:iterate>

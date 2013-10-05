@@ -76,7 +76,7 @@
                         </td>
                         </tr>
                         <tr>
-                        <td width="15%" style="font-weight: bold">Nombres <span style="color:red">*</span></td>
+                        <td width="15%" style="font-weight: bold">Nombre(s) <span style="color:red">*</span></td>
                         <td>
                             <html:text name="usuarioForm" property="nombres" disabled="true"
                                        styleClass="modificar" maxlength="50">
@@ -86,7 +86,7 @@
                         </tr>
 
                         <tr>
-                        <td style="font-weight: bold">Apellidos <span style="color:red">*</span></td>
+                        <td style="font-weight: bold">Apellido(s) <span style="color:red">*</span></td>
                         <td>
                             <html:text name="usuarioForm" property="apellidos" disabled="true"
                                        styleClass="modificar" maxlength="50">

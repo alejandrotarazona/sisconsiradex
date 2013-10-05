@@ -23,7 +23,7 @@ public class TipoActividad extends Root {
 
     private int id;
     private String nombreTipo;
-    private String tipoPR;
+    private String tipoPR = "";
     private int nroCampos = 1;
     private String descripcion;
     private String[] permisos;
@@ -146,6 +146,7 @@ public class TipoActividad extends Root {
     //Este m[etodo permite que cuando el multibox no tenga nada, el arreglo
     //permisos tome el valor de nulo, pero como sobreescribe el reset de Root  
     //tuve que agregar tambien lo que esta en el reset de Root 
+    @Override
     public void reset(ActionMapping mapping, HttpServletRequest request) {
         try {
             request.setCharacterEncoding("UTF-8");
@@ -155,6 +156,7 @@ public class TipoActividad extends Root {
         permisos = null;
     }
 
+    @Override
     public TipoActividad clone() {
         TipoActividad resp = new TipoActividad();
         resp.setId(this.getId());
@@ -307,9 +309,8 @@ public class TipoActividad extends Root {
         }
 
         if (esTipoActividad()) {
-            mensaje = "Error: Ya existe un Tipo de Actividad con el Nombre "
-                    + "de la Actividad '" + nombreTipo + "'. Por favor "
-                    + "intente con otro nombre.";
+            mensaje = "Error: Ya existe un Tipo de Actividad llamado '"
+                    + nombreTipo + "'. Por favor intente con otro nombre.";
             return false;
         }
 
@@ -371,6 +372,20 @@ public class TipoActividad extends Root {
 
     }
 
+    // verifica si un campo tipo archivo o participante fue cambiado a otro tipo 
+    // para marcar el tipo actividad como modificado, esto se hace para mantener 
+    // la coherencia de los datos de las actividades registradas de este tipo
+    public void verificarCambios(ArrayList<Campo> camposNM) {
+        for (int i = 0; i < campos.size(); i++) {
+            String tipoNM = camposNM.get(i).getTipo();
+            String tipo = campos.get(i).getTipo();
+            if ((tipoNM.equals("participante") && !tipo.equals("participante"))
+                    || (tipoNM.equals("archivo") && !tipo.equals("archivo"))) {
+                modificado = true;
+            }
+        }
+    }
+
     // los agrega al form para ser enviados desde el action a la vista
     public void agregarCamposNuevos() {
         for (int i = 0; i < nroCampos; i++) {
@@ -391,7 +406,8 @@ public class TipoActividad extends Root {
             eMod.setIp(ip);
             eMod.setUser(user);
             eMod.insertarLog();
-            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito.";
+            mensaje = "El Tipo de Actividad '" + nombreTipo + "' ha sido eliminado con éxito."
+                    + " Se ha envíado a la Papelera.";
             return true;
         }
         mensaje = "Error: No se pudo eliminar el Tipo de Actividad '" + nombreTipo + "'.";
@@ -414,10 +430,7 @@ public class TipoActividad extends Root {
     private boolean verificarEliminacionCampos() {
         boolean participante = false;
         boolean archivo = false;
-
-        Iterator it = campos.iterator();
-        while (it.hasNext()) {
-            Campo campo = (Campo) it.next();
+        for (Campo campo : campos) {
             String tipo = campo.getTipo();
             if (!campo.isEliminado()) {
                 if (tipo.equals("participante")) {
@@ -596,7 +609,7 @@ public class TipoActividad extends Root {
 
     private int totalActividades() {
 
-        Entity eSelec = new Entity(21);//TIPO_ACT__ACT
+        Entity eSelec = new Entity(15);//TIPO_ACT__ACT
         ResultSet rs = eSelec.seleccionarNumActividades("id_tipo_actividad = '" + id + "'");
         try {
             if (rs != null) {

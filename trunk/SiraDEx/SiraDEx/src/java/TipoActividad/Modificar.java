@@ -4,6 +4,7 @@
  */
 package TipoActividad;
 
+import Clases.Campo;
 import Clases.ElementoCatalogo;
 import Clases.TipoActividad;
 import Clases.Usuario;
@@ -71,6 +72,9 @@ public class Modificar extends DispatchAction {
         String nombreNM = ta.getNombreTipo();
         request.getSession().setAttribute("nombreNM", nombreNM);
 
+        ArrayList camposNM = Clases.Campo.listar(idTA);
+        request.getSession().setAttribute("camposNM", camposNM);
+
         return mapping.findForward(PAGE);
     }
 
@@ -105,14 +109,33 @@ public class Modificar extends DispatchAction {
             return mapping.findForward(PAGE);
         }
 
-        if (ta.isModificado()) {
-            if (!ta.eliminar(ip, usuario) || !ta.agregar(ip, usuario)) {
-                return mapping.findForward(PAGE);
+        if (ta.getActividades() > 0) {
+
+            if (!ta.isModificado()) {
+                ArrayList camposNM = (ArrayList<Campo>) request.getSession().getAttribute("camposNM");
+                ta.verificarCambios(camposNM);
             }
-            ta.setMensaje("El Tipo de Actividad '" + ta.getNombreTipo()
-                    + "' ha sido modificado con éxito.");
-            return mapping.findForward(SUCCESS);
         }
+
+        if (ta.isModificado()) {
+            if (ta.getActividades() > 0) {
+                if (!ta.eliminar(ip, usuario) || !ta.agregar(ip, usuario)) {
+                    return mapping.findForward(PAGE);
+                }
+                request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
+                        + ta.getNombreTipo() + "' ha sido modificado con éxito."
+                        + "El Tipo previo a la modificación se ha envíado ha la Papelera.");
+                return mapping.findForward(SUCCESS);
+            } else {
+                if (!ta.eliminarDefinitivo(ip, usuario) || !ta.agregar(ip, usuario)) {
+                    return mapping.findForward(PAGE);
+                }
+                request.getSession().setAttribute("mensajeTipo", "El Tipo de Actividad '"
+                        + ta.getNombreTipo() + "' ha sido modificado con éxito.");
+                return mapping.findForward(SUCCESS);
+            }
+        }
+
 
         if (ta.modificar(nombreNM, ip, usuario)) {
 

@@ -487,6 +487,13 @@ public class Verificaciones {
                         + "solo números.");
                 return false;
             }
+            
+            /*verifica si el campo es tipo usbid que no sea vacío*/
+            if (ccv.getCampo().getTipo().equals("usbid") && esVacio(valor)) {
+                ec.setMensaje("Error: El campo " + nombre + " es obligatorio.");
+                return false;
+            }
+            
             todosVacios &= Verificaciones.esVacio(valor);
         }
         if (todosVacios) {
@@ -505,13 +512,6 @@ public class Verificaciones {
 
 
         String respVerif = verificarLongitudVacio("'USB-ID'", u.getUsername(),
-                20, true);
-        if (respVerif != null) {
-            u.setMensaje(respVerif);
-            return false;
-        }
-
-        respVerif = verificarLongitudVacio("'Contraseña'", u.getPassword(),
                 20, true);
         if (respVerif != null) {
             u.setMensaje(respVerif);

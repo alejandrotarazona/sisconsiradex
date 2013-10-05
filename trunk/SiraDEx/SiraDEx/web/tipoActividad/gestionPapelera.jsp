@@ -57,9 +57,9 @@
                     <thead>
                         <tr>
                         <th>Nombre</th>
-                        <th></th>
-                        <th></th>
-                        <th></th>
+                        <th width="10%"></th>
+                        <th width="10%"></th>
+                        <th width="10%"></th>
                         </tr>
                     </thead>
                     <tbody>

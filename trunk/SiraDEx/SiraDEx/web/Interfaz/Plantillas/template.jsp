@@ -10,11 +10,7 @@
 <%@ taglib uri="http://struts.apache.org/tags-logic" prefix="logic" %>
 
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%              
-  response.setHeader("pragma", "no-cache");              
-  response.setHeader("Cache-control", "no-cache, no-store, must-revalidate");             
-  response.setHeader("Expires", "0");  
-%>
+
 <!DOCTYPE html>
 <html version="HTML+RDFa 1.0" lang="es" dir="ltr" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:content="http://purl.org/rss/1.0/modules/content/"
@@ -34,7 +30,7 @@
             <tiles:insert attribute="topMenu"/>
             <div id="main" class="section section-main clearfix" role="main">
                 <div id="content" class="column grid-15 push-3" style="overflow-y: auto;max-height: 420px;height:400px;">
-                    <div class="inner" style="padding-bottom:170px;">
+                    <div class="inner" style="padding-bottom:145px;">
                         <div id="main-content" class="clearfix">
                             <div class="region region-content">
                                 <div class="content clearfix">
@@ -46,10 +42,18 @@
                                                 </logic:present>
                                                 <logic:notPresent name="user">
                                                     <br></br>
-                                                    <span class ="warning">
-                                                        Su sesión ha expirado, para iniciar sesión nuevamente, por favor, 
-                                                        <html:link action="/Login?method=page">haga click aquí</html:link>
-                                                        </span>
+                                                    <div align="center">
+                                                        <span class ="warning">
+                                                            Su sesión en SiraDEx ha expirado si no desea volver al sistema, por favor, 
+                                                            <html:link action="/Logout">haga click aquí</html:link>
+                                                                para salir del CAS
+                                                            </span>
+                                                            <br></br>
+                                                            <div style="font-size:1.3em">
+                                                                Si desea volver al sistema, por favor, 
+                                                            <html:link action="Login?method=page">haga click aquí</html:link> 
+                                                            </div>
+                                                        </div>
                                                 </logic:notPresent>
                                                 <br>
                                                 </br>

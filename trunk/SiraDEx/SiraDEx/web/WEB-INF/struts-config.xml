@@ -34,7 +34,7 @@
         <action path="/Login" type="Usuario.Login" scope="session" 
                 parameter="method" name="usuarioForm">
             <forward name="success" path="/sesion.jsp"/>
-            <forward name="page" path="/autenticacion.jsp"/>
+            <forward name="page" path="registrarUsuario"/>
         </action>
         
         <action path="/Entrar" type="Usuario.Entrar" scope="session" 
@@ -43,9 +43,8 @@
             <forward name="page" path="entrarDirecto"/>               
         </action>
         
-        <action path="/Logout" type="Usuario.Logout" 
-                scope="request" name="usuarioForm">
-            <forward name="success" path="paginaInicial"/>
+        <action path="/Logout" type="Usuario.Logout" scope="request" name="usuarioForm">
+            <forward name="success"  path="https://secure.dst.usb.ve/logout" redirect="true"/>
         </action>
 
         <action path="/GestionUsuarios" type="Usuario.Listar"
@@ -253,8 +252,12 @@
             <forward name="success" path="consultarLog"/>
           </action>
             
-            
-        <action path="/Welcome" forward="paginaInicial"/> 
+        <!-- ===============================================================-->    
+        
+        <action path="/Welcome" forward="paginaInicial"/>
+        
+        <action path="/Error" forward="error"/>
+        
     </action-mappings>
     
     <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>

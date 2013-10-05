@@ -45,6 +45,10 @@
         <put name="body" value="/entradaSiraDEx.jsp" />
     </definition>
     
+    <definition name="error" extends="plantillaPublica">
+        <put name="body" value="/error.jsp" />
+    </definition>
+    
     <!-- =======================USUARIO====================================-->
     
     <definition name="gestionUsuarios" extends="plantilla">
@@ -65,6 +69,10 @@
     
     <definition name="entrarDirecto" extends="plantilla">
         <put name="body" value="/usuario/entradaDirecta.jsp" />
+    </definition>
+    
+    <definition name="registrarUsuario" extends="plantillaPublica">
+        <put name="body" value="/usuario/formRegistroUsuario.jsp" />
     </definition>
     
     <!-- =======================TIPO DE ACTIVIDAD==========================-->

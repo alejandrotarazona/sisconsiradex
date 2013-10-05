@@ -176,28 +176,11 @@
                             </td>
 
                             <td align="center">
-                                <logic:notEqual name="campos" property="tipo" value="archivo">
-                                    <logic:notEqual name="campos" property="tipo" value="participante">
-                                        <html:select name="campos"  property="tipo" indexed="true" 
-                                        styleId="<%=s%>" styleClass="selector">
-                                            <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
-                                                                    value="valor"/>
-                                        </html:select>
-                                    </logic:notEqual>
-                                </logic:notEqual>
-
-                                <logic:equal name="campos" property="tipo" value="archivo">
-                                    <html:select name="campos"  property="tipo" disabled="true" 
-                                                 indexed="true" styleClass="selector">
-                                        <html:option value="archivo">archivo</html:option>
-                                    </html:select>
-                                </logic:equal>
-                                <logic:equal name="campos" property="tipo" value="participante">
-                                    <html:select name="campos"  property="tipo" disabled="true" 
-                                                 indexed="true" styleClass="selector">
-                                        <html:option value="participante">participante</html:option>
-                                    </html:select>
-                                </logic:equal>
+                                <html:select name="campos"  property="tipo" indexed="true" 
+                                styleId="<%=s%>" styleClass="selector">
+                                    <html:optionsCollection name="campos" property="tipos" label="etiqueta" 
+                                                            value="valor"/>
+                                </html:select>
                             </td>
 
                             <td align="center">

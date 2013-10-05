@@ -37,30 +37,14 @@ public class Entity {
         "LOG", //11
 
         "PERMISOS", //12        ---------------Vista-------------------   
-        "ESTUDIANTES", //13         OJO!!!
-        "PROFESORES", //14          NO se puede hacer insert ni update
-        "OBREROS", //15             a traves de estas!!!
-        "PROGRAMAS", //16
-        "EMPLEADOS", //17
-        "DEPENDENCIAS", //18     
-        "TIPO_P", //19
-        "TIPO_R", //20        
-        "TIPO_ACT__ACT", //21
-        "ACT_PARTICIPA", //22
-        "ELEMENTOS", //23    
-        "ACT_COMPLETA"//24      -------------------------------------- 
+        "TIPO_P",//13           OJO!!!
+        "TIPO_R",//14           NO se puede hacer insert ni update
+        "TIPO_ACT__ACT",//15    a traves de estas!!!
+        "ACT_PARTICIPA",//16
+        "ELEMENTOS",//17
+        "ACT_COMPLETA"//18      -------------------------------------- 
     };
 
-    /*
-     * public boolean consultar(Entity e) { if (e instanceof Usuario) { String
-     * sqlquery = "SELECT * FROM usuario" + " WHERE usuario ='" + ((Usuario)
-     * e).getLogin() + "' " + " AND " + "password ='" + ((Usuario)
-     * e).getPassword() + "'";
-     *
-     * System.out.println(sqlquery); try { ResultSet rs = consult(sqlquery);
-     * boolean b = rs.next(); return b; } catch(Exception e){
-     * System.out.println(e.getMessage()); return false; } } return false; }
-     */
     public Entity(int TABLA) {
         this.TABLA = TABLAS[TABLA];
     }
@@ -257,8 +241,8 @@ public class Entity {
 
         return rs;
     }
-    
-        public ResultSet listarOrdenado(String columna) {
+
+    public ResultSet listarOrdenado(String columna) {
         sql = "SELECT * FROM " + TABLA + " ORDER BY " + columna;
 
         System.out.println(sql);

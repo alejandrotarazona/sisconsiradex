@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 import org.apache.struts.actions.DispatchAction;
 
+
 /**
  *
  * @author SisCon
@@ -34,18 +35,18 @@ public class Login extends DispatchAction {
      * @throws java.lang.Exception
      * @return
      */
+
     public ActionForward page(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
         Usuario u = (Usuario) form;
         u.setMensaje(null);
-        return mapping.findForward(PAGE);
-    }
 
-    public ActionForward save(ActionMapping mapping, ActionForm form,
-            HttpServletRequest request, HttpServletResponse response)
-            throws Exception {
-        Usuario u = (Usuario) form;
+        // Obteniendo usuario del CAS
+        String usbid = request.getRemoteUser();
+        if (usbid != null) {
+            u.setUsername(usbid);
+        }
 
         if (u.esUsuario()) {
             u.setUsuario();
@@ -59,6 +60,31 @@ public class Login extends DispatchAction {
                     request.getSession().setAttribute("permiso", "dex");
                 }
             }
+            request.getSession().setAttribute("mensajeAct", "¡Bienvenido al SiraDEx!");
+            return mapping.findForward(SUCCESS);
+        } else {
+
+            // Obteniendo datos del LDAP
+            if (!u.obtenerUsuario()) {
+                request.getSession().setAttribute("fallo", u.getMensaje());
+            }
+            request.getSession().setAttribute("mensajeAct", "Su registro en el SiraDEx se ha realizado con éxito.");
+            return mapping.findForward(PAGE);
+        }
+    }
+
+    public ActionForward save(ActionMapping mapping, ActionForm form,
+            HttpServletRequest request, HttpServletResponse response)
+            throws Exception {
+        Usuario u = (Usuario) form;
+        String usuario = u.getUsername();
+        String ip = request.getHeader("X-Forwarded-For");
+        if (ip == null) {
+            ip = request.getRemoteAddr();
+        }
+
+        if (u.agregar(ip, usuario)) {
+            request.getSession().setAttribute("user", u);
             return mapping.findForward(SUCCESS);
         }
         return mapping.findForward(PAGE);

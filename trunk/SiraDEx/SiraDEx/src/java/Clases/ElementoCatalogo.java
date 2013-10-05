@@ -79,7 +79,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
     public boolean usuarioExistente(String usbid) {
 
-        Entity e = new Entity(23);//ELEMENTOS
+        Entity e = new Entity(17);//ELEMENTOS
 
         String[] atrib = {"id_catalogo", "tipo", "valor"};
         Object[] valor = {idCatalogo, "usbid", usbid};
@@ -100,10 +100,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
     }
 
     public String getCampoUsuario() {
-        Iterator itValores = this.camposValores.iterator();
-
-        while (itValores.hasNext()) {
-            CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
+        for (CampoCatalogoValor ccv : camposValores) {
             if (ccv.getCampo().getTipo().equals("usbid")) {
                 return ccv.getValor();
             }
@@ -120,7 +117,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         String usbid = getCampoUsuario();
 
         if (usbid != null && usuarioExistente(usbid)) {
-            mensaje = "Error: Ya existe un elemento con el USB-ID '"+usbid+"' en el Catálogo.";
+            mensaje = "Error: Ya existe un elemento con el USB-ID '" + usbid + "' en el Catálogo.";
             return false;
         }
 
@@ -134,7 +131,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
 
             idElemento = eElemento.seleccionarMaxId("id_elemento");
 
-            Iterator itValores = this.camposValores.iterator();
+            Iterator itValores = camposValores.iterator();
 
             while (itValores.hasNext() && resp) {
                 CampoCatalogoValor ccv = (CampoCatalogoValor) itValores.next();
@@ -144,7 +141,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
             if (!resp) {
                 mensaje = "Error: El elemento no pudo ser registrado.";
                 if (!eliminar(ip, user)) {
-                    mensaje = " Error: La elemento 'no pudo ser resgistrado"
+                    mensaje = " Error: El elemento 'no pudo ser resgistrado"
                             + " satisfactoriamente, en caso  de que aparezca,"
                             + " por favor, elimínelo.";
                 }
@@ -154,6 +151,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         }
         return resp;
     }
+    
 
     public boolean eliminar(String ip, String user) {
         Entity e = new Entity(8);//ELEMENTO_CATALOGO
@@ -178,7 +176,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         String usbid = getCampoUsuario();
 
         if (usbid != null && !usbidNM.equals(usbid) && usuarioExistente(usbid)) {
-            mensaje = "Error: Ya existe un elemento con el USB-ID '"+usbid+"' en el Catálogo.";
+            mensaje = "Error: Ya existe un elemento con el USB-ID '" + usbid + "' en el Catálogo.";
             return false;
         }
 
@@ -244,9 +242,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         try {
             rs.next();
             idCat = rs.getInt(1);
-            if (rs != null) {
-                rs.close();
-            }
+            rs.close();
 
             ArrayList<ElementoCatalogo> elementos;
             elementos = Clases.ElementoCatalogo.listarElementosId(idCat);
@@ -299,6 +295,7 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
         return null;
     }
 
+    @Override
     public int compareTo(ElementoCatalogo e) {
 
         return contenido.compareTo(e.getContenido());
@@ -330,6 +327,43 @@ public class ElementoCatalogo extends Root implements Serializable, Comparable<E
                     } else {//el participante no es usuario
                         contenido = usbid.substring(1) + " (No es usuario)";
                     }
+
+                    ec.setMensaje(usbid);
+                    ec.setContenido(contenido);
+
+                    listaElementoCatalogo.add(ec);
+                }
+
+                rs.close();
+
+                return listaElementoCatalogo;
+
+
+            } catch (SQLException ex) {
+                Logger.getLogger(ElementoCatalogo.class
+                        .getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        return null;
+    }
+
+    public static ArrayList<ElementoCatalogo> listarUsuarios() {
+
+        ArrayList<ElementoCatalogo> listaElementoCatalogo = new ArrayList<>(0);
+
+        Entity e = new Entity(0);//USUARIO
+
+        ResultSet rs = e.listar();
+        if (rs != null) {
+            try {
+                while (rs.next()) {
+                    ElementoCatalogo ec = new ElementoCatalogo();
+
+                    String contenido;
+                    String usbid = rs.getString("usbid");
+
+                    contenido = usbid + ", " + rs.getString("nombres")
+                            + " " + rs.getString("apellidos");
 
                     ec.setMensaje(usbid);
                     ec.setContenido(contenido);

@@ -42,6 +42,7 @@ public class Modificar extends DispatchAction {
         u.setMensaje(null);
         u.setUsuario();
         request.getSession().setAttribute("usernameNM", u.getUsername());
+        request.getSession().setAttribute("rolNM", u.getRol());
 
         String r = u.getRol();
         if (!r.equals("WM") && !r.equals("profesor") && !r.equals("obrero")
@@ -90,12 +91,13 @@ public class Modificar extends DispatchAction {
         }
 
         String usernameNM = (String) request.getSession().getAttribute("usernameNM");
+        String rolNM = (String) request.getSession().getAttribute("rolNM");
 
         u.setUsername(usernameNM);
         u.setUsuario();
         u.setRol(rol);
 
-        if (u.modificar(ip, usuario)) {
+        if (u.modificar(ip, usuario, rolNM)) {
             request.getSession().setAttribute("mensajeUsuario", "El rol del Usuario '"
                     + u.getUsername() + "' se ha modificado a '" + u.getRol() + "' con éxito.");
 
