@@ -98,12 +98,24 @@
                         </span>
                         </td>
                         <td align="center">
-                            <bean:write name="campos" property="tipo"/>
+                            <logic:notEqual name="campos" property="tipo" value="participante">
+                                <logic:notEqual name="campos" property="tipo" value="catalogo">
+                                    <bean:write name="campos" property="tipo"/>
+                                </logic:notEqual>
+                            </logic:notEqual>
+                            <logic:equal name="campos" property="tipo" value="participante">
+                                catálogo de usuarios
+                            </logic:equal>
+                            <logic:equal name="campos" property="tipo" value="catalogo">
+                                otros catálogos
+                            </logic:equal>
                         </td>
                         <td align="center">
                             <logic:notEqual name="campos" property="tipo" value="archivo">
                                 <logic:notEqual name="campos" property="tipo" value="checkbox">
-                                    <bean:write name="campos"  property="longitud"/>
+                                    <logic:notEqual name="campos" property="tipo" value="catalogo">
+                                        <bean:write name="campos"  property="longitud"/>
+                                    </logic:notEqual>
                                 </logic:notEqual>
                             </logic:notEqual>  
                         </td>
