@@ -157,7 +157,7 @@ public class Agregar extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
-        if (act.agregar(ip, usuario)) {
+        if (act.agregar(ip, usuario, u.getRol())) {
 
             String rol = u.getRol();
 

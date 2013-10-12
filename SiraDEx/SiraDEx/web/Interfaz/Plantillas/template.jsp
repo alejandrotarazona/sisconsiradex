@@ -44,9 +44,9 @@
                                                     <br></br>
                                                     <div align="center">
                                                         <span class ="warning">
-                                                            Su sesión en SiraDEx ha expirado si no desea volver al sistema, por favor, 
+                                                            Su sesión en SiraDEx ha expirado, si desea salir del sistema, por favor, 
                                                             <html:link action="/Logout">haga click aquí</html:link>
-                                                                para salir del CAS
+                                                                para cerrar su sesión en el CAS
                                                             </span>
                                                             <br></br>
                                                             <div style="font-size:1.3em">

@@ -34,7 +34,7 @@
         <logic:present name="fallo"><br><br>            
             <div class ="error"><bean:write name="fallo"/></div><br><br><br>
             <div style="font-size:1.3em">
-                Para cerrar su sesión en el Servicio Centralizado de Autenticación, por favor  
+                Para cerrar su sesión en el Servicio Centralizado de Autenticación, por favor,  
                 <html:link action="/Logout">
                     haga click aquí
                 </html:link>
@@ -105,6 +105,7 @@
                 </table>  
                 <div align="center">
                     <html:submit styleId="registrar">Continuar</html:submit>
+                    <html:link styleClass="button" action="/Logout">Cancelar</html:link>
                     </div>
             </html:form>
         </logic:notPresent>

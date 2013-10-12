@@ -240,7 +240,7 @@ public class Verificaciones {
             }
         }
         if (!hayParticipante) {
-            ta.setMensaje("Error: Debe haber al menos un campo participante.");
+            ta.setMensaje("Error: Debe haber al menos un campo de tipo 'catálogo de usuarios'.");
             return false;
         }
         return true;
@@ -254,7 +254,7 @@ public class Verificaciones {
      * @param accion false si es agregar, true si es modificar
      * @return true si los valores son validos, de lo contrario retorna false.
      */
-    public static boolean verificar(Actividad act, boolean accion) {
+    public static boolean verificar(Actividad act, boolean accion, String rol) {
 
         boolean creador = false;
         ArrayList<CampoValor> campos = act.getCamposValores();
@@ -307,7 +307,8 @@ public class Verificaciones {
 
             /*verifica si el creador de la actividad esta presente*/
             String usbid = valor.split(",")[0];
-            if (tipo.equals("participante") && act.getCreador().equals(usbid)) {
+            if (rol.equals("WM") || 
+                    (tipo.equals("participante") && act.getCreador().equals(usbid))) {
                 creador = true;
             }
 

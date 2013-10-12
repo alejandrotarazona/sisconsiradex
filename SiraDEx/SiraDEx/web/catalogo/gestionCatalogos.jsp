@@ -13,31 +13,62 @@
         <style type="text/css" title="currentStyle">
             @import "../Stylesheets/demo_table_jui.css";
         </style>
-        <script>
-            $(document).ready(function() {
+        <logic:present name="permiso">
+            <logic:equal name="permiso" value="wm">
+                <script>
+                    $(document).ready(function() {
 
-                $('#datatab').dataTable({
-                    "aoColumns": [
-                        /* Nombre */ null,
-                        /* Modificar */ {"bSortable": false},
-                        /* Consultar */ {"bSortable": false},
-                        /* Eliminar */ {"bSortable": false}
-                    ]});
-            });
+                        $('#datatab').dataTable({
+                            "aoColumns": [
+                                /* Nombre */ null,
+                                /* Consultar */ {"bSortable": false},
+                                /* Modificar */ {"bSortable": false},
+                                /* Eliminar */ {"bSortable": false}
+                            ]});
+                    });
 
-        </script>
+                </script>
+            </logic:equal>
+            <logic:equal name="permiso" value="dex">
+                <script>
+                    $(document).ready(function() {
+
+                        $('#datatab').dataTable({
+                            "aoColumns": [
+                                /* Nombre */ null,
+                                /* Consultar */ {"bSortable": false}
+                            ]});
+                    });
+
+                </script>
+            </logic:equal>
+        </logic:present>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SiraDEx | Gestión de Catálogos</title>
+        <logic:present name="permiso">
+            <logic:equal name="permiso" value="wm">
+                <title>SiraDEx | Gestión de Catálogos</title>
+            </logic:equal>
+            <logic:equal name="permiso" value="dex">
+                <title>SiraDEx | Consulta de Catálogos</title>
+            </logic:equal>
+        </logic:present>
+        <logic:notPresent name="permiso">
+            <title>SiraDEx | Gestión de Catálogos</title>
+        </logic:notPresent>
     </head>
     <body>
-        <logic:notEqual name="permiso" value="wm">
+        <logic:notPresent name="permiso">
             <div align="center" class ="warning">
                 Usted no tiene permiso para acceder a esta página del SiraDEx.
             </div>
-        </logic:notEqual>
-        <logic:equal name="permiso" value="wm">
-            <h1 class="title">Gestión de Catálogos</h1>
-
+        </logic:notPresent>
+        <logic:present name="permiso">
+            <logic:equal name="permiso" value="wm">
+                <h1 class="title">Gestión de Catálogos</h1>
+            </logic:equal>
+            <logic:equal name="permiso" value="dex">
+                <h1 class="title">Consulta de Catálogos</h1>
+            </logic:equal>
             <logic:present name="mensajeCat">
                 <br>
                 <logic:notMatch name="mensajeCat" value="Error:">
@@ -48,12 +79,12 @@
                 </logic:match>
                 <br>
             </logic:present>
-
-            <html:link action="/RegistrarCatalogo?method=page"> 
-                <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
-                <b>Agregar Catálogo</b>    
-            </html:link>
-            <br>
+            <logic:equal name="permiso" value="wm">
+                <html:link action="/RegistrarCatalogo?method=page"> 
+                    <html:img src="../Stylesheets/iconos/Add_26x26.png"/>  
+                    <b>Agregar Catálogo</b><br>    
+                </html:link>
+            </logic:equal>
 
             <logic:notPresent name="catalogos"><br><br>
             <span align="center">No hay catálogos que mostrar</span>
@@ -67,8 +98,10 @@
                     <tr>
                     <th>Nombre</th>
                     <th width="10%"></th>
-                    <th width="10%"></th>
-                    <th width="10%"></th>
+                        <logic:equal name="permiso" value="wm">
+                        <th width="10%"></th>
+                        <th width="10%"></th>
+                        </logic:equal>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,14 +119,7 @@
                         </logic:lessEqual>
 
                         </td>
-                        <td align="center">
-                            <html:form method="POST" action="/ModificarCatalogo?method=page">
-                                <html:hidden name="cat" property="idCatalogo" />
-                                <html:submit styleId="botonModificar"
-                                             value=" "
-                                             title="Modificar"/>
-                            </html:form>
-                        </td>
+
                         <td align="center">
                             <html:form method="POST" action="/GestionElementos">
                                 <html:hidden name="cat" property="idCatalogo"/>
@@ -102,26 +128,37 @@
                                              title="Consultar"/>
                             </html:form>
                         </td>
-                        <td align="center">
-
-                            <logic:greaterThan name="cat" property="idCatalogo" value="6"> 
-
-                                <html:form method="POST" action="/EliminarCatalogo">
+                        <logic:equal name="permiso" value="wm">
+                            <td align="center">
+                                <html:form method="POST" action="/ModificarCatalogo?method=page">
                                     <html:hidden name="cat" property="idCatalogo" />
-                                    <html:hidden name="cat" property="nombre" />
-                                    <html:submit styleId="botonEliminar"
+                                    <html:submit styleId="botonModificar"
                                                  value=" "
-                                                 title="Eliminar"
-                                                 onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
+                                                 title="Modificar"/>
                                 </html:form>
+                            </td>
+                            <td align="center">
 
-                            </logic:greaterThan>
-                        </td>
+                                <logic:greaterThan name="cat" property="idCatalogo" value="6"> 
+
+                                    <html:form method="POST" action="/EliminarCatalogo">
+                                        <html:hidden name="cat" property="idCatalogo" />
+                                        <html:hidden name="cat" property="nombre" />
+                                        <html:submit styleId="botonEliminar"
+                                                     value=" "
+                                                     title="Eliminar"
+                                                     onclick="return confirm('¿Está seguro que desea eliminar catálogo?')"/>
+                                    </html:form>
+
+                                </logic:greaterThan>
+                            </td>
+                        </logic:equal>
                         </tr>
                     </logic:iterate>
                 </tbody>
             </table>
         </logic:present>
-    </logic:equal>
+
+    </logic:present>
 </body>
 </html>

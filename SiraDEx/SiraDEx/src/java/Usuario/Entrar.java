@@ -53,7 +53,7 @@ public class Entrar extends DispatchAction {
 
         request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null) {
+        if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;
@@ -72,7 +72,7 @@ public class Entrar extends DispatchAction {
 
         request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null) {
+        if (u == null ) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;
@@ -85,13 +85,13 @@ public class Entrar extends DispatchAction {
         return mapping.findForward(PAGE);
     }
 
-    public ActionForward signinES(ActionMapping mapping, ActionForm form,
+    public ActionForward signinEst(ActionMapping mapping, ActionForm form,
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
         request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null) {
+        if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;
@@ -109,7 +109,7 @@ public class Entrar extends DispatchAction {
             throws Exception {
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null) {
+        if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;
@@ -128,7 +128,7 @@ public class Entrar extends DispatchAction {
 
         request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null) {
+        if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;

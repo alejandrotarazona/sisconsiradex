@@ -29,6 +29,15 @@
                                         Tipos de Actividad
                                     </html:link></li>
 
+                                <br>
+                                <li>
+                                <h1 class="title">
+                                    <html:link action="/GestionCatalogos?method=preList"> 
+                                        Consultar Catálogos 
+                                    </html:link>
+                                </h1>  
+                                </li>
+
                             </logic:equal>
 
 

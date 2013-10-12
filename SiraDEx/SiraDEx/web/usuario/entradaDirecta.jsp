@@ -27,7 +27,7 @@
         <ul>
             <li><html:link action="/Entrar?method=signinEA">Empleado Administrativo</html:link></li>
             <li><html:link action="/Entrar?method=signinPO">Personal Obrero</html:link></li>
-            <li><html:link action="/Entrar?method=signinES">Estudiante</html:link></li>
+            <li><html:link action="/Entrar?method=signinEst">Estudiante</html:link></li>
             <li><html:link action="/Entrar?method=signinProf">Profesor</html:link></li>
             <li><html:link action="/Entrar?method=signinDEx">Jefe de Dependencia del DEx</html:link></li>
             </ul>
