@@ -30,10 +30,10 @@ public class Campo implements Serializable {
     private boolean eliminado = false;
     private final Par[] tipos = {
         new Par("texto", "texto"),
-        new Par("catálogo", "catalogo"),
+        new Par("catálogo de usuarios", "participante"),
+        new Par("otros catálogos", "catalogo"),
         new Par("fecha", "fecha"),
         new Par("número", "numero"),
-        new Par("participante", "participante"),
         new Par("texto largo", "textol"),
         new Par("archivo", "archivo"),
         new Par("checkbox", "checkbox")

@@ -36,6 +36,10 @@
                             <html:link action="/GestionActividades?method=preListUser">Inicio</html:link> |
                         </logic:equal>
 
+                        <logic:equal name="user" property="rol" value="empleado">
+                            <html:link action="/GestionActividades?method=preListUser">Inicio</html:link> |
+                        </logic:equal>
+
                         <logic:equal name="user" property="rol" value="WM">
                             <html:link action="/GestionActividades?method=preListAll">Inicio</html:link> |
                         </logic:equal>

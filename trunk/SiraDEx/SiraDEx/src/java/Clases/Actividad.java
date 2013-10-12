@@ -497,9 +497,9 @@ public class Actividad extends Root {
         }
     }
 
-    public boolean agregar(String ip, String user) {
+    public boolean agregar(String ip, String user, String rol) {
 
-        if (!Verificaciones.verificar(this, false)) {
+        if (!Verificaciones.verificar(this, false, rol)) {
             return false;
         }
 
@@ -569,9 +569,10 @@ public class Actividad extends Root {
         return e.borrar(campos, condicion);
     }
 
-    public boolean modificar(ArrayList<CampoValor> camposNM, String ip, String usuario) {
+    public boolean modificar(ArrayList<CampoValor> camposNM, String ip, 
+            String usuario, String rol) {
 
-        if (!Verificaciones.verificar(this, true)) {
+        if (!Verificaciones.verificar(this, true, rol)) {
             return false;
         }
         boolean resp = eliminarParticipantes();

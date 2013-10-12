@@ -13,7 +13,7 @@
 <html>
     <head>
         <style>
-            .selector {width: 80px;}
+            .selector {width: 126px;}
         </style>
         <script>
             $(document).ready(function() {
@@ -153,7 +153,7 @@
                             <th><b>Tipo</b></th>
                             <th><b>Longitud/Límite</b> <span style="color:red">*</span></th>
                             <th><b>Obligatorio</b></th>
-                            <th><b>Catálogo</b></th>
+                            <th><b>Catálogo</b> <span style="color:red">*</span></th>
                             <th>Eliminar</th>
                             </tr>      
 
@@ -288,11 +288,6 @@
                            && document.getElementById('submit').value!='Eliminar Campos'){
                            document.getElementById('submit').value='Registrar'
                            }"/>
-                <html:img src="../Stylesheets/iconos/Add_26x26.png" style="cursor:pointer"
-                          onclick="document.getElementById('mas').value= +document.getElementById('mas').value+1;
-                          if(document.getElementById('submit').value!='Eliminar Campos') {
-                          document.getElementById('submit').value='Agregar Campos'
-                          }"/>
 
                 <div align="center">
                     <html:submit value="Registrar" styleId="submit"/>

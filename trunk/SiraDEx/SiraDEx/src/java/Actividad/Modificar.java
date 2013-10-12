@@ -138,7 +138,7 @@ public class Modificar extends DispatchAction {
             ip = request.getRemoteAddr();
         }
 
-        if (act.modificar(camposNM, ip, usuario)) {
+        if (act.modificar(camposNM, ip, usuario, u.getRol())) {
 
             String rol = u.getRol();
             act.enviarCorreo(1);

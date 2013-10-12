@@ -49,8 +49,15 @@ public class Listar extends DispatchAction {
             throws Exception {
 
         Usuario u = (Usuario) request.getSession().getAttribute("user");
+
         if (u == null) {
             return mapping.findForward(SUCCESS1);
+        }
+
+
+        String p = (String) request.getSession().getAttribute("permiso");
+        if (p != null && p.equals("dex")) {
+            return new ActionRedirect("/GestionActividades.do?method=listDex");
         }
 
         Clases.Root.deleteSessions(request, "mensajeAct");
@@ -86,6 +93,13 @@ public class Listar extends DispatchAction {
         if (u == null) {
             return mapping.findForward(SUCCESS1);
         }
+        String p = (String) request.getSession().getAttribute("permiso");
+        if (!u.getRol().equals("WM")) {
+            if (p != null) {
+                return new ActionRedirect("/GestionActividades.do?method=listDex");
+            }
+            return new ActionRedirect("/GestionActividades.do?method=listUser");
+        }
 
         Clases.Root.deleteSessions(request, "mensajeAct");
 
@@ -120,6 +134,11 @@ public class Listar extends DispatchAction {
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null) {
             return mapping.findForward(SUCCESS1);
+        }
+
+        String p = (String) request.getSession().getAttribute("permiso");
+        if (p == null) {
+            return new ActionRedirect("/GestionActividades.do?method=listUser");
         }
 
         Clases.Root.deleteSessions(request, "mensajeVal");

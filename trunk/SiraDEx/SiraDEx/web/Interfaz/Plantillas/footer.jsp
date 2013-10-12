@@ -27,7 +27,7 @@
                             <br />
                             Sartenejas, Baruta, Edo. Miranda - Apartado 89000 - Cable Unibolivar - Caracas Venezuela. Teléfono +58 0212-9063111
                             <br />
-                            Diseñada y desarrollada por SisCon <a href="mailto:siradexusb@gmail.com">webmaster@usb.ve</a>
+                            Diseñada y desarrollada por SisCon <a href="mailto:siradexusb@gmail.com">siradexusb@gmail.com</a>
                         </td>
                         </tr>
                     </table>

@@ -69,7 +69,6 @@
                                                  } else {
                                                  document.getElementById('usuario').value= '';
                                                  }">
-                                        <html:option value="">-- Seleccione --</html:option>
                                         <html:optionsCollection name="usuarios" label="contenido" value="mensaje"/>
                                     </html:select>  
                                 </logic:equal>

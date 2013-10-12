@@ -443,7 +443,7 @@ public class TipoActividad extends Root {
         }
         if (!participante || !archivo) {
             mensaje = "Error: El Tipo de Actividad debe conservar al menos un "
-                    + "campo tipo participante y un campo tipo archivo";
+                    + "campo tipo 'catálogo de usuarios' y un campo tipo 'archivo'";
             return false;
         }
         return true;
