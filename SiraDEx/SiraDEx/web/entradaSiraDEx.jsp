@@ -13,17 +13,21 @@
 
         <logic:notPresent name="user">
             <br><br>
-            <div style="margin-left:100px;font-size:1.3em">
-                Para ingresar al SiraDEx utilizando su USBID, por favor
+            <div style="text-align:center;font-size:1.3em">
+                Para ingresar al SiraDEx utilizando su USBID, por favor, 
                 <html:link action="/Login?method=page">haga click aquí</html:link>
-            </div>   
-            </logic:notPresent> 
-            <logic:present name="user">
+                    <br><br><br>
+                    <span class ="warning">
+                        Para un buen funcionamiento del sistema, por favor, use navegadores compatibles con HTML5, como Chrome o Firefox.
+                    </span>
+                </div>   
+        </logic:notPresent> 
+        <logic:present name="user">
             <br><br>
-            <div style="margin-left:90px;font-size:1.3em">
+            <div style="text-align:center;font-size:1.3em">
                 Si desea ingresar al SiraDEx con otro USBID haga click en <b>(Cerrar Sesión)</b>
             </div>
-            </logic:present>
+        </logic:present>
 
     </body>
 </html>

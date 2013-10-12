@@ -45,43 +45,44 @@
                         </logic:equal>
 
                         <logic:present name="permiso">
-                            <html:link action="/BusquedaAvanzada?method=page" title="Busquedas avanzadas">
-                                Busquedas
-                            </html:link> |
+                            <html:link action="/BusquedaAvanzada?method=page" title="Búsquedas avanzadas">
+                                Búsquedas
+                            </html:link>
                         </logic:present>
                         <logic:equal name="user" property="rol" value="estudiante">
-                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
-                                Busquedas
-                            </html:link> |
+                            <html:link action="/BusquedaPublica?method=page" title="Búsquedas públicas">
+                                Búsquedas
+                            </html:link>
                         </logic:equal>
                         <logic:equal name="user" property="rol" value="obrero">
-                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
-                                Busquedas
-                            </html:link> |
+                            <html:link action="/BusquedaPublica?method=page" title="Búsquedas públicas">
+                                Búsquedas
+                            </html:link>
                         </logic:equal>
                         <logic:equal name="user" property="rol" value="profesor">
-                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
-                                Busquedas
-                            </html:link> |
+                            <html:link action="/BusquedaPublica?method=page" title="Búsquedas públicas">
+                                Búsquedas
+                            </html:link>
                         </logic:equal>
                         <logic:equal name="user" property="rol" value="empleado">
-                            <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
-                                Busquedas
-                            </html:link> |
+                            <html:link action="/BusquedaPublica?method=page" title="Búsquedas públicas">
+                                Búsquedas
+                            </html:link>
                         </logic:equal>
                     </logic:present>
 
                     <logic:notPresent name="user">
                         <html:link action="/Welcome">Inicio</html:link> |
 
-                        <html:link action="/BusquedaPublica?method=page" title="Busquedas públicas">
-                            Busquedas
-                        </html:link> |
+                        <html:link action="/BusquedaPublica?method=page" title="Búsquedas públicas">
+                            Búsquedas
+                        </html:link> 
                     </logic:notPresent>
-
-                    <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Contactenos</a> |
-
-                    <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Ayuda</a>
+                    <!-- |
+                                        <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Contáctenos</a> |
+                    
+                                        <a title="No está disponible" style="cursor: pointer; text-decoration:underline">Ayuda</a>
+                    -->    
                 </td>
                 </tr>
             </table>
