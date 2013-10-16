@@ -13,7 +13,7 @@
         <br><br>
         <div style="text-align:center;font-size:1.3em">  
             <span class ="warning">
-                Para un buen funcionamiento del sistema, por favor, use navegadores de alta compatibilidad con HTML5, como Chrome o Firefox.
+                Para un buen funcionamiento del sistema se recomienda el uso de navegadores de alta compatibilidad con HTML5, como Chrome o Firefox.
             </span>
             <br><br><br>
             <logic:notPresent name="user">
