@@ -8,14 +8,14 @@ INSERT INTO permiso (nombre) VALUES ('Profesor');
 
 --Usuarios
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
-VALUES ('09-00000', 'obrero', 'Pablo', 'Perez', '04321234567', 
+VALUES ('99-00000', 'obrero', 'Pablo', 'Perez', '04321234567', 
 '00-00000@usb.ve');
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
 VALUES ('05-38978', 'WM', 'Alejandro', 'Tarazona', '04121341842',
  'alejandrotarazona@gmail.com');
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
 VALUES 
-('gsalazar', 'empleado', 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
+('gsalazar', 'WM', 'Gerson', 'Salazar', '01469060847', 'gsalazar@usb.ve');
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
 VALUES ('07-41618', 'WM', 'Diana', 'Vainberg', '04126053552', 
 'dianak90@gmail.com');
@@ -27,7 +27,7 @@ VALUES ('05-38199', 'WM','Jorge', 'García', '04141360451',
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
 VALUES ('kdoming', 'profesor','Kenyer', 'Dominguez', '', 'kdoming@usb.ve');
 INSERT INTO usuario (usbid,rol,nombres,apellidos,telefono,email) 
-VALUES ('99-10000', 'Unidad de Participación y Acción Social','Pedro', 
+VALUES ('99-00001', 'Unidad de Participación y Acción Social','Pedro', 
 'Gomez',  '', '07-10000@usb.ve');
 
 
@@ -173,33 +173,20 @@ INSERT INTO valor_catalogo (id_campo, id_elemento, valor)
 VALUES (3,16,'Emprendimiento y Seguimiento de Egresados');
 
 
-
---      Valores de los carnets de los estudiantes
-
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,17,'07-41618');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,18,'05-38199');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,19,'05-38978');
-
---      Valores de los nombres de estudiantes
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,17,'Diana Vainberg');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,18,'Jorge García');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,19,'Alejandro Tarazona');
-
-
 --      Valor del campo Id de un profesor
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (6,20,'kdoming');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,20,'kdoming');
 --      Valor del campo Nombre de un profesor
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (7,20,'Kenyer Dominguez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,20,'Kenyer Dominguez');
 
 --      Valor del campo Id de un empleado
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,21,'99-10000');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,22,'gsalazar');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,21,'99-00001');
+
 --      Valor del campo Nombre de un empleado
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,21,'Pedro Gomez');
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,22,'Gerson Salazar');
 
 --      Valor del campo Id de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'09-00000');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'99-00000');
+
 --      Valor del campo Nombre de un obrero
 INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,23,'Pablo Perez');
 
