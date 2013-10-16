@@ -10,24 +10,19 @@
         <title>Entrada al SiraDEx</title>
     </head>
     <body>
-
-        <logic:notPresent name="user">
-            <br><br>
-            <div style="text-align:center;font-size:1.3em">
+        <br><br>
+        <div style="text-align:center;font-size:1.3em">  
+            <span class ="warning">
+                Para un buen funcionamiento del sistema, por favor, use navegadores de alta compatibilidad con HTML5, como Chrome o Firefox.
+            </span>
+            <br><br><br>
+            <logic:notPresent name="user">
                 Para ingresar al SiraDEx utilizando su USBID, por favor, 
                 <html:link action="/Login?method=page">haga click aquí</html:link>
-                    <br><br><br>
-                    <span class ="warning">
-                        Para un buen funcionamiento del sistema, por favor, use navegadores compatibles con HTML5, como Chrome o Firefox.
-                    </span>
-                </div>   
-        </logic:notPresent> 
-        <logic:present name="user">
-            <br><br>
-            <div style="text-align:center;font-size:1.3em">
+            </logic:notPresent> 
+            <logic:present name="user">
                 Si desea ingresar al SiraDEx con otro USBID haga click en <b>(Cerrar Sesión)</b>
-            </div>
-        </logic:present>
-
+            </logic:present>
+        </div>
     </body>
 </html>
