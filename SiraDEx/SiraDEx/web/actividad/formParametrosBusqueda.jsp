@@ -67,9 +67,15 @@
                         <logic:present name="permiso">
                             <b>Producto Tipo:</b><br> 
                             <html:radio property="tipoPR" value="">Cualquiera</html:radio>
-                            <html:radio property="tipoPR" value="P">P</html:radio>
-                            <html:radio property="tipoPR" value="R">R</html:radio>
-                                <br><br>   
+                            <html:radio property="tipoPR" value="P"
+                                        title="Evaluables por pares académicos">
+                                P
+                            </html:radio>
+                            <html:radio property="tipoPR" value="R"
+                                        title="No evaluables por pares académicos">
+                                R
+                            </html:radio>
+                            <br><br>   
                         </logic:present>
 
                         <b>Dependencia a la que pertenece:</b><br> 

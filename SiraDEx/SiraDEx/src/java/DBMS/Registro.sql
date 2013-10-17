@@ -97,17 +97,11 @@ INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (2);
 
---  Catálogo de Estudiantes
-INSERT INTO elemento_catalogo (id_catalogo) VALUES (3);
-INSERT INTO elemento_catalogo (id_catalogo) VALUES (3);
-INSERT INTO elemento_catalogo (id_catalogo) VALUES (3);
-
 
 --  Catálogo de Profesores
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (4);
 
 --  Catálogo de Empleados
-INSERT INTO elemento_catalogo (id_catalogo) VALUES (5);
 INSERT INTO elemento_catalogo (id_catalogo) VALUES (5);
 
 --  Catálogo de Obreros
@@ -174,19 +168,19 @@ VALUES (3,16,'Emprendimiento y Seguimiento de Egresados');
 
 
 --      Valor del campo Id de un profesor
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,20,'kdoming');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (4,17,'kdoming');
 --      Valor del campo Nombre de un profesor
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,20,'Kenyer Dominguez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (5,17,'Kenyer Dominguez');
 
 --      Valor del campo Id de un empleado
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,21,'99-00001');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (8,18,'99-00001');
 
 --      Valor del campo Nombre de un empleado
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,21,'Pedro Gomez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (9,18,'Pedro Gomez');
 
 --      Valor del campo Id de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,23,'99-00000');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (10,19,'99-00000');
 
 --      Valor del campo Nombre de un obrero
-INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,23,'Pablo Perez');
+INSERT INTO valor_catalogo (id_campo, id_elemento, valor) VALUES (11,19,'Pablo Perez');
 
