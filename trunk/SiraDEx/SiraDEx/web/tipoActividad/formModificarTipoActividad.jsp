@@ -100,15 +100,22 @@
                         <td>
                             <b>Tipo de Producto</b> <span style="color:red">*</span>
                         </td>
-                        <td><html:radio property="tipoPR" value="P">P</html:radio>
-                            <html:radio property="tipoPR" value="R">R</html:radio>
-                            </td>
-                            </tr>
-                            <tr>
-                            <td>
-                                <b>Programa</b> <span style="color:red">*</span>
-                            </td>
-                            <td>
+                        <td>
+                            <html:radio property="tipoPR" value="P" 
+                                        title="Evaluables por pares académicos">
+                                P
+                            </html:radio>
+                            <html:radio property="tipoPR" value="R"
+                                        title="No evaluables por pares académicos">
+                                R
+                            </html:radio>
+                        </td>
+                        </tr>
+                        <tr>
+                        <td>
+                            <b>Programa</b> <span style="color:red">*</span>
+                        </td>
+                        <td>
                             <html:select property="programa">   
                                 <html:optionsCollection name="programas" label="contenido" value="contenido"/>
                             </html:select>
@@ -187,7 +194,7 @@
                                 <logic:equal name="campos" property="tipo" value="fecha">
                                     <div id="<%=l%>" style="visibility: hidden">
                                         <html:text name="campos" property="longitud" indexed="true" 
-                                                   title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
+                                                   title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos" 
                                                    size="2" maxlength="4">
                                             <bean:write name="campos" property="longitud"/>
                                         </html:text>    
@@ -196,7 +203,7 @@
                                 <logic:equal name="campos" property="tipo" value="archivo">
                                     <div id="<%=l%>" style="visibility: hidden">
                                         <html:text name="campos" property="longitud" indexed="true" 
-                                                   title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
+                                                   title="Longitud/Límite: si el campo es tipo 'texto' o 'número' indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo 'catálogo de usuarios' indica la cantidad máxima que se podrán agregar de estos campos" 
                                                    size="2" maxlength="4">
                                             <bean:write name="campos" property="longitud"/>
                                         </html:text>    
@@ -206,7 +213,7 @@
                                     <logic:notEqual name="campos" property="tipo" value="archivo">
                                         <div id="<%=l%>" style="visibility: visible">
                                             <html:text name="campos" property="longitud" indexed="true" 
-                                                       title="Si el campo es tipo texto o número indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo participante indica la cantidad máxima que se podrán agregar de estos campos." 
+                                                       title="Longitud/Límite: si el campo es tipo 'texto' o 'número' indica la cantidad máxima de caracteres o dígitos que podrá almacenar, si es tipo 'catálogo de usuarios' indica la cantidad máxima que se podrán agregar de estos campos" 
                                                        size="2" maxlength="4">
                                                 <bean:write name="campos" property="longitud"/>
                                             </html:text>    
@@ -216,7 +223,8 @@
                             </td>
 
                             <td align="center">
-                                <html:checkbox name="campos" property="obligatorio" indexed="true" />
+                                <html:checkbox name="campos" property="obligatorio" indexed="true"
+                                               title="Obligatorio: indica que el campo será obligatorio"/>
                                 <html:hidden name="campos" property="obligatorio" value="false" indexed="true"/>        
                             </td>
 
@@ -273,7 +281,8 @@
                                                document.getElementById('submit').value='Eliminar'
                                                } else {
                                                document.getElementById('submit').value=anterior
-                                               }"/>
+                                               }"
+                                               title="Eliminar"/>
                                 <html:hidden name="campos" property="eliminado" value="false" 
                                              indexed="true"/>
                             </td>
@@ -291,7 +300,7 @@
                            && document.getElementById('submit').value!='Eliminar'){
                            document.getElementById('submit').value='Modificar'
                            }"/>
-                
+
                 <div align="center">
                     <html:submit value="Modificar" styleId="submit"/>
                 </div>
