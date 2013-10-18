@@ -12,7 +12,13 @@
 <body>
     <logic:notEqual name="permiso" value="wm">
         <div align="center" class ="warning">
-            Usted no tiene permiso para acceder a esta página del SiraDEx.
+            <logic:present name="usuarioForm" property="mensaje"><br>
+                <div class ="error"><bean:write name="usuarioForm" property="mensaje"/></div>
+                <br>
+            </logic:present>
+            <logic:notPresent name="usuarioForm" property="mensaje">
+                Usted no tiene permiso para acceder a esta página del SiraDEx.
+            </logic:notPresent>
         </div>
     </logic:notEqual>
     <logic:equal name="permiso" value="wm">

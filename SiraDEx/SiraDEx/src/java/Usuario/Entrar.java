@@ -51,7 +51,7 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        request.getSession().setAttribute("permiso", null);
+
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
@@ -59,6 +59,7 @@ public class Entrar extends DispatchAction {
         Usuario user = (Usuario) form;
         String rol = "obrero";
         if (user.setUsuario(rol)) {
+            request.getSession().setAttribute("permiso", null);
             request.getSession().setAttribute("user", user);
             return mapping.findForward(SUCCESS);
         }
@@ -70,14 +71,14 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
-        if (u == null ) {
+        if (u == null) {
             return mapping.findForward(PAGE);
         }
         Usuario user = (Usuario) form;
         String rol = "empleado";
         if (user.setUsuario(rol)) {
+            request.getSession().setAttribute("permiso", null);
             request.getSession().setAttribute("user", user);
             return mapping.findForward(SUCCESS);
         }
@@ -89,7 +90,6 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
@@ -97,6 +97,7 @@ public class Entrar extends DispatchAction {
         Usuario user = (Usuario) form;
         String rol = "estudiante";
         if (user.setUsuario(rol)) {
+            request.getSession().setAttribute("permiso", null);
             request.getSession().setAttribute("user", user);
             return mapping.findForward(SUCCESS);
         }
@@ -115,6 +116,7 @@ public class Entrar extends DispatchAction {
         Usuario user = (Usuario) form;
         if (user.setUsuarioDEx()) {
             request.getSession().setAttribute("user", user);
+            request.getSession().setAttribute("permiso", null);
             request.getSession().setAttribute("permiso", "dex");
             return mapping.findForward(SUCCESS);
         }
@@ -126,7 +128,6 @@ public class Entrar extends DispatchAction {
             HttpServletRequest request, HttpServletResponse response)
             throws Exception {
 
-        request.getSession().setAttribute("permiso", null);
         Usuario u = (Usuario) request.getSession().getAttribute("user");
         if (u == null || !u.getRol().equals("WM")) {
             return mapping.findForward(PAGE);
@@ -134,6 +135,7 @@ public class Entrar extends DispatchAction {
         Usuario user = (Usuario) form;
         String rol = "profesor";
         if (user.setUsuario(rol)) {
+            request.getSession().setAttribute("permiso", null);
             request.getSession().setAttribute("user", user);
             return mapping.findForward(SUCCESS);
         }
