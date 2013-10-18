@@ -13,17 +13,6 @@
 
 <html>
     <head>
-        <script type="text/javascript">
-            function submitform()
-            {
-                if (document.actividadForm.onsubmit &&
-                        !document.actividadForm.onsubmit())
-                {
-                    return;
-                }
-                document.actividadForm.submit();
-            }
-        </script>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>SiraDEx | Agregar Actividad</title>
     </head>
@@ -45,9 +34,11 @@
                             <html:hidden name="actividadForm" 
                                          property="idTipoActividad" value="${ta.id}"/>
                             <li>
-                                <a href="javascript: submitform()">
-                                    <bean:write name="ta" property="nombreTipo"/>
-                                </a>
+                                <html:link action="/RegistrarActividad?method=save" 
+                                   paramName="ta" paramProperty="idTipoActividad" 
+                                   paramId="idTipoActividad">
+                                <bean:write name="ta" property="nombreTipo"/>
+                            </html:link> 
                             </li>
                         </logic:iterate>
                     </ul>
