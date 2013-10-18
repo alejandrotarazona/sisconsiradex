@@ -14,6 +14,7 @@
     <head>
         <style>
             .selector {width: 126px;}
+            .selectlargo {width: 570px;}
         </style>
         <script>
             $(document).ready(function() {
@@ -112,7 +113,7 @@
                             <b>Programa</b> <span style="color:red">*</span>
                         </td>
                         <td>
-                            <html:select property="programa">
+                            <html:select property="programa" styleClass="selectlargo">
                                 <html:option value="">-- Seleccione --</html:option>
                                 <html:optionsCollection name="programas" label="contenido" value="contenido"/>
 
@@ -125,7 +126,7 @@
                                 <b>Dependencia a validar</b> <span style="color:red">*</span>
                             </td>
                             <td>
-                                <html:select property="validador">
+                                <html:select property="validador" styleClass="selectlargo">
                                     <html:option value="">-- Seleccione --</html:option>
                                     <html:optionsCollection name="dependencias" label="contenido" value="contenido"/>
                                 </html:select>
@@ -140,7 +141,7 @@
                             <b>Realizado por</b> <span style="color:red">*</span>
                         </td>
                         <td>
-                            <html:multibox property="permisos">Empleado</html:multibox> Empleados<br>
+                            <html:multibox property="permisos">Empleado</html:multibox> Empleados Administrativos<br>
                             <html:multibox property="permisos">Estudiante</html:multibox> Estudiantes<br>
                             <html:multibox property="permisos">Profesor</html:multibox> Profesores<br>
                             <html:multibox property="permisos">Obrero</html:multibox> Obreros 
@@ -286,7 +287,7 @@
                         </logic:iterate>
                     </tbody>
                 </table>
-                Más campos
+                <span style="color:#0ADF12;font-weight:bold;font-size:1.2em">Más campos</span>
                 <html:text name="tipoActividadForm" styleId="mas"
                            property="nroCampos" value="0" size="1" maxlength="2"
                            onkeyup="if(this.value > 0 

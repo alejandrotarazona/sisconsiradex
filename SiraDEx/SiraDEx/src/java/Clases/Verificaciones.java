@@ -122,7 +122,7 @@ public class Verificaciones {
             return false;
         }
 
-        respVerif = verificarVacio("'Tipo'", ta.getTipoPR());
+        respVerif = verificarVacio("'Tipo de Producto'", ta.getTipoPR());
         if (respVerif != null) {
             ta.setMensaje(respVerif);
             return false;

@@ -99,7 +99,7 @@
                         </logic:notEmpty>
                     </tbody>
                 </table>                    
-                Más campos
+                <span style="color:#0ADF12;font-weight:bold;font-size:1.2em">Más campos</span>
                 <html:text name="catalogoForm" styleId="mas"
                            property="nroCampos" value="0" size="1" maxlength="1"
                            onkeyup="if(this.value > 0 

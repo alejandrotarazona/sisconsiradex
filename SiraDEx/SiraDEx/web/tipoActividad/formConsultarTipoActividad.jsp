@@ -114,7 +114,9 @@
                             <logic:notEqual name="campos" property="tipo" value="archivo">
                                 <logic:notEqual name="campos" property="tipo" value="checkbox">
                                     <logic:notEqual name="campos" property="tipo" value="catalogo">
-                                        <bean:write name="campos"  property="longitud"/>
+                                        <logic:notEqual name="campos" property="tipo" value="fecha">
+                                            <bean:write name="campos"  property="longitud"/>
+                                        </logic:notEqual>
                                     </logic:notEqual>
                                 </logic:notEqual>
                             </logic:notEqual>  
@@ -123,8 +125,13 @@
                             <html:checkbox name="campos" property="obligatorio" 
                                            disabled="true" indexed="true"/>
                         </td>
-                        <td align="center">     
-                            <bean:write name="campos" property="catalogo"/>
+                        <td align="center">
+                            <logic:equal name="campos" property="tipo" value="participante">
+                                <bean:write name="campos" property="catalogo"/>
+                            </logic:equal>
+                            <logic:equal name="campos" property="tipo" value="catalogo">
+                                <bean:write name="campos" property="catalogo"/>
+                            </logic:equal>
                         </td>
                         </tr>
                     </logic:iterate>
