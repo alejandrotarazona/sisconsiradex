@@ -160,8 +160,8 @@ public class Usuario extends Root {
 
         try {
             ResultSet rs = eUsuario.seleccionar(atrib, valor);
-            if (rs != null) {
-                rs.next();
+            if (rs != null && rs.next()) {
+              
                 nombres = rs.getString(ATRIBUTOS[0]);
                 apellidos = rs.getString(ATRIBUTOS[1]);
                 username = rs.getString(ATRIBUTOS[2]);
@@ -187,8 +187,8 @@ public class Usuario extends Root {
 
         ResultSet rs = eUsuario.seleccionarDistintos("rol", valor);
         try {
-            if (rs != null) {
-                rs.next();
+            if (rs != null && rs.next()) {
+               
                 nombres = rs.getString(ATRIBUTOS[0]);
                 apellidos = rs.getString(ATRIBUTOS[1]);
                 username = rs.getString(ATRIBUTOS[2]);
