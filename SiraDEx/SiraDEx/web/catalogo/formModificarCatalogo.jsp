@@ -26,6 +26,7 @@
                 Usted no tiene permiso para acceder a esta página del SiraDEx.
             </div>
         </logic:notEqual>
+        
         <logic:equal name="permiso" value="wm">
             <h1 class='title'>Edición del Catálogo 
                 <bean:write name="catalogoForm" property="nombre"/>
@@ -205,7 +206,6 @@
                                  if (this.value=='Eliminar') 
                                  return alert('Los campos seleccionados no podrán ser recuperados  una vez confirme esta acción. Esto afectara a todos los elementos del catálogo.'), 
                                  confirm('¿Está seguro que desea eliminar los campos seleccionados?')"/>
-                </div>
             </html:form>
         </logic:equal>
     </body>
